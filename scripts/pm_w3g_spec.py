@@ -344,12 +344,8 @@ def R(suffix, kind, args, code, neg, applies=CURRENT, variant='base', entailed=N
 
 
 def _state_proof(field, path, keyword):
-    return (f'Always refused first by the payload {keyword} row of {field} or its join row. The payload field {field} is '
-            f'built from the same native fact {path} (pm_w3g_spec.PAYLOAD), the join row FJ<n>_{field} requires the stored '
-            f'payload to equal that fact exactly, and the closed selector pins {field} by {keyword} '
-            f'(Plans/event_authority_w3g/payloads/<family>.schema.json, ProjectPayloadV1 and ApplicationPayloadV1 '
-            f'properties.{field}). A fact outside the {keyword} either reaches the payload (the py {keyword} row refuses) or '
-            f'not (the join row refuses), so this row is never the first refusal.')
+    """(field, fact path, keyword); pm_w3g_events.entailed_proofs renders the written proof with path:line citations."""
+    return (field, path, keyword)
 
 
 GOAL_SHARED = [

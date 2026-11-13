@@ -796,26 +796,54 @@ ROWS = {
         ('RS06_coherent_restore_tombstones', 'restore_tombstones', 'restore applies the current deletion boundary before disclosure', 'restore_unavailable', (RS,)),
     ]),
 }
+def cite(path, needle, start_after=None):
+    """path:line of the unique line holding needle (after the first line holding start_after, when given)."""
+    lines = (ROOT / path).read_text().split('\n')
+    first = 0
+    if start_after is not None:
+        first = next(n for n, line in enumerate(lines) if start_after in line)
+    hits = [n + 1 for n, line in enumerate(lines) if n >= first and needle in line]
+    assert hits, (path, needle)
+    return f'{path}:{hits[0]}'
+
+
+EV = 'scripts/pm_w3g_events.py'
 ENTAILED = {
-    'EJ00_scope_kind': (
-        'Always refused first by EN01, EJ01 or a py_<family> scope row. EN01 validates the logical event against '
-        'EventRecord 2.0.0, whose root allOf (Plans/event_record.schema.json, allOf[0] and allOf[1] if/then) makes '
-        'scope_kind=application require project_id=null and scope_kind=project require a nonempty project_id; EJ01 '
-        'requires event project_id == the authentic source project_id; the source scope is built coherently '
-        '(pm_w3g_events._scope: application has project_id None, project has PROJECT). With EN01 and EJ01 holding, a '
-        'null project_id forces both scopes to application and a nonempty one forces both to project, so EJ00 '
-        'cannot be the first refusal.'),
-    'RR07_original_verified': (
-        'Always refused first by ID01, RR03, ST05, NM04 or RR05. The frozen verifier (pm_w3g_events._frozen.verify) '
-        'recomputes exactly: (1) event_id = w3g@1 over the bound instance/partition/type/operation, the predicate of ID01 '
-        'on the same event and binding fields; (2) sha256(original source bytes) = binding.source_commitment, which RR03 '
-        'already requires by comparing the sealed binding with binding_of(w), whose source_commitment is that hash; '
-        '(3) the receipt full_value_commitment = CV-339 over the event, the predicate of ST05; (4) for the current '
-        'edition, producer_semantic_bytes(event), the predicate of NM04, which runs on history exactly when the sealed '
-        'recipe is the current edition (observe: current_recipe); (5) custody.recipe = the installed tuple of that '
-        'family/scope/edition, the predicate of RR05. RetainedDispatcher.resolve adds binding equality (RR03) and recipe '
-        'membership (RR04). Every predicate RR07 evaluates is an earlier row, so RR07 is never the first refusal.'),
+    'EJ00_scope_kind': lambda: (
+        'Always refused first by EN01 or EJ01. EN01 validates the logical event against EventRecord 2.0.0, whose root allOf '
+        f'({cite("Plans/event_record.schema.json", chr(34) + "allOf" + chr(34))}, if/then at '
+        f'{cite("Plans/event_record.schema.json", chr(34) + "then" + chr(34))} and the second then) makes scope_kind=application '
+        'require project_id=null and scope_kind=project require a nonempty project_id; EJ01 '
+        f'({cite(EV, "for field, src in ((" + chr(39) + "env_project_id" + chr(39))}) requires event project_id == the authentic '
+        f'source project_id; the source scope is coherent ({cite(EV, "project = PROJECT if scope_kind == " + chr(39) + "project" + chr(39))}: '
+        'application has project_id None, project has PROJECT). With EN01 and EJ01 holding, a null project_id forces both scopes '
+        'to application and a nonempty one forces both to project, so EJ00 cannot be the first refusal.'),
+    'RR07_original_verified': lambda: (
+        'Always refused first by ID01, RR03, ST05, NM04 or RR05. The frozen verifier recomputes exactly: (1) the w3g@1 event_id '
+        f'({cite(EV, "if b.event_id != event_id_of(")}), the predicate of ID01 ({cite(EV, "obs[" + chr(39) + "identity_recipe" + chr(39) + "] = ")}); '
+        f'(2) sha256(source bytes) = binding.source_commitment ({cite(EV, "if hashlib.sha256(custody.result_bytes)")}), which RR03 '
+        f'already requires ({cite(EV, "obs[" + chr(39) + "sealed_binding" + chr(39) + "] = ")}) by comparing the sealed binding with '
+        f'binding_of(w), whose source_commitment is that hash; (3) the receipt commitment ({cite(EV, "if receipt.get(" + chr(39) + "full_value_commitment" + chr(39) + ") != full_value_commitment(ev)")}), '
+        f'the predicate of ST05 ({cite(EV, "obs[" + chr(39) + "receipt_event" + chr(39) + "] = ")}); (4) for the current edition '
+        f'producer_semantic_bytes ({cite(EV, "            producer_semantic_bytes(ev)")}), the predicate of NM04 '
+        f'({cite(EV, "obs[" + chr(39) + "producer_route" + chr(39) + "] = ")}), which runs on history exactly when the sealed recipe is '
+        f'the current edition ({cite(EV, "current_recipe = b not in (HI, RS)")}); (5) the installed tuple of that family/scope/edition '
+        f'({cite(EV, "return custody.recipe == RECIPES[(f, scope, edition)]")}), the predicate of RR05 '
+        f'({cite(EV, "obs[" + chr(39) + "recipe_edition" + chr(39) + "] = ")}). Every predicate RR07 evaluates is an earlier row, so '
+        'RR07 is never the first refusal.'),
 }
+
+
+def _state_proof(f, field, path, keyword):
+    payload = FAM[f]['payload_path']
+    return (f'Always refused first by the py {keyword} row of {field} or its join row FJ<n>_{field}. The payload field {field} '
+            f'is built from the native fact {path} ({cite("scripts/pm_w3g_spec.py", field + "=" + chr(39) + path + chr(39))}); the '
+            f'join row ({cite(EV, "obs[f" + chr(39) + "join.{k}" + chr(39) + "] = ")}) requires the stored payload to equal that fact; '
+            f'the closed selector pins {field} by {keyword} ({cite(payload, chr(34) + keyword + chr(34), start_after=chr(34) + field + chr(34) + ": {")} '
+            f'in ProjectPayloadV1, the same in ApplicationPayloadV1). A fact outside the {keyword} either reaches the payload (the py '
+            f'{keyword} row refuses) or not (the join row refuses), so this row is never the first refusal.')
+
+
 PY_CODE = 'invalid_payload'
 
 
@@ -882,11 +910,9 @@ def py_rows(f):
 
 
 def join_fields(f):
-    """Payload family fields joined to a native fact path (consts are bound by the py const row and the domain rows;
-    '@'/'derived.' paths are bound by their own domain rows)."""
-    d = SCHEMAS[f]['$defs']['ProjectPayloadV1']['properties']
-    return [k for k, path in spec.PAYLOAD[f].items()
-            if 'const' not in d[k] and not path.startswith('derived.') and path not in ('@null', '@card_count')]
+    """Payload family fields joined to a native fact path, const fields included (a forged copy of the const over an owner
+    fact outside it is refused here); '@'/'derived.' paths are bound by their own domain rows."""
+    return [k for k, path in spec.PAYLOAD[f].items() if not path.startswith('derived.') and path not in ('@null', '@card_count')]
 
 
 def fx_rows(f):
@@ -937,11 +963,12 @@ def entailed_phase(f, r):
 
 
 def entailed_proofs():
-    out = dict(ENTAILED)
+    out = {k: v() for k, v in ENTAILED.items()}
     for f in FAMILIES:
         for n, r in enumerate(spec.DOMAIN[f], 1):
             if r.get('entailed'):
-                out[f'{f}:FD{n:02d}_{_sanitize(r["suffix"])}'] = r['entailed']
+                field, path, keyword = r['entailed']
+                out[f'{f}:FD{n:02d}_{_sanitize(r["suffix"])}'] = _state_proof(f, field, path, keyword)
     return out
 
 

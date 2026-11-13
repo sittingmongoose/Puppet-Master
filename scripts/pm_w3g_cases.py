@@ -440,8 +440,17 @@ def fx_negatives(f, scope):
     phase = f'fx_{m.FAM[f]["slug"]}'
     rows = {r[1]: r for r in m.fx_rows(f)}
     payload = w0_payload(f, scope)
+    props = m.SCHEMAS[f]['$defs']['ProjectPayloadV1']['properties']
     for k in m.join_fields(f):
-        r = rows[f'join.{k}']
+        if 'const' in props[k]:
+            # A const copy: the owner fact leaves the const while the stored payload still claims it (one defect: the
+            # event's claim is not the original owner result); the py const row passes, the join row refuses.
+            path = spec.PAYLOAD[f][k]
+            other = {str: 'other-state', int: 2}[type(props[k]['const'])]
+            for b in (A, HI):
+                out.append(case(f'neg/{f}/{scope}/{b}/join.{k}', f, scope, b, _row(phase, f'join.{k}'),
+                                mut=_payload_edit({k: props[k]['const']}), neg=('pre', {path: other})))
+            continue
         alt = _alt(payload[k])
         prop = m.SCHEMAS[f]['$defs']['ProjectPayloadV1']['properties'][k]
         if '$ref' in prop and 'typed_error' in prop['$ref']:
