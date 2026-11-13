@@ -235,7 +235,7 @@ start `a6749a55292b1bd9e17f41c36d32c88a6e098c9c`. Two gated merges, in order, ea
 
 `scripts/pm_w3d_bsd_events.py` is the complete checker over the 15 families; `scripts/pm_w3d_bsd_rows.py`
 is the row inventory and `scripts/pm-w3d-table-generate.py` generates the Method B table modules
-(`scripts/pm_w3d_bsd_table_*.py`, 71 tables). Every refusal goes through a named guard row evaluated in
+(`scripts/pm_w3d_bsd_table_*.py`, 72 tables, 1641 rows). Every refusal goes through a named guard row evaluated in
 row order on an observation the checker derives from the complete boundary input. The checker builds a
 complete world (native owner decision, captured source, payload, envelope, admission, operation, packs,
 custody/receipt, head, retry, publication, retained read, replay, withdrawal) and regenerates every
