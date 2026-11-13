@@ -15,7 +15,8 @@ export default async function(t){
   for(const look of ['nier-dark','nier-light']){
    await pickerLook(page,look);
    await visitCursorPickers(page,async state=>{
-    const row=page.locator(state.target).first();await row.waitFor({state:'visible'});
+    const row=page.locator(state.target).first();await row.waitFor({state:'visible'});await row.hover();
+    await page.waitForTimeout(300);
     const result=await row.evaluate((el,rules)=>{
      const carrier=el.closest('[role="option"],[role="menuitem"]');if(!carrier)throw Error('picker carrier absent');
      const finish=()=>{for(const a of document.getAnimations())if(a.effect?.getTiming().iterations!==Infinity)try{a.finish();}catch{}};
@@ -25,10 +26,11 @@ export default async function(t){
      const census=[];for(const id of [0,6]){const r=rules.find(r=>r.rule===id);if(id===6){carrier.classList.add('is-active');carrier.setAttribute('aria-selected','true');}
       const old=[...document.querySelectorAll(r.original)].filter(e=>carrier.contains(e)),next=new Set(document.querySelectorAll(r.replacement));census.push({rule:id,original:old.length,replacement:old.filter(e=>next.has(e)).length,missing:old.filter(e=>!next.has(e)).map(e=>({tag:e.tagName,classes:[...e.classList],text:e.textContent.slice(0,60)}))});
      }
-     return {actual,original,census,text:el.textContent,theme:document.documentElement.dataset.theme,parts:document.documentElement.dataset.o55NierParts};
+     return {actual,original,census,text:el.textContent,hover:carrier.matches(':hover'),nier:PM_NIER.on(),theme:document.documentElement.dataset.theme,parts:document.documentElement.dataset.o55NierParts};
     },rules);
     out.cases.push({build,look,...state,...result});t.log('PICKER '+JSON.stringify(out.cases.at(-1)));
     const equal=JSON.stringify(result.actual)===JSON.stringify(result.original);
+    await t.check(build+' '+look+' '+state.kind+' real NieR cursor state',result.hover&&result.nier&&result.theme.endsWith(look.endsWith('light')?'-light':'-dark')&&result.parts.split(/\s+/).includes('cursor'));
     await t.check(build+' '+look+' '+state.kind+' colour '+(build===t.args.witness?'witness differs':'equals original'),build===t.args.witness?!equal:equal,JSON.stringify(result));
     if(String(t.args.census||'0')==='1')await t.check(build+' '+look+' '+state.kind+' descendant arms retained',result.census.every(r=>!r.missing.length),JSON.stringify(result.census));
    });

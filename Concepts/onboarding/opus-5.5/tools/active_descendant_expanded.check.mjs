@@ -2,6 +2,7 @@
 // browser-check run <this file> --config <kit config> --set page=<build URL> --set bundle=<review JSON> --set out=<JSON>
 import {readFileSync,writeFileSync} from 'node:fs';
 import {installRailReview,visitExpandedRails} from './rail_expanded_states.mjs';
+import {pickerLook,visitCursorPickers} from './cursor_picker_states.mjs';
 import {muteSound} from '../../../pm7-tools/browser-check/helpers/quiet-page.mjs';
 const RULES=JSON.parse(readFileSync(new URL('./active_descendant_rules.json',import.meta.url),'utf8')).rules;
 const RULE0=RULES[0].original;
@@ -81,6 +82,10 @@ export default async function(t){
    const menus=await page.evaluate(()=>{const result=[];for(const p of Object.values(PMR.data))for(const[k,m]of Object.entries(p.menus||{}))result.push({panel:p.id,key:k});return result;});
    for(const m of menus){await page.evaluate(({panel,key})=>{const p=Object.values(PMR.data).find(p=>p.id===panel);PMR.menu.closeAll();PMR.menu.open(p.menus[key],document.querySelector('.activity-bar .icon'),{menus:p.menus});},m);await check({look,kind:'shipped menu',...m});}
    await page.evaluate(()=>PMR.menu.closeAll());
+   if(look.startsWith('nier-')){
+    await pickerLook(page,look);
+    await visitCursorPickers(page,meta=>check({look,...meta}));
+   }
   }
  }catch(e){result.errors.push(String(e.stack||e));throw e;}
  finally{result.notExercised=actualRules.filter(r=>!r.omit&&!result.maxMatches[r.rule]).map(r=>r.rule);result.pass=!result.mismatches.length&&!result.rawStyleDifferences.length&&!result.notExercised.length&&!result.errors.length;save();t.log('EXPANDED RESULT '+JSON.stringify({states:result.states.length,features:result.features,maxMatches:result.maxMatches,notExercised:result.notExercised,errors:result.errors}));}
