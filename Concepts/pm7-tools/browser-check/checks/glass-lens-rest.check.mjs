@@ -3,8 +3,10 @@
 // only while it moves or is pressed. Its live SVG backdrop filter (url(#lgf..) saturate(..), glass.js mount) was kept
 // while it rested, the largest single Glass cost (lane E, 2026-11-11). Read in the page, per animation frame (a probe:
 // the pixel proof of the hand-over is separate, see the lane G report):
-//   rest     every lens with a box, after the page has settled and every lens animation has ended, computes
-//            backdrop-filter none, and no lens in the page keeps an inline one;
+//   rest     every lens with a box, after the page has settled and every lens animation has ended, computes no
+//            url() backdrop filter, and none in the page keeps one inline; the only resting backdrop filter is the
+//            Activity bar icon lens's plain saturate(1.12) (the lead's R2, 2026-11-13: it keeps the tint its filter
+//            gave it, so it comes to rest with no tint step), and every other lens computes none;
 //   press    for every laid-out lens whose strip takes a press: the pointer goes down on the nearest other item and is
 //            held 1.1 s, then moves off the item (across the strip, so no scrub starts) and is released, which abandons
 //            the press: the lens travels there and back. Every frame of either travel, and every frame the press is held,
@@ -28,6 +30,8 @@ const VIEWS = { home: 'dashboard', usage: 'usage', settings: 'settings', wizard:
 
 /* in the page: the lenses, their strips (glass.js STRIPS, the ones a press can reach) and a per-frame sampler */
 const PROBE = () => {
+	/* the Activity bar icon lens's resting tint (glass.js KINDS.lensIcon.sat, restSat) */
+	const ICON_REST = 'saturate(1.12)';
 	const STRIPS = [
 		{ sel: 'nav.page-tabs', items: '.page-tab', scrub: true },
 		{ sel: '#pmuRange', items: ':scope > button', scrub: true },
@@ -71,21 +75,22 @@ const PROBE = () => {
 		/* the resting state of every lens in the page, read over a few frames */
 		rest(frames = 6) {
 			return new Promise((resolve) => {
-				const bad = new Map(), inl = new Map(); let n = 0, laid = 0, movers = 0;
+				const bad = new Map(), inl = new Map(), icons = new Map(); let n = 0, laid = 0, movers = 0;
 				const tick = () => {
 					const all = this.all(); laid = 0; movers = 0;
 					all.forEach((l, i) => {
 						const mv = busy(l); if (mv) movers++;
 						if (this.laid(l)) {
 							laid++;
-							const f = getComputedStyle(l).backdropFilter;
-							if (f && f !== 'none' && !mv) bad.set(l, { ...desc(l, i), filter: f, opacity: getComputedStyle(l).opacity });
+							const f = getComputedStyle(l).backdropFilter, icon = l.getAttribute('data-lg-lens') === 'lensIcon';
+							if (f && f !== 'none' && !mv && (/url\(/.test(f) || !(icon && f === ICON_REST))) bad.set(l, { ...desc(l, i), filter: f, opacity: getComputedStyle(l).opacity });
+							if (icon && !mv && +getComputedStyle(l).opacity > 0.5 && getComputedStyle(l).visibility !== 'hidden') icons.set(l, { ...desc(l, i), filter: f });
 						}
 						const s = l.style.getPropertyValue('backdrop-filter');
-						if (s && !mv) inl.set(l, { ...desc(l, i), inline: s });
+						if (s && !mv && (/url\(/.test(s) || !(l.getAttribute('data-lg-lens') === 'lensIcon' && s.replace(/\s/g, '') === ICON_REST))) inl.set(l, { ...desc(l, i), inline: s });
 					});
 					if (++n < frames) requestAnimationFrame(tick);
-					else resolve({ lenses: all.length, laid, movers, bent: [...bad.values()], inline: [...inl.values()] });
+					else resolve({ lenses: all.length, laid, movers, bent: [...bad.values()], inline: [...inl.values()], icons: [...icons.values()] });
 				};
 				requestAnimationFrame(tick);
 			});
@@ -126,7 +131,7 @@ const PROBE = () => {
 			const tick = (ts) => {
 				if (!this.on) return;
 				const f = getComputedStyle(l).backdropFilter;
-				this.frames.push({ t: Math.round(ts), ph: this.phase, mv: moving(l), up: l.hasAttribute('data-lg-lifted'), bend: !!f && f !== 'none', b: box(l) });
+				this.frames.push({ t: Math.round(ts), ph: this.phase, mv: moving(l), up: l.hasAttribute('data-lg-lifted'), bend: /url\(/.test(f || ''), tint: f === ICON_REST, b: box(l) });
 				requestAnimationFrame(tick);
 			};
 			requestAnimationFrame(tick);
@@ -164,8 +169,9 @@ async function restCheck(t, f, tag, { W, H }) {
 	const s = await f.evaluate(() => window.__g.settle());
 	const r = await f.evaluate(() => window.__g.rest());
 	await t.check(`rest: the page has settled and shows a lens ${tag}`, s.settled && r.laid >= 1, JSON.stringify({ ...s, lenses: r.lenses, laid: r.laid, movers: r.movers }));
-	await t.check(`rest: no laid-out lens bends what is under it ${tag}`, r.bent.length === 0, JSON.stringify({ laid: r.laid, bent: r.bent.length, eg: r.bent.slice(0, 4) }));
-	await t.check(`rest: no lens in the page keeps a backdrop filter while still ${tag}`, r.inline.length === 0, JSON.stringify({ lenses: r.lenses, inline: r.inline.length, eg: r.inline.slice(0, 3) }));
+	await t.check(`rest: no laid-out lens bends what is under it, and only the Activity icon lens keeps a plain saturate ${tag}`, r.bent.length === 0, JSON.stringify({ laid: r.laid, bent: r.bent.length, eg: r.bent.slice(0, 4) }));
+	await t.check(`rest: no lens in the page keeps a url() filter, nor any filter but the icon lens's saturate, while still ${tag}`, r.inline.length === 0, JSON.stringify({ lenses: r.lenses, inline: r.inline.length, eg: r.inline.slice(0, 3) }));
+	if (r.icons.length) await t.check(`rest: the Activity icon lens rests with its saturate(1.12) and no url() filter ${tag}`, r.icons.every((x) => x.filter === 'saturate(1.12)'), JSON.stringify(r.icons));
 	return r;
 }
 
@@ -290,7 +296,8 @@ async function appPart(t, surface, W, H) {
 		await restCheck(t, f, `${look} back at ${W}x${H} ${surface}`, { W, H });
 		await t.app.look('basic-dark'); await t.page.waitForTimeout(1500);
 		const basic = await f.evaluate(() => window.__g.rest());
-		await t.check(`look: no lens bends in Basic Dark ${look} ${surface}`, basic.bent.length === 0 && basic.inline.length === 0, JSON.stringify({ bent: basic.bent.slice(0, 3), inline: basic.inline.slice(0, 3) }));
+		const anyF = await f.evaluate(() => window.__g.all().filter((l) => window.__g.laid(l) && getComputedStyle(l).backdropFilter !== 'none').length);
+		await t.check(`look: no lens carries any backdrop filter in Basic Dark ${look} ${surface}`, anyF === 0 && basic.inline.length === 0 && basic.bent.length === 0, JSON.stringify({ anyF, bent: basic.bent.slice(0, 3), inline: basic.inline.slice(0, 3) }));
 		await t.app.look(look); await t.page.waitForTimeout(2500);
 		await restCheck(t, f, `${look} back from Basic Dark ${surface}`, { W, H });
 	}
@@ -387,8 +394,11 @@ async function pixelsPart(t, surface, W, H) {
 			await t.page.waitForTimeout(400);
 			rec.lenses = await lensRows();
 			await shot(`${tag}-rest`);
-			rec.relive = await f.evaluate(() => { let n = 0; window.__g.all().forEach((l) => { if (window.__g.laid(l) && l.__lgBf && !l.style.getPropertyValue('backdrop-filter')) { l.style.setProperty('backdrop-filter', l.__lgBf, 'important'); l.__pxPut = true; n++; } }); return n; });
-			if (rec.relive) { await t.page.waitForTimeout(300); await shot(`${tag}-relive`); await f.evaluate(() => window.__g.all().forEach((l) => { if (l.__pxPut) { l.style.removeProperty('backdrop-filter'); l.__pxPut = false; } })); }
+			rec.relive = await f.evaluate(() => { let n = 0; window.__g.all().forEach((l) => { if (window.__g.laid(l) && l.__lgBf && !/url\(/.test(l.style.getPropertyValue('backdrop-filter'))) { l.__pxPut = [l.style.getPropertyValue('backdrop-filter'), l.style.getPropertyValue('-webkit-backdrop-filter')]; l.style.setProperty('backdrop-filter', l.__lgBf, 'important'); l.style.setProperty('-webkit-backdrop-filter', l.__lgBf, 'important'); n++; } }); return n; });
+			if (rec.relive) {
+				await t.page.waitForTimeout(300); await shot(`${tag}-relive`);
+				await f.evaluate(() => window.__g.all().forEach((l) => { const k = l.__pxPut; if (!k) return; l.__pxPut = null; ['backdrop-filter', '-webkit-backdrop-filter'].forEach((p, j) => { if (k[j]) l.style.setProperty(p, k[j], 'important'); else l.style.removeProperty(p); }); }));
+			}
 			await thaw();
 			/* frames across one travel */
 			/* Home's travel is the Activity bar's: the rail tabs' travel is cut short on both builds when the chosen tab grows
@@ -403,10 +413,11 @@ async function pixelsPart(t, surface, W, H) {
 			await freeze(); await t.page.waitForTimeout(300);
 			const lensState = () => f.evaluate((i) => { const l = window.__g.all()[i], r = l.getBoundingClientRect(); return { filter: getComputedStyle(l).backdropFilter, box: { x: r.left, y: r.top, w: r.width, h: r.height } }; }, x.lens);
 			rec.travel = { strip: sel, from: x.box, to: x.other, frames: {} };
-			/* the same paused frame with the lens's inline filter taken off for one shot and put back: the filter's own
-			   part of a frame, apart from what the press and the choice change around it */
+			/* the same paused frame with the lens dressed as at rest for one shot (its live filter off; the icon lens's resting
+			   saturate on, R2) and put back: what the hand-over itself changes, apart from the press and the choice */
 			const flat = async (name) => {
-				const had = await f.evaluate((i) => { const l = window.__g.all()[i], v = l.style.getPropertyValue('backdrop-filter'); if (v) { l.__pxKeep = [v, l.style.getPropertyValue('-webkit-backdrop-filter')]; l.style.removeProperty('backdrop-filter'); l.style.removeProperty('-webkit-backdrop-filter'); } return !!v; }, x.lens);
+				/* the lens dressed as at rest: no filter, or the build's resting tint where it keeps one (the icon lens, R2) */
+				const had = await f.evaluate((i) => { const l = window.__g.all()[i], v = l.style.getPropertyValue('backdrop-filter'); if (v) { l.__pxKeep = [v, l.style.getPropertyValue('-webkit-backdrop-filter')]; l.style.removeProperty('backdrop-filter'); l.style.removeProperty('-webkit-backdrop-filter'); if (l.__lgRest) { l.style.setProperty('backdrop-filter', l.__lgRest, 'important'); l.style.setProperty('-webkit-backdrop-filter', l.__lgRest, 'important'); } } return !!v; }, x.lens);
 				if (!had) return;
 				await t.page.waitForTimeout(200); await shot(name);
 				await f.evaluate((i) => { const l = window.__g.all()[i], k = l.__pxKeep; l.__pxKeep = null; if (k) { l.style.setProperty('backdrop-filter', k[0], 'important'); l.style.setProperty('-webkit-backdrop-filter', k[1] || k[0], 'important'); } }, x.lens);
@@ -486,6 +497,60 @@ async function filmPart(t, surface, W, H) {
 	}
 }
 
+/* --set parts=restcost (Windows; the lead's condition on R2, 2026-11-13): Home at rest, one page load (?pm-warm=0), per
+   look, rounds of three states, each measured by a DevTools trace (--set ms=, 4000) after 800 ms: rest (as the build
+   draws it: the Activity icon lens's plain saturate), bare (that saturate taken off: no lens has a backdrop filter) and
+   live (every laid-out lens's own url() filter put back, as main draws them), in turn ABC then CBA (--set rounds=, 4).
+   R2's price is rest - bare; the lens change's gain is live - rest. Rows in restcost.json in the run folder. */
+async function restcostPart(t, surface, W, H) {
+	const { traceWindow } = await import('../helpers/frame-trace.mjs');
+	const { writeFileSync } = await import('node:fs');
+	const pathm = await import('node:path');
+	const f = await t.app.open({ query: 'pm-warm=0' });
+	await f.evaluate(PROBE);
+	await f.evaluate(() => document.fonts.ready.then(() => true));
+	await t.page.waitForTimeout(Number(t.args.settle ?? 40000));
+	const cdp = await t.page.context().newCDPSession(t.page);
+	const ms = Number(t.args.ms || 4000), rounds = Number(t.args.rounds || 4), rows = [];
+	const set = (state) => f.evaluate((st) => {
+		const g = window.__g, P = ['backdrop-filter', '-webkit-backdrop-filter']; let n = 0;
+		g.all().forEach((l) => {
+			if (!l.__pxRest) l.__pxRest = P.map((p) => l.style.getPropertyValue(p));   /* the build's own resting values */
+			const put = (vals) => P.forEach((p, j) => { if (vals[j]) l.style.setProperty(p, vals[j], 'important'); else l.style.removeProperty(p); });
+			if (st === 'rest') put(l.__pxRest);
+			else if (st === 'bare') { if (l.__pxRest[0]) n++; put(['', '']); }
+			else if (st === 'live') { if (g.laid(l) && l.__lgBf) { put([l.__lgBf, l.__lgBf]); n++; } else put(l.__pxRest); }
+		});
+		return n;
+	}, state);
+	const median = (v) => { const s = v.filter((x) => x != null).sort((a, b) => a - b); return s.length ? s[s.length >> 1] : null; };
+	for (const look of list(t.args.looks, LOOKS)) {
+		await t.app.look(look);
+		await f.evaluate((p) => PM_PAGES.go(p), VIEWS.home);
+		await t.page.waitForTimeout(8000);
+		await parkPointer(t.page, W, H);
+		await f.evaluate(() => window.__g.settle());
+		await f.evaluate(() => window.__g.all().forEach((l) => { l.__pxRest = null; }));
+		const icon = await f.evaluate(() => window.__g.all().filter((l) => l.getAttribute('data-lg-lens') === 'lensIcon' && window.__g.laid(l)).map((l) => getComputedStyle(l).backdropFilter));
+		t.log(`${look} home: icon lens at rest ${JSON.stringify(icon)}`);
+		for (let r = 0; r < rounds; r++) {
+			for (const st of r % 2 ? ['live', 'bare', 'rest'] : ['rest', 'bare', 'live']) {
+				const n = await set(st);
+				await t.page.waitForTimeout(800);
+				const x = await traceWindow(cdp, { ms, url: f.url() });
+				rows.push({ look, round: r, state: st, changed: n, main: x.cost.main, gpu: x.cost.gpuMain, viz: x.cost.viz, comp: x.cost.compositor, raster: x.cost.raster, mainFrames: x.mainFrames.perSec, drawn: x.drawn.perSec });
+			}
+			await set('rest');
+		}
+		const by = (st, k) => median(rows.filter((z) => z.look === look && z.state === st).map((z) => z[k]));
+		const line = (k) => `${k} rest ${Math.round(by('rest', k))} bare ${Math.round(by('bare', k))} live ${Math.round(by('live', k))} | R2 price ${Math.round(by('rest', k) - by('bare', k))} gain ${Math.round(by('live', k) - by('rest', k))}`;
+		t.log(`${look} home restcost (medians of ${rounds}, ms/s): ${['main', 'gpu', 'viz', 'comp'].map(line).join(' || ')}`);
+	}
+	writeFileSync(pathm.join(t.run.dir, 'restcost.json'), JSON.stringify(rows, null, 1));
+	await cdp.detach().catch(() => {});
+	await t.check('restcost: rows written', rows.length > 0, String(rows.length));
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	const run = (part, fn) => async (t) => {
@@ -508,5 +573,6 @@ for (const surface of ['normal', 'sandbox']) {
 		};
 		tests[`PERF-4 lens pixels`] = named('pixels', pixelsPart);
 		tests[`PERF-4 lens film`] = named('film', filmPart);
+		tests[`PERF-4 lens resting tint cost`] = named('restcost', restcostPart);
 	}
 }
