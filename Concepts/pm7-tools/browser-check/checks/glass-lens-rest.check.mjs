@@ -55,8 +55,21 @@ const PROBE = () => {
 		{ sel: '#pm-settings-root nav.page-index-card', items: '.pm51-index-group > .index-link', vertical: true },
 		{ sel: '#pm-settings-root nav.manager-tabs', items: '.manager-tab' }
 	];
+	/* the coloured hosts (the lead's round 2, C, from lane G's measurement over the default print and over Prism at the
+	   0.35 transparency floor): strips whose lens keeps a plain saturate(1.1) at rest, so it comes to rest with no tint
+	   step (STRIPS restSat in glass.js) */
+	const TINT_STRIPS = ['#sidePanelSlot .pm-segtab', '#pmuNav', '#pm-o55-onboarding .o55-seg', '#themeMenu .pm6-tt-modes', '#pm-settings-root .rail-scroll', '#pm-settings-root nav.workspace-tabs'];
+	const STRIP_REST = 'saturate(1.1)';
 	const box = (e) => { const r = e.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; };
 	const shown = (e) => { const r = e.getBoundingClientRect(); if (r.width < 2 || r.height < 2) return false; try { return e.checkVisibility({ visibilityProperty: true }); } catch (x) { return true; } };
+	/* the strip whose item lies under a lens's centre (null for none) */
+	const stripOf = (l) => {
+		const lb = l.getBoundingClientRect(), cx = lb.left + lb.width / 2, cy = lb.top + lb.height / 2;
+		for (const cfg of STRIPS) for (const strip of document.querySelectorAll(cfg.sel)) {
+			if ([...strip.querySelectorAll(cfg.items)].some((it) => { const r = it.getBoundingClientRect(); return r.width > 1 && cx >= r.left - 1 && cx <= r.right + 1 && cy >= r.top - 1 && cy <= r.bottom + 1; })) return cfg.sel;
+		}
+		return null;
+	};
 	/* a travel, a scrub's return or a bead's flow: a running WAAPI move on the lens itself */
 	const moving = (l) => l.getAnimations().some((a) => (a.playState === 'running' || a.playState === 'pending') && a.effect && !a.effect.pseudoElement &&
 		(a.effect.getComputedTiming().duration || 0) > 150 && a.effect.getKeyframes().some((k) => k.transform != null && k.transform !== ''));
@@ -81,7 +94,7 @@ const PROBE = () => {
 		/* the resting state of every lens in the page, read over a few frames */
 		rest(frames = 6) {
 			return new Promise((resolve) => {
-				const bad = new Map(), inl = new Map(), icons = new Map(); let n = 0, laid = 0, movers = 0;
+				const bad = new Map(), inl = new Map(), icons = new Map(), tints = new Map(); let n = 0, laid = 0, movers = 0;
 				const tick = () => {
 					const all = this.all(); laid = 0; movers = 0;
 					all.forEach((l, i) => {
@@ -89,15 +102,18 @@ const PROBE = () => {
 						if (this.laid(l)) {
 							laid++;
 							const f = getComputedStyle(l).backdropFilter, icon = l.getAttribute('data-lg-lens') === 'lensIcon';
-							const beadOn = l.classList.contains('lg-bead') && l.classList.contains('on');
-							if (f && f !== 'none' && !mv && (/url\(/.test(f) || !((icon && f === ICON_REST) || (beadOn && f === BEAD_REST)))) bad.set(l, { ...desc(l, i), filter: f, opacity: getComputedStyle(l).opacity });
-							if (icon && !mv && +getComputedStyle(l).opacity > 0.5 && getComputedStyle(l).visibility !== 'hidden') icons.set(l, { ...desc(l, i), filter: f });
+							const beadOn = l.classList.contains('lg-bead') && l.classList.contains('on'), st = l.classList.contains('lg-bead') ? null : stripOf(l), tinted = !!st && TINT_STRIPS.includes(st);
+							if (f && f !== 'none' && !mv && (/url\(/.test(f) || !((icon && f === ICON_REST) || (beadOn && f === BEAD_REST) || (tinted && f === STRIP_REST)))) bad.set(l, { ...desc(l, i), filter: f, strip: st, opacity: getComputedStyle(l).opacity });
+							const seen = !mv && +getComputedStyle(l).opacity > 0.5 && getComputedStyle(l).visibility !== 'hidden';
+							if (icon && seen) icons.set(l, { ...desc(l, i), filter: f });
+							if (tinted && seen) tints.set(l, { ...desc(l, i), strip: st, filter: f });
 						}
-						const s = l.style.getPropertyValue('backdrop-filter');
-						if (s && !mv && (/url\(/.test(s) || !(l.getAttribute('data-lg-lens') === 'lensIcon' && s.replace(/\s/g, '') === ICON_REST))) inl.set(l, { ...desc(l, i), inline: s });
+						const s = l.style.getPropertyValue('backdrop-filter'), sv = s.replace(/\s/g, '');
+						const stI = s && !l.classList.contains('lg-bead') ? stripOf(l) : null;
+						if (s && !mv && (/url\(/.test(s) || !((l.getAttribute('data-lg-lens') === 'lensIcon' && sv === ICON_REST) || (stI && TINT_STRIPS.includes(stI) && sv === STRIP_REST)))) inl.set(l, { ...desc(l, i), inline: s });
 					});
 					if (++n < frames) requestAnimationFrame(tick);
-					else resolve({ lenses: all.length, laid, movers, bent: [...bad.values()], inline: [...inl.values()], icons: [...icons.values()] });
+					else resolve({ lenses: all.length, laid, movers, bent: [...bad.values()], inline: [...inl.values()], icons: [...icons.values()], tints: [...tints.values()] });
 				};
 				requestAnimationFrame(tick);
 			});
@@ -230,6 +246,8 @@ async function restCheck(t, f, tag, { W, H }) {
 	await t.check(`rest: no laid-out lens bends what is under it, and only the Activity icon lens keeps a plain saturate ${tag}`, r.bent.length === 0, JSON.stringify({ laid: r.laid, bent: r.bent.length, eg: r.bent.slice(0, 4) }));
 	await t.check(`rest: no lens in the page keeps a url() filter, nor any filter but the icon lens's saturate, while still ${tag}`, r.inline.length === 0, JSON.stringify({ lenses: r.lenses, inline: r.inline.length, eg: r.inline.slice(0, 3) }));
 	if (r.icons.length) await t.check(`rest: the Activity icon lens rests with its saturate(1.12) and no url() filter ${tag}`, r.icons.every((x) => x.filter === 'saturate(1.12)'), JSON.stringify(r.icons));
+	/* C: a lens on a coloured host rests with its plain saturate(1.1), today's tint, so it comes to rest with no step */
+	if (r.tints.length) await t.check(`rest: a lens on a coloured host (${[...new Set(r.tints.map((x) => x.strip))].join(', ')}) rests with its plain saturate(1.1) ${tag}`, r.tints.every((x) => x.filter === 'saturate(1.1)'), JSON.stringify(r.tints.map((x) => ({ strip: x.strip, filter: x.filter }))));
 	return r;
 }
 
@@ -512,6 +530,24 @@ async function appPart(t, surface, W, H) {
 			if (view === 'usage') { const r = xs.find((x) => x.strip === '#pmuRange'); if (r) { await scrubCheck(t, f, r, tag); await scrubNewCheck(t, f, r, tag); } else await t.check(`scrub: Usage's range has its lens ${tag}`, false, JSON.stringify(xs)); }
 			if (view === 'home') await beadCheck(t, f, tag);
 			await restCheck(t, f, tag + ' after the presses', { W, H });
+		}
+		/* C: Settings' section tabs and left bar in a chapter, and the theme menu's modes, at rest. The look goes through
+		   Settings' own setting: Settings puts back its stored look when a chapter draws */
+		{
+			const [fam, m] = look.split('-');
+			await f.evaluate(([a, b]) => { PM12_KIMI.setSettingFromHost('general.visual.theme', a[0].toUpperCase() + a.slice(1)); PM12_KIMI.setSettingFromHost('general.visual.theme-mode', b === 'light' ? 'Light' : 'Dark'); }, [fam, m]);
+			await f.waitForFunction((w) => document.documentElement.getAttribute('data-theme') === w, look, { timeout: 15000 }).catch(() => {});
+			await f.evaluate(() => PM_PAGES.go('settings')); await t.page.waitForTimeout(1500);
+			await f.evaluate(() => PM51.go('code', 'editor-runtime'));
+			await f.waitForSelector('[data-continuous-workspace-body="editor-runtime"][data-workspace-mounted="true"]', { timeout: 15000 }).catch(() => {});
+			await t.page.waitForTimeout(2500);
+			await t.check(`look ${look} held in Settings' chapter ${surface}`, (await f.evaluate(() => document.documentElement.getAttribute('data-theme'))) === look, '');
+			await restCheck(t, f, `${look} settings chapter ${surface}`, { W, H });
+			await f.evaluate(() => PM_PAGES.go('dashboard')); await t.page.waitForTimeout(1500);
+			await f.locator('#themeSelect').click(); await t.page.waitForTimeout(1200);
+			await restCheck(t, f, `${look} theme menu ${surface}`, { W, H });
+			await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(600);
+			await t.app.look(look);
 		}
 		/* a resize, and a look round trip out of Glass and back */
 		await t.viewport(1390, 900); await t.page.waitForTimeout(1800);
