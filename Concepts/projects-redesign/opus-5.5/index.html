@@ -46,7 +46,7 @@
     <b>Projects</b><span class="pc-model" data-concept-model="Opus 5.5">Opus 5.5</span>
     <span class="pc-sep" aria-hidden="true"></span>
     <div class="pc-seg" id="opt" role="group" aria-label="Concept">
-      <button type="button" data-opt="c" aria-pressed="true">C · Split v2<kbd>3</kbd></button>
+      <button type="button" data-opt="c" aria-pressed="true">C · Split v3<kbd>3</kbd></button>
       <button type="button" data-opt="before" aria-pressed="false">Today<kbd>0</kbd></button>
       <button type="button" data-opt="a" aria-pressed="false" class="pc-frozen">A · Polish<kbd>1</kbd></button>
       <button type="button" data-opt="b" aria-pressed="false" class="pc-frozen">B · Ledger<kbd>2</kbd></button>
@@ -78,8 +78,11 @@
     <button type="button" class="pc-btn" data-act="unfinished">Setup didn't finish</button>
     <select id="moment" aria-label="More moments, shown in C (Split)" data-c-only title="Shown in C, Split">
       <option value="">More moments (C)…</option>
+      <option value="nochat">A chat with no project (in the chat, on Home)</option>
+      <option value="homenew">Home: New chat with no project</option>
       <option value="fromchat">From a chat: Make this a project…</option>
       <option value="chatmove">From a chat: Move it into a project I have</option>
+      <option value="work">Where work runs: tastebook (Auto, Why this computer)</option>
       <option value="agent">An agent sets up a Project (try Regular, then YOLO)</option>
       <option value="contribute">Contribute: github.com/maplecraft/plant-journal</option>
       <option value="foundonline">Found online copy: ~/Code/budget-tracker</option>
@@ -90,7 +93,7 @@
       <option value="backupsetup">Backup setup: docs-site</option>
       <option value="photosorter">A fork: photo-sorter (original newer)</option>
       <option value="legacy">Found, not linked: legacy-app</option>
-      <option value="gardennotes">Waiting for Media NAS: garden-notes</option>
+      <option value="gardennotes">Waiting for Media server: garden-notes</option>
     </select>
     <button type="button" class="pc-btn" data-act="reset">Reset demo</button>
     <label class="pc-check"><input type="checkbox" id="reduced"> Reduced motion</label>
@@ -108,16 +111,17 @@
   const base = new URL('./', location.href);
   const STEPS = [
     ['css', 'layer/core.css'], ['css', 'layer/np.css'], ['js', 'layer/core.js'], ['js', 'layer/words.js'], ['js', 'layer/rules.js'],
-    ['js', 'layer/flow.js'], ['js', 'layer/np.js'], ['js', 'layer/parts.js'], ['js', 'layer/np-ui.js'],
+    ['js', 'layer/flow.js'], ['js', 'layer/np.js'], ['js', 'layer/parts.js'], ['js', 'layer/np-ui.js'], ['js', 'layer/work.js'], ['js', 'layer/chat.js'], ['css', 'layer/fix.css'],
     ['css', 'concepts/a.css'], ['js', 'concepts/a.js'],
     ['css', 'concepts/b.css'], ['js', 'concepts/b.js'],
     ['css', 'concepts/c.css'], ['js', 'concepts/c.js'],
+    ['css', 'concepts/c-v3.css'], ['js', 'concepts/c-v3.js'],
     ['js', 'layer/boot.js']
   ].map(([k, p]) => [k, new URL(p, base).href]);
   const NOTES = {
     a: '<b>A · Polish.</b> Today’s page, kept and brought up to Home and Usage: the same cards, now with a status mark and word, a Safe line (history, online copy, backup), labelled actions and a More menu. One New Project button opens a stepped window that asks what onboarding asks, without the stage.',
     b: '<b>B · Ledger.</b> Usage’s layout: a side list of views with counts, a header row of filters, and one ledger row per project with its status, place, history, online copy and backup. A row opens an inspector beside it. New Project is a sheet from the right on one scrolling page.',
-    c: '<b>C · Split (v2).</b> The chosen concept. A project list grouped by machine, and the chosen Project’s own page. New Project: paste or pick a way, then one guided page beside a live Review: where it lives, a look inside before adding, online copy for every service, contribute, backups and copying settings with AI accounts. A chat with no project becomes a new project or moves into one you have. A and B are kept as they were (More concepts).',
+    c: '<b>C · Split v3.</b> The chosen concept, set for reading. A project list grouped by machine, and the chosen Project’s own page: each value sits beside its label on one left edge, bold and colour are kept for what needs you, rows are separated by space, a list of choices is one ruled list, and there is more room between plates and groups than inside them. New Project: paste or pick a way, then one guided page beside a live Review: where it lives, a look inside before adding, online copy for every service, contribute, backups and copying settings with AI accounts. A chat with no project becomes a new project or moves into one you have. A and B are kept as they were (More concepts).',
     before: '<b>Today.</b> PMConcept7’s current Projects page, unchanged: New Project and Open Folder open the same sheet, the card icons have no labels, and the folder-missing project points to a Settings page that cannot fix it.'
   };
   const UI = { opt: 'c', scenario: 'demo', run: 'regular' };
