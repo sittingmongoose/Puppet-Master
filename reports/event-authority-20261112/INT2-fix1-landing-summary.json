@@ -1,0 +1,135 @@
+{
+ "schema": "pm.event_authority.batch2_fix1_landing_summary.v1",
+ "command": "PYTHONINTMAXSTRDIGITS=0 PYTHONDONTWRITEBYTECODE=1 TMPDIR=<run>/tmp python3 scripts/pm-landing-check.py --base 6bd829472678026ff753a0edada9e1cc8df03edf --json --keep-check-reports <run>/subchecks --readiness-audit-root <worktree>/Plans/.audits/event-authority-2026-08-13-currentness (clean full worktree at fb24402e4e, ignored audit inputs hardlinked and hash-verified, under MemoryMax=2G/MemorySwapMax=0)",
+ "report_sha256": "9b738fc712646cf50abeed8e646298c284f23d6b097218d791e1576559d19604",
+ "commit": "fb24402e4e5a3914a2c47aea27a65f1154fc604b",
+ "base": "6bd829472678026ff753a0edada9e1cc8df03edf",
+ "exit": 1,
+ "baseline_commit": "48dd033447c5feb95866d6978d2cfd70961c5cbb",
+ "baseline_currency": {
+  "age_days": 0.53,
+  "ancestor": true,
+  "base": "6bd829472678026ff753a0edada9e1cc8df03edf",
+  "base_commit": "6bd829472678026ff753a0edada9e1cc8df03edf",
+  "baseline_commit": "48dd033447c5feb95866d6978d2cfd70961c5cbb",
+  "max_age_days": 7,
+  "reason": "its commit 48dd033447c5 is an ancestor of the base 6bd829472678026ff753a0edada9e1cc8df03edf and 0.53 days older than it, within 7",
+  "rule_two_applies": true
+ },
+ "blocking": 0,
+ "infrastructure": [],
+ "pre_existing": 0,
+ "checks": {
+  "audit-governance": {
+   "failure_total": 6279,
+   "baseline_failure_total": 5386,
+   "status": "fail"
+  },
+  "plan-migration-validate": {
+   "failure_total": 32482,
+   "baseline_failure_total": 0,
+   "status": "fail"
+  },
+  "run-gates": {
+   "failure_total": 6279,
+   "baseline_failure_total": 5386,
+   "status": "fail"
+  }
+ },
+ "branch_paths": 5286,
+ "branch_paths_concepts": 35,
+ "rows_naming_concepts": 0,
+ "branch_units": 5550,
+ "on_branch": 33082,
+ "on_branch_stale": 33082,
+ "on_branch_by_error": {
+  "current_snapshot_live_span_metadata_mismatch": 27085,
+  "current_snapshot_coverage_not_exact_same_document_planunit_set": 2839,
+  "current_snapshot_span_sha256_mismatch": 2302,
+  "stale_batch_report_sha256_after": 290,
+  "artifact_hash_stale": 120,
+  "audit_closure_validator_error": 94,
+  "event_authority_currentness_source_drift": 78,
+  "current_snapshot_live_sha256_mismatch": 64,
+  "current_snapshot_live_bytes_mismatch": 64,
+  "current_snapshot_live_line_count_mismatch": 56,
+  "stale_hash": 34,
+  "current_snapshot_batch_doc_invalid": 24,
+  "pnc019_source_hash_stale": 18,
+  "storage_value_registry_spec_lock_hash_stale": 8,
+  "buildability_gate_report_stale_or_not_canonical": 2,
+  "event_record_spec_lock_hash_stale": 2,
+  "non_executable_closure_spec_lock_hash_stale": 2
+ },
+ "new": 32924,
+ "new_stale": 32922,
+ "new_not_stale": [
+  {
+   "check": "run-gates",
+   "subcheck": "validate_plan_migration",
+   "error": "historical_successor_terminal_current_snapshot_invalid",
+   "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+   "key": "run-gates|validate_plan_migration|historical_successor_terminal_current_snapshot_invalid|Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json|2a7ddc91ba1a"
+  },
+  {
+   "check": "audit-governance",
+   "subcheck": "plan_migration",
+   "error": "historical_successor_terminal_current_snapshot_invalid",
+   "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+   "key": "audit-governance|plan_migration|historical_successor_terminal_current_snapshot_invalid|Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json|2a7ddc91ba1a"
+  }
+ ],
+ "grown_buckets": 12,
+ "grown_buckets_not_stale": [],
+ "resolved_buckets": [
+  "audit-governance|audit_status_index|stale_audit_status_index|Plans/.audits/_audit_status_index.json",
+  "audit-governance|support_refs|missing_ref|Plans/00-plans-index.md",
+  "run-gates|lint_contractrefs|missing_ref|Plans/00-plans-index.md",
+  "run-gates|validate_audit_status_index|stale_audit_status_index|Plans/.audits/_audit_status_index.json"
+ ],
+ "subchecks_compared_by_total_only": [
+  "audit-governance/audit_closure",
+  "run-gates/validate_audit_closure"
+ ],
+ "validator_pairs": [
+  {
+   "audit_governance": "audit_closure",
+   "audit_governance_counts": {
+    "baseline_reported": 201,
+    "baseline_sampled": 100,
+    "reported": 201,
+    "sampled": 100
+   },
+   "command": "validate-audit-closure --registry Plans/.audits/_semantic_closure_registry.jsonl --subcheck-timeout-seconds 600",
+   "judged": "run-gates/validate_audit_closure",
+   "paired": false,
+   "reason": "the audit-governance copy prints 100 of 201, so its rows do not key every failure",
+   "run_gates": "validate_audit_closure",
+   "run_gates_counts": {
+    "baseline_reported": 201,
+    "baseline_sampled": 50,
+    "reported": 201,
+    "sampled": 50
+   }
+  }
+ ],
+ "excused_by_kind": {
+  "artifact_hash_stale": 120,
+  "audit_closure_validator_error": 94,
+  "buildability_gate_report_stale_or_not_canonical": 2,
+  "current_snapshot_batch_doc_invalid": 24,
+  "current_snapshot_coverage_not_exact_same_document_planunit_set": 2839,
+  "current_snapshot_live_bytes_mismatch": 64,
+  "current_snapshot_live_line_count_mismatch": 56,
+  "current_snapshot_live_sha256_mismatch": 64,
+  "current_snapshot_live_span_metadata_mismatch": 27085,
+  "current_snapshot_span_sha256_mismatch": 2302,
+  "event_authority_currentness_source_drift": 78,
+  "event_record_spec_lock_hash_stale": 2,
+  "non_executable_closure_spec_lock_hash_stale": 2,
+  "pnc019_source_hash_stale": 18,
+  "stale_batch_report_sha256_after": 290,
+  "stale_hash": 34,
+  "storage_value_registry_spec_lock_hash_stale": 8
+ }
+}

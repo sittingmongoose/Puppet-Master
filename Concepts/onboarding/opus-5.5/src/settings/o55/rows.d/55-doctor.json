@@ -9,7 +9,7 @@
   },
   "system.health.run-doctor": {
    "label": "Check everything",
-   "help": "Checks every group once; nothing is changed or installed.",
+   "help": "Checks every area once; nothing is changed or installed.",
    "pm51": "pm51-doctor-check-all",
    "actionLabel": "Check everything"
   },
@@ -33,11 +33,11 @@
    "label": "What is checked",
    "help": "Leaving areas out is faster but can hide problems.",
    "options": {
-    "AI providers": "AI services",
-    "Storage": "Storage and backups",
-    "Sign-ins": "Accounts and sign-ins",
-    "Performance": "Speed",
-    "Dependencies": "Tools and code"
+    "AI providers": "AI providers",
+    "Storage": "Storage",
+    "Sign-ins": "Sign-ins",
+    "Performance": "Performance",
+    "Dependencies": "Dependencies"
    }
   },
   "system.health.readiness-badges": {

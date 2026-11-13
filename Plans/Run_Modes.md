@@ -1727,7 +1727,7 @@ Every applicable run snapshot preserves `requested_bsd_mode`, `effective_bsd_mod
 
 `BackSeatDriverService` lifecycle and isolation remain owned by `Plans/Shared_Integration_Runtime.md`: independent assignment, cursor, stable prefix, requested/effective route, Usage lineage, fallback, quota, and health; bounded delta input; semantic duplicate suppression; no protected `AuthBrowserSession`; and non-blocking timeout/failure/quota behavior. Usage owns cost/accounting. Chat owns presentation. This owner decides effective mode policy only.
 
-Time-Traveling conditional rules are likewise a separate Prompt Pipeline/shared-runtime consumer. A rule conditioned on runtime mode or Goal phase may remind or request a bounded steer/retry, but cannot change effective runtime mode, approve an action, bypass deterministic safety, or widen authority.
+Time-Traveling conditional rules are likewise a separate Prompt Pipeline/shared-runtime consumer. A rule conditioned on runtime mode or workflow stage may remind or request a bounded steer/retry, but cannot change effective runtime mode, approve an action, bypass deterministic safety, or widen authority.
 
 The concurrency defaults in §4.1 remain hard ceilings, not promised admission. Effective sustainable concurrency is always less than or equal to those ceilings and is determined by `RuntimeResourceGovernor` from actual Host/Environment capacity, provider/account/model/reset permits, memory/process pressure, leases, dependency readiness, cost policy, and physical-parent sharing. Provider request permits are held only during provider request/stream production, not while an agent performs local work or awaits children.
 

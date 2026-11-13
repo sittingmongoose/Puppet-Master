@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L17-L28
 
-Source SHA256: `e1b57f1eac9ff87964edd227ba9d4de690bc5bb9b49b9da4f591aadd6907d44c`
+Source SHA256: `60d3ef46e9d34adfd5e01d6a25d733f35f7c9bf6280b24227df7618c875cba23`
 
 ---
 
@@ -19,4 +19,4 @@ Source SHA256: `e1b57f1eac9ff87964edd227ba9d4de690bc5bb9b49b9da4f591aadd6907d44c
 
 Browser-capability rethink entries in this planning-doc are research inputs, not direct implementation authority by themselves. They may survey capability breadth, behavior contracts and `/state` model, UX flows, safety and `/permissions`, and chat `/planning` integration, but canonical product/runtime changes must be transferred into the owning live `Plans/**` docs before implementation.
 
-Tier-level phrasing in this status block is compatibility and search-lineage only. Live orchestration uses capability_lane, agent_role, write_mode, certification_tier, and graph/package/seam/lane identity.
+Tier-level phrasing in this status block is compatibility and search-lineage only. Live orchestration uses capability_lane, agent_role, write_mode, and graph/package/seam/lane identity. Goal-owned certification tiers are retired by DL-478.

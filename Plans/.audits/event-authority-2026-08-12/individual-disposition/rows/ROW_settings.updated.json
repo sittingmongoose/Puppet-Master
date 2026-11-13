@@ -2,8 +2,8 @@
   "event_type": "settings.updated",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to settings.updated. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "DL-039 Step 9 exclusion applied under Jared's DL-408 / card 2d A at 2026-11-04T20:26:49.560778Z by DM-APPLY-FIX1. settings.updated is retired as superseded; every Settings change records only settings.layer.changed under SSYS-060/DL-300 and existing owner-adoption prerequisites. Authority: Plans/Decision_Log.md#DL-408 at b6332f391a7870bad5f01a29a7e9d080050dac27 (origin/plans/ea-cards1-answers-20261104; integration dependency, no Decision Log edit here). Current owner evidence: Plans/Settings_System.md:2312; Plans/UI_Command_Catalog.md:8554; Plans/storage-plan.md:28944. No alias, payload rewrite, current writer, new family or registry admission is created. Older dedicated settings.agent_rules.dry_method_default_guard.updated records remain readable. The DRY guard stays disabled with owner_contract_missing until exact setting-ID and writer mapping is owner-proven. Application: reports/event-authority-20261104/DM-settings-exclusions-application.json. The legacy bucket, working bucket, July classification, census category and cohort pins stay intact; no denominator removal, contract-depth pass or seal is claimed. The retained evidence and prior citations below describe their historical review state and supply no current writer authority. Previous rationale: Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to settings.updated. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
   "evidence": {
     "owner_doc": {
       "status": "OWNER_REQUIRED",
@@ -96,6 +96,61 @@
       "citation": "Plans/Wiring_Matrix.production.json:23266-23325",
       "status": "ok",
       "notes": "Production wiring explicitly binds handlers::settings::agent_rules_dry_method_default_guard_set to a settings.updated event effect and emission assertion."
+    },
+    {
+      "citation": "Plans/Decision_Log.md:6453",
+      "status": "ok",
+      "notes": "Exact checked quote at 90f7e163614575558644d291f283c19ae6f305a9: \"excluded with cited evidence, or on a decision card for Jared; none is registered in bulk.\""
+    },
+    {
+      "citation": "Plans/Decision_Log.md:5298",
+      "status": "ok",
+      "notes": "Exact checked quote at b6332f391a7870bad5f01a29a7e9d080050dac27: \"Settings change, including the DRY guard, the memory switch and theme changes, is recorded only as `settings.layer.changed`.\""
+    },
+    {
+      "citation": "Plans/Decision_Log.md:5299",
+      "status": "ok",
+      "notes": "Exact checked quote at b6332f391a7870bad5f01a29a7e9d080050dac27: \"`settings.updated` and `settings.theme.updated` are retired as superseded; records already written under the older\""
+    },
+    {
+      "citation": "Plans/Settings_System.md:2312",
+      "status": "ok",
+      "notes": "Exact checked quote at 90f7e163614575558644d291f283c19ae6f305a9: \"DL-408 retires `settings.updated` and `settings.theme.updated` as superseded by `settings.layer.changed`: no current writer emits either retired name.\""
+    },
+    {
+      "citation": "Plans/Settings_System.md:2312",
+      "status": "ok",
+      "notes": "Exact checked quote at 90f7e163614575558644d291f283c19ae6f305a9: \"Already written dedicated DRY-guard records stay readable without a payload rewrite.\""
+    },
+    {
+      "citation": "Plans/Settings_System.md:2312",
+      "status": "ok",
+      "notes": "Exact checked quote at 90f7e163614575558644d291f283c19ae6f305a9: \"Until that key-to-valid-setting-ID and writer mapping is proven, the toggle remains disabled with the existing `owner_contract_missing` reason\""
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8554",
+      "status": "ok",
+      "notes": "Exact checked quote at 90f7e163614575558644d291f283c19ae6f305a9: \"**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.\""
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:1118",
+      "status": "ok",
+      "notes": "Exact checked quote at 90f7e163614575558644d291f283c19ae6f305a9: \"| `cmd.chat.memory.toggle_auto_save_unverified` | `{ project_id, enabled }` | `settings.layer.changed` (DL-408) | Assistant chat Gist Review panel |\""
+    },
+    {
+      "citation": "Plans/UI_Wiring_Rules.md:977",
+      "status": "ok",
+      "notes": "Exact checked quote at 90f7e163614575558644d291f283c19ae6f305a9: \"This naming decision does not change current transaction `expected_event_types=[]` until existing owner-adoption prerequisites are satisfied\""
+    },
+    {
+      "citation": "Plans/storage-plan.md:28944",
+      "status": "ok",
+      "notes": "Exact checked quote at 90f7e163614575558644d291f283c19ae6f305a9: \"This is retirement, not a payload alias or byte rewrite; older dedicated settings.agent_rules.dry_method_default_guard.updated records remain readable.\""
+    },
+    {
+      "citation": "reports/event-authority-20260911/step-09-procedure-20260924.md:40",
+      "status": "ok",
+      "notes": "Exact checked quote at 90f7e163614575558644d291f283c19ae6f305a9: \"Keep the legacy bucket and cohort pins, since the frozen schema has no J248 exclusion category, and claim no denominator removal.\""
     }
   ],
   "owner_veto": null,

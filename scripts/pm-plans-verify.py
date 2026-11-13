@@ -1953,6 +1953,13 @@ def iter_schema_dicts(value: Any, path: str = "$") -> list[tuple[str, dict[str, 
     return found
 
 
+# DL-478 (Jared, 2026-11-12, "Sweep and retire all"): H-018's Goal V2 handoff ("All terminal
+# receipts to GoalCompletionReceipt", Goal Runtime certifier) is retired, so the live handoff matrix
+# is H-001..H-017. The goal_completion_receipt payload itself stays live and strict for the
+# Original Standard route (GRS-064 keeps it unchanged).
+HANDOFF_MATRIX_ROW_IDS = [f"H-{index:03d}" for index in range(1, 18)]
+
+
 def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[str, Any]:
     schema_path = PLANS / "plans_to_code_handoff.schema.json"
     failures: list[dict[str, Any]] = []
@@ -2654,12 +2661,20 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
         failures.append({"path": rel(schema_path), "error": "handoff_row_id_not_strict_h_enum"})
     if handoff_row_props.get("schema_payload", {}).get("items", {}).get("$ref") != "#/$defs/schema_payload_ref":
         failures.append({"path": rel(schema_path), "error": "handoff_schema_payload_not_strict_ref_array"})
+    expected_rows = HANDOFF_MATRIX_ROW_IDS
     rows_prop = def_props("handoff_matrix").get("rows", {})
-    if rows_prop.get("minItems") != 18 or rows_prop.get("maxItems") != 18:
-        failures.append({"path": rel(schema_path), "error": "handoff_matrix_rows_not_exactly_h001_h018"})
+    if rows_prop.get("minItems") != len(expected_rows) or rows_prop.get("maxItems") != len(expected_rows):
+        failures.append(
+            {
+                "path": rel(schema_path),
+                "error": "handoff_matrix_rows_not_exactly_h001_h017",
+                "expected": len(expected_rows),
+                "actual_min_items": rows_prop.get("minItems"),
+                "actual_max_items": rows_prop.get("maxItems"),
+            }
+        )
 
     matrix_path = PLANS / "Plan_To_Node_Compilation.md"
-    expected_rows = [f"H-{index:03d}" for index in range(1, 19)]
     matrix_rows: list[dict[str, Any]] = []
     try:
         matrix_text = matrix_path.read_text(encoding="utf-8")
@@ -2683,7 +2698,7 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
         failures.append({"path": rel(matrix_path), "error": "handoff_matrix_unreadable", "detail": str(exc)})
     row_ids = [row["row_id"] for row in matrix_rows]
     if row_ids != expected_rows:
-        failures.append({"path": rel(matrix_path), "error": "handoff_matrix_rows_not_h001_to_h018_in_order", "actual": row_ids})
+        failures.append({"path": rel(matrix_path), "error": "handoff_matrix_rows_not_h001_to_h017_in_order", "actual": row_ids})
     schema_payload_defs = set(defs) | set(kinds)
     for row in matrix_rows:
         payload_tokens = [token.strip() for token in str(row["schema_payload"]).split(",") if token.strip()]

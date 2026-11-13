@@ -108,7 +108,7 @@
   function pickProjects(kind, id, done, set, anchor) {
     const t = things()[kind][id];
     const cur = new Set(t.reach === 'only' ? t.projects || [] : []);
-    const body = `<p class="psx-p">${esc(t.name)} can be used in the projects you tick, and nowhere else.</p>` + PROJECTS.map((p) => `<label class="psx-check"><input type="checkbox" value="${p.id}"${cur.has(p.id) ? ' checked' : ''}><span>${esc(p.id)}<small>works on ${esc(placeName('computer', p.home))}</small></span></label>`).join('');
+    const body = `<p class="psx-p">${esc(t.name)} can be used in the projects you tick, and nowhere else.</p>` + PROJECTS.map((p) => `<label class="psx-check"><input type="checkbox" value="${p.id}"${cur.has(p.id) ? ' checked' : ''}><span>${esc(p.id)}<small>Auto (default: ${esc(placeName('computer', p.home))})</small></span></label>`).join('');
     const key = anchor && anchor.getAttribute('data-psx-key');
     PSX.sheet({
       title: `Where ${t.name} is available`, kicker: 'Only these projects', body,
@@ -145,6 +145,10 @@
       if (el && el.textContent === txt) return;
       if (!el) { el = D.createElement('div'); el.className = 'pm51-item-meta psx-reach'; el.setAttribute('data-psx-reach', ''); el.setAttribute('data-o55-foreign', ''); const copy = item.querySelector('.pm51-item-copy'); if (copy) copy.appendChild(el); }
       el.textContent = txt;
+      // Jared #8: the base page's own scope word in the same line ("This project only", "Managed by Puppet Master")
+      // said where the server applies a second way; the layer's line wins and the base page's word goes
+      const meta = [...item.querySelectorAll('.pm51-item-meta:not([data-psx-reach])')].find((m) => / · (This project only|Managed by Puppet Master|Outside service)$/.test(m.textContent.trim()));
+      if (meta) { const tw = D.createTreeWalker(meta, NodeFilter.SHOW_TEXT); let n; while ((n = tw.nextNode())) { const v = n.data.replace(/ · (This project only|Managed by Puppet Master|Outside service)\s*$/, ''); if (v !== n.data) n.data = v; } }
     });
     // the add-server set-up's "Where it can be used" reads "Where it's available: Only this project / Every project"
     D.querySelectorAll('#pm-settings-portals .o55-mcp-scope, #pm-settings-root .o55-mcp-scope').forEach((sel) => relabelScope(sel));
@@ -164,6 +168,9 @@
     const id = Object.keys(things().mcp).find((k) => things().mcp[k].name === name); if (!id) return;
     const t = things().mcp[id];
     const body = aside.querySelector('.pm51-panel-body'); if (!body) return;
+    // Jared #8: the base page's "Where it applies" line under How it connects is the same question the layer's Where
+    // it's available answers; only the layer's stays
+    body.querySelectorAll('.pm51-kv-row').forEach((r) => { const k = r.firstElementChild; if (k && /^Where it applies$/.test(k.textContent.trim()) && !r.hidden) { r.hidden = true; r.setAttribute('data-psx-hidden', ''); } });
     const c = PSX.ctxFull(S.ctx), proj = S.mcpProject || c.project || 'tastebook';
     const sig = JSON.stringify([PSX.W.rev, t, proj]);
     if (body.dataset.psxDone === sig && body.querySelector('[data-psx-mcp]')) return;
@@ -212,7 +219,7 @@
       thingWrite('mcp', id, rec, `${t.name} in ${proj}: ${label2}`, (tx) => { redo(); PSX.note({ title: `Saved for ${proj}.`, body: `${t.name}: ${label2}.`, actions: [{ label: 'Undo', run: () => { PSX.undoTx(tx.id); redo(); } }] }); });
     };
     if (a === 'reach') reachMenu(b, 'mcp', id, redo);
-    else if (a === 'proj') PSX.menu(b, PROJECTS.map((p) => ({ label: p.id, meta: `works on ${placeName('computer', p.home)}`, run: () => { S.mcpProject = p.id; redo(); } })), { label: 'Choose a project', search: true, width: 260 });
+    else if (a === 'proj') PSX.menu(b, PROJECTS.map((p) => ({ label: p.id, meta: `Auto (default: ${placeName('computer', p.home)})`, run: () => { S.mcpProject = p.id; redo(); } })), { label: 'Choose a project', search: true, width: 260 });
     else if (a === 'on') PSX.menu(b, [{ label: 'Same as everywhere · On', run: () => setIp({ on: undefined }, 'same as everywhere') }, { label: 'On', run: () => setIp({ on: true }, 'on') }, { label: 'Off', run: () => setIp({ on: false }, 'off') }], { label: 'On or off', width: 260 });
     else if (a === 'may') PSX.menu(b, [{ label: 'Same as everywhere · Ask before it changes things', run: () => setIp({ may: undefined }, 'same as everywhere') }, { label: 'Ask before it changes things', run: () => setIp({ may: 'Ask before it changes things' }, 'ask before it changes things') }, { label: 'Read only', run: () => setIp({ may: 'Read only' }, 'read only') }, { label: 'Protected files only', run: () => setIp({ may: 'Protected files only' }, 'protected files only') }], { label: 'What it may do', width: 300 });
     // a sign-in is a person's step on the device in front of them, kept on the computer that runs the server

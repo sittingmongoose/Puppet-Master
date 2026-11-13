@@ -175,11 +175,11 @@
     today: ' <b>Changed · Today.</b> The 10.5px word, under the 11px floor.'
   };
   const MOMENT = {
-    '11.1': '<b>11.1 Home NAS isn’t answering.</b> The head line says what you are seeing and as of when; an everywhere change offers <b>Just this computer for now</b> and <b>Change it when Home NAS is back</b>; nothing is queued. Switch Home NAS back to Answering to be asked about the change made meanwhile. NEW CANON (SETTINGS-PROPOSAL 7.5). <em>Example</em> times.',
+    '11.1': '<b>11.1 Home NAS isn’t answering.</b> The header says what you are seeing, and a line under it says as of when; an everywhere change offers <b>Just this computer for now</b> and <b>Change it when Home NAS is back</b>; nothing is queued. Switch Home NAS back to Answering to be asked about the change made meanwhile. NEW CANON (SETTINGS-PROPOSAL 7.5). <em>Example</em> times.',
     '11.2': '<b>11.2 A conflict.</b> Change Text size here while a change from Studio Mac lands first: the conflict card with the change-conflict mark, Keep or Use. NEW CANON wording over SSYS-009’s compare-and-set (7.6).',
     '11.3': '<b>11.3 Change it everywhere, then only for tastebook.</b> Follow the steps: a row that comes from tastebook’s own writes tastebook; a row from everywhere writes everywhere and the note offers <b>Only for tastebook</b>. NEW CANON (3.2, decision S4).',
     '11.4': '<b>11.4 An everywhere change a project refuses.</b> Switch when this much is left, set everywhere to 15%: harbor’s Codex account would switch at once, so it is refused before commit, with <b>Change it everywhere except harbor</b>. NEW CANON generalising MA-073’s crossing check (1.7). <em>Example</em>: harbor’s account has 12% left.',
-    '11.5': '<b>11.5 Move where your settings are kept.</b> cmd.server.settings_home.move (proposed SRV-016): the preview, then every surface names the new home (the head line, Computers, For experts). The two variants below: refused while a change is on its way, and Home NAS gone for good with its freshness line. An owner choice: YOLO still asks. NEW CANON (7.2).',
+    '11.5': '<b>11.5 Move where your settings are kept.</b> cmd.server.settings_home.move (proposed SRV-016): the preview, then every surface names the new home (the header’s notice, Computers, For experts). The two variants below: refused while a change is on its way, and Home NAS gone for good with its freshness line. An owner choice: YOLO still asks. NEW CANON (7.2).',
     '11.5-flight': '<b>11.5, a change on its way.</b> A change from iPhone is still travelling to Home NAS, so Move is refused until it has been saved (7.2).',
     '11.5-lost': '<b>11.5, Home NAS gone for good.</b> Home NAS isn’t answering; another computer keeps your settings from its own copy, with the freshness line. NEW CANON (7.2).',
     '11.6': '<b>11.6 Two setups joining.</b> Studio Mac was set up on its own: choose which computer keeps your settings (it becomes the settings home), then a choice per difference, applied as one batch with Undo; what isn’t kept stays in History. In YOLO the keeper is still your choice; the merge then needs no second yes. NEW CANON (7.8, S12). <em>Example</em> values.',
@@ -187,26 +187,36 @@
     '11.8': '<b>11.8 No project.</b> Settings with no project open: your own look, writes go everywhere or to this computer, project-only rows read “Each project”, and a project’s own value is still changeable by name in a panel. NEW CANON (section 6). Concept mechanic: the engine needs a project to accept writes, so the layer uses a hidden stand-in; the product never uses a stand-in project id.',
     '11.9': '<b>11.9 A project with its own look.</b> tastebook’s own Retro Dark and Studio Mac’s own Basic Light: switch Project between tastebook and harbor and You’re using between This computer and Studio Mac; the look follows the resolver (the pair as one, project beats device). NEW CANON (1.3). <em>Example</em> looks.',
     '11.10': '<b>11.10 The assistant changes a setting.</b> In loom the assistant writes the narrowest place (loom). Regular: changing Everyday model everywhere needs your yes in a card that names how many projects it changes (S13). YOLO: the same preview becomes the report, the change is made without the card, with Undo. NEW CANON (7.9).',
-    '11.11': '<b>11.11 A device with limited access.</b> You’re using Sam’s iPad, a Member’s device: only its own screen values change; every other line, the managers, Copy and Undo refuse, and Change view never lends another device’s rights. NEW CANON access scope settings.everywhere.write (7.10).',
+    '11.11': '<b>11.11 A device with limited access.</b> You’re using Sam’s iPad, a Member’s device: only its own screen values change; every other line, the managers, Copy and Undo refuse, and looking at another device’s screen never lends another device’s rights. NEW CANON access scope settings.everywhere.write (7.10).',
     '11.12': '<b>11.12 An update changed defaults.</b> One note on Settings Home, with <b>Keep the old ones</b> (written as your everywhere values, source migrated). NEW CANON (7.11). <em>Example</em> defaults.',
     '11.13': '<b>11.13 Rules a project brings.</b> A forked project brings its own rules; anything looser than yours is held until you accept it, in YOLO too (a trust choice). The choice is kept, with Undo. NEW CANON PS-144 (4.4, S15). <em>Example</em> rules.',
     '11.14': '<b>11.14 Settings now apply everywhere.</b> The fold as a concept moment: a value is promoted to everywhere only where every project already agrees; the look suggestion is a real everywhere change with Undo (section 8).',
     '11.15': '<b>11.15 First start.</b> Before any computer is set up there is nowhere to keep anything: the ephemeral Basic Dark Settings, every control unavailable and every write (row, panel, copy, managers) refused with one sentence (SSYS-002’s ephemeral context, kept).',
-    '11.16': '<b>11.16 Filters and the Differences view.</b> Changed, Set here, Varies, Per computer and Per project filter the list; group by project or computer; bulk actions refuse two values for one setting, keep project-only rows, and keep a careful safety value. Also from any page: Change view › All the differences. NEW CANON (3.6).',
+    '11.16': '<b>11.16 Filters and the Differences view.</b> Changed, Set here, Varies, Per computer and Per project filter the list; group by project or computer; bulk actions refuse two values for one setting, keep project-only rows, and keep a careful safety value. Also from any page: the header’s Change › All the differences. NEW CANON (3.6).',
     '11.17': '<b>11.17 A batch that can’t finish.</b> Studio Mac is off; copying tastebook’s settings into five projects finishes four and says why the fifth wasn’t changed. Nothing is queued. Set Studio Mac to Answering above; History’s <b>Finish lighting-rig</b> brings the values the batch copied, and the batch’s Undo all of it then undoes every part. NEW CANON (5.6).',
-    '11.18': '<b>11.18 What asks you.</b> One run in loom’s chat. Regular: each step asks; <b>Always allow</b> offers This project, This computer or Everywhere, never chosen for you and never Everywhere for a path (S16). YOLO: the test, the <b>git push</b> and the <b>publish</b> run without asking (Jared, 2026-11-03) and are reported; a path outside the project and a deletion on the remote still ask; no Always rule is made.',
-    copy: '<b>Copy settings, in Settings.</b> Settings Transfer › Copy settings from another project: what makes it different, its own things and its AI accounts, with Advanced to pick one by one. NEW CANON (5.1 to 5.6, decisions S9 to S11). <em>Example</em> counts.',
-    'copy-new': '<b>Copy settings, in New Project.</b> The same sheet as Split v2’s “Start like another Project?” for a new project, recipe-box, that will work on Home NAS. It starts on Your usual settings; this moment picks Like tastebook for you, to show Advanced. The AI account rows say what each needs there. NEW CANON (5.2, 5.4).'
+    '11.18': '<b>11.18 What asks you.</b> One run in loom’s chat, built from one rule model (README). Regular: a command or a folder outside the project offers Allow once, For this session, Always allow… and Don’t allow; a push or a publish offers no Always; a deletion on the remote is answered one at a time. For this session lasts the rest of this run in this run mode. <b>Always allow</b> opens under the step: you choose the exact pattern (a suggestion or your own) and its place, with nothing chosen for you; the preview says what it matches and what still asks. A command rule covers commands only and a folder rule covers paths only; nothing covers a push, a publish or a deletion. Everywhere is offered only for a command rule whose pattern isn’t about a path, a folder or a program’s location. NEW CANON (Permissions, guided flows 8.03 and 8.04). A home-folder read the task needs doesn’t ask while FileSafe is on (PS-145); the folder on the team share, outside home, asks in both run modes unless your folder rule covers it. YOLO: the tests, the <b>git push</b> and the <b>publish</b> run without asking and are reported; the team-share folder and the deletion still ask; nothing YOLO runs becomes a rule.',
+    copy: '<b>Copy settings, in Settings.</b> Settings Transfer › Copy settings from another project: what makes it different, its own things and its AI accounts, with Advanced to pick one by one. Copy checks each account on the destination computer again at the moment it copies, and shows the preview again if one changed. NEW CANON (5.1 to 5.6, decisions S9 to S11; Settings_System: a different Computer or account invalidates the readiness preview). <em>Example</em> counts.',
+    'copy-new': '<b>Copy settings, in New Project.</b> The same sheet as Split v2’s “Start like another Project?” for a new project, recipe-box, whose default computer is Home NAS. It starts on Your usual settings; this moment picks Like tastebook for you, to show Advanced. The AI account rows say what each needs there; the Copilot seat tied to this Mac reads <b>Can’t be used on Home NAS</b> and stays the intended choice (cannot_move). Keep them fixed follows the kinds and rows you choose. NEW CANON (5.2, 5.4; Settings_System cannot_move and Notifications &amp; limits).'
   };
   const RUN = {
     regular: ' <b>Run mode · Regular.</b> Every yes-point asks.',
     yolo: ' <b>Run mode · YOLO</b> (the run mode <code>yolo</code>, never the Full profile). An ordinary yes is skipped: the preview is shown as the report after the change, with Undo. Still asked: FileSafe off, a looser rule from someone else’s repository, which computer keeps your settings, pairing, sign-ins, a path outside the project, a deletion on the remote. Still refused: a project that can’t take a change, a computer that isn’t answering, a Member’s device.'
   };
-  const UI = { end: 'origin', changed: 'outline', moment: '', run: 'regular', compare: false };
+  const UI = { end: 'origin', changed: 'outline', moment: '', run: 'regular', compare: false, lookWant: null, painted: null };
   const $ = (id) => document.getElementById(id);
   let live = false;
 
   const send = (msg) => { try { frame.contentWindow.postMessage(Object.assign({ source: 'psx-host' }, msg), '*'); } catch (e) { /* not there yet */ } };
+  // a look change: the Look is greyed and names it until the answer to this request arrives (or 30s pass, when it names
+  // the last look painted again)
+  let lookSeq = 0, lookTimer = 0;
+  const askLook = (v) => {
+    lookSeq += 1; UI.lookWant = { look: v, seq: lookSeq };
+    $('look').value = v; $('look').disabled = true;
+    send({ cmd: 'look', look: v, seq: lookSeq });
+    clearTimeout(lookTimer);
+    lookTimer = setTimeout(() => { UI.lookWant = null; $('look').disabled = false; if (UI.painted) $('look').value = UI.painted; }, 30000);
+  };
   function paintBar() {
     document.querySelectorAll('#end button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.end)));
     document.querySelectorAll('#changed button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.changed)));
@@ -241,6 +251,20 @@
     if (!(W.PMG && W.PM_PAGES && d.getElementById('panel-settings') && d.getElementById('themeSelect'))) { setTimeout(inject, 150); return; }
     d.documentElement.setAttribute('data-psx-layer', 'loading');
     let i = 0;
+    /* inventory alignment: the layer reads Plans' inventory layering (the per-row authority, SSYS-059) from this
+       repository before it starts; the single files carry it inline (tools/build_standalone.py) */
+    const INVENTORY = new URL('../../../Plans/settings_inventory.json', base).href;
+    const withInventory = async () => {
+      try {
+        const res = await fetch(INVENTORY, { cache: 'no-store' }); if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+        const text = await res.text(), inv = JSON.parse(text);
+        let sha = null;
+        try { const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)); sha = [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, '0')).join(''); } catch (e) { /* not a secure context */ }
+        const settings = (inv.settings || []).filter((r) => r && r.id && r.layering).map((r) => ({ id: r.id, type: r.type, layering: r.layering }));
+        const groups = {}; (inv.categories || []).forEach((c) => (c.subgroups || []).forEach((g) => { groups[c.id + '.' + g.id] = g.title; }));
+        W.PSX_LAYERING = { source: { path: 'Plans/settings_inventory.json', sha256: sha, schema_version: inv.schema_version, rows: settings.length }, groups, settings };
+      } catch (e) { console.warn('Settings concept: could not read Plans’ inventory', INVENTORY, e); }
+    };
     const next = () => {
       if (i >= STEPS.length) return;
       const [kind, url] = STEPS[i++];
@@ -250,7 +274,7 @@
       el.onerror = () => { console.error('Settings concept: could not load', url); next(); };
       (kind === 'css' ? d.head : d.body).appendChild(el);
     };
-    next();
+    withInventory().then(next);
   }
   frame.addEventListener('load', () => { live = false; inject(); });
 
@@ -268,11 +292,16 @@
         send({ cmd: 'runmode', mode: UI.run });
         send({ cmd: 'compare', open: UI.compare });
         if ($('reduced').checked) send({ cmd: 'motion', reduced: true });
-        if ($('look').value !== 'basic-dark' && m.state && m.state.look !== $('look').value) send({ cmd: 'look', look: $('look').value });
+        if ($('look').value !== 'basic-dark' && m.state && m.state.look !== $('look').value) askLook($('look').value);
       }
       const s = m.state;
       if (s) {
-        if (s.look && m.type !== 'look-done' && !$('look').disabled) $('look').value = s.look;
+        /* review A-r4 (R3-5): the Look names the look that is painted. Only while a change it asked for is on its way is
+           it greyed and naming that change; the answer to that request (its seq), and only that one, ends the wait */
+        if (s.look) UI.painted = s.look;
+        if (m.type === 'look-done' && UI.lookWant && m.seq != null && m.seq !== UI.lookWant.seq) { /* an older request's answer */ }
+        else if (m.type === 'look-done') { UI.lookWant = null; clearTimeout(lookTimer); $('look').disabled = false; if (s.look) $('look').value = s.look; }
+        else if (s.look && !UI.lookWant) { $('look').disabled = false; $('look').value = s.look; }
         if (s.opt) { UI.end = s.opt.end; UI.changed = s.opt.changed; }
         if (s.ctx) {
           $('project').value = s.ctx.project || 'tastebook';
@@ -285,7 +314,6 @@
         UI.moment = s.moment || '';
         if (s.runMode) UI.run = s.runMode;
         paintBar();
-        if (m.type === 'look-done') { $('look').disabled = false; if (s.look) $('look').value = s.look; }
       }
       return;
     }
@@ -293,7 +321,7 @@
     if (m.source === 'pm-concept-hub' && m.type === 'pm-concept-state' && m.state) {
       $('reduced').checked = !!m.state.reducedMotion;
       send({ cmd: 'motion', reduced: !!m.state.reducedMotion });
-      if (m.state.theme && m.state.theme !== $('look').value) { $('look').value = m.state.theme; send({ cmd: 'look', look: m.state.theme }); }
+      if (m.state.theme && m.state.theme !== $('look').value) { $('look').value = m.state.theme; askLook(m.state.theme); }
     }
   });
 
@@ -310,7 +338,7 @@
   $('moment').addEventListener('change', (e) => { const v = e.target.value; if (!v) return; UI.moment = v; paintBar(); send({ cmd: 'moment', id: v }); setTimeout(() => { e.target.value = ''; }, 0); });
   $('compare').addEventListener('click', () => send({ cmd: 'board' }));
   $('reset').addEventListener('click', () => { UI.moment = ''; paintBar(); send({ cmd: 'reset' }); });
-  $('look').addEventListener('change', (e) => { e.target.disabled = true; send({ cmd: 'look', look: e.target.value }); setTimeout(() => { e.target.disabled = false; }, 5000); });
+  $('look').addEventListener('change', (e) => askLook(e.target.value));
   $('width').addEventListener('change', (e) => { frame.style.width = e.target.value ? e.target.value + 'px' : '100%'; });
   $('reduced').addEventListener('change', (e) => send({ cmd: 'motion', reduced: e.target.checked }));
   // while Compare options is open: 1 to 4 pick the end-of-row option and 0 shows today's, C opens the board (outside text

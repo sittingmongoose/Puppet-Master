@@ -13,10 +13,12 @@
   const look = () => { const t = H.getAttribute('data-theme') || 'basic-dark'; return H.getAttribute('data-o55-nier') === 'on' ? 'nier-' + (/-light$/.test(t) ? 'light' : 'dark') : t; };
 
   /* ------------------------------------------------------------------ messages to index.html */
-  function report(type) {
+  function report(type, extra) {
     const state = { opt: Object.assign({}, S.opt), ctx: Object.assign({}, S.ctx, { homenas: PSX.W.up.homenas !== false, studio: PSX.W.up.studio !== false, actor: S.actor }), look: look(), moment: S.moment, motion: !!S.osReduced, runMode: S.runMode };
     PSX.lastReport = { type, state };
-    if (W.parent !== W) { try { W.parent.postMessage({ source: 'psx', type, state }, '*'); } catch (e) { /* no parent */ } }
+    // the look the strip was last told about: the look watcher below compares the painted look with this one
+    PSX.lastLook = state.look;
+    if (W.parent !== W) { try { W.parent.postMessage(Object.assign({ source: 'psx', type, state }, extra || {}), '*'); } catch (e) { /* no parent */ } }
   }
   PSX.report = report;
 
@@ -42,15 +44,44 @@
       // a look paints on its own schedule (Glass mounts its lenses, NieR plays its switch-on): wait until it shows
       const painted = () => { const t = H.getAttribute('data-theme') || ''; return nier ? (/^nier/.test(t) || nierOn()) && t.endsWith('-' + mode) : t === id && !(W.PM_NIER && W.PM_NIER.on && W.PM_NIER.on()); };
       for (let i = 0; i < 40 && !painted(); i++) await wait(100);
+      // review A-r3 R3-5: a look that hasn't landed by then is asked for once more (under load the first clicks can be
+      // lost); whatever is on screen afterwards is what look-done and the look watcher below report to the strip
+      if (!painted()) {
+        if (!nier && nierOn() && !nierFamily) await flipNier();
+        await pick(`#themeMenu .pm6-tt-family[data-family="${fam}"]`);
+        await pick(`#themeMenu .pm6-tt-mode[data-mode-value="${mode}"]`);
+        if (nier && !nierOn() && !nierFamily) await flipNier();
+        for (let i = 0; i < 40 && !painted(); i++) await wait(100);
+      }
       // close the menu with its own button: a synthetic Escape would also close a sheet that is open in Settings
       await wait(120);
       if (tb.getAttribute('aria-expanded') === 'true') { tb.click(); await wait(140); }
       if (W.PMR && W.PMR.menu && W.PMR.menu.isOpen()) { try { W.PMR.menu.closeAll(); } catch (e) { /* closed */ } }
       await wait(260);   // the router's diff runs after the menu's clicks; it reads reviewChange
+      /* the theme menu sits outside Settings, so a click there that changes only light or dark never reaches the router:
+         the world kept the old look and the next change of project or view painted it again (found in review round
+         A-r1). The look that is painted now is stored where the look lives, as the router would have stored it */
+      // only once the asked-for look has really painted, and then that look itself: under load a paint can outlast the
+      // wait above, and storing the base page's state then would store the look it is leaving (review round A-r2)
+      const FAM = { basic: 'Basic', friendly: 'Friendly', retro: 'Retro', glass: 'Glass', nier: 'NieR' };
+      const value = `${FAM[id.split('-')[0]] || 'Basic'} ${mode === 'light' ? 'Light' : 'Dark'}`;
+      const r = PSX.resolve('general.visual.theme', S.ctx);
+      if (painted() && r && r.value !== value && PSX.targetFor) {
+        const tg = PSX.targetFor('general.visual.theme', r, S.ctx);
+        if (tg) { PSX.apply([{ level: tg.level, key: tg.key, id: 'general.visual.theme', value }], { history: false }); PSX.feed.push(); }
+      }
     } finally { S.reviewChange = false; }
     PSX.rows && PSX.rows.refreshAll();
   }
   PSX.setLook = setLook;
+  /* the strip's Look always shows the look that is on screen: any change of the painted look (the base page's own
+     repaint, a look that landed late or never) is reported a moment later, and the strip takes it while its Look isn't
+     waiting for a change of its own (review A-r3 R3-5) */
+  /* review A-r4 (R3-5 under load): it compares with the look last reported to the strip, not with the last one it saw
+     itself. A look it saw while a change was on its way, then reported by none, left the strip naming an older look
+     after the new one painted */
+  let lookTimer = 0;
+  new MutationObserver(() => { clearTimeout(lookTimer); lookTimer = setTimeout(() => { if (look() !== PSX.lastLook) report('state'); }, 120); }).observe(H, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });
 
   /* ------------------------------------------------------------------ review commands */
   function setOpt(patch) {
@@ -91,7 +122,7 @@
     }
     if (m.cmd === 'moment') { if (PSX.moments) await PSX.moments.run(m.id); report('state'); return; }
     if (m.cmd === 'board') { if (PSX.board) PSX.board.open(); return; }
-    if (m.cmd === 'look') { await setLook(m.look); report('look-done'); return; }
+    if (m.cmd === 'look') { await lookCmd(m); return; }
     if (m.cmd === 'motion') {
       S.osReduced = !!m.reduced;
       if (m.reduced) { H.setAttribute('data-motion', 'reduced'); H.setAttribute('data-reduced-motion', '1'); }
@@ -106,6 +137,18 @@
     if (m.cmd === 'selftest') { report('selftest'); return; }
   }
   PSX.command = command;
+  /* review A-r4 (R3-5 under load): one look change at a time. A change asked for while another is on its way waits,
+     and only the latest waiting one runs (two at once clicked the theme menu in turns). Each look-done says which
+     request it answers (seq), so the strip ends a wait only on the answer to its latest request */
+  let lookBusy = false, lookNext = null;
+  async function lookCmd(m) {
+    if (lookBusy) { lookNext = m; return; }
+    lookBusy = true;
+    try { await setLook(m.look); } catch (e) { console.error('[psx look]', e); }
+    lookBusy = false;
+    report('look-done', { seq: m.seq == null ? null : m.seq, requested: m.look });
+    if (lookNext) { const n = lookNext; lookNext = null; await lookCmd(n); }
+  }
   W.addEventListener('message', (ev) => {
     const m = ev.data;
     if (!m || m.source !== 'psx-host' || ev.source !== W.parent) return;

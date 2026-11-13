@@ -2,8 +2,8 @@
   "event_type": "coordination.debug_mirror_exported",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.debug_mirror_exported. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "RECLASSIFY_TO_EXCLUDED: current owner retires coordination.debug_mirror_exported; DL-270. See reports/event-authority-20261104/DCN-exclusion-application.json. Legacy bucket/cohort pins and denominator preserved. DL-039 Step 9 individual semantic adjudication at 2026-11-04T18:11:24Z (lane DS, stream E batch 1), with today's owner evidence (Plans/storage-plan.md:553; Plans/storage-plan.md:570; Plans/storage-plan.md:572; Plans/storage-plan.md:28363): coordination.debug_mirror_exported is retired: SP-339 (Jared's DL-270 card 5, 2026-10-31) retires the live JSON mirror files it recorded, so no mirror export attempt is recorded and the event ends with them; a failure of an on-request pm export is reported in the pm export result (Plans/storage-plan.md:572). Residual prepared-payload text (Plans/Contracts_V0.md CV-310 table, Plans/coordination_event_contract_fixtures.json) keeps it prepared and not admitted and is swept separately, as storage-plan.md says. This records the exclusion of this exact token from the persisted-family campaign under DL-039's J248 outcome \"excluded with cited evidence\" (SP-339 and DL-270); it creates no alias, deletes no history and changes no registered family. Application: reports/event-authority-20261104/ds-step7-exclusions-application.json. The legacy CPU bucket and cohort pins remain because the frozen schema and validator have no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed. Previous rationale: Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.debug_mirror_exported. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -96,6 +96,26 @@
       "citation": "Plans/orchestrator-subagent-integration.md:3775-3809",
       "status": "ok",
       "notes": "Names the exact canonical record and the PM-only compatibility mirror exporter and authority boundary."
+    },
+    {
+      "citation": "Plans/storage-plan.md:553",
+      "status": "ok",
+      "notes": "exact quote at ade1ee3d6c: the live mirror files it described are retired, so no new mirror export attempt is recorded"
+    },
+    {
+      "citation": "Plans/storage-plan.md:570",
+      "status": "ok",
+      "notes": "exact quote at ade1ee3d6c: the mirror writer, mirror lag and absence rules, mirror failure handling and the `coordination.debug_mirror_exported` event end with them."
+    },
+    {
+      "citation": "Plans/storage-plan.md:572",
+      "status": "ok",
+      "notes": "exact quote at ade1ee3d6c: A copy produced on request by `pm export` is an export; a failure there is reported in the `pm export` result"
+    },
+    {
+      "citation": "Plans/storage-plan.md:28363",
+      "status": "ok",
+      "notes": "exact quote at ade1ee3d6c: ### SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export"
     }
   ],
   "owner_veto": null,
@@ -106,7 +126,8 @@
   "source_overlay": "UnregOverlay07",
   "provisional": false,
   "quality_notes": [
-    "Deepened independently against exact current Plans citations; two absent authority dimensions remain owner-required and fail closed."
+    "Deepened independently against exact current Plans citations; two absent authority dimensions remain owner-required and fail closed.",
+    "2026-11-04T20:31:21Z: lane DS-FIX1 corrected the application times mirrored in this row to the evidenced times of their application commits (2026-11-04T18:50:00Z -> 2026-11-04T18:11:24Z for ds-step7-exclusions-application.json). The recorded times were later than the commits that applied them (review DS-SOL-04). The original application records are unchanged; see reports/event-authority-20261104/ds-fix1-application-time-correction.json."
   ],
   "working_bucket": "confirmed_persisted_unregistered",
   "cohort_pins": [

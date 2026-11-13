@@ -888,6 +888,12 @@ def syntax_check(built: str) -> list[str]:
 
 
 def main() -> int:
+    # The Settings layers read Plans/settings_inventory.json (tracked, outside Concepts/). Without it the build
+    # silently drops inventory rows and fails later with a misleading placement error, so refuse a partial checkout.
+    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+    if not inventory.is_file():
+        print('BUILD FAILED: this build needs Plans/settings_inventory.json (a full repository checkout)', file=sys.stderr)
+        return 1
     unknown = [a for a in sys.argv[1:] if a.startswith('--') and a not in ('--check', '--publish-pm7', '--out')]
     if unknown:
         print(f"unknown option(s): {' '.join(unknown)} (the --no-usage and --no-home private reference builds were "

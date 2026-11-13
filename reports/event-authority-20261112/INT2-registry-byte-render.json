@@ -1,0 +1,23 @@
+{
+  "before_sha256": "89062f8f8422604383088bb17bb8be4c32b40bdf1459a79dab49c60aee34df91",
+  "after_sha256": "7a046f5c594c7eca40fec58a6daa27e0528b8291b43e4181a9cccb22e02d1f96",
+  "semantic_values_changed": 0,
+  "changed_lines": 2,
+  "status": "VERIFIED",
+  "cause": "Integration JSON merge escaped two literal Unicode characters expected by the canonical ensure_ascii=False renderer;17 other raw backslash-u substrings remain literal regex text.",
+  "required_validation": "Rerun materializer byte-render unit and complete shared-runtime group; preserve399/pending-retention refusals.",
+  "literal_unicode_characters_restored": 2,
+  "raw_backslash_u_substrings": 19,
+  "application_parent": "7b51beeb464509f68e139f0cd5fc4461a2b90a18",
+  "validation": {
+    "byte_render_unit_exit": 0,
+    "full_group_exit": 1,
+    "full_group_tests": 36,
+    "full_group_inherited_failures": [
+      "test_live_registry_satisfies_readiness_census_and_value_contracts",
+      "test_materializer_check_is_current"
+    ],
+    "new_registry_diagnostics": 0
+  },
+  "diff": "--- before/Plans/storage_value_registry.json\n+++ after/Plans/storage_value_registry.json\n@@ -19025 +19025 @@\n-                \"description\": \"DL-259 CERT-1 / srv C1: certificates remain on the person\\u2019s own systems; onboarding collects no TLS/certificate choice.\"\n+                \"description\": \"DL-259 CERT-1 / srv C1: certificates remain on the person\u2019s own systems; onboarding collects no TLS/certificate choice.\"\n@@ -82781 +82781 @@\n-            \"title\": \"Generic EventRecord index checkpoint custody \\u2014 external proposal\",\n+            \"title\": \"Generic EventRecord index checkpoint custody \u2014 external proposal\",\n"
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L133-L1185
+Source lines: L133-L1187
 
-Source SHA256: `23639a3ba83b0aaf6c2697215a0b9787100cbb602fb5195f228070a646e66809`
+Source SHA256: `41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1`
 
 ---
 
@@ -1025,6 +1025,8 @@ Typed owner payloads and results are defined in AMS-141; the catalogue owns IDs 
 | `cmd.chat.memory.prune_archive` | AMS-141 | Held archive-only operation | Internal/support only |
 
 Lineage pointer (DL-333): for each command here that UCC-230 routes, the Args schema column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
+DL-407 / AMS-130: verify/edit/pin/unpin/discard use `memory.gist_state_changed` once per successful real mutation, including automatic changes through RealMemoryProvider. Requested or failed verification retains only its command result and emits no history event; a no-op emits none. The seven former command event names are retired only under the complete AMS-130/CV-785/SP-765 contract. Preparation grants no native append permission.
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand
 

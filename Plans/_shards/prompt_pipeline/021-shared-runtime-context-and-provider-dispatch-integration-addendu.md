@@ -4,7 +4,7 @@ Source: `Plans/Prompt_Pipeline.md`
 
 Source lines: L5194-L5758
 
-Source SHA256: `98b14aa766512aa10031600a7555f0164bf580f4a0c038a0aeb10d9b666e7a48`
+Source SHA256: `4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174`
 
 ---
 
@@ -167,7 +167,7 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plan
 
 ### Time-Traveling conditional rules
 
-The shared runtime may evaluate versioned dormant conditional rules indexed by `project`, `path`, `tool`, `mode`, Goal phase, workflow state, and regex/AST/typed conditions. Prompt Pipeline owns only the admission and stable rendering of a resulting concise instruction delta. Rule discovery/evaluation remains deterministic program logic and adds zero hidden model-gate calls.
+The shared runtime may evaluate versioned dormant conditional rules indexed by `project`, `path`, `tool`, `mode`, workflow state, and regex/AST/typed conditions. Prompt Pipeline owns only the admission and stable rendering of a resulting concise instruction delta. Rule discovery/evaluation remains deterministic program logic and adds zero hidden model-gate calls.
 
 Each shared-runtime `ConditionalRuleEngine` receipt consumed by Prompt Pipeline carries `rule_id`, `rule_version`, scope refs, matched typed fact/evidence IDs, matcher kind/version, emitted instruction IDs or stable content ref, interrupt policy, logical turn/attempt/context epoch, pre/post rendered dependency hashes, cache impact, retry counters/caps, disposition, loop-breaker state, and user-visible activity reason. Prompt Pipeline does not create a parallel conditional-rule lifecycle or receipt family.
 

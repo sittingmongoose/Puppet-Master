@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3257-L3381
+Source lines: L3257-L3380
 
-Source SHA256: `0da28ffc13dc522838eeae1a1baf45906934d251ef6965873f31916de1b6c968`
+Source SHA256: `b7ed4b1c3437a68b97a5ec79bce60e0c2d172b0d1c6821dffad8113ff6f382e2`
 
 ---
 
@@ -23,9 +23,9 @@ canonical_text: 'Approve And Build atomically writes the immutable pack, user ap
   transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved
   uses a deterministic idempotency key derived from project_id, pack_id, pack version, and pack hash; duplicate
   delivery returns the existing PlanCompileRun rather than creating another run. After provisioning acceptance,
-  one activation transaction creates or binds the GoalRun in activating state, installs the certified WorkGraph
-  revision, materializes all WorkNodes, queues runnable entrypoints, records the activation receipt, and writes
-  GoalRunStarted or BuildStarted through a transactional outbox. Commands for topic navigation, reopen, defer,
+  one activation transaction materializes all WorkNodes, queues runnable entrypoints, records the activation
+  receipt, and writes BuildStarted through a transactional outbox. GoalRun build activation and certified-graph
+  installation are retired (DL-478). Commands for topic navigation, reopen, defer,
   annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect
   evidence, inspect assignment, request bounded recompile, and open resulting build define permission, enablement,
   disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery. Run a doc-impact pass
@@ -108,7 +108,6 @@ preserved_exact_tokens:
 - idempotency_key
 - project_id
 - pack_hash
-- GoalRunStarted
 - BuildStarted
 - activation transaction
 - Approve And Build

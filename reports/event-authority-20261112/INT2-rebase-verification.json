@@ -1,0 +1,1909 @@
+{
+ "schema": "pm.ea.int2_rebase_verification.v1",
+ "head": "see report",
+ "commands_total": 119,
+ "commands_run": 119,
+ "missing": [],
+ "exit_zero": 118,
+ "nonzero": [
+  "DT-guards"
+ ],
+ "exit_differs_from_int2": [],
+ "phases": {
+  "phase1b": "worktree int2-dry at 2db51d2a34 with tracked files only (T198 scan universe)",
+  "phase2b": "worktree int2-rebase at fc4a5b9728 (identical to 2db51d2a34 outside Concepts/; no consumer reads Concepts/), ignored inputs present and hash-verified"
+ },
+ "environment": "TMPDIR only; PYTHONINTMAXSTRDIGITS not set (as INT2 consumer runs)",
+ "superseded_pass": {
+  "results": "runs/results.env0.tsv",
+  "reason": "runner exported PYTHONINTMAXSTRDIGITS=0, which INT2 sets only for the landing dry; DO-checker long_identity oracle failed under it; whole set rerun without it",
+  "nonzero_then": [
+   "DT-guards",
+   "DG6A-regression x5 (before the DG6A citation re-pin)",
+   "DO-checker"
+  ]
+ },
+ "dt_guards": "exit 1 is the declared failing replay: 70 phases, 244/247 proved, FAIL src_stage and src_project_only; verdict lines identical to INT2",
+ "commands": [
+  {
+   "label": "SHARED-datetime-runtime",
+   "phase": "phase1b",
+   "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/bin/datetime-runtime-dry.py",
+   "exit": 0,
+   "seconds": 11,
+   "max_rss_kb": 119952,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs-phase1b/SHARED-datetime-runtime.log",
+   "log_sha256": "3b2c1ad054eb03de8743d13e38ff6e4fa3e4f690a5c56fef410d22e9fd64bc5a",
+   "int2": null
+  },
+  {
+   "label": "SHARED-numbers-scope",
+   "phase": "phase1b",
+   "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+   "exit": 0,
+   "seconds": 1,
+   "max_rss_kb": 130012,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs-phase1b/SHARED-numbers-scope.log",
+   "log_sha256": "3e81a92755d356cfe5d3d84cc01c8ed2023ebbe614a4407c93c1789607950754",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "SHARED-numbers-all",
+   "phase": "phase1b",
+   "command": "python3 scripts/pm_event_numbers.py --self-test",
+   "exit": 0,
+   "seconds": 732,
+   "max_rss_kb": 1014064,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs-phase1b/SHARED-numbers-all.log",
+   "log_sha256": "5f8ac03d616f91f25a96ce1724458946010238a975904f7c03cdf0de2a2cfd09",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "SHARED-datetime-inventory",
+   "phase": "phase1b",
+   "command": "python3 scripts/pm_event_datetime_inventory.py",
+   "exit": 0,
+   "seconds": 104,
+   "max_rss_kb": 962768,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs-phase1b/SHARED-datetime-inventory.log",
+   "log_sha256": "aea67d829783ea2e8191dfa5e41c9c7df068ec3d14483c3cfc0ff5bb19b096e4",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DO-checker",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-orchestrator-event-contracts.py",
+   "exit": 0,
+   "seconds": 1869,
+   "max_rss_kb": 678552,
+   "start_available_gib": 12,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DO-checker.log",
+   "log_sha256": "ced1b7325c440ccdb1db2540bb27083269945ccd566720d06059e1100a6c3cce",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "REGISTRY-rebase-proof",
+   "phase": "phase2b",
+   "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/bin/registry-rebase-proof.py",
+   "exit": 0,
+   "seconds": 1,
+   "max_rss_kb": 67020,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/REGISTRY-rebase-proof.log",
+   "log_sha256": "3c0a9953991712765cb8b89592bb07e07265bccf4daea3d1d8e7355562e80a2a",
+   "int2": null
+  },
+  {
+   "label": "POST-registry-diagnostics",
+   "phase": "phase2b",
+   "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/bin/registry-working-tree-post-gated.py",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 55584,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/POST-registry-diagnostics.log",
+   "log_sha256": "e05423e47010bbbcdfaaf1a95d8059fcfe0bb9e2943dad387fb68beabec32846",
+   "int2": null
+  },
+  {
+   "label": "POST-unit-preservation",
+   "phase": "phase2b",
+   "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/bin/unit-preservation-post-gated.py",
+   "exit": 0,
+   "seconds": 1,
+   "max_rss_kb": 173316,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/POST-unit-preservation.log",
+   "log_sha256": "0b8b6a0bb689f74c047d4d55f85e0309e784e7d16bdd135ce90fcde6a8bb6e24",
+   "int2": null
+  },
+  {
+   "label": "POST-graphs",
+   "phase": "phase2b",
+   "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/bin/check-graphs-after-index-post-gated.py",
+   "exit": 0,
+   "seconds": 2,
+   "max_rss_kb": 89500,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/POST-graphs.log",
+   "log_sha256": "b2a75f4e1979bcebffa9588d273acfabd76bd3f30b345ad8e11c2d97cdbf5671",
+   "int2": null
+  },
+  {
+   "label": "POST-custody",
+   "phase": "phase2b",
+   "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/bin/custody-final-post-gated.py",
+   "exit": 0,
+   "seconds": 1,
+   "max_rss_kb": 39292,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/POST-custody.log",
+   "log_sha256": "b121612d035cb188c108064cf0180e46fcf5bb866aebf852191cda3dd6d79359",
+   "int2": null
+  },
+  {
+   "label": "REGISTRY-self-test",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-implementation-readiness.py self-test",
+   "exit": 0,
+   "seconds": 36,
+   "max_rss_kb": 955148,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/REGISTRY-self-test.log",
+   "log_sha256": "281584a36a7e8fa1c20d39f7affb74dd442004c1f8f3f0084770e73c9e5dfba4",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "SHARED-materializer",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-shared-runtime-storage-materialize.py check",
+   "exit": 0,
+   "seconds": 12,
+   "max_rss_kb": 93572,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/SHARED-materializer.log",
+   "log_sha256": "d5b79b24669b55cbd6028b47bf02010daa700d0b8768176169ff94abda44ac01",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-file.copied",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.copied",
+   "exit": 0,
+   "seconds": 74,
+   "max_rss_kb": 286624,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-file.copied.log",
+   "log_sha256": "0361fc19d91e652cf1be98c1ffdf836680a6e58724adc4c9a0a0f1df5ac911da",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-folder.copied",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.copied",
+   "exit": 0,
+   "seconds": 50,
+   "max_rss_kb": 277220,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-folder.copied.log",
+   "log_sha256": "dfd9a7ec46704c2f46188e685c53f3aead530871998461eab64f0a02d95e636e",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-file.created",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.created",
+   "exit": 0,
+   "seconds": 44,
+   "max_rss_kb": 278996,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-file.created.log",
+   "log_sha256": "9fb8ca43291f882614df467d66400a4ee0f725157b08794f75663fd1d56a7bbc",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-folder.created",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.created",
+   "exit": 0,
+   "seconds": 47,
+   "max_rss_kb": 277148,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-folder.created.log",
+   "log_sha256": "49515d9d44ffff3e0d8224b1b2a16d053f6dd1830f683ae6ae9070061a8a0502",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-file.deleted",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.deleted",
+   "exit": 0,
+   "seconds": 45,
+   "max_rss_kb": 277600,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-file.deleted.log",
+   "log_sha256": "221769a9c88fd4cfe531cffdb2c8c37750d0dbcb13e504dd06f862bcf982753e",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-folder.deleted",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.deleted",
+   "exit": 0,
+   "seconds": 48,
+   "max_rss_kb": 277460,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-folder.deleted.log",
+   "log_sha256": "6d223300c748d70bc5c8457a7c244030eb509e04ba7726b81514461fe35688fb",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-file.exported",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.exported",
+   "exit": 0,
+   "seconds": 45,
+   "max_rss_kb": 277412,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-file.exported.log",
+   "log_sha256": "d85b49cce614081bf39b66bbe91d6b96e854d226813aad37a3b31a873c446a94",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-folder.exported",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.exported",
+   "exit": 0,
+   "seconds": 51,
+   "max_rss_kb": 279440,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-folder.exported.log",
+   "log_sha256": "b61a56b09373f066a598bd1bb6fefd0581c386739e1e464c86c8f2211e1822c8",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-file.moved",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.moved",
+   "exit": 0,
+   "seconds": 48,
+   "max_rss_kb": 281836,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-file.moved.log",
+   "log_sha256": "2da83ce9bc0d4cf9b600cb1919bdae82e4a587c386b93f8ecb6b53c65feb3f07",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-folder.moved",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.moved",
+   "exit": 0,
+   "seconds": 53,
+   "max_rss_kb": 281072,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-folder.moved.log",
+   "log_sha256": "b61a56b09373f066a598bd1bb6fefd0581c386739e1e464c86c8f2211e1822c8",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-file.renamed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.renamed",
+   "exit": 0,
+   "seconds": 46,
+   "max_rss_kb": 277980,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-file.renamed.log",
+   "log_sha256": "d8cd64c80c0e2e04b07ab398f24014e0c0cc8642aa0bcc1654c9607f8c53e0aa",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-folder.renamed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.renamed",
+   "exit": 0,
+   "seconds": 52,
+   "max_rss_kb": 278560,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-folder.renamed.log",
+   "log_sha256": "3e1177bb4a1fc9c3d96e616fd329ca70e287a401d517e14e325eeffe25c27e5b",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-p2a",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-p2a-cases.py --check",
+   "exit": 0,
+   "seconds": 39,
+   "max_rss_kb": 168056,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-p2a.log",
+   "log_sha256": "63fe47f79874ba92827cae33d7a4f8deb34cf70a90256070ce2d14f644446987",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-table-generate.py --check",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 14880,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-tables.log",
+   "log_sha256": "6d8e5b49fa3de1c92774e6d3175a750480618ad503a5a84169d166d9178cd001",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DFM-registry-regression",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-filemanager-registry-regression.py",
+   "exit": 0,
+   "seconds": 111,
+   "max_rss_kb": 305476,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DFM-registry-regression.log",
+   "log_sha256": "2cda8dbfd181dfb0a141a74d15f163478d09e55347b82d214ede7d61cead9672",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DO-test-shared-runtime",
+   "phase": "phase2b",
+   "command": "python3 -m unittest tests.test_shared_runtime_storage_contracts tests.test_pm_event_index_binding",
+   "exit": 0,
+   "seconds": 133,
+   "max_rss_kb": 255212,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DO-test-shared-runtime.log",
+   "log_sha256": "e4e0d07dcfc1e65be62e9bf36ec93f4b3ca3b0697f0f593d6c828fbf35698a63",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-alert.acknowledged",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-alert-event-contracts-check.py --family alert.acknowledged",
+   "exit": 0,
+   "seconds": 8,
+   "max_rss_kb": 113812,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-alert.acknowledged.log",
+   "log_sha256": "384e05c7485363aa4cfe6df711ba46862a95fbb646a214d3ff7fced53bedecd8",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-alert.dismissed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-alert-event-contracts-check.py --family alert.dismissed",
+   "exit": 0,
+   "seconds": 7,
+   "max_rss_kb": 115736,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-alert.dismissed.log",
+   "log_sha256": "5daa6782e17fb62cc91f54d8c5ab2ddb5ee0e0b4262657bed563423057a239ff",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-alert.rule_muted",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-alert-event-contracts-check.py --family alert.rule_muted",
+   "exit": 0,
+   "seconds": 8,
+   "max_rss_kb": 114688,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-alert.rule_muted.log",
+   "log_sha256": "b309ecb48831fc970632adc84f0808d6280c0cfd98bcbdb370ae1f9c1e4321f6",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-alert.snoozed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-alert-event-contracts-check.py --family alert.snoozed",
+   "exit": 0,
+   "seconds": 9,
+   "max_rss_kb": 114900,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-alert.snoozed.log",
+   "log_sha256": "cfb52574d570a65b4b4579e0f15ab92e1b3336aa8795be997ddb94e1ae093b4b",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-bundle.annotation_state_changed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card5-event-contracts-check.py --family bundle.annotation_state_changed",
+   "exit": 0,
+   "seconds": 3,
+   "max_rss_kb": 83680,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-bundle.annotation_state_changed.log",
+   "log_sha256": "58aea99489457b27aaffb7c10209a6c0711d94c011f8e7b89f8488e1b61b3c4a",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-bundle.note_created",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_created",
+   "exit": 0,
+   "seconds": 10,
+   "max_rss_kb": 97800,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-bundle.note_created.log",
+   "log_sha256": "9109ff04d7aa82a21978b348fac711d8d8f987f42ef7807898e9e7043bb2c478",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-bundle.note_status_changed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_status_changed",
+   "exit": 0,
+   "seconds": 9,
+   "max_rss_kb": 100848,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-bundle.note_status_changed.log",
+   "log_sha256": "566a2d83ed13a9c7766fb9c69b98f16f43d0664dd260f0bde9f493ebc0e52a69",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-concern.assigned",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.assigned",
+   "exit": 0,
+   "seconds": 11,
+   "max_rss_kb": 97408,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-concern.assigned.log",
+   "log_sha256": "a76f3937c3c56ac4448943179d2ff7240d0d3f2af4f010ba899e742fcd30d6d5",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-concern.created",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-concern-created-contracts-check.py --family concern.created",
+   "exit": 0,
+   "seconds": 3,
+   "max_rss_kb": 97148,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-concern.created.log",
+   "log_sha256": "42edb1755d52afb198e2c3260ed1b673286c720e66d1554425c597219a0cdf45",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-concern.evidence_linked",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.evidence_linked",
+   "exit": 0,
+   "seconds": 9,
+   "max_rss_kb": 102440,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-concern.evidence_linked.log",
+   "log_sha256": "fbd66fdca71a02d04ac3e465bcb5aa1a92fc31ac8cff5bf5a0cb13b815f3d125",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-concern.promoted",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.promoted",
+   "exit": 0,
+   "seconds": 10,
+   "max_rss_kb": 98780,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-concern.promoted.log",
+   "log_sha256": "188f528c215780c81488447e464b3b8be61c3f3f28abce8494c374fea8062f4e",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-concern.reopened",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.reopened",
+   "exit": 0,
+   "seconds": 9,
+   "max_rss_kb": 101936,
+   "start_available_gib": 17,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-concern.reopened.log",
+   "log_sha256": "42689eb274260a9e7b61800faeeb5b16e25ec77e126e8ceed381d4aba621be45",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-concern.resolved",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.resolved",
+   "exit": 0,
+   "seconds": 10,
+   "max_rss_kb": 99404,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-concern.resolved.log",
+   "log_sha256": "a86010716aa813cdce697566417674d8ca857a71b1f31332b0836773aff83f94",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-concern.updated",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.updated",
+   "exit": 0,
+   "seconds": 9,
+   "max_rss_kb": 102276,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-concern.updated.log",
+   "log_sha256": "ef361ecb487ece535931ca9d9bafd3a21dc755b09408e8374f732d48cc1ecb8d",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-panel.redocked",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-panel-event-contracts-check.py --family panel.redocked",
+   "exit": 0,
+   "seconds": 3,
+   "max_rss_kb": 89140,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-panel.redocked.log",
+   "log_sha256": "83c458c9527ff270c238cec0acdbc1e9847f4e5044ff9b6da3b2498d124381f0",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-family-panel.undocked",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-panel-event-contracts-check.py --family panel.undocked",
+   "exit": 0,
+   "seconds": 2,
+   "max_rss_kb": 88852,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-family-panel.undocked.log",
+   "log_sha256": "9a0eda6d604962ddf4a5ec4219b227c1d91bcbb5b8b6743998286f706786093f",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6B-checker",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6b-event-contracts.py",
+   "exit": 0,
+   "seconds": 96,
+   "max_rss_kb": 277044,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6B-checker.log",
+   "log_sha256": "39f9971513724770801f0e93b3f3aca9f359ea8c978f798d79b0022d1f3532c8",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6B-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6b-table-generate.py scripts --check",
+   "exit": 0,
+   "seconds": 1,
+   "max_rss_kb": 13916,
+   "start_available_gib": 21,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6B-tables.log",
+   "log_sha256": "e933929e09e1de560e31a02be8b907d9d979a1121f86e2e1e6ad09ceeb84235c",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6B-preparation-retention-guards",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6b-guard-tables.py --family shared --phase preparation_b --out /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6b-retention-guards --max-rss 2048 --pause-when-low 0 --resume-at 0",
+   "exit": 0,
+   "seconds": 32,
+   "max_rss_kb": 325260,
+   "start_available_gib": 21,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6B-preparation-retention-guards.log",
+   "log_sha256": "0e68b42c3dc4a79c22aeea71e5dc9d1c45e03a94b05177966ca4f72f1c243e91",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DT-checker",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dt-event-contracts.py",
+   "exit": 0,
+   "seconds": 97,
+   "max_rss_kb": 230576,
+   "start_available_gib": 21,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DT-checker.log",
+   "log_sha256": "4842f5129778c73804a8d2d307012e23a3f33efd5979e08e6b108d2475643603",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DT-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dt-table-generate.py scripts --check",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 13952,
+   "start_available_gib": 21,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DT-tables.log",
+   "log_sha256": "aaf39f6c03661900ef9ea534a218fada3341c0ac924abd56ff381f0ef4450027",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DT-guards",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dt-guard-tables.py --out /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dt-guards --max-rss 2048 --pause-when-low 10 --resume-at 11",
+   "exit": 1,
+   "seconds": 567,
+   "max_rss_kb": 641548,
+   "start_available_gib": 21,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DT-guards.log",
+   "log_sha256": "ab416280a4a27b04011c5205f45cc9ffb38a67f366b6600150cf60d7811ce64d",
+   "int2": {
+    "exit": 1,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DS15-checker",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-ds15-event-contracts.py",
+   "exit": 0,
+   "seconds": 98,
+   "max_rss_kb": 256132,
+   "start_available_gib": 21,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-checker.log",
+   "log_sha256": "437e754f8b0b1601752cbd805430fec78c52c3ba227c5ca9b2694b9be4b8638b",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DMEM-maintenance",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_memory_maintenance_events.py",
+   "exit": 0,
+   "seconds": 81,
+   "max_rss_kb": 195800,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DMEM-maintenance.log",
+   "log_sha256": "34c8bf21a273da8c505e8781008c9afaba0ebe03082347545a87693793a0ad73",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DMEM-archive",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_memory_archive_events.py",
+   "exit": 0,
+   "seconds": 31,
+   "max_rss_kb": 213724,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DMEM-archive.log",
+   "log_sha256": "d0ccb77ce78a59bf07a8da8a2708af2a91b51b51d6b882e6a2aeafd7bf490211",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-domain-alert.acknowledged",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-domain-check.py --family alert.acknowledged --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-domain-alert.acknowledged",
+   "exit": 0,
+   "seconds": 11,
+   "max_rss_kb": 63560,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-domain-alert.acknowledged.log",
+   "log_sha256": "94dfa6b45eda6593d39cfd7afbd7862eafb5c606684425dfabc2272d56efd716",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-regression-alert.acknowledged",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-final-regression-check.py --family alert.acknowledged --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-regression-alert.acknowledged",
+   "exit": 0,
+   "seconds": 220,
+   "max_rss_kb": 115204,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-regression-alert.acknowledged.log",
+   "log_sha256": "9f6e1ccbe43fc9c414aa147fca5037a88e01c9b3a090b66aeecaf54a2fbac427",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-domain-alert.dismissed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-domain-check.py --family alert.dismissed --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-domain-alert.dismissed",
+   "exit": 0,
+   "seconds": 11,
+   "max_rss_kb": 63532,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-domain-alert.dismissed.log",
+   "log_sha256": "b3aed277f1ce9a275fb173727d5e1457d2e80edda9485731afbbaa600d630ca6",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-regression-alert.dismissed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-final-regression-check.py --family alert.dismissed --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-regression-alert.dismissed",
+   "exit": 0,
+   "seconds": 227,
+   "max_rss_kb": 114792,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-regression-alert.dismissed.log",
+   "log_sha256": "817d69a109189519058702a6b3e7203e026aee1301aed149c7d447078985f76e",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-domain-alert.rule_muted",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-domain-check.py --family alert.rule_muted --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-domain-alert.rule_muted",
+   "exit": 0,
+   "seconds": 11,
+   "max_rss_kb": 63816,
+   "start_available_gib": 17,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-domain-alert.rule_muted.log",
+   "log_sha256": "ddb09914793d0e62cd8f538dceaef8d7903570aeb9086cb773fcd1dbef2a86ed",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-regression-alert.rule_muted",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-final-regression-check.py --family alert.rule_muted --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-regression-alert.rule_muted",
+   "exit": 0,
+   "seconds": 230,
+   "max_rss_kb": 115012,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-regression-alert.rule_muted.log",
+   "log_sha256": "23366c63470396a98fb9e409ad84f8d551a388971c92b13cb4229d2cbe40f062",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-domain-alert.snoozed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-domain-check.py --family alert.snoozed --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-domain-alert.snoozed",
+   "exit": 0,
+   "seconds": 13,
+   "max_rss_kb": 62548,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-domain-alert.snoozed.log",
+   "log_sha256": "d15a6e5725297682b378d706a5bbd0f2d8474c8924e7ae1a6ebed1658466f001",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-regression-alert.snoozed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-final-regression-check.py --family alert.snoozed --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-regression-alert.snoozed",
+   "exit": 0,
+   "seconds": 272,
+   "max_rss_kb": 114964,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-regression-alert.snoozed.log",
+   "log_sha256": "3519e118ce17efa1b3533625414b52b029d66a7d11db1a2e54a3aa457a704b69",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-domain-panel.redocked",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-domain-check.py --family panel.redocked --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-domain-panel.redocked",
+   "exit": 0,
+   "seconds": 18,
+   "max_rss_kb": 69696,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-domain-panel.redocked.log",
+   "log_sha256": "f15886b700b0730be8545a506060357eb7217478db979da6bdefea4007cd3c90",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-regression-panel.redocked",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-final-regression-check.py --family panel.redocked --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-regression-panel.redocked",
+   "exit": 0,
+   "seconds": 176,
+   "max_rss_kb": 89448,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-regression-panel.redocked.log",
+   "log_sha256": "0a4538522dcc7381c070bb9d0089fc126d34801892d12264c2b1364efdde8d6b",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-domain-panel.undocked",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-domain-check.py --family panel.undocked --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-domain-panel.undocked",
+   "exit": 0,
+   "seconds": 12,
+   "max_rss_kb": 70368,
+   "start_available_gib": 12,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-domain-panel.undocked.log",
+   "log_sha256": "71d7a56eff1fc7df8f58ac28cbd5f74e3e8eaabf83fa5101ba94bd11c245e905",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-regression-panel.undocked",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-final-regression-check.py --family panel.undocked --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-regression-panel.undocked",
+   "exit": 0,
+   "seconds": 172,
+   "max_rss_kb": 93688,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-regression-panel.undocked.log",
+   "log_sha256": "f3455b2e7f4546ba10bf97d9c6d2d6926879931765cf5d1b5b2f5c69a211b90c",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-domain-concern.created",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-domain-check.py --family concern.created --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-domain-concern.created",
+   "exit": 0,
+   "seconds": 17,
+   "max_rss_kb": 70344,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-domain-concern.created.log",
+   "log_sha256": "0a94db868029da71cd0922bf31e5c82aad6ec8fc8181d370088bc8196ef12a5e",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-regression-concern.created",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-final-regression-check.py --family concern.created --output /home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/out/dg6a-regression-concern.created",
+   "exit": 0,
+   "seconds": 135,
+   "max_rss_kb": 98648,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-regression-concern.created.log",
+   "log_sha256": "250482bb48c3f22899dd84ff0fcd0becc0362556e64cfe6d4bdd24b08f82e29c",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-audit-grade",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-final-regression-check.py --audit-grade-only",
+   "exit": 0,
+   "seconds": 7,
+   "max_rss_kb": 59168,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-audit-grade.log",
+   "log_sha256": "60f40f9e80b9dca3de67162b825d7b89b0bf042ec81d4d79d7241dd30da0498b",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-table-generate.py scripts --check",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 14804,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-tables.log",
+   "log_sha256": "5cb09bb5ee79f219ac0219be795f88a541064500004b2087bc36b5ef3eb3c521",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DG6A-guard-check",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dg6a-guard-check.py",
+   "exit": 0,
+   "seconds": 3,
+   "max_rss_kb": 50212,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DG6A-guard-check.log",
+   "log_sha256": "5477c9ae9442d25d133fac6718dad16120e21e32febcbfbd1f0ec8272dd0921c",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DCW-bundle.revision_requested",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_bundle_revision_events.py --family bundle.revision_requested",
+   "exit": 0,
+   "seconds": 29,
+   "max_rss_kb": 199144,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCW-bundle.revision_requested.log",
+   "log_sha256": "7013210de86ccf2c6e4a65ce6299c884c8a53718a529dd17f46a7ec18c83babb",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DCW-bundle.revision_started",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_bundle_revision_events.py --family bundle.revision_started",
+   "exit": 0,
+   "seconds": 37,
+   "max_rss_kb": 203428,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCW-bundle.revision_started.log",
+   "log_sha256": "979ee399bfc54b5b6f330f70389db29d9fd9b35394154eadb0bf8368f29c6b08",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DCW-bundle.revision_completed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_bundle_revision_events.py --family bundle.revision_completed",
+   "exit": 0,
+   "seconds": 41,
+   "max_rss_kb": 210132,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCW-bundle.revision_completed.log",
+   "log_sha256": "d167835a0eba106c3b8d7c7f0f88711aaef6b8e63e7edc0eebbeba8688937a0e",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DCW-bundle.revision_interrupted",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_bundle_revision_events.py --family bundle.revision_interrupted",
+   "exit": 0,
+   "seconds": 41,
+   "max_rss_kb": 209732,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCW-bundle.revision_interrupted.log",
+   "log_sha256": "8e031efee8a3b66fa78e6f5bcacce5219398b56ffb7317ca5bdd8db8cc3a85be",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DCW-wizard.opened",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_bundle_revision_events.py --family wizard.opened",
+   "exit": 0,
+   "seconds": 29,
+   "max_rss_kb": 187676,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCW-wizard.opened.log",
+   "log_sha256": "e12f65ba1d33c8f5187b16c6efedc0f44ac86f20eadd17416035b019019b9c99",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DCW-wizard.deferred_payload.loaded",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_bundle_revision_events.py --family wizard.deferred_payload.loaded",
+   "exit": 0,
+   "seconds": 63,
+   "max_rss_kb": 218252,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCW-wizard.deferred_payload.loaded.log",
+   "log_sha256": "87b4b63290d3a08cdfa8f32f0bf7e5f26b21f73a74a5e774d99ee6817fe37047",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DR-checker",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-runtime-artifact-event-drafts.py",
+   "exit": 0,
+   "seconds": 1122,
+   "max_rss_kb": 327284,
+   "start_available_gib": 13,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DR-checker.log",
+   "log_sha256": "17eb718392c5e22a91f32edcc0671b151088f74428417c57f8f9869a9ce4d404",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DX-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-executor-table-generate.py --check",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 14320,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DX-tables.log",
+   "log_sha256": "1c3491343bb48fa8c3137a19b471ad0b811e9a01434b31d98ac5802073afc7c9",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DX-p2a",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-executor-p2a-cases.py --check",
+   "exit": 0,
+   "seconds": 2,
+   "max_rss_kb": 311660,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DX-p2a.log",
+   "log_sha256": "df906240d749926f9c7d1f583d6a2ce6ffe5ead66200fb94a456782820527e42",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DX-semantics",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_executor_event_semantics.py",
+   "exit": 0,
+   "seconds": 72,
+   "max_rss_kb": 319668,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DX-semantics.log",
+   "log_sha256": "9d7fe74491255a36e2e35631fd3437236693661caf190fbe253cb660720baae7",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "DX-contracts",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_executor_event_contracts.py",
+   "exit": 0,
+   "seconds": 6,
+   "max_rss_kb": 52248,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DX-contracts.log",
+   "log_sha256": "2268a78af639b061cc94bff13219c199c3feaaa84063078830532f5d798f5728",
+   "int2": {
+    "exit": 0,
+    "source": "INT2-retention-verification.json"
+   }
+  },
+  {
+   "label": "SHARED-command-payload-defs",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-command-payload-defs-check.py",
+   "exit": 0,
+   "seconds": 127,
+   "max_rss_kb": 111724,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/SHARED-command-payload-defs.log",
+   "log_sha256": "32b728319856cd0c8d98220f00eb8d44383bd66e1ea367a084bc6780d8173cad",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DCN-checker",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_card2_events.py",
+   "exit": 0,
+   "seconds": 499,
+   "max_rss_kb": 140168,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCN-checker.log",
+   "log_sha256": "755601ffa60683414a8e2880df8199e1d77e3e90954861936cc0ada764025da0",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DCN-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card2-table-generate.py --check",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 33424,
+   "start_available_gib": 20,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCN-tables.log",
+   "log_sha256": "17dee3a0ea20c4fc3923f47e62af0ad836138cb78f119044315df270b843f1b6",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DCN-p2a",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-card2-p2a-cases.py --check",
+   "exit": 0,
+   "seconds": 14,
+   "max_rss_kb": 133288,
+   "start_available_gib": 20,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCN-p2a.log",
+   "log_sha256": "e1fc9593a4218100dc120cf870f8aaf9bc614799ece9d3e72220fbb83130c336",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS-p2b",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_ds_p2b_cases.py --check",
+   "exit": 0,
+   "seconds": 11,
+   "max_rss_kb": 214120,
+   "start_available_gib": 20,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS-p2b.log",
+   "log_sha256": "ef96ed8cc5839636c613beb7e5b5f6af89659a209a8ce6efc3be1ef0e918c684",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS-p2a",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_ds_p2a_cases.py --check",
+   "exit": 0,
+   "seconds": 57,
+   "max_rss_kb": 690216,
+   "start_available_gib": 20,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS-p2a.log",
+   "log_sha256": "a308d22873605cfcfe6092f73d0948d55d6073ab2a267d0f535941cd14633dd2",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-ds-table-generate.py --check",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 17112,
+   "start_available_gib": 20,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS-tables.log",
+   "log_sha256": "5868cb5ba2ea2414785d025b6e6c1887f57e388b8b78a221d2621f88f0edbce2",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS-terminal-selftest",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_terminal_workgroup_compatibility.py --self-test",
+   "exit": 0,
+   "seconds": 1,
+   "max_rss_kb": 77344,
+   "start_available_gib": 20,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS-terminal-selftest.log",
+   "log_sha256": "934592185b3a011cbefea710c22b16e157b288d1e0f93d864199cbcd14c49256",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS-layout-slot",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_home_layout_v2_slot_receipt.py",
+   "exit": 0,
+   "seconds": 10,
+   "max_rss_kb": 150244,
+   "start_available_gib": 20,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS-layout-slot.log",
+   "log_sha256": "c981c6ea5c795ff48dca4290140ccd1f043be4e8567beab2e5134c9e283ba000",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS-layout-slot-selftest",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_home_layout_v2_slot_receipt.py --self-test",
+   "exit": 0,
+   "seconds": 23,
+   "max_rss_kb": 181072,
+   "start_available_gib": 20,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS-layout-slot-selftest.log",
+   "log_sha256": "71b03406e0e355f4cfba34acdcc0ddc8f691d6b589e9734e02ae7ae0be692491",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DM-checker",
+   "phase": "phase2b",
+   "command": "python3 -B scripts/pm-small-owner-events.py",
+   "exit": 0,
+   "seconds": 175,
+   "max_rss_kb": 155832,
+   "start_available_gib": 19,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DM-checker.log",
+   "log_sha256": "fcd01a399c362a5a4f471873d9473ca67d3a5be8eafd7e7540409c088ca69eba",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DMEM-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-memory-table-generate.py scripts --check",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 15256,
+   "start_available_gib": 20,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DMEM-tables.log",
+   "log_sha256": "a230e020b85bc36256287bb240fef5ae9c7be9d91056bf4b4d897ddbf492929c",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DCH-checker",
+   "phase": "phase2b",
+   "command": "python3 -B scripts/pm_dch_events.py",
+   "exit": 0,
+   "seconds": 390,
+   "max_rss_kb": 477576,
+   "start_available_gib": 20,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCH-checker.log",
+   "log_sha256": "0a55040d30045014d08d19be2335ae76ed4e02214dc979fe735fabe2c492c3df",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DCH-stop",
+   "phase": "phase2b",
+   "command": "python3 -B scripts/pm_dch_stop.py",
+   "exit": 0,
+   "seconds": 35,
+   "max_rss_kb": 121008,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCH-stop.log",
+   "log_sha256": "4d26cd7b3dfe2174cfbe5a2eaf4fd35bd582fcb104da11edf0c5e1daefdb75d2",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DCH-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-dch-table-generate.py scripts --check",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 14816,
+   "start_available_gib": 17,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DCH-tables.log",
+   "log_sha256": "6ac4a02258d1cad57e87428f010e21287190e3552471dcd89006efc791d082f9",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS15-deck2-browser.context_shared",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_shared",
+   "exit": 0,
+   "seconds": 4,
+   "max_rss_kb": 63564,
+   "start_available_gib": 17,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-deck2-browser.context_shared.log",
+   "log_sha256": "d2fcb64761dc10ac521586f79b677e2a399de4a95223493d788d7d4af9ec5a34",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS15-deck2-browser.context_share_revoked",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked",
+   "exit": 0,
+   "seconds": 3,
+   "max_rss_kb": 63292,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-deck2-browser.context_share_revoked.log",
+   "log_sha256": "973261cb63fe0f35139e1d143e1b3ec0ebb3fdfdbab40cb15a247216364118a7",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS15-deck2-catalog.update.started",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.started",
+   "exit": 0,
+   "seconds": 2,
+   "max_rss_kb": 64032,
+   "start_available_gib": 17,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-deck2-catalog.update.started.log",
+   "log_sha256": "04614cf0be964114f55353ef6d457ee375f196421220880d48710028f733a35f",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS15-deck2-catalog.update.completed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.completed",
+   "exit": 0,
+   "seconds": 4,
+   "max_rss_kb": 63832,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-deck2-catalog.update.completed.log",
+   "log_sha256": "062b8f973b93b26b83c380221325a106fa2b2386649f9650db41161032065ec2",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS15-deck2-catalog.remove.started",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.started",
+   "exit": 0,
+   "seconds": 3,
+   "max_rss_kb": 63792,
+   "start_available_gib": 17,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-deck2-catalog.remove.started.log",
+   "log_sha256": "4d6a087410d4ef0ebcb44bc73381bcda4a3f5fdc72bc6efc89d587c751e3db5a",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS15-deck2-catalog.remove.completed",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.completed",
+   "exit": 0,
+   "seconds": 3,
+   "max_rss_kb": 63172,
+   "start_available_gib": 17,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-deck2-catalog.remove.completed.log",
+   "log_sha256": "12ae0cb4e770e04e0f56ee3f9d19f256631eee94c7e73746e436972649eef714",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS15-deck2-tool.custom_headless.skipped",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-ds15-deck2-contracts.py --family tool.custom_headless.skipped",
+   "exit": 0,
+   "seconds": 3,
+   "max_rss_kb": 63184,
+   "start_available_gib": 17,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-deck2-tool.custom_headless.skipped.log",
+   "log_sha256": "09eec28b488efacfcfbb6ae8e6343ed37bed66cef598e012f300a5820e062964",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS15-p2b",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_ds15_p2b_cases.py --check",
+   "exit": 0,
+   "seconds": 3,
+   "max_rss_kb": 98084,
+   "start_available_gib": 17,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-p2b.log",
+   "log_sha256": "70b2b512b43a3d60bdbe5c19d748c18620631547ac42a079b3b1fd4562712418",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS15-p2a",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_ds15_p2a_cases.py --check",
+   "exit": 0,
+   "seconds": 3,
+   "max_rss_kb": 101320,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-p2a.log",
+   "log_sha256": "7274450b8f7537f9558439e7622ad1ad72982a534d988367f32fbc7e688335bd",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DS15-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-ds15-table-generate.py scripts --check",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 15688,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DS15-tables.log",
+   "log_sha256": "29335c8c70b43df60e7ddb6f27ddc181a296746e7c5373954ae6853e373ea3d9",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DDBG-checker",
+   "phase": "phase2b",
+   "command": "python3 -B scripts/pm-debug-investigation-events.py",
+   "exit": 0,
+   "seconds": 77,
+   "max_rss_kb": 168932,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DDBG-checker.log",
+   "log_sha256": "bd7ee2fbf9436ff097bf47b8143b8094279de2eb50dd4f7b56e63a966ba0d067",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DDBG-views",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_debug_investigation_views.py --check-guard-views",
+   "exit": 0,
+   "seconds": 1,
+   "max_rss_kb": 38240,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DDBG-views.log",
+   "log_sha256": "99ab0bf17469812a4d0effede1fe61491e10638d7f1a9935ad8c00b8dd37cdef",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DC-checker",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_collaboration_events.py --json",
+   "exit": 0,
+   "seconds": 326,
+   "max_rss_kb": 1255484,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DC-checker.log",
+   "log_sha256": "ab6dd64d9e449dce84d989d8e396b6196a3f05929532a040cadcc11be91d92c0",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DC-tables",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-collab-table-generate.py --check",
+   "exit": 0,
+   "seconds": 0,
+   "max_rss_kb": 15704,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DC-tables.log",
+   "log_sha256": "68bd8381ffd86f1340320f70b10b598778e36f8f7e2a6236efd216de5c954a31",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DC-selftest",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_collaboration_events.py --self-test",
+   "exit": 0,
+   "seconds": 895,
+   "max_rss_kb": 1287280,
+   "start_available_gib": 18,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DC-selftest.log",
+   "log_sha256": "c41be306663964f4334f660b9c96c103b12517c8dade5a5789a1b40d25ffad34",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DO-guard-proof-check-all",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-orchestrator-guard-proof.py check-all",
+   "exit": 0,
+   "seconds": 59,
+   "max_rss_kb": 633352,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DO-guard-proof-check-all.log",
+   "log_sha256": "eefcf81037deca3794155d0788917187bb178aaaa7aa0a86267ca574d85602fd",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DO-guard-proof-check",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-orchestrator-guard-proof.py check",
+   "exit": 0,
+   "seconds": 1,
+   "max_rss_kb": 40228,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DO-guard-proof-check.log",
+   "log_sha256": "a1e99992492286b624970ae1ee88d5e435ecb22671165eb649240ee298ba7e57",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DO-coordination-events",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm_coordination_events.py",
+   "exit": 0,
+   "seconds": 6,
+   "max_rss_kb": 93084,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DO-coordination-events.log",
+   "log_sha256": "79db659b2239953b1b48f003a3fb2f7ffe0592ea46062b4bbe407d4adbc67ebe",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "DO-test-coordination",
+   "phase": "phase2b",
+   "command": "python3 -m unittest discover -s tests -p test_pm_coordination_events.py",
+   "exit": 0,
+   "seconds": 66,
+   "max_rss_kb": 262052,
+   "start_available_gib": 15,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/DO-test-coordination.log",
+   "log_sha256": "c9a7a7ac551f7d9d56b1ea2e1f72412111db607a44650ea224cfd118d646039d",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "TEST-onboarding",
+   "phase": "phase2b",
+   "command": "python3 -m unittest tests.test_pm_onboarding_phases",
+   "exit": 0,
+   "seconds": 11,
+   "max_rss_kb": 358784,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/TEST-onboarding.log",
+   "log_sha256": "fe2654da38259d77896b95a323b2bb769a02d76e27cee724a3d0f7d11fd12729",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "TEST-browser-admission",
+   "phase": "phase2b",
+   "command": "python3 -m unittest tests.test_pm_browser_event_admission",
+   "exit": 0,
+   "seconds": 178,
+   "max_rss_kb": 286104,
+   "start_available_gib": 17,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/TEST-browser-admission.log",
+   "log_sha256": "409cb4ee3efe37dcba1281157e339c16546593fda7c7cbb56c1ce3c5514b5cdf",
+   "int2": {
+    "exit": 0,
+    "source": "ea-int2/checker-summary.json"
+   }
+  },
+  {
+   "label": "POST-shard-check",
+   "phase": "phase2b",
+   "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+   "exit": 0,
+   "seconds": 33,
+   "max_rss_kb": 93356,
+   "start_available_gib": 14,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/POST-shard-check.log",
+   "log_sha256": "7da2c2397b239dd0ed23a315f1db1f44846b9c666bf8ec77ecf15d2ac6e46ce0",
+   "int2": null
+  },
+  {
+   "label": "POST-registry-render",
+   "phase": "phase2b",
+   "command": "python3 -m unittest tests.test_shared_runtime_storage_contracts.SharedRuntimeStorageContractsTest.test_registry_bytes_match_materializer_render_behind_pending_retention",
+   "exit": 0,
+   "seconds": 12,
+   "max_rss_kb": 137204,
+   "start_available_gib": 16,
+   "mode": "capped2G_no_swap",
+   "log": "/home/sittingmongoose/pm-scratch/ea-int2-rebase-resume/runs/logs/POST-registry-render.log",
+   "log_sha256": "c2b64d3de65793cded4f90e929bc20eeae4640f3686914440904fc8f9e4843b8",
+   "int2": null
+  }
+ ]
+}

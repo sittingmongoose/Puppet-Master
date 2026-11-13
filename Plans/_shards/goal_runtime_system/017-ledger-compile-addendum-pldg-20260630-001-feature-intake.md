@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L1045-L2760
+Source lines: L1045-L2744
 
-Source SHA256: `a3d445f21fb597b64bb086e380015fe3ae5e7ff9445b60f75ae5bf17aea53614`
+Source SHA256: `89fd63627d92d52c7eb46ca8f019b279f72c15db055a54e46aeb9eec66c963bb`
 
 ---
 
@@ -20,31 +20,29 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime may request, consume, and certify work that depends on containerized-host capability, but it does not
-  dispatch host work directly and cannot treat blocked host state as completion evidence. Goals, child goals, and
-  verification or repair cycles pass host_capability_ref, host_profile_id, host_assignment_id, execution_unit_context_ref,
+  Goal Runtime may request and consume work that depends on containerized-host capability, but it does not
+  dispatch host work directly and cannot treat blocked host state as completion evidence. Host-dependent
+  work passes host_capability_ref, host_profile_id, host_assignment_id, execution_unit_context_ref,
   TestRunReceipt refs, host_preflight_receipt, host_execution_receipt, cleanup_retention_receipt, blocked_reason_code, and
-  Runtime Artifacts evidence refs through Executor, Automated Testing, Tools, and subagent boundaries. Goal completion
-  certification requires lane-appropriate host/test/cleanup receipts, explicit blocker payloads, or approved verification
-  exceptions; Runtime Artifacts remains projection and evidence browsing, not receipt truth.
+  Runtime Artifacts evidence refs through Executor, Automated Testing, Tools, and subagent boundaries.
+  Runtime Artifacts remains projection and evidence browsing, not receipt truth.
 gui_related: false
-gui_classification_reason: Goal Runtime host-capability consumption and certification are backend/runtime behavior, not GUI presentation.
+gui_classification_reason: Goal Runtime host-capability consumption is backend/runtime behavior, not GUI presentation.
 depends_on: [EP-109, RM-048, T-166, ATS-019, RAP-042, CV-303]
 unblocks: [OSI-431, OP-028, RGV-015]
 acceptance_criteria:
-  - Goal and child-goal records can carry host_capability_ref, host_assignment_id, execution_unit_context_ref, and receipt refs without owning host mutation.
-  - GoalCompletionReceipt certification fails or blocks when required host/test/cleanup evidence is missing.
+  - Host-dependent work can carry host_capability_ref, host_assignment_id, execution_unit_context_ref, and receipt refs without owning host mutation.
   - Blocked host outcomes are preserved as blocked != failed and cannot be transformed into success.
   - Runtime Artifacts links are used as evidence projection, not as the authoritative receipt source.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future GoalCompletionReceipt host-evidence fixture
+  - future Goal host-evidence fixture
 risk_class: goal_runtime_host_certification_drift
 reasoning_tier: high
 context_scope: goal_runtime_containerized_host_consumption
 implementation_surfaces:
   - Plans/Goal_Runtime_System.md
-  - future GoalCompletionReceipt and child-goal runtime records
+  - future Goal host-evidence consumption
 node_compile_hint:
   mode: goal_runtime_host_capability_consumption
   create_worknodes: false
@@ -65,10 +63,9 @@ preserved_exact_tokens:
   - "execution_unit_context"
   - "host_assignment_id"
   - "blocked != failed"
-  - "GoalCompletionReceipt"
 negative_constraints:
   - Do not let Goal Runtime dispatch host work directly.
-  - Do not certify completion from a blocked host state.
+  - Do not complete from a blocked host state.
   - Do not make Runtime Artifacts the receipt authority.
 owner_hints:
   - Plans/Goal_Runtime_System.md
@@ -85,19 +82,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Goal Runtime uses one Goal Runtime engine with three product integrations labeled A. invisible, B. Goal mode exposed to the user in chat assistant, and C. orchestration flow: invisible internal goals for product flows, visible user-directed Goal mode in Assistant Chat, and Orchestrator Goal runtime flows that project GoalRun and WorkGraph state while delegating WorkNode readiness, backoff, capacity, and dispatch to Executor. Invisible goals are hands-off for ordinary ambiguity and continue from start to finish unless a hard stop, approval boundary, or true blocker applies. Hard-stop classes include explicit user stop, a forbidden specific action, missing source ledger, missing project plans or inaccessible target artifacts, permissions/file-system failure, unsafe/destructive scope, contradictory goal text, and true infrastructure blocker. Visible goals and Orchestrator goals expose controls and status through their owner surfaces while sharing the same runtime state and lifecycle model.
+  Goal Runtime uses one Goal Runtime engine with three product integrations labeled A. invisible, B. Goal mode exposed to the user in chat assistant, and C. orchestration flow: invisible internal goals for product flows, visible user-directed Goal mode in Assistant Chat, and Orchestrator goals started by Orchestrator flows, which leave WorkNode readiness, backoff, capacity, and dispatch to Executor. The Orchestrator Goal runtime projection of GoalRun and WorkGraph state under one Goal lifecycle is retired by DL-478: no GoalRun is created, and a WorkGraph is not Goal state. Invisible goals are hands-off for ordinary ambiguity and continue from start to finish unless a hard stop, approval boundary, or true blocker applies. Hard-stop classes include explicit user stop, a forbidden specific action, missing source ledger, missing project plans or inaccessible target artifacts, permissions/file-system failure, unsafe/destructive scope, contradictory goal text, and true infrastructure blocker. Visible goals and Orchestrator goals expose controls and status through their owner surfaces while sharing the same runtime state and lifecycle model.
 gui_related: false
 gui_classification_reason: This unit defines runtime presentation modes; chat-specific controls are owned by Assistant Chat consumer PlanUnits.
 depends_on:
   - GRS-001
 unblocks: []
 acceptance_criteria:
-  - Invisible internal goals, visible Assistant Chat Goal mode, and Orchestrator Goal runtime flows share one lifecycle/state model.
+  - Invisible internal goals, visible Assistant Chat Goal mode, and Orchestrator goals share one lifecycle/state model.
   - The three integrations preserve the labels A. invisible, B. Goal mode exposed to the user in chat assistant, and C. orchestration flow.
   - Invisible goals do not ask row-by-row or ordinary ambiguity questions.
   - Hard stops remain available for authority, safety, missing preconditions, and true blockers.
   - Hard-stop classification preserves explicit user stop, missing source ledger, missing project plans, permissions/file-system failure, unsafe/destructive, and contradictory cases.
-  - Orchestrator Goal runtime projections do not replace Executor readiness, backoff, capacity, or dispatch authority.
+  - Orchestrator goals do not replace Executor readiness, backoff, capacity, or dispatch authority.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Goal Runtime lifecycle tests
@@ -334,9 +331,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-005
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-048
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The concise Goal V2 record replaces the expanded durable Goal state under GRS-048 (DL-478); the old text below is retained for lineage only.
   Goal Runtime owns durable execution state for each goal, including objective, lifecycle status, task list, allowed scope, constraints, budgets, attachment manifest, child goals, evidence references, completion receipt, revision, and append-only goal event log. Goal state survives compaction, restarts, and model switches, and optimistic concurrency prevents stale overwrite.
 gui_related: false
 gui_classification_reason: Durable goal state and event logs are runtime/persistence contracts, not GUI implementation.
@@ -406,7 +405,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Scheduler continuation and revisioning are runtime behavior; visible controls are Assistant Chat consumer behavior.
 depends_on:
-  - GRS-005
+  - GRS-048
 unblocks: []
 acceptance_criteria:
   - "The host reloads canonical state and Stop/currentness/root/permission/writer evidence before every bounded turn."
@@ -462,9 +461,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-007
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-054
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Direct user edits and approved agent proposals replace Goal Replan Events under GRS-054 (DL-478); the old text below is retained for lineage only.
   Material mid-goal user changes create an explicit Goal Replan Event. The runtime pauses scheduling, classifies the interruption as pause/resume, stop/cancel, constraint update, scope expansion, scope reduction, goal replacement, or clarifying instruction, computes impact, updates the visible task list, re-steers or cancels child goals, and then resumes when valid. Trivial clarifications may apply inline; hard constraints apply immediately; forks are reserved for alternate paths or material conflicts.
 gui_related: true
 gui_classification_reason: The runtime event includes user-visible task-list updates and chat-facing replan feedback.
@@ -740,9 +741,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-011
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-049
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The initiating chat model and workflow-owned Review replace Goal-specific verifier escalation under GRS-049 (DL-478); the old text below is retained for lineage only.
   Goal Runtime escalates to a stronger verifier, second-pass worker, adjudicator, or stronger policy handling when evidence is incomplete, stale, or non-replayable; child outputs conflict; retries or blockers repeat; strong-certification surfaces are touched; destructive or governance actions are proposed; worker confidence is low; high-density slice or high-signal input produces an empty/weak result; target conflict, large deletion/replacement, or failing tests appear; writes are out of scope; validators fail; or completion claims are unsupported.
 gui_related: false
 gui_classification_reason: Escalation policy is runtime safety behavior, not GUI implementation.
@@ -800,9 +803,11 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-012
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Goal_Runtime_System.md
+superseded_by: GRS-050
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Evidence-gated completion replaces Goal completion certification under GRS-050 (DL-478); the old text below is retained for lineage only.
   Every goal produces a Goal Completion Receipt. Completion is a runtime-certified state, not a worker-model judgment. A worker can propose completion, but the controller/evaluator/certifier decides whether the goal is complete. Required inputs must be inventoried, required work represented or dispositioned, validations run or explicitly skipped with reason, acceptance criteria satisfied, unresolved items explicit, and no required source or target areas left unaccounted for. Ledger-to-Plans completion additionally requires material ledger content represented in live Plans or intentionally captured as open questions or unresolved decisions, conflicts preserved, unsupported inventions absent, and source-to-target evidence present. Receipts separate source evidence, canonical evidence, process evidence, governance evidence, unresolved items, changed artifacts, and validator outcomes.
 gui_related: false
 gui_classification_reason: Completion receipt authority and evidence classes are runtime/governance behavior.
@@ -1196,9 +1201,10 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-018
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Goal task templates and Goal-type completion criteria are retired. The old text below is retained for lineage only.
   Goal Runtime provides a task template catalog for common goal classes: bug_fix, feature_build, test_until_pass, doc_update, repo_research, refactor, migration, audit_and_repair, ledger_to_plan_transfer, governance seal, and future plan_graph_build only after the PlanUnit-to-NodeSeed-to-WorkNode compiler contract exists. Each template carries goal-type completion criteria, validator expectations, evidence requirements, and no-WorkNode boundary where applicable. Bug-fix goals require the bug reproduced or a reason recorded, fix applied, relevant tests pass, and changed files/evidence summarized. Feature-build goals require implementation done within scope, tests added/updated and passing, docs/plans updated when required, and acceptance criteria proved. Test-until-pass goals keep running until the command passes or external/blocking status is classified with logs captured. Doc-update goals require target docs reflect the request, unsupported content absent, source refs/lineage preserved where required, and validators or lint checks pass. Ledger-to-plan transfer goals load compact state and relevant records, inspect sharded source/target docs through runtime retrieval, update live Plans, verify coverage, repair missed/weak areas autonomously, and complete with evidence/certification.
 gui_related: false
 gui_classification_reason: Goal templates and completion criteria are runtime/task policy, not GUI implementation.
@@ -1207,14 +1213,7 @@ depends_on:
   - GRS-015
 unblocks: []
 acceptance_criteria:
-  - Bug-fix, feature-build, test-until-pass, doc-update, audit/repair, and ledger-to-plan transfer goals have explicit completion criteria.
-  - Plan graph build remains deferred until the compiler contract defines safe node artifacts.
-  - Template metadata does not create executable queues by itself.
-  - Bug-fix goals complete only after bug reproduced or reason recorded, fix applied, relevant tests pass, and changed files/evidence summarized.
-  - Feature-build goals complete only after implementation done within scope, tests added/updated and pass, docs/plans updated when required, and acceptance criteria proved.
-  - Test-until-pass goals continue until command passes or external/blocking condition is classified with logs captured.
-  - Doc-update goals complete only when target docs reflect the request, unsupported content is absent, source refs/lineage are preserved where required, and validators or lint checks pass.
-  - Ledger-to-plan transfer goals load compact state/relevant records, inspect sharded source/target docs, update live Plans, verify coverage, repair autonomously, and complete with completion certificate.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future template catalog tests
@@ -1247,7 +1246,6 @@ preserved_exact_tokens:
   - "migration"
   - "audit_and_repair"
   - "ledger_to_plan_transfer"
-  - "ledger-to-plan transfer"
   - "governance seal"
   - "plan_graph_build"
   - "Plan graph build goal deferred"
@@ -1272,8 +1270,6 @@ preserved_exact_tokens:
   - "sharded source/target docs"
   - "update live Plans"
   - "verify coverage"
-  - "repair autonomously"
-  - "completion certificate"
 negative_constraints:
   - Do not create NodeSeeds or WorkNodes until Plans/Plan_To_Node_Compilation.md defines the compiler contract.
   - Do not treat a task template as an executable queue.
@@ -1292,8 +1288,7 @@ owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
   Goal Runtime handles ordinary ambiguity and large-work recovery autonomously by preserving open
   questions, conflicts, or unplaced requirements in appropriate docs/artifacts, selecting a safe canonical
-  destination when policy is clear, retrying, inspecting, replanning, spawning verifier/subagents,
-  escalating model tier, narrowing scope, running repair gates, rolling back isolated changes when
+  destination when policy is clear, retrying, inspecting, replanning, narrowing scope, and rolling back isolated changes when
   appropriate, and recording precise blockers when it cannot proceed. Large, cross-referential,
   ambiguous-in-ordinary-ways, or many-shard tasks do not route to manual decision merely because they are
   large. Blocked status must store and display blocker_class, cause, affected scope, last attempted
@@ -1305,14 +1300,12 @@ gui_related: true
 gui_classification_reason: Exact blocker status is a user-visible goal status surface as well as runtime state.
 depends_on:
   - GRS-006
-  - GRS-015
 unblocks: []
 acceptance_criteria:
   - Ordinary large-work ambiguity does not become a manual decision request by default.
   - Recovery actions are recorded as goal events or receipt evidence.
-  - Blocked states expose exact blocker causes for user and verifier review.
+  - Blocked states expose exact blocker causes for user review.
   - Ordinary ambiguity can be preserved as open questions, conflicts, or unplaced requirements with safe canonical destination evidence.
-  - Recovery actions include retry, replan, spawn verifier/subagents, escalate model tier, narrow scope, repair gates, and isolated rollback where safe.
   - Blocked states record blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -1344,9 +1337,6 @@ preserved_exact_tokens:
   - "Autonomous recovery actions"
   - "retry"
   - "replan"
-  - "spawn verifier"
-  - "escalate model tier"
-  - "repair gates"
   - "roll back"
   - "precise blockers"
   - "No manual decision for ordinary large work"
@@ -1379,8 +1369,8 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Approval authority boundaries are runtime/permission policy, not GUI layout or presentation.
 depends_on:
-  - GRS-011
-  - GRS-012
+  - GRS-049
+  - GRS-050
 unblocks: []
 acceptance_criteria:
   - High-risk goal actions request explicit user approval before execution.
@@ -1491,9 +1481,10 @@ owner_hints:
 ```yaml
 plan_unit_id: GRS-022
 unit_type: risk
-status: accepted
+status: retired
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The Goal risk register and runtime-certification mitigation policy are retired. The old text below is retained for lineage only.
   The primary Goal Runtime risks are false completion by weak agents, hidden work without user control, and invisible/internal flows interrupting the user for ordinary blockers. Runtime certification, visible control surfaces, exact blocker states, autonomous recovery, and explicit authority boundaries mitigate these risks.
 gui_related: true
 gui_classification_reason: This risk register includes hidden-work/user-control UX risk and visible control mitigation.
@@ -1504,9 +1495,7 @@ depends_on:
   - GRS-020
 unblocks: []
 acceptance_criteria:
-  - False completion risk is mitigated through runtime-certified receipts and verifier/adjudicator policy.
-  - Hidden work risk is mitigated through visible Assistant Chat controls and evidence disclosure.
-  - Internal-flow interruption risk is mitigated through autonomous recovery and exact hard-stop boundaries.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - manual Goal Runtime risk review
@@ -1609,18 +1598,15 @@ unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Current Planning Wizard flow semantics are owned by Plans/Planning_Wizard.md, and legacy Chain Wizard compatibility remains source-lineage-only unless a separate compatibility owner explicitly implements an import/display bridge. Goal Runtime may define invisible ledger-to-Plans execution and a plan_graph_build template that consumes the accepted Plan_To_Node_Compilation compiler contract, but Goal Runtime plan/index/governance phases still must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks. Runtime PlanCompile may create runtime artifacts only through the Plan_To_Node_Compilation compiler, Executor intake, activation, and completion certification chain.
+  Current Planning Wizard flow semantics are owned by Plans/Planning_Wizard.md, and legacy Chain Wizard compatibility remains source-lineage-only unless a separate compatibility owner explicitly implements an import/display bridge. Goal Runtime may support invisible ledger-to-Plans execution, but Goal Runtime plan/index/governance phases must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks. The plan_graph_build Goal template and Goal-owned completion certification are retired by DL-478; runtime compilation remains owned by Plan_To_Node_Compilation and Executor.
 gui_related: false
 gui_classification_reason: Legacy compatibility/source-lineage and runtime compiler boundary design is not a GUI implementation requirement.
 depends_on:
   - GRS-003
-  - GRS-018
-  - PNC-007
 unblocks: []
 acceptance_criteria:
   - Current Planning Wizard flow semantics route to Plans/Planning_Wizard.md.
   - Legacy Chain Wizard compatibility is source-lineage-only and is not required by accepted runtime flow.
-  - Plan graph build consumes the accepted Plan_To_Node_Compilation compiler contract without letting Goal Runtime bypass Executor intake.
   - No node artifacts are produced by Goal Runtime documentation, index, or governance phases.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -1643,12 +1629,11 @@ source_lineage:
   - pldg-20260616-001-goal-runtime-system:q-0002
 preserved_exact_tokens:
   - "Plan graph goals come after compiler contract"
-  - "Plan graph build"
   - "exact redesigned Chain Wizard flow"
   - "PlanUnit-to-NodeSeed-to-WorkNode compiler contract"
 negative_constraints:
   - Do not make legacy Chain Wizard compatibility a dependency for accepted runtime flow.
-  - Do not let Goal Runtime bypass Plan_To_Node_Compilation, Executor intake, activation, or completion certification.
+  - Do not let Goal Runtime bypass Plan_To_Node_Compilation or Executor intake.
 owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/Plan_To_Node_Compilation.md
@@ -1673,9 +1658,8 @@ gui_related: true
 gui_classification_reason: This requirement includes final visual styling, iconography, and layout for Goal
   UI surfaces.
 depends_on:
-- GRS-005
-- GRS-007
-- GRS-010
+- GRS-048
+- GRS-054
 - GRS-049
 unblocks: []
 acceptance_criteria:

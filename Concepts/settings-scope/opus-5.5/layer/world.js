@@ -49,6 +49,215 @@
   const portal = () => (W.PM7_SETTINGS_TOME && W.PM7_SETTINGS_TOME.portal ? W.PM7_SETTINGS_TOME.portal() : D.body);
   const root = () => D.getElementById('pm-settings-root');
 
+  /* ------------------------------------------------------------------ Plans' inventory layering, the per-row authority
+     Inventory alignment (2026-11-13): SSYS-059 makes the inventory layering object, not legacy scope, the reviewed
+     authority for every row: home, may_differ_by, computer_key, combine, careful_order and not_offered. The layer reads
+     Plans/settings_inventory.json from the same tree, so it follows whatever inventory the repository carries:
+     index.html fetches it when served, and tools/build_standalone.py inlines it into the single files. Either way it
+     arrives as window.PSX_LAYERING = { source: { path, sha256, schema_version, rows }, groups: { 'cat.sub': title },
+     settings: [{ id, type, layering }] }. Without it the layer says so and falls back to its own heuristic. */
+  const layering = (() => {
+    const raw = W.PSX_LAYERING;
+    if (!raw || !Array.isArray(raw.settings)) { try { console.warn('[psx] Plans’ inventory layering is missing: rows use the concept’s own heuristic'); } catch (e) { /* no console */ } return null; }
+    const rows = {}, types = {};
+    raw.settings.forEach((r) => { if (r && r.id && r.layering) { rows[r.id] = r.layering; types[r.id] = r.type || null; } });
+    return { source: raw.source || null, groups: raw.groups || {}, rows, types };
+  })();
+  // a row's layering, or null when the inventory doesn't list it
+  const layerOf = (id) => (layering && layering.rows[id]) || null;
+  // the inventory's title for a row's group (its owner's page), from the id's first two parts
+  const groupOf = (id) => (layering && layering.groups[String(id).split('.').slice(0, 2).join('.')]) || null;
+
+  /* ------------------------------------------------------------------ is a pattern about one computer? One rule
+     Astra max A2 (2026-11-13): the second max review in a row found spellings the old word reader missed (a relative
+     folder or script with no dots or extension, "node scripts/release"; a folder flag's one-word value, "git -C repo
+     status"; both saved as Everywhere rules). So it is rebuilt as one rule over a pattern's words, written first as the
+     README's table E2 and held here as HOST_ROWS, one entry per row, in the table's order. Nothing else in the layer
+     decides it: the Always editor's places, its line saying why, the line saying a place was cleared, the save guard,
+     broad detection (F), the home read (B) and feed.js's absolute-path rows all ask PSX.paths.
+     The pattern is split the way a shell splits it (quotes keep a word together and come off). The program word is the
+     first after sudo, env (with their flags) and NAME=value; every other word, a NAME=value before the program included,
+     is an argument. A flag's value is read with its flag (row 5). The pattern is host-dependent when any row holds for
+     any word; the first such word, in pattern order, is named with its row.
+     Refined the same day (the lead's canon call, PS-144): a web address, an image or registry reference whose first
+     segment is a host name, and a git ref (an argument of a ref-taking git subcommand, before --) are not paths. They
+     lift row 4, the bare relative path, and nothing else: NOT_A_PATH below */
+  const PATH_EXT = /\.(sh|bash|zsh|fish|ps1|psm1|bat|cmd|exe|py|js|mjs|cjs|ts|rb|pl|php|lua)$/i;
+  /* the parts of a NAME=value or --flag=value value: a , or ; list, each piece then a : list (a drive's C: stays whole).
+     Recheck R2: a piece that is a whole web address (scheme://, port and path included) is never split, so
+     --registry=https://registry.example.com:8443/npm/ stays one address; nor is an image or registry flag's value */
+  const WEB = /^[a-z][a-z0-9+.-]*:\/\//i;
+  const PATH_COLON = /(?<!^[A-Za-z]):(?!\/\/)/;
+  const listParts = (v, whole) => (whole ? [v] : v.split(/[,;]/).flatMap((piece) => (WEB.test(piece) ? [piece] : piece.split(PATH_COLON)))).filter(Boolean);
+  const FILE_CMDS = /^(read|write|edit|list|open|cat|less|head|tail|ls|cp|mv|rm|rmdir|mkdir|touch|chmod|chown|find|grep|tar|zip|unzip)$/i;
+  /* row 5: the flags whose value is a folder or a file. -p only after tsc or vue-tsc (elsewhere it names a package, a
+     port or a plugin); any other long flag whose name ends in dir, directory, path, folder or root, or in -file or _file
+     (--profile is not one), except a --no-... switch */
+  const DIR_FLAGS = ['-C', '--prefix', '--cwd', '--dir', '--directory', '--root', '--workdir', '--chdir', '-chdir', '--git-dir', '--work-tree', '-f', '--file', '--config', '--manifest-path', '--project'];
+  const FLAG_AFTER = { '-p': /^(tsc|vue-tsc)$/ };
+  const FLAG_NAME = /^--(?!no-)(?:[\w.-]*(?:dir|directory|path|folder|root)|(?:[\w.]+[-_])+file)$/i;
+  const baseName = (w) => String(w || '').split(/[\\/]/).pop();
+  /* git: -C is git's own "run in this folder" only before the subcommand (after it, git commit -C names a commit), and
+     -f is force, never a file; -c and the other global options with a value take the next word */
+  const GIT_REF_CMDS = /^(push|pull|fetch|checkout|switch|merge|rebase|branch|tag|log|diff|reset|cherry-pick)$/;
+  const GIT_VALUE_OPTS = ['-c', '-C', '--git-dir', '--work-tree', '--namespace', '--exec-path', '--super-prefix', '--config-env'];
+  const pathFlag = (name, seen, git) => (git && (name === '-f' || (name === '-C' && git.sub))) ? false : DIR_FLAGS.includes(name) || FLAG_NAME.test(name) || (!!FLAG_AFTER[name] && seen.some((w) => FLAG_AFTER[name].test(baseName(w))));
+  /* not a path (the README's "Not a path" table): a web address (a scheme then ://; file: is a file, row 2), anywhere;
+     and an image or registry reference whose first segment is a host name (dot-separated labels ending in two or more
+     letters, or a name or address with a port), but only where the argument takes one (read(), x.image). Recheck R1:
+     the spelling alone isn't enough, since scripts.dev/release.js is a host-shaped local folder. A git ref is decided
+     by its place in the pattern too (read(), x.ref) */
+  const HOST_NAME = /^(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}(?::\d+)?|[A-Za-z0-9.-]+:\d+)$/;
+  const isWeb = (p) => WEB.test(p) && !/^file:/i.test(p);
+  const isImageRef = (p) => { const i = p.indexOf('/'); return i > 0 && !/\\/.test(p.slice(0, i)) && HOST_NAME.test(p.slice(0, i)); };
+  // a part one row would read as a path, that isn't one: a web address anywhere, an image reference where one is taken
+  const notAPath = (p, image) => (isWeb(p) ? 'web' : image && isImageRef(p) ? 'image' : null);
+  /* where an argument takes an image or registry reference (recheck R1). docker, podman and nerdctl: every argument of
+     push, pull and tag; the image of run and create (the first argument; the rest is the command run inside); the value
+     of build's -t or --tag; every argument after image's own subcommand. oras, skopeo and crane: every argument after
+     the subcommand (only the first for oras push and attach, whose others are files). Any program: the value of a
+     registry or image flag. The value flags of docker's run, create and build are listed so their values are never
+     taken for the image */
+  const CONTAINER_CLIS = /^(docker|podman|nerdctl)$/i, OCI_CLIS = /^(oras|skopeo|crane)$/i;
+  const IMAGE_FLAG = /^--(?:[\w-]*registry[\w-]*|image)$/i;
+  const DOCKER_VALUE_FLAGS = ['--context', '-c', '-H', '--host', '-l', '--log-level', '-w', '-a', '--attach', '-e', '--env', '-v', '--volume', '-p', '--publish', '--name', '-u', '--user', '--network', '--net', '--entrypoint', '--platform', '--mount', '--label', '--hostname', '-h', '--restart', '--cpus', '-m', '--memory', '--add-host', '--device', '--gpus', '--pull', '--ulimit', '--log-driver', '--log-opt', '--cap-add', '--cap-drop', '--security-opt', '--tmpfs', '--dns', '--ip', '--expose', '--runtime', '--shm-size', '--stop-signal', '--volumes-from', '--build-arg', '--target', '--cache-from', '--cache-to', '--secret', '--ssh', '--output', '-o', '--progress'];
+  // where a word starts: a root, the home folder, a drive, a UNC share, a variable then a separator, file:, or dots
+  const ROOTS = [
+    ['unc', /^(\\\\|\/\/)[^\\/]/],
+    ['home', /^~[\w.+-]*(?=[\\/]|$)/],
+    ['home', /^(\$HOME|\$\{HOME\}|%USERPROFILE%|%HOMEPATH%|\$env:USERPROFILE|\$env:HOME)(?=[\\/]|$)/i],
+    ['drive', /^[A-Za-z]:(?=[\\/]|$)/],
+    ['variable', /^(\$\{?\w+\}?|%\w+%|\$env:\w+)(?=[\\/])/i],
+    ['file', /^file:/i],
+    ['root', /^\//],
+    ['relative', /^\.{1,2}(?=[\\/]|$)/]
+  ];
+  const rootOf = (w) => { const s = String(w == null ? '' : w); for (const [root, re] of ROOTS) if (re.test(s)) return root; return null; };
+  function shellWords(text) {
+    const out = []; let cur = '', has = false, q = null;
+    for (const ch of String(text == null ? '' : text)) {
+      if (q) { if (ch === q) q = null; else cur += ch; continue; }
+      if (ch === '"' || ch === "'") { q = ch; has = true; continue; }
+      if (/\s/.test(ch)) { if (has || cur) out.push(cur); cur = ''; has = false; continue; }
+      cur += ch;
+    }
+    if (has || cur) out.push(cur);
+    return out;
+  }
+  // where the program word is: past sudo and env (and their flags) and any NAME=value before it
+  function programAt(ws) {
+    let i = 0;
+    while (i < ws.length) {
+      const w = ws[i];
+      if (w === 'sudo' || w === 'env') { i++; while (i < ws.length && /^-/.test(ws[i])) i++; continue; }
+      if (/^[A-Za-z_]\w*=/.test(w)) { i++; continue; }
+      break;
+    }
+    return i;
+  }
+  /* what rows 2, 3, 4 and 6 read in one argument: the value of NAME=value or --flag=value (each part of its list), the
+     rest of a one-letter flag written against its value (-I/usr/include), then the word itself. The first part a row
+     holds for is the one it names */
+  function partsOf(w, whole) {
+    const out = [], eq = w.indexOf('=');
+    // a NAME=value or --flag=value is read by its value alone: its name holds no separator (--registry=https://… is a web address)
+    if (eq > 0 && !/[\\/]/.test(w.slice(0, eq))) return listParts(w.slice(eq + 1), whole);
+    const glued = /^-[A-Za-z]([^=].*)$/.exec(w); if (glued && !w.startsWith('--')) out.push(glued[1]);
+    out.push(w);
+    return out;
+  }
+  // the words of a pattern, each with its role: program, flag, value (a directory or file flag's), arg or end (--)
+  function read(text) {
+    const ws = shellWords(text), at = programAt(ws), words = [];
+    // git: its subcommand (the first argument after its own options) and, for a ref-taking one, its ref arguments
+    const prog = at < ws.length ? baseName(ws[at]).replace(/\.exe$/i, '') : '';
+    const git = /^git$/i.test(prog) ? { sub: null } : null;
+    // recheck R1: a container or registry tool, its subcommand(s), and whether its image argument has been read
+    const oci = CONTAINER_CLIS.test(prog) ? { kind: 'container', sub: null, sub2: null, image: false } : OCI_CLIS.test(prog) ? { kind: 'oci', sub: null, image: false } : null;
+    const eff = () => (oci && (oci.sub === 'image' || oci.sub === 'buildx') ? oci.sub2 : oci && oci.sub);
+    let ended = false, takes = null, skip = null;
+    ws.forEach((w, i) => {
+      const x = { word: w, at: i, role: i === at ? 'program' : 'arg', program: i === at, value: null };
+      if (i > at) {
+        if (takes) { x.role = 'value'; x.value = { flag: takes, word: w }; takes = null; }
+        else if (skip) { x.role = 'value'; if (skip === 'image') x.image = true; skip = null; }
+        else if (!ended && w === '--') { x.role = 'end'; ended = true; }
+        else if (!ended && /^-./.test(w)) {
+          x.role = 'flag';
+          const eq = w.indexOf('='), name = eq > 0 ? w.slice(0, eq) : w, seen = ws.slice(at, i);
+          const next = i + 1 < ws.length && !/^-/.test(ws[i + 1]);
+          const imageFlag = IMAGE_FLAG.test(name) || (oci && oci.kind === 'container' && eff() === 'build' && (name === '-t' || name === '--tag'));
+          if (pathFlag(name, seen, git)) { if (eq > 0) x.value = { flag: name, word: w.slice(eq + 1) }; else if (next) takes = name; }
+          else if (imageFlag) { if (eq > 0) x.image = true; else if (next) skip = 'image'; }
+          else if (git && !git.sub && eq < 0 && next && GIT_VALUE_OPTS.includes(name)) skip = 'value';
+          else if (oci && oci.kind === 'container' && eq < 0 && next && DOCKER_VALUE_FLAGS.includes(name)) skip = 'value';
+        } else if (git && !git.sub) { git.sub = w; x.sub = true; }
+        else if (git && GIT_REF_CMDS.test(git.sub) && !ended) x.ref = true;
+        else if (oci && !oci.sub) { oci.sub = w; x.sub = true; }
+        else if (oci && (oci.sub === 'image' || oci.sub === 'buildx') && !oci.sub2) { oci.sub2 = w; x.sub = true; }
+        else if (oci && !ended) {
+          const e = eff();
+          if (oci.kind === 'container') {
+            if (/^(push|pull|tag)$/.test(e) || oci.sub === 'image') x.image = true;
+            else if (/^(run|create)$/.test(e) && !oci.image) { x.image = true; oci.image = true; }
+          } else if (!(/^(push|attach)$/.test(e) && oci.image)) { x.image = true; oci.image = true; }
+        }
+      }
+      words.push(x);
+    });
+    // the parts each row reads; an image or registry value is never split at its port
+    words.forEach((x) => { x.parts = x.program ? [x.word] : partsOf(x.word, !!x.image); });
+    return { words, at, program: at < ws.length ? ws[at] : '', git, oci };
+  }
+  const first = (parts, ok) => parts.find((p) => ok(p)) || null;
+  const homeWord = (p) => /^~/.test(p) || /^(\$HOME|\$\{HOME\}|%USERPROFILE%|%HOMEPATH%|\$env:USERPROFILE|\$env:HOME)$/i.test(p);
+  /* README table E2, row by row. Each test gets one word and gives the word it names, or nothing */
+  const atRoot = (p) => { const r = rootOf(p); return (!!r && r !== 'relative') || homeWord(p); };
+  const HOST_ROWS = [
+    { row: 1, why: 'program', test: (x) => (x.program && (/[\\/]/.test(x.word) || /^[~.]/.test(x.word) || !!rootOf(x.word)) ? x.word : null) },
+    { row: 2, why: 'root', test: (x) => (x.program ? null : first(x.parts, atRoot)) },
+    { row: 3, why: 'relative', test: (x) => (x.program ? null : first(x.parts, (p) => /^\.{1,2}([\\/]|$)/.test(p))) },
+    // the bare relative path: lifted for a git ref, a web address and an image or registry reference (NOT_A_PATH)
+    { row: 4, why: 'separator', test: (x) => (x.program || x.ref ? null : first(x.parts, (p) => /[\\/]/.test(p) && !notAPath(p, x.image))) },
+    { row: 5, why: 'flag', test: (x) => (x.value && x.value.word !== '' ? x.value.word : null) },
+    // a web address or an image reference that ends like a script is still not a local file
+    { row: 6, why: 'file', test: (x) => first(x.parts, (p) => PATH_EXT.test(p) && !notAPath(p, x.image)) },
+    { row: 7, why: 'filecmd', test: (x) => (x.program && FILE_CMDS.test(x.word) ? x.word : null) },
+    { row: 8, why: 'wildcard', test: (x) => (x.program && x.word.includes('*') ? x.word : null) }
+  ];
+  // the first row that holds for one word: { row, why, word, root, flag?, program, at } or null
+  function hostWord(x) {
+    for (const R of HOST_ROWS) {
+      const w = R.test(x); if (w == null) continue;
+      const why = R.why === 'root' && homeWord(w) ? 'home' : R.why;
+      return Object.assign({ row: R.row, why, word: w, path: w, root: rootOf(w), program: x.program, at: x.at }, R.row === 5 ? { flag: x.value.flag } : {});
+    }
+    return null;
+  }
+  const paths = {
+    words: shellWords,
+    programAt,
+    rows: HOST_ROWS.map((R) => ({ row: R.row, why: R.why })),
+    // a word that isn't a path: 'web' anywhere, 'image' only where the argument takes an image (`image` true)
+    notAPath: (p, image) => notAPath(String(p || ''), !!image),
+    program(text) { const ws = shellWords(text), i = programAt(ws); return i < ws.length ? ws[i] : ''; },
+    rootOf,
+    // a pattern's words with their roles, each with the first row that holds for it (host) or null
+    read(text) { const r = read(text); r.words.forEach((x) => { x.host = hostWord(x); }); return r; },
+    // is this pattern about one computer? The first word a row holds for, in pattern order, or null
+    host(text) { const r = paths.read(text); const x = r.words.find((y) => y.host); return x ? x.host : null; },
+    // every word a row holds for: [{ row, why, word, path, root, program, at }]
+    find(text) { return paths.read(text).words.filter((y) => y.host).map((y) => y.host); },
+    // the same path written either way: quotes off, \ as /, one separator at a time, no separator at the end
+    norm(text) {
+      let s = shellWords(text).join(' ').replace(/\\/g, '/');
+      const lead = /^\/\//.test(s) ? '//' : '';
+      s = lead + s.slice(lead.length).replace(/\/{2,}/g, '/');
+      if (s.length > 1 && !/^[A-Za-z]:\/$/.test(s)) s = s.replace(/\/+$/, '');
+      return s;
+    }
+  };
+
   /* ------------------------------------------------------------------ the layer's own storage
      Only the review options and the one-time tip are kept (psx.settings-scope.v1); every read and write is guarded,
      and a page with no storage (a sandboxed preview) keeps them in memory. Never written into a project snapshot. */
@@ -95,7 +304,6 @@
      "Show where each setting comes from" ships Off) */
   const DEFAULTS = {
     'ai.models.default-model': 'anthropic/claude-sonnet-4',
-    'ai.models.reasoning-effort': 'medium',
     'branching.subagents.max-parallel': 4,
     'general.interaction.eli5-default': false,
     'safety.rules.permission-preset': 'regular',
@@ -117,7 +325,6 @@
      how levels combine, and the one closed reason for every level it does not offer */
   const DEF = {
     'ai.models.default-model': { may: ['computer', 'project'] },
-    'ai.models.reasoning-effort': { may: ['computer', 'project'] },
     'branching.subagents.max-parallel': { may: ['computer', 'project'], combine: 'computer_ceiling' },
     'general.interaction.eli5-default': { may: ['computer', 'project'], chats: true },
     'safety.rules.permission-preset': { may: ['computer', 'project'], combine: 'more_careful', careful: ['read_only', 'plan', 'regular', 'full'], safety: true },
@@ -140,12 +347,17 @@
   const REASONS = {
     names_a_program: ['Each computer has its own, because a program can be in a different place on each computer.', 'Programs differ per computer'],
     names_a_folder: ['Each computer has its own, because a folder is in a different place on each computer.', 'Folders differ per computer'],
+    names_a_path: ['Each computer has its own, because a path names a place on one computer.', 'Paths differ per computer'],
+    kept_by_owner: ['Kept inside its owner, so it isn’t set for everywhere, a computer, a device or a project.', 'Kept by its owner'],
+    // the inventory's own code for an owner-held row's levels (Plans/settings_inventory.json not_offered)
+    set_inside_a_thing: ['Kept inside its owner, so it isn’t set for everywhere, a computer, a device or a project.', 'Kept by its owner'],
     about_hardware: ['Each computer has its own, because it depends on what that computer can do.', 'Depends on the computer'],
     about_the_network: ['Each computer has its own, because each one reaches the internet its own way.', 'Network differs per computer'],
     about_this_project: ['Each project has its own, because it’s about that project’s own files.', 'Belongs to one project'],
-    about_the_screen: ['This is about the screen in front of you, so it can differ per device, not per project.', 'Follows the device'],
+    about_the_screen: ['This is about the screen in front of you, so it can differ per device.', 'Follows the device'],
     not_about_the_screen: ['This is about the work, not the screen, so devices can’t change it.', 'Not about a screen'],
     same_for_you: ['Same everywhere. It’s about how Puppet Master works for you.', 'Same everywhere'],
+    your_library: ['Same everywhere. It’s your library, kept with your settings.', 'Your library'],
     limited_device: ['This device can change only its own screen settings.', 'This device can change only its own screen settings']
   };
 
@@ -192,14 +404,17 @@
           'work-claude': { name: 'Work Claude', service: 'Claude', tool: 'Claude Code', kind: 'tool', reach: 'every', order: 1, on: { here: 'ready', homenas: 'checked', studio: 'missing' } },
           'personal-claude': { name: 'Personal', service: 'Claude', tool: 'Claude Code', kind: 'tool', reach: 'only', projects: ['experiment', 'lighting-rig'], order: 2, on: { here: 'ready' } },
           codex: { name: 'ChatGPT sign-in', service: 'Codex', tool: 'Codex', kind: 'tool', reach: 'every', on: { here: 'ready' } },
-          openrouter: { name: 'API key', service: 'OpenRouter', kind: 'key', reach: 'every', on: { here: 'ready' } }
+          openrouter: { name: 'API key', service: 'OpenRouter', kind: 'key', reach: 'every', on: { here: 'ready' } },
+          /* a sign-in tied to this computer's hardware: it can't be used on any other computer (cannot_move) [Demo only] */
+          copilot: { name: 'Seat on this Mac', service: 'GitHub Copilot', tool: 'Copilot', kind: 'tool', reach: 'every', bound: 'here', on: { here: 'ready' } }
         },
         personas: { reviewer: { name: 'Reviewer', home: 'library', versions: ['tastebook'] } }
       }
     };
     const set = (lvl, key, id, v) => { w[lvl][key][id] = v; };
     set('project', 'docs-site', 'ai.models.default-model', 'anthropic/claude-sonnet-4');
-    set('project', 'tastebook', 'ai.models.reasoning-effort', 'high');
+    /* main's one-model design (Settings batch 3) retired Thinking depth (ai.models.reasoning-effort; depth lives inside
+       the model picker now), so the demo's "This project" example is Everyday building (ai.models.worker-model, below) */
     set('computer', 'here', 'branching.subagents.max-parallel', 3);
     set('computer', 'homenas', 'branching.subagents.max-parallel', 8);
     set('project', 'tastebook', 'branching.subagents.max-parallel', 6);
@@ -234,7 +449,7 @@
     set('project', 'tastebook', 'planning.testing.cap-visible-browser', 'On');
     set('project', 'tastebook', 'planning.testing.cap-simulator', 'On');
     set('project', 'tastebook', 'memory.retention.history-retention', 'recent');
-    set('project', 'tastebook', 'memory.retention.subagent-access', true);
+    // (main's Memory rulings retired memory.retention.subagent-access, which tastebook used to set here)
     // the history seed (4.6)
     w.history = [
       { id: 'h5', when: 'Sun 20:10', by: 'you', from: 'here', level: 'everywhere', key: null, sid: 'ai.models.default-model', before: 'anthropic/claude-sonnet-4', after: 'anthropic/claude-opus-4' },
@@ -248,6 +463,8 @@
 
   /* ------------------------------------------------------------------ names and words */
   const projectName = (id) => (id === 'psx-none' || id === 'none' || id == null ? 'No project' : id);
+  // who asks for a value, in a sentence: Everywhere, a device (the one in use is "This screen"), a project by its name
+  const askerName = (f) => (!f ? '' : f.level === 'device' && PSX.S && f.key === PSX.S.actor ? 'This screen' : f.level === 'project' ? f.key : placeName(f.level, f.key));
   const placeName = (lvl, key) => {
     if (lvl === 'everywhere') return 'Everywhere';
     if (lvl === 'default') return 'Puppet Master’s default';
@@ -293,7 +510,7 @@
   const S = {
     opt: Object.assign({ end: 'origin', changed: 'outline' }, saved.opt || {}),
     ctx: { project: 'tastebook', device: 'here', on: null },
-    actor: 'here',        // the device in use (the strip's You're using); Change view's device is only what you see
+    actor: 'here',        // the device in use (the strip's You're using); the header's Change › another device's screen is only what you see
     runMode: saved.runMode === 'yolo' ? 'yolo' : 'regular',   // the run mode the yes-points follow (Regular or YOLO)
     keys: false,          // the review keys 1 to 4, 0 and C work only while the strip's Compare options is open
     tipShown: !!saved.tipShown,
@@ -532,6 +749,7 @@
     const m = {
       id: uid('menu'), label: opts.label || 'Actions',
       search: opts.search != null ? opts.search : false,
+      searchPlaceholder: opts.placeholder || undefined,
       groups: gs.map((g) => ({ label: g.label, items: g.items.filter(Boolean).map((it) => { const id = uid('mi'); count++; map.set(id, it); return { id, label: it.label, meta: it.disabled && typeof it.disabled === 'string' ? it.disabled : it.meta, icon: it.icon, disabled: it.disabled || null }; }) }))
     };
     if (opts.search == null && count > 8) m.search = true;
@@ -549,10 +767,10 @@
   }
 
   Object.assign(PSX, {
-    D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip,
+    D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip, paths, layering, layerOf, groupOf,
     store, COMPUTERS, HOSTS, DEVICES, PROJECTS, MENU_PROJECTS, projectById, DEFAULTS, DEF, IDS, REASONS, computerIds, home,
     homeName: () => placeName('computer', home()), bagOf,
-    projectName, placeName, label, vt, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,
+    projectName, placeName, askerName, label, vt, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,
     note, hideNote, sheet, topSheet, closeSheets, sheets, menu
   });
 })(window);

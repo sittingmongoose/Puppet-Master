@@ -1,0 +1,1816 @@
+{
+  "status": "PASS",
+  "native_execution": "NOT_RUN",
+  "families": [
+    {
+      "event_type": "format.applied",
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "format.applied",
+            "1"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('format.applied', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/format_applied-check1-negative.txt",
+          "sha256": "921ff328959d5edc581e1cfd16020c6ed7ef4b177c17bc440e3f3925e353522a"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "format.applied",
+            "2"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('format.applied', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/format_applied-check2-negative.txt",
+          "sha256": "070bfa73324774fcf74971d7e6ce96c739a2d426d85b4e9b934f20c6dcad671c"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "format.applied",
+            "3"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('format.applied', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/format_applied-check3-negative.txt",
+          "sha256": "34fdee5cca0c658fcdf0c288a828210a5ee32e14f280a7751666e25d101159db"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "format.applied",
+            "4"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('format.applied', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/format_applied-check4-negative.txt",
+          "sha256": "0a60c9a8c1d90e87e0a9709a445c0c2df3185aed5d0409dc8a988a4277d9e1a2"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "format.applied",
+            "5"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('format.applied', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/format_applied-check5-negative.txt",
+          "sha256": "2a2bcacfb195f31dba98920f77ae46a7e795db5bd8e9e052f2495aeb66a83742"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "format.applied",
+            "6"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('format.applied', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/format_applied-check6-negative.txt",
+          "sha256": "242875b666f010079f09090a68dbb6787f07ca1f591a0a24d594546ccb4bd6ec"
+        },
+        {
+          "check": 7,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "format.applied",
+            "7"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('format.applied', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/format_applied-check7-negative.txt",
+          "sha256": "6213461366235ee888d15518711013ca3db43a1486031ef3b5df65e691dedfa5"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "format.applied",
+            "8"
+          ],
+          "exit": 1,
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/format_applied-check8-negative.txt",
+          "sha256": "2e8cd6fe6d50f7b7306a491960342f40f39e023db6c01651c0e7611a835dc55a"
+        },
+        {
+          "check": 9,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "format.applied",
+            "9"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('unresolved schema reference', '#/$defs/missing_format_applied')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/format_applied-check9-negative.txt",
+          "sha256": "1ab3cdc7d0bffb981355d97eee0de9c1910438ad45048e6eb82607191dcb8e09"
+        }
+      ],
+      "success_exit_refused": true
+    },
+    {
+      "event_type": "lsp.server.lifecycle_changed",
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "lsp.server.lifecycle_changed",
+            "1"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/lsp_server_lifecycle_changed-check1-negative.txt",
+          "sha256": "ad0d2bce6104deb9c9fff5856c7125d08809a9a79a4d15954b4cba5017f64b7c"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "lsp.server.lifecycle_changed",
+            "2"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/lsp_server_lifecycle_changed-check2-negative.txt",
+          "sha256": "a4d29d446200ab45cbf1dc61536ebe8c9238fd2f447fb3e2cc82ae301725b775"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "lsp.server.lifecycle_changed",
+            "3"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/lsp_server_lifecycle_changed-check3-negative.txt",
+          "sha256": "41d7bc19ddae39884e609e5a992afd24d0c47058542ab1b66962b9e31e221920"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "lsp.server.lifecycle_changed",
+            "4"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/lsp_server_lifecycle_changed-check4-negative.txt",
+          "sha256": "62efb4677b1e32e3ffd2633591c43648d4a84cac251911d0f99b0993e9d37cd0"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "lsp.server.lifecycle_changed",
+            "5"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/lsp_server_lifecycle_changed-check5-negative.txt",
+          "sha256": "3af64fc50388bf362d35b86adbe1e3b02aa97b7ef77e1f0a4ead9ac7d75c9c97"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "lsp.server.lifecycle_changed",
+            "6"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/lsp_server_lifecycle_changed-check6-negative.txt",
+          "sha256": "effb36fc60d73cf57646470da60135f3224c95517f2d69e7b6e06544ca0fdc2e"
+        },
+        {
+          "check": 7,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "lsp.server.lifecycle_changed",
+            "7"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('lsp.server.lifecycle_changed', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/lsp_server_lifecycle_changed-check7-negative.txt",
+          "sha256": "94f4c97b61ab3ed7085ecb599b845d2b8589e1680c6af7111041ae373c1a33ea"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "lsp.server.lifecycle_changed",
+            "8"
+          ],
+          "exit": 1,
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/lsp_server_lifecycle_changed-check8-negative.txt",
+          "sha256": "0b4c9a66c223389cd93db5ff1e06b05900e1a59348c5ef53872c9e6bc1a96c9e"
+        },
+        {
+          "check": 9,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "lsp.server.lifecycle_changed",
+            "9"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('unresolved schema reference', '#/$defs/missing_lsp_server_lifecycle_changed')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/lsp_server_lifecycle_changed-check9-negative.txt",
+          "sha256": "b7eda66b978fc855ddc8dccf620c674b50da2576c2500c653a5180c8a3a6e0d3"
+        }
+      ],
+      "success_exit_refused": true
+    },
+    {
+      "event_type": "model.catalog_refreshed",
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "model.catalog_refreshed",
+            "1"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('model.catalog_refreshed', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/model_catalog_refreshed-check1-negative.txt",
+          "sha256": "ac43052fafcc9a2828be2f41bc55ec10fb8c52c4e7ae7e40a974d50c299941d3"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "model.catalog_refreshed",
+            "2"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('model.catalog_refreshed', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/model_catalog_refreshed-check2-negative.txt",
+          "sha256": "0dba2b3e30b3842887a8b23b20f637019cc3f8f8dc52518d2d17ab98f6faf78e"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "model.catalog_refreshed",
+            "3"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('model.catalog_refreshed', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/model_catalog_refreshed-check3-negative.txt",
+          "sha256": "5769b4d340587dc8c17e06a1955ae532496b52509f022702e5c5115d42450b8c"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "model.catalog_refreshed",
+            "4"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('model.catalog_refreshed', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/model_catalog_refreshed-check4-negative.txt",
+          "sha256": "f589e358814f9b43856a72a510005cccf1bdeb06abacbebd5c80b06609f2ec85"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "model.catalog_refreshed",
+            "5"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('model.catalog_refreshed', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/model_catalog_refreshed-check5-negative.txt",
+          "sha256": "83ef272f7e70d09f7c748027796548e828708b67fb19955fd6b23b53e3bb7736"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "model.catalog_refreshed",
+            "6"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('model.catalog_refreshed', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/model_catalog_refreshed-check6-negative.txt",
+          "sha256": "0a9c68d251a0a0effab803d8efe4e5f0ab727998a53de44e8c79e34bd4d5a358"
+        },
+        {
+          "check": 7,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "model.catalog_refreshed",
+            "7"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('model.catalog_refreshed', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/model_catalog_refreshed-check7-negative.txt",
+          "sha256": "8e8fe7ac74e013b9d8c8c90b5a69c24b449eb7ae9018d163ae8cb67334e2eef2"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "model.catalog_refreshed",
+            "8"
+          ],
+          "exit": 1,
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/model_catalog_refreshed-check8-negative.txt",
+          "sha256": "8462c92cdf60d3cdb19882ba8bcbfce74a257e2adcb9e2aba78ae66eaee0b345"
+        },
+        {
+          "check": 9,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "model.catalog_refreshed",
+            "9"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('unresolved schema reference', '#/$defs/missing_model_catalog_refreshed')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/model_catalog_refreshed-check9-negative.txt",
+          "sha256": "f7e8bb0ca8f24e1c63995aa1e3e0d47444612218b22b83084fe95b8acff8d958"
+        }
+      ],
+      "success_exit_refused": true
+    },
+    {
+      "event_type": "subagent.context_rehydrated",
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_rehydrated",
+            "1"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_rehydrated-check1-negative.txt",
+          "sha256": "d35f177e6d149d3ff04bcc3b794c7b04ec667fc9adad098ee466e12dcf3cc6fe"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_rehydrated",
+            "2"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_rehydrated-check2-negative.txt",
+          "sha256": "edcf8066d74d0a15280986fb27c6c0bc7bbde7d101e58ca38e18b85bfff41e25"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_rehydrated",
+            "3"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_rehydrated-check3-negative.txt",
+          "sha256": "e1185bbe2c38d9d2539de5628ea95b5f026e7211785413106650f84c442c7631"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_rehydrated",
+            "4"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_rehydrated-check4-negative.txt",
+          "sha256": "07059c9ed4687240492243aa4f85aba89ba2d81a6ffc4090457b754900b10bce"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_rehydrated",
+            "5"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_rehydrated-check5-negative.txt",
+          "sha256": "fb7e72103684a683ee4c178d5005d577a0d11901eb51c517b33f052464eab52e"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_rehydrated",
+            "6"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_rehydrated-check6-negative.txt",
+          "sha256": "fbb52584a37385a9d0f38d24057cd53d15499734f4200012fc5ce591fc5cab45"
+        },
+        {
+          "check": 7,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_rehydrated",
+            "7"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_rehydrated', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_rehydrated-check7-negative.txt",
+          "sha256": "04cffefa5d0815383434b08c10e2fea1c78deeec66e1a999b2e8af1f556af18d"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_rehydrated",
+            "8"
+          ],
+          "exit": 1,
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_rehydrated-check8-negative.txt",
+          "sha256": "5b715b8c6f8863448c23c890a2fb7d0a2579b9aeed7fdaefd53756eec88267ba"
+        },
+        {
+          "check": 9,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_rehydrated",
+            "9"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('unresolved schema reference', '#/$defs/missing_subagent_context_rehydrated')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_rehydrated-check9-negative.txt",
+          "sha256": "76773afa5b59f16a3c8d4c33434556879d79a2d6f7c7967b15ebdd167cc1f9d6"
+        }
+      ],
+      "success_exit_refused": true
+    },
+    {
+      "event_type": "subagent.context_shrunk",
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_shrunk",
+            "1"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_shrunk', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_shrunk-check1-negative.txt",
+          "sha256": "a129618b87039afd232d98f9d760bc33e388e5ac5a21e29c49675bcb35c6903e"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_shrunk",
+            "2"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_shrunk', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_shrunk-check2-negative.txt",
+          "sha256": "7f0d5126ffe6fece83d77c510b13d69370fccd4b4e47e7848edc73937952f363"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_shrunk",
+            "3"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_shrunk', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_shrunk-check3-negative.txt",
+          "sha256": "24ed2dcac8def53f765bb30b0ac8288f822549675739958cf7572fcf63014472"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_shrunk",
+            "4"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_shrunk', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_shrunk-check4-negative.txt",
+          "sha256": "d7eaebd94b2ba911547b7fcb25ad72106f7753dae1150829c58fb6789a3beac9"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_shrunk",
+            "5"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_shrunk', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_shrunk-check5-negative.txt",
+          "sha256": "ad6b1b64e2bc8a3535938a8daa1877106d989ba3eaeb919d038dd2bb56dd9283"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_shrunk",
+            "6"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_shrunk', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_shrunk-check6-negative.txt",
+          "sha256": "638a08277079c7217d843acf85421143362bceecefed2f8fd89437e7a44fe8f3"
+        },
+        {
+          "check": 7,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_shrunk",
+            "7"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('subagent.context_shrunk', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_shrunk-check7-negative.txt",
+          "sha256": "60cfa09ef4cf659930068ca216b47917d9a0e2449b7be5f7b7489a6a613c6efd"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_shrunk",
+            "8"
+          ],
+          "exit": 1,
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_shrunk-check8-negative.txt",
+          "sha256": "2145d8e037d13f4131d924e7c568eb7014a25a63c63e872ab0da2a5538212c51"
+        },
+        {
+          "check": 9,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "subagent.context_shrunk",
+            "9"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('unresolved schema reference', '#/$defs/missing_subagent_context_shrunk')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/subagent_context_shrunk-check9-negative.txt",
+          "sha256": "38f15ed7f2479745aa4bf350bbf9cb67d420ebdde3126e0b523dcc2aac29dfd9"
+        }
+      ],
+      "success_exit_refused": true
+    },
+    {
+      "event_type": "project.added",
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.added",
+            "1"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.added', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_added-check1-negative.txt",
+          "sha256": "2e74d45154f503dce2f39f4af0dd98e28afbf5290ec87f32e0a37710fe2c2828"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.added",
+            "2"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.added', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_added-check2-negative.txt",
+          "sha256": "4343b1afa0ba91f78561ca61b927c37ba9f28ee9582078b597a9a23e746d45a7"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.added",
+            "3"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.added', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_added-check3-negative.txt",
+          "sha256": "93be64a3328745e133d6ef602e1a3fc75a89b0c63a6fbd733d96ff28cb02d1c2"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.added",
+            "4"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.added', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_added-check4-negative.txt",
+          "sha256": "3ff7b1d54863e8d7622e72ffebd408ca961c0dab730fa82f34a7e515362e101f"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.added",
+            "5"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.added', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_added-check5-negative.txt",
+          "sha256": "3bfb676e34edeb01c70930df87001e1218cb68c95e0793f26254384917cbbbc0"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.added",
+            "6"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.added', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_added-check6-negative.txt",
+          "sha256": "839406858b2a10accffbd112d8e1bd6471111642e1a082864ee023fd32125287"
+        },
+        {
+          "check": 7,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.added",
+            "7"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.added', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_added-check7-negative.txt",
+          "sha256": "162f049c2d86745e02c678e39b021e551ef0017d5d99d1e6ae75dcdc01c02ec6"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.added",
+            "8"
+          ],
+          "exit": 1,
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_added-check8-negative.txt",
+          "sha256": "45978de8a0d80a1b703d03d0e7fe23c65c6296e7d9483ee40b282681ab77b642"
+        },
+        {
+          "check": 9,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.added",
+            "9"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('unresolved schema reference', '#/$defs/missing_project_added')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_added-check9-negative.txt",
+          "sha256": "e07bd89506d603405eeb54128e6e3cf6f82b76c84d033787e3c68be05ac7b2d9"
+        }
+      ],
+      "success_exit_refused": true
+    },
+    {
+      "event_type": "project.created",
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.created",
+            "1"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.created', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_created-check1-negative.txt",
+          "sha256": "be486e6bd1e4c2d799d8af74b819b9eb1a710a20cae440217315a16a8d507d6f"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.created",
+            "2"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.created', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_created-check2-negative.txt",
+          "sha256": "da2917ffc41d06d5386142b596408f03040984262685bb62fb2213e0dbabda1f"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.created",
+            "3"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.created', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_created-check3-negative.txt",
+          "sha256": "2a57f36c1587aa76583e21c71f6cf448db92346e08a33d7e737f3772f204c25a"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.created",
+            "4"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.created', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_created-check4-negative.txt",
+          "sha256": "73e026228218826fb1df7b362ded3f32b0e028af5faf5cdc61380a64affc9051"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.created",
+            "5"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.created', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_created-check5-negative.txt",
+          "sha256": "97affdbe5509f3bbf1af2d14bc1a971db3609afd91ac51d8e59101594c0f520e"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.created",
+            "6"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.created', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_created-check6-negative.txt",
+          "sha256": "2b62e2377d6eb3d409e910a94a2584dde3fceb9b08d609a79e38c76f71ab1789"
+        },
+        {
+          "check": 7,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.created",
+            "7"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('project.created', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_created-check7-negative.txt",
+          "sha256": "938b40f8e114b81c54075d8a4e92f399170599fa52676e0d87aff18ccee5f321"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.created",
+            "8"
+          ],
+          "exit": 1,
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_created-check8-negative.txt",
+          "sha256": "f02e48d4a1c4d087220d08c60546ddbb7597db5dc68058e561acd6cd9f2a6a03"
+        },
+        {
+          "check": 9,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "project.created",
+            "9"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('unresolved schema reference', '#/$defs/missing_project_created')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/project_created-check9-negative.txt",
+          "sha256": "d6ea6f751b2501a06475e1727db7d787aa069f454e8ef56cacb4a00584557fde"
+        }
+      ],
+      "success_exit_refused": true
+    },
+    {
+      "event_type": "git.clone.completed",
+      "checks": [
+        {
+          "check": 1,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "git.clone.completed",
+            "1"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('git.clone.completed', 'even genuine historical replay-only original cannot become a current retry')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/git_clone_completed-check1-negative.txt",
+          "sha256": "9cba6141b2fea157d0c051dc28e7eb194bc4eaa39cd49081dcf3934fa9fc026d"
+        },
+        {
+          "check": 2,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "git.clone.completed",
+            "2"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('git.clone.completed', 'full original-operation EventRecord')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/git_clone_completed-check2-negative.txt",
+          "sha256": "0ad23b3ae863fc8d71b5ae425ee0df91fe6e98b93b774d7d2bbe708788465889"
+        },
+        {
+          "check": 3,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "git.clone.completed",
+            "3"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('git.clone.completed', 'authored encoded project partition positive')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/git_clone_completed-check3-negative.txt",
+          "sha256": "a9e163d0aea9ecf93a995a44b824b8a1ed1c26c8e3c57d4d26382f7f2e5942a3"
+        },
+        {
+          "check": 4,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "git.clone.completed",
+            "4"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('git.clone.completed', 'oversized inline bytes refused before logical schema')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/git_clone_completed-check4-negative.txt",
+          "sha256": "68e34508c8fca6276dccc3157119c720f4e0e3c4afd1b24b80ba8ee6b3a8e687"
+        },
+        {
+          "check": 5,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "git.clone.completed",
+            "5"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('git.clone.completed', 'checkpoint_trailing_LF_storage_instance_id_coherent')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/git_clone_completed-check5-negative.txt",
+          "sha256": "704e0d17827970c7c4922ccef02e5927ac555431092972794a3c514b29dc030d"
+        },
+        {
+          "check": 6,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "git.clone.completed",
+            "6"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('git.clone.completed', 'sequence_id: excluded from semantic digest')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/git_clone_completed-check6-negative.txt",
+          "sha256": "781862ae852779db7765bd73acc4a26b302cb480948de5acd32ff81d67c3e6c0"
+        },
+        {
+          "check": 7,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "git.clone.completed",
+            "7"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('git.clone.completed', 'checkpoint_foreign_storage_instance')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/git_clone_completed-check7-negative.txt",
+          "sha256": "7388f960241b6711330d895a35587eb666144b87b8a5c484f1cf7929fee7d348"
+        },
+        {
+          "check": 8,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "git.clone.completed",
+            "8"
+          ],
+          "exit": 1,
+          "failure": "AssertionError",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/git_clone_completed-check8-negative.txt",
+          "sha256": "1c0389dcf798abe99136c70a5fa49cc66163ac3a3e152ff5f19de233a27d6eb8"
+        },
+        {
+          "check": 9,
+          "status": "PASS",
+          "command": [
+            "/usr/bin/python3",
+            "-B",
+            "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+            "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+            "git.clone.completed",
+            "9"
+          ],
+          "exit": 1,
+          "failure": "AssertionError: ('unresolved schema reference', '#/$defs/missing_git_clone_completed')",
+          "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/git_clone_completed-check9-negative.txt",
+          "sha256": "177b07bc6c5603d81aadc48119596640c4994ea80d4a6ee04f4e759164f6503f"
+        }
+      ],
+      "success_exit_refused": true
+    }
+  ],
+  "full_checker_negatives_rejected": 72,
+  "success_exit_harness_negatives_rejected": 8,
+  "settings_negatives": [
+    {
+      "case_id": "catalog.theme_reset.expected.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "0"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-00.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_reset.effect.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "1"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-01.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_reset.test.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "2"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-02.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_reset.requirement.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "3"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-03.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_reset.expected.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "4"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-04.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_reset.effect.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "5"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-05.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_reset.test.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "6"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-06.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_reset.requirement.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "7"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-07.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_accent.expected.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "8"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-08.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_accent.effect.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "9"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-09.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_accent.test.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "10"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-10.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_accent.requirement.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "11"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-11.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_accent.expected.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "12"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-12.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_accent.effect.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "13"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-13.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_accent.test.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "14"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-14.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_accent.requirement.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "15"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-15.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_density.expected.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "16"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-16.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_density.effect.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "17"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-17.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_density.test.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "18"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-18.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_density.requirement.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "19"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-19.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_density.expected.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "20"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-20.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_density.effect.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "21"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-21.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_density.test.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "22"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-22.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_density.requirement.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "23"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-23.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_mode.expected.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "24"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-24.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_mode.effect.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "25"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-25.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_mode.test.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "26"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-26.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_mode.requirement.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "27"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-27.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_mode.expected.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "28"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-28.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_mode.effect.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "29"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-29.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_mode.test.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "30"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-30.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "catalog.theme_set_mode.requirement.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "31"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-31.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "guard_migration.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "32"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-32.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "guard_exclusion.settings.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "33"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-33.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "guard_migration.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "34"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-34.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "guard_exclusion.settings.theme.updated",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "35"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-35.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "guard_event",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "36"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-36.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "guard_handler",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "37"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-37.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "guard_wiring",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "38"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-38.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    },
+    {
+      "case_id": "historical_readability",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py",
+        "/home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+        "settings",
+        "39"
+      ],
+      "exit": 1,
+      "failure": "AssertionError: DL-408 current Settings companions",
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-negative-39.txt",
+      "sha256": "899b16f2ea092b58a0675506b2a239d3e56fa413639d7cdc20b189b9453c3ae7"
+    }
+  ],
+  "settings_negatives_rejected": 40,
+  "worker": "DM-APPLY-FIX1",
+  "input_head": "90f7e163614575558644d291f283c19ae6f305a9",
+  "contract_checker_head": "66655ae43ec98be050816fb574ef26d9d9e8709c",
+  "application_head": "e2cfea7c5823e1ea822cfd088db0c125a0327d5b",
+  "qualification": "Static model/contract checks. Prepared families remain unadmitted; native NOT_RUN. Each child runs the complete checker with one process-local regression; no repository input overwritten."
+}

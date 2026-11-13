@@ -63,6 +63,10 @@
     {
       "name": "goal_lineage_cannot_store_secret_shaped_route",
       "patch": {"effective_route_ref": "sk-abcdefgh12345678"}
+    },
+    {
+      "name": "root_goal_must_be_its_own_root",
+      "patch": {"root_goal_id": "goal:other"}
     }
   ]
 }

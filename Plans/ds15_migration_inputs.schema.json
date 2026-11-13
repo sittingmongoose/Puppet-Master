@@ -1,0 +1,488 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.migration_inputs.v1",
+  "$defs": {
+    "dap_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "evidence"
+      ],
+      "properties": {
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "project_id",
+            "dev_session_id",
+            "dap_session_id",
+            "topology",
+            "adapter_capability_snapshot_ref",
+            "owner_ref",
+            "lease_ref",
+            "session_generation",
+            "permission_grant_ref",
+            "policy_ref",
+            "state",
+            "waiter_arm_ref",
+            "waiter_armed_at_utc",
+            "triggered_at_utc",
+            "log_refs",
+            "artifact_refs",
+            "cleanup_ref",
+            "created_at_utc",
+            "updated_at_utc",
+            "terminal_at_utc"
+          ],
+          "properties": {
+            "schema_id": {
+              "type": "string"
+            },
+            "schema_version": {
+              "type": "string"
+            },
+            "project_id": {
+              "type": "string"
+            },
+            "dev_session_id": {
+              "type": "string"
+            },
+            "dap_session_id": {
+              "type": "string"
+            },
+            "topology": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "project_id",
+                "project_home_server_id",
+                "execution_host_id",
+                "execution_environment_id",
+                "source_location_id",
+                "topology_generation"
+              ],
+              "properties": {
+                "project_id": {
+                  "type": "string"
+                },
+                "project_home_server_id": {
+                  "type": "string"
+                },
+                "execution_host_id": {
+                  "type": "string"
+                },
+                "execution_environment_id": {
+                  "type": "string"
+                },
+                "source_location_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "topology_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "adapter_capability_snapshot_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "owner_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "lease_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "session_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "permission_grant_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "policy_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "state": {
+              "type": "string"
+            },
+            "waiter_arm_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "waiter_armed_at_utc": {
+              "type": "string"
+            },
+            "triggered_at_utc": {
+              "type": "string"
+            },
+            "log_refs": {
+              "type": "array",
+              "items": {}
+            },
+            "artifact_refs": {
+              "type": "array",
+              "items": {}
+            },
+            "cleanup_ref": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "created_at_utc": {
+              "type": "string"
+            },
+            "updated_at_utc": {
+              "type": "string"
+            },
+            "terminal_at_utc": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "verified",
+            "backup_verified",
+            "project_id",
+            "dev_session_id"
+          ],
+          "properties": {
+            "verified": {
+              "type": "boolean"
+            },
+            "backup_verified": {
+              "type": "boolean"
+            },
+            "project_id": {
+              "type": "string"
+            },
+            "dev_session_id": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "preview_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "evidence"
+      ],
+      "properties": {
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "preview_id",
+            "preview_type",
+            "source_file",
+            "status",
+            "last_refresh"
+          ],
+          "properties": {
+            "preview_id": {
+              "type": "string"
+            },
+            "preview_type": {
+              "type": "string"
+            },
+            "source_file": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "last_refresh": {
+              "type": "string"
+            }
+          }
+        },
+        "evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "verified",
+            "backup_verified",
+            "mappings"
+          ],
+          "properties": {
+            "verified": {
+              "type": "boolean"
+            },
+            "backup_verified": {
+              "type": "boolean"
+            },
+            "mappings": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "preview_id",
+                  "source_file",
+                  "saved_subject_ui"
+                ],
+                "properties": {
+                  "preview_id": {
+                    "type": "string"
+                  },
+                  "source_file": {
+                    "type": "string"
+                  },
+                  "saved_subject_ui": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "schema_id",
+                      "schema_version",
+                      "project_id",
+                      "preview_subject_id",
+                      "source_ref",
+                      "restore_intent",
+                      "attached_surface",
+                      "export_prefs_ref",
+                      "scroll_sync",
+                      "last_error_ref",
+                      "last_preview_session_id",
+                      "runtime_verification",
+                      "last_source_revision",
+                      "last_preview_revision",
+                      "legacy_status"
+                    ],
+                    "properties": {
+                      "schema_id": {
+                        "type": "string"
+                      },
+                      "schema_version": {
+                        "type": "string"
+                      },
+                      "project_id": {
+                        "type": "string"
+                      },
+                      "preview_subject_id": {
+                        "type": "string"
+                      },
+                      "source_ref": {
+                        "type": "string"
+                      },
+                      "restore_intent": {
+                        "type": "string"
+                      },
+                      "attached_surface": {
+                        "type": "string"
+                      },
+                      "export_prefs_ref": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "scroll_sync": {
+                        "type": "boolean"
+                      },
+                      "last_error_ref": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "last_preview_session_id": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "runtime_verification": {
+                        "type": "string"
+                      },
+                      "last_source_revision": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "last_preview_revision": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "legacy_status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "capture_chip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "evidence"
+      ],
+      "properties": {
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "thread_id",
+            "chip_id",
+            "browser_session_id",
+            "attachment_type",
+            "capture_status",
+            "source_ref",
+            "provenance_ref",
+            "summary_ref",
+            "scope"
+          ],
+          "properties": {
+            "thread_id": {
+              "type": "string"
+            },
+            "chip_id": {
+              "type": "string"
+            },
+            "browser_session_id": {
+              "type": "string"
+            },
+            "attachment_type": {
+              "type": "string"
+            },
+            "capture_status": {
+              "type": "string"
+            },
+            "source_ref": {
+              "type": "string"
+            },
+            "provenance_ref": {
+              "type": "string"
+            },
+            "summary_ref": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "project_id",
+                "user_id",
+                "computer_id",
+                "profile_id"
+              ],
+              "properties": {
+                "kind": {
+                  "type": "string"
+                },
+                "project_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "user_id": {
+                  "type": "string"
+                },
+                "computer_id": {
+                  "type": "string"
+                },
+                "profile_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "verified",
+            "backup_verified",
+            "thread_id",
+            "scope"
+          ],
+          "properties": {
+            "verified": {
+              "type": "boolean"
+            },
+            "backup_verified": {
+              "type": "boolean"
+            },
+            "thread_id": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "project_id",
+                "user_id",
+                "computer_id",
+                "profile_id"
+              ],
+              "properties": {
+                "kind": {
+                  "type": "string"
+                },
+                "project_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "user_id": {
+                  "type": "string"
+                },
+                "computer_id": {
+                  "type": "string"
+                },
+                "profile_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -22,7 +22,7 @@ This document exists to avoid losing features when writing rewrite implementatio
 - **assistant-chat-design** — `Plans/assistant-chat-design.md`; canonical Assistant Chat behavior, modes, thread UX, and slash-command semantics.
 
 <a id="media-generation-capabilities-ref"></a>
-- **Media generation and capabilities** — `Plans/Media_Generation_and_Capabilities.md`; canonical for capability discovery and media generation routing. Feature summaries MUST defer Gemini media/account capability wording to the owner docs: Gemini Direct is key-only/API-key-backed, Gemini CLI is mode-dependent across OAuth/API-key/Google-credential rows, and stale-canon `mixed-account` or bare `key-exception` shorthand is not a complete feature description.
+- **Media generation and capabilities** — `Plans/Media_Generation_and_Capabilities.md`; canonical for capability discovery and media generation routing. Feature summaries MUST defer Gemini media/account capability wording to the owner docs: Gemini Direct is key-only/API-key-backed, the Gemini CLI media route and its historical OAuth/API-key/Google-credential rows are retired (DL-332, UF-019, UF-021, DL-478), Antigravity remains the live CLI-backed Google/agent route, and stale-canon `mixed-account` or bare `key-exception` shorthand is not a complete feature description.
 
 <a id="feature-debug-mode"></a>
 ### 6A. Debug Mode and shared debug-capable tooling
@@ -317,7 +317,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/feature-list.md
 canonical_text: >-
-  Feature-list reference anchors route summaries to Crosswalk, storage-plan, assistant-chat-design, and Media Generation owner docs, and media-account capability summaries must defer Gemini wording to those owners rather than using stale shorthand.
+  Feature-list reference anchors route summaries to Crosswalk, storage-plan, assistant-chat-design, and Media Generation owner docs, and media-account capability summaries must defer Gemini wording to those owners rather than using stale shorthand. Gemini Direct remains key-only/API-key-backed and Antigravity stays live; the Gemini CLI media route and its OAuth/API-key/Google-credential rows are retired by DL-332 and DL-478.
 gui_related: false
 gui_classification_reason: This unit preserves reference anchors and owner routing constraints, not GUI presentation.
 split_recommended: false

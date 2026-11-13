@@ -1,0 +1,94 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "run_id",
+    "live_session_id",
+    "platform",
+    "provider",
+    "session_id",
+    "pid",
+    "display_target",
+    "artifact_root"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "live_session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "platform": {
+      "enum": [
+        "web",
+        "desktop",
+        "ios",
+        "android"
+      ]
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "pid": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "display_target": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "artifact_root": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "browser_session_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "session_class": {
+      "enum": [
+        "workspace_preview",
+        "detached_preview",
+        "automation_session",
+        "normal_browsing"
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.live_session_started.payload.v1",
+  "dependentRequired": {
+    "browser_session_id": [
+      "session_class"
+    ],
+    "session_class": [
+      "browser_session_id"
+    ]
+  }
+}

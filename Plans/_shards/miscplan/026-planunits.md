@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L1353-L6320
+Source lines: L1381-L6359
 
-Source SHA256: `9fe00e10eab87efa104b8d9deeac8ba2ce657ee0776a20f86f99a6053793f37e`
+Source SHA256: `075650d61f254d219224a6955894056175249145fa195c870d67edcca7226d33`
 
 ---
 
@@ -4732,15 +4732,22 @@ plan_unit_id: M-079
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Instrumentation-first debug behavior is not grounded MVP behavior until the temporary-instrumentation patch pipeline declares lifecycle, collector state, evidence sink, cleanup, rollback, and failed-cleanup semantics.
+canonical_text: Instrumentation-first debug behavior is not grounded MVP behavior until the temporary-instrumentation
+  patch pipeline declares lifecycle, collector state, evidence sink, cleanup, rollback, and failed-cleanup
+  semantics. DL-429 now supplies the complete approved six-state/five-result meanings and transition table
+  in this owner; CV-574 binds original before/after values, reason, whole-lane proof, handoff acceptance
+  and the unchanged two-retry ceiling.
 gui_related: false
-gui_classification_reason: The unit covers backend debug pipeline lifecycle, evidence, cleanup, and rollback contracts rather than direct GUI presentation.
+gui_classification_reason: The unit covers backend debug pipeline lifecycle, evidence, cleanup, and rollback
+  contracts rather than direct GUI presentation.
 split_recommended: true
 depends_on:
 - M-078
 unblocks: []
 acceptance_criteria:
-- Temporary-instrumentation patch pipeline declares an instrumentation_id, collector_state, install/collect/remove sequence, debug-specific mutation rules, evidence sink contract, and explicit write cleanup/rollback semantics.
+- Temporary-instrumentation patch pipeline declares an instrumentation_id, collector_state, install/collect/remove
+  sequence, debug-specific mutation rules, evidence sink contract, and explicit write cleanup/rollback
+  semantics.
 - Resolved, cancelled, and superseded investigations attempt cleanup automatically.
 - Failed residue uses lifecycle failed_cleanup with stop_reason_code = investigation.cleanup_failed.
 - Instrumentation-first behavior is not treated as grounded MVP behavior until this contract exists.
@@ -4758,6 +4765,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0101
+- Plans/Decision_Log.md#DL-429
+- Plans/Contracts_V0.md#CV-574
 preserved_exact_tokens:
 - Investigation instrumentation lifecycle contract
 - Instrumentation-first behavior is not grounded MVP behavior
@@ -4767,7 +4776,7 @@ preserved_exact_tokens:
 - collector-state
 - install/collect/remove
 - evidence sink contract
-- "/cleanup/rollback"
+- /cleanup/rollback
 - failed_cleanup
 - stop_reason_code = investigation.cleanup_failed
 negative_constraints:
@@ -4776,12 +4785,14 @@ compatibility_only_notes:
 - blog-sourced Cursor-like behavior is hypothesis-first reference behavior only.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Runtime, evidence, storage, assistant-chat, and GitHub integration owner docs retain authority for concrete storage, evidence, and export mechanics.
+- Runtime, evidence, storage, assistant-chat, and GitHub integration owner docs retain authority for concrete
+  storage, evidence, and export mechanics.
 owner_hints:
 - Plans/MiscPlan.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md'
-split_recommendation_reason: Temporary instrumentation lifecycle spans collector state, mutation rules, evidence, cleanup, rollback, and failed residue semantics.
+split_recommendation_reason: Temporary instrumentation lifecycle spans collector state, mutation rules,
+  evidence, cleanup, rollback, and failed residue semantics.
 ```
 
 ### M-080 - Debug Cleanup Residue Visibility And Bundle Records

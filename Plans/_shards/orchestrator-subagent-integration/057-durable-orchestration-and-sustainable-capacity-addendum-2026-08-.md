@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31765-L31897
+Source lines: L31797-L31929
 
-Source SHA256: `e1b57f1eac9ff87964edd227ba9d4de690bc5bb9b49b9da4f591aadd6907d44c`
+Source SHA256: `60d3ef46e9d34adfd5e01d6a25d733f35f7c9bf6280b24227df7618c875cba23`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `e1b57f1eac9ff87964edd227ba9d4de690bc5bb9b49b9da4f591aadd6907d44c
 
 Orchestrator consumes `Plans/Shared_Integration_Runtime.md` for connection/replay, durable thread-operation lifecycle, `RuntimeResourceGovernor`, `LeaseCoordinator`, `OperationalAwarenessService`, and `ObservableWork`. This document retains orchestration policy: child/agent identity, parent lineage, decomposition, capacity-aware waves, synthesis, verification, repair, and completion contribution. Shared runtime services must not become a second Orchestrator or Executor scheduler.
 
-`thread.request`, `thread.spawn`, and `thread.await` semantics are durable and attributable even when final command IDs remain Commands-owner work. Each operation records stable operation identity, source/target thread refs, bounded task and reply contract, parent Goal/Plan/run/agent lineage, permission ceiling, currentness/idempotency, status/timestamps, result/evidence refs, Usage refs, and cancellation/restart disposition. Ordering is serial within a thread and parallel across unrelated threads; await uses shared wait state and never parks a dedicated OS thread. Child authority is equal to or narrower than the parent and cross-project access requires an explicit scoped grant.
+`thread.request`, `thread.spawn`, and `thread.await` semantics are durable and attributable even when final command IDs remain Commands-owner work. Each operation records stable operation identity, source/target thread refs, bounded task and reply contract, parent agent/Plan/run lineage, permission ceiling, currentness/idempotency, status/timestamps, result/evidence refs, Usage refs, and cancellation/restart disposition. Ordering is serial within a thread and parallel across unrelated threads; await uses shared wait state and never parks a dedicated OS thread. Child authority is equal to or narrower than the parent and cross-project access requires an explicit scoped grant.
 
 Owner adjudication of the packet branch clause (2026-09-26): packet `PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md` §12 lists `thread.branch` beside `thread.spawn`, `thread.request`, and `thread.await` as durable logical operations with "copy-on-write branching where applicable". The branch clause is **deferred and unadmitted**. Current canon defines exactly three durable logical thread operations — this paragraph, OSI-433, OSI-435, and the central `cmd.thread.request`, `cmd.thread.spawn`, and `cmd.thread.await` family (`Plans/UI_Command_Catalog.md:11487-11489`, `Plans/Commands_System.md:4067-4069`) — and no owner prose establishes what an Orchestrator-level branch would target, its per-thread ordering/idempotency/restart identity, or its parent-lineage and permission-ceiling inheritance. The packet's own "where applicable" qualifier means the absence of a registered `cmd.thread.branch` proves neither a mechanical drop nor a retirement; neither is recorded, and missing spelling alone is never admission evidence. `cmd.chat.branch_from_restore` is an Assistant Chat restore-point application under `PD-RSP-08` (`Plans/assistant-chat-design.md:1226-1230`, catalog row `Plans/UI_Command_Catalog.md:8584`) that materializes a frozen conversation boundary into a new conversation thread/branch; it is not an Orchestrator copy-on-write thread branch and does not satisfy this clause. Exact future admission gate, all three in order: (1) a recorded owner adjudication here and in `Plans/Shared_Integration_Runtime.md` naming a concrete orchestration need that request/spawn/await cannot express and defining the branch target identity, per-thread ordering/idempotency/restart disposition, lineage, and child-equal-or-narrower permission inheritance; (2) central admission by the Commands owners — typed request/result contract, one `UI_Command_Catalog` row, one `Commands_System` row, one wiring row, one sole handler; (3) restart/replay/duplicate-branch contract fixtures. Until all three exist, no `cmd.thread.branch` command, alias, or handler may be registered by any owner.
 
@@ -45,7 +45,7 @@ canonical_text: >-
   revalidate before delivery.
 gui_related: false
 gui_classification_reason: Durable orchestration lineage and authority are backend coordination semantics.
-depends_on: [OSI-410, OSI-428, GRS-044]
+depends_on: [OSI-410, GRS-044]
 unblocks: []
 acceptance_criteria:
   - Restart/reconnect fixtures preserve request/spawn/await identity and do not duplicate child work.

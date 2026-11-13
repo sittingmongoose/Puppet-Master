@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1299-L7135
+Source lines: L1301-L7133
 
-Source SHA256: `23639a3ba83b0aaf6c2697215a0b9787100cbb602fb5195f228070a646e66809`
+Source SHA256: `41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1`
 
 ---
 
@@ -4941,7 +4941,7 @@ canonical_text: Memory Add/Edit/Delete commands are cmd.chat.memory.add, cmd.cha
   and the chat sheet produces them. Legacy Verify/Pin/Discard/toggle_auto_save_unverified/preview_capsule
   IDs remain support/compatibility only, with no ordinary GUI, search or prompt-preview producer; they
   cannot restore retired features or verification bypasses. Native handlers remain unavailable until evidence
-  closes wiring.
+  closes wiring. DL-407 and AMS-130/CV-785/SP-765 replace the seven command history spellings with memory.gist_state_changed once per successful real mutation; requested or failed verification and no-ops retain only their command results. Under DL-408, the auto-save-unverified switch records only settings.layer.changed; settings.updated is retired as superseded.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4970,19 +4970,14 @@ source_lineage:
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - cmd.chat.memory.verify
+- memory.gist_state_changed
 - cmd.chat.memory.edit
 - cmd.chat.memory.pin
 - cmd.chat.memory.discard
 - cmd.chat.memory.toggle_auto_save_unverified
 - cmd.chat.memory.preview_capsule
-- memory.gist.verification_requested
-- memory.gist.verified
-- memory.gist.verification_failed
-- memory.gist.updated
-- memory.gist.pinned
-- memory.gist.unpinned
-- memory.gist.discarded
 - settings.updated
+- settings.layer.changed
 - Assistant chat Gist Review panel
 - cmd.chat.memory.add
 - cmd.chat.memory.delete
@@ -4990,7 +4985,8 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- settings.updated is retired as superseded by settings.layer.changed under DL-408.
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```

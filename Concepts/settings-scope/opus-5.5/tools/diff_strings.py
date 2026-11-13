@@ -17,6 +17,12 @@ EXPECTED = {
     "np.like.things": "added (SETTINGS-PROPOSAL 11: its own things, one outcome line each)",
     "np.acct.checked": "the check_there row (SETTINGS-PROPOSAL 11)",
     "np.acct.checkedWhy": "the check_there row (SETTINGS-PROPOSAL 11)",
+    # 2026-11-10: copied verbatim from Split v2's layer/words.js (newer than BUILD-SPEC 6.7) for the guided-flows fixes
+    "np.acct.keyWhy": "verbatim from Split v2's layer/words.js (guided flows 3.11)",
+    "np.acct.install": "verbatim from Split v2's layer/words.js (guided flows 3.11)",
+    "np.acct.installWhy": "verbatim from Split v2's layer/words.js (guided flows 3.11)",
+    "np.acct.cannot": "verbatim from Split v2's layer/words.js: the cannot_move result (guided flows 3.12)",
+    "np.acct.cannotWhy": "verbatim from Split v2's layer/words.js: the cannot_move result (guided flows 3.12)",
 }
 NOT_DRAWN = {
     "np.acct.keySend": "sendKeys is off (S11 A)",

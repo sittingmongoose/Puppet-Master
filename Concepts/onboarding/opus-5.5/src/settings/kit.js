@@ -791,7 +791,20 @@ PM51.on('noop', () => {});
 PM51.on('disabled', el => { showToast('Not available', el.dataset.disabledReason || 'This cannot be changed here.', 'info', 2600); });
 /* Narrow hosts: the roster becomes an off-canvas list toggled from the detail head. */
 PM51.on('toggle-roster', el => { state.resourceRosterOpen = !state.resourceRosterOpen; const body = el.closest('.manager-body'); if (body) body.classList.toggle('roster-open', state.resourceRosterOpen); });
-const applyRosterFilter = el => { const list = el.closest('.resource-roster')?.querySelector('.roster-list'); if (!list) return; const q = String(el.value || '').toLowerCase(); list.querySelectorAll('.resource-row').forEach(row => { row.hidden = !!q && !row.textContent.toLowerCase().includes(q); }); };
+const applyRosterFilter = el => {
+  const roster = el.closest('.resource-roster'), list = roster?.querySelector('.roster-list'); if (!list) return;
+  const q = String(el.value || '').toLowerCase(), rows = [...list.querySelectorAll('.resource-row')];
+  rows.forEach(row => { row.hidden = !!q && !row.textContent.toLowerCase().includes(q); });
+  const empty = !!q && !rows.some(row => !row.hidden);
+  let message = roster.querySelector('.pm51-filter-empty');
+  if (!message) {
+    message = document.createElement('div'); message.className = 'pm51-popout-empty pm51-filter-empty';
+    message.textContent = el.placeholder === 'Filter services' ? 'No services match. Clear the filter to see everything.' : 'No matches. Clear the filter to see everything.';
+    list.before(message);
+  }
+  message.hidden = !empty;
+  const title = roster.querySelector('.roster-title'); if (title) title.hidden = empty;
+};
 PM51.applyFilters = scope => { (scope || root).querySelectorAll('input[data-action="pm51-filter"]').forEach(el => { const stored = (PM51.s().filters || {})[ds(el, 'manager')]; if (stored != null && el.value !== stored) el.value = stored; if (el.value) applyRosterFilter(el); }); };
 PM51.onInput('filter', el => { PM51.s().filters = PM51.s().filters || {}; PM51.s().filters[ds(el, 'manager')] = el.value; applyRosterFilter(el); });
 

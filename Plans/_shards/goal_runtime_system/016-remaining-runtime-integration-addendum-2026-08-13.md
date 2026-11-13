@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L961-L1043
 
-Source SHA256: `a3d445f21fb597b64bb086e380015fe3ae5e7ff9445b60f75ae5bf17aea53614`
+Source SHA256: `89fd63627d92d52c7eb46ca8f019b279f72c15db055a54e46aeb9eec66c963bb`
 
 ---
 
@@ -14,7 +14,7 @@ Source SHA256: `a3d445f21fb597b64bb086e380015fe3ae5e7ff9445b60f75ae5bf17aea53614
 
 ### Durable Goal, Plan, thread, and agent lineage
 
-A Goal and every GoalRun preserve `goal_id`, Goal revision, parent/child refs, GoalRun/checkpoint refs, owner-defined Plan lineage refs, originating/current thread refs, agent/crew/WorkNode refs where present, correlation/causation, policy/Persona/route snapshots, budget/capacity refs, evidence/blocker/completion refs, and execution-owner epoch across provider rotation, compaction, restart, client reconnect, and client closure. These relationships are never reconstructed from the focused thread, selected Plan, prompt text, or a client-local transcript.
+A Goal preserves `goal_id`, Goal revision, checkpoint refs, owner-defined Plan lineage refs, originating/current thread refs, agent/WorkNode refs where present, correlation/causation, policy/Persona/route snapshots, evidence/blocker/completion refs, and execution-owner epoch across provider rotation, compaction, restart, client reconnect, and client closure. These relationships are never reconstructed from the focused thread, selected Plan, prompt text, or a client-local transcript.
 
 Provider processes, Goals, agents, tests, and approved work are Server/Execution-Host-owned after durable admission. Closing or disconnecting a client changes observation/control connectivity only. One concrete GoalRun has one accepted execution owner/epoch; transfer requires durable disposition, a safe checkpoint, a new fencing epoch, rejection of late prior-owner writes, and recreation or resolution of nonportable local resources. UI focus, server connection, thread selection, and execution ownership are separate. Reconnect consumes shared epoch-fenced cursor replay or snapshot-plus-live-buffer recovery, deduplicated by durable event identity, and cannot duplicate a Goal transition, child spawn, approval, provider attempt, charge, or completion.
 
@@ -39,7 +39,7 @@ canonical_text: >-
   Goal Runtime preserves durable Goal, Plan, thread, child, agent, run, checkpoint, policy, evidence, blocker, receipt, and execution-owner lineage across compaction, restart, disconnect, reconnect, and host transfer. Admitted work remains server-owned; one GoalRun has one accepted owner epoch; shared cursor/snapshot recovery never duplicates an effect.
 gui_related: false
 gui_classification_reason: Runtime identity, continuation, fencing, and recovery semantics are not visual implementation.
-depends_on: [GRS-011, GRS-019, GRS-040]
+depends_on: [GRS-049, GRS-019, GRS-040]
 unblocks: []
 acceptance_criteria:
   - Client closure/reconnect preserves Goal execution without duplicate transitions, attempts, charges, or completion.
@@ -71,7 +71,7 @@ canonical_text: >-
   Goal Runtime consumes BSD and conditional-rule outputs as bounded read-only attributable advice. Advice can remain silent, cannot widen authority or access AuthBrowserSession, and cannot block primary work on failure. Goal controls without command, handler, event, revision, and production-wiring closure remain disabled or omitted; this owner invents no IDs.
 gui_related: true
 gui_classification_reason: Visible Goal control availability, advisory projection, and disabled reasons are user-facing behavior.
-depends_on: [GRS-014, GRS-021, RM-050]
+depends_on: [GRS-050, GRS-021, RM-050]
 unblocks: []
 acceptance_criteria:
   - Silent, duplicate, timeout, quota, and failure cases preserve primary progress and Usage attribution.

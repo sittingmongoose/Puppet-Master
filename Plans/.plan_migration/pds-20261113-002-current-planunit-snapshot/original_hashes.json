@@ -1,0 +1,586 @@
+{
+  "capture_semantics": "current_snapshot_not_pre_conversion_baseline",
+  "files": [
+    {
+      "bytes": 535051,
+      "line_count": 6328,
+      "path": "Plans/00-plans-index.md",
+      "sha256": "5e4e5febe9d2185e9303ae0d97e3c05bcc7be9a6b2f2df3220c6e579933947d9"
+    },
+    {
+      "bytes": 118010,
+      "line_count": 2461,
+      "path": "Plans/agent-rules-context.md",
+      "sha256": "abc7dcb9b880d42034005d801131e1eb874cebd74eed7af23de2a74cb86375e6"
+    },
+    {
+      "bytes": 236800,
+      "line_count": 4619,
+      "path": "Plans/Architecture_Invariants.md",
+      "sha256": "d48461a5189f0540f72edec82e53ffffd9a421fcdd39f7ec884aa1a81e22e254"
+    },
+    {
+      "bytes": 1862816,
+      "line_count": 33346,
+      "path": "Plans/assistant-chat-design.md",
+      "sha256": "d6a0adb2d473eee030abd7e011b477a4066eeb8754c44d9f942999781fcdb608"
+    },
+    {
+      "bytes": 292398,
+      "line_count": 4936,
+      "path": "Plans/assistant-memory-subsystem.md",
+      "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911"
+    },
+    {
+      "bytes": 177330,
+      "line_count": 2229,
+      "path": "Plans/Assistant_Plan_Runtime.md",
+      "sha256": "10c3eaf881604c06a1a25b60feab59c9873270d0179c5bf8fb5657aa54e2af8f"
+    },
+    {
+      "bytes": 1216603,
+      "line_count": 11709,
+      "path": "Plans/Automated_Testing_System.md",
+      "sha256": "02a13c270486be30954aea1afce8358d487024dbe45e9cfc41b19f3966616255"
+    },
+    {
+      "bytes": 40077,
+      "line_count": 453,
+      "path": "Plans/Azure_DevOps_Integration.md",
+      "sha256": "be6d4bc96769a2bdc4e801c0609c6a77d539c90bb74799b746559313b8a081c6"
+    },
+    {
+      "bytes": 190655,
+      "line_count": 2638,
+      "path": "Plans/Back_Seat_Driver.md",
+      "sha256": "29dcb8bc0c7f7dc3911a33ff80e93498b4201d4df7cec4c43de9f5af4648e252"
+    },
+    {
+      "bytes": 231147,
+      "line_count": 2237,
+      "path": "Plans/Backup_Restore_System.md",
+      "sha256": "3aba3715bcd5efa073c27ecff294644e7980d06db5b0c79dc70039252f19d493"
+    },
+    {
+      "bytes": 107305,
+      "line_count": 1955,
+      "path": "Plans/BinaryLocator_Spec.md",
+      "sha256": "3a2ef514e89e24a91cd69abecc37c3330fbd05d8e192138f8c23a4fd38ac095b"
+    },
+    {
+      "bytes": 17183,
+      "line_count": 228,
+      "path": "Plans/Bitbucket_Integration.md",
+      "sha256": "2485fd9b05feaedb526c327f8d69dba2f4babbb67f56d0ce0f388cf74f0045ad"
+    },
+    {
+      "bytes": 40546,
+      "line_count": 620,
+      "path": "Plans/Bootstrap_Planning_Migration.md",
+      "sha256": "2ce889933b04cdce0510d5d7577292bb7de5c3d0db194980d937b48d01b8230e"
+    },
+    {
+      "bytes": 543364,
+      "line_count": 10269,
+      "path": "Plans/chain-wizard-flexibility.md",
+      "sha256": "b9c380ab89303839d2abbf9958ab8b20a6d548fd71b9f0a94ea34992e1f8bb3a"
+    },
+    {
+      "bytes": 30347,
+      "line_count": 578,
+      "path": "Plans/chain-wizard.md",
+      "sha256": "c03dfe1840905803d55d1b7df90f5face904cb5169df64148e17abd0ee54a6aa"
+    },
+    {
+      "bytes": 135700,
+      "line_count": 2133,
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "sha256": "6e1ee908148cdf8fd6065f6e3121064753df6d5c65f7f56ab901f82d2ab71157"
+    },
+    {
+      "bytes": 450495,
+      "line_count": 5526,
+      "path": "Plans/Collaborative_Workflows.md",
+      "sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b"
+    },
+    {
+      "bytes": 933052,
+      "line_count": 11251,
+      "path": "Plans/Commands_System.md",
+      "sha256": "863b525b3833fdd01ebeb6925f6baef415ffdf1525912a2c5fbaa5526e439c63"
+    },
+    {
+      "bytes": 652327,
+      "line_count": 9878,
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "sha256": "95bfb633848bbd57d1c954d260433ae631bf27239507418e2f352d011a70394e"
+    },
+    {
+      "bytes": 3169262,
+      "line_count": 37008,
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "e91c8b29fb8a1eb9c2c6c5a5e4f3b96f44d02552c3b0358d0decce4b7b5c0900"
+    },
+    {
+      "bytes": 226910,
+      "line_count": 3642,
+      "path": "Plans/Crosswalk.md",
+      "sha256": "2ab27e2c80bf1dccd3906a987fa207e103af8679f2ed73bbf5e7ffe49fc0007b"
+    },
+    {
+      "bytes": 19709,
+      "line_count": 470,
+      "path": "Plans/Cursor_Origin_Integration.md",
+      "sha256": "59ff156cb3fc076e506f833e6100d34c2e8828cf53340a0c9169e8ac9b783981"
+    },
+    {
+      "bytes": 2374193,
+      "line_count": 32456,
+      "path": "Plans/Decision_Log.md",
+      "sha256": "c29b7ef5db937646b9b1fa2b620d07d35c5cd01a901ce658d733699e1f392331"
+    },
+    {
+      "bytes": 183062,
+      "line_count": 3762,
+      "path": "Plans/Decision_Policy.md",
+      "sha256": "79c1701509e6333d3470add092021dbf424a6992e9cae2ce874abfc7a555a58a"
+    },
+    {
+      "bytes": 80206,
+      "line_count": 1750,
+      "path": "Plans/Document_Packaging_Policy.md",
+      "sha256": "c70b4b215f421cf69ac503698088fb46278c038f80df19f94d50ae87d6bd77bd"
+    },
+    {
+      "bytes": 337201,
+      "line_count": 5365,
+      "path": "Plans/DRY_Rules.md",
+      "sha256": "ec31e72135a20b97f0cf6eb893d2b7ddfedd51dcbc640599df316eb2a454ab3e"
+    },
+    {
+      "bytes": 943858,
+      "line_count": 12283,
+      "path": "Plans/Executor_Protocol.md",
+      "sha256": "9bb56532eb8a4ee5374d13acbfe2fc87deabb2a1118c5e9690b238625b862511"
+    },
+    {
+      "bytes": 67210,
+      "line_count": 796,
+      "path": "Plans/External_Research.md",
+      "sha256": "a7da7ac63f5064759a08e55eff0c70f3a410a55f58715ba188a88c02cad4d25d"
+    },
+    {
+      "bytes": 84682,
+      "line_count": 1597,
+      "path": "Plans/feature-list.md",
+      "sha256": "1e3c076e3e5d6450aa86dc05bbe33cfbd128a43087e206006648c977104238bc"
+    },
+    {
+      "bytes": 508176,
+      "line_count": 7584,
+      "path": "Plans/FileManager.md",
+      "sha256": "ae91f8f664fe4836837cf8796e57ec967e68ce836f081ac1b68b1e3ca56a2f4f"
+    },
+    {
+      "bytes": 721731,
+      "line_count": 15325,
+      "path": "Plans/FileSafe.md",
+      "sha256": "89becad1a1bce7ab45ca2d49609e6364167aa8470ed0165926afcbd64e400f2c"
+    },
+    {
+      "bytes": 3558042,
+      "line_count": 53056,
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "50e00d67a61f15d8c93c7d8953f478927de33ec39de9e98ddf8df47e97f610d1"
+    },
+    {
+      "bytes": 188847,
+      "line_count": 2108,
+      "path": "Plans/Forge_Integrations.md",
+      "sha256": "34e1e70418d006b981137ec40fa4e55189dd24d066e8536336da850e53babcd7"
+    },
+    {
+      "bytes": 65046,
+      "line_count": 1159,
+      "path": "Plans/Formatters_System.md",
+      "sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7"
+    },
+    {
+      "bytes": 90409,
+      "line_count": 1310,
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "sha256": "fd52a7262fec3af2cb9c01bc9c9e37eb643c4a1d146bd05617d04107cdd8c5e5"
+    },
+    {
+      "bytes": 163581,
+      "line_count": 2653,
+      "path": "Plans/GitHub_Integration.md",
+      "sha256": "262c75f28aa55381f858b6da540084b3e0490881c137e356e8b8f4e199f640ef"
+    },
+    {
+      "bytes": 17603,
+      "line_count": 233,
+      "path": "Plans/GitLab_Integration.md",
+      "sha256": "90174785adbaf5b057fa2795c9b3847eb0de6738d4a02d725c8fa98f9dfa283c"
+    },
+    {
+      "bytes": 157576,
+      "line_count": 2689,
+      "path": "Plans/Glossary.md",
+      "sha256": "a63c96ba124b2bc011958e01d7e7090e71667525faf183296956e1db7cd1d794"
+    },
+    {
+      "bytes": 695958,
+      "line_count": 8667,
+      "path": "Plans/Goal_Runtime_System.md",
+      "sha256": "89fd63627d92d52c7eb46ca8f019b279f72c15db055a54e46aeb9eec66c963bb"
+    },
+    {
+      "bytes": 151103,
+      "line_count": 2293,
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "sha256": "c2fb730c57e1a122bc4f80813e833a45287bd5f77199026663042324d3db5ae0"
+    },
+    {
+      "bytes": 155766,
+      "line_count": 2803,
+      "path": "Plans/human-in-the-loop.md",
+      "sha256": "e83477fb5445aacd63eb29a0513ee20fb69444fe64add25776c30616f3de13a0"
+    },
+    {
+      "bytes": 61672,
+      "line_count": 1073,
+      "path": "Plans/interview-subagent-integration.md",
+      "sha256": "8226743db705a889683a4d00fce308fa29e13002f3f70345455e8249c35fffa4"
+    },
+    {
+      "bytes": 140484,
+      "line_count": 1770,
+      "path": "Plans/Jujutsu_Integration.md",
+      "sha256": "7e80821630ab49cfd7cd5c1c6069e43bed3047b78c2fc32dde2cee97272f1252"
+    },
+    {
+      "bytes": 424158,
+      "line_count": 7298,
+      "path": "Plans/LSPSupport.md",
+      "sha256": "8460219bdb4126ddfa1d188eb067cdede819bc588f824a600983d8d2a4678f45"
+    },
+    {
+      "bytes": 163711,
+      "line_count": 2970,
+      "path": "Plans/MCP_Integration.md",
+      "sha256": "8828c2151d68074096ab61a89e2b2a83e705b3dbcacbc10fb1e0dafaa221b6aa"
+    },
+    {
+      "bytes": 355927,
+      "line_count": 6725,
+      "path": "Plans/Media_Generation_and_Capabilities.md",
+      "sha256": "abbe7955eb2492e271b9acd2109b60adec8bb157229bee863f206b57ba69825d"
+    },
+    {
+      "bytes": 399052,
+      "line_count": 6516,
+      "path": "Plans/MiscPlan.md",
+      "sha256": "075650d61f254d219224a6955894056175249145fa195c870d67edcca7226d33"
+    },
+    {
+      "bytes": 539026,
+      "line_count": 10063,
+      "path": "Plans/Models_System.md",
+      "sha256": "dee618544c82f1dea7dbd9558bd093dae88c784b1a6383c823f8895256c0e015"
+    },
+    {
+      "bytes": 358254,
+      "line_count": 5868,
+      "path": "Plans/Multi-Account.md",
+      "sha256": "5428a3a6244d5d451d2b68857de5b7035b2d85ba353dd0f9f19a8a0c9c51240d"
+    },
+    {
+      "bytes": 42920,
+      "line_count": 454,
+      "path": "Plans/Multi-Account_Connection_Spec.md",
+      "sha256": "8347087c1f7b4fc57df4e3c5e25c4de39e71b22c5d7bbd9064198dbb53c1f507"
+    },
+    {
+      "bytes": 43581,
+      "line_count": 474,
+      "path": "Plans/Named_Plan_System.md",
+      "sha256": "c9a27bc15edd5344c283cf74c50423f44dc0b51940d4b663fa6dd4c69f78ccbd"
+    },
+    {
+      "bytes": 61216,
+      "line_count": 1234,
+      "path": "Plans/newfeatures.md",
+      "sha256": "09c9b55682dcc0d23f24a3512c14e70168dd50cbcdafcbdfc88e9518d3d2f9c2"
+    },
+    {
+      "bytes": 555518,
+      "line_count": 9475,
+      "path": "Plans/newtools.md",
+      "sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+    },
+    {
+      "bytes": 72573,
+      "line_count": 1215,
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "sha256": "e89c8e4a8a74a1c1b541b2dfd2f1ed215f0037bb1e5389fded9d781e7e7e78f1"
+    },
+    {
+      "bytes": 215201,
+      "line_count": 4616,
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+    },
+    {
+      "bytes": 1947825,
+      "line_count": 33459,
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "sha256": "60d3ef46e9d34adfd5e01d6a25d733f35f7c9bf6280b24227df7618c875cba23"
+    },
+    {
+      "bytes": 223124,
+      "line_count": 3586,
+      "path": "Plans/Orchestrator_Page.md",
+      "sha256": "7ac0440bbf7df272f65f2b98c2918ece20982eb6a28a55072e14aa430f410937"
+    },
+    {
+      "bytes": 579967,
+      "line_count": 11007,
+      "path": "Plans/Permissions_System.md",
+      "sha256": "5cb7fb002abccbb92fd5babcd9ccf807db1540aee5e2e0f7e3777e6238fdbc28"
+    },
+    {
+      "bytes": 219688,
+      "line_count": 4058,
+      "path": "Plans/Personas.md",
+      "sha256": "a14c5b9c5e694e2fc888bb675dcc7a25d4f60eca214f24ba761bbdceaaef6409"
+    },
+    {
+      "bytes": 81067,
+      "line_count": 1392,
+      "path": "Plans/Plan_Document_System.md",
+      "sha256": "8a187f223848c09f9d7ab145c5d2333b966abe1692c1070ebc44f94d6225c48d"
+    },
+    {
+      "bytes": 155541,
+      "line_count": 2156,
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "sha256": "9fd8edd4f088747cc4bc64858cedf72af0406fb22105ff745d64b1175c5db80f"
+    },
+    {
+      "bytes": 110288,
+      "line_count": 1791,
+      "path": "Plans/Planning_Ledger_System.md",
+      "sha256": "b11c900e665baa56ec201528b5d624d2a1c767f933a466d7ef39126fea3fac1a"
+    },
+    {
+      "bytes": 392539,
+      "line_count": 4965,
+      "path": "Plans/Planning_Wizard.md",
+      "sha256": "9c406a902f6078fb761662c6534c8afb7877b338ac7a94bc77637b92c64d8574"
+    },
+    {
+      "bytes": 271940,
+      "line_count": 4979,
+      "path": "Plans/Plugins_System.md",
+      "sha256": "ddd8af20bd919318e67b7488a4391bb6a9655cc3233643dfbdad278d29cc8132"
+    },
+    {
+      "bytes": 90279,
+      "line_count": 1664,
+      "path": "Plans/PRD_Builder.md",
+      "sha256": "d666b56022640a91a61dcab56c87364d47710c7f09e2dde2a7744d395c6dc2f2"
+    },
+    {
+      "bytes": 178333,
+      "line_count": 3695,
+      "path": "Plans/Progression_Gates.md",
+      "sha256": "72df37706b4be279175bd902815fa3c1e190d8ed0cc4ee16755ec08299d8f855"
+    },
+    {
+      "bytes": 187868,
+      "line_count": 3550,
+      "path": "Plans/Project_Output_Artifacts.md",
+      "sha256": "06b99d2b75ddd6f9e5a03a973e3829440f39ab16f05b4c042fbb9838acbfa5fa"
+    },
+    {
+      "bytes": 26435,
+      "line_count": 335,
+      "path": "Plans/Project_Sync_and_Backbone.md",
+      "sha256": "d43b6e02c5c199cb28beff1bbf2712a772fae5fa7d0ca3cb43c9d39cb0a13337"
+    },
+    {
+      "bytes": 144830,
+      "line_count": 1093,
+      "path": "Plans/Project_System.md",
+      "sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+    },
+    {
+      "bytes": 379452,
+      "line_count": 6218,
+      "path": "Plans/Prompt_Pipeline.md",
+      "sha256": "4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174"
+    },
+    {
+      "bytes": 189371,
+      "line_count": 3750,
+      "path": "Plans/Provider_OpenCode.md",
+      "sha256": "a25abc5983444a442ffc5e1046fd673b284538cb02e67a2acec042fe8ba926aa"
+    },
+    {
+      "bytes": 117840,
+      "line_count": 2194,
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "sha256": "a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906"
+    },
+    {
+      "bytes": 141496,
+      "line_count": 1546,
+      "path": "Plans/Release_Supply_Chain.md",
+      "sha256": "3d544077b7a9aab12c0834d5aaa8b887e7f037cc567cc93bf09112b6e39f900d"
+    },
+    {
+      "bytes": 142203,
+      "line_count": 1428,
+      "path": "Plans/Remote_Access_System.md",
+      "sha256": "d8b8af4e4ece810fa877c45eb2b5053b9889db5ff22cedfd7254f807df60fb2b"
+    },
+    {
+      "bytes": 146113,
+      "line_count": 852,
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "sha256": "353387d68dafd801aa1b4fe4383487037da33cf2fb710d4b583b0e62be46dd7f"
+    },
+    {
+      "bytes": 88194,
+      "line_count": 1369,
+      "path": "Plans/Run_Graph_View.md",
+      "sha256": "2e313dd145a70c97b08265328941a91390451c105bd0c8ab01c57a7d5deded18"
+    },
+    {
+      "bytes": 218287,
+      "line_count": 1985,
+      "path": "Plans/Run_Modes.md",
+      "sha256": "dfa7c351d242a3d230013fbd3a26a1ced44c10a25e5cf4e387dd7aa530b388af"
+    },
+    {
+      "bytes": 448120,
+      "line_count": 4402,
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+    },
+    {
+      "bytes": 146813,
+      "line_count": 2098,
+      "path": "Plans/Scheduling_and_Quota_Resume.md",
+      "sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+    },
+    {
+      "bytes": 1192951,
+      "line_count": 16668,
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e"
+    },
+    {
+      "bytes": 135398,
+      "line_count": 1522,
+      "path": "Plans/Server_System.md",
+      "sha256": "036f7ce0cd5a6e91b8fa53eb1987e3a38b2ee35a8420ecc90450e35ea246498d"
+    },
+    {
+      "bytes": 530733,
+      "line_count": 5878,
+      "path": "Plans/Settings_System.md",
+      "sha256": "cfec4c3a676e3710e16fa2395909796db6a5247e00aa7b69b6ee564b2932f965"
+    },
+    {
+      "bytes": 348584,
+      "line_count": 3346,
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "sha256": "91057d3979f60a4c73ae6b06031a6a027d4e3f66866ac0e394be44cefa2af29e"
+    },
+    {
+      "bytes": 170303,
+      "line_count": 2972,
+      "path": "Plans/Skills_System.md",
+      "sha256": "00b7117cc361f317a2ee0f87f70f6157a97b841c02bef53c090b206497929c7b"
+    },
+    {
+      "bytes": 193545,
+      "line_count": 2191,
+      "path": "Plans/Source_Control_System.md",
+      "sha256": "c4a21ec82c48f3f116a642a35f9c456472c8294538f3ad66e99d69a0bab20300"
+    },
+    {
+      "bytes": 5536464,
+      "line_count": 44561,
+      "path": "Plans/storage-plan.md",
+      "sha256": "8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8"
+    },
+    {
+      "bytes": 55797,
+      "line_count": 529,
+      "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "sha256": "2ae65396edcf44e4f7796239d62db46dae06667b78c4de998623d98cd1479d53"
+    },
+    {
+      "bytes": 67719,
+      "line_count": 1020,
+      "path": "Plans/ToDo_Runtime.md",
+      "sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+    },
+    {
+      "bytes": 678803,
+      "line_count": 13356,
+      "path": "Plans/Tools.md",
+      "sha256": "71c6920b3d7d5974d2b69814640300405bef873087fda23a02bbaef57c6c0035"
+    },
+    {
+      "bytes": 1692864,
+      "line_count": 22049,
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+      "bytes": 298405,
+      "line_count": 3403,
+      "path": "Plans/UI_Wiring_Rules.md",
+      "sha256": "ce6744fcba9d14aa1c2f0d384b23c3db1cb65e097e8af357f5a33e33375c6b09"
+    },
+    {
+      "bytes": 460527,
+      "line_count": 7685,
+      "path": "Plans/usage-feature.md",
+      "sha256": "360ee72cf6d6f5d0f1af9d7d19e0b02650903fb7f48ad3ccba901491031f557d"
+    },
+    {
+      "bytes": 178847,
+      "line_count": 2100,
+      "path": "Plans/Widget_System.md",
+      "sha256": "ee7020e9012ae96dae030d4199408291d8f3386233eb9e2e6577ce4fa64f740e"
+    },
+    {
+      "bytes": 649957,
+      "line_count": 9119,
+      "path": "Plans/Wiring_Matrix.md",
+      "sha256": "b7ed4b1c3437a68b97a5ec79bce60e0c2d172b0d1c6821dffad8113ff6f382e2"
+    },
+    {
+      "bytes": 78351,
+      "line_count": 1054,
+      "path": "Plans/Working_Notebook.md",
+      "sha256": "6cba37f7258c89089448405822c74bf58b02550a36793491e189eb60e441e817"
+    },
+    {
+      "bytes": 446417,
+      "line_count": 7726,
+      "path": "Plans/WorktreeGitImprovement.md",
+      "sha256": "ab3eeeeef09ddea12414c865b3d3b853617aa80fcac2a918c67408603f34a6e4"
+    }
+  ],
+  "generated_at_utc": "2026-11-13T16:25:51Z",
+  "plans_manifest_sha256": "0123f08f41b8f44b527e035ef709dc913af0552f67aa5c3ae48a6135ea40ee21",
+  "run_id": "pds-20261113-002-current-planunit-snapshot",
+  "schema_id": "pm.plan_migration.original_hashes.v1",
+  "scope": "exact current top-level Plans/*.md"
+}

@@ -346,6 +346,29 @@ them by error kind.
 
 A bucket of one of these kinds that grew is staleness too, so it does not stop the landing either.
 
+**A renamed line-range shard (T32).** A `missing_ref` is a stale artifact evidence hash in another form,
+and counts as staleness, when all of these hold, read from the checkout: the reference comes from sealed
+evidence (its `path` is under `Plans/.evidence/`); its target is a line-range shard directly under
+`Plans/_shards/<document>/` (`NNN-lines-A-B.md`) that no longer exists; and that document's current
+`manifest.json` still holds a shard with the same `shard_id` under another line-range name, and that shard
+exists. Documents sharded by line count (JSON documents among them) rename a shard whenever an edit adds or
+removes lines, so the sealed evidence names the old range until the reseal refreshes it (the Q5 landing,
+2026-11-05: `002-lines-201-235.md` became `002-lines-201-237.md`). A `missing_ref` bucket that grew is
+staleness only when its rows that are not renamed shards are no more than the baseline held. Every other
+`missing_ref` keeps its class: a deleted unit (the manifest holds no shard with that id), a missing path that
+is not a line-range shard, and a reference from a file that is not sealed evidence. Three more conditions
+come from git (T53): both paths must be relative and in their normal form (`Plans/.evidence/../x` is not
+evidence), the branch must not have changed the evidence file itself (it is not in
+`git diff --name-only <base>..HEAD`: generated evidence changes only in a reseal, so a reference the branch
+wrote into it is the branch's own; T63: that list is read with `-z` and `core.quotePath=false`, so a non-ASCII
+path is compared as itself, the working tree must hold no change to the file either (`git status`: not
+modified, staged, deleted or untracked), and neither the file nor a folder above it may be a symbolic link),
+and the old target must have existed at the base
+(`git cat-file -e <base>:<target>`: a range name that never existed is not a rename). With no base, as when
+recording the baseline, the rule never applies. `renamed_shard_ref` and `RenameContext` in the script are
+the rule; `tests/test_pm_landing_check.py` `RenamedShardStaleness` reproduces the Q5 case against a git base
+and the negatives, P6 and P8 among them.
+
 Deliberately not on the list: the shard and index kinds such as `shard_hash_stale` and
 `stale_generated_index_artifact`, because a branch that edits canon regenerates those and a stale one
 is the branch's to fix; `event_authority_currentness_audit_unavailable`, which says the ignored audit
@@ -621,3 +644,79 @@ follow-up and releasing the landing lock.
 
 `plans/acceptance-and-landing-baseline-20260917` records the decisions behind this rule, DL-059 and
 DL-060, and lands after this one.
+
+## Tool batch 4: findings and responses
+
+REVIEW-etools-tb3-opus findings 7 and 8 (TOOLBATCH4 T63) are fixed; nothing is disputed. Base:
+`9647530869`. Fix: `c07818c2f0` on `fix/landing-check-renamed-shard-20261106`, which stays unlanded.
+Both findings are HYPOTHETICAL: the repository has no non-ASCII path, and no symbolic link under
+`Plans/.evidence/` or `Plans/_shards/` on `main`.
+
+| Finding | Location, cause and fix | Test (fails on the base, passes now) |
+|---|---|---|
+| 7: a non-ASCII evidence path the branch edited kept the rename excuse | `branch_paths`. `git diff --name-only` ran with git's default `core.quotePath`, so `touched` held `"Plans/.evidence/\303\251.json"` and the raw path of the evidence file was not found in it. The list is now read with `git -c core.quotePath=false diff --name-only -z` and split on NUL, so every path the branch names, and the on-branch match in general, is compared raw. | `test_a_non_ascii_evidence_path_the_branch_edited_keeps_its_class` |
+| 8: "the branch left the evidence file alone" was judged on commits only | `RenameContext.left_alone`. It now also requires that `git status --porcelain -z --untracked-files=all -- <file>` is empty (no uncommitted, staged, deleted or untracked change) and that neither the file nor a folder above it in the repository is a symbolic link. | `test_an_uncommitted_edit_of_the_evidence_keeps_its_class`, `test_an_untracked_evidence_file_keeps_its_class`, `test_an_evidence_symlink_keeps_its_class` |
+
+Soundness: nothing widens. Both changes can only take the rename excuse away (the failure is then
+classed by the other rules, as before T53).
+
+| Check | `9647530869` | Now |
+|---|---|---|
+| `python3 -B -m unittest tests.test_pm_landing_check` | 171/171 (4 failures with the 4 new tests) | **175/175** |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH4/landing/`:
+`tests-on-base-9647530869.txt` (the fix's test file run against the base script) and `tests-on-fix.txt`.
+
+## Tool batch 5: findings and responses
+
+**TOOLBATCH4 pre-check findings 5 to 7 (TOOLBATCH5 T88) are fixed; nothing is disputed. This branch stays unlanded** (a landing-policy change for pm7-build). Base: `e7b77247a7`. Fix: `35f92ff241` on `fix/landing-check-renamed-shard-20261106`. `grown_buckets` is unchanged, so T63's rebase note for `write_row_report` still applies as written when this branch is rebased onto `fix/landing-check-report-ids-20261106`.
+
+| Finding | Location, cause and fix | Evidence |
+|---|---|---|
+| **5: a committed rename's old path was not one of the branch's paths — fixed (pre-existing on main)** | `branch_paths`: `git diff --name-only` uses git's default rename detection, which names only a renamed file's new path. Now `--no-renames --no-ext-diff`, with `--no-optional-locks`. On main's `9ddfa95b51` the old command lists 66,989 paths and the new one 66,990, the renamed file's old path the one added. | Test `test_a_committed_rename_names_its_old_path_among_the_branch_paths`. |
+| **6: files `git status` does not report kept the renamed-shard excuse — fixed** | `RenameContext._alone`. Status now runs with `--ignored=matching` (an untracked evidence file under a `.gitignore`d or `info/exclude`d folder), the index's own flags are read (`git ls-files -v`: `S` skip-worktree, a lowercase tag assume-unchanged), and the file's bytes are compared with HEAD's blob (`git cat-file blob HEAD:<path>`), which catches every hidden edit whatever git reports. | Tests `test_an_ignored_untracked_evidence_file_keeps_its_class`, `test_an_excluded_untracked_evidence_file_keeps_its_class`, `test_a_skip_worktree_edit_of_the_evidence_keeps_its_class`, `test_an_assume_unchanged_edit_of_the_evidence_keeps_its_class`. |
+| **7: `git status` rewrote the shared checkout's index, and a lost excuse named no cause — fixed** | Every git call of the rule passes `--no-optional-locks` (no index refresh, no `index.lock`), and the report names each evidence file that lost the excuse and why (`rename_excuse_lost` in the JSON; a list under the branch paths in the text, for example `evidence has working-tree changes: <status line>`), so the landing agent can tell whose work stopped the landing. | Test `test_the_untouched_evidence_still_keeps_the_excuse_and_the_index_is_not_written` (stale stat data, which a plain status refreshes: the index is byte- and mtime-identical after the rule runs). |
+
+**Tests:** 181/181 (`tests-fix.txt`). The fix's tests against `e7b77247a7`'s script: 6 failures, exactly the six new tests (`tests-on-base-e7b77247a7.txt`). **Soundness:** nothing widens: the branch's path list can only grow, and the excuse can only be lost in more cases.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH5/landing/` (`SHA256SUMS`).
+
+## Fix round 1 after the gates (Jared, 2026-11-09)
+
+Jared chose **"Small fix, recheck + Sol max (Recommended)"** after the Sol max and Astra max gates at
+`a960ec98df105054cd45c1bfd478998382e7852f`. This round implements the small fix; the one Sol 6.1 high
+recheck and one Sol max gate remain the lead's next steps. No Astra recheck is requested.
+
+| Where | Cause and fix |
+|---|---|
+| `scripts/pm-landing-check.py:1595`, `:1680`, `:1929` | Complete-export normalization dropped `RenameContext`, then replaced the correctly classified aggregate rows. `key_from_exports` now accepts the same context, passes it to every exported row's `normalize`, and receives it from `check_main`. Baseline recording retains `context=None`. |
+| `scripts/pm-landing-check.py:548`, `:575` | A cached clean result survived a later evidence edit. `left_alone` now checks evidence afresh on every application, including the current committed diff with `--no-renames --no-ext-diff`, status, index flags and bytes against HEAD. It also clears an obsolete refusal diagnostic when the file is clean again. Only old-target existence at the base remains cached. |
+| `tests/test_pm_landing_check.py:486`, `:2392` | Eleven new tests compare the printed and complete-export paths for both aggregates, independently witness the explicit file/ancestor symlink diagnostic, and exercise `main`'s export replacement with both renamed rows beyond both print caps. |
+
+| Test | Result |
+|---|---|
+| **Real Q5 export, before → after**, Sol input `4db776c0896c0b17196c3f1a3fe501571501aa42` / base `dd6580cd11debab88d65f7b65e2abf0cf27b3b72` (1,904 rows), and Astra input `90ef72139473f316428cbc2a651e49a47de6ddee` / base `ae06ffd113334ce64d76a75af0c19abec6463869` (1,822 rows) | **PASS**, both aggregates. The real missing-ref bucket remains **1 → 3**. Before: exported stale flags `[false, false, false]`, one blocker, focused exit **2**. After: `[true, true, false]`, zero blockers, focused exit **1**, matching direct/printed normalization. The unrelated storage-registry reference remains non-stale. |
+| **Fresh production exports** on both full real Q5 trees | **PASS**. Unmodified `run_export` reruns the real `validate-evidence`; totals match the reviewers' captures, every printed row matches, both aggregates key the complete exports, and the missing-ref decision remains exit **1** with zero blockers. |
+| **Old target absent at the base**, with unchanged real evidence and existing replacements | **PASS**, printed and export paths, both aggregates and both Q5 trees: renamed references remain non-stale and bucket growth blocks. |
+| **Evidence changed in commits**, including a new commit after the first clean check | **PASS**, printed and export paths. Both real Q5 probes and the regression refuse the excuse with `the branch's commits changed it`. |
+| **Rename detection must not hide an old evidence path** | **PASS**, scratch regression with `diff.renames=true` and a committed evidence rename. `branch_paths` still names the old path; the fresh evidence diff explicitly uses `--no-renames --no-ext-diff`; both printed and export paths block. The existing committed-rename regression also passes. |
+| **Cached-result reproduction**, working-tree and staged edits after the first clean check | **PASS**, both real Q5 trees and both paths. Reusing the same context refuses the excuse after an edit, including a staged change with original bytes restored on disk. |
+| **Evidence symlink and symlinked ancestor**, after the first clean check | **PASS**, both real Q5 trees and both paths. Separate regression tests require the exact explicit-symlink refusal diagnostic, witnessing the predicate identified by Astra P3 even though Git also refuses those inputs. |
+| **No context during baseline recording; current commit lookup fails** | **PASS**, regression coverage on both paths. No rename excuse is granted. |
+| **Complete landing-check suite** | **192/192 PASS**, exit **0**: the original 181 plus 11 new tests. The runner redirects only the default readiness audit source to an absent local path so the suite never selects the shared checkout. |
+| **Diff whitespace check** | **PASS**, `git diff --check`. |
+
+**Policy remains exactly bounded.** A missing reference must still come from unchanged, plain sealed
+evidence, name a line-range shard that existed at the base and is now absent, and have an existing
+replacement with the same document and ordinal in the current manifest. Committed paths are read with
+rename detection off; evidence changes, hidden index flags, symlinks, Git failures, absent replacements
+and missing context still refuse the excuse. Bucket growth beyond the recognized renames still blocks.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/LANDING-T32/fix1/`, bound by
+`SHA256SUMS`. `real-results.json` SHA-256
+`a3e5cc6041c3691043a942f1578965d08dc24cf476e2f7bb53ff93403dc0002b`;
+`suite-result.json` SHA-256 `cd19de77990347c4b431e85116e86edf8939ace75c8910569bec4a62906edafe`.
+These are production export/normalization/bucket replays, not a complete top-level repository-wide landing
+run. No baseline or audit input was refreshed. Heavy runs were sequential, started above 13.5 GiB
+available, and stayed above 10 GiB (minimum observed 13.78 GiB). No shared-checkout access, landing lock,
+main push, landing, pm-mail, subagent or browser was used.
