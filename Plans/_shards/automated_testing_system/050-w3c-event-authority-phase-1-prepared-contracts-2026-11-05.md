@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7239-L7574
+Source lines: L7239-L7601
 
-Source SHA256: `0c1db114d37d87078adf5fe867807610f9ae3a0816252ca769f4cd9681262c7c`
+Source SHA256: `313f963d02e0bd68b24fe3b6d256ad533ab93c4a9a8b858bc5f1c29ca24875fc`
 
 ---
 
@@ -137,8 +137,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.runtime_enabled_for_
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Phase-aware recovery: compare a retry with the complete original request and pre-effect inputs first, excluding
@@ -173,7 +174,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -211,8 +213,8 @@ status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: 'NEWLY AUTHORED per-family criterion-12 oracle PLAN for the exact 21 names in Plans/w3c_test_capture_event_oracle_plan.json.
   Each named family owns an independent guard inventory, source-backed positives, one-defect negative plans,
-  passive retained-history positives, oversized-part custody cases and native NOT_RUN obligations. This is
-  not executable oracle code and claims no guard-removal result. Criterion 12 is PARTIAL for every family.
+  passive retained-history positives, oversized-part custody cases and native NOT_RUN obligations. Phase 1
+  wrote it as a plan; phase 2 makes it executable (below).
 
 
   After reviewed plans/ea-numrule-20261105 and plans/ea-guardtool-20261105 foundation adoption, phase 2 materializes
@@ -239,8 +241,8 @@ canonical_text: 'NEWLY AUTHORED per-family criterion-12 oracle PLAN for the exac
   crash reconciliation, outcome-before-append recovery, and receipt-before-publication recovery in each scope.
   Pending request comparison is separate from the later frozen EventRecord producer preimage. Each missing
   phase obligation, changed original request, premature publication, uncertain repeated action and altered
-  frozen outcome is a separate one-defect negative; preserve all peer copies and proofs. No executable oracle
-  or guard-isolation result is claimed.
+  frozen outcome is a separate one-defect negative; preserve all peer copies and proofs. Phase 2 executes
+  each of these cases.
 
 
   Phase-1 review round 1 also plans empty, nonempty inline and nonempty external checkpoints in each applicable
@@ -248,7 +250,30 @@ canonical_text: 'NEWLY AUTHORED per-family criterion-12 oracle PLAN for the exac
   Each cursor/projection shape mismatch, omitted source range, mismatched token identity and otherwise valid
   foreign last-event body is a separate one-defect negative. Keep source worlds, hashes, copied fields and
   keys coherent apart from that one relation; isolate cursor predicates separately and never weaken the entire
-  conditional. Read/advance/replay/rebuild coverage verification remains a phase-2 oracle obligation.'
+  conditional. Phase 2 executes read/advance/replay/rebuild coverage verification.
+
+
+  Phase 2 (2026-11-13, executable synthetic oracles). scripts/pm_w3c_event_oracles.py is the complete
+  checker for the 21 families over six paths: install (eager schema reference closure through the unchanged
+  Corpus registry), append (current writer, CV-339/SP-286 first-receipt custody, publication order), retry
+  (phase-aware request and frozen-preimage comparison, original result), history (SP-1101 retained read),
+  operation (each canonical operation CAS step: pending, outcome binding with the uncertain-action fence,
+  commit custody, terminal, withdrawal, restore) and checkpoint (SP-278 token, empty and nonempty coverage,
+  cursors, last-event joins, predecessor CAS, RP-PROJECTION-3GEN generations). Every refusal is one named
+  guard row with one predicate and one code in a generated table of at most eight rows
+  (scripts/pm_w3c_table_*.py, generator scripts/pm-w3c-table-generate.py); the row compares the raw facts
+  the checker observed for it, and the gated shared tool proves each row (scripts/pm-w3c-guard-tables.py).
+  Validation keeps every owner schema keyword except the operation phase oneOf and the checkpoint cursor
+  if/then pairs, which named rows restore predicate by predicate; format uuid and pattern-only fields
+  without a line guard have explicit full-match rows. Plans/w3c_event_fixtures.json (builder
+  scripts/pm-w3c-cases.py) holds complete positives per family, scope edition and path, and one-defect
+  negatives each built from a named positive by changing one owner value at the stage that owns it, so every
+  copy, hash, key and commitment follows it. Numbers use the shared NUMRULE calls (current_integer,
+  storage_uint64, producer_semantic_bytes/_digest, full_value_commitment, storage_value_bytes,
+  verify_payload_bytes, RetainedDispatcher); timestamps use the shared pm_event_datetime checks with each
+  owner profile. A retained read selects its recipe only from the sealed receipt for that exact original in
+  Plans/w3c_original_custody.json and the scenario''s Store, and the checker compares the sealed store before
+  and after every read. Native execution stays NOT_RUN and membership ABSENT.'
 gui_related: false
 gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
   existing projections.
@@ -262,7 +287,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -318,7 +344,8 @@ unblocks: []
 acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json

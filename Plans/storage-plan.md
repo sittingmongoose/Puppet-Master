@@ -2033,7 +2033,14 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/E
 ### 8.1 Phased implementation order
 
 - **Phase 1 -- seglog foundation**
-  Build first: root continuity and aggregate-lock admission, directory creation, and the single-writer SeglogFrameV2 path carrying MessagePack EventRecord, fixed resynchronization prefix, header/payload integrity, durable sequence lease, batch/barrier acknowledgement, commit watermark, and deterministic rotation on size threshold, clean shutdown, explicit maintenance, or frame/schema-generation change. No projectors and no redb product writers. SP-286 requires the narrow Storage control/receipt table, compatible protected-group parser and four receipt bindings under existing root/coordinator admission before the first successful seglog append; these are foundation durability controls, not Phase 2 product projections.
+  Build first: root continuity and aggregate-lock admission, directory creation, and the single-writer
+  SeglogFrameV2 path carrying MessagePack EventRecord, fixed resynchronization prefix, header/payload
+  integrity, durable sequence lease, batch/barrier acknowledgement, commit watermark, and deterministic
+  rotation on size threshold, clean shutdown, explicit maintenance, or frame/schema-generation change. No
+  projectors and no redb product writers. SP-286 requires the narrow Storage control/receipt table,
+  compatible protected-group parser and four receipt bindings under existing root/coordinator admission
+  before the first successful seglog append; these are foundation durability controls, not Phase 2 product
+  projections.
   **Exit criterion:** We can append events, durably retain their first receipts under SP-286, and read the events back (by tailing or reading the segment file).
 
 - **Phase 2 -- redb and schema**
@@ -15195,7 +15202,11 @@ unit_type: compatibility_disposition
 status: retired
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  SP-001 is retired as active source-preserving product coverage after Phase 2B batch 180. storage-plan-S0001 through S0127 are covered by fine-grained SP-002 through SP-212 or explicit split coverage, while storage-plan-S0128 through S0130 are generated PlanUnits and Migration Coverage audit material. SP-001 remains only a generated-artifact residual for migration lineage and must not override implementation-facing Storage Plan units.
+  SP-001 is retired as active source-preserving product coverage after Phase 2B batch 180.
+  storage-plan-S0001 through S0127 are covered by fine-grained SP-002 through SP-212 or explicit split
+  coverage, while storage-plan-S0128 through S0130 are generated PlanUnits and Migration Coverage audit
+  material. SP-001 remains only a generated-artifact residual for migration lineage and must not override
+  implementation-facing Storage Plan units.
 gui_related: true
 gui_classification_reason: >-
   The retired generated residual preserves GUI-bearing historical bridge metadata from storage-plan-S0129, but the live SP-001 disposition is migration/audit lineage rather than product GUI coverage.
@@ -29672,10 +29683,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `artifacts.capture_pr
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For artifacts.capture_provenance.inspected, what lifetime,
-  expiry anchor and counting scope apply to its saved history, including manual or No project captures without
-  a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history,
-  or lasting receipt/source-lineage authority? Card 1 G21 does not name this fact; do not apply it by analogy.
+  History retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a
+  restart (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day
+  Project allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock.
   Canonical original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy.
   Both values declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340
   storage groups. Oversize intent, outcome, source snapshot and projection parts independently externalize
@@ -29734,7 +29746,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -29888,7 +29901,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -29982,10 +29996,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `artifacts.demonstrat
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For artifacts.demonstration_video.failed, what lifetime,
-  expiry anchor and counting scope apply to its saved history, including manual or No project captures without
-  a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history,
-  or lasting receipt/source-lineage authority? Card 1 G21 does not name this fact; do not apply it by analogy.
+  History retention: history kept seven years / 220,752,000 seconds from the original saved change it
+  records (DL-455, E-CARDS-3 item 3.a, option A). Project records share the existing 2,000,000-entry
+  seven-year Project allowance under `RP-OPERATIONAL-2555D@1.0.0` with Storage''s Project first-save anchor
+  adapter; application records use `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (count key
+  `app:operational_security`). Retrying, reprocessing and restoring never reset the clock.
   Canonical original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy.
   Both values declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340
   storage groups. Oversize intent, outcome, source snapshot and projection parts independently externalize
@@ -30044,7 +30059,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -30138,10 +30154,10 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.book
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.bookmarked, what lifetime, expiry anchor
-  and counting scope apply to its saved history, including manual or No project captures without a real run:
-  runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  History retention: history `RP-AUTHORITY-INDEFINITE@1.0.0` (DL-453, E-CARDS-3 item 1.a, option A): kept
+  permanently, with no age or count expiry and no new count allowance, in Project and application records
+  alike; explicit Project and application data deletion and current access still apply, and storage pressure
+  refuses new history writes. Canonical
   original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy. Both values
   declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340 storage groups.
   Oversize intent, outcome, source snapshot and projection parts independently externalize via SP-337; unresolved
@@ -30200,7 +30216,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -30354,7 +30371,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -30448,10 +30466,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.effe
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.effective_quality_changed, what lifetime,
-  expiry anchor and counting scope apply to its saved history, including manual or No project captures without
-  a real run: runtime/run history only when a real run exists, non-authority operational/diagnostic history,
-  or lasting receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy.
+  History retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a
+  restart (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day
+  Project allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock.
   Canonical original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy.
   Both values declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340
   storage groups. Oversize intent, outcome, source snapshot and projection parts independently externalize
@@ -30510,7 +30529,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -30604,10 +30624,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.heal
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.health_degraded, what lifetime, expiry
-  anchor and counting scope apply to its saved history, including manual or No project captures without a real
-  run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  History retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a
+  restart (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day
+  Project allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical
   original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy. Both values
   declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340 storage groups.
   Oversize intent, outcome, source snapshot and projection parts independently externalize via SP-337; unresolved
@@ -30666,7 +30687,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -30760,10 +30782,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.heal
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.health_recovered, what lifetime, expiry
-  anchor and counting scope apply to its saved history, including manual or No project captures without a real
-  run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  History retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a
+  restart (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day
+  Project allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical
   original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy. Both values
   declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340 storage groups.
   Oversize intent, outcome, source snapshot and projection parts independently externalize via SP-337; unresolved
@@ -30822,7 +30845,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -30916,10 +30940,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.inte
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.interrupted, what lifetime, expiry anchor
-  and counting scope apply to its saved history, including manual or No project captures without a real run:
-  runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  History retention: history kept seven years / 220,752,000 seconds from the original saved change it
+  records (DL-455, E-CARDS-3 item 3.a, option A). Project records share the existing 2,000,000-entry
+  seven-year Project allowance under `RP-OPERATIONAL-2555D@1.0.0` with Storage''s Project first-save anchor
+  adapter; application records use `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (count key
+  `app:operational_security`). Retrying, reprocessing and restoring never reset the clock. Canonical
   original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy. Both values
   declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340 storage groups.
   Oversize intent, outcome, source snapshot and projection parts independently externalize via SP-337; unresolved
@@ -30978,7 +31003,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -31072,10 +31098,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.paus
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.paused, what lifetime, expiry anchor
-  and counting scope apply to its saved history, including manual or No project captures without a real run:
-  runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  History retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a
+  restart (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day
+  Project allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical
   original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy. Both values
   declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340 storage groups.
   Oversize intent, outcome, source snapshot and projection parts independently externalize via SP-337; unresolved
@@ -31134,7 +31161,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -31288,7 +31316,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -31442,7 +31471,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -31596,7 +31626,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -31690,10 +31721,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.resu
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.resumed, what lifetime, expiry anchor
-  and counting scope apply to its saved history, including manual or No project captures without a real run:
-  runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  History retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a
+  restart (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day
+  Project allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical
   original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy. Both values
   declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340 storage groups.
   Oversize intent, outcome, source snapshot and projection parts independently externalize via SP-337; unresolved
@@ -31752,7 +31784,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -31846,10 +31879,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.segm
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.segment_corrupt, what lifetime, expiry
-  anchor and counting scope apply to its saved history, including manual or No project captures without a real
-  run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  History retention: history kept seven years / 220,752,000 seconds from the original saved change it
+  records (DL-455, E-CARDS-3 item 3.a, option A). Project records share the existing 2,000,000-entry
+  seven-year Project allowance under `RP-OPERATIONAL-2555D@1.0.0` with Storage''s Project first-save anchor
+  adapter; application records use `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (count key
+  `app:operational_security`). Retrying, reprocessing and restoring never reset the clock. Canonical
   original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy. Both values
   declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340 storage groups.
   Oversize intent, outcome, source snapshot and projection parts independently externalize via SP-337; unresolved
@@ -31908,7 +31942,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -32062,7 +32097,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -32216,7 +32252,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -32310,10 +32347,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.star
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.started, what lifetime, expiry anchor
-  and counting scope apply to its saved history, including manual or No project captures without a real run:
-  runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  History retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a
+  restart (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day
+  Project allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical
   original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy. Both values
   declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340 storage groups.
   Oversize intent, outcome, source snapshot and projection parts independently externalize via SP-337; unresolved
@@ -32372,7 +32410,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -32466,10 +32505,11 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.stop
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.stopped, what lifetime, expiry anchor
-  and counting scope apply to its saved history, including manual or No project captures without a real run:
-  runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  History retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a
+  restart (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day
+  Project allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical
   original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy. Both values
   declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340 storage groups.
   Oversize intent, outcome, source snapshot and projection parts independently externalize via SP-337; unresolved
@@ -32528,7 +32568,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -32622,10 +32663,10 @@ canonical_text: 'NEWLY AUTHORED Storage binding solely for `testing.capture.targ
   compatible rebuild; current writer/retry admission cannot accept projector_replay_only.
 
 
-  History retention is PENDING_RETENTION_DECISION; For testing.capture.target_changed, what lifetime, expiry
-  anchor and counting scope apply to its saved history, including manual or No project captures without a real
-  run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  History retention: history `RP-AUTHORITY-INDEFINITE@1.0.0` (DL-453, E-CARDS-3 item 1.a, option A): kept
+  permanently, with no age or count expiry and no new count allowance, in Project and application records
+  alike; explicit Project and application data deletion and current access still apply, and storage pressure
+  refuses new history writes. Canonical
   original operation/receipt rows use RP-AUTHORITY-INDEFINITE, not an extension to raw media policy. Both values
   declare at most 16384 encoded bytes, canonical versus derived redb files and existing SP-340 storage groups.
   Oversize intent, outcome, source snapshot and projection parts independently externalize via SP-337; unresolved
@@ -32684,7 +32725,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -32830,7 +32872,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json

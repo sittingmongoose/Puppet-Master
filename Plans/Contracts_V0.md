@@ -24623,7 +24623,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `artifacts.capture_provenance.
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -24660,7 +24661,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -24715,7 +24717,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `artifacts.demonstration_video
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -24752,7 +24755,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -24807,7 +24811,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `artifacts.demonstration_video
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -24844,7 +24849,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -24899,7 +24905,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.bookmarked@1.
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -24936,7 +24943,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -24991,7 +24999,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.clip_saved@1.
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25028,7 +25037,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -25084,7 +25094,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.effective_qua
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25121,7 +25132,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -25176,7 +25188,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.health_degrad
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25213,7 +25226,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -25268,7 +25282,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.health_recove
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25305,7 +25320,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -25360,7 +25376,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.interrupted@1
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25397,7 +25414,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -25452,7 +25470,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.paused@1.0.0`
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25489,7 +25508,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -25544,7 +25564,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.provenance_re
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25581,7 +25602,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -25636,7 +25658,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.provenance_ve
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25673,7 +25696,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -25728,7 +25752,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.redaction_app
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25765,7 +25790,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -25820,7 +25846,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.resumed@1.0.0
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25857,7 +25884,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -25912,7 +25940,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.segment_corru
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -25949,7 +25978,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -26004,7 +26034,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.segment_final
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -26041,7 +26072,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -26096,7 +26128,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.segment_recov
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -26133,7 +26166,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -26188,7 +26222,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.started@1.0.0
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -26225,7 +26260,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -26280,7 +26316,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.stopped@1.0.0
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -26317,7 +26354,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -26372,7 +26410,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.capture.target_change
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -26409,7 +26448,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -26465,7 +26505,8 @@ canonical_text: 'NEWLY AUTHORED exact payload for `testing.runtime_enabled_for_a
   BLAKE3 addressing, original full-value receipt commitments and producer-semantic digest keep their existing
   independent owner recipes. App physical wrappers adopt CV-366, Project physical values adopt SP-236/SP-339;
   no sibling or legacy schema receives current-write authority. No number/time implementation is authored here.
-  Phase-2 shared NUMRULE/format adoption and guard-isolation proof remain required. Proposed payload existence
+  Phase 2 adopts the shared NUMRULE number recipes and pm_event_datetime date-time checks and proves each
+  guard row with the gated shared tool (ATS-1221). Proposed payload existence
   is not event admission.
 
 
@@ -26493,7 +26534,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json

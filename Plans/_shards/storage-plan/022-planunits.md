@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2396-L15244
+Source lines: L2403-L15255
 
-Source SHA256: `c757c0a7e52e53a6a73fe01fcf47c9ae9c81489e4bfbb2412e7f661d9e170058`
+Source SHA256: `fddb58688c4d42d36009e3a1d225b0d23baa0816cb1971a91db4846732a8e73d`
 
 ---
 
@@ -12810,7 +12810,11 @@ unit_type: compatibility_disposition
 status: retired
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  SP-001 is retired as active source-preserving product coverage after Phase 2B batch 180. storage-plan-S0001 through S0127 are covered by fine-grained SP-002 through SP-212 or explicit split coverage, while storage-plan-S0128 through S0130 are generated PlanUnits and Migration Coverage audit material. SP-001 remains only a generated-artifact residual for migration lineage and must not override implementation-facing Storage Plan units.
+  SP-001 is retired as active source-preserving product coverage after Phase 2B batch 180.
+  storage-plan-S0001 through S0127 are covered by fine-grained SP-002 through SP-212 or explicit split
+  coverage, while storage-plan-S0128 through S0130 are generated PlanUnits and Migration Coverage audit
+  material. SP-001 remains only a generated-artifact residual for migration lineage and must not override
+  implementation-facing Storage Plan units.
 gui_related: true
 gui_classification_reason: >-
   The retired generated residual preserves GUI-bearing historical bridge metadata from storage-plan-S0129, but the live SP-001 disposition is migration/audit lineage rather than product GUI coverage.

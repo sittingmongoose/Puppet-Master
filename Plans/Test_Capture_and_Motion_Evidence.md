@@ -619,10 +619,11 @@ canonical_text: 'NEWLY AUTHORED owner contract for `artifacts.capture_provenance
   as replay_only_not_appendable. Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For artifacts.capture_provenance.inspected, what lifetime, expiry
-  anchor and counting scope apply to its saved history, including manual or No project captures without a real
-  run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G21 does not name this fact; do not apply it by analogy. Canonical
+  Retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a restart
+  (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day Project
+  allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical
   original operation/receipt authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN
   and never holds expired source history alive. Unknown history policy retains indefinitely/no-count-eviction
   as materially incomplete, without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage
@@ -656,8 +657,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `artifacts.capture_provenance
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_capture_provenance_inspected
@@ -701,7 +703,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -852,8 +855,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `artifacts.demonstration_vide
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_created
@@ -897,7 +901,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -1012,10 +1017,11 @@ canonical_text: 'NEWLY AUTHORED owner contract for `artifacts.demonstration_vide
   as replay_only_not_appendable. Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For artifacts.demonstration_video.failed, what lifetime, expiry
-  anchor and counting scope apply to its saved history, including manual or No project captures without a real
-  run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G21 does not name this fact; do not apply it by analogy. Canonical
+  Retention: history kept seven years / 220,752,000 seconds from the original saved change it records
+  (DL-455, E-CARDS-3 item 3.a, option A). Project records share the existing 2,000,000-entry seven-year
+  Project allowance under `RP-OPERATIONAL-2555D@1.0.0` with Storage''s Project first-save anchor adapter;
+  application records use `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (count key
+  `app:operational_security`). Retrying, reprocessing and restoring never reset the clock. Canonical
   original operation/receipt authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN
   and never holds expired source history alive. Unknown history policy retains indefinitely/no-count-eviction
   as materially incomplete, without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage
@@ -1049,8 +1055,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `artifacts.demonstration_vide
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failed
@@ -1094,7 +1101,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -1207,10 +1215,10 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.bookmarked@1
   Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.bookmarked, what lifetime, expiry anchor and
-  counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run
-  history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage
-  authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical original operation/receipt
+  Retention: history `RP-AUTHORITY-INDEFINITE@1.0.0` (DL-453, E-CARDS-3 item 1.a, option A): kept
+  permanently, with no age or count expiry and no new count allowance, in Project and application records
+  alike; explicit Project and application data deletion and current access still apply, and storage pressure
+  refuses new history writes. Canonical original operation/receipt
   authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN and never holds expired
   source history alive. Unknown history policy retains indefinitely/no-count-eviction as materially incomplete,
   without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage holds remain
@@ -1244,8 +1252,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.bookmarked@1
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_bookmarked
@@ -1289,7 +1298,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -1438,8 +1448,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.clip_saved@1
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_clip_saved
@@ -1483,7 +1494,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -1596,10 +1608,11 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.effective_qu
   as replay_only_not_appendable. Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.effective_quality_changed, what lifetime, expiry
-  anchor and counting scope apply to its saved history, including manual or No project captures without a real
-  run: runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  Retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a restart
+  (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day Project
+  allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical
   original operation/receipt authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN
   and never holds expired source history alive. Unknown history policy retains indefinitely/no-count-eviction
   as materially incomplete, without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage
@@ -1634,8 +1647,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.effective_qu
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_effective_quality_changed
@@ -1679,7 +1693,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -1793,10 +1808,11 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.health_degra
   Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.health_degraded, what lifetime, expiry anchor
-  and counting scope apply to its saved history, including manual or No project captures without a real run:
-  runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  Retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a restart
+  (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day Project
+  allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical
   original operation/receipt authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN
   and never holds expired source history alive. Unknown history policy retains indefinitely/no-count-eviction
   as materially incomplete, without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage
@@ -1830,8 +1846,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.health_degra
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_degraded
@@ -1875,7 +1892,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -1988,10 +2006,11 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.health_recov
   Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.health_recovered, what lifetime, expiry anchor
-  and counting scope apply to its saved history, including manual or No project captures without a real run:
-  runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  Retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a restart
+  (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day Project
+  allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical
   original operation/receipt authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN
   and never holds expired source history alive. Unknown history policy retains indefinitely/no-count-eviction
   as materially incomplete, without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage
@@ -2025,8 +2044,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.health_recov
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_recovered
@@ -2070,7 +2090,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -2183,10 +2204,12 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.interrupted@
   Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.interrupted, what lifetime, expiry anchor and
-  counting scope apply to its saved history, including manual or No project captures without a real run: runtime/run
-  history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage
-  authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical original operation/receipt
+  Retention: history kept seven years / 220,752,000 seconds from the original saved change it records
+  (DL-455, E-CARDS-3 item 3.a, option A). Project records share the existing 2,000,000-entry seven-year
+  Project allowance under `RP-OPERATIONAL-2555D@1.0.0` with Storage''s Project first-save anchor adapter;
+  application records use `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (count key
+  `app:operational_security`). Retrying, reprocessing and restoring never reset the clock. Canonical
+  original operation/receipt
   authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN and never holds expired
   source history alive. Unknown history policy retains indefinitely/no-count-eviction as materially incomplete,
   without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage holds remain
@@ -2220,8 +2243,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.interrupted@
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_interrupted
@@ -2265,7 +2289,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -2377,10 +2402,12 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.paused@1.0.0
   Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.paused, what lifetime, expiry anchor and counting
-  scope apply to its saved history, including manual or No project captures without a real run: runtime/run
-  history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage
-  authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical original operation/receipt
+  Retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a restart
+  (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day Project
+  allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical original
+  operation/receipt
   authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN and never holds expired
   source history alive. Unknown history policy retains indefinitely/no-count-eviction as materially incomplete,
   without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage holds remain
@@ -2414,8 +2441,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.paused@1.0.0
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_paused
@@ -2459,7 +2487,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -2609,8 +2638,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.provenance_r
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_rejected
@@ -2654,7 +2684,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -2804,8 +2835,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.provenance_v
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_verified
@@ -2849,7 +2881,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -2999,8 +3032,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.redaction_ap
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_redaction_applied
@@ -3044,7 +3078,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -3157,10 +3192,12 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.resumed@1.0.
   Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.resumed, what lifetime, expiry anchor and counting
-  scope apply to its saved history, including manual or No project captures without a real run: runtime/run
-  history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage
-  authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical original operation/receipt
+  Retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a restart
+  (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day Project
+  allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical original
+  operation/receipt
   authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN and never holds expired
   source history alive. Unknown history policy retains indefinitely/no-count-eviction as materially incomplete,
   without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage holds remain
@@ -3194,8 +3231,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.resumed@1.0.
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_resumed
@@ -3239,7 +3277,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -3352,10 +3391,11 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.segment_corr
   Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.segment_corrupt, what lifetime, expiry anchor
-  and counting scope apply to its saved history, including manual or No project captures without a real run:
-  runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  Retention: history kept seven years / 220,752,000 seconds from the original saved change it records
+  (DL-455, E-CARDS-3 item 3.a, option A). Project records share the existing 2,000,000-entry seven-year
+  Project allowance under `RP-OPERATIONAL-2555D@1.0.0` with Storage''s Project first-save anchor adapter;
+  application records use `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (count key
+  `app:operational_security`). Retrying, reprocessing and restoring never reset the clock. Canonical
   original operation/receipt authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN
   and never holds expired source history alive. Unknown history policy retains indefinitely/no-count-eviction
   as materially incomplete, without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage
@@ -3389,8 +3429,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.segment_corr
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_corrupt
@@ -3434,7 +3475,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -3583,8 +3625,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.segment_fina
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_finalized
@@ -3628,7 +3671,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -3777,8 +3821,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.segment_reco
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_recovered
@@ -3822,7 +3867,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -3936,10 +3982,12 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.started@1.0.
   Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.started, what lifetime, expiry anchor and counting
-  scope apply to its saved history, including manual or No project captures without a real run: runtime/run
-  history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage
-  authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical original operation/receipt
+  Retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a restart
+  (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day Project
+  allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical original
+  operation/receipt
   authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN and never holds expired
   source history alive. Unknown history policy retains indefinitely/no-count-eviction as materially incomplete,
   without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage holds remain
@@ -3973,8 +4021,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.started@1.0.
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_started
@@ -4018,7 +4067,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -4132,10 +4182,12 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.stopped@1.0.
   Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.stopped, what lifetime, expiry anchor and counting
-  scope apply to its saved history, including manual or No project captures without a real run: runtime/run
-  history only when a real run exists, non-authority operational/diagnostic history, or lasting receipt/source-lineage
-  authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical original operation/receipt
+  Retention: history kept 90 days / 7,776,000 seconds from the first successful save that survives a restart
+  (DL-454, E-CARDS-3 item 2.a, option A). Project records share the existing 2,000,000-entry 90-day Project
+  allowance under `RP-TELEMETRY-90D@1.0.0`; application records use
+  `RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0` (count key `app:routine_observation`). Retrying a save,
+  reprocessing old history and restoring a backup never restart the clock. Canonical original
+  operation/receipt
   authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN and never holds expired
   source history alive. Unknown history policy retains indefinitely/no-count-eviction as materially incomplete,
   without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage holds remain
@@ -4169,8 +4221,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.stopped@1.0.
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_stopped
@@ -4214,7 +4267,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
@@ -4328,10 +4382,10 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.target_chang
   Historical compatibility-only reads never pass through current-writer admission.
 
 
-  Retention: `PENDING_RETENTION_DECISION`. For testing.capture.target_changed, what lifetime, expiry anchor
-  and counting scope apply to its saved history, including manual or No project captures without a real run:
-  runtime/run history only when a real run exists, non-authority operational/diagnostic history, or lasting
-  receipt/source-lineage authority? Card 1 G13 does not name this fact; do not apply it by analogy. Canonical
+  Retention: history `RP-AUTHORITY-INDEFINITE@1.0.0` (DL-453, E-CARDS-3 item 1.a, option A): kept
+  permanently, with no age or count expiry and no new count allowance, in Project and application records
+  alike; explicit Project and application data deletion and current access still apply, and storage pressure
+  refuses new history writes. Canonical
   original operation/receipt authority uses RP-AUTHORITY-INDEFINITE; the derived family uses RP-PROJECTION-3GEN
   and never holds expired source history alive. Unknown history policy retains indefinitely/no-count-eviction
   as materially incomplete, without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage
@@ -4365,8 +4419,9 @@ canonical_text: 'NEWLY AUTHORED owner contract for `testing.capture.target_chang
   generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
   new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
   must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
-  No new event records the withdrawal here. Criterion 12 is the per-family oracle PLAN in ATS-1221, PARTIAL
-  until phase 2; native execution is NOT_RUN.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
 
 
   Exact scope-edition selection: Project payload Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_target_changed
@@ -4410,7 +4465,8 @@ acceptance_criteria:
 - The exact family uses its own newly authored prepared contract without event admission.
 - All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
   is inferred.
-- Criterion 12 remains PARTIAL until phase 2 implements per-guard oracles with the reviewed shared tools.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json
