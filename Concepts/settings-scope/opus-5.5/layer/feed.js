@@ -213,6 +213,8 @@
       const r = PSX.resolve(id, actorCtx && DEF[id].screen ? actorCtx : ctx);
       let v = r.notOffered ? DEFAULTS[id] : (r.asked !== undefined ? r.asked : r.value);
       if (id === 'general.visual.theme') { const pair = PSX.themePair(v); Object.assign(out, pair); changed['general.visual.theme'] = r.changed; changed['general.visual.theme-mode'] = r.changed; return; }
+      // a model chosen with its own thinking depth is one atomic value in the world; the engine's row keeps the model
+      if (PSX.isModel && PSX.isModel(id) && v && typeof v === 'object' && !Array.isArray(v)) v = v.model;
       out[id] = clone(v); changed[id] = !!r.changed && !r.notOffered;
     });
     return { settings: out, changed };
@@ -357,6 +359,10 @@
   function targetFor(id, r, ctx, src) {
     const def = DEF[id], c = PSX.ctxFull(ctx);
     if (src === 'panel' && S.targets[id]) return S.targets[id];
+    /* Jared 2026-11-13: the row's own editor opened for one place (a map or a list of records, places.js openRow): its
+       Save goes to that place */
+    const pe = PSX.places && PSX.places.editing;
+    if (pe && pe.id === id) return { level: pe.level, key: pe.key };
     if (def.home === 'computer') return { level: 'computer', key: def.host ? (c.host || c.on) : c.on };
     if (def.home === 'project') return c.project ? { level: 'project', key: c.project } : null;
     if (def.home === 'everywhere') return { level: 'everywhere', key: null };
@@ -496,6 +502,9 @@
     const wrapped = function (payload) {
       try {
         const t = payload && String(payload.title || '');
+        // the row's own editor opened for one place says "Saved · <row> updated."; the layer's note names the place instead
+        const pe = PSX.places && PSX.places.editing;
+        if (pe && t === 'Saved' && String(payload.body || '').startsWith(label(pe.id))) { PSX.toastsSwallowed = (PSX.toastsSwallowed || 0) + 1; return undefined; }
         if (/^(Saved|Back to the default)$/.test(t)) {
           const body = String(payload.body || ''), map = labelIds();
           const name = Object.keys(map).find((l) => body.startsWith(l + ':'));
