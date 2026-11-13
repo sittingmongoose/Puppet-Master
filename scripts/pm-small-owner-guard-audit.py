@@ -193,6 +193,18 @@ def catalogue(m, fixtures):
                 no_if("commitment['sha256'] != hashlib.sha256(requested_preimage).hexdigest() or commitment['sha256'] != hashlib.sha256(stored_preimage).hexdigest()"))
         add('receipt.protected_authority',family+':unprotected_original','resolve_original',(row,e,a),(row,e,dict(a,protected_authority_current=False)),
             [(" or authority['protected_authority_current'] is not True",'')])
+        # SP-1101 (batch 2 fix 1): the recipe comes only from the stored original's own sealed write receipt.
+        receipt=dict(a['write_recipe_receipts'][0])
+        other_recipe='dm-cv1100-producer-v1' if receipt['recipe_id']=='dm-retained-producer-v1' else 'dm-retained-producer-v1'
+        for guard,label,receipts,edits in [
+                ('receipt.write_receipt','write_receipt_missing',[],[("'write_receipt_present': bool(receipts)","'write_receipt_present': True")]),
+                ('receipt.write_receipt','write_receipt_for_other_original',[dict(receipt,event_id=receipt['event_id']+':other')],
+                 [("'write_receipt_present': bool(receipts)","'write_receipt_present': True")]),
+                ('receipt.write_receipt_unique','write_receipt_ambiguous',[receipt,dict(receipt,recipe_id=other_recipe)],
+                 [("'write_receipt_unique': len(receipts) <= 1","'write_receipt_unique': True")]),
+                ('receipt.write_recipe','write_recipe_unknown',[dict(receipt,recipe_id='dm-retained-producer-v0')],
+                 [("or recipe_digest(recipe) is not None","or True")])]:
+            add(guard,family+':'+label,'resolve_original',(row,e,a),(row,e,dict(a,write_recipe_receipts=receipts)),edits)
         fields=['event_id','scope_partition','event_type','idempotency_key','producer_semantic_digest','storage_instance_id']
         for field in fields:
             value='f'*64 if field=='producer_semantic_digest' else 'foreign'

@@ -945,7 +945,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+            "event_type": "format.applied",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "publication_positive": {
         "membership": true,
@@ -1173,7 +1180,14 @@
             "segment_ref": "ref:segment.original.3",
             "byte_offset": 128
           },
-          "protected_authority_current": true
+          "protected_authority_current": true,
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+              "event_type": "format.applied",
+              "recipe_id": "dm-cv1100-producer-v1"
+            }
+          ]
         }
       },
       "admission_cases": [
@@ -2747,7 +2761,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+              "event_type": "format.applied",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         }
       },
       "durable_read_token": {
@@ -3828,7 +3849,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -4001,7 +4029,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -4241,7 +4276,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "unavailable"
@@ -4475,7 +4517,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+              "event_type": "format.applied",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         },
         "reader_enabled": true,
         "permission_current": true,
@@ -4848,7 +4897,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -5294,7 +5350,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -5477,7 +5540,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -5660,7 +5730,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -5843,7 +5920,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -6026,7 +6110,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -6209,7 +6300,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -6392,7 +6490,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -6575,7 +6680,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -6758,7 +6870,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -6941,7 +7060,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -7124,7 +7250,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -7307,7 +7440,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -7490,7 +7630,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -7673,7 +7820,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -7856,7 +8010,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -8039,7 +8200,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -8222,7 +8390,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -8428,7 +8603,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -8601,7 +8783,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -8883,7 +9072,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "preserve_old"
@@ -9276,7 +9472,14 @@
                 "segment_ref": "ref:segment.original.3",
                 "byte_offset": 128
               },
-              "protected_authority_current": true
+              "protected_authority_current": true,
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_1fb2ec5e212d78b6d6004414530a738014dcc0e5be85c11c767d394e1346daab",
+                  "event_type": "format.applied",
+                  "recipe_id": "dm-cv1100-producer-v1"
+                }
+              ]
             }
           },
           "expected_durable_events": 1
@@ -9996,7 +10199,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_896dbc64a0df96491bb07cccbcc8f2bde5b03b06b80ba0d7d3b68f8bd0529953",
+            "event_type": "format.applied",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "project_partition_case": {
         "encoded_partition": "project~cHJvamVjdDphY3R1YWwtMQ",
@@ -11173,7 +11383,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+            "event_type": "lsp.server.lifecycle_changed",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "publication_positive": {
         "membership": true,
@@ -11406,7 +11623,14 @@
             "segment_ref": "ref:segment.original.3",
             "byte_offset": 128
           },
-          "protected_authority_current": true
+          "protected_authority_current": true,
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+              "event_type": "lsp.server.lifecycle_changed",
+              "recipe_id": "dm-cv1100-producer-v1"
+            }
+          ]
         }
       },
       "admission_cases": [
@@ -12990,7 +13214,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+              "event_type": "lsp.server.lifecycle_changed",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         }
       },
       "durable_read_token": {
@@ -14075,7 +14306,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -14252,7 +14490,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -14496,7 +14741,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "unavailable"
@@ -14734,7 +14986,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+              "event_type": "lsp.server.lifecycle_changed",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         },
         "reader_enabled": true,
         "permission_current": true,
@@ -15111,7 +15370,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -15559,7 +15825,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -15744,7 +16017,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -15929,7 +16209,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -16114,7 +16401,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -16299,7 +16593,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -16484,7 +16785,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -16669,7 +16977,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -16854,7 +17169,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -17039,7 +17361,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -17224,7 +17553,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -17409,7 +17745,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -17594,7 +17937,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -17779,7 +18129,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -17964,7 +18321,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -18149,7 +18513,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -18334,7 +18705,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -18519,7 +18897,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -18729,7 +19114,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -18906,7 +19298,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -19192,7 +19591,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "preserve_old"
@@ -19590,7 +19996,14 @@
                 "segment_ref": "ref:segment.original.3",
                 "byte_offset": 128
               },
-              "protected_authority_current": true
+              "protected_authority_current": true,
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6b3a9932c1efcb996ccb1537c2959c65f35034738396ee853b7619ca70f46303",
+                  "event_type": "lsp.server.lifecycle_changed",
+                  "recipe_id": "dm-cv1100-producer-v1"
+                }
+              ]
             }
           },
           "expected_durable_events": 1
@@ -20278,7 +20691,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_8c2647e3417ec0c37e13dcbb78618f18a9418f1671b2b4b45e9a16f3ed442bee",
+            "event_type": "lsp.server.lifecycle_changed",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "project_partition_case": {
         "encoded_partition": "project~cHJvamVjdDphY3R1YWwtMQ",
@@ -22019,7 +22439,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+            "event_type": "model.catalog_refreshed",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "publication_positive": {
         "membership": true,
@@ -22253,7 +22680,14 @@
             "segment_ref": "ref:segment.original.3",
             "byte_offset": 128
           },
-          "protected_authority_current": true
+          "protected_authority_current": true,
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+              "event_type": "model.catalog_refreshed",
+              "recipe_id": "dm-cv1100-producer-v1"
+            }
+          ]
         }
       },
       "admission_cases": [
@@ -23839,7 +24273,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+              "event_type": "model.catalog_refreshed",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         }
       },
       "durable_read_token": {
@@ -24924,7 +25365,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -25101,7 +25549,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -25345,7 +25800,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "unavailable"
@@ -25583,7 +26045,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+              "event_type": "model.catalog_refreshed",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         },
         "reader_enabled": true,
         "permission_current": true,
@@ -25960,7 +26429,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -26408,7 +26884,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -26593,7 +27076,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -26778,7 +27268,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -26963,7 +27460,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -27148,7 +27652,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -27333,7 +27844,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -27518,7 +28036,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -27703,7 +28228,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -27888,7 +28420,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -28073,7 +28612,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -28258,7 +28804,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -28443,7 +28996,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -28628,7 +29188,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -28813,7 +29380,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -28998,7 +29572,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -29183,7 +29764,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -29368,7 +29956,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -29578,7 +30173,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -29755,7 +30357,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -30041,7 +30650,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "preserve_old"
@@ -30440,7 +31056,14 @@
                 "segment_ref": "ref:segment.original.3",
                 "byte_offset": 128
               },
-              "protected_authority_current": true
+              "protected_authority_current": true,
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6f6ac12c547171a77e952b29cff6aebab4de10396c5eee3b915e19f09154af10",
+                  "event_type": "model.catalog_refreshed",
+                  "recipe_id": "dm-cv1100-producer-v1"
+                }
+              ]
             }
           },
           "expected_durable_events": 1
@@ -32925,7 +33548,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_018b603bec2bf05ae260b3fff5ef8bd444584a4d24251c7021db665537adccdb",
+            "event_type": "model.catalog_refreshed",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "project_partition_case": {
         "encoded_partition": "project~cHJvamVjdDphY3R1YWwtMQ",
@@ -34680,7 +35310,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+            "event_type": "subagent.context_rehydrated",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "publication_positive": {
         "membership": true,
@@ -34921,7 +35558,14 @@
             "segment_ref": "ref:segment.original.3",
             "byte_offset": 128
           },
-          "protected_authority_current": true
+          "protected_authority_current": true,
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+              "event_type": "subagent.context_rehydrated",
+              "recipe_id": "dm-cv1100-producer-v1"
+            }
+          ]
         }
       },
       "admission_cases": [
@@ -36521,7 +37165,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+              "event_type": "subagent.context_rehydrated",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         }
       },
       "durable_read_token": {
@@ -37610,7 +38261,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -37791,7 +38449,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -38039,7 +38704,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "unavailable"
@@ -38281,7 +38953,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+              "event_type": "subagent.context_rehydrated",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         },
         "reader_enabled": true,
         "permission_current": true,
@@ -38662,7 +39341,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -39112,7 +39798,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -39299,7 +39992,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -39486,7 +40186,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -39673,7 +40380,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -39860,7 +40574,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -40047,7 +40768,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -40234,7 +40962,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -40421,7 +41156,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -40608,7 +41350,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -40795,7 +41544,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -40982,7 +41738,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -41169,7 +41932,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -41356,7 +42126,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -41543,7 +42320,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -41730,7 +42514,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -41917,7 +42708,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -42104,7 +42902,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -42318,7 +43123,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -42499,7 +43311,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -42789,7 +43608,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "preserve_old"
@@ -43195,7 +44021,14 @@
                 "segment_ref": "ref:segment.original.3",
                 "byte_offset": 128
               },
-              "protected_authority_current": true
+              "protected_authority_current": true,
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_7ec0ff2b0927f498d37b0122e6de9625b920fb0c06eb78787df9cc4deb73036a",
+                  "event_type": "subagent.context_rehydrated",
+                  "recipe_id": "dm-cv1100-producer-v1"
+                }
+              ]
             }
           },
           "expected_durable_events": 1
@@ -45695,7 +46528,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_97c2c9634ee6ea8a16f2a8135768977606519985bf71aa0e33c5d9e087074462",
+            "event_type": "subagent.context_rehydrated",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "project_partition_case": {
         "encoded_partition": "project~cHJvamVjdDphY3R1YWwtMQ",
@@ -47501,7 +48341,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+            "event_type": "subagent.context_shrunk",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "publication_positive": {
         "membership": true,
@@ -47743,7 +48590,14 @@
             "segment_ref": "ref:segment.original.3",
             "byte_offset": 128
           },
-          "protected_authority_current": true
+          "protected_authority_current": true,
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+              "event_type": "subagent.context_shrunk",
+              "recipe_id": "dm-cv1100-producer-v1"
+            }
+          ]
         }
       },
       "admission_cases": [
@@ -49345,7 +50199,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+              "event_type": "subagent.context_shrunk",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         }
       },
       "durable_read_token": {
@@ -50434,7 +51295,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -50615,7 +51483,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -50863,7 +51738,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "unavailable"
@@ -51105,7 +51987,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+              "event_type": "subagent.context_shrunk",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         },
         "reader_enabled": true,
         "permission_current": true,
@@ -51486,7 +52375,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -51936,7 +52832,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -52123,7 +53026,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -52310,7 +53220,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -52497,7 +53414,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -52684,7 +53608,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -52871,7 +53802,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -53058,7 +53996,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -53245,7 +54190,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -53432,7 +54384,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -53619,7 +54578,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -53806,7 +54772,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -53993,7 +54966,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -54180,7 +55160,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -54367,7 +55354,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -54554,7 +55548,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -54741,7 +55742,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -54928,7 +55936,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -55142,7 +56157,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -55323,7 +56345,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -55613,7 +56642,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "preserve_old"
@@ -56020,7 +57056,14 @@
                 "segment_ref": "ref:segment.original.3",
                 "byte_offset": 128
               },
-              "protected_authority_current": true
+              "protected_authority_current": true,
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6a7bc74caeceef0c81bfb57e8f4a55fd15cfdd49a0ac2d1cba39070014153135",
+                  "event_type": "subagent.context_shrunk",
+                  "recipe_id": "dm-cv1100-producer-v1"
+                }
+              ]
             }
           },
           "expected_durable_events": 1
@@ -58520,7 +59563,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_d994491affbab99e5bb3bbbaca6272408b082d1a8b20248e5e046f6314c3948d",
+            "event_type": "subagent.context_shrunk",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "project_partition_case": {
         "encoded_partition": "project~cHJvamVjdDphY3R1YWwtMQ",
@@ -59645,7 +60695,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+            "event_type": "project.added",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "publication_positive": {
         "membership": true,
@@ -59870,7 +60927,14 @@
             "segment_ref": "ref:segment.original.3",
             "byte_offset": 128
           },
-          "protected_authority_current": true
+          "protected_authority_current": true,
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+              "event_type": "project.added",
+              "recipe_id": "dm-cv1100-producer-v1"
+            }
+          ]
         }
       },
       "admission_cases": [
@@ -61438,7 +62502,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+              "event_type": "project.added",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         }
       },
       "durable_read_token": {
@@ -62517,7 +63588,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -62688,7 +63766,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -62926,7 +64011,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "unavailable"
@@ -63158,7 +64250,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+              "event_type": "project.added",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         },
         "reader_enabled": true,
         "permission_current": true,
@@ -63529,7 +64628,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -63974,7 +65080,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -64156,7 +65269,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -64338,7 +65458,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -64520,7 +65647,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -64702,7 +65836,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -64884,7 +66025,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -65066,7 +66214,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -65248,7 +66403,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -65430,7 +66592,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -65612,7 +66781,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -65794,7 +66970,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -65976,7 +67159,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -66158,7 +67348,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -66340,7 +67537,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -66522,7 +67726,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -66704,7 +67915,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -66886,7 +68104,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -67090,7 +68315,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -67261,7 +68493,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -67541,7 +68780,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "preserve_old"
@@ -67931,7 +69177,14 @@
                 "segment_ref": "ref:segment.original.3",
                 "byte_offset": 128
               },
-              "protected_authority_current": true
+              "protected_authority_current": true,
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_db04e5835d1b285cc2a068e23061992ebb3be3b96f0865856f8bb55544dd5de7",
+                  "event_type": "project.added",
+                  "recipe_id": "dm-cv1100-producer-v1"
+                }
+              ]
             }
           },
           "expected_durable_events": 1
@@ -68639,7 +69892,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_11f044581f82f9aab1488884debfb540d34013ee805255d7364a85fd98256363",
+            "event_type": "project.added",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "project_partition_case": {
         "encoded_partition": "project~cHJvamVjdDphY3R1YWwtMQ",
@@ -69735,7 +70995,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+            "event_type": "project.created",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "publication_positive": {
         "membership": true,
@@ -69960,7 +71227,14 @@
             "segment_ref": "ref:segment.original.3",
             "byte_offset": 128
           },
-          "protected_authority_current": true
+          "protected_authority_current": true,
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+              "event_type": "project.created",
+              "recipe_id": "dm-cv1100-producer-v1"
+            }
+          ]
         }
       },
       "admission_cases": [
@@ -71528,7 +72802,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+              "event_type": "project.created",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         }
       },
       "durable_read_token": {
@@ -72607,7 +73888,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -72778,7 +74066,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -73016,7 +74311,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "unavailable"
@@ -73248,7 +74550,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+              "event_type": "project.created",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         },
         "reader_enabled": true,
         "permission_current": true,
@@ -73619,7 +74928,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -74064,7 +75380,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -74246,7 +75569,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -74428,7 +75758,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -74610,7 +75947,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -74792,7 +76136,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -74974,7 +76325,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -75156,7 +76514,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -75338,7 +76703,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -75520,7 +76892,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -75702,7 +77081,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -75884,7 +77270,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -76066,7 +77459,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -76248,7 +77648,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -76430,7 +77837,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -76612,7 +78026,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -76794,7 +78215,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -76976,7 +78404,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -77180,7 +78615,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -77351,7 +78793,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -77631,7 +79080,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "preserve_old"
@@ -78021,7 +79477,14 @@
                 "segment_ref": "ref:segment.original.3",
                 "byte_offset": 128
               },
-              "protected_authority_current": true
+              "protected_authority_current": true,
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_4a4f7e2ed2e40d77904854425567a7a5daee22bfc8075554817021ef00bb3877",
+                  "event_type": "project.created",
+                  "recipe_id": "dm-cv1100-producer-v1"
+                }
+              ]
             }
           },
           "expected_durable_events": 1
@@ -78740,7 +80203,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_6c2a4a393f32bfc0458957cc81faf9873a271753cd25be63f840dfda3660127f",
+            "event_type": "project.created",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "project_partition_case": {
         "encoded_partition": "project~cHJvamVjdDphY3R1YWwtMQ",
@@ -79915,7 +81385,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+            "event_type": "git.clone.completed",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "publication_positive": {
         "membership": true,
@@ -80147,7 +81624,14 @@
             "segment_ref": "ref:segment.original.3",
             "byte_offset": 128
           },
-          "protected_authority_current": true
+          "protected_authority_current": true,
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+              "event_type": "git.clone.completed",
+              "recipe_id": "dm-cv1100-producer-v1"
+            }
+          ]
         }
       },
       "admission_cases": [
@@ -81729,7 +83213,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+              "event_type": "git.clone.completed",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         }
       },
       "durable_read_token": {
@@ -82812,7 +84303,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -82987,7 +84485,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "available"
@@ -83229,7 +84734,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "unavailable"
@@ -83465,7 +84977,14 @@
             "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
             "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-          }
+          },
+          "write_recipe_receipts": [
+            {
+              "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+              "event_type": "git.clone.completed",
+              "recipe_id": "dm-retained-producer-v1"
+            }
+          ]
         },
         "reader_enabled": true,
         "permission_current": true,
@@ -83840,7 +85359,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -84287,7 +85813,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -84471,7 +86004,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -84655,7 +86195,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -84839,7 +86386,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -85023,7 +86577,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -85207,7 +86768,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -85391,7 +86959,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -85575,7 +87150,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -85759,7 +87341,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -85943,7 +87532,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -86127,7 +87723,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -86311,7 +87914,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -86495,7 +88105,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -86679,7 +88296,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -86863,7 +88487,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\n",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -87047,7 +88678,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -87231,7 +88869,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "patches": [
@@ -87439,7 +89084,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -87614,7 +89266,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "publish_complete"
@@ -87898,7 +89557,14 @@
                 "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
                 "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-              }
+              },
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+                  "event_type": "foreign.family",
+                  "recipe_id": "dm-retained-producer-v1"
+                }
+              ]
             }
           },
           "expected": "preserve_old"
@@ -88295,7 +89961,14 @@
                 "segment_ref": "ref:segment.original.3",
                 "byte_offset": 128
               },
-              "protected_authority_current": true
+              "protected_authority_current": true,
+              "write_recipe_receipts": [
+                {
+                  "event_id": "evt_c0a2492aa816a767fa07c6a123c8eee4dd6a5cddd68ff71c6cea3081a9bbb818",
+                  "event_type": "git.clone.completed",
+                  "recipe_id": "dm-cv1100-producer-v1"
+                }
+              ]
             }
           },
           "expected_durable_events": 1
@@ -89005,7 +90678,14 @@
           "durable_watermarks_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
           "excluded_ranges_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
           "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        }
+        },
+        "write_recipe_receipts": [
+          {
+            "event_id": "evt_6c0248931b06da633ef8429b8878527512b94cea38fb71d8f289fb5fc7c55d84",
+            "event_type": "git.clone.completed",
+            "recipe_id": "dm-retained-producer-v1"
+          }
+        ]
       },
       "project_partition_case": {
         "encoded_partition": "project~cHJvamVjdDphY3R1YWwtMQ",
