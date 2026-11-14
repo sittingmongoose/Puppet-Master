@@ -20,6 +20,7 @@ import dataclasses
 import hashlib
 import importlib
 import json
+import re
 import sys
 from contextlib import contextmanager
 from pathlib import Path
@@ -65,6 +66,50 @@ def _load(path):
 
 
 SCHEMAS = {name: _load(f'Plans/{name}.schema.json') for name in SCHEMA_FILES}
+
+
+def _durable_read_token():
+    """SP-278 nine-field durable read token (DL-076): the shared read_token with redb_snapshot_id removed from
+    properties and required, every other member unchanged. W3A's DurableGenericToken must be exactly this schema
+    (INT3 integration repair, lead decision A): no lane copy, so the readiness read-token exemption applies."""
+    token = copy.deepcopy(SCHEMAS['event_record_index_checkpoint']['$defs']['read_token'])
+    token['properties'].pop('redb_snapshot_id')
+    token['required'] = [k for k in token['required'] if k != 'redb_snapshot_id']
+    return token
+
+
+DURABLE_READ_TOKEN = _durable_read_token()
+if SCHEMAS['forge_event_storage_contracts']['$defs']['DurableGenericToken'] != DURABLE_READ_TOKEN:
+    raise SystemExit('forge DurableGenericToken is not the shared SP-278 durable read token')
+
+
+def _token_patterns(node, path=()):
+    """(path, pattern) of every pattern-bearing string member of the durable token."""
+    out = []
+    for name, sub in node.get('properties', {}).items():
+        if type(sub.get('pattern')) is str:
+            out.append((path + (name,), sub['pattern']))
+        if sub.get('type') == 'object':
+            out += _token_patterns(sub, path + (name,))
+    return out
+
+
+TOKEN_PATTERNS = _token_patterns(DURABLE_READ_TOKEN)
+
+
+def token_full_match(token):
+    """Every pattern-bearing string of the token full-matches its SP-278 pattern. Draft 2020-12 `pattern` is a
+    search, so '^...$' alone accepts one trailing LF; this is W3A's trailing-LF refusal (non-strings stay with
+    the schema row)."""
+    if type(token) is not dict:
+        return True
+    for path, pattern in TOKEN_PATTERNS:
+        value = token
+        for part in path:
+            value = value.get(part) if type(value) is dict else None
+        if type(value) is str and re.fullmatch(pattern, value) is None:
+            return False
+    return True
 PAYLOAD_SCHEMAS = {f['slug']: _load(f['payload_schema_path']) for f in spec.FAMILIES}
 
 
@@ -459,7 +504,7 @@ def build_publication(W, m, empty):
         return {'schema_id': f'pm.storage_value.{slug}_checkpoint.generation_core.v1', 'schema_version': '1.0.0',
                 'storage_instance_id': STORAGE, 'scope': copy.deepcopy(scope), 'event_type': fam['event_type'],
                 'consumer_id': root_id['consumer_id'], 'consumer_version': CONSUMER_VERSION,
-                'publication_revision': rev, 'previous_checkpoint_sha256': prev, 'generic_token': token,
+                'publication_revision': rev, 'previous_checkpoint_sha256': prev, 'generic_read_token': token,
                 'last_scanned': last, 'matched_count': count, 'state': 'current', 'withdrawal_receipt_ref': None,
                 'redaction_profile': 'secret_refs_only'}
     durable = {k: v for k, v in live.items() if k != 'redb_snapshot_id'}
@@ -488,7 +533,7 @@ def build_publication(W, m, empty):
     sel['core']['previous_checkpoint_sha256'] = pred_hash
     sel['core']['last_scanned'] = cursor_u if not empty else None
     sel['core']['matched_count'] = 0 if empty else 1
-    sel['core']['generic_token'] = copy.deepcopy(durable)
+    sel['core']['generic_read_token'] = copy.deepcopy(durable)
     W['cand'] = hook(m, 'cand', cand, W)
     W['root_key'] = hook(m, 'root_key', key, W)
     W['storage_keys'] = hook(m, 'storage_keys', [W['root_key']], W)
@@ -766,7 +811,8 @@ def obs_receipt(W):
     }
     for s_name in rows_spec.RECEIPT_UINT:
         out[f'receipt_{s_name}_uint64'] = uint64_ok(r.get(s_name))
-    out['ack_clock'] = clock_ok(r.get('acknowledged_at_utc'), STORAGE_UTC_Z)
+    # E5-2 = A (Jared, 2026-11-13): AppendReceipt acknowledged_at_utc takes the EventRecord profile (format date-time).
+    out['ack_clock'] = clock_ok(r.get('acknowledged_at_utc'), EVENT_RECORD)
     resolved = W['receipt_index'].get(row.get('first_append_receipt_ref'))
     out['settlement_ref'] = resolved is not None and same(resolved, c)
     out['settlement_phase'] = row.get('phase') == 'history_committed'
@@ -808,7 +854,7 @@ def _core(n):
 
 def _slot_values(n, slot):
     core = _core(n)
-    token = core.get('generic_token') if type(core.get('generic_token')) is dict else {}
+    token = core.get('generic_read_token') if type(core.get('generic_read_token')) is dict else {}
     selection = token.get('source_selection') if type(token.get('source_selection')) is dict else {}
     last = core.get('last_scanned')
     if slot == 'publication_revision':
@@ -834,6 +880,7 @@ def obs_checkpoint(W, root):
         out[f'{slot}_uint64'] = all(uint64_ok(v) for n in nodes for v in _slot_values(n, slot))
     out['activated_clock'] = all(n.get('activated_at_utc') is None or clock_ok(n['activated_at_utc'], STORAGE_UTC_Z) for n in nodes)
     out['retired_clock'] = all(n.get('retired_at_utc') is None or clock_ok(n['retired_at_utc'], STORAGE_UTC_Z) for n in nodes)
+    out['token_full_match'] = all(token_full_match(_core(n).get('generic_read_token')) for n in nodes)
     size = encoded_len(root, INDEX_BINDING)
     out['root_size'] = size is None or size <= INLINE_LIMIT
     out['no_fourth_key'] = W['storage_keys'] == [W['root_key']]
@@ -888,7 +935,7 @@ def _selected(root):
 def obs_token(W):
     cand = W['cand']
     n = _selected(cand) or {}
-    token = _core(n).get('generic_token') if type(_core(n).get('generic_token')) is dict else {}
+    token = _core(n).get('generic_read_token') if type(_core(n).get('generic_read_token')) is dict else {}
     live = W['storage_live']
     sel = token.get('source_selection') if type(token.get('source_selection')) is dict else {}
     out = {}
@@ -1232,6 +1279,11 @@ def positives(fam, kind):
         dict(id='append/broad-occurred-profile', path='append',
              muts={'native': setp('occurred_at_utc', '2026-11-01t10:00:00.123456789-05:00')}),
         dict(id='settle/first-receipt-history-committed', path='settle', muts={}),
+        # E5-2 = A: owner-valid receipt times the EventRecord profile accepts (offset; lowercase z).
+        dict(id='settle/receipt-ack-offset', path='settle',
+             muts={'receipt': setp('acknowledged_at_utc', '2026-11-01T03:00:02.5-05:00')}),
+        dict(id='settle/receipt-ack-lowercase-z', path='settle',
+             muts={'receipt': setp('acknowledged_at_utc', '2026-11-01T08:00:02.5z')}),
         dict(id='settle/restart-after-receipt-issued', path='settle',
              muts={'settle': setp('receipts_before', 1)}),
         dict(id='retry/same-body-other-storage-metadata', path='retry', muts={}),
@@ -1267,7 +1319,7 @@ def _sub_component(index, value):
 
 def _token_both(field, value, selection=False):
     def cand(c, W):
-        n = c['generations'][0]['core']['generic_token']
+        n = c['generations'][0]['core']['generic_read_token']
         (n['source_selection'] if selection else n)[field] = copy.deepcopy(value)
 
     def req(r, W):
@@ -1420,7 +1472,8 @@ def shared_negatives(fam, kind):
     add('RC08_full_value', 'settle', {'meta': setp('sequence_id', big)}, '4,400-digit sequence: no CV-339 preimage (RC11 also fails)', multi=True)
     for i, slot in enumerate(rows_spec.RECEIPT_UINT[1:]):
         add(f'RC{12 + i:02d}_receipt_{slot}_uint64', 'settle', {'receipt': setp(slot, 3.0)}, 'float spelling')
-    add('RC16_ack_clock', 'settle', {'receipt': setp('acknowledged_at_utc', '2026-11-01T08:00:02.5+00:00')})
+    add('RC16_ack_clock', 'settle', {'receipt': setp('acknowledged_at_utc', '2026-11-01T08:00:02.5')}, 'missing zone (EventRecord profile, E5-2)')
+    add('RC16_ack_clock', 'settle', {'receipt': setp('acknowledged_at_utc', '2026-11-01T24:00:00Z')}, 'hour 24 (EventRecord profile, E5-2)')
     add('RC17_settlement_ref', 'settle', {'settle': setp('row', 'first_append_receipt_ref', 'pmref:receipt.other')})
     add('RC18_settlement_phase', 'settle', {'settle': setp('row', 'phase', 'source_committed')})
     add('RC19_settlement_release', 'settle', {'settle': lambda s, W: s['row'].__setitem__('pending_intent_ref', W['pack']['ref'])})
@@ -1442,20 +1495,22 @@ def shared_negatives(fam, kind):
     add('CP04_root_scope', 'publish', {'cand': setp('scope', 'server_id', 'server-B')})
     slot_paths = {'publication_revision': ('core', 'publication_revision'), 'matched_count': ('core', 'matched_count'),
                   'cursor_sequence': ('core', 'last_scanned', 'sequence_id'),
-                  'frontier_revision': ('core', 'generic_token', 'frontier_revision')}
+                  'frontier_revision': ('core', 'generic_read_token', 'frontier_revision')}
     for i, slot in enumerate(rows_spec.UINT_SLOTS):
-        path = slot_paths.get(slot, ('core', 'generic_token', 'source_selection', slot))
+        path = slot_paths.get(slot, ('core', 'generic_read_token', 'source_selection', slot))
         add(f'CP{5 + i:02d}_{slot}_uint64', 'publish',
             {'cand': lambda c, W, path=path: _set_float(c['generations'][0], path)}, 'float spelling')
     add('CP01_root_schema', 'publish', {'cand': setp('generations', 0, 'core', 'matched_count', big)}, '4,400-digit matched_count (CP06 also fails)', multi=True)
     add('CP12_activated_clock', 'publish', {'cand': setp('generations', 1, 'activated_at_utc', '2026-10-01T00:00:00+00:00')})
     add('CP13_retired_clock', 'publish', {'cand': setp('generations', 1, 'retired_at_utc', '2026-10-20T00:00:00z')})
-    add('CP14_root_size', 'publish', {'cand': setp('generations', 0, 'core', 'generic_token', 'checkpoint_key', 'k' * 17000)})
+    add('CP16_token_full_match', 'publish', {'cand': setp('generations', 0, 'core', 'generic_read_token', 'frontier_sha256', sha(b'frontier') + '\n')},
+        'trailing LF on a durable read-token hash (the schema pattern search accepts it)')
+    add('CP14_root_size', 'publish', {'cand': setp('generations', 0, 'core', 'generic_read_token', 'checkpoint_key', 'k' * 17000)})
     add('CP15_no_fourth_key', 'publish', {'storage_keys': lambda k, W: k + [W['root_key'] + '.history']})
     lf = _token_both('generation_anchor_sha256', sha(b'anchor') + '\n')
-    add('CP01_root_schema', 'publish', lf, 'trailing LF on a durable token hash (standing check 5; TK05 also fails later)')
+    add('CP16_token_full_match', 'publish', lf, 'trailing LF on a durable token hash (standing check 5; TK05 also fails later; CP01 before the shared SP-278 token)')
     lf = _token_both('generation_id', 'eig_' + sha(b'index-gen') + '\n')
-    add('CP01_root_schema', 'publish', lf, 'trailing LF on the durable token generation id (standing check 5; TK04 also fails later)')
+    add('CP16_token_full_match', 'publish', lf, 'trailing LF on the durable token generation id (standing check 5; TK04 also fails later; CP01 before the shared SP-278 token)')
     # generation (R1 constructions)
     add('GN01_current_cardinality', 'publish', {'cand': lambda c, W: c['generations'][1].update(lifecycle='current', retired_at_utc=None)})
     add('GN02_node_membership', 'publish', {'cand': lambda c, W: c.__setitem__('generations', [c['generations'][0], c['generations'][1], copy.deepcopy(c['generations'][1])])}, 'A,B,B')

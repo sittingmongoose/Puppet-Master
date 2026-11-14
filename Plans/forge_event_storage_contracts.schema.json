@@ -58,11 +58,11 @@
         },
         "generation_id": {
           "type": "string",
-          "pattern": "^eig_[0-9a-f]{64}(?![\\s\\S])"
+          "pattern": "^eig_[0-9a-f]{64}$"
         },
         "generation_anchor_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+          "pattern": "^[0-9a-f]{64}$"
         },
         "frontier_revision": {
           "type": "integer",
@@ -71,7 +71,7 @@
         },
         "frontier_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+          "pattern": "^[0-9a-f]{64}$"
         },
         "index_dataset_name": {
           "type": "string",
@@ -105,7 +105,7 @@
             },
             "current_bytes_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+              "pattern": "^[0-9a-f]{64}$"
             },
             "selected_segment_generation": {
               "type": "integer",
@@ -117,7 +117,7 @@
             },
             "manifest_bytes_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+              "pattern": "^[0-9a-f]{64}$"
             },
             "manifest_generation": {
               "type": "integer",
@@ -131,23 +131,23 @@
             },
             "manifest_survivor_prefix_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+              "pattern": "^[0-9a-f]{64}$"
             },
             "retained_inventory_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+              "pattern": "^[0-9a-f]{64}$"
             },
             "durable_watermarks_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+              "pattern": "^[0-9a-f]{64}$"
             },
             "excluded_ranges_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+              "pattern": "^[0-9a-f]{64}$"
             },
             "retired_inputs_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+              "pattern": "^[0-9a-f]{64}$"
             }
           }
         }
@@ -385,7 +385,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -427,7 +427,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -740,7 +740,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -782,7 +782,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -1095,7 +1095,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -1137,7 +1137,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -1450,7 +1450,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -1492,7 +1492,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -1805,7 +1805,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -1847,7 +1847,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -2160,7 +2160,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -2202,7 +2202,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -2515,7 +2515,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -2557,7 +2557,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -2870,7 +2870,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -2912,7 +2912,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -3225,7 +3225,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -3267,7 +3267,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -3580,7 +3580,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -3622,7 +3622,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -3935,7 +3935,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -3977,7 +3977,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -4290,7 +4290,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -4332,7 +4332,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -4645,7 +4645,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -4687,7 +4687,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -5000,7 +5000,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -5042,7 +5042,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -5355,7 +5355,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -5397,7 +5397,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -5710,7 +5710,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -5752,7 +5752,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -6065,7 +6065,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -6107,7 +6107,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -6420,7 +6420,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -6462,7 +6462,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -6819,7 +6819,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -6861,7 +6861,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -7218,7 +7218,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -7260,7 +7260,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -7573,7 +7573,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -7615,7 +7615,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -7928,7 +7928,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -7970,7 +7970,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -8283,7 +8283,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -8325,7 +8325,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -8638,7 +8638,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -8680,7 +8680,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -8993,7 +8993,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -9035,7 +9035,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -9348,7 +9348,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -9390,7 +9390,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -9703,7 +9703,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -9745,7 +9745,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -10058,7 +10058,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -10100,7 +10100,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -10413,7 +10413,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -10455,7 +10455,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -10768,7 +10768,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -10810,7 +10810,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -11123,7 +11123,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -11165,7 +11165,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -11478,7 +11478,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -11520,7 +11520,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -11833,7 +11833,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -11875,7 +11875,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -12188,7 +12188,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -12230,7 +12230,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {
@@ -12543,7 +12543,7 @@
                   "consumer_version",
                   "publication_revision",
                   "previous_checkpoint_sha256",
-                  "generic_token",
+                  "generic_read_token",
                   "last_scanned",
                   "matched_count",
                   "state",
@@ -12585,7 +12585,7 @@
                       }
                     ]
                   },
-                  "generic_token": {
+                  "generic_read_token": {
                     "$ref": "#/$defs/DurableGenericToken"
                   },
                   "last_scanned": {

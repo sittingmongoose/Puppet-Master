@@ -117,7 +117,7 @@ SHARED = {
         ('RC10_receipt_sequence', 'receipt_sequence', 'the first receipt sequence is the retained event sequence', 'receipt_unverified', ['first_receipt', 'storage_metadata']),
     ] + [(f'RC{11 + i:02d}_receipt_{s}_uint64', f'receipt_{s}_uint64', f'first receipt {s} passes storage_uint64', 'receipt_unverified', ['numbers'])
          for i, s in enumerate(RECEIPT_UINT)] + [
-        ('RC16_ack_clock', 'ack_clock', 'acknowledged_at_utc passes date_time with the storage_utc_z profile', 'receipt_unverified', ['timestamps']),
+        ('RC16_ack_clock', 'ack_clock', 'acknowledged_at_utc passes date_time with the EventRecord profile (E5-2)', 'receipt_unverified', ['timestamps']),
         ('RC17_settlement_ref', 'settlement_ref', 'first_append_receipt_ref resolves to this custody in Storage', 'settlement_refused', ['settlement_receipt']),
         ('RC18_settlement_phase', 'settlement_phase', 'the settled row phase is history_committed', 'settlement_refused', ['settlement_receipt']),
         ('RC19_settlement_release', 'settlement_release', 'pending_intent_ref is cleared in the same transaction', 'settlement_refused', ['settlement_release']),
@@ -145,6 +145,7 @@ SHARED = {
         ('CP13_retired_clock', 'retired_clock', 'every non-null retired_at_utc passes date_time storage_utc_z', 'checkpoint_invalid', ['timestamps']),
         ('CP14_root_size', 'root_size', 'the whole encoded root is at most 16 KiB', 'checkpoint_too_large', ['generation.root_size']),
         ('CP15_no_fourth_key', 'no_fourth_key', 'Storage holds no other key for this consumer root', 'checkpoint_invalid', ['generation.no_fourth_key']),
+        ('CP16_token_full_match', 'token_full_match', 'every pattern-bearing generic_read_token string full-matches its SP-278 pattern (no trailing LF)', 'checkpoint_invalid', ['token']),
     ]),
     'generation': ('SP-12xx generation invariants (R1 independent predicates)', [
         ('GN01_current_cardinality', 'current_cardinality', 'at most one node is current', 'generation_invalid', ['generation.node_count']),

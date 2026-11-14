@@ -118,7 +118,7 @@ SLOTS = (
      lambda v: {'pred': w3a.setp('generations', 1, 'core', 'publication_revision', v)}, numbers.storage_uint64,
      {'CP01_root_schema', 'CP05_publication_revision_uint64'}, set()),
     ('checkpoint.staged_node.frontier_revision', 'publish',
-     lambda v: {'pred': w3a.setp('generations', 2, 'core', 'generic_token', 'frontier_revision', v)}, numbers.storage_uint64,
+     lambda v: {'pred': w3a.setp('generations', 2, 'core', 'generic_read_token', 'frontier_revision', v)}, numbers.storage_uint64,
      {'CP01_root_schema', 'CP08_frontier_revision_uint64'}, set()),
     ('cleanup.elapsed_seconds', 'stage',
      lambda v: {'stage': lambda st, W: st.update(op='cleanup', root=w3a.copy.deepcopy(W['pred']),

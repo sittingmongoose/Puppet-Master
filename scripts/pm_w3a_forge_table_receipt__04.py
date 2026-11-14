@@ -27,7 +27,7 @@ def case(value):
         g.Guard('RC13_receipt_byte_offset_uint64', g.Invariant('/receipt_byte_offset_uint64', 'first receipt byte_offset passes storage_uint64'), 'receipt_unverified', RC13_receipt_byte_offset_uint64),
         g.Guard('RC14_receipt_durable_end_offset_uint64', g.Invariant('/receipt_durable_end_offset_uint64', 'first receipt durable_end_offset passes storage_uint64'), 'receipt_unverified', RC14_receipt_durable_end_offset_uint64),
         g.Guard('RC15_receipt_manifest_generation_uint64', g.Invariant('/receipt_manifest_generation_uint64', 'first receipt manifest_generation passes storage_uint64'), 'receipt_unverified', RC15_receipt_manifest_generation_uint64),
-        g.Guard('RC16_ack_clock', g.Invariant('/ack_clock', 'acknowledged_at_utc passes date_time with the storage_utc_z profile'), 'receipt_unverified', RC16_ack_clock),
+        g.Guard('RC16_ack_clock', g.Invariant('/ack_clock', 'acknowledged_at_utc passes date_time with the EventRecord profile (E5-2)'), 'receipt_unverified', RC16_ack_clock),
     ])
 
     def check(value):
