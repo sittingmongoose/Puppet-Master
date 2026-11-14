@@ -55,6 +55,7 @@ def main():
     parser.add_argument('--retained-snapshots',action='store_true')
     args=parser.parse_args()
     args.out.mkdir(parents=True,exist_ok=True)
+    memory_floor()
     commands=list(COMMANDS)
     selected=cells.load_rows()
     for row in selected:

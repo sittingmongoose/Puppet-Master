@@ -28,7 +28,17 @@ def snapshot(owner):
         # actual sealed worlds and their complete pinned resource catalogues.
         custody=namespace['_CUSTODY']
         maps['_CUSTODY']={key:custody[key] for key in ('worlds','contracts','frozen','frozen_sha256')}
-    value={'owner':vars(owner),'maps':maps}
+    if method.__func__.__code__.co_filename.endswith('/pm_dcw_number_custody.py') and method.__func__.__qualname__=='Owner.authenticated_original':
+        maps['_ISSUED']=namespace['_ISSUED']
+    if method.__func__.__code__.co_filename.endswith('/pm-ds15-event-contracts.py') and method.__func__.__qualname__=='DS15OriginalOwner.authenticated_original':
+        accessor=namespace['original_custody']
+        if accessor.cache_info().currsize==0:
+            raise TypeError('DS15 sealed catalogue was not composed before the read')
+        maps['original_custody()']=accessor()
+    owner_state=vars(owner)
+    if not maps and not any(type(v) in (dict,list,tuple,set,frozenset) or dataclasses.is_dataclass(v) for v in owner_state.values()):
+        raise TypeError('no authenticated store snapshot surface')
+    value={'owner':owner_state,'maps':maps}
     supported_store(value)
     encoded=pickle.dumps(value,protocol=5)
     return hashlib.sha256(encoded).hexdigest(),sorted(maps),method.__func__.__code__.co_filename,method.__func__.__code__.co_firstlineno
@@ -72,6 +82,7 @@ def main():
         if getattr(expected,'event_type',None) not in families:
             return original(dispatcher,original_ref,expected,**options)
         entry={'event_type':getattr(expected,'event_type','<unbound>'),'outcome':'exception'}
+        entry['owner_attributes']=sorted(vars(dispatcher._owner))
         before=None
         try:
             before,maps,source,line=snapshot(dispatcher._owner)

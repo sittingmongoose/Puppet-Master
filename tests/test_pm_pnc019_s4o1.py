@@ -91,11 +91,11 @@ class OracleAttribution(unittest.TestCase):
             value=-0.0
             def authenticated_original(self,ref):
                 return self.value
-        owner=Owner();owner.value=-0.0
+        owner=Owner();owner.value={'number':-0.0}
         before=retained.snapshot(owner)[0]
-        owner.value=0.0
+        owner.value={'number':0.0}
         self.assertNotEqual(retained.snapshot(owner)[0],before)
-        owner.value=10**4399
+        owner.value={'number':10**4399}
         self.assertEqual(len(retained.snapshot(owner)[0]),64)
 
     def test_unsupported_snapshot_is_never_an_unchanged_store(self):
@@ -104,6 +104,13 @@ class OracleAttribution(unittest.TestCase):
                 raise AssertionError('custom serialization must not execute')
         with self.assertRaisesRegex(TypeError,'unsupported'):
             retained.supported_store({'opaque':Opaque()})
+
+    def test_empty_owner_without_store_is_not_snapshot_credit(self):
+        class Owner:
+            def authenticated_original(self,reference):
+                return None
+        with self.assertRaisesRegex(TypeError,'no authenticated store'):
+            retained.snapshot(Owner())
 
     def test_forged_upstream_flip_cannot_hide_another_owner_refusal(self):
         schema={'properties':{'x':{'type':'string','minLength':1,'pattern':'.+'}}}
