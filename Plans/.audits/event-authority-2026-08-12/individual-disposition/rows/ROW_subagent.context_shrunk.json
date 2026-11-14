@@ -6,68 +6,68 @@
     "july248"
   ],
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to subagent.context_shrunk. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to subagent.context_shrunk. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-14.32 in admission merge 1 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-551); DL-077 admission record reports/event-authority-20260911/admission-records/subagent.context_shrunk.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261114/admission-merge-1/depth/subagent.context_shrunk.json (sha256 44ddb245277acbeb1f67744d81f13810d07466a62d3c885d81f316adb55ff9fa); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked Plans citation explicitly names the semantic authority empowered to approve the `subagent.context_shrunk` Event Authority contract; namespace and adjacent-family ownership are not evidence."
+      "status": "PASS",
+      "citation": "Plans/Prompt_Pipeline.md:6168",
+      "note": "PP-152/CV-624/SP-604 independently govern this exact 1.0.0 candidate."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2989",
-      "note": "Contracts explicitly states that runtime projection may emit `subagent.context_shrunk` when effective-context state changes need to be inspectable or replayable."
+      "citation": "Plans/Prompt_Pipeline.md:6127",
+      "note": "PP-152 adopts original owner operation/result, SP-286/CV-339 full-value and current SP-336/SP-347 group-before-receipt ordering; admission remains unavailable."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No individually versioned registry membership is cited for `subagent.context_shrunk`."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:5122-5207",
+      "note": "Registered at registry revision 2026-11-14.32 as #/families/77 (canonical row SHA-256 2c2730e2e593772d0b80bff0335d56945d40af0f67e686e1aa63d3af8c9527f5); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No closed, versioned durable payload schema is cited for `subagent.context_shrunk`; a field list without an exhaustiveness or schema-version rule is insufficient."
+      "status": "PASS",
+      "citation": "Plans/event_payloads/subagent_context_shrunk.schema.json:5; Plans/Prompt_Pipeline.md:6182",
+      "note": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2874-2885",
-      "note": "The binding family rule applies to every `subagent.*` event and requires run, thread, agent, parent, child, parent-thread, and requested/effective runtime lineage for `subagent.context_shrunk`."
+      "citation": "Plans/Prompt_Pipeline.md:6182; Plans/Prompt_Pipeline.md:6181; Plans/Prompt_Pipeline.md:6128",
+      "note": "CV-366 application key uses the original actual Server and exact UTF-8 owner operation bytes, independently per family; Project/event-id identities and all original joins remain unchanged."
     },
     "replay_idempotency": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No event-local replay ordering, duplicate handling, or idempotency rule is cited for `subagent.context_shrunk`."
+      "status": "PASS",
+      "citation": "Plans/Prompt_Pipeline.md:6181; Plans/Prompt_Pipeline.md:6190",
+      "note": "Frozen deterministic identity and complete producer semantics select immutable original result/receipt; changed semantics refuse, no owner action on replay."
     },
     "retention": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No event-local retention, compaction, tombstone, or deletion policy is cited for `subagent.context_shrunk`."
+      "status": "PASS",
+      "citation": "Plans/Prompt_Pipeline.md:6133",
+      "note": "Runtime child-context evidence retains existing RP-RUNTIME-365D and source-coupled/three-generation generic index policy."
     },
     "redaction_custody": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No event-local sensitive-field redaction and custody boundary is cited for `subagent.context_shrunk`."
+      "status": "PASS",
+      "citation": "Plans/Prompt_Pipeline.md:6184; Plans/Prompt_Pipeline.md:6185",
+      "note": "PP-152 independently selects existing secret_refs_only with rationale, family source custody, coherent original backup/restore and access/deletion/hold gates."
     },
     "transitions": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No closed legal predecessor/successor set or invalid-transition rule is cited for `subagent.context_shrunk`."
+      "status": "PASS",
+      "citation": "Plans/Prompt_Pipeline.md:6178",
+      "note": "Exact original owner completion/observation and this family producer predicates precede append; unrelated copied sibling clauses removed."
     },
     "consumers_checkpoints": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No authoritative consumer set, checkpoint key, or fail-closed advancement rule is cited for `subagent.context_shrunk`."
+      "status": "PASS",
+      "citation": "Plans/Prompt_Pipeline.md:6183; Plans/Prompt_Pipeline.md:6191; scripts/pm-small-owner-events.py:811",
+      "note": "Exact operating reader adopts SP-278 with no private cursor. The static adapter validates original Storage/source/key/generation identity, closed nine-field token, exact selected live-token projection and publication frontier before atomic rebuild; 37 checkpoint negatives preserve old publication. Native NOT_RUN."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2887",
-      "note": "The accepted family boundary keeps canonical names under `subagent.*` and classifies `chat.subagent_*` / `chat.subagent_spawned` as legacy source aliases for `subagent.context_shrunk`."
+      "citation": "Plans/Prompt_Pipeline.md:6134",
+      "note": "Exact producer/reader withdrawal, frozen original acceptance epoch/session/restore joins and governed fresh re-enable/rebuild refuse stale intent relabeling; retained original replay stays immutable."
     },
     "positive_negative_oracles": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No event-specific positive and negative persistence/replay oracle is cited for `subagent.context_shrunk`; token occurrence alone is not an oracle."
+      "status": "PASS",
+      "citation": "Plans/Prompt_Pipeline.md:6188; Plans/Prompt_Pipeline.md:6190; Plans/Prompt_Pipeline.md:6129; Plans/Prompt_Pipeline.md:6191; scripts/pm-small-owner-events.py:1040; scripts/pm-small-owner-guard-audit.py:794; scripts/pm-small-owner-events.py:764; scripts/pm-small-owner-events.py:765; scripts/pm-small-owner-events.py:178; scripts/pm-small-owner-events.py:235; scripts/pm-small-owner-events.py:488; scripts/pm-small-owner-guard-audit.py:638; scripts/pm-small-owner-events.py:76; scripts/pm-small-owner-events.py:91; scripts/pm-small-owner-events.py:64; scripts/pm-small-owner-events.py:66; scripts/pm-small-owner-events.py:200; scripts/pm-small-owner-guard-audit.py:474; scripts/pm-small-owner-events.py:759; scripts/pm-small-owner-events.py:1279",
+      "note": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed."
     }
   },
   "citations_checked": [
