@@ -1,0 +1,49 @@
+{
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "findings": [
+    {
+      "event_type": "hitl.approved",
+      "outside_148": true,
+      "outside_249": true,
+      "outcome": "label_on_existing_resolution_notification",
+      "existing_result": "approval.granted",
+      "finding": "HITL-028 explicitly uses hitl.approved for immediate scheduler queue reevaluation on approval/rejection resolution. CV-082 and the Runtime event catalog carry-through table name approval.granted as the durable HITL/approval-resolver event; HITL Tier-era compatibility retirement defines the durable approval outcome/principal/scope. The exact closed wake_reason enum includes approval_resolved at Plans/Contracts_V0.md:917 and :2420; CV-313's acceptance criterion at :20372 repeats that requirement. CV-215 establishes scheduler.pass ownership and the run.scheduler_analysis legacy alias. The spelling is a live wake notification label; it is not proved to be a separate saved-history family or a renamed wire event. Keep notifications and existing durable resolution.",
+      "citations": [
+        "Plans/human-in-the-loop.md#HITL-028",
+        "Plans/human-in-the-loop.md#Tier-era compatibility retirement",
+        "Plans/Contracts_V0.md#CV-082",
+        "Plans/Contracts_V0.md#Runtime event catalog carry-through",
+        "Plans/Contracts_V0.md#CV-215",
+        "Plans/Contracts_V0.md:917",
+        "Plans/Contracts_V0.md:2420",
+        "Plans/Contracts_V0.md#CV-313",
+        "Plans/Contracts_V0.md:20372"
+      ],
+      "negative_evidence": "Exact-token live-canon search finds no separate payload schema, persisted value, or producer requirement for this notification spelling. Storage command-compatibility prose lists hitl.approved migration-only; it does not retire the HITL-028 wake notification and does not independently decide hitl.rejected.",
+      "new_contract_authored": false,
+      "question_for_jared": null
+    },
+    {
+      "event_type": "hitl.rejected",
+      "outside_148": true,
+      "outside_249": true,
+      "outcome": "label_on_existing_resolution_notification",
+      "existing_result": "approval.denied",
+      "finding": "HITL-028 explicitly uses hitl.rejected for immediate scheduler queue reevaluation on approval/rejection resolution. CV-082 and the Runtime event catalog carry-through table name approval.denied as the durable HITL/approval-resolver event; HITL Tier-era compatibility retirement defines the durable approval outcome/principal/scope. The exact closed wake_reason enum includes approval_resolved at Plans/Contracts_V0.md:917 and :2420; CV-313's acceptance criterion at :20372 repeats that requirement. CV-215 establishes scheduler.pass ownership and the run.scheduler_analysis legacy alias. The spelling is a live wake notification label; it is not proved to be a separate saved-history family or a renamed wire event. Keep notifications and existing durable resolution.",
+      "citations": [
+        "Plans/human-in-the-loop.md#HITL-028",
+        "Plans/human-in-the-loop.md#Tier-era compatibility retirement",
+        "Plans/Contracts_V0.md#CV-082",
+        "Plans/Contracts_V0.md#Runtime event catalog carry-through",
+        "Plans/Contracts_V0.md#CV-215",
+        "Plans/Contracts_V0.md:917",
+        "Plans/Contracts_V0.md:2420",
+        "Plans/Contracts_V0.md#CV-313",
+        "Plans/Contracts_V0.md:20372"
+      ],
+      "negative_evidence": "Exact-token live-canon search finds no separate payload schema, persisted value, or producer requirement for this notification spelling. Storage command-compatibility prose lists hitl.approved migration-only; it does not retire the HITL-028 wake notification and does not independently decide hitl.rejected.",
+      "new_contract_authored": false,
+      "question_for_jared": null
+    }
+  ]
+}

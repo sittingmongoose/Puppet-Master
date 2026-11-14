@@ -1,0 +1,755 @@
+{
+  "phase": 1,
+  "oracle_code_written": false,
+  "native_execution": "NOT_RUN",
+  "standing_checks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "astra_findings": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    "10a"
+  ],
+  "shared_prerequisites": [
+    "plans/ea-numrule-20261105",
+    "plans/ea-guardtool-20261105"
+  ],
+  "families": [
+    {
+      "event_type": "continuity.actor_identified",
+      "owner_units": [
+        "OSI-1600",
+        "CV-1600",
+        "SP-1600",
+        "ATS-1280"
+      ],
+      "phase": 1,
+      "criterion_12": "PARTIAL",
+      "execution_status": "NOT_RUN",
+      "positive_plan": [
+        "own authentic original observation and exact Project envelope",
+        "non-admission refuses before all effects",
+        "same-body lost-ack returns original receipt",
+        "retained original valid after live-state change",
+        "authentic compatibility/replay-only derived rebuild",
+        "SP-337 exact external body where an owner-valid body exceeds inline threshold; otherwise assert size boundary refusal rather than fabricate a too-large valid body",
+        "shared integer/time original boundaries and authenticated original history",
+        "CAS commit, rebuild, coherent restore, held retention, withdrawal/successor"
+      ],
+      "negative_guard_plans": [
+        {
+          "guard_id": "W3I-1600-01",
+          "predicate_expansion": "each required field, root/nested closure, type, const, bound and ref separately",
+          "single_defect_plan": "remove one required field or introduce one unknown property, wrong primitive/const or boundary value",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-02",
+          "predicate_expansion": "each ID/ref exact alphabet, bound and no CR/LF",
+          "single_defect_plan": "append LF to one otherwise valid ID; verify only the no-LF/alphabet duplicate predicate fails",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-03",
+          "predicate_expansion": "each original observation principal/project/stream/provenance/redaction/time join separately",
+          "single_defect_plan": "substitute one independently resolved source fact while recomputing unrelated dependent values",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-04",
+          "predicate_expansion": "exact event type/version membership before effects",
+          "single_defect_plan": "remove just this family admission from an otherwise valid context",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-05",
+          "predicate_expansion": "Project scope and each source/envelope/key partition join separately",
+          "single_defect_plan": "use a foreign valid Project join at the target guard only",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-06",
+          "predicate_expansion": "recomputed tuple/event ID/key independently",
+          "single_defect_plan": "change only the supplied event ID or key, keeping the authenticated tuple fixed",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-07",
+          "predicate_expansion": "each CV-317 semantic body/envelope field separately",
+          "single_defect_plan": "change one caller semantic field under the original tuple; derive copies/digests consistently; expect idempotency_conflict",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-08",
+          "predicate_expansion": "current-writer appendability",
+          "single_defect_plan": "set only projector_replay_only on current write/retry",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-09",
+          "predicate_expansion": "verified authoritative catch-up",
+          "single_defect_plan": "mark only authoritative dedupe unavailable; no append",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-10",
+          "predicate_expansion": "each original eleven-field receipt and full-value commitment separately",
+          "single_defect_plan": "substitute one receipt field or original value at the isolated custody boundary",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-11",
+          "predicate_expansion": "actual accepted-operation and completed-restore source",
+          "single_defect_plan": "remove only the real source acceptance at the SP-286 gate; restored absence alone cannot reissue",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-12",
+          "predicate_expansion": "actual byte binding and every stored part size",
+          "single_defect_plan": "mismatch one ID/size/media-type/body relation; oversized derived row keeps every other predicate valid and refuses atomically",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-13",
+          "predicate_expansion": "each formatted time using its CV-317 owner profile",
+          "single_defect_plan": "use each malformed separator/zone/calendar/LF/leap/fraction form the shared helper classifies invalid; retain allowed boundary positives",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-14",
+          "predicate_expansion": "shared domain/recipe/version rule at each numerical metadata site",
+          "single_defect_plan": "use 1.0, 1e0, -0 or a wrong type only where it violates the original shared domain; large uint64 positives remain admitted without a blanket JCS cap",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-15",
+          "predicate_expansion": "same continuity identity and monotonic matching original sequence",
+          "single_defect_plan": "supply one older sequence or stale prior-value CAS while all source custody remains valid",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-16",
+          "predicate_expansion": "each nine-field token, source cursor, root, dataset, generation, publication and prefix join separately",
+          "single_defect_plan": "change one token/source relationship; no persisted redb_snapshot_id; no unrelated event/checkpoint positive",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-17",
+          "predicate_expansion": "all projection/checkpoint changes commit together",
+          "single_defect_plan": "simulate only transaction failure before commit; neither row nor checkpoint advances",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-18",
+          "predicate_expansion": "authenticated original edition dispatch and original-valid retained facts",
+          "single_defect_plan": "change only the authenticated original recipe selector or original custody; later live state changes are positive",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-19",
+          "predicate_expansion": "each permission/tombstone/redaction/hold boundary separately",
+          "single_defect_plan": "deny only one current read/access/delete eligibility condition",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-20",
+          "predicate_expansion": "writer cutoff and current/retired publication fences separately",
+          "single_defect_plan": "cross one cutoff or read one withdrawn publication; no advance/effect",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-21",
+          "predicate_expansion": "audit-only retained rebuild",
+          "single_defect_plan": "observe one forbidden external effect or event publication during otherwise valid replay",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1600-22",
+          "predicate_expansion": "actual failed/unavailable outcome is never success",
+          "single_defect_plan": "replace only reported outcome with success, using authentic failed source result",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        }
+      ],
+      "family_fact_guard": "actual original principal/kind"
+    },
+    {
+      "event_type": "continuity.provenance_recorded",
+      "owner_units": [
+        "OSI-1601",
+        "CV-1601",
+        "SP-1601",
+        "ATS-1281"
+      ],
+      "phase": 1,
+      "criterion_12": "PARTIAL",
+      "execution_status": "NOT_RUN",
+      "positive_plan": [
+        "own authentic original observation and exact Project envelope",
+        "non-admission refuses before all effects",
+        "same-body lost-ack returns original receipt",
+        "retained original valid after live-state change",
+        "authentic compatibility/replay-only derived rebuild",
+        "SP-337 exact external body where an owner-valid body exceeds inline threshold; otherwise assert size boundary refusal rather than fabricate a too-large valid body",
+        "shared integer/time original boundaries and authenticated original history",
+        "CAS commit, rebuild, coherent restore, held retention, withdrawal/successor"
+      ],
+      "negative_guard_plans": [
+        {
+          "guard_id": "W3I-1601-01",
+          "predicate_expansion": "each required field, root/nested closure, type, const, bound and ref separately",
+          "single_defect_plan": "remove one required field or introduce one unknown property, wrong primitive/const or boundary value",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-02",
+          "predicate_expansion": "each ID/ref exact alphabet, bound and no CR/LF",
+          "single_defect_plan": "append LF to one otherwise valid ID; verify only the no-LF/alphabet duplicate predicate fails",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-03",
+          "predicate_expansion": "each original observation principal/project/stream/provenance/redaction/time join separately",
+          "single_defect_plan": "substitute one independently resolved source fact while recomputing unrelated dependent values",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-04",
+          "predicate_expansion": "exact event type/version membership before effects",
+          "single_defect_plan": "remove just this family admission from an otherwise valid context",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-05",
+          "predicate_expansion": "Project scope and each source/envelope/key partition join separately",
+          "single_defect_plan": "use a foreign valid Project join at the target guard only",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-06",
+          "predicate_expansion": "recomputed tuple/event ID/key independently",
+          "single_defect_plan": "change only the supplied event ID or key, keeping the authenticated tuple fixed",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-07",
+          "predicate_expansion": "each CV-317 semantic body/envelope field separately",
+          "single_defect_plan": "change one caller semantic field under the original tuple; derive copies/digests consistently; expect idempotency_conflict",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-08",
+          "predicate_expansion": "current-writer appendability",
+          "single_defect_plan": "set only projector_replay_only on current write/retry",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-09",
+          "predicate_expansion": "verified authoritative catch-up",
+          "single_defect_plan": "mark only authoritative dedupe unavailable; no append",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-10",
+          "predicate_expansion": "each original eleven-field receipt and full-value commitment separately",
+          "single_defect_plan": "substitute one receipt field or original value at the isolated custody boundary",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-11",
+          "predicate_expansion": "actual accepted-operation and completed-restore source",
+          "single_defect_plan": "remove only the real source acceptance at the SP-286 gate; restored absence alone cannot reissue",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-12",
+          "predicate_expansion": "actual byte binding and every stored part size",
+          "single_defect_plan": "mismatch one ID/size/media-type/body relation; oversized derived row keeps every other predicate valid and refuses atomically",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-13",
+          "predicate_expansion": "each formatted time using its CV-317 owner profile",
+          "single_defect_plan": "use each malformed separator/zone/calendar/LF/leap/fraction form the shared helper classifies invalid; retain allowed boundary positives",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-14",
+          "predicate_expansion": "shared domain/recipe/version rule at each numerical metadata site",
+          "single_defect_plan": "use 1.0, 1e0, -0 or a wrong type only where it violates the original shared domain; large uint64 positives remain admitted without a blanket JCS cap",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-15",
+          "predicate_expansion": "same continuity identity and monotonic matching original sequence",
+          "single_defect_plan": "supply one older sequence or stale prior-value CAS while all source custody remains valid",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-16",
+          "predicate_expansion": "each nine-field token, source cursor, root, dataset, generation, publication and prefix join separately",
+          "single_defect_plan": "change one token/source relationship; no persisted redb_snapshot_id; no unrelated event/checkpoint positive",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-17",
+          "predicate_expansion": "all projection/checkpoint changes commit together",
+          "single_defect_plan": "simulate only transaction failure before commit; neither row nor checkpoint advances",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-18",
+          "predicate_expansion": "authenticated original edition dispatch and original-valid retained facts",
+          "single_defect_plan": "change only the authenticated original recipe selector or original custody; later live state changes are positive",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-19",
+          "predicate_expansion": "each permission/tombstone/redaction/hold boundary separately",
+          "single_defect_plan": "deny only one current read/access/delete eligibility condition",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-20",
+          "predicate_expansion": "writer cutoff and current/retired publication fences separately",
+          "single_defect_plan": "cross one cutoff or read one withdrawn publication; no advance/effect",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-21",
+          "predicate_expansion": "audit-only retained rebuild",
+          "single_defect_plan": "observe one forbidden external effect or event publication during otherwise valid replay",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1601-22",
+          "predicate_expansion": "actual failed/unavailable outcome is never success",
+          "single_defect_plan": "replace only reported outcome with success, using authentic failed source result",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        }
+      ],
+      "family_fact_guard": "source_event_id plus original output/handoff provenance, never a route"
+    },
+    {
+      "event_type": "continuity.redaction_applied",
+      "owner_units": [
+        "OSI-1602",
+        "CV-1602",
+        "SP-1602",
+        "ATS-1282"
+      ],
+      "phase": 1,
+      "criterion_12": "PARTIAL",
+      "execution_status": "NOT_RUN",
+      "positive_plan": [
+        "own authentic original observation and exact Project envelope",
+        "non-admission refuses before all effects",
+        "same-body lost-ack returns original receipt",
+        "retained original valid after live-state change",
+        "authentic compatibility/replay-only derived rebuild",
+        "SP-337 exact external body where an owner-valid body exceeds inline threshold; otherwise assert size boundary refusal rather than fabricate a too-large valid body",
+        "shared integer/time original boundaries and authenticated original history",
+        "CAS commit, rebuild, coherent restore, held retention, withdrawal/successor"
+      ],
+      "negative_guard_plans": [
+        {
+          "guard_id": "W3I-1602-01",
+          "predicate_expansion": "each required field, root/nested closure, type, const, bound and ref separately",
+          "single_defect_plan": "remove one required field or introduce one unknown property, wrong primitive/const or boundary value",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-02",
+          "predicate_expansion": "each ID/ref exact alphabet, bound and no CR/LF",
+          "single_defect_plan": "append LF to one otherwise valid ID; verify only the no-LF/alphabet duplicate predicate fails",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-03",
+          "predicate_expansion": "each original observation principal/project/stream/provenance/redaction/time join separately",
+          "single_defect_plan": "substitute one independently resolved source fact while recomputing unrelated dependent values",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-04",
+          "predicate_expansion": "exact event type/version membership before effects",
+          "single_defect_plan": "remove just this family admission from an otherwise valid context",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-05",
+          "predicate_expansion": "Project scope and each source/envelope/key partition join separately",
+          "single_defect_plan": "use a foreign valid Project join at the target guard only",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-06",
+          "predicate_expansion": "recomputed tuple/event ID/key independently",
+          "single_defect_plan": "change only the supplied event ID or key, keeping the authenticated tuple fixed",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-07",
+          "predicate_expansion": "each CV-317 semantic body/envelope field separately",
+          "single_defect_plan": "change one caller semantic field under the original tuple; derive copies/digests consistently; expect idempotency_conflict",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-08",
+          "predicate_expansion": "current-writer appendability",
+          "single_defect_plan": "set only projector_replay_only on current write/retry",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-09",
+          "predicate_expansion": "verified authoritative catch-up",
+          "single_defect_plan": "mark only authoritative dedupe unavailable; no append",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-10",
+          "predicate_expansion": "each original eleven-field receipt and full-value commitment separately",
+          "single_defect_plan": "substitute one receipt field or original value at the isolated custody boundary",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-11",
+          "predicate_expansion": "actual accepted-operation and completed-restore source",
+          "single_defect_plan": "remove only the real source acceptance at the SP-286 gate; restored absence alone cannot reissue",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-12",
+          "predicate_expansion": "actual byte binding and every stored part size",
+          "single_defect_plan": "mismatch one ID/size/media-type/body relation; oversized derived row keeps every other predicate valid and refuses atomically",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-13",
+          "predicate_expansion": "each formatted time using its CV-317 owner profile",
+          "single_defect_plan": "use each malformed separator/zone/calendar/LF/leap/fraction form the shared helper classifies invalid; retain allowed boundary positives",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-14",
+          "predicate_expansion": "shared domain/recipe/version rule at each numerical metadata site",
+          "single_defect_plan": "use 1.0, 1e0, -0 or a wrong type only where it violates the original shared domain; large uint64 positives remain admitted without a blanket JCS cap",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-15",
+          "predicate_expansion": "same continuity identity and monotonic matching original sequence",
+          "single_defect_plan": "supply one older sequence or stale prior-value CAS while all source custody remains valid",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-16",
+          "predicate_expansion": "each nine-field token, source cursor, root, dataset, generation, publication and prefix join separately",
+          "single_defect_plan": "change one token/source relationship; no persisted redb_snapshot_id; no unrelated event/checkpoint positive",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-17",
+          "predicate_expansion": "all projection/checkpoint changes commit together",
+          "single_defect_plan": "simulate only transaction failure before commit; neither row nor checkpoint advances",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-18",
+          "predicate_expansion": "authenticated original edition dispatch and original-valid retained facts",
+          "single_defect_plan": "change only the authenticated original recipe selector or original custody; later live state changes are positive",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-19",
+          "predicate_expansion": "each permission/tombstone/redaction/hold boundary separately",
+          "single_defect_plan": "deny only one current read/access/delete eligibility condition",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-20",
+          "predicate_expansion": "writer cutoff and current/retired publication fences separately",
+          "single_defect_plan": "cross one cutoff or read one withdrawn publication; no advance/effect",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-21",
+          "predicate_expansion": "audit-only retained rebuild",
+          "single_defect_plan": "observe one forbidden external effect or event publication during otherwise valid replay",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1602-22",
+          "predicate_expansion": "actual failed/unavailable outcome is never success",
+          "single_defect_plan": "replace only reported outcome with success, using authentic failed source result",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        }
+      ],
+      "family_fact_guard": "actual applied original profile/decision, never request-only"
+    },
+    {
+      "event_type": "continuity.replay_checkpointed",
+      "owner_units": [
+        "OSI-1603",
+        "CV-1603",
+        "SP-1603",
+        "ATS-1283"
+      ],
+      "phase": 1,
+      "criterion_12": "PARTIAL",
+      "execution_status": "NOT_RUN",
+      "positive_plan": [
+        "own authentic original observation and exact Project envelope",
+        "non-admission refuses before all effects",
+        "same-body lost-ack returns original receipt",
+        "retained original valid after live-state change",
+        "authentic compatibility/replay-only derived rebuild",
+        "SP-337 exact external body where an owner-valid body exceeds inline threshold; otherwise assert size boundary refusal rather than fabricate a too-large valid body",
+        "shared integer/time original boundaries and authenticated original history",
+        "CAS commit, rebuild, coherent restore, held retention, withdrawal/successor"
+      ],
+      "negative_guard_plans": [
+        {
+          "guard_id": "W3I-1603-01",
+          "predicate_expansion": "each required field, root/nested closure, type, const, bound and ref separately",
+          "single_defect_plan": "remove one required field or introduce one unknown property, wrong primitive/const or boundary value",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-02",
+          "predicate_expansion": "each ID/ref exact alphabet, bound and no CR/LF",
+          "single_defect_plan": "append LF to one otherwise valid ID; verify only the no-LF/alphabet duplicate predicate fails",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-03",
+          "predicate_expansion": "each original observation principal/project/stream/provenance/redaction/time join separately",
+          "single_defect_plan": "substitute one independently resolved source fact while recomputing unrelated dependent values",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-04",
+          "predicate_expansion": "exact event type/version membership before effects",
+          "single_defect_plan": "remove just this family admission from an otherwise valid context",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-05",
+          "predicate_expansion": "Project scope and each source/envelope/key partition join separately",
+          "single_defect_plan": "use a foreign valid Project join at the target guard only",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-06",
+          "predicate_expansion": "recomputed tuple/event ID/key independently",
+          "single_defect_plan": "change only the supplied event ID or key, keeping the authenticated tuple fixed",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-07",
+          "predicate_expansion": "each CV-317 semantic body/envelope field separately",
+          "single_defect_plan": "change one caller semantic field under the original tuple; derive copies/digests consistently; expect idempotency_conflict",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-08",
+          "predicate_expansion": "current-writer appendability",
+          "single_defect_plan": "set only projector_replay_only on current write/retry",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-09",
+          "predicate_expansion": "verified authoritative catch-up",
+          "single_defect_plan": "mark only authoritative dedupe unavailable; no append",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-10",
+          "predicate_expansion": "each original eleven-field receipt and full-value commitment separately",
+          "single_defect_plan": "substitute one receipt field or original value at the isolated custody boundary",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-11",
+          "predicate_expansion": "actual accepted-operation and completed-restore source",
+          "single_defect_plan": "remove only the real source acceptance at the SP-286 gate; restored absence alone cannot reissue",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-12",
+          "predicate_expansion": "actual byte binding and every stored part size",
+          "single_defect_plan": "mismatch one ID/size/media-type/body relation; oversized derived row keeps every other predicate valid and refuses atomically",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-13",
+          "predicate_expansion": "each formatted time using its CV-317 owner profile",
+          "single_defect_plan": "use each malformed separator/zone/calendar/LF/leap/fraction form the shared helper classifies invalid; retain allowed boundary positives",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-14",
+          "predicate_expansion": "shared domain/recipe/version rule at each numerical metadata site",
+          "single_defect_plan": "use 1.0, 1e0, -0 or a wrong type only where it violates the original shared domain; large uint64 positives remain admitted without a blanket JCS cap",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-15",
+          "predicate_expansion": "same continuity identity and monotonic matching original sequence",
+          "single_defect_plan": "supply one older sequence or stale prior-value CAS while all source custody remains valid",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-16",
+          "predicate_expansion": "each nine-field token, source cursor, root, dataset, generation, publication and prefix join separately",
+          "single_defect_plan": "change one token/source relationship; no persisted redb_snapshot_id; no unrelated event/checkpoint positive",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-17",
+          "predicate_expansion": "all projection/checkpoint changes commit together",
+          "single_defect_plan": "simulate only transaction failure before commit; neither row nor checkpoint advances",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-18",
+          "predicate_expansion": "authenticated original edition dispatch and original-valid retained facts",
+          "single_defect_plan": "change only the authenticated original recipe selector or original custody; later live state changes are positive",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-19",
+          "predicate_expansion": "each permission/tombstone/redaction/hold boundary separately",
+          "single_defect_plan": "deny only one current read/access/delete eligibility condition",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-20",
+          "predicate_expansion": "writer cutoff and current/retired publication fences separately",
+          "single_defect_plan": "cross one cutoff or read one withdrawn publication; no advance/effect",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-21",
+          "predicate_expansion": "audit-only retained rebuild",
+          "single_defect_plan": "observe one forbidden external effect or event publication during otherwise valid replay",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        },
+        {
+          "guard_id": "W3I-1603-22",
+          "predicate_expansion": "actual failed/unavailable outcome is never success",
+          "single_defect_plan": "replace only reported outcome with success, using authentic failed source result",
+          "exactly_one_defective_input_invariant": true,
+          "guard_isolation": "phase 2 shared tool; enumerate every enforcement site for this exact field/predicate; no cross-predicate removal set"
+        }
+      ],
+      "family_fact_guard": "original upstream source checkpoint and captured complete prefix, never a circular downstream checkpoint"
+    }
+  ]
+}

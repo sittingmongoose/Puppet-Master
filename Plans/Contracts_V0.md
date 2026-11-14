@@ -25476,6 +25476,223 @@ Repairs row `sfk-ca66bb490466433a5eb1986b`.
 - `route_object` fields are `route_id`, `surface_id`, `route_kind`, `target_ref`, `owner_doc_ref`, `permission_snapshot_id?`, `requested_model_snapshot_id?`, `effective_model_snapshot_id?`, `created_at_utc`, and `schema_version`.
 - `route_kind` values are `page`, `panel`, `tab`, `modal`, `toast`, `external_uri`, `artifact`, and `command`.
 
+
+### CV-1600 — `continuity.actor_identified` closed payload and identity
+
+**NEWLY AUTHORED owner contract** under DL-450. Exact payload schema: `Plans/continuity_event_contracts.schema.json#/$defs/actor_identified`; `schema_id=pm.continuity.actor_identified.payload.v1`, `schema_version=1.0.0`. The root is closed. Every required ID/ref/enum-like token is a bounded ASCII string without CR/LF; `actor_kind`, `redaction_profile_id`, and `redaction_decision` are the original owner tokens, not a new local enum or policy. References are opaque owner-resolved identities; URI/path text is not a substitute. The payload carries the whole original continuity snapshot, adding `stream_id` and `fact_ref`; `replay_checkpoint_ref` is required for replay position and otherwise optional (omitted, never null). `created_at_utc` is the original source event occurrence time, not retry time. Original source evidence must meet OSI-1600, including `actor_ref and actor_kind equal the independently resolved original source principal and principal kind`.
+
+Adopt `Contracts_V0.md#EventRecord` / CV-317 unchanged at writer 2.0.0; no owner-local envelope. This Project-bound orchestration edition requires `scope_kind=project` and the exact original Project. `thread_id`, `run_id`, `node_id`, `attempt_id`, requested/effective account refs are copied from the authenticated original source including required-present nulls; `actor_ref` names the actual continuity observer, while payload `actor_ref` identifies the source actor. `causation_event_id` and `parent_event_id` equal `source_event_id`; `correlation_id` equals `continuity_id`, `occurred_at_utc=created_at_utc`; `producer_sequence_id=null`. An application edition is not authored; no fake Project or nulling of the original Project shape is allowed.
+
+For this exact family, identity bytes are RFC 8785 canonical JSON of the ordered string array [event_type, project_id, continuity_id, source_event_id, fact_ref]; `event_id=evt_continuity_` followed by lowercase SHA-256 of those bytes; `idempotency_key=continuity@1:` followed by the same digest. Recompute identity from the authenticated tuple, never accept a supplied digest. The key selects CV-317 lifetime dedupe in `(scope_partition,event_type,idempotency_key)` with `scope_partition=project~base64url_no_pad(UTF8(project_id))`. All current writes and retries select `dedupe_by_idempotency_key`. Compare the complete CV-317 producer-semantic digest (its exact named fields); Storage-assigned metadata is excluded. Same tuple and body return the original full result, differing semantic body conflicts. Current writer/retry `projector_replay_only` is refused as `replay_only_not_appendable`; retained originals use their authenticated original edition/recipe. The shared number and timestamp rule from `plans/ea-numrule-20261105` is adopted in phase 2; this lane implements no encoding, timestamp parser, or blanket numeric cap.
+
+```yaml
+plan_unit_id: CV-1600
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: NEWLY AUTHORED continuity.actor_identified@1.0.0 has its own closed actor_identified schema and
+  exact original-source joins. Project scope uses CV-317, string-tuple RFC 8785/SHA-256 identity and lifetime scoped
+  dedupe; caller semantic fields alone define retry equality. Current replay-only append is refused; history selects
+  authenticated original recipes.
+gui_related: false
+gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
+depends_on:
+- CV-317
+- CV-282
+unblocks: []
+acceptance_criteria:
+- Payload root and every nested authored value are closed.
+- Identity, scope, source, and semantic-body joins are checked independently.
+- Every schema reference resolves eagerly before accepting any branch.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-1280
+risk_class: continuity_source_custody_drift
+reasoning_tier: high
+context_scope: event_authority_w3i_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/continuity_event_contracts.schema.json
+node_compile_hint:
+  mode: prepared_without_admission
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-2 item 9.a A; answer i approve all of it; DL-450 on plans/ea-cards2-answers-20261105
+- reports/event-authority-20261105/W3I.md#cv-1600
+preserved_exact_tokens:
+- continuity.actor_identified
+- pm.continuity.actor_identified.payload.v1
+- 'continuity@1:'
+- dedupe_by_idempotency_key
+- replay_only_not_appendable
+negative_constraints:
+- No event-family admission, native execution, registry append, or PNC-019 clearance.
+- No runtime_continuity alias or receipt reconstructed from current state.
+```
+
+### CV-1601 — `continuity.provenance_recorded` closed payload and identity
+
+**NEWLY AUTHORED owner contract** under DL-450. Exact payload schema: `Plans/continuity_event_contracts.schema.json#/$defs/provenance_recorded`; `schema_id=pm.continuity.provenance_recorded.payload.v1`, `schema_version=1.0.0`. The root is closed. Every required ID/ref/enum-like token is a bounded ASCII string without CR/LF; `actor_kind`, `redaction_profile_id`, and `redaction_decision` are the original owner tokens, not a new local enum or policy. References are opaque owner-resolved identities; URI/path text is not a substitute. The payload carries the whole original continuity snapshot, adding `stream_id` and `fact_ref`; `replay_checkpoint_ref` is required for replay position and otherwise optional (omitted, never null). `created_at_utc` is the original source event occurrence time, not retry time. Original source evidence must meet OSI-1601, including `provenance_ref resolves the exact retained output or handoff version that names source_event_id; a route target is not provenance evidence`.
+
+Adopt `Contracts_V0.md#EventRecord` / CV-317 unchanged at writer 2.0.0; no owner-local envelope. This Project-bound orchestration edition requires `scope_kind=project` and the exact original Project. `thread_id`, `run_id`, `node_id`, `attempt_id`, requested/effective account refs are copied from the authenticated original source including required-present nulls; `actor_ref` names the actual continuity observer, while payload `actor_ref` identifies the source actor. `causation_event_id` and `parent_event_id` equal `source_event_id`; `correlation_id` equals `continuity_id`, `occurred_at_utc=created_at_utc`; `producer_sequence_id=null`. An application edition is not authored; no fake Project or nulling of the original Project shape is allowed.
+
+For this exact family, identity bytes are RFC 8785 canonical JSON of the ordered string array [event_type, project_id, continuity_id, source_event_id, fact_ref]; `event_id=evt_continuity_` followed by lowercase SHA-256 of those bytes; `idempotency_key=continuity@1:` followed by the same digest. Recompute identity from the authenticated tuple, never accept a supplied digest. The key selects CV-317 lifetime dedupe in `(scope_partition,event_type,idempotency_key)` with `scope_partition=project~base64url_no_pad(UTF8(project_id))`. All current writes and retries select `dedupe_by_idempotency_key`. Compare the complete CV-317 producer-semantic digest (its exact named fields); Storage-assigned metadata is excluded. Same tuple and body return the original full result, differing semantic body conflicts. Current writer/retry `projector_replay_only` is refused as `replay_only_not_appendable`; retained originals use their authenticated original edition/recipe. The shared number and timestamp rule from `plans/ea-numrule-20261105` is adopted in phase 2; this lane implements no encoding, timestamp parser, or blanket numeric cap.
+
+```yaml
+plan_unit_id: CV-1601
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: NEWLY AUTHORED continuity.provenance_recorded@1.0.0 has its own closed provenance_recorded schema
+  and exact original-source joins. Project scope uses CV-317, string-tuple RFC 8785/SHA-256 identity and lifetime
+  scoped dedupe; caller semantic fields alone define retry equality. Current replay-only append is refused; history
+  selects authenticated original recipes.
+gui_related: false
+gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
+depends_on:
+- CV-317
+- CV-282
+unblocks: []
+acceptance_criteria:
+- Payload root and every nested authored value are closed.
+- Identity, scope, source, and semantic-body joins are checked independently.
+- Every schema reference resolves eagerly before accepting any branch.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-1281
+risk_class: continuity_source_custody_drift
+reasoning_tier: high
+context_scope: event_authority_w3i_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/continuity_event_contracts.schema.json
+node_compile_hint:
+  mode: prepared_without_admission
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-2 item 9.a A; answer i approve all of it; DL-450 on plans/ea-cards2-answers-20261105
+- reports/event-authority-20261105/W3I.md#cv-1601
+preserved_exact_tokens:
+- continuity.provenance_recorded
+- pm.continuity.provenance_recorded.payload.v1
+- 'continuity@1:'
+- dedupe_by_idempotency_key
+- replay_only_not_appendable
+negative_constraints:
+- No event-family admission, native execution, registry append, or PNC-019 clearance.
+- No runtime_continuity alias or receipt reconstructed from current state.
+```
+
+### CV-1602 — `continuity.redaction_applied` closed payload and identity
+
+**NEWLY AUTHORED owner contract** under DL-450. Exact payload schema: `Plans/continuity_event_contracts.schema.json#/$defs/redaction_applied`; `schema_id=pm.continuity.redaction_applied.payload.v1`, `schema_version=1.0.0`. The root is closed. Every required ID/ref/enum-like token is a bounded ASCII string without CR/LF; `actor_kind`, `redaction_profile_id`, and `redaction_decision` are the original owner tokens, not a new local enum or policy. References are opaque owner-resolved identities; URI/path text is not a substitute. The payload carries the whole original continuity snapshot, adding `stream_id` and `fact_ref`; `replay_checkpoint_ref` is required for replay position and otherwise optional (omitted, never null). `created_at_utc` is the original source event occurrence time, not retry time. Original source evidence must meet OSI-1602, including `redaction_profile_id and redaction_decision equal the actual original redaction owner result for provenance_ref, including its transform/version; a requested transform is not an applied result`.
+
+Adopt `Contracts_V0.md#EventRecord` / CV-317 unchanged at writer 2.0.0; no owner-local envelope. This Project-bound orchestration edition requires `scope_kind=project` and the exact original Project. `thread_id`, `run_id`, `node_id`, `attempt_id`, requested/effective account refs are copied from the authenticated original source including required-present nulls; `actor_ref` names the actual continuity observer, while payload `actor_ref` identifies the source actor. `causation_event_id` and `parent_event_id` equal `source_event_id`; `correlation_id` equals `continuity_id`, `occurred_at_utc=created_at_utc`; `producer_sequence_id=null`. An application edition is not authored; no fake Project or nulling of the original Project shape is allowed.
+
+For this exact family, identity bytes are RFC 8785 canonical JSON of the ordered string array [event_type, project_id, continuity_id, source_event_id, fact_ref]; `event_id=evt_continuity_` followed by lowercase SHA-256 of those bytes; `idempotency_key=continuity@1:` followed by the same digest. Recompute identity from the authenticated tuple, never accept a supplied digest. The key selects CV-317 lifetime dedupe in `(scope_partition,event_type,idempotency_key)` with `scope_partition=project~base64url_no_pad(UTF8(project_id))`. All current writes and retries select `dedupe_by_idempotency_key`. Compare the complete CV-317 producer-semantic digest (its exact named fields); Storage-assigned metadata is excluded. Same tuple and body return the original full result, differing semantic body conflicts. Current writer/retry `projector_replay_only` is refused as `replay_only_not_appendable`; retained originals use their authenticated original edition/recipe. The shared number and timestamp rule from `plans/ea-numrule-20261105` is adopted in phase 2; this lane implements no encoding, timestamp parser, or blanket numeric cap.
+
+```yaml
+plan_unit_id: CV-1602
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: NEWLY AUTHORED continuity.redaction_applied@1.0.0 has its own closed redaction_applied schema and
+  exact original-source joins. Project scope uses CV-317, string-tuple RFC 8785/SHA-256 identity and lifetime scoped
+  dedupe; caller semantic fields alone define retry equality. Current replay-only append is refused; history selects
+  authenticated original recipes.
+gui_related: false
+gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
+depends_on:
+- CV-317
+- CV-282
+unblocks: []
+acceptance_criteria:
+- Payload root and every nested authored value are closed.
+- Identity, scope, source, and semantic-body joins are checked independently.
+- Every schema reference resolves eagerly before accepting any branch.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-1282
+risk_class: continuity_source_custody_drift
+reasoning_tier: high
+context_scope: event_authority_w3i_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/continuity_event_contracts.schema.json
+node_compile_hint:
+  mode: prepared_without_admission
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-2 item 9.a A; answer i approve all of it; DL-450 on plans/ea-cards2-answers-20261105
+- reports/event-authority-20261105/W3I.md#cv-1602
+preserved_exact_tokens:
+- continuity.redaction_applied
+- pm.continuity.redaction_applied.payload.v1
+- 'continuity@1:'
+- dedupe_by_idempotency_key
+- replay_only_not_appendable
+negative_constraints:
+- No event-family admission, native execution, registry append, or PNC-019 clearance.
+- No runtime_continuity alias or receipt reconstructed from current state.
+```
+
+### CV-1603 — `continuity.replay_checkpointed` closed payload and identity
+
+**NEWLY AUTHORED owner contract** under DL-450. Exact payload schema: `Plans/continuity_event_contracts.schema.json#/$defs/replay_checkpointed`; `schema_id=pm.continuity.replay_checkpointed.payload.v1`, `schema_version=1.0.0`. The root is closed. Every required ID/ref/enum-like token is a bounded ASCII string without CR/LF; `actor_kind`, `redaction_profile_id`, and `redaction_decision` are the original owner tokens, not a new local enum or policy. References are opaque owner-resolved identities; URI/path text is not a substitute. The payload carries the whole original continuity snapshot, adding `stream_id` and `fact_ref`; `replay_checkpoint_ref` is required for replay position and otherwise optional (omitted, never null). `created_at_utc` is the original source event occurrence time, not retry time. Original source evidence must meet OSI-1603, including `replay_checkpoint_ref resolves the original source stream checkpoint, whose complete SP-278 durable token and examined prefix include source_event_id; it is an upstream checkpoint, never this event or its downstream continuity checkpoint`.
+
+Adopt `Contracts_V0.md#EventRecord` / CV-317 unchanged at writer 2.0.0; no owner-local envelope. This Project-bound orchestration edition requires `scope_kind=project` and the exact original Project. `thread_id`, `run_id`, `node_id`, `attempt_id`, requested/effective account refs are copied from the authenticated original source including required-present nulls; `actor_ref` names the actual continuity observer, while payload `actor_ref` identifies the source actor. `causation_event_id` and `parent_event_id` equal `source_event_id`; `correlation_id` equals `continuity_id`, `occurred_at_utc=created_at_utc`; `producer_sequence_id=null`. An application edition is not authored; no fake Project or nulling of the original Project shape is allowed.
+
+For this exact family, identity bytes are RFC 8785 canonical JSON of the ordered string array [event_type, project_id, continuity_id, source_event_id, fact_ref]; `event_id=evt_continuity_` followed by lowercase SHA-256 of those bytes; `idempotency_key=continuity@1:` followed by the same digest. Recompute identity from the authenticated tuple, never accept a supplied digest. The key selects CV-317 lifetime dedupe in `(scope_partition,event_type,idempotency_key)` with `scope_partition=project~base64url_no_pad(UTF8(project_id))`. All current writes and retries select `dedupe_by_idempotency_key`. Compare the complete CV-317 producer-semantic digest (its exact named fields); Storage-assigned metadata is excluded. Same tuple and body return the original full result, differing semantic body conflicts. Current writer/retry `projector_replay_only` is refused as `replay_only_not_appendable`; retained originals use their authenticated original edition/recipe. The shared number and timestamp rule from `plans/ea-numrule-20261105` is adopted in phase 2; this lane implements no encoding, timestamp parser, or blanket numeric cap.
+
+```yaml
+plan_unit_id: CV-1603
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: NEWLY AUTHORED continuity.replay_checkpointed@1.0.0 has its own closed replay_checkpointed schema
+  and exact original-source joins. Project scope uses CV-317, string-tuple RFC 8785/SHA-256 identity and lifetime
+  scoped dedupe; caller semantic fields alone define retry equality. Current replay-only append is refused; history
+  selects authenticated original recipes.
+gui_related: false
+gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
+depends_on:
+- CV-317
+- CV-282
+unblocks: []
+acceptance_criteria:
+- Payload root and every nested authored value are closed.
+- Identity, scope, source, and semantic-body joins are checked independently.
+- Every schema reference resolves eagerly before accepting any branch.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-1283
+risk_class: continuity_source_custody_drift
+reasoning_tier: high
+context_scope: event_authority_w3i_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/continuity_event_contracts.schema.json
+node_compile_hint:
+  mode: prepared_without_admission
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-2 item 9.a A; answer i approve all of it; DL-450 on plans/ea-cards2-answers-20261105
+- reports/event-authority-20261105/W3I.md#cv-1603
+preserved_exact_tokens:
+- continuity.replay_checkpointed
+- pm.continuity.replay_checkpointed.payload.v1
+- 'continuity@1:'
+- dedupe_by_idempotency_key
+- replay_only_not_appendable
+negative_constraints:
+- No event-family admission, native execution, registry append, or PNC-019 clearance.
+- No runtime_continuity alias or receipt reconstructed from current state.
+```
+
 ### Governance Runtime Records And Projection Trust
 
 Repairs FABLE row `sfk-382a8aaadd071809899261b5`.
