@@ -53,6 +53,9 @@ REGISTRY_SCHEMA = "Plans/event_family_registry.schema.json"
 DECISION_LOG = "Plans/Decision_Log.md"
 CURRENTNESS = "scripts/pm_pnc019_currentness.py"
 TEST_PINS = ("tests/test_pm_testing_session_events.py", "tests/test_pm_github_project_integration.py")
+# The EVT2 legacy golden oracle names the registry revision it recomputes against; readiness fails
+# event_legacy_fixture_root_mismatch (and its self-test) when the label trails the live registry.
+LEGACY_GOLDEN = "tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json"
 AUDIT = "Plans/.audits/event-authority-2026-08-12"
 FROZEN = AUDIT + "/independent-validator/pm_event_authority_independent_validator.py"
 LEDGER = AUDIT + "/individual-disposition/LEDGER.jsonl"
@@ -1122,6 +1125,12 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
             raise SystemExit("approved checkpoint pin not found exactly once in " + rel + " (run the census generalization first)")
         write_text(rel, text)
         touched.append(rel)
+    golden = read_raw(LEGACY_GOLDEN)
+    label = f'\n  "registry_revision": "{before["revision"]}",\n'
+    if golden.count(label) != 1:
+        raise SystemExit("legacy golden fixture does not name the registry revision before this commit exactly once")
+    write_text(LEGACY_GOLDEN, golden.replace(label, f'\n  "registry_revision": "{after["revision"]}",\n'))
+    touched.append(LEGACY_GOLDEN)
     state["results"].append({"event_type": et, "dl": dl, "registry_after": after, "record": ctx["record_path"],
                              "depth": depth_rel, "row_sha256": ctx["row_sha256"],
                              "record_problems": state.pop("record_problems")})
