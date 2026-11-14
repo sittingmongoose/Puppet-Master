@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event-authority-w3g/notebook_checkpoint_failed/1.0.0/schema.json",
+  "title": "notebook.checkpoint_failed prepared payload selectors; no admission",
+  "$defs": {
+    "ProjectPayloadV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "owner_operation_id",
+        "scope",
+        "source_record_ref",
+        "source_record_sha256",
+        "source_schema_id",
+        "source_schema_version",
+        "source_receipt_ref",
+        "notebook_id",
+        "thread_id",
+        "computer_ref",
+        "notebook_scope_kind",
+        "checkpoint_id",
+        "failure_reason",
+        "failure_result_ref",
+        "required_capture"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.notebook.checkpoint_failed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "notebook.checkpoint_failed"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "project"
+                }
+              }
+            }
+          ]
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_record_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_schema_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_schema_version": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "notebook_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "computer_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "notebook_scope_kind": {
+          "type": "string",
+          "enum": [
+            "thread",
+            "worker_lineage",
+            "coordinator_run",
+            "participant",
+            "shared_slice"
+          ]
+        },
+        "checkpoint_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "failure_reason": {
+          "$ref": "https://puppet-master.local/schemas/working_notebook_contracts.schema.json#/$defs/typed_error/properties/code"
+        },
+        "failure_result_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "required_capture": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ApplicationPayloadV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "owner_operation_id",
+        "scope",
+        "source_record_ref",
+        "source_record_sha256",
+        "source_schema_id",
+        "source_schema_version",
+        "source_receipt_ref",
+        "notebook_id",
+        "thread_id",
+        "computer_ref",
+        "notebook_scope_kind",
+        "checkpoint_id",
+        "failure_reason",
+        "failure_result_ref",
+        "required_capture"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.notebook.checkpoint_failed.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "notebook.checkpoint_failed"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_record_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_schema_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_schema_version": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "notebook_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "computer_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "notebook_scope_kind": {
+          "type": "string",
+          "enum": [
+            "thread",
+            "worker_lineage",
+            "coordinator_run",
+            "participant",
+            "shared_slice"
+          ]
+        },
+        "checkpoint_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "failure_reason": {
+          "$ref": "https://puppet-master.local/schemas/working_notebook_contracts.schema.json#/$defs/typed_error/properties/code"
+        },
+        "failure_result_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "required_capture": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/ProjectPayloadV1"
+    },
+    {
+      "$ref": "#/$defs/ApplicationPayloadV1"
+    }
+  ]
+}
