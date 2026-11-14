@@ -286,6 +286,10 @@
   {
    "event_type": "named_plan.restored",
    "outcome": "registered"
+  },
+  {
+   "event_type": "notebook.checkpoint_committed",
+   "outcome": "registered"
   }
  ]
 }
