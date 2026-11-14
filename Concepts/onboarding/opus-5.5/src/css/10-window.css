@@ -13,9 +13,9 @@
 html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 /* the app beneath the window is inert and dimmed (its demo clock is paused too): its own loops (working pulses, status
    dots) hold still until the window closes, so every frame's work is the window's own. Each element of the app that
-   runs a CSS animation is marked data-o55-loop by js/14-window-hold.js in the click's own task, so the loops are held
-   from the next frame (the dim's), not in the mount's long frame, and let go a frame after the close's wake: a hold or
-   resume taken in a long frame is taken by that frame's stale time, and every held loop jumped by the frame's length
+   runs a CSS animation is marked data-o55-loop by js/14-window-hold.js in the frame that draws the click's dim, so the
+   loops are held there, not in the mount's long frame, and let go a frame after the close's wake: a hold or resume
+   taken in a long frame is taken by that frame's stale time, and every held loop jumped by the frame's length
    (FO-181). Keyed on the mark alone, so only the marked elements restyle; the rule on every element of the app it
    replaces (`html[data-o55-open] body > [data-o55-held] *`) cost about 240 ms of style at each open and close.
    !important and the two :not(#...) (an id's weight each) because some loops are set inline or by an !important
