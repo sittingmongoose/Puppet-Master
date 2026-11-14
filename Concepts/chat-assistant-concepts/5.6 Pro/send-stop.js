@@ -222,9 +222,17 @@
       var t = o.a.effect.getTiming(), d = +t.duration, l = +t.delay || 0, rate = o.a.playbackRate || 1, n;
       if (!(d > 0) || !(o.d > 0)) return;
       /* the backlight at the glyph's point (in its own timing, which CSS makes the glyph's); without a glyph's loop,
-         each at its own */
-      if (at && o !== lead) n = at.n < at.l ? (at.l > 0 ? at.n * l / at.l : at.n) : l + (at.n - at.l) * d / at.d;
-      else { var p = pointNow(o, w); if (!p) return; n = p.n; }
+         each at its own. A backlight still waiting out its delay behind a glyph that breathes (a loop made anew: NieR
+         Mode off, its box back under the onboarding window) is not moved into the loop, which would step it: it stays
+         at rest, which is its loop's first frame, and its delay ends at the glyph's next loop end, so it starts with
+         the glyph from there. A breathing backlight goes to the glyph's point in the loop by the nearest way and keeps
+         its own count of loops run (only the point in the loop shows). */
+      var own = at && o !== lead ? pointNow(o, w) : null;
+      if (at && o !== lead && own && own.n < l && at.n >= at.l) { var q = (at.n - at.l) / at.d, f = q - Math.floor(q); n = l - (f > 0 ? (1 - f) * d : 0); }
+      else if (at && o !== lead) {
+        n = at.n < at.l ? (at.l > 0 ? at.n * l / at.l : at.n) : l + (at.n - at.l) * d / at.d;
+        if (own && own.n >= l && n >= l) { var x = (n - own.n) % d; if (x > d / 2) x -= d; else if (x < -d / 2) x += d; n = own.n + x; }
+      } else { var p = pointNow(o, w); if (!p) return; n = p.n; }
       if (o.held) o.a.currentTime = n; else o.a.startTime = w - n / rate;
     });
   }

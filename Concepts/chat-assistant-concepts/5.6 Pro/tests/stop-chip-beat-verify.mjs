@@ -468,6 +468,21 @@ const CASES = {
 		const step = Math.max(0, ...W.jumps.filter((j) => j.i >= i1 && j.layer === 'bl').map((j) => { const x = (((j.after - j.before) % 1) + 1) % 1; return Math.min(x, 1 - x); }));
 		smooth(W, i1);
 		out.push(`NieR Mode off: a new backlight loop ${back.toFixed(4)} of a loop from the glyph; the next change put it with the glyph, a step of ${step.toFixed(4)} of a loop`);
+		// NieR Mode off and a change while the new backlight still waits out its delay (at rest, its loop's first
+		// frame): it is not moved into the loop; it starts with the glyph's next loop, and stays with it
+		W.until(() => W.attrs.get('data-flow') === 'waiting', 3000);
+		W.set('nier', true); W.run(100); W.set('nier', false); W.run(300);
+		assert.equal(W.glow().place(), null, 'the new backlight is still in its delay');
+		const i2 = W.frames.length;
+		W.api.token('one'); W.frame();
+		assert.equal(W.glow().place(), null, 'the change left the new backlight at rest');
+		W.until(() => W.glow().place() != null, 4000);
+		const first = W.glow().place(), g1 = W.glyph().place(), lag = Math.min(((g1 % 1) + 1) % 1, 1 - (((g1 % 1) + 1) % 1));
+		assert.ok(first < FRAME / W.glow().t.duration + 1e-9 && lag < FRAME / W.glyph().t.duration + 1e-9, `it starts with the glyph's loop: backlight ${first}, glyph ${g1}`);
+		W.run(300);
+		assert.ok(apart(W) < 1e-6, `then with the glyph: ${apart(W).toFixed(4)} of a loop apart`);
+		smooth(W, i2); smooth(W, i2, 'b');
+		out.push(`NieR Mode off, a change inside the new loop's delay: at rest, then started with the glyph's loop ${apart(W).toFixed(6)} apart`);
 		return out.join('; ');
 	},
 	'a Stop chip missing for a moment (the quiet timer and the observer stop) is watched again from the next render': () => {
