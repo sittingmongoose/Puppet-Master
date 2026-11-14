@@ -103,6 +103,8 @@ def original_row_guards(ev,p,old,g):
   g.require('row/child_successor',b['next_status']==facts['child']['state_after'])
   g.require('row/child_legal_edge',[b['previous_status'],b['next_status']] in facts['original_child_contract']['allowed_edges'])
  elif f=='goal.degraded':
+  for flag in ('required_check_affected','mutation_affected','exception_required','risk_accepted'):
+   g.require('row/degraded_boolean/'+flag,type(facts[flag]) is bool)
   g.require('row/degraded_edge',pre in {'created','scheduled','running','paused','verifying','repairing','degraded'} and post=='degraded')
   g.require('row/degraded_tier',facts['tier']!='strong' or not facts['required_check_affected'] and b['degraded_reason']!='verifier_unavailable')
   g.require('row/degraded_standard',facts['tier']!='standard' or not facts['mutation_affected'] and not facts['required_check_affected'])

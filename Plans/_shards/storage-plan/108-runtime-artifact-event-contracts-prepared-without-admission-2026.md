@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L43331-L45532
+Source lines: L43353-L45562
 
-Source SHA256: `955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a`
+Source SHA256: `7aec8989ab5ce9aba02e7ddcdba9ae5e5b038a359654c7b17ce7b8a0e0036c2f`
 
 ---
 
@@ -2091,6 +2091,9 @@ Individually adopt SP-420's two-member proof for this exact record: its own reta
 
 **Withdrawal.** Current writers in both scopes are already cut off by GRS-205, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.evidence_captured`, this reader explicitly adopts SP-1147 and its separate ATS-1119 `evidence_captured` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-432 - Historical goal.receipt_recorded reader custody
 
 ```yaml
@@ -2151,6 +2154,9 @@ Individually adopt SP-420's two-member proof for this exact record: its own reta
 
 **Withdrawal.** Current writers in both scopes are already cut off by GRS-206, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
 
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.receipt_recorded`, this reader explicitly adopts SP-1148 and its separate ATS-1119 `receipt_recorded` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.
+
 ### SP-433 - Historical goal.tool_check_recorded reader custody
 
 ```yaml
@@ -2210,3 +2216,5 @@ Individually adopt SP-420's two-member proof for this exact record: its own reta
 **Consumer, replay and custody.** SP-339 pm inspect / F3-666 call this exact binding for its original event and consume only its historical interpretation. Repeated reads recompute the same observation under current source/fence, never append or replay an action. This family's checkpoint is individually none_required: no durable state projector, cursor, idempotency ledger, acknowledgment, receipt or any owned write. SP-278's generic checkpoint remains mandatory. Canonical source/first receipts retain RP-AUTHORITY-INDEFINITE@1.0.0; lookup/index retains RP-EVENT-INDEX-SOURCE@1.0.0. Referenced evidence/output/receipt retention, thread deletion, permissions, holds, backup and identity-preserving restore follow their existing separate owners. A ref creates no hold or right to reacquire disposed source/control bytes; canonical receipts are not rebuildable from index/events. Reject unhandled secrets rather than partially redacting an original. This reader performs no quarantine/recovery write or payload resurrection. Bodies above the current 16 KiB ingest cap follow SP-337 under their source owner; no new over-limit inline positive or payload-reference codec is claimed here.
 
 **Withdrawal.** Current writers in both scopes are already cut off by GRS-207, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
+
+**DG-OWN-D O6 adoption (2026-11-05, newly authored owner contract).** For exactly `goal.tool_check_recorded`, this reader explicitly adopts SP-1149 and its separate ATS-1119 `tool_check_recorded` entry/resolver/row-validator/answer-builder/inspection/disclosure suite, preserving its own SP-420 missing-proof outcome and SP-339 actual consumer. This is an oracle and boundary completion; it grants no current writer, historical instance, new retention, registry or native authority.

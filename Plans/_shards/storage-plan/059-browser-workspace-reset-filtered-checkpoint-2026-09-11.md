@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L21736-L22541
+Source lines: L21744-L22551
 
-Source SHA256: `955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a`
+Source SHA256: `7aec8989ab5ce9aba02e7ddcdba9ae5e5b038a359654c7b17ce7b8a0e0036c2f`
 
 ---
 
@@ -205,6 +205,8 @@ owner-approved successor/version, install/rebuild through StorageMigrationCoordi
 verify scope/coverage/currentness/deletion, then activate the adopted reader.
 No silent zero-cursor reset, sibling reuse, bulk Browser admission, history rewrite,
 global count override or governance reseal follows.
+
+
 
 ### SP-282 - Browser workspace-reset single-family persistence binding
 

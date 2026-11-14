@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 23489,
+    "depends_on_edge_count": 23549,
     "downstream_blocked_node_count": 0,
-    "edge_count": 26707,
-    "node_count": 8792,
+    "edge_count": 26767,
+    "node_count": 8803,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-14T16:55:47Z",
+  "generated_at_utc": "2026-11-14T19:31:15Z",
   "gui_related_units": {
     "count": 3931,
     "units": [
@@ -36476,8 +36476,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 22385,
-          "line": 22409,
+          "heading_line": 22395,
+          "line": 22419,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36487,8 +36487,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 23971,
-          "line": 23973,
+          "heading_line": 23981,
+          "line": 23983,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36498,8 +36498,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 28965,
-          "line": 28967,
+          "heading_line": 28987,
+          "line": 28989,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36509,8 +36509,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 29130,
-          "line": 29132,
+          "heading_line": 29152,
+          "line": 29154,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36520,8 +36520,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 29252,
-          "line": 29254,
+          "heading_line": 29274,
+          "line": 29276,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36531,8 +36531,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 29351,
-          "line": 29353,
+          "heading_line": 29373,
+          "line": 29375,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36542,8 +36542,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 29724,
-          "line": 29726,
+          "heading_line": 29746,
+          "line": 29748,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36553,8 +36553,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 29790,
-          "line": 29792,
+          "heading_line": 29812,
+          "line": 29814,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36564,8 +36564,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 29864,
-          "line": 29866,
+          "heading_line": 29886,
+          "line": 29888,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36575,8 +36575,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 29917,
-          "line": 29919,
+          "heading_line": 29939,
+          "line": 29941,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36586,8 +36586,8 @@
         "source_location": {
           "heading": "SP-656 — Preview subject UI and runtime identity mapping",
           "heading_level": 3,
-          "heading_line": 40555,
-          "line": 40557,
+          "heading_line": 40577,
+          "line": 40579,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -43265,10 +43265,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 8792,
+  "plan_unit_count": 8803,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4109,
+      "high": 4120,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -44990,6 +44990,7 @@
       "historical_goal_event_source_and_checkpoint_authority": 1,
       "historical_goal_oracle_drift": 1,
       "historical_handoff_drift": 1,
+      "historical_original_authority_laundering": 11,
       "historical_projection_and_ghost_evidence": 1,
       "historical_reference_reactivation": 3,
       "historical_run_focus": 1,
@@ -47491,7 +47492,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 8512,
+      "accepted": 8523,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47551,7 +47552,7 @@
       "operational_policy": 1,
       "optional_requirement": 1,
       "owner_boundary": 75,
-      "owner_contract": 16,
+      "owner_contract": 27,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,
@@ -47693,7 +47694,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+        "expected": "1fff6d48ab9cf15bd45c46c79f5ced8aaf26a16f1844aabf7646e7d912fdc40e",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
