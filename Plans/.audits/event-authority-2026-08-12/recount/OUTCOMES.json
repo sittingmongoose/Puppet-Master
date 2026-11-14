@@ -342,6 +342,10 @@
   {
    "event_type": "source_control.remote.publish_completed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.remote.publish_started",
+   "outcome": "registered"
   }
  ]
 }
