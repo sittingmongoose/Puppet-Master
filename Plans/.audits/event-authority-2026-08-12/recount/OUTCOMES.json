@@ -106,6 +106,10 @@
   {
    "event_type": "external_research.job_terminal",
    "outcome": "registered"
+  },
+  {
+   "event_type": "external_research.packet_delivered",
+   "outcome": "registered"
   }
  ]
 }

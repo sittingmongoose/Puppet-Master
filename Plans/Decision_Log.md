@@ -34673,3 +34673,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-568: Event Authority registers external_research.packet_delivered (admission merge 1)
+
+```yaml
+plan_unit_id: DL-568
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `external_research.packet_delivered` as family `event-family-external-research-packet-delivered` revision 1.0.0 in admission merge 1 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the families ready then are admitted in a first merge. `external_research.packet_delivered` is one of the 249 names of the 2026-11-04 census recount (bucket e). Jared's answer to card EA-P1, option A ("Add each once its definition passes every check"), admits each such name once its full definition, its record and both reviews pass; DL-039's no bulk registration stands. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `external_research.packet_delivered`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-14.48 (94 families, SHA-256 d2eca31e6d469ceb6c27459c14b43a5f410ebf7220e97d1b8ffe1ef3110ffa0a) to 2026-11-14.49 (95 families, SHA-256 a717dda56ba648100f9a74f781b9dca8349581d189a5324fed1bd5fb03df45aa). The appended row, canonical SHA-256 4595b2fbce7630c7ef454fa5f372f25711d664d247db7b648a6128902a45aa93, has scope policy project_only, payload `pm.event_payload.external_research.packet_delivered.v1` at Plans/event_authority_w3g/payloads/external_research_packet_delivered.schema.json#/$defs/ProjectPayloadV1, semantic owner Plans/External_Research.md#ERS-1510, payload owner Plans/Contracts_V0.md#CV-1510 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-14.49 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 95 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261114/admission-merge-1/depth/external_research.packet_delivered.json (SHA-256 9a45bddd9c76cc83fadc8c9ded13e0505044bed760183e0ea1df7cb99f2c1dc1) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261105/W3G.self-grade.json (SHA-256 6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/external_research.packet_delivered.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `external_research.packet_delivered`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for external_research.packet_delivered, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/external_research.packet_delivered.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-14.49 and 95 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_1
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json (recount name)"
+- "reports/event-authority-20261105/W3G.self-grade.json; SHA-256 6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/INT3/admission-readiness.json; SHA-256 815ed8bfdc86b5fe565fac1cc5549fc590fa7b72cd9606fcb589f947bf8eaa8f"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["external_research.packet_delivered", "event-family-external-research-packet-delivered", "2026-11-14.49", "a717dda56ba648100f9a74f781b9dca8349581d189a5324fed1bd5fb03df45aa", "4595b2fbce7630c7ef454fa5f372f25711d664d247db7b648a6128902a45aa93", "Add each once its definition passes every check", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
