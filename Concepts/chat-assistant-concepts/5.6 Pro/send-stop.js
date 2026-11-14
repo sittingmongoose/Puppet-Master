@@ -89,7 +89,7 @@
        loop that survived a Stop -> Send -> Stop flip inside one task keeps its length; apply() moves it, and fresh loops
        (still in their delay then), in the next frame. The pace is watched only while Stop shows (paceOn), and nothing is
        left armed once it has gone (paceOff). */
-    if (s === 'stop' && lastSs !== 'stop') { want = (now() - lastTok < QUIET || streaming(o.tid)) ? 'flowing' : 'waiting'; kWant = speedNow(); paceOn(); }
+    if (s === 'stop' && lastSs !== 'stop') { want = (now() - lastTok < QUIET || streaming(o.tid)) ? 'flowing' : 'waiting'; paceOn(); }
     else if (s === 'stop') paceKeep();   // a chip that went missing for a moment switched the quiet timer and the listener off
     if (s !== 'stop') paceOff();
     if (s === 'queue' || s === 'full') { if (q) shownQ = q; }
@@ -229,7 +229,9 @@
      the next frame */
   function paceOn() { paceKeep(); schedule(); }
   function paceKeep() {
-    if (!listening) { listening = true; window.addEventListener('pm-animation-speed', onSpeed); }
+    /* (re)attached: Stop starting, or Stop shown again after the chip went missing and the quiet timer or a speed
+       event found no chip and switched the listener off; a speed change made while nobody listened is read here (R34 F1) */
+    if (!listening) { listening = true; window.addEventListener('pm-animation-speed', onSpeed); kWant = speedNow(); }
     if (want === 'flowing') armQuiet();
     if (want !== flow || kWant !== k) schedule();
   }
