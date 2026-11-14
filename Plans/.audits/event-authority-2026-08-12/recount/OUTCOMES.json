@@ -182,6 +182,10 @@
   {
    "event_type": "forge.repository.discovered",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.repository.eligibility_changed",
+   "outcome": "registered"
   }
  ]
 }
