@@ -399,14 +399,24 @@ export const tests = {
 			const which = look === looks[0] || ['basic-dark', 'glass-light', 'nier-dark'].includes(look) ? sizes : sizes.slice(0, 1);
 			for (const size of which) {
 				await settingsAt(t, f, size.w, size.h);
-				for (const [domain, ws] of [['ai', 'providers'], ['general', null]]) {
-					await press(t, f, `#pm-settings-root [data-action="navigate-domain"][data-domain="${domain}"]`);
-					if (ws) await press(t, f, `#pm-settings-root .workspace-tabs [data-action="jump-workspace"][data-workspace="${ws}"]`);
+				/* sol-recheck-fo182-186 (2026-11-14): a narrow Settings folds the chapter rail away, so press() found no
+				   visible link, returned false, and the cell silently judged the previous chapter. Now: navigate at a size
+				   that shows the rail when the target size hides it, come back to the target size, and require the strip
+				   to be the chapter asked for (it has that chapter's tab) and, for a workspace, its page tabs to be drawn. */
+				for (const [domain, ws, first] of [['ai', 'providers', 'Providers & Accounts'], ['general', null, 'App & Input']]) {
+					const nav = `#pm-settings-root [data-action="navigate-domain"][data-domain="${domain}"]`;
+					const wsSel = ws && `#pm-settings-root .workspace-tabs [data-action="jump-workspace"][data-workspace="${ws}"]`;
+					const go = async () => (await press(t, f, nav)) && (!ws || (await press(t, f, wsSel)));
+					let reached = await go();
+					if (!reached) { await settingsAt(t, f, 1920, 1080); reached = await go(); await settingsAt(t, f, size.w, size.h); }
 					await t.page.waitForTimeout(300);
 					const m = await f.evaluate(TABS);
 					const cell = `${look} ${size.id}${size.docked ? ' docked' : ''} ${domain}`;
+					await t.check(`${cell}: the ${domain} chapter${ws ? ` and its ${ws} page` : ''} were reached by real presses`, reached);
 					if (size.docked) await t.check(`${cell}: Files is docked beside Settings`, await f.evaluate(DOCKED));
 					if (!m) { await t.check(`${cell}: the top tab strip is drawn`, false); continue; }
+					await t.check(`${cell}: the strip is the ${domain} chapter's (it has the '${first}' tab)`, m.labels.some((l) => l.startsWith(first)), m.labels.join(' / '));
+					if (ws && !m.pageTabs) await t.check(`${cell}: the ${ws} page tabs are drawn`, false);
 					await t.check(`${cell}: FO-184 the top tabs stand in the middle of their strip (${m.off} px off; ${m.labels.join(' / ')})`, Math.abs(m.off) <= 1, `${m.off} px`);
 					await t.check(`${cell}: FO-184 the top tabs are one line, nothing clipped`, m.lines === 1 && m.scroll <= 1 && !m.clipped.length, `lines ${m.lines}, overflow ${m.scroll} px, clipped ${m.clipped.join(', ') || 'none'}`);
 					if (ws && m.pageTabs) {
