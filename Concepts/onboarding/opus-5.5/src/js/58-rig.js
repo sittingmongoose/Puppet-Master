@@ -503,6 +503,15 @@
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
+    /* where a prop coming in will hang at rest, as placeProp will place it then (level, at its full length and opacity, moved
+       off Pip's head and the props already placed this frame): the bubble keeps off the whole way down to it (placeBubble).
+       Measured without changing the prop. */
+    restBox(pr) {
+      const tg = this.propTarget(pr), tieMid = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
+      const was = { restOff: pr.restOff, op: pr.op, a: pr.a };
+      pr.op = Math.max(pr.op, tg.op); pr.a = 0; this.restProbe = true;
+      try { return this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tieMid).box; } finally { this.restProbe = false; pr.restOff = was.restOff; pr.op = was.op; pr.a = was.a; }
+    }
     /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
        (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
        fixed box, or a bubble that found no clear place); box is where it is then painted */
@@ -552,6 +561,11 @@
            (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
            inside the pane, and is drawn a little smaller only when no way does */
         const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        /* (and, while it comes in, off the bubble where it is: the bubble is placed clear of the way it comes down
+           (placeBubble), and its swing or its bounce at the end of the way does not then send the bubble off its place,
+           FO-191; not where it will rest, which the bubble is placed from: restBox) */
+        const bb = !this.restProbe && this.famName !== 'nier' && pr.state !== 'out' && !pr.settled ? this.bubbleBox : null;
+        if (bb && pr.op > .05) obs.push(bb);
         /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
         const pk = this.pipKeep; if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
         this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
@@ -1302,7 +1316,23 @@
       if (tall) face[1] -= 12; else face[2] += 12;
       /* (a leaving prop too, while it shows: the bubble with the next screen's words moved onto a prop still fading out,
          FO-34, Basic Light A3) */
-      this.props.forEach((pr) => { if (pr.box && pr.op > .05) { const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
+      /* A prop coming in takes the whole way it is lowered through, from where it hangs now down to where it will rest,
+         from its first frame (at no opacity yet too): the bubble is placed clear of that way once. Taken where it hung
+         each frame, its box swept down through the bubble's place as it was lowered, and the bubble jumped out of its way
+         and back, 50-100 px in a frame, two or three times in the 0.2 s after every screen change with a prop (FO-189,
+         FO-191: "starts too high and jumps down"). */
+      this.props.forEach((pr) => {
+        if (!pr.box) return;
+        const coming = pr.state !== 'out' && !pr.settled;
+        if (!coming && pr.op <= .05) return;
+        let q = pr.box;
+        const r = coming ? this.restBox(pr) : null;
+        if (r) q = [Math.min(q[0], r[0]), Math.min(q[1], r[1]), Math.max(q[2], r[2]), Math.max(q[3], r[3])];
+        /* (and one leaving, the way it is lifted out, up to the stage's top, while it shows: lifted into the place the
+           bubble had taken beside it, it pushed the bubble away again) */
+        else if (pr.state === 'out') q = [q[0], -1e4, q[2], q[3]];
+        const a = this.toScreen([q[0], q[1]]), c = this.toScreen([q[2], q[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]);
+      });
       const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
       const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
       /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
@@ -1312,20 +1342,32 @@
       const over = (cx, cy, o) => cx < o[2] && cx + bw > o[0] && cy < o[3] && cy + bh > o[1];
       const fits = (cx, cy) => cx >= X0 - .5 && cx <= X1 + .5 && cy >= Y0 - .5 && cy <= Y1 + .5;
       const clear = (cx, cy) => fits(cx, cy) && !over(cx, cy, face) && !obs.some((o) => over(cx, cy, o));
+      /* (a place it already holds is kept until it would touch what it keeps off, not just its margin: placed against the
+         margin, it followed Pip's sway a pixel into it and jumped away, FO-191) */
+      const inner = (o) => [o[0] + gap, o[1] + gap, o[2] - gap, o[3] - gap];
+      const holds = (cx, cy) => fits(cx, cy) && !over(cx, cy, inner(face)) && !obs.some((o) => over(cx, cy, inner(o)));
       /* (a place on Pip's other side counts as far: new words never send the bubble across Pip, it goes above instead) */
       const cost = ([cx, cy]) => Math.hypot(cx - x, cy - y) + (this.bubbleSide && sideOf(cx) !== this.bubbleSide && !(cy + bh <= face[1]) ? 400 : 0);
       const near = (list) => list.filter(([cx, cy]) => clear(cx, cy)).sort((p, q) => cost(p) - cost(q))[0];
-      const prev = this.bubbleRel ? [hx0 + this.bubbleRel[0], hy0 + this.bubbleRel[1]] : null;
+      /* (where Pip's sway takes the place it moved to against the pane's edge, it slides along the edge rather than going:
+         a pixel past it sent it back across 114 px, FO-191) */
+      const prev = this.bubbleRel ? [clamp(hx0 + this.bubbleRel[0], X0, Math.max(X0, X1)), clamp(hy0 + this.bubbleRel[1], Y0, Math.max(Y0, Y1))] : null;
+      /* (a new screen, or the bubble coming back with a line: its place is chosen again from its usual one; otherwise it
+         keeps the place it moved to while that stays clear, and is not sent back to its usual place a while later in one
+         frame, with the same words: it went home 2.5 s after it moved, 70-90 px in a frame, FO-191) */
+      const talking = this.bubble.classList.contains('on') && !!(this.bubble.textContent || '').trim();
+      const fresh = !this.bubbleTalked || this.bubbleScreen !== this.lastScreen;
+      this.bubbleTalked = talking; this.bubbleScreen = this.lastScreen;
       let at = null;
-      if (prev && clear(prev[0], prev[1]) && this.t - (this.bubbleRelT || 0) < 2.5) at = prev; /* (the side it moved to, while it stays clear) */
-      else if (clear(x, y) && !(this.bubbleSide && sideOf(x) !== this.bubbleSide && y + bh > face[1])) at = [x, y];
+      const sideOk = !(this.bubbleSide && sideOf(x) !== this.bubbleSide && y + bh > face[1]);
+      if (prev && !fresh && holds(prev[0], prev[1])) at = prev; /* (the side it moved to, while it stays clear) */
+      else if (sideOk && (!prev && !fresh ? holds(x, y) : clear(x, y))) at = [x, y]; /* (its usual place, kept the same way) */
       else {
         const cand = [];
         [face].concat(obs).forEach((o) => { cand.push([o[0] - bw, y], [o[2], y], [x, o[1] - bh], [x, o[3]], [o[0] - bw, o[1] - bh], [o[2], o[1] - bh], [o[0] - bw, o[3]], [o[2], o[3]]); });
         cand.push([X0, Y0], [X1, Y0], [X0, Y1], [X1, Y1]);
         at = near(cand.map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]));
       }
-      const talking = this.bubble.classList.contains('on') && !!(this.bubble.textContent || '').trim();
       const claimed = this.bubbleClaim && talking && at && Math.abs(at[0] - this.bubbleClaim[0]) < 10 && Math.abs(at[1] - this.bubbleClaim[1]) < 10;
       if (!claimed) this.bubbleKeepOff = null;
       if (!at) {
@@ -1341,7 +1383,7 @@
       /* (a new claim moves the props off it in this same frame, before it is painted: on a stepped stage the props learnt of
          it a step later and sat under it for a tenth of a second) */
       if (this.bubbleKeepOff && !claimed) { this.keepOff = this.bubbleKeepOff; this.renderN = (this.renderN || 0) + 1; this.props.forEach((pr) => this.placeProp(pr)); }
-      if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - hx0, at[1] - hy0]; } else this.bubbleRel = null;
+      if (at[0] !== x || at[1] !== y) this.bubbleRel = [at[0] - hx0, at[1] - hy0]; else this.bubbleRel = null;
       [x, y] = at;
       this.bubbleSide = talking ? sideOf(x) : null;
       /* where it is, with its tail, for the props that leave under it (holdUnder) */
