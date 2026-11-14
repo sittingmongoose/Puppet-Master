@@ -263,11 +263,17 @@ class BrowserPreparedAdmissionTests(unittest.TestCase):
         self.assertEqual(admitted | prepared, set(ROWS))
         self.assertEqual(report["prepared_scoped_event_families"], len(prepared))
         self.assertEqual(report["admitted_scoped_event_families"], len(admitted))
-        # The only other additions are rows the coordination ledger marks admitted (Step 9 batch 2) and the
-        # three DL-300 families.
+        # The only other additions are rows the coordination ledger marks admitted (Step 9 batch 2), the
+        # three DL-300 families and rows their own DL-077 admission record pins (PNC-019 admission merges).
         coordination = GATE.admitted_coordination_rows()
+        historical = set(CONTEXT[0]["preexisting_family_ids"]) | {GATE.COMPACTION_FAMILY}
+        recorded = GATE.admitted_record_rows()
+        record_pinned = [row for row in central
+                         if row["family_id"] not in historical and row["event_type"] not in ROWS
+                         and (row["family_id"], row["event_type"]) not in coordination
+                         and recorded.get((row["family_id"], row["event_type"])) == GATE.dl077_row_sha256(row)]
         self.assertEqual(report["registry_family_count"],
-                         40 + len(admitted) + len(coordination) + len(GATE.REVIEWED_DL300_FAMILIES))
+                         40 + len(admitted) + len(coordination) + len(GATE.REVIEWED_DL300_FAMILIES) + len(record_pinned))
         self.assertEqual(report["admission_complete"], len(admitted) == 53)
 
     def test_isolated_prepared_consistency_is_not_admission_completion(self):
