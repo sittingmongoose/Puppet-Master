@@ -47,12 +47,12 @@ PRODUCER_FIELDS = (
 # recomputed identities, type names, presence, mismatch lists); a refusal is
 # issued only by a row. A boundary is an ordered chain of phases.
 TABLE_PHASES = (
-    'src_envelope', 'src_replay', 'src_inline', 'src_definition', 'src_schema', 'src_size', 'src_stage', 'src_original',
+    'src_envelope', 'src_replay', 'src_inline', 'src_definition', 'src_schema', 'src_size', 'src_prepared_stage', 'src_completed_stage', 'src_original',
     'src_scope', 'src_project_only', 'src_payload', 'src_join', 'src_identity', 'src_context', 'id_inputs',
     'append_types', 'append_retry',
     'rec_gate', 'rec_custody', 'rec_commit', 'rec_original', 'rec_receipt', 'rec_receipt_join',
     'cp_schema', 'cp_lifecycle', 'cp_cas', 'cp_token', 'cp_source', 'cp_rows', 'cp_prefix', 'cp_coverage', 'cp_state',
-    'hr_flags_a', 'hr_flags_b', 'hr_original',
+    'hr_flags_a', 'hr_flags_b', 'hr_receipt', 'hr_receipt_schema', 'hr_original',
     'tool_request', 'tr_approval_requested', 'tr_approval_granted', 'tr_approval_denied', 'tr_approval_timeout',
     'tr_config_migrated', 'gate_score', 'tr_gate_started', 'tr_gate_failed_a', 'tr_gate_failed_b',
     'tr_gate_passed_a', 'tr_gate_passed_b', 'tr_requirements', 'tr_background', 'denial', 'tr_tool_denied',
@@ -897,7 +897,8 @@ def source_steps(c, prepared, completed, event, schemas, resolved_payload, paylo
     yield 'src_size', {'prepared_size': len(source_bytes(prepared)), 'completed_size': len(source_bytes(completed))}
     immutable = (['application_scope', 'original_owner_operation_id', 'owner_operation_id'] if source_is_app else []) + ['storage_instance_id', 'scope_partition', 'event_type', 'event_id', 'idempotency_key', 'producer', 'owner_ref', 'owner_revision', 'subject', 'before', 'captured_at_utc', 'runtime_context']
     a, b = prepared['envelope_context'], completed['envelope_context']
-    yield 'src_stage', {'prepared_stage': prepared['stage'], 'completed_stage': completed['stage']}
+    yield 'src_prepared_stage', {'prepared_stage': prepared['stage']}
+    yield 'src_completed_stage', {'completed_stage': completed['stage']}
     yield 'src_original', {'prepared_commitment': completed['prepared_sha256'], 'recomputed_commitment': source_digest(prepared),
                            'immutable_mismatches': copy_mismatches(prepared, completed, immutable),
                            'envelope_mismatches': [k for k in a if k != 'occurred_at_utc' and canonical(a[k]) != canonical(b[k])]}
@@ -1068,6 +1069,7 @@ def checkpoint_result(c, old, proposed, context, schema):
 # a context dict, historical flag or caller-supplied original selects nothing.
 FROZEN_EDITION = '1.0.0'
 _CUSTODY = {'worlds': [], 'dispatcher': None, 'contracts': {}, 'frozen': {}}
+_WRITER_RECEIPT = object()
 
 
 def original_ref(completed, event):
@@ -1143,9 +1145,16 @@ def frozen_verifier(contract):
     return verify
 
 
-def seal_original(store, prepared, completed, event, receipt=None):
+def seal_original(store, prepared, completed, event, receipt=_WRITER_RECEIPT):
     """Writer composition only: seal one original the lane's writer built, at its seglog ref."""
     contract = _CUSTODY['contracts'][event['event_type']]
+    if receipt is _WRITER_RECEIPT:
+        # Scenario construction, outside reads: the modeled writer's first
+        # receipt for this separately written original. Explicit None models
+        # missing custody and is never repaired by the historical reader.
+        receipt = copy.deepcopy(_CUSTODY['receipt_templates'][event['event_type']])
+        receipt['event_id'] = event['event_id']
+        receipt['sequence_id'] = event['sequence_id']
     recipe = recipe_for(contract, completed['envelope_context']['scope_kind'], _CUSTODY['frozen_sha256'])
     store[original_ref(completed, event)] = OriginalCustody(
         binding=original_binding(completed, event), recipe=recipe,
@@ -1158,18 +1167,25 @@ class SealedOriginalOwner:
     """The finite model of the native original owner: the installed world's sealed originals only."""
 
     def authenticated_original(self, ref):
-        return _CUSTODY['worlds'][-1].get(ref) if _CUSTODY['worlds'] else None
+        original = _CUSTODY['worlds'][-1].get(ref) if _CUSTODY['worlds'] else None
+        # Multiple authority results are ambiguous, even when their bytes agree.
+        if isinstance(original, tuple):
+            return original[0] if len(original) == 1 else None
+        return original
 
 
 def install_original_custody(contracts, fixtures, schema_document, event_schema):
     """Composition, outside request data: frozen resources, recipe map and the committed originals."""
-    frozen = {'schemas': schema_document['$defs'], 'event_schema': event_schema}
-    frozen_sha256 = hashlib.sha256(canonical([schema_document, event_schema])).hexdigest()
-    _CUSTODY['contracts'] = {c['event_type']: c for c in contracts}
+    receipt_document = load('Plans/event_append_receipt_contracts.schema.json')
+    frozen = {'schemas': copy.deepcopy(schema_document['$defs']), 'event_schema': copy.deepcopy(event_schema),
+              'receipt_schema': copy.deepcopy(receipt_document['$defs']['AppendReceipt'])}
+    frozen_sha256 = hashlib.sha256(canonical([schema_document, event_schema, receipt_document])).hexdigest()
+    _CUSTODY['contracts'] = {c['event_type']: copy.deepcopy(c) for c in contracts}
+    _CUSTODY['receipt_templates'] = {name: copy.deepcopy(f['first_append_receipt']) for name, f in fixtures.items()}
     _CUSTODY['frozen'] = {frozen_sha256: frozen}
     _CUSTODY['frozen_sha256'] = frozen_sha256
     recipes = {recipe_for(c, scope, frozen_sha256): FrozenRecipe(frozen_verifier(c))
-               for c in contracts for scope in ('project', 'application')}
+               for c in _CUSTODY['contracts'].values() for scope in ('project', 'application')}
     _CUSTODY['dispatcher'] = RetainedDispatcher(SealedOriginalOwner(), recipes)
     # The committed base original of every family. Positive variants reuse the base
     # event identity with other closures (separate scenarios), so each is sealed in
@@ -1225,8 +1241,15 @@ def historical_read(c, prepared, completed, event, schemas, context):
         require('hr_flags_a', dict({'nonbool_flags': nonbool(context, flags)}, **{k: context[k] for k in flags[:4]}))
         custody_refusal, custody = resolve_original(completed, event)
         require('hr_flags_b', dict({k: context[k] for k in flags[4:]}, custody_refusal=custody_refusal))
-        original_prepared, original_completed, original_event, _ = sealed_closure(custody)
+        original_prepared, original_completed, original_event, receipt = sealed_closure(custody)
+        receipt_present = type(receipt) is dict
+        ack_refusal, _ = exact_instant(receipt.get('acknowledged_at_utc')) if receipt_present else (None, None)
+        require('hr_receipt', {'receipt_present': receipt_present,
+            'binding_mismatches': [k for k in ('event_id', 'sequence_id')
+                if canonical(receipt.get(k)) != canonical(original_event[k])] if receipt_present else [],
+            'ack_refusal': ack_refusal})
         frozen = _CUSTODY['frozen'][custody.recipe.resource_manifest_sha256]
+        require('hr_receipt_schema', {'receipt_errors': schema_error_count(lane_validator(frozen['receipt_schema']), receipt)})
         require('hr_original', {'prepared_digest': source_digest(prepared), 'original_prepared_digest': source_digest(original_prepared),
                                 'completed_digest': source_digest(completed), 'original_completed_digest': source_digest(original_completed),
                                 'event_digest': value_digest(event), 'original_event_digest': value_digest(original_event),
@@ -1286,6 +1309,71 @@ def historical_results(c, f, schemas):
         a, b, e = (variant[key] for key in ['prepared', 'completed', 'event'])
         results['variants'].append({'case': variant['case'], **read(a, b, e, context, sealed=(a, b, e))})
     return results
+
+
+def retained_store_snapshot():
+    """Content snapshot of every sealed original, recipe and receipt in this store.
+
+    Reads may neither create receipts nor repair a missing/ambiguous original.
+    Hash bytes directly; never serialize an opaque custody object as JSON.
+    """
+    def entry(original):
+        if isinstance(original, tuple):
+            return tuple(entry(item) for item in original)
+        return (repr(original.binding), repr(original.recipe),
+                *(hashlib.sha256(raw).hexdigest() for raw in
+                  (original.record_bytes, original.result_bytes, original.receipt_bytes)))
+    return tuple(sorted((ref, entry(value)) for ref, value in _CUSTODY['worlds'][-1].items()))
+
+
+def retained_custody_checks(c, f, schemas, check):
+    """Complete retained boundary: independent receipts and before/after store bytes."""
+    name = c['event_type']
+    values = [f[k] for k in ('prepared_source', 'completed_source', 'event_record')]
+    a, b, e = values
+    context = dict(f['historical_reader_oracle']['context'], live_before=None)
+    cases = [('control', 'retained', None, None),
+             ('missing_original', 'unavailable', 'missing', None),
+             ('ambiguous_original', 'unavailable', 'ambiguous', None),
+             ('other_original', 'unavailable', 'other', None),
+             ('missing_receipt', 'unavailable', None, None),
+             ('receipt_event_copy', 'unavailable', None, dict(f['first_append_receipt'], event_id=e['event_id'] + '-foreign')),
+             ('receipt_sequence_copy', 'unavailable', None, dict(f['first_append_receipt'], sequence_id=e['sequence_id'] + 1)),
+             ('receipt_boolean_sequence', 'unavailable', None, dict(f['first_append_receipt'], sequence_id=True))]
+    for form in BROAD_ACCEPTED:
+        cases.append(('ack_accept/' + repr(form), 'retained', None,
+                      dict(f['first_append_receipt'], acknowledged_at_utc=form)))
+    for form in DATE_TIME_REFUSED:
+        cases.append(('ack_refuse/' + repr(form), 'unavailable', None,
+                      dict(f['first_append_receipt'], acknowledged_at_utc=form)))
+    for field in f['first_append_receipt']:
+        missing = copy.deepcopy(f['first_append_receipt']); del missing[field]
+        cases.append(('receipt_required/' + field, 'unavailable', None, missing))
+    cases.append(('receipt_closed', 'unavailable', None, dict(f['first_append_receipt'], unexpected=True)))
+    for field in ('sequence_id', 'segment_generation', 'byte_offset', 'durable_end_offset', 'manifest_generation'):
+        for value in (True, 1.0, -1):
+            cases.append(('receipt_integer/' + field + '/' + repr(value), 'unavailable', None,
+                          dict(f['first_append_receipt'], **{field: value})))
+    cases.append(('receipt_synced', 'unavailable', None, dict(f['first_append_receipt'], durability_state='pending')))
+    for label, expected, change, receipt in cases:
+        sealed = (*values, receipt) if label != 'control' and change is None else (*values, f['first_append_receipt'])
+        with retained_world(sealed):
+            store = _CUSTODY['worlds'][-1]
+            ref = original_ref(b, e)
+            if change == 'missing':
+                del store[ref]
+            elif change == 'ambiguous':
+                store[ref] = (store[ref], store[ref])
+            elif change == 'other':
+                store[ref] = next(value for key, value in _CUSTODY['worlds'][0].items() if key != ref)
+            before = retained_store_snapshot()
+            result = historical_read(c, a, b, e, schemas, context)
+            after = retained_store_snapshot()
+            check(result['result'] == expected, name + ': sealed custody ' + label)
+            check(result['external_effects'] == result['append_count'] == 0 and before == after,
+                  name + ': sealed store preserved ' + label)
+            check((result['value'] == e) if expected == 'retained' else result['value'] is None,
+                  name + ': retained exact value or unavailable ' + label)
 
 
 def recommit(c, values):
@@ -2380,6 +2468,14 @@ def family_checks(c, inputs, check):
     technical_checks(c, f, schemas, check)
     round6_checks(c, f, schemas, check)
     table_witness_checks(c, f, schemas, check)
+    retained_custody_checks(c, f, schemas, check)
+    # A well-formed completed record can be supplied in the prepared role,
+    # and conversely. Source-schema acceptance alone does not entail either
+    # role check. These single-role substitutions reach SV12/SV13 first.
+    check(source_valid(c, f['completed_source'], f['completed_source'], f['event_record'], schemas) == 'original_source_refused',
+          name + ': completed original supplied in prepared role')
+    check(source_valid(c, f['prepared_source'], f['prepared_source'], f['event_record'], schemas) == 'original_source_refused',
+          name + ': prepared original supplied in completed role')
     datetime_checks(c, f, schemas, check)
     number_checks(c, f, schemas, check)
     number_corpus_checks(c, f, schemas, check)
