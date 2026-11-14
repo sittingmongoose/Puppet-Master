@@ -520,10 +520,12 @@ for (const surface of ['normal', 'sandbox']) {
 			await t.page.waitForTimeout(1000);
 			reps.push(await f.evaluate(() => {
 				const l = document.querySelector('.pm7-mem-layer'), w = window.__fo200;
-				return { open: !!l && !l.hidden && l.classList.contains('is-open'), escToBack: w.back && w.esc ? Math.round(w.back - w.esc) : null, enterOnBtn: w.enterOnBtn, hiddenAgain: !!w.hidden };
+				return { open: !!l && !l.hidden && l.classList.contains('is-open'), escToEnter: w.enter && w.esc ? Math.round(w.enter - w.esc) : null, escToBack: w.back && w.esc ? Math.round(w.back - w.esc) : null, enterOnBtn: w.enterOnBtn, hiddenAgain: !!w.hidden };
 			}));
 		}
-		await t.check('each reopen landed on the restored header button inside the 220 ms close window', reps.every((r) => r.enterOnBtn && r.escToBack !== null && r.escToBack > 0 && r.escToBack < 220), JSON.stringify(reps));
+		// the race window is Escape -> Enter (the button's click opens the sheet synchronously); the is-open class
+		// lands a frame later, which a slow surface can push past 220 ms without the reopen itself being late
+		await t.check('each reopen landed on the restored header button inside the 220 ms close window', reps.every((r) => r.enterOnBtn && r.escToEnter !== null && r.escToEnter > 0 && r.escToEnter < 220), JSON.stringify(reps));
 		await t.check('the sheet is still open 1 s after each quick reopen (no stale close timer hides it)', reps.every((r) => r.open && !r.hiddenAgain), JSON.stringify(reps));
 		await t.page.keyboard.press('Escape');
 		await t.page.waitForTimeout(450);
