@@ -1399,8 +1399,9 @@
     PJX.npui.render(E.steps, () => PJX.npui.sections(s, E.steps, {
       focusField: (id, f) => goToSection(id, f),
       /* Jared 2026-11-13 (#8): the next unfinished section opens, comes into view (smoothly, or at once under Reduced
-         Motion: reveal) and its first control takes the focus; after the last one, Create does */
-      afterContinue: (next) => { if (next) goToSection(next, null, false); else later(() => { const g = C.root.querySelector('[data-c-key="rv:go"]'); if (g) g.focus({ preventScroll: true }); }, 60); },
+         Motion: reveal) and its first control takes the focus; after the last one, Create comes into view the same way
+         and takes the focus (B-1: finished out of order, the last Done can sit high in the list, with Create below) */
+      afterContinue: (next) => { if (next) goToSection(next, null, false); else { reveal('[data-c-key="rv:go"]'); later(() => { const g = C.root.querySelector('[data-c-key="rv:go"]'); if (g) g.focus({ preventScroll: true }); }, 60); } },
       onInstead: (c) => chooserExisting(c)
     }));
     E.scroll.scrollTop = sc;

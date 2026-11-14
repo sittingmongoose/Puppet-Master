@@ -23,6 +23,11 @@ they all close and the focus is on Create. The button says Continue while anothe
 on the last one. Check: `tools/checks/np-next.check.mjs` (real presses through every section of a new Project, in
 order and out of order, a section reopened and closed again, and adding a folder without Reduced Motion).
 
+Recheck B-1 (2026-11-14): finished out of order, the last Done can sit high in the list, with Create below the
+scroller's visible part; Create now comes into view the same way a section does (`reveal`, at once under Reduced
+Motion) before it takes the focus. The check's "focus on Create" also asks that Create is on screen, and a new case
+finishes the sections out of order in a 1280×720 window.
+
 ## Split v3 (2026-11-10): Split, set for reading. It replaces Split v2
 
 Jared, 2026-11-10: "I like the new split design it made. However, one issue I have with it is its a little hard to

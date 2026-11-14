@@ -24,13 +24,21 @@ const STATE = () => {
 		focusInBody: !!(a && a.closest && a.closest('.pjx-np-body')),
 		focusIsHead: !!(a && a.classList && a.classList.contains('pjx-np-head')),
 		focusCreate: !!(a && a.getAttribute && a.getAttribute('data-c-key') === 'rv:go'),
+		create: (() => {
+			// Create is on screen: inside its scroller's visible part and inside the window (B-1)
+			const g = document.querySelector('[data-c-key="rv:go"]'); if (!g) return null;
+			const r = g.getBoundingClientRect(), sc = g.closest('.pjxc-scroll'), sr = sc ? sc.getBoundingClientRect() : { top: 0, bottom: innerHeight };
+			const top = Math.max(sr.top, 0), bottom = Math.min(sr.bottom, innerHeight);
+			return { inView: r.height > 0 && r.top >= top - 1 && r.bottom <= bottom + 1, y: [Math.round(r.top), Math.round(r.bottom)], seen: [Math.round(top), Math.round(bottom)] };
+		})(),
 		problems: Object.fromEntries(list.map((id) => [id, !!NP.problem(s, id)])),
 		go: open[0] ? ((document.querySelector('[data-c-key="sec:' + open[0] + ':go"]') || {}).textContent || '').trim() : null
 	};
 };
 async function startNew(t, way, o) {
 	const f = await t.app.open(t, o);
-	await t.app.click(t, f, '[data-c-key="lib:new"]', { wait: 300 });
+	// a short window hides the library's New Project; the page's own one (h:new) stands in for it there
+	await t.app.click(t, f, f.locator('[data-c-key="lib:new"]:visible, [data-c-key="h:new"]:visible').first(), { wait: 300 });
 	await t.app.click(t, f, '[data-c-key="way:' + way + '"]', { wait: 400 });
 	await f.waitForFunction(() => document.querySelectorAll('.pjx-np-sec').length > 2, null, { timeout: 15000 });
 	return f;
@@ -57,6 +65,7 @@ async function judge(t, label, st, want) {
 	} else {
 		await t.check(`${label}: every section is closed`, st.open.length === 0, JSON.stringify({ open: st.open }));
 		await t.check(`${label}: the focus is on Create`, st.focusCreate, JSON.stringify({ focusSec: st.focusSec }));
+		await t.check(`${label}: Create is in view`, !!(st.create && st.create.inView), JSON.stringify(st.create));
 	}
 }
 // walk: Done on each section in `order`, checking what opens; returns the finished set
@@ -116,6 +125,18 @@ export const tests = {
 		await openSec(t, f, 'like');
 		st = await done(t, f, 'like');
 		await judge(t, 'all finished · like reopened, Done', st, null);
+	},
+	// B-1 (recheck 2026-11-14): finished out of order, the last Done sits high in the list with Create far below it;
+	// in a short window Create must still come into view, then take the focus
+	async 'out of order in a short window (1280×720): after the last Done, Create is in view and has the focus (Reduced Motion)'(t) {
+		await t.page.setViewportSize({ width: 1280, height: 720 });
+		const f = await startNew(t, 'new');
+		const list = (await sess(f, STATE)).list;
+		await t.check('short window · the sections of a new Project', list.join() === 'start,where,like,versions,online,backup', list.join());
+		// versions first, then the rest; like, third in the list, is the last one left
+		await walk(t, f, 'short window, out of order', ['versions', 'online', 'backup', 'start', 'where', 'like'], new Set());
+		const st = await sess(f, STATE);
+		await t.check('short window · after the last Done, Create is in view and has the focus', st.open.length === 0 && st.focusCreate && !!(st.create && st.create.inView), JSON.stringify({ open: st.open, focusCreate: st.focusCreate, create: st.create }));
 	},
 	async 'adding a folder: Done opens each next section, without Reduced Motion too'(t) {
 		const f = await startNew(t, 'folder', { reduced: false });
