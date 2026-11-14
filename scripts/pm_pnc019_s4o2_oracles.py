@@ -109,11 +109,22 @@ def proof_jobs(lane, families, out):
         "DR": "pm-runtime-artifact-guard-tables.py", "DF": "pm-filesafe-guard-tables.py",
     }
     if lane in tools:
+        if lane == "DT":
+            flags += ["--family", "shared"]
         yield lane, ["scripts/" + tools[lane], *flags, "--out", str(out / lane), *resource]
     elif lane == "DG6B":
+        # The existing adapter permits precisely named donor witnesses for
+        # rows a particular family cannot reach. Materialize the two declared
+        # donor banks before proving any target; never fabricate a witness.
+        pool = out / "DG6B-pool"
+        for donor in ("auth.github.authenticated", "persona.created"):
+            yield "DG6B-pool-" + donor, ["scripts/pm-dg6b-guard-tables.py", "--family", donor,
+                                         "--collect-only", "--out", str(pool / donor), *resource]
         for name in families:
             yield name, ["scripts/pm-dg6b-guard-tables.py", "--family", name,
-                         "--out", str(out / lane / name), *resource]
+                         "--pool", str(pool), "--out", str(out / lane / name), *resource]
+        yield "DG6B-shared", ["scripts/pm-dg6b-guard-tables.py", "--family", "shared",
+                              "--out", str(out / lane / "shared"), *resource]
     elif lane == "DC":
         yield lane, ["scripts/pm-collab-guard-tables.py", "--out", str(out / lane), *resource]
     elif lane == "DS15":
