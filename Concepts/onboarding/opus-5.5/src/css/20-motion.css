@@ -122,7 +122,10 @@ html[data-o55-vt-b]::view-transition-new(*.o55-held) { animation: none; opacity:
 html[data-o55-vt-b]::view-transition-group(o55-win) { animation: none; }
 html[data-o55-vt-b]::view-transition-old(o55-win), html[data-o55-vt-b]::view-transition-new(o55-win) { animation: none; mix-blend-mode: normal; }
 html[data-o55-open] body > [data-o55-held] { contain-intrinsic-size: auto 0px auto 0px; }
-html[data-o55-vt-still] body > [data-o55-held] { content-visibility: hidden; }
+/* (in the new state the parts have no name, so each picture is the old one alone, at the old part's box: named in the
+   new state too, a group took the hidden part's new box, which is empty under content-visibility, and the old picture
+   was drawn into it: the dimmed app vanished for the whole reveal, Alexis film t-b3) */
+html[data-o55-vt-still] body > [data-o55-held] { content-visibility: hidden; view-transition-name: none; }
 
 /* ---- Reduced Motion: order and cause/effect kept, movement removed ---------------------------------------------- */
 html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st,
