@@ -37,8 +37,14 @@ function pm51AdoptAnchors(ws, body) {
   }
 }
 /* What the index can honestly list for a drawn page: anchors in drawing order, not hidden, not switched off, not in a
-   manager's closed More options (a plain page's More options is listed: its groups open on the way there). */
-const pm51AnchorShown = el => !el.closest('[hidden], .o55-sec-off, .o55-leaving') && !(el.closest('details.pm51-advanced') && !el.closest('.o55-page-more'));
+   manager's closed More options (a plain page's More options is listed: its groups open on the way there).
+   FO-185: a manager's More options that is open is listed too (it was left out open or closed, so the index lit
+   nothing while you read How models answer, Models' last group); opening or closing it redraws the page's entries. */
+const pm51AnchorShown = el => !el.closest('[hidden], .o55-sec-off, .o55-leaving') && !(el.closest('details.pm51-advanced:not([open])') && !el.closest('.o55-page-more'));
+root.addEventListener('toggle', e => {
+  const d = e.target; if (!d || !d.matches || !d.matches('details.pm51-advanced')) return;
+  const body = d.closest('[data-continuous-workspace-body]'); if (body && PM51.syncIndex) PM51.syncIndex(body.dataset.continuousWorkspaceBody);
+}, true);
 function pm51IndexEntries(w) {
   const statics = (domainSectionMap[w.id] || []).filter(s => !pm51IsMain(w.id, s.id));
   const body = root.querySelector(`[data-continuous-workspace-body="${cssEscape(w.id)}"][data-workspace-mounted="true"]`);
