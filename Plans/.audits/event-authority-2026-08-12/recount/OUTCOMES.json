@@ -478,6 +478,10 @@
   {
    "event_type": "testing.capture.effective_quality_changed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.health_degraded",
+   "outcome": "registered"
   }
  ]
 }
