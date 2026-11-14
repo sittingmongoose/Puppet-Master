@@ -26,23 +26,28 @@
        PM_LOOK_HOLD.after(fn) while held: fn is kept (once) and run after it, and the answer is true; else false, and the
                               caller runs fn itself as before
        PM_LOOK_HOLD.begin()   holds; returns end(), which a reveal calls once
-     What was kept runs once the reveal has ended, one job per idle slice in the order asked: the frame after the reveal's
-     last one is the browser's own restyle of the whole page (the transition ending, about 4,800 elements), and one task
-     doing all of it after that was a long task of its own. A new reveal starting meanwhile holds the rest again. */
+     What was kept runs once the reveal has ended, in idle slices in the order asked: the frame after the reveal's last
+     one is the browser's own restyle of the whole page (the transition ending, about 4,800 elements), and one task doing
+     all of it after that was a long task of its own. A slice runs jobs until 6 ms have gone (at least one): a reveal
+     keeps dozens of after-layout callbacks, whose asking again costs nothing, and one job a slice left the chat's redraw
+     waiting behind them for 0.7 to 2 s after the reveal (Alexis, kit check perf-look-change), the dimmed app showing
+     the old family's glyphs all that time. A new reveal starting meanwhile holds the rest again. */
   let lookHolds = 0, lookIdle = 0;
   const lookLater = [];
   const lookNext = () => {
     lookIdle = 0;
-    if (lookHolds) return;
-    const fn = lookLater.shift();
-    if (!fn) return;
-    try { fn(); } catch (e) { try { console.error('[PM_LOOK_HOLD]', e); } catch (_) { /* none */ } }
+    const t0 = performance.now();
+    while (!lookHolds && lookLater.length) {
+      const fn = lookLater.shift();
+      try { fn(); } catch (e) { try { console.error('[PM_LOOK_HOLD]', e); } catch (_) { /* none */ } }
+      if (performance.now() - t0 >= 6) break;
+    }
     if (lookLater.length) lookSlice();
   };
   const lookSlice = () => {
     if (lookIdle || lookHolds) return;
     lookIdle = 1;
-    if (window.requestIdleCallback) window.requestIdleCallback(lookNext, { timeout: 400 });
+    if (window.requestIdleCallback) window.requestIdleCallback(lookNext, { timeout: 200 });
     else setTimeout(lookNext, 16);
   };
   window.PM_LOOK_HOLD = function lookHold() { return lookHolds > 0; };
