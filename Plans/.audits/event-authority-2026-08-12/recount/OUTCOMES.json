@@ -362,6 +362,10 @@
   {
    "event_type": "source_control.repository.unbound",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.status.refreshed",
+   "outcome": "registered"
   }
  ]
 }
