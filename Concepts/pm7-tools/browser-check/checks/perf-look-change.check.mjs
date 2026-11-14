@@ -15,7 +15,8 @@
 //   played   the circle really played (review R33): the page said it started it ('o55:reveal'), the transition was not
 //            skipped (its skipTransition, wrapped by the check, was not called, and ready did not fail), and from the
 //            circle's first frame to finished it ran at least its length less 50 ms (760 ms, Retro 520 ms) with at least
-//            one frame per 34 ms of that length. A page without 'o55:reveal' (one that starts the circle at ready) fails
+//            one frame per 100 ms of that length (a floor that tells a circle drawn from one skipped or frozen, 0-4 frames;
+//            how smooth it was is the gap row's: one per 34 ms failed circles that played at 25 fps on a loaded PC). A page without 'o55:reveal' (one that starts the circle at ready) fails
 //            this row and its other rows are still judged from ready; a skipped transition fails every row below;
 //   held     the app beneath holds still until the reveal has ended, and its work for the look still runs after it:
 //            a hook of the check added with PM56_HOST.onTheme (the chat's own theme hooks, app.js renderApp among them,
@@ -134,7 +135,7 @@ async function surface(t, sandbox) {
 		t.log(`${name}: ${v ? `click->first ${v.first} ms (click task ${(r.ltAll.find((e) => e[0] <= 20) || [0, 0])[1]} ms, ready at ${v.ready}, circle played at ${v.play == null ? 'ready' : v.play}), reveal ${v.end - v.first} ms, ${r.frames} frames, longest gap ${r.maxGap} ms, long tasks in it ${JSON.stringify(r.ltIn)}` : 'no View Transition (NieR\'s own path)'}; theme written at ${r.write}, chat hook at ${JSON.stringify(r.hook)}, after-layout at ${JSON.stringify(r.after)}; all long tasks ${JSON.stringify(r.ltAll.slice(0, 10))}`);
 		if (!v) continue;
 		if (!v.first || !v.end) { await t.check(`${name}: the reveal played (ready, first frame, finished)`, false, JSON.stringify(v)); continue; }
-		const circle = r.family === 'retro' ? 520 : 760, len = v.end - v.first, least = Math.floor(circle / 34);
+		const circle = r.family === 'retro' ? 520 : 760, len = v.end - v.first, least = Math.ceil(circle / 100);
 		const played = v.play != null && !v.skipped && len >= circle - 50 && r.frames >= least;
 		await t.check(`${name}: played: the circle really played (o55:reveal, not skipped, its ${circle} ms with frames)`, played,
 			`o55:reveal ${v.play == null ? 'not seen' : `at ${v.play} ms`}; ${v.skipped ? 'skipped' : 'not skipped'}; first frame ${v.first} ms to finished ${v.end} ms = ${len} ms (at least ${circle - 50}); ${r.frames} frames (at least ${least})`);

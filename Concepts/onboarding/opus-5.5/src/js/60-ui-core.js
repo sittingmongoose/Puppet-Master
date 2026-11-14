@@ -312,7 +312,7 @@
        takes the new look in one go, and its held work follows (PM_LOOK_HOLD). Where the browser cannot give each part
        of the app its own picture (view-transition-name: match-element), the reveal runs as before. */
     const still = !!(window.CSS && CSS.supports && CSS.supports('view-transition-name', 'match-element') && CSS.supports('view-transition-class', 'o55-held'));
-    /* (a reveal skipped by this pick left the app hidden: it is shown again for the new one's picture of it) */
+    /* (the app is shown for the new reveal's picture of it: skipLook, above, has ended a reveal still playing) */
     document.documentElement.removeAttribute('data-o55-vt-still');
     if (still) document.documentElement.setAttribute('data-o55-vt-b', '');
     /* The whole wait belongs to its transition (R33). One end, whatever ends it: finished, the next pick, a press, a key,
