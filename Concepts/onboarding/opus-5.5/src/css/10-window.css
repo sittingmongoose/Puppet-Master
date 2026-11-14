@@ -12,10 +12,15 @@
 #pm-o55-onboarding[hidden] { display: none !important; }
 html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 /* the app beneath the window is inert and dimmed (its demo clock is paused too): its own loops (working pulses, status
-   dots) hold still until the window closes, so every frame's work is the window's own. Restyled in the same frame that
-   makes the app inert, which the window's first held frame already pays for. The parts are marked data-o55-held by
-   the window (60-ui-core.js setInert), so an inert toggle elsewhere (the editor's sheet) matches nothing here. */
-html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55-held] * { animation-play-state: paused !important; }
+   dots) hold still until the window closes, so every frame's work is the window's own. Each element of the app that
+   runs a CSS animation is marked data-o55-loop by js/14-window-hold.js in the click's own task, so the loops are held
+   from the next frame (the dim's), not in the mount's long frame, and let go a frame after the close's wake: a hold or
+   resume taken in a long frame is taken by that frame's stale time, and every held loop jumped by the frame's length
+   (FO-181). Keyed on the mark alone, so only the marked elements restyle; the rule on every element of the app it
+   replaces (`html[data-o55-open] body > [data-o55-held] *`) cost about 240 ms of style at each open and close.
+   !important and the two :not(#...) (an id's weight each) because some loops are set inline or by an !important
+   shorthand, which also sets the play state (NieR Mode's diamonds, the loaders), as in 21-shell-still.css. */
+[data-o55-loop]:not(#o55-loop-a):not(#o55-loop-b) { animation-play-state: paused !important; }
 /* NieR Mode's diamond loaders (styles.d/14-nier-parts.css) set their animation with an !important shorthand, which
    resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
    Mode in the window never wakes the app beneath (performance rule 6; review W9).
