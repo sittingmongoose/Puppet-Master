@@ -33133,3 +33133,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-2013: Event Authority registers remediation.resolved (admission merge 1)
+
+```yaml
+plan_unit_id: DL-2013
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `remediation.resolved` as family `event-family-remediation-resolved` revision 1.0.0 in admission merge 1 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the families ready then are admitted in a first merge. `remediation.resolved` is one of the rows DL-039 confirmed as persisted but unregistered and kept quarantined until its contract was complete; DL-414 requires every such row to reach its one outcome, and DL-039 authorized registering these rows family by family. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `remediation.resolved`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-14.13 (59 families, SHA-256 a03a1aba6bc2b90ce91dea6c4f1e94669cf1b801b624db38d1b57f9920cdcea3) to 2026-11-14.14 (60 families, SHA-256 36ef62c90ecf73f39b1cc652c27755f4e64191731044fd54bfd9b54c377c08dd). The appended row, canonical SHA-256 4d6975b3d44ae107d9c1402547a0b4f9d5c5a3aa984c3754cfd81fcdc5c9b875, has scope policy project_only, payload `https://puppetmaster.local/schemas/event_payloads/remediation_resolved/1.0.0` at Plans/event_payload_remediation_resolved.schema.json#, semantic owner Plans/Executor_Protocol.md#EP-217, payload owner Plans/Contracts_V0.md#CV-507 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-14.14 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 60 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261114/admission-merge-1/depth/remediation.resolved.json (SHA-256 aec2a5df8650f3f039543aabbe4549257d26e076e49493c11ca570800d22085c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261104/DX.self-grade.json (SHA-256 e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/remediation.resolved.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `remediation.resolved`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for remediation.resolved, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/remediation.resolved.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-14.14 and 60 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_1
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "Plans/Decision_Log.md#DL-039 (confirmed_persisted_unregistered row, registered family by family)"
+- "reports/event-authority-20261104/DX.self-grade.json; SHA-256 e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/INT2/admission-readiness-final.json; SHA-256 58566991d8f8a012b87e49afb36f0578576ed24f73122362d84ff365901507be"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["remediation.resolved", "event-family-remediation-resolved", "2026-11-14.14", "36ef62c90ecf73f39b1cc652c27755f4e64191731044fd54bfd9b54c377c08dd", "4d6975b3d44ae107d9c1402547a0b4f9d5c5a3aa984c3754cfd81fcdc5c9b875", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
