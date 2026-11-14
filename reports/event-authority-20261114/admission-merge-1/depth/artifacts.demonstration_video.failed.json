@@ -1,0 +1,311 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-14.25",
+  "sha256": "e43c01c5ca6c4a31677ee909df04916404fc7f0e4a34dc3a6d248b76a0a0bb45",
+  "family_count": 71,
+  "row_pointer": "#/families/70"
+ },
+ "base_commit": "3ddaccb0db313761b3a840a95172703d1b7b0c7e",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "artifacts.demonstration_video.failed",
+   "family_id": "event-family-artifacts-demonstration-video-failed",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-14.25 as #/families/70 (canonical row SHA-256 53ee17551a15f468802f03718cf01463f75e81c200105a64b2018f20201e0af7); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/70",
+       "line_start": 4608,
+       "line_end": 4689,
+       "quote": "\"event_type\": \"artifacts.demonstration_video.failed\"",
+       "quote_line": 4611,
+       "file_sha256": "e43c01c5ca6c4a31677ee909df04916404fc7f0e4a34dc3a6d248b76a0a0bb45",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative pre-admission contract is authored; native behavior is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+       "unit": "TCME-1302",
+       "line_start": 941,
+       "line_end": 941,
+       "quote": "canonical_text: 'NEWLY AUTHORED owner contract for `artifacts.demonstration_video.failed@1.0.0`, prepared without",
+       "file_sha256": "bcff977a43eeae404701f93a8816db5d94d1734ae0cc653210b99012476d223a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS for the prepared normative contract only: closed pre-effect request, CAS-bound genuine outcome/preimage, frozen append and original full-value custody before publication; uncertain actions remain fenced. Synthetic pending/outcome shapes are checked; runtime and phase-2 oracles are NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+       "unit": "TCME-1302",
+       "line_start": 977,
+       "line_end": 977,
+       "quote": "Producer ordering: validate admission, physical schema, scope, permission, resource, currentness and authoritative",
+       "file_sha256": "bcff977a43eeae404701f93a8816db5d94d1734ae0cc653210b99012476d223a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1302",
+       "line_start": 55326,
+       "line_end": 55326,
+       "quote": "Original producer preimage custody: intent is the immutable pre-effect request described by TCME-1302, not",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS for normative schema completeness: all 290 original relative sites replaced by registered absolute URIs, eager offline URI-aware closure including unvisited branches, and separate closed pre-effect request/completed outcome roots. Semantic source joins and phase-2 oracles remain required.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1302",
+       "line_start": 42868,
+       "line_end": 42868,
+       "quote": "Pre-effect request schema: project request Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failed_request",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative pre-admission contract is authored; native behavior is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+       "unit": "TCME-1302",
+       "line_start": 1004,
+       "line_end": 1004,
+       "quote": "Identity and replay: adopt Contracts_V0.md#EventRecord, CV-317, CV-339 and CV-366 by name. Capture one owner_operation_id",
+       "file_sha256": "bcff977a43eeae404701f93a8816db5d94d1734ae0cc653210b99012476d223a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative pre-admission contract is authored; native behavior is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+       "unit": "TCME-1302",
+       "line_start": 1071,
+       "line_end": 1071,
+       "quote": "Phase-aware recovery: compare a retry with the complete original request and pre-effect inputs first, excluding",
+       "file_sha256": "bcff977a43eeae404701f93a8816db5d94d1734ae0cc653210b99012476d223a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "History retention bound by DL-455: Project RP-OPERATIONAL-2555D@1.0.0, application RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (main Storage Case L-3 at 564ed6a467).",
+     "evidence": [
+      {
+       "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+       "unit": "TCME-1302",
+       "line_start": 1020,
+       "line_end": 1020,
+       "quote": "Retention: history kept seven years / 220,752,000 seconds from the original saved change it records",
+       "file_sha256": "bcff977a43eeae404701f93a8816db5d94d1734ae0cc653210b99012476d223a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative pre-admission contract is authored; native behavior is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+       "unit": "TCME-1302",
+       "line_start": 1032,
+       "line_end": 1032,
+       "quote": "Custody: exact media bytes stay immutable under SP-343 and SP-337; metadata contains only bounded safe refs/IDs,",
+       "file_sha256": "bcff977a43eeae404701f93a8816db5d94d1734ae0cc653210b99012476d223a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS for the prepared normative contract only: closed pre-effect request, CAS-bound genuine outcome/preimage, frozen append and original full-value custody before publication; uncertain actions remain fenced. Synthetic pending/outcome shapes are checked; runtime and phase-2 oracles are NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+       "unit": "TCME-1302",
+       "line_start": 971,
+       "line_end": 971,
+       "quote": "Family-specific predicates: (1) The error belongs to cmd.artifacts.create_demonstration_video and this original",
+       "file_sha256": "bcff977a43eeae404701f93a8816db5d94d1734ae0cc653210b99012476d223a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1302",
+       "line_start": 55326,
+       "line_end": 55326,
+       "quote": "Original producer preimage custody: intent is the immutable pre-effect request described by TCME-1302, not",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS for normative reader completeness: explicit empty projection paired with null cursors and authenticated complete coverage; nonempty inline/external payload matches the last real event and source custody. Both scope editions receive schema-shape diagnostics; runtime coverage verification remains phase 2.",
+     "evidence": [
+      {
+       "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+       "unit": "TCME-1302",
+       "line_start": 1084,
+       "line_end": 1084,
+       "quote": "Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors",
+       "file_sha256": "bcff977a43eeae404701f93a8816db5d94d1734ae0cc653210b99012476d223a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1302",
+       "line_start": 54963,
+       "line_end": 54963,
+       "quote": "with predecessor CAS only after all source proof is complete. Empty filtered history uses exactly projection={mode:",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative pre-admission contract is authored; native behavior is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+       "unit": "TCME-1302",
+       "line_start": 1050,
+       "line_end": 1050,
+       "quote": "Compatibility and withdrawal: current proposed schema/reader version is 1.0.0 and no historical capture event",
+       "file_sha256": "bcff977a43eeae404701f93a8816db5d94d1734ae0cc653210b99012476d223a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS for synthetic criterion-12 oracles: the complete checker scripts/pm_w3c_event_oracles.py runs this family's positives and one-defect negatives in every scope edition and path (install, append, retry, history, operation, checkpoint); each refusal is one guard row in a generated table and the gated shared tool proves every row; the mutation proof and the shared number corpus run through the same checker. Native execution NOT_RUN; membership ABSENT.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-1221",
+       "line_start": 13199,
+       "line_end": 13199,
+       "quote": "Phase 2 (2026-11-13, executable synthetic oracles). scripts/pm_w3c_event_oracles.py is the complete",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3C-self-grade.json",
+      "sha256": "c2ed56dabc376900b35fbfb91808d68d04cd56385d7cee42f1139364cf22c938",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
