@@ -2,6 +2,85 @@
 
 Branch `plans/ea-batch3-int-20261114`, full worktree `/home/sittingmongoose/pm-worktrees/int3` (kept). No landing, landing lock, `main` push, reseal, registry append, admission or admission Decision Log entry. Native execution stays NOT_RUN everywhere; every result below is synthetic oracle or planning evidence.
 
+## Batch 3 fix 1: merge of newer main (2026-11-14)
+
+This answers Sol 6.1 max finding 1 (`reviews/BATCH3-sol/REVIEW.md`, REAL): the reviewed head `92f9cc9283` lacked the `main` commits after its last main merge `65f5bba1f5`. Astra max was LANDING_READY_WITH_NOTES. No landing, lock, `main` push or reseal.
+
+**Commits after `92f9cc9283`:**
+- `a03eba09be` merges `origin/main` `f4e49a6dc43deb01a222df170f9837661500102a`. That is 13 commits after `65f5bba1f5`: the 12 the review counted plus `f4e49a6dc4`, main's snapshot/baseline refresh after C's atom-0017 landing.
+- `72382ead8d` is the T198 exclusion refresh.
+- `6c1efe4421` re-pins W3B's citations (Sol note 2).
+- This report commit follows.
+
+### Merged paths
+
+- **Changed on `main` since `65f5bba1f5`, non-derived (18):**
+  - `Plans/Plan_To_Node_Compilation.md` (C's PNC-012 atom-0017 amendment);
+  - the eight `Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/` files (`events.jsonl`, `manifest.json`, `records/corrections.jsonl`, `state/compile_queue.json`, `state/current.json`, `state/handoff.json`, `state/open_items.json`, `validation/ledger_health.json`);
+  - `Plans/.audits/closure-reaudit-20261104/old-format/repair-updates.jsonl`;
+  - `reports/landing-checks/baseline.json`;
+  - seven `Concepts/` files: `PMConcept7.html`, `onboarding/opus-5.5/src/js/15-sound.js` and `15-sound-pip.js`, `src/settings/managers/30-memory.js`, `pm7-tools/browser-check/README.md`, and `checks/memory-notes-unicode.check.mjs` and `onboarding-music-bed.check.mjs`.
+- **Changed on `main`, derived:**
+  - 16 `Plans/_shards/plan_to_node_compilation` files;
+  - 6 `Plans/.plan_index` files;
+  - `Plans/.plan_migration/current_run.json` and the runs `pds-20261114-002` and `pds-20261114-003` (10 files each).
+- **Conflicts: 4,** all in `Plans/.plan_index/` (`coverage_report.json`, `dependencies.json`, `doc_cards.json`, `node_readiness_report.json`), each resolved to `main`'s side.
+- **Non-derived files changed on both sides: none.** The branch changed 1,984 non-derived paths since `65f5bba1f5`, `main` changed 18, and the two sets do not intersect.
+- **Regeneration:** shard generate (no change), then plan-index generate with the shared checkout's currentness edition (identical per `diff -rq`), then shard check pass. Plan-index generate rewrote 6 index files.
+
+### Preservation proof
+
+Blob-level comparison at the new head; record in `drafts/INT3/fix1/preservation.json`.
+
+| Set | Paths | Equal | Differ | Note |
+|---|---:|---:|---:|---|
+| Non-derived paths `92f9cc9283` changed since `65f5bba1f5` | 1,984 | 1,984 equal `92f9cc9283` | 0 | — |
+| Derived paths `92f9cc9283` changed | 2,157 | 2,151 equal `92f9cc9283` | 6 | the 6 regenerated `Plans/.plan_index` files |
+| Non-derived paths `main` changed since `65f5bba1f5` | 18 | 18 equal `main` | 0 | — |
+| Derived paths `main` changed | 63 | 57 equal `main` | 6 | the same 6 regenerated index files |
+| `plan_units.jsonl`, unit by unit | 8,792 units | 27 main-changed units equal `main`; 3,594 branch-changed units equal `92f9cc9283`; every other unit equals `65f5bba1f5` | 0 | — |
+
+Every non-derived path either side changed is exact. The regenerated index is exactly the union of both sides, with no recorded clean-merge exception needed.
+
+### T198 after the merge
+
+`main`'s two snapshot refreshes replaced the migration runs `pds-20261113-002` and `pds-20261114-001`, so the inventory gate failed closed (`scan_exclusions_invalid`: an exclusion cites a removed `span_map.jsonl`). The tool's own refresh path on a tracked-files-only tree:
+- **prune:** 412 obsolete snapshot exclusions;
+- **relocate:** 0;
+- **projection:** 0 rows;
+- **classify:** 0 new nodes, 412 exclusions for the new runs (1,337 total).
+
+Inventory gate: pass, 290 nodes, 0 unclassified, 0 failures. No NUMRULE code, node control or line pin changed.
+
+### Re-runs
+
+| Check | Exit | Result |
+|---|---:|---|
+| Registry diagnostics (`storage_value_registry_data_failures`) | — | 0 |
+| `pm-shard-plans.py --check` | 0 | pass, 99 sources |
+| `pm-plan-index.py validate` (live `origin/main` `f4e49a6dc4`) | 0 | pass, 0 failures, 8,792 PlanUnits, 33,172 acceptance units |
+| `pm_event_datetime_inventory.py`, tracked tree | 0 | pass, 290 nodes |
+| `pm_event_numbers.py --self-test` (scope all), tracked tree | 1 | 13,626/13,626 cases, inventory pass; exactly the 32 W3H `datetime_node_*` checks of T215 fail, as before |
+| `pm_goal_test_demo_r1.py` | 0 | pass, 1 positive, 36 negatives |
+
+**Lane checkers whose inputs main changed:** none read `Plan_To_Node_Compilation.md`, the PNC ledger, the closure re-audit repair file, the migration snapshot, the landing baseline or `Concepts/`. Two DG helpers build a SHA-256 → path index over every JSON file under `Plans/` to locate frozen resources by hash: `pm_goal_test_demo_r1.py` (rerun above, pass) and `pm_goal_dg_r_world.py`. Main's new JSON files only add entries to that index, and a lookup changes only for byte-identical content, so `dg-r` is unaffected. W3G's `Plans/**/*.schema.json` scan is unaffected because main changed no schema file. W3C's mutation runner copies `Plans/` into scratch but mutates only W3C files. Every other lane checker reads only its own schemas, fixtures and the shared NUMRULE and guard modules, none of which main changed.
+
+### Dry landing check
+
+`python3 scripts/pm-landing-check.py --base f4e49a6dc43deb01a222df170f9837661500102a --json --keep-check-reports <dir> --readiness-audit-root Plans/.audits/event-authority-2026-08-13-currentness`. Run in the full `int3` worktree at `6c1efe4421`, with `PYTHONINTMAXSTRDIGITS=0`, under `MemoryMax=2G` with a 2-hour limit, as a long-job (2,464 s).
+
+**Exit 1; 0 blocking; 0 infrastructure timeouts.**
+- **Baseline:** `ef429abcaa`, main's new baseline: an ancestor of the base, 0.06 days old, current.
+- **Totals:** run-gates and audit-governance 6,605 each (baseline 6,323 / 6,322); plan-migration-validate 18,969.
+- **On-branch rows:** all 19,281 are governance staleness.
+- **New but off-branch:** the same two non-stale `historical_successor_terminal_current_snapshot_invalid` rows as before, on `Plans/.plan_migration/pds-20260611-002-atomize-planunits/…`. They name no branch file and do not block. Reported to Jared.
+- **T215:** the 32 W3H node checks do not appear in the landing check.
+- **Reseal list:** `Plans/Plan_To_Node_Compilation.md` is now on `main`, so the Spec Lock `stale_hash` list is the ten branch files of the reseal request below. Otherwise the request is unchanged.
+
+### W3B citation re-pin (Sol note 2, editorial)
+
+The 19 W3B retention citations of `Plans/storage-plan.md` named the file's SHA-256 before the W3D merge (`5065d9e0…`). They now name the integrated file's hash. All 76 retention quotes were re-read at their cited lines first: 19 re-pinned, 57 already current, 0 misses. No quote, line or grade changed. The "76 exact quotes pinned at current lines and hashes" sentence in item 4 below holds from `6c1efe4421`.
+
 ## Base
 
 - **Start:** `origin/main` `87793bb7fd442b2a1c7650d4c7e5d3407ed683fc` (fetched 2026-11-14 about 03:10Z), carrying batch 2.
