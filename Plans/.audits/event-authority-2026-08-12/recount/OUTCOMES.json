@@ -202,6 +202,10 @@
   {
    "event_type": "forge.review.created",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.marked_ready",
+   "outcome": "registered"
   }
  ]
 }
