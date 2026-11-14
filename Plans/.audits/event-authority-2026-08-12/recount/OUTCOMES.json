@@ -330,6 +330,10 @@
   {
    "event_type": "source_control.checkpoint.restored",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.remote.fetch_completed",
+   "outcome": "registered"
   }
  ]
 }
