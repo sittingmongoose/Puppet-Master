@@ -397,8 +397,9 @@
   },
   "ai.models.model-alias": {
    "label": "Model nicknames",
-   "placeholder": "e.g. fast = Claude Haiku",
-   "help": "Pickers find a model by its nickname first."
+   "help": "Short names you can type instead of a full model name, for chat and media models.",
+   "layout": "wide",
+   "about": "A nickname is a short name for one model. Type it in chat or in a picture, video or speech request and Puppet Master uses that model. The built-in ones (Nano Banana, Veo Fast and the rest) are in the list too; a nickname of your own with the same name points it elsewhere, and removing yours brings the built-in back. A nickname never makes a model available: the model still has to be on one of your services."
   },
   "ai.models.temperature": {
    "label": "Randomness"

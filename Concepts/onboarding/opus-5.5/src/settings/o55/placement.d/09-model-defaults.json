@@ -1,5 +1,5 @@
 {
- "_about": "Build companions for canonical Settings model row admission/retirement (DL-476). The model design and picker implementation remain with the concept owner.",
+ "_about": "Build companions for canonical Settings model row admission/retirement (DL-476). The model design and picker implementation remain with the concept owner. FO-186 (DL-479): media.image.model-aliases is retired into the one Model nicknames list (ai.models.model-alias); its old box is drawn nowhere.",
  "retire_ids": [
   "ai.models.default-variant",
   "ai.models.execution-role",
@@ -14,6 +14,7 @@
   "ai.models.subagent-effort",
   "ai.models.subagent-model",
   "extensions.commands.command-model",
+  "media.image.model-aliases",
   "media.image.provider",
   "personas.tuning.default-model",
   "personas.tuning.default-platform",
