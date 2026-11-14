@@ -558,6 +558,10 @@
   {
    "event_type": "todo.status_changed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "todo.updated",
+   "outcome": "registered"
   }
  ]
 }
