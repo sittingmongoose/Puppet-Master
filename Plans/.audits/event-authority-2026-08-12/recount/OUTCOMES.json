@@ -46,6 +46,10 @@
   {
    "event_type": "assistant_plan.wizard_handoff_created",
    "outcome": "registered"
+  },
+  {
+   "event_type": "autonomy.ceiling_checked",
+   "outcome": "registered"
   }
  ]
 }

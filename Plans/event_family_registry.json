@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-14.43",
+  "registry_revision": "2026-11-14.44",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -6121,6 +6121,96 @@
           "producer_admission": "requires_owner_adoption",
           "append_owner_ref": "Plans/Assistant_Plan_Runtime.md#APR-1506",
           "read_owner_ref": "Plans/Assistant_Plan_Runtime.md#APR-1506",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+    },
+    {
+      "family_id": "event-family-autonomy-ceiling-checked",
+      "family_revision": "1.0.0",
+      "event_type": "autonomy.ceiling_checked",
+      "scope_policy": "application_or_project",
+      "semantic_owner_doc": "Plans/Contracts_V0.md#CV-1450",
+      "payload_owner_doc": "Plans/Contracts_V0.md#CV-1450",
+      "payload_schema_id": "pm.event_payload.autonomy.ceiling_checked.v1",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/w3f/autonomy_ceiling_checked.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.event_payload.autonomy.ceiling_checked.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/run_id"
+          ],
+          "attempt_id": [
+            "/payload/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Contracts_V0.md#CV-1450",
+        "Plans/storage-plan.md#SP-1450",
+        "Plans/event_payloads/w3f/autonomy_ceiling_checked.schema.json#",
+        "reports/event-authority-20261105/W3F-self-grade.json"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.event_payload.autonomy.ceiling_checked.v1",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/w3f/autonomy_ceiling_checked.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.event_payload.autonomy.ceiling_checked.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Contracts_V0.md#CV-1450",
+          "read_owner_ref": "Plans/Contracts_V0.md#CV-1450",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.event_payload.autonomy.ceiling_checked.v1",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/w3f/autonomy_ceiling_checked.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.event_payload.autonomy.ceiling_checked.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Contracts_V0.md#CV-1450",
+          "read_owner_ref": "Plans/Contracts_V0.md#CV-1450",
           "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
           "retention_policy_ref": {
             "registry_schema_id": "pm.storage_value_registry.v2",
