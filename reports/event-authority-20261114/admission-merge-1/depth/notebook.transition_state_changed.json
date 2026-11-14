@@ -1,0 +1,284 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-14.98",
+  "sha256": "6253ecb26b6ed3795170e78a4d9e0d718dccb2e7cd322340df359aae7c6b698d",
+  "family_count": 144,
+  "row_pointer": "#/families/143"
+ },
+ "base_commit": "a3436440cdfca1c33350f8ae0ea5df1fc3774bdb",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "notebook.transition_state_changed",
+   "family_id": "event-family-notebook-transition-state-changed",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-14.98 as #/families/143 (canonical row SHA-256 3a5ef711af4cab69660b79d6a25bdb1e1b4da425a19fa340029e9f98588e5075); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/143",
+       "line_start": 10037,
+       "line_end": 10121,
+       "quote": "\"event_type\": \"notebook.transition_state_changed\"",
+       "quote_line": 10040,
+       "file_sha256": "6253ecb26b6ed3795170e78a4d9e0d718dccb2e7cd322340df359aae7c6b698d",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact newly authored owner unit governs this family; its own CV/SP companions bind the technical contract.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1142,
+       "line_end": 1142,
+       "quote": "plan_unit_id: WN-1518",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact original owning command/emitter, complete native source/result, ordering and first-receipt custody are specified. Native implementation remains unavailable until original owner and admission prerequisites exist.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1187,
+       "line_end": 1187,
+       "quote": "**Producer and original source.** SharedIntegrationRuntime context-transition lifecycle owner; Notebook supplies required content only. Reuse Prompt_Pipeline proactive fresh-window request/a",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Distinct closed Project/application selectors (where applicable) resolve; all 19 payload files pass structural schema validation and eager reference resolution.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1189,
+       "line_end": 1189,
+       "quote": "**Payload and scope.** CV-1518 selects `Plans/event_authority_w3g/payloads/notebook_transition_state_changed.schema.json` at each named closed selector in `Plans/event_authority_w3g/contract",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact source/envelope/scope/subject joins and per-family immutable original operation identity/key recipes adopt CV-317/CV-366 without a local number/timestamp implementation.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1189,
+       "line_end": 1189,
+       "quote": "**Payload and scope.** CV-1518 selects `Plans/event_authority_w3g/payloads/notebook_transition_state_changed.schema.json` at each named closed selector in `Plans/event_authority_w3g/contract",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original operation/result and first receipt replay never reexecute work; changed semantic request conflicts and historical read is separate from current append.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1191,
+       "line_end": 1191,
+       "quote": "**Replay, consumer and checkpoints.** SP-1518 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original el",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Case L-3 Runtime/run/node/attempt and SP-256 context_transition_record assignment; require the actual original run lineage/completion anchor, never window or provider-session identity.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1193,
+       "line_end": 1193,
+       "quote": "RP-RUNTIME-365D@1.0.0`. Case L-3 Runtime/run/node/attempt and SP-256 context_transition_record assignment; require the actual original run lineage/completion anchor, never window or provider",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Whole original source/result and first full-value receipt, no-body/ref-only disclosure, coherent backup/restore and read-time restrictions are bound without retaining source content by reference.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1193,
+       "line_end": 1193,
+       "quote": "**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache ",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Record an actual owner transition along requested -> preparing -> checkpointed -> admitted -> activated -> recovered_resumed, or its defined terminal deferred/denied/failed/cancelled edge from a nonterminal state. Each exact source transition has one original identity; unchanged reads/replay create none. Changed route/account/Stop/generations require safe owner re-admission, never invented activation. Observable activation and complete checkpoint/admission evidence precede the respective success edges; recovery resumes no stopped work.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1147,
+       "line_end": 1147,
+       "quote": "Record an actual owner transition along requested -> preparing -> checkpointed ->",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact named passive family reader adopts SP-278 generic projector/checkpoint and full captured-range semantics. It owns no persisted filtered projection or private checkpoint.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1191,
+       "line_end": 1191,
+       "quote": "reader.notebook.transition_state_changed.history.v1@1.0.0` is the sole newly authored family history reader for Notebook/Context Details history; continuation still requires its native admis",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original recipe/edition dispatch, writer cutoff, reader withdrawal and authentic generic rebuild fences are explicit. Future/unknown/withdrawn selectors are unavailable.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1193,
+       "line_end": 1193,
+       "quote": "Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cut",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Executable synthetic oracle (native NOT_RUN): 42 positives and 494 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
+     "evidence": [
+      {
+       "path": "Plans/Working_Notebook.md",
+       "unit": "WN-1518",
+       "line_start": 1195,
+       "line_end": 1195,
+       "quote": "**Criterion 12.** `ATS-1263` and the `notebook.transition_state_changed` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executab",
+       "quote_check": "exact",
+       "file_sha256": "7a8d6b81de64a320cf0c894ccf914e46fd6b8b07bcd69a86b177ed5abc0f3bbf"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
