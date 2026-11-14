@@ -16,7 +16,8 @@
 //            skipped (its skipTransition, wrapped by the check, was not called, and ready did not fail), and from the
 //            circle's first frame to finished it ran at least its length less 50 ms (760 ms, Retro 520 ms) with at least
 //            one frame per 100 ms of that length (a floor that tells a circle drawn from one skipped or frozen, 0-4 frames;
-//            how smooth it was is the gap row's: one per 34 ms failed circles that played at 25 fps on a loaded PC). A page without 'o55:reveal' (one that starts the circle at ready) fails
+//            how smooth it was is the gap row's: one per 34 ms failed circles that played at 25 fps on a loaded PC). This
+//            row answers 'did the circle play'; the task and gap rows answer 'was it smooth' (the lead, 2026-11-14). A page without 'o55:reveal' (one that starts the circle at ready) fails
 //            this row and its other rows are still judged from ready; a skipped transition fails every row below;
 //   held     the app beneath holds still until the reveal has ended, and its work for the look still runs after it:
 //            a hook of the check added with PM56_HOST.onTheme (the chat's own theme hooks, app.js renderApp among them,
@@ -137,7 +138,8 @@ async function surface(t, sandbox) {
 		if (!v.first || !v.end) { await t.check(`${name}: the reveal played (ready, first frame, finished)`, false, JSON.stringify(v)); continue; }
 		const circle = r.family === 'retro' ? 520 : 760, len = v.end - v.first, least = Math.ceil(circle / 100);
 		const played = v.play != null && !v.skipped && len >= circle - 50 && r.frames >= least;
-		await t.check(`${name}: played: the circle really played (o55:reveal, not skipped, its ${circle} ms with frames)`, played,
+		// (this row answers 'did the circle play'; the task and gap rows below answer 'was it smooth')
+		await t.check(`${name}: played: the circle played (o55:reveal, not skipped, its ${circle} ms, a frame per 100 ms; whether it was smooth is the task and gap rows')`, played,
 			`o55:reveal ${v.play == null ? 'not seen' : `at ${v.play} ms`}; ${v.skipped ? 'skipped' : 'not skipped'}; first frame ${v.first} ms to finished ${v.end} ms = ${len} ms (at least ${circle - 50}); ${r.frames} frames (at least ${least})`);
 		// a skipped transition passes none of the rows below: its end is early, and what it measured is not a reveal
 		const skipped = v.skipped ? 'skipped, not judged; ' : '';
