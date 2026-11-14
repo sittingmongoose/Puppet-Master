@@ -531,6 +531,19 @@
     for(var i=0;i<descendants.length;i++)nodes.push(descendants[i]);
     nodes.forEach(function(node){self.release(node);});if(this.active&&(this.active===root||root.contains(this.active)))this.close(true);
   };
+  /* Releasing the tags of a removed part walks all of it: a Settings chapter switch removes the old chapter (about
+     2,000 nodes) inside the task that builds the new one, and that walk was 6 to 16 ms of it on a P1000 and 1 to 6 ms on
+     an RTX 3080 (lane U, 2026-11-14, FO-196). The tag on show, or about to open, inside the removed part still closes at once; the walk
+     itself waits for an idle moment. A part that is back in the page by then (moved, not removed) keeps its tags:
+     its add record has bound it again already. */
+  HoverTagController.prototype.queueRemoved=function(root){
+    if(!root||root.nodeType!==1)return;var self=this;
+    if(this.active&&(this.active===root||root.contains(this.active)))this.close(true);
+    if(this.pendingOpenTarget&&(this.pendingOpenTarget===root||root.contains(this.pendingOpenTarget)))this.cancelPendingOpen();
+    (this.removedQueue||(this.removedQueue=[])).push(root);if(this.removedJob)return;
+    var run=function(){self.removedJob=0;var q=self.removedQueue;self.removedQueue=[];q.forEach(function(r){if(!r.isConnected)self.cleanupRemoved(r);});};
+    this.removedJob=typeof requestIdleCallback==='function'?requestIdleCallback(run,{timeout:1500}):setTimeout(run,200);
+  };
   HoverTagController.prototype.beginLive=function(){
     var self=this;if(this.pageSettling||this.overlaySettling){this.liveShallow.clear();this.liveDeep.clear();return;}if(this.scanning||this.scanFrame){this.liveFrame=censusFrame(function(){self.liveFrame=0;self.beginLive();});return;}this.pruneLiveScopes();
     var nodes=[],seen=new Set();function add(node){if(!node||node.nodeType!==1||!node.isConnected||inOwner(node)||seen.has(node))return;seen.add(node);nodes.push(node);}
@@ -794,7 +807,7 @@
             var added=record.addedNodes[j],providerSwap=!settingsSwap&&added.matches&&added.matches('#panel-settings .resource-detail,.resource-detail')&&added.querySelector&&added.querySelector('.tab-swap-a,.tab-swap-b');
             if(settingsSwap||providerSwap)self.deferLiveScope(added);else self.enqueueLive(added,true);
           }
-          for(var k=0;k<record.removedNodes.length;k++)if(record.removedNodes[k].nodeType===1)self.cleanupRemoved(record.removedNodes[k]);
+          for(var k=0;k<record.removedNodes.length;k++)if(record.removedNodes[k].nodeType===1)self.queueRemoved(record.removedNodes[k]);
         }
       }
       }finally{self.liveBatch=false;self.liveBatchOverlay=null;}
