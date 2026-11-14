@@ -775,6 +775,39 @@
     st.tip(t ? { id: S.tip.id, title: t.title, text: t.text } : null, !!S.talkSwitch);
   }
   /* the column's top, held from the moment the screen comes in (p76); a window resize centres it again */
+  /* FO-206: the screen after this one, prepared while this one sits idle. The first Look screen's five tiles each carry
+     their own look (data-theme), so Start used every look's fonts for the first time, and each face that arrived laid
+     the whole app out again, 4,034 of its 4,800 objects in the frame after the press (19 ms on Alexis, 47 ms on the VM,
+     invalidation "Fonts changed"). Here that screen's body is built once into a host that is laid out but never painted
+     (visibility: hidden, contained, inert, its ids taken off), its fonts are asked for there, and the host goes once they
+     have come: the whole-page layout they cost falls on this screen's quiet time instead of Start's frames. Once per
+     page (a face once loaded stays); never while the screen asked for is already up, or once the window has closed. */
+  const prewarmed = new Set();
+  function prewarm(id, delay) {
+    if (prewarmed.has(id) || !SCREENS.defs[id] || typeof SCREENS.defs[id].body !== 'function') return;
+    const run = () => {
+      if (prewarmed.has(id) || !S.open || S.sess.screen === id) return;
+      const def = SCREENS.defs[id], pane = S.root && S.root.querySelector('.o55-pane');
+      if (!pane) return;
+      prewarmed.add(id);
+      const host = document.createElement('div');
+      host.className = 'o55-prewarm'; host.setAttribute('aria-hidden', 'true'); host.setAttribute('inert', ''); host.setAttribute('data-screen', id);
+      try { host.innerHTML = def.body(S); } catch (_) { return; }
+      host.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+      pane.appendChild(host);
+      try { if (def.mounted) def.mounted(S, host, false); } catch (_) { /* a part it could not draw: its fonts are still asked */ }
+      /* (document.fonts is read a frame later, after the frame's own layout has asked for the faces: its status getter
+         flushes style and layout, FO-188) */
+      const gone = () => { if (host.isConnected) host.remove(); };
+      O55.motion.real.raf(() => O55.motion.real.raf(() => {
+        const F = document.fonts;
+        if (!F || F.status !== 'loading') { gone(); return; }
+        Promise.race([F.ready, new Promise((res) => O55.motion.real.setTimeout(res, 3000))]).then(() => O55.motion.real.raf(gone));
+      }));
+    };
+    const idle = () => (window.requestIdleCallback ? window.requestIdleCallback(run, { timeout: 1500 }) : O55.motion.real.setTimeout(run, 0));
+    O55.motion.real.setTimeout(idle, delay == null ? 1500 : delay);
+  }
   function holdColumn(layer) {
     if (!layer) return;
     layer.removeAttribute('data-col-held');
@@ -1714,5 +1747,5 @@
     return true;
   }
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill });
+  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill, prewarm });
 })();

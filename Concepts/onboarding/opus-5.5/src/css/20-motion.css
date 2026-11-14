@@ -11,6 +11,8 @@
    for the frame that does its heavy style and layout; O55.motion.release then lets the choreography start on a light
    frame. The outgoing layer and scene wait in place, still visible, and start leaving at the same moment. */
 .o55-hold { visibility: hidden; }
+/* a screen prepared while the one before it is idle (FO-206, 60-ui-core.js prewarm): laid out, never painted or hit */
+#pm-o55-onboarding .o55-prewarm { position: absolute; inset: 0; visibility: hidden; pointer-events: none; overflow: hidden; contain: strict; }
 .o55-hold, .o55-hold *, .o55-wait, .o55-wait * { animation-play-state: paused !important; }
 
 /* layers are transparent so the outgoing layer stays visible under the incoming one */
