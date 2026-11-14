@@ -1454,6 +1454,15 @@
        so in every look their chip is the control's own under-layer (under: the lens inside the control, under its
        labels), which scrolls with it and stays under the bars; it wears the material the chosen segment wore in place */
     { sel: '#pm-settings-root .segmented', items: ':scope > button', many: true, kind: 'lens', active: ':is([aria-checked="true"], [aria-pressed="true"])', pad: 0, magRest: 1, mark: true, under: true },
+    /* FO-197 (Jared, 2026-11-13: "should the tab selection between the adjustable tabs on the home page also use the newer
+       animations ... Yes to both, and also the usage page tab switching"): the panels' tabs are the same switcher, in
+       the panel strip's own under-layer, so the chip moves as every other chip of the look does (Friendly's hop,
+       Basic's snap, Retro's steps, NieR's cut, Glass's lens) and as Reduce Motion asks; the plate's chip steps aside
+       (glass.css). A strip folded to a column marks its chosen tab in place, and a tab carried by a drag keeps the
+       plate, which follows it 1:1: neither has a chip here. Settings' chapters and Usage's pages were here already. */
+    { sel: '.pmw-strip', items: '.pmw-tab', many: true, kind: 'lens', active: '[data-active]', pad: 0, magRest: 1, mark: true, under: true,
+      pick: function (strip) { return strip.hasAttribute('data-column') || strip.classList.contains('is-dragging') ? null : strip.querySelector('.pmw-tab[data-active]'); },
+      follow: function (strip) { return [strip]; } },
   ];
   /* the onboarding step rail's mark of a step: its bead and its word, those of them that are drawn; null when neither is */
   function railMark(i) { return unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); }

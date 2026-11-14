@@ -597,6 +597,7 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]),
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > lg-under > .lg-lens,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-strip > lg-under > .lg-lens,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .resource-row[aria-current="true"],
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #projectMenu .pm6-tb-menu-item.is-selected,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-set[aria-pressed="true"], .pmt-cz-chipbox.pmt-cz-lit) {
@@ -615,6 +616,10 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #projectMenu .pm6-tb-menu-item
   background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens))), linear-gradient(var(--pm-switch-body, var(--lg-lens-body)), var(--pm-switch-body, var(--lg-lens-body)));
   box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), var(--pm-switch-shadow, var(--lg-lens-drop));
 }
+/* FO-197: the panels' tabs move with the switcher (glass.js STRIPS, .pmw-strip), whose chip under the labels is the
+   chosen tab's marker; the plate's chip steps aside, but for a tab carried by a drag, which the plate follows 1:1 and
+   the switcher leaves without a chip */
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmw-strip[data-lg-lensed]:not(.is-dragging) > .pmw-plate::before { visibility: hidden; }
 /* While a tab is carried its plate covers the tabs it crosses (rev 20, home-redesign 10-panels.css): the switcher's
    material above is translucent, so during a drag it lies on the strip's own ground, and a neighbour's words no longer
    read through the carried tab (2026-10-28 review, astra R2: both labels at once for the length of the hold) */
@@ -892,6 +897,11 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .o55t-ring { box-shadow: 0 0 0
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > lg-under.lg-lenses-under { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > lg-under > .lg-lens { will-change: auto; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > lg-under > .lg-lens::after { display: none; }
+/* FO-197: the panels' tabs' chip is their strip's own under-layer in Glass too (the plate's chip steps aside, above), so
+   it glides with the panel as the plate did; it wears the lens's material in place, as the segmented choices do */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-strip > lg-under.lg-lenses-under { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-strip > lg-under > .lg-lens { will-change: auto; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-strip > lg-under > .lg-lens::after { display: none; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented[data-lg-lensed] > button { position: relative; z-index: 1; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented:not([data-lg-moving]) > lg-under > .lg-lens { visibility: hidden; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz):not(#lgy) #pm-settings-root .segmented[data-lg-moving] > button:is([aria-checked="true"], [aria-pressed="true"]) { background: transparent !important; box-shadow: none !important; }
