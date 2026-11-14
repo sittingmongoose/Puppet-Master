@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L10036-L11007
 
-Source SHA256: `2cdd733d8301618bfe11517ee6fbe463e4ffc3481fda81aa4ba27f1bf120d357`
+Source SHA256: `05362bc42b3490d9b531203896a4a675872c063c9b6ffb0d8e48fbb42a901a91`
 
 ---
 
@@ -389,7 +389,7 @@ canonical_text: 'Application chat, Goal, Crew, Plan/Deep Plan and scheduled mess
   fields exist only for real owners. Commit the evidence before mutation-capable run/attempt admission; audit
   failure blocks dispatch. Storage owns its explicit app key family, retention/backup and single writer; never
   interpolate an empty Project into the v1 key or reconstruct history from current Settings. App ordinary
-  tool asks use a distinct thread/tool/request/target-bound approval contract (approval.chat_tool_requested/resolved, registered by DL-300; producers still require owner adoption)
+  tool asks use a distinct thread/tool/request/target-bound approval contract (approval.chat_tool_requested/resolved, registered by DL-300; producers still require owner adoption; their DL-411 technical parts are CV-2301, CV-2302 and SP-2301 to SP-2303)
   through the shared approval host; do not null required node fields in Orchestrator approval payloads or
   reuse cmd.runtime.approve without a typed app variant.
 

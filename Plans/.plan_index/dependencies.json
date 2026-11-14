@@ -7782,6 +7782,7 @@
     "SMPFS-140",
     "SMPFS-141",
     "SP-350",
+    "CV-2301",
     "ATS-336",
     "UCC-211",
     "F3-406",
@@ -7834,6 +7835,8 @@
     "SMPFS-001",
     "SMPFS-144",
     "SP-352",
+    "CV-2302",
+    "SP-2301",
     "ATS-018",
     "CS-077",
     "UCC-151",
@@ -7907,6 +7910,8 @@
     "F3-509",
     "SMPFS-148",
     "SMPFS-149",
+    "SP-2302",
+    "SP-2303",
     "UCC-155",
     "WM-050",
     "N2-154",
@@ -8324,6 +8329,7 @@
     "BSD-1352",
     "SSYS-062",
     "SSYS-065",
+    "CV-2300",
     "EP-124",
     "CV-350",
     "GRS-083",
@@ -8354,6 +8360,7 @@
     "SS-039",
     "CS-109",
     "F3-670",
+    "SP-2300",
     "EP-200",
     "CV-351",
     "SP-314",
@@ -8399,6 +8406,7 @@
     "P-124",
     "P-125",
     "UCC-214",
+    "ATS-2301",
     "CV-352",
     "ATS-055",
     "SP-315",
@@ -18393,6 +18401,41 @@
       "edge_type": "depends_on",
       "from": "ATS-2300",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2301",
+      "to": "CV-2300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2301",
+      "to": "CV-2301"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2301",
+      "to": "CV-2302"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2301",
+      "to": "SP-2300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2301",
+      "to": "SP-2301"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2301",
+      "to": "SP-2302"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2301",
+      "to": "SP-2303"
     },
     {
       "edge_type": "depends_on",
@@ -31878,6 +31921,131 @@
       "edge_type": "depends_on",
       "from": "CV-230",
       "to": "CV-229"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2300",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2300",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2300",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2300",
+      "to": "DL-300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2300",
+      "to": "DL-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2300",
+      "to": "SP-348"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2300",
+      "to": "SSYS-060"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2301",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2301",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2301",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2301",
+      "to": "DL-300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2301",
+      "to": "DL-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2301",
+      "to": "HITL-038"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2301",
+      "to": "PS-145"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2301",
+      "to": "SP-353"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2302",
+      "to": "CV-1100"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2302",
+      "to": "CV-2301"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2302",
+      "to": "CV-317"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2302",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2302",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2302",
+      "to": "DL-300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2302",
+      "to": "DL-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2302",
+      "to": "HITL-038"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2302",
+      "to": "PS-145"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-2302",
+      "to": "SP-353"
     },
     {
       "edge_type": "depends_on",
@@ -99281,6 +99449,126 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-2300",
+      "to": "CV-2300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2300",
+      "to": "DL-300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2300",
+      "to": "DL-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2300",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2300",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2300",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2301",
+      "to": "CV-2301"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2301",
+      "to": "DL-300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2301",
+      "to": "DL-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2301",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2301",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2301",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2302",
+      "to": "CV-2302"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2302",
+      "to": "DL-300"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2302",
+      "to": "DL-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2302",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2302",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2302",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2303",
+      "to": "CV-2301"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2303",
+      "to": "CV-2302"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2303",
+      "to": "DL-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2303",
+      "to": "HITL-038"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2303",
+      "to": "PS-145"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-2303",
+      "to": "SP-353"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-231",
       "to": "CV-287"
     },
@@ -142355,7 +142643,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-14T19:34:04Z",
+  "generated_at_utc": "2026-11-14T20:08:25Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -157890,6 +158178,23 @@
         "heading_level": 3,
         "heading_line": 14153,
         "line": 14155,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_contract"
+    },
+    {
+      "context_scope": "event_authority_pnc019_s2",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-2301",
+      "reasoning_tier": "high",
+      "risk_class": "event_oracle_coverage_drift",
+      "source_location": {
+        "heading": "ATS-2301 - Executable oracle of the three DL-300 families (PNC-019 S2)",
+        "heading_level": 3,
+        "heading_line": 14206,
+        "line": 14208,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -173500,6 +173805,57 @@
       },
       "status": "accepted",
       "unit_type": "compatibility_disposition"
+    },
+    {
+      "context_scope": "event_authority_pnc019_s2",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-2300",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-2300 — `settings.layer.changed` producer, identity and replay (newly authored, DL-411)",
+        "heading_level": 2,
+        "heading_line": 51280,
+        "line": 51282,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_pnc019_s2",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-2301",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-2301 — `approval.chat_tool_requested` producer, identity and replay (newly authored, DL-411)",
+        "heading_level": 2,
+        "heading_line": 51349,
+        "line": 51351,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_pnc019_s2",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-2302",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "CV-2302 — `approval.chat_tool_resolved` producer, pairing, identity and replay (newly authored, DL-411)",
+        "heading_level": 2,
+        "heading_line": 51418,
+        "line": 51420,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
     },
     {
       "context_scope": "plan_decomposition_degraded_payload",
@@ -270504,6 +270860,74 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "event_authority_pnc019_s2",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-2300",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-2300 — `settings.layer.changed` publication, retention and reader (newly authored, DL-411)",
+        "heading_level": 2,
+        "heading_line": 66104,
+        "line": 66106,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_pnc019_s2",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-2301",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-2301 — `approval.chat_tool_requested` publication, retention and reader (newly authored, DL-411)",
+        "heading_level": 2,
+        "heading_line": 66175,
+        "line": 66177,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_pnc019_s2",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-2302",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_identity_or_replay_drift",
+      "source_location": {
+        "heading": "SP-2302 — `approval.chat_tool_resolved` publication, retention and reader (newly authored, DL-411)",
+        "heading_level": 2,
+        "heading_line": 66246,
+        "line": 66248,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_pnc019_s2",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-2303",
+      "reasoning_tier": "high",
+      "risk_class": "scope_authority_and_custody_drift",
+      "source_location": {
+        "heading": "SP-2303 — Project chat-tool approval source record (newly authored, DL-411)",
+        "heading_level": 2,
+        "heading_line": 66317,
+        "line": 66319,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "interface_contract"
+    },
+    {
       "context_scope": "tier_0c_2_storage_value_registry",
       "gui_related": false,
       "owner_doc": "Plans/storage-plan.md",
@@ -277636,8 +278060,8 @@
       "source_location": {
         "heading": "SSYS-026 - Provider, backup, and connector owner projections",
         "heading_level": 3,
-        "heading_line": 2467,
-        "line": 2469,
+        "heading_line": 2468,
+        "line": 2470,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277653,8 +278077,8 @@
       "source_location": {
         "heading": "SSYS-027 - Assistant Redesign Settings Managers And Ownership Split",
         "heading_level": 3,
-        "heading_line": 2723,
-        "line": 2725,
+        "heading_line": 2724,
+        "line": 2726,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277670,8 +278094,8 @@
       "source_location": {
         "heading": "SSYS-028 - Assistant Redesign Setting Registration And Packet Spelling Reconciliation",
         "heading_level": 3,
-        "heading_line": 2771,
-        "line": 2773,
+        "heading_line": 2772,
+        "line": 2774,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277687,8 +278111,8 @@
       "source_location": {
         "heading": "Working Notebook Settings Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2909,
-        "line": 2913,
+        "heading_line": 2910,
+        "line": 2914,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277704,8 +278128,8 @@
       "source_location": {
         "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
         "heading_level": 3,
-        "heading_line": 2999,
-        "line": 3077,
+        "heading_line": 3000,
+        "line": 3078,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277721,8 +278145,8 @@
       "source_location": {
         "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
         "heading_level": 3,
-        "heading_line": 2999,
-        "line": 3124,
+        "heading_line": 3000,
+        "line": 3125,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277738,8 +278162,8 @@
       "source_location": {
         "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
         "heading_level": 3,
-        "heading_line": 2999,
-        "line": 3169,
+        "heading_line": 3000,
+        "line": 3170,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277755,8 +278179,8 @@
       "source_location": {
         "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
         "heading_level": 3,
-        "heading_line": 2999,
-        "line": 3221,
+        "heading_line": 3000,
+        "line": 3222,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277772,8 +278196,8 @@
       "source_location": {
         "heading": "SSYS-034 - Terminal Capability Remote Setup And Launch Provenance Projection",
         "heading_level": 3,
-        "heading_line": 3301,
-        "line": 3303,
+        "heading_line": 3302,
+        "line": 3304,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277789,8 +278213,8 @@
       "source_location": {
         "heading": "SSYS-034 - Terminal Capability Remote Setup And Launch Provenance Projection",
         "heading_level": 3,
-        "heading_line": 3301,
-        "line": 3388,
+        "heading_line": 3302,
+        "line": 3389,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277806,8 +278230,8 @@
       "source_location": {
         "heading": "SSYS-036 - Settings Transfer To An Uncreated Project Draft",
         "heading_level": 3,
-        "heading_line": 3455,
-        "line": 3457,
+        "heading_line": 3456,
+        "line": 3458,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277823,8 +278247,8 @@
       "source_location": {
         "heading": "SSYS-037 - External Research Limit Values",
         "heading_level": 3,
-        "heading_line": 3533,
-        "line": 3537,
+        "heading_line": 3534,
+        "line": 3538,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277840,8 +278264,8 @@
       "source_location": {
         "heading": "SSYS-038 - Commands Manager Layout And Palette Preferences",
         "heading_level": 3,
-        "heading_line": 3595,
-        "line": 3597,
+        "heading_line": 3596,
+        "line": 3598,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277857,8 +278281,8 @@
       "source_location": {
         "heading": "SSYS-039 - Chat Sound On By Default And Queue As The Busy Send Default",
         "heading_level": 3,
-        "heading_line": 3643,
-        "line": 3645,
+        "heading_line": 3644,
+        "line": 3646,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277874,8 +278298,8 @@
       "source_location": {
         "heading": "10. Guided set-ups, profiles, keys and transfer (2026-09-28)",
         "heading_level": 3,
-        "heading_line": 3860,
-        "line": 3909,
+        "heading_line": 3861,
+        "line": 3910,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277891,8 +278315,8 @@
       "source_location": {
         "heading": "10. Guided set-ups, profiles, keys and transfer (2026-09-28)",
         "heading_level": 3,
-        "heading_line": 3860,
-        "line": 3996,
+        "heading_line": 3861,
+        "line": 3997,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277908,8 +278332,8 @@
       "source_location": {
         "heading": "10. Guided set-ups, profiles, keys and transfer (2026-09-28)",
         "heading_level": 3,
-        "heading_line": 3860,
-        "line": 4054,
+        "heading_line": 3861,
+        "line": 4055,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277925,8 +278349,8 @@
       "source_location": {
         "heading": "SSYS-043 - NieR Theme Family, Adjust Parts, Background And Load Migration",
         "heading_level": 3,
-        "heading_line": 4161,
-        "line": 4163,
+        "heading_line": 4162,
+        "line": 4164,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277942,8 +278366,8 @@
       "source_location": {
         "heading": "SSYS-044 - Settings Controls Hosted Outside Settings",
         "heading_level": 3,
-        "heading_line": 4291,
-        "line": 4293,
+        "heading_line": 4292,
+        "line": 4294,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277959,8 +278383,8 @@
       "source_location": {
         "heading": "SSYS-050 - Panels, Tabs, Editor And Chat Column Rows, And The Rows The Redesign Retires",
         "heading_level": 3,
-        "heading_line": 4589,
-        "line": 4591,
+        "heading_line": 4590,
+        "line": 4592,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277976,8 +278400,8 @@
       "source_location": {
         "heading": "SSYS-051 - Terminal Look Rows On The One Appearance Model",
         "heading_level": 3,
-        "heading_line": 4770,
-        "line": 4772,
+        "heading_line": 4771,
+        "line": 4773,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -277993,8 +278417,8 @@
       "source_location": {
         "heading": "SSYS-052 - Editor Look Rows And Shared Customize Entry",
         "heading_level": 3,
-        "heading_line": 4991,
-        "line": 4993,
+        "heading_line": 4992,
+        "line": 4994,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278010,8 +278434,8 @@
       "source_location": {
         "heading": "SSYS-053 - Settings Preserves The Reader And Opens Chapters At The Top",
         "heading_level": 3,
-        "heading_line": 5072,
-        "line": 5074,
+        "heading_line": 5073,
+        "line": 5075,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278027,8 +278451,8 @@
       "source_location": {
         "heading": "SSYS-054 - Wallpaper Setting And Replacement Of Old Glass Backgrounds",
         "heading_level": 3,
-        "heading_line": 5175,
-        "line": 5177,
+        "heading_line": 5176,
+        "line": 5178,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278044,8 +278468,8 @@
       "source_location": {
         "heading": "SSYS-055 - Chat Preferences In The Hosted Surface",
         "heading_level": 3,
-        "heading_line": 5268,
-        "line": 5270,
+        "heading_line": 5269,
+        "line": 5271,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278061,8 +278485,8 @@
       "source_location": {
         "heading": "SSYS-056 - Pip Parts And One Editor",
         "heading_level": 3,
-        "heading_line": 5338,
-        "line": 5340,
+        "heading_line": 5339,
+        "line": 5341,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278078,8 +278502,8 @@
       "source_location": {
         "heading": "SSYS-057 - Status Bar Numbers Or Words",
         "heading_level": 3,
-        "heading_line": 5461,
-        "line": 5463,
+        "heading_line": 5462,
+        "line": 5464,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278095,8 +278519,8 @@
       "source_location": {
         "heading": "SSYS-058 - Storage Health, Free Up Space And Backup Status In Settings",
         "heading_level": 3,
-        "heading_line": 5529,
-        "line": 5531,
+        "heading_line": 5530,
+        "line": 5532,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278146,8 +278570,8 @@
       "source_location": {
         "heading": "SSYS-061 - Manager Home, Reach, Project Switches And Whole Versions",
         "heading_level": 3,
-        "heading_line": 1773,
-        "line": 1775,
+        "heading_line": 1774,
+        "line": 1776,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278163,8 +278587,8 @@
       "source_location": {
         "heading": "SSYS-062 - Detached Layered Copy And Destination Account Readiness",
         "heading_level": 3,
-        "heading_line": 1859,
-        "line": 1861,
+        "heading_line": 1860,
+        "line": 1862,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278180,8 +278604,8 @@
       "source_location": {
         "heading": "SSYS-063 - Changed, Origin Details, Targeted Edits And Undo",
         "heading_level": 3,
-        "heading_line": 1975,
-        "line": 1977,
+        "heading_line": 1976,
+        "line": 1978,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278197,8 +278621,8 @@
       "source_location": {
         "heading": "SSYS-064 - Pre-Release Fold Without Silent Value Changes",
         "heading_level": 3,
-        "heading_line": 2083,
-        "line": 2085,
+        "heading_line": 2084,
+        "line": 2086,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278214,8 +278638,8 @@
       "source_location": {
         "heading": "SSYS-065 - Agent Targets, Limited Devices, Onboarding And Updated Defaults",
         "heading_level": 3,
-        "heading_line": 2168,
-        "line": 2170,
+        "heading_line": 2169,
+        "line": 2171,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278231,8 +278655,8 @@
       "source_location": {
         "heading": "SSYS-076 - Settings Route Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 5591,
-        "line": 5593,
+        "heading_line": 5592,
+        "line": 5594,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -278248,8 +278672,8 @@
       "source_location": {
         "heading": "SSYS-077 - One Model Defaults List And Retired Input Handling",
         "heading_level": 3,
-        "heading_line": 5816,
-        "line": 5818,
+        "heading_line": 5817,
+        "line": 5819,
         "path": "Plans/Settings_System.md"
       },
       "status": "accepted",
@@ -291845,10 +292269,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 23493,
+    "depends_on_edge_count": 23549,
     "downstream_blocked_node_count": 0,
-    "edge_count": 26711,
-    "node_count": 8793,
+    "edge_count": 26767,
+    "node_count": 8801,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0

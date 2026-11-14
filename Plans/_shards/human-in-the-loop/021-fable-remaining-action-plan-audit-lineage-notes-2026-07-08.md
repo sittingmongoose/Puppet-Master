@@ -4,7 +4,7 @@ Source: `Plans/human-in-the-loop.md`
 
 Source lines: L2682-L2803
 
-Source SHA256: `1cdfb7b5831131f91336e60315b7ae325a3cf2e112724c4d2ec06a6349a0ba58`
+Source SHA256: `c5f5927ba8fa04bd16ee8a60d0a9416c378b9ccaeae0f4e2592a30e05c40b5ac`
 
 ---
 
@@ -65,7 +65,7 @@ canonical_text: 'The existing approval host renders three distinct authorities f
   audit/backup/retention and historical restored evidence; current Settings, client claims or a copied grant
   never become an actual human decision.
 
-  RuntimeApproveV3Request and RuntimeDeclineV3Request select a closed union of the historical run_id/node_id/blocked_sequence/optional attempt_id payload and a discriminated chat_tool decision carrying its exact command, request digest/revision, tool/target, protected person evidence and expiry. Pre-attempt blocks retain absent attempt_id; current attempts resolve only from the original blocked episode, never focus. Results distinguish node identity/effects from the ChatToolApprovalResult resolution payload. node.unblocked applies only to node approval; chat-tool resolution uses approval.chat_tool_resolved with DL-300 requires_owner_adoption. Cross-variant fields, wrong decisions and stale/currentness mismatch refuse; the host, handlers and permission ladder are shared.'
+  RuntimeApproveV3Request and RuntimeDeclineV3Request select a closed union of the historical run_id/node_id/blocked_sequence/optional attempt_id payload and a discriminated chat_tool decision carrying its exact command, request digest/revision, tool/target, protected person evidence and expiry. Pre-attempt blocks retain absent attempt_id; current attempts resolve only from the original blocked episode, never focus. Results distinguish node identity/effects from the ChatToolApprovalResult resolution payload. node.unblocked applies only to node approval; chat-tool resolution uses approval.chat_tool_resolved with DL-300 requires_owner_adoption. Cross-variant fields, wrong decisions and stale/currentness mismatch refuse; the host, handlers and permission ladder are shared. The host producers, request pairing and storage custody of approval.chat_tool_requested and approval.chat_tool_resolved are CV-2301, CV-2302 and SP-2301 to SP-2303 (newly authored under DL-411, PNC-019 S2).'
 gui_related: true
 gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are
   user-visible.
