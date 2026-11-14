@@ -206,6 +206,10 @@
   {
    "event_type": "forge.review.approved",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.changes_requested",
+   "outcome": "registered"
   }
  ]
 }
