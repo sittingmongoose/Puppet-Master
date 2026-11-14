@@ -4064,9 +4064,39 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const ok=new Set(r.accounts.map(a=>ONB_PICKER[a.settings_provider_id||a.provider_entry_id]).filter(Boolean));
     return D.models.filter(m=>ok.has(m.provider));
   }
+  /* FO-186 r2 (MS-052): a typed nickname finds the model it means. The map is the Settings row's own effective
+     read (PM51.modelNicknames: your lines, the retired Media box's compatibility read, the 6.8 built-ins) through
+     the page's one Settings access — no second store. Nicknames normalize as the row does (lowercase; spaces,
+     underscores and hyphens collapse) and match whole or as a prefix. A nickname's model id maps to this picker's
+     entries the way the Settings picker resolves it: a chat model id directly, else the canonical
+     provider_id/model_id through Settings' ready-model list, by its provider (ONB_PICKER) and model name. A
+     nickname whose model is not a configured chat model lists nothing. */
+  const nickNorm=s=>String(s==null?'':s).trim().toLowerCase().replace(/[\s_-]+/g,' ');
+  function modelNicknames(){ try{ return (window.PM51&&typeof PM51.modelNicknames==='function')?PM51.modelNicknames():[]; }catch(e){ return []; } }
+  function nickChatModels(value){
+    const v=String(value||''); if(!v) return [];
+    const direct=D.models.filter(x=>x.id===v); if(direct.length) return direct;
+    let ready=[]; try{ ready=(window.PM51&&PM51.readyModels)?PM51.readyModels():[]; }catch(e){}
+    const c=ready.find(x=>x.value===v); if(!c) return [];
+    const provider=ONB_PICKER[c.pid]||'', name=nickNorm(c.model); if(!name) return [];
+    return D.models.filter(x=>(!provider||x.provider===provider)&&(nickNorm(x.name)===name||nickNorm(x.name).startsWith(name+' ')));
+  }
+  /* model id -> the nickname the current search matched (whole or prefix, normalized); empty when not searching */
+  function modelNicknameHits(){
+    const nq=nickNorm(state.modelSearch), hits={};
+    if(!nq) return hits;
+    const ids=new Set(configuredModels().map(x=>x.id));
+    modelNicknames().forEach(n=>{
+      const nn=nickNorm(n.nick);
+      if(!nn||(nn!==nq&&!nn.startsWith(nq))) return;
+      nickChatModels(n.model).forEach(m=>{ if(ids.has(m.id)&&!(m.id in hits)) hits[m.id]=n.nick; });
+    });
+    return hits;
+  }
   function filteredModels(){
     const q=state.modelSearch.toLowerCase().trim();
-    let models=configuredModels().filter(x=>!q||`${x.name} ${x.provider} ${x.account}`.toLowerCase().includes(q));
+    const hits=modelNicknameHits();
+    let models=configuredModels().filter(x=>!q||`${x.name} ${x.provider} ${x.account}`.toLowerCase().includes(q)||x.id in hits);
     if(state.modelProvider==='favorites') models=models.filter(x=>isFavorite(x.id));
     else if(state.modelProvider!=='all') models=models.filter(x=>x.provider===state.modelProvider);
     return models;
@@ -4098,7 +4128,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function groupModels(models){
     const by={};models.forEach(m=>(by[m.provider]??=[]).push(m));
-    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}"${hoverAttrs('model-fav:'+m.id,(isFavorite(m.id)?'Remove from':'Add to')+' favorites')}>${icon('star',12)}</button></div>`).join('')}`).join('');
+    const hits=modelNicknameHits();
+    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong>${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${hits[m.id]?`<span class="effort-word model-nick">“${esc(hits[m.id])}”</span>`:''}${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}"${hoverAttrs('model-fav:'+m.id,(isFavorite(m.id)?'Remove from':'Add to')+' favorites')}>${icon('star',12)}</button></div>`).join('')}`).join('');
   }
   /* Measured in-browser at 1440x900, not guessed: .model-row pitch is 44.03
      (min-height:44 with border-box, so its 5/6px padding is inside), a

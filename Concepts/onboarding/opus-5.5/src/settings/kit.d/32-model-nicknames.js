@@ -12,6 +12,7 @@
    Nicknames normalize as 6.7 says: lowercase, spaces, underscores and hyphens collapse. The row is wide: the list under
    its words, then a line to add one. */
 const O55_NICK_ID = 'ai.models.model-alias';
+const O55_NICK_LEGACY_ID = 'media.image.model-aliases';
 const O55_NICK_BUILTIN = [
   ['nano banana', 'gemini-2.5-flash-image', 'Gemini 2.5 Flash Image', 'Pictures'],
   ['nano banana pro', 'gemini-3-pro-image-preview', 'Gemini 3 Pro Image', 'Pictures'],
@@ -20,7 +21,22 @@ const O55_NICK_BUILTIN = [
   ['tts pro', 'gemini-2.5-pro-preview-tts', 'Gemini 2.5 Pro speech', 'Reading aloud']
 ];
 const o55NickNorm = s => String(s == null ? '' : s).trim().toLowerCase().replace(/[\s_-]+/g, ' ');
-const o55NickValue = () => { const v = PM51.value ? PM51.value(O55_NICK_ID) : null; return v && typeof v === 'object' && !Array.isArray(v) ? Object.assign({}, v) : {}; };
+const o55NickOwn = () => { const v = PM51.value ? PM51.value(O55_NICK_ID) : null; return v && typeof v === 'object' && !Array.isArray(v) ? Object.assign({}, v) : {}; };
+/* While the new key holds no lines of its own (missing, the old text default '', or {}), the retired Media box
+   media.image.model-aliases is a compatibility read into this list (Models_System 6.7 "Older values";
+   Plans/settings_inventory.json compatibility_reads): its entries read as your lines, and a line named like a
+   built-in replaces it exactly as your own do. The legacy key's stored bytes stay untouched (no deletion); the
+   next real save writes the merged lines into ai.models.model-alias. The row's former text box had no line format
+   the canon defines, so a text value holds no lines of its own. */
+const o55NickValue = () => {
+  const own = o55NickOwn();
+  if (Object.keys(own).length) return own;
+  const legacy = state && state.settings ? state.settings[O55_NICK_LEGACY_ID] : null;
+  if (!legacy || typeof legacy !== 'object' || Array.isArray(legacy)) return own;
+  const merged = {};
+  Object.keys(legacy).forEach(k => { const m = legacy[k]; if (typeof m === 'string' && m) merged[k] = m; });
+  return merged;
+};
 /* the models a nickname may name: your signed-in models, then the media models of the built-in table */
 function o55NickChoices() {
   const chat = o55Ready().map(m => ({ value: m.value, label: String(m.label).split(' · ').slice(0, -1).join(' · ') || m.label, meta: m.meta || '', brand: o55BrandOf(m.value, m) }));
@@ -120,4 +136,15 @@ PM51.valueText = (setting, v) => {
   if (!setting || setting.id !== O55_NICK_ID) return o55NickText(setting, v);
   const own = v && typeof v === 'object' && !Array.isArray(v) ? Object.entries(v) : [];
   return own.length ? own.map(([n, m]) => `${n} → ${o55NickModelName(m)}`).join(', ') : 'Only the built-in nicknames';
+};
+/* The nicknames a lookup sees (Models_System 6.7, MS-052): the list's effective lines — yours (with the retired
+   Media box's compatibility read while the new key holds none of your own), then the 6.8 built-ins your lines have
+   not replaced. The chat's model picker reads this through PM51, the page's one Settings access, so a typed nickname
+   finds the model it means; this only reads. */
+PM51.modelNicknames = () => {
+  const own = o55NickValue();
+  const lines = Object.keys(own).map(k => ({ nick: k, model: own[k] }));
+  const taken = new Set(lines.map(x => o55NickNorm(x.nick)));
+  O55_NICK_BUILTIN.forEach(([n, id]) => { if (!taken.has(o55NickNorm(n))) lines.push({ nick: n, model: id }); });
+  return lines;
 };
