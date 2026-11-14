@@ -58,9 +58,12 @@ async function press(t, f, sel, what) {
 	const loc = f.locator(sel).filter({ visible: true }).first();
 	if (!(await loc.count())) return false;
 	await loc.scrollIntoViewIfNeeded().catch(() => {});
-	await loc.click({ timeout: 8000 }).catch((e) => t.log(`press ${what || sel}: ${e.message.split('\n')[0]}`));
+	/* a click that times out or fails did not press: say so (false), so a caller can take another route instead of
+	   judging whatever page is still showing (sol-recheck-fo182-186, 2026-11-14) */
+	let clicked = true;
+	await loc.click({ timeout: 8000 }).catch((e) => { clicked = false; t.log(`press ${what || sel}: ${e.message.split('\n')[0]}`); });
 	await t.settle();
-	return true;
+	return clicked;
 }
 async function closeAll(t, f) {
 	for (let i = 0; i < 3; i++) {
