@@ -12,9 +12,10 @@
      marked data-o55-loop in that frame's own callback, and the rule keyed on that mark (10-window.css) pauses it at
      once (one restyle of the marked elements); the mount's heavy frame then finds them held already. That frame starts
      late by the click's own task (the menu, the tour's reset, the open: 25-40 ms), so its time, which the pause
-     takes, is that much behind the wall clock the compositor moves the loops by: each held loop is then placed where
-     it is on screen now (currentTime from its own start time and performance.now(), after the pause's restyle), so it
-     holds the place it was shown at, to within the rest of that frame's work;
+     takes, is that much behind the wall clock the compositor moves the loops by: each held loop the compositor runs
+     (transform, opacity, filter; most of the app's) is then placed where it is on screen now (currentTime from its own
+     start time and performance.now(), after the pause's restyle), so it holds the place it was shown at, to within the
+     rest of that frame's work; a loop the main thread draws was shown at the frame's own time and stays there;
    - at the close, the marks stay through the frame that wakes the app (data-o55-open goes, inert comes off) and are
      taken off in the frame after it, which starts on time, so each loop goes on from exactly where it stopped;
    - a loop that starts while the window is open (a look applied as the window opens, a row the app redraws beneath) is
@@ -60,6 +61,20 @@
     mark(e.target);
   }
 
+  /* Only a loop the compositor can run (transform, opacity, filter alone) moved on by the wall clock while the frame
+     waited; one that animates anything else is drawn by the main thread, at the frame's own time, which is where its
+     pause leaves it, so it is not placed. Known per @keyframes name, once. */
+  const COMPOSITED = new Set(['transform', 'translate', 'rotate', 'scale', 'opacity', 'filter']);
+  const NOT_PROPS = new Set(['offset', 'computedOffset', 'easing', 'composite']);
+  const kinds = new Map();
+  const onCompositor = (a) => {
+    const name = a.animationName;
+    if (kinds.has(name)) return kinds.get(name);
+    let ok = false;
+    try { const props = new Set(); for (const k of a.effect.getKeyframes()) for (const p of Object.keys(k)) if (!NOT_PROPS.has(p)) props.add(p); ok = props.size > 0 && [...props].every((p) => COMPOSITED.has(p)); } catch (_) { ok = false; }
+    kinds.set(name, ok);
+    return ok;
+  };
   /* mark every CSS animation of the app that runs (or is paused by another rule) and place each running one where the
      compositor shows it now: in a frame that starts late, the frame's own time (which the pause takes) is behind */
   function take() {
@@ -75,7 +90,7 @@
       const st = a.playState; if (st !== 'running' && st !== 'paused') continue;
       const fx = a.effect; if (!fx || fx.pseudoElement || !heldElement(fx.target)) continue;
       els.push(fx.target);
-      if (st === 'running') { const s0 = a.startTime, k = a.playbackRate; if (s0 != null && Number.isFinite(k)) place.push([a, s0, k]); }
+      if (st === 'running' && onCompositor(a)) { const s0 = a.startTime, k = a.playbackRate; if (s0 != null && Number.isFinite(k)) place.push([a, s0, k]); }
     }
     for (const el of els) mark(el);
     if (place.length) void place[0][0].playState;   // the one restyle: the marks pause the loops now

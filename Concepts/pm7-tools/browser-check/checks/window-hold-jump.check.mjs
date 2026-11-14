@@ -9,12 +9,19 @@
 // its Close button closes it, under a light DevTools trace. Every frame (requestAnimationFrame) samples each loop's
 // currentTime and play state at the frame's own time; the trace gives the end of that frame's main-thread work (its
 // ProxyMain::BeginMainFrame, matched by the sample's own clock through a sync mark). Judged, per loop:
-//   open    the hold was taken at time X (the loop's start + its held currentTime); the frame that shows it (the first
-//           whose late sample, a ResizeObserver callback after its style and layout, is paused) ended its traced main
-//           frame at d. d - X is how far the compositor kept moving the loop past the place it was put back to: at
-//           most one frame.
-//   close   the resume was taken at X (the loop's new start + its held currentTime); d - X of the frame that shows it
-//           (the first whose late sample runs) is the jump forward when it is shown: at most one frame.
+//   open    the hold was taken at time X (the loop's start + its held currentTime). The main frame that carries it is
+//           the first whose late sample (a ResizeObserver callback after its style and layout) is paused; until that
+//           frame's commit is activated the compositor goes on drawing the loop by its own frame times, the last at V.
+//           V - X is how far the loop steps back when the hold is shown. Every change Chrome makes in a frame reaches
+//           the screen some time after that frame's own time (paint, commit, activation); the page's ordinary delay,
+//           P, is the median of V - the frame's time over every sampled frame of the run. Judged: V - X - P, at most
+//           one frame (the step a stale hold time adds to what any change in the page has).
+//   close   the resume was taken at X (the loop's new start + its held currentTime); for the main frame that carries
+//           it (the first whose late sample runs), V - X is how far the loop steps forward past one ordinary step when
+//           it moves again; judged as V - X - P, at most one frame.
+//   (a loop the main thread draws, anything but transform, opacity and filter, is drawn at each frame's own time: for
+//   it the step into the hold and the first step out of it, in the late samples' values, must match the frames' own
+//   time step to within one frame)
 //   held    no held loop advances while the window is open (currentTime the same in every held frame), and none still
 //           runs once the window is on screen.
 // One frame is the display's own frame time, at least 16.7 ms (one frame of a 60 fps film: the films' unit).
@@ -54,8 +61,11 @@ function install(max) {
 		for (const a of all) if (pick.length < max && !seen.has(a.animationName)) { seen.add(a.animationName); pick.push(a); }
 		for (const a of all) if (pick.length < max && !pick.includes(a)) pick.push(a);
 		S.loops = pick;
+		// which of them the compositor runs (transform, opacity, filter alone; Chrome draws anything else on the main thread)
+		const COMP = new Set(['transform', 'translate', 'rotate', 'scale', 'opacity', 'filter']), NOT = new Set(['offset', 'computedOffset', 'easing', 'composite']);
+		S.comp = pick.map((a) => { const ps = new Set(); for (const k of a.effect.getKeyframes()) for (const p of Object.keys(k)) if (!NOT.has(p)) ps.add(p); return ps.size > 0 && [...ps].every((p) => COMP.has(p)) ? 'compositor' : 'main thread: ' + [...ps].filter((p) => !COMP.has(p)).join(' '); });
 		const box = (a) => { const r = a.effect.target.getBoundingClientRect(); return [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)]; };
-		return { total: all.length, picked: pick.map(desc), boxes: pick.map((a) => desc(a) + ' ' + box(a).join(',')) };
+		return { total: all.length, picked: pick.map(desc), boxes: pick.map((a, i) => desc(a) + ' ' + box(a).join(',') + ' (' + S.comp[i] + ')') };
 	};
 	// a second sample late in each frame, after its style and layout: a ResizeObserver on a 1 px probe (outside <body>,
 	// so the window never holds it) that each frame's first sample resizes. It sees a change made in that frame's own
@@ -76,7 +86,7 @@ function install(max) {
 		requestAnimationFrame(tick);
 	};
 	S.start = () => { S.rows = []; S.marks = []; S.on = true; requestAnimationFrame(tick); };
-	S.stop = () => { S.on = false; return { rows: S.rows, marks: S.marks, loops: S.loops.map(desc) }; };
+	S.stop = () => { S.on = false; return { rows: S.rows, marks: S.marks, loops: S.loops.map(desc), comp: S.comp }; };
 	// a mark on both clocks: the page's (performance.now) and the trace's (a user timing mark)
 	S.mark = (name) => { const w = performance.now(); performance.mark('fo181:' + name, { startTime: w }); S.marks.push({ name, w }); return w; };
 	window.__fo181 = S;
@@ -87,7 +97,8 @@ const median = (xs) => { const s = xs.filter(Number.isFinite).sort((a, b) => a -
 const r1 = (x) => (Number.isFinite(x) ? Math.round(x * 10) / 10 : x);
 
 // Judge one loop's rows: its held span (paused while the window holds it) and the two changes around it.
-function judgeLoop(R, k, frames) {
+function judgeLoop(R, k, T) {
+	const frames = T.frames;
 	const rows = R.rows, v = (r) => r.v[k], out = { loop: R.loops[k] };
 	const iP = rows.findIndex((r, i) => i > 0 && v(r)[1] === 'paused' && v(rows[i - 1])[1] === 'running');
 	if (iP < 0) { out.error = 'never paused'; return out; }
@@ -106,7 +117,30 @@ function judgeLoop(R, k, frames) {
 	const lo = late(Math.max(0, iP - 2), 'paused'), lc = late(Math.max(iP, iR - 2), 'running');
 	const fo = shown(lo), fc = shown(lc);
 	if (!fo || !fc) { out.error = `no traced frame shows the ${!fo ? 'open' : 'close'}${!(fo ? lc : lo) ? ' (no late sample)' : ''}`; return out; }
-	out.openLate = r1(Math.max(0, fo.e - xOpen)); out.closeLate = r1(Math.max(0, fc.e - xClose));
+	out.comp = R.comp[k] === 'compositor';
+	if (out.comp) {
+		// what the screen shows: the compositor draws the loop at each draw's frame time until the commit of the frame that
+		// carries the change is activated; the last draw before that showed it at V. The step there is V - X: backward at
+		// the open (the hold is behind what was shown), forward at the close (the resume starts behind what is shown next)
+		// (that main frame's commit on the compositor thread, its activation, the last draw before it)
+		const visible = (fr, x) => { const v = T.lastDrawBefore(fr); return v == null ? null : v - x; };
+		const vo = visible(fo, xOpen), vc = visible(fc, xClose);
+		if (vo == null || vc == null) { out.error = `no compositor draw found after the ${vo == null ? 'open' : 'close'}'s commit`; return out; }
+		// judged: the step beyond the page's ordinary delay from a frame's time to the screen (T.pipeline)
+		out.openStep = r1(Math.max(0, vo)); out.closeStep = r1(Math.max(0, vc));
+		out.openLate = r1(Math.max(0, vo - T.pipeline)); out.closeLate = r1(Math.max(0, vc - T.pipeline));
+	}
+	else {
+		// a loop the main thread draws is shown at each frame's own time: what is drawn is the late samples' values, frame
+		// by frame. The step into the hold, and the first step out of it, must match the frames' own time step to within
+		// a frame (a hold placed ahead of the frame's time steps forward; a resume by a stale time jumps)
+		const L = rows.filter((r) => r.v2), at = (r) => L.indexOf(r);
+		const j = at(lo), prev = j > 0 ? L[j - 1] : null;
+		out.openLate = prev ? r1(Math.abs((lo.v2[k][0] - prev.v2[k][0]) - (lo.tl - prev.tl))) : null;
+		let m = -1; for (let i = at(lc); i >= 0 && i < L.length; i++) if (Math.abs(L[i].v2[k][0] - hold) > 0.01) { m = i; break; }
+		out.closeLate = m > 0 ? r1(Math.max(0, (L[m].v2[k][0] - hold) - (L[m].tl - L[m - 1].tl))) : null;
+		if (out.openLate == null || out.closeLate == null) { out.error = 'main-thread loop: no drawn step at the ' + (out.openLate == null ? 'open' : 'close'); return out; }
+	}
 	out.openFrameMs = r1(fo.e - fo.b); out.closeFrameMs = r1(fc.e - fc.b);
 	// lane S's measure: the gap between the samples around each change less the loop's own advance there
 	out.gapOpen = r1((rows[iP].tl - before.tl) - (hold - v(before)[0]));
@@ -188,7 +222,27 @@ function readTrace(t, tag, R, raw) {
 	};
 	const cost = { open: span('open', 'close'), close: span('close', 'end') };
 	t.log(`${tag}: COST open ${JSON.stringify(cost.open)}; close ${JSON.stringify(cost.close)}`);
-	return { matched, frames: frames.sort((a, b) => a.b - b.b), cost };
+	// the page's compositor (its renderer's 'Compositor' thread): when each commit is activated, and each draw with the
+	// frame time it draws animations at
+	const names = new Map(ev.filter((e) => e.ph === 'M' && e.name === 'thread_name' && e.pid === pid).map((e) => [e.tid, e.args && e.args.name]));
+	const comp = ev.filter((e) => e.pid === pid && e.tid !== tid && names.get(e.tid) === 'Compositor' && e.ph === 'X');
+	const begins = comp.filter((e) => e.name === 'Scheduler::BeginImplFrame' && e.args && e.args.args && e.args.args.frame_time_us).map((e) => ({ ts: at(e), ft: e.args.args.frame_time_us / 1000 - off })).sort((a, b) => a.ts - b.ts);
+	const acts = comp.filter((e) => e.name === 'LayerTreeHostImpl::ActivateSyncTree').map(at).sort((a, b) => a - b);
+	const commits = comp.filter((e) => e.name === 'ProxyImpl::Commit').map(at).sort((a, b) => a - b);
+	const draws = comp.filter((e) => e.name === 'ProxyImpl::ScheduledActionDraw').map((e) => { const d = at(e); let ft = null; for (const b of begins) { if (b.ts <= d) ft = b.ft; else break; } return { ts: d, ft }; }).sort((a, b) => a.ts - b.ts);
+	frames.sort((a, b) => a.b - b.b);
+	// the page's ordinary delay from a main frame's own time to the screen: for each sampled frame that committed, the
+	// last compositor draw before its commit was activated, less the frame's time. Any change Chrome makes in a frame (a
+	// pause, a resume, a new value) reaches the compositor that much after the frame's time; the median is the page's
+	const lastDrawBefore = (fr) => {
+		// (a main frame that commits nothing hands its changes to the next commit)
+		const cm = commits.find((c) => c >= fr.b); if (cm == null) return null;
+		const act = acts.find((a) => a >= cm); if (act == null) return null;
+		const i = draws.findIndex((d) => d.ts > act); return i >= 1 ? draws[i - 1].ft : null;
+	};
+	const pipe = [];
+	for (const r of R.rows) { const fr = frames.find((x) => x.b <= r.w + 0.05 && r.w <= x.e + 0.05); const v = fr && lastDrawBefore(fr); if (v != null) pipe.push(v - r.tl); }
+	return { matched, frames, cost, acts, commits, draws, lastDrawBefore, pipeline: median(pipe), pipeN: pipe.length, interval: begins.length > 1 ? median(begins.slice(1).map((b, i) => b.ft - begins[i].ft)) : NaN };
 }
 
 const only = (v, all) => (v === 'all' ? all : v ? String(v).split(',').map((s) => s.trim()).filter((x) => all.includes(x)) : DEFAULT_LOOKS);
@@ -203,16 +257,19 @@ export const tests = Object.fromEntries(LOOKS.map((look) => [look, async (t) => 
 	for (let n = 1; n <= rounds; n++) {
 		const tag = `${look} round ${n}`;
 		const { result: R, raw } = await episode(t, f, tag, { work });
-		if (t.args.keepTrace === '1' && t.run && t.run.dir) writeFileSync(join(t.run.dir, `trace-${tag.replace(/[^a-z0-9]+/gi, '-')}.json.gz`), gzipSync(raw));
+		if (t.args.keepTrace === '1' && t.run && t.run.dir) {
+			writeFileSync(join(t.run.dir, `trace-${tag.replace(/[^a-z0-9]+/gi, '-')}.json.gz`), gzipSync(raw));
+			writeFileSync(join(t.run.dir, `samples-${tag.replace(/[^a-z0-9]+/gi, '-')}.json`), JSON.stringify(R));
+		}
 		const T = readTrace(t, tag, R, raw);
 		await t.check(`${tag}: the trace has the page's frames`, !T.error && T.matched >= R.rows.length * 0.9, T.error || `${T.matched} of ${R.rows.length} samples in a traced main frame (${T.frames.length} frames)`, { hard: true });
 		const theme = await f.evaluate(() => document.documentElement.getAttribute('data-theme'));
 		const rows = R.rows, display = median(rows.slice(1).map((r, i) => r.tl - rows[i].tl)), bound = Math.max(display, FILM_FRAME);
-		t.log(`${tag}: ${rows.length} frames, display frame ${r1(display)} ms (bound ${r1(bound)} ms), theme after ${theme}`);
+		t.log(`${tag}: ${rows.length} frames, display frame ${r1(display)} ms, compositor interval ${r1(T.interval)} ms, ordinary delay from a frame's time to the screen ${r1(T.pipeline)} ms (median of ${T.pipeN}) (bound ${r1(bound)} ms), theme after ${theme}`);
 		// none still running once the window is on screen
 		const shownRows = rows.filter((r) => r.open && r.shown);
 		const running = R.loops.filter((_, k) => shownRows.slice(3).some((r) => r.v[k][1] === 'running'));
-		const verdicts = R.loops.map((_, k) => judgeLoop(R, k, T.frames)), judged = verdicts.filter((x) => !x.error);
+		const verdicts = R.loops.map((_, k) => judgeLoop(R, k, T)), judged = verdicts.filter((x) => !x.error);
 		for (const x of verdicts) t.log(`${tag}: ${x.loop}: ${x.error ? 'not judged: ' + x.error : JSON.stringify(x)}`);
 		await t.check(`${tag}: no loop of the app still runs once the window is on screen`, running.length === 0, running.length ? running.join('; ') : `${shownRows.length} frames shown`);
 		// every loop runs again after the close (a hold that never lets go, or a placement that took the loop out of CSS's hands)
@@ -225,8 +282,8 @@ export const tests = Object.fromEntries(LOOKS.map((look) => [look, async (t) => 
 		worst.gapOpen = Math.max(worst.gapOpen, max('gapOpen')); worst.gapClose = Math.max(worst.gapClose, max('gapClose'));
 		worst.styleOpen = Math.max(worst.styleOpen, T.cost.open.styleMaxMs); worst.styleClose = Math.max(worst.styleClose, T.cost.close.styleMaxMs);
 		await t.check(`${tag}: held loops keep their place while the window is open (currentTime unchanged)`, max('heldDrift') <= 0.5, worstOf('heldDrift'));
-		await t.check(`${tag}: open: each loop is held at most one frame (${r1(bound)} ms) before the frame that shows it`, max('openLate') <= bound, `worst ${worstOf('openLate')}; lane S's gap measure up to ${max('gapOpen')} ms`);
-		await t.check(`${tag}: close: each loop resumes at most one frame (${r1(bound)} ms) before the frame that shows it`, max('closeLate') <= bound, `worst ${worstOf('closeLate')}; lane S's gap measure up to ${max('gapClose')} ms`);
+		await t.check(`${tag}: open: no loop steps back more than one frame (${r1(bound)} ms) beyond the page's ordinary ${r1(T.pipeline)} ms`, max('openLate') <= bound, `worst ${worstOf('openLate')}; step on screen up to ${max('openStep')} ms; lane S's gap measure up to ${max('gapOpen')} ms`);
+		await t.check(`${tag}: close: no loop steps forward more than one frame (${r1(bound)} ms) beyond the page's ordinary ${r1(T.pipeline)} ms`, max('closeLate') <= bound, `worst ${worstOf('closeLate')}; step on screen up to ${max('closeStep')} ms; lane S's gap measure up to ${max('gapClose')} ms`);
 		await f.waitForTimeout(1500);
 	}
 	t.log(`${look}: SUMMARY worst over ${rounds} round(s): open ${worst.open} ms, close ${worst.close} ms, held drift ${worst.held} ms; lane S's gap open ${worst.gapOpen} ms, close ${worst.gapClose} ms; largest style recalc open ${worst.styleOpen} ms, close ${worst.styleClose} ms`);
