@@ -326,6 +326,10 @@
   {
    "event_type": "notebook.transition_state_changed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "planning.question_budget_exhausted",
+   "outcome": "registered"
   }
  ]
 }
