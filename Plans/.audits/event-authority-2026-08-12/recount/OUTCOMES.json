@@ -34,6 +34,10 @@
   {
    "event_type": "assistant_plan.exported",
    "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.schedule_invalidated",
+   "outcome": "registered"
   }
  ]
 }
