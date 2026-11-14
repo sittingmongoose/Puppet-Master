@@ -324,7 +324,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Formatters_System.md",
@@ -417,10 +417,18 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "bound_profile",
-       "quote": "if kind in ('storage', 'ack'):",
-       "line_start": 58,
-       "line_end": 58,
-       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+       "quote": "if kind in ('source', 'ack'):",
+       "line_start": 64,
+       "line_end": 64,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind == 'storage':",
+       "line_start": 66,
+       "line_end": 66,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -773,7 +781,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
@@ -866,10 +874,18 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "bound_profile",
-       "quote": "if kind in ('storage', 'ack'):",
-       "line_start": 58,
-       "line_end": 58,
-       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+       "quote": "if kind in ('source', 'ack'):",
+       "line_start": 64,
+       "line_end": 64,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind == 'storage':",
+       "line_start": 66,
+       "line_end": 66,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -1222,7 +1238,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/LSPSupport.md",
@@ -1315,10 +1331,18 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "bound_profile",
-       "quote": "if kind in ('storage', 'ack'):",
-       "line_start": 58,
-       "line_end": 58,
-       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+       "quote": "if kind in ('source', 'ack'):",
+       "line_start": 64,
+       "line_end": 64,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind == 'storage':",
+       "line_start": 66,
+       "line_end": 66,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -1679,7 +1703,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Models_System.md",
@@ -1780,10 +1804,18 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "bound_profile",
-       "quote": "if kind in ('storage', 'ack'):",
-       "line_start": 58,
-       "line_end": 58,
-       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+       "quote": "if kind in ('source', 'ack'):",
+       "line_start": 64,
+       "line_end": 64,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind == 'storage':",
+       "line_start": 66,
+       "line_end": 66,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -2136,7 +2168,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Project_System.md",
@@ -2229,10 +2261,18 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "bound_profile",
-       "quote": "if kind in ('storage', 'ack'):",
-       "line_start": 58,
-       "line_end": 58,
-       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+       "quote": "if kind in ('source', 'ack'):",
+       "line_start": 64,
+       "line_end": 64,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind == 'storage':",
+       "line_start": 66,
+       "line_end": 66,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -2585,7 +2625,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Project_System.md",
@@ -2678,10 +2718,18 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "bound_profile",
-       "quote": "if kind in ('storage', 'ack'):",
-       "line_start": 58,
-       "line_end": 58,
-       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+       "quote": "if kind in ('source', 'ack'):",
+       "line_start": 64,
+       "line_end": 64,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind == 'storage':",
+       "line_start": 66,
+       "line_end": 66,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -4088,7 +4136,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Prompt_Pipeline.md",
@@ -4205,10 +4253,18 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "bound_profile",
-       "quote": "if kind in ('storage', 'ack'):",
-       "line_start": 58,
-       "line_end": 58,
-       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+       "quote": "if kind in ('source', 'ack'):",
+       "line_start": 64,
+       "line_end": 64,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind == 'storage':",
+       "line_start": 66,
+       "line_end": 66,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -4568,7 +4624,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Prompt_Pipeline.md",
@@ -4685,10 +4741,18 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "bound_profile",
-       "quote": "if kind in ('storage', 'ack'):",
-       "line_start": 58,
-       "line_end": 58,
-       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+       "quote": "if kind in ('source', 'ack'):",
+       "line_start": 64,
+       "line_end": 64,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind == 'storage':",
+       "line_start": 66,
+       "line_end": 66,
+       "file_sha256": "d3fd313baeadce06bcf3bc6960acd0b2f2b8adb408a114a1566b1f2ec07a0d97"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
