@@ -130,6 +130,10 @@
   {
    "event_type": "forge.connection.validated",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.connected",
+   "outcome": "registered"
   }
  ]
 }
