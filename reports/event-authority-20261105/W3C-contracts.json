@@ -1,0 +1,1010 @@
+{
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "families": [
+    {
+      "event_type": "artifacts.capture_provenance.inspected",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1300",
+      "payload_unit": "CV-1300",
+      "storage_unit": "SP-1300",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_capture_provenance_inspected",
+      "payload_schema_id": "pm.event_payload.artifacts.capture_provenance.inspected.v1",
+      "scope_policy": "application_or_project",
+      "producer": "handlers::test_capture::artifacts_inspect_capture_provenance",
+      "source_record_definition": "capture_provenance_selection",
+      "semantic_result": "The exact requested subject and candidate identities were inspected and a provenance selection result was committed; inspection does not assert that provenance was accepted.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.artifacts.capture_provenance.inspected.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_capture_provenance_inspected"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.artifacts.capture_provenance.inspected.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_capture_provenance_inspectedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original provenance-inspection request with the exact subject and candidate identities before inspection",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.artifacts.capture_provenance.inspected.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_capture_provenance_inspected_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.artifacts.capture_provenance.inspected.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_capture_provenance_inspected_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
+    },
+    {
+      "event_type": "artifacts.demonstration_video.created",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1301",
+      "payload_unit": "CV-1301",
+      "storage_unit": "SP-1301",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_created",
+      "payload_schema_id": "pm.event_payload.artifacts.demonstration_video.created.v1",
+      "scope_policy": "application_or_project",
+      "producer": "handlers::test_capture::artifacts_create_demonstration_video",
+      "source_record_definition": "derived_demonstration_video",
+      "semantic_result": "A distinct immutable demonstration artifact and its derivation manifest were committed from exact admitted raw spans after privacy review and confirmation.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.artifacts.demonstration_video.created.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_created"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.artifacts.demonstration_video.created.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_createdApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original cmd.artifacts.create_demonstration_video request, raw span refs, privacy review and confirmation before encoding",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.artifacts.demonstration_video.created.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_created_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.artifacts.demonstration_video.created.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_created_requestApplicationV1"
+        }
+      }
+    },
+    {
+      "event_type": "artifacts.demonstration_video.failed",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1302",
+      "payload_unit": "CV-1302",
+      "storage_unit": "SP-1302",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failed",
+      "payload_schema_id": "pm.event_payload.artifacts.demonstration_video.failed.v1",
+      "scope_policy": "application_or_project",
+      "producer": "handlers::test_capture::artifacts_create_demonstration_video",
+      "source_record_definition": "capture_command_error",
+      "semantic_result": "The original demonstration operation ended in a typed failure; no successful demonstration output is claimed.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.artifacts.demonstration_video.failed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failed"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.artifacts.demonstration_video.failed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original cmd.artifacts.create_demonstration_video request, raw span refs, privacy review and confirmation before encoding",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.artifacts.demonstration_video.failed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failed_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.artifacts.demonstration_video.failed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/artifacts_demonstration_video_failed_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_decision": "DL-455"
+    },
+    {
+      "event_type": "testing.capture.bookmarked",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1303",
+      "payload_unit": "CV-1303",
+      "storage_unit": "SP-1303",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_bookmarked",
+      "payload_schema_id": "pm.event_payload.testing.capture.bookmarked.v1",
+      "scope_policy": "application_or_project",
+      "producer": "handlers::test_capture::testing_capture_bookmark",
+      "source_record_definition": "capture_command_request",
+      "semantic_result": "The exact session received a durable bookmark at the requested service clock position, with its safe label reference.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.bookmarked.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_bookmarked"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.bookmarked.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_bookmarkedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original bookmark command with session identity and requested source position before bookmark commitment",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.bookmarked.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_bookmarked_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.bookmarked.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_bookmarked_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_decision": "DL-453"
+    },
+    {
+      "event_type": "testing.capture.clip_saved",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1304",
+      "payload_unit": "CV-1304",
+      "storage_unit": "SP-1304",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_clip_saved",
+      "payload_schema_id": "pm.event_payload.testing.capture.clip_saved.v1",
+      "scope_policy": "application_or_project",
+      "producer": "handlers::test_capture::testing_capture_save_clip",
+      "source_record_definition": "capture_derivation_manifest",
+      "semantic_result": "A separately identified immutable clip was saved with exact source raw identity and span lineage; raw media was not trimmed in place.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.clip_saved.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_clip_saved"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.clip_saved.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_clip_savedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original save-clip command with exact admitted raw span refs before derivation",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.clip_saved.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_clip_saved_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.clip_saved.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_clip_saved_requestApplicationV1"
+        }
+      }
+    },
+    {
+      "event_type": "testing.capture.effective_quality_changed",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1305",
+      "payload_unit": "CV-1305",
+      "storage_unit": "SP-1305",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_effective_quality_changed",
+      "payload_schema_id": "pm.event_payload.testing.capture.effective_quality_changed.v1",
+      "scope_policy": "application_or_project",
+      "producer": "TestCaptureService.commit_effective_quality",
+      "source_record_definition": "capture_health_receipt",
+      "semantic_result": "The service committed a real requested/effective capture-quality change under the RuntimeResourceGovernor permit without degrading already retained evidence.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.effective_quality_changed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_effective_quality_changed"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.effective_quality_changed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_effective_quality_changedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original quality observation and prior session/quality snapshot before committing effective quality",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.effective_quality_changed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_effective_quality_changed_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.effective_quality_changed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_effective_quality_changed_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
+    },
+    {
+      "event_type": "testing.capture.health_degraded",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1306",
+      "payload_unit": "CV-1306",
+      "storage_unit": "SP-1306",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_degraded",
+      "payload_schema_id": "pm.event_payload.testing.capture.health_degraded.v1",
+      "scope_policy": "application_or_project",
+      "producer": "TestCaptureService.commit_health_observation",
+      "source_record_definition": "capture_health_receipt",
+      "semantic_result": "A detector observation committed a worsening health interval and preserved its thresholds and evidence, without claiming a root cause.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.health_degraded.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_degraded"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.health_degraded.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_degradedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original health observation and prior health/session snapshot before committing degradation",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.health_degraded.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_degraded_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.health_degraded.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_degraded_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
+    },
+    {
+      "event_type": "testing.capture.health_recovered",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1307",
+      "payload_unit": "CV-1307",
+      "storage_unit": "SP-1307",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_recovered",
+      "payload_schema_id": "pm.event_payload.testing.capture.health_recovered.v1",
+      "scope_policy": "application_or_project",
+      "producer": "TestCaptureService.commit_health_observation",
+      "source_record_definition": "capture_health_receipt",
+      "semantic_result": "The service committed recovery of a previously degraded health interval, preserving the earlier interval and any gaps.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.health_recovered.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_recovered"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.health_recovered.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_recoveredApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original health observation and prior health/session snapshot before committing recovery",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.health_recovered.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_recovered_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.health_recovered.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_health_recovered_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
+    },
+    {
+      "event_type": "testing.capture.interrupted",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1308",
+      "payload_unit": "CV-1308",
+      "storage_unit": "SP-1308",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_interrupted",
+      "payload_schema_id": "pm.event_payload.testing.capture.interrupted.v1",
+      "scope_policy": "application_or_project",
+      "producer": "TestCaptureService.commit_interruption",
+      "source_record_definition": "test_capture_session",
+      "semantic_result": "Capture continuity was interrupted by crash, disconnection or producer loss, with the original gap and recoverable/partial outcome retained.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.interrupted.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_interrupted"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.interrupted.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_interruptedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original interruption trigger, boundary and reason with the prior session before the interruption transition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.interrupted.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_interrupted_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.interrupted.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_interrupted_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_decision": "DL-455"
+    },
+    {
+      "event_type": "testing.capture.paused",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1309",
+      "payload_unit": "CV-1309",
+      "storage_unit": "SP-1309",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_paused",
+      "payload_schema_id": "pm.event_payload.testing.capture.paused.v1",
+      "scope_policy": "application_or_project",
+      "producer": "handlers::test_capture::testing_capture_pause",
+      "source_record_definition": "test_capture_session",
+      "semantic_result": "An authorized pause committed the exact existing capture session into paused state.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.paused.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_paused"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.paused.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_pausedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original pause command and prior active session before the pause transition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.paused.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_paused_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.paused.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_paused_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
+    },
+    {
+      "event_type": "testing.capture.provenance_rejected",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1310",
+      "payload_unit": "CV-1310",
+      "storage_unit": "SP-1310",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_rejected",
+      "payload_schema_id": "pm.event_payload.testing.capture.provenance_rejected.v1",
+      "scope_policy": "application_or_project",
+      "producer": "TestCaptureService.commit_provenance_selection",
+      "source_record_definition": "capture_provenance_selection",
+      "semantic_result": "The exact provenance request committed rejected_identity_mismatch, rejected_continuity_unverified, original_missing or no_candidate, with no accepted-source claim.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.provenance_rejected.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_rejected"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.provenance_rejected.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_rejectedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original provenance-selection input with exact subject, candidates and verification inputs before committing the rejected disposition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.provenance_rejected.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_rejected_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.provenance_rejected.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_rejected_requestApplicationV1"
+        }
+      }
+    },
+    {
+      "event_type": "testing.capture.provenance_verified",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1311",
+      "payload_unit": "CV-1311",
+      "storage_unit": "SP-1311",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_verified",
+      "payload_schema_id": "pm.event_payload.testing.capture.provenance_verified.v1",
+      "scope_policy": "application_or_project",
+      "producer": "TestCaptureService.commit_provenance_selection",
+      "source_record_definition": "capture_provenance_selection",
+      "semantic_result": "Exact subject identity, original availability and continuity checks committed a selected original capture.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.provenance_verified.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_verified"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.provenance_verified.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_verifiedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original provenance-selection input with exact subject, candidates and verification inputs before committing the verified disposition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.provenance_verified.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_verified_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.provenance_verified.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_provenance_verified_requestApplicationV1"
+        }
+      }
+    },
+    {
+      "event_type": "testing.capture.redaction_applied",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1312",
+      "payload_unit": "CV-1312",
+      "storage_unit": "SP-1312",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_redaction_applied",
+      "payload_schema_id": "pm.event_payload.testing.capture.redaction_applied.v1",
+      "scope_policy": "application_or_project",
+      "producer": "TestCaptureService.commit_retained_redaction",
+      "source_record_definition": "capture_artifact",
+      "semantic_result": "A source or encoder masking operation was applied and receipted against exact retained/exported spans under the existing privacy policy.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.redaction_applied.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_redaction_applied"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.redaction_applied.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_redaction_appliedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original retained-redaction request, reviewed mask/selection and original artifact refs before applying redaction",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.redaction_applied.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_redaction_applied_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.redaction_applied.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_redaction_applied_requestApplicationV1"
+        }
+      }
+    },
+    {
+      "event_type": "testing.capture.resumed",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1313",
+      "payload_unit": "CV-1313",
+      "storage_unit": "SP-1313",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_resumed",
+      "payload_schema_id": "pm.event_payload.testing.capture.resumed.v1",
+      "scope_policy": "application_or_project",
+      "producer": "handlers::test_capture::testing_capture_resume",
+      "source_record_definition": "test_capture_session",
+      "semantic_result": "An authorized resume committed the same paused capture session back to recording with truthful continuity.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.resumed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_resumed"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.resumed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_resumedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original resume command and prior paused session before the resume transition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.resumed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_resumed_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.resumed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_resumed_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
+    },
+    {
+      "event_type": "testing.capture.segment_corrupt",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1314",
+      "payload_unit": "CV-1314",
+      "storage_unit": "SP-1314",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_corrupt",
+      "payload_schema_id": "pm.event_payload.testing.capture.segment_corrupt.v1",
+      "scope_policy": "application_or_project",
+      "producer": "TestCaptureService.commit_segment_recovery",
+      "source_record_definition": "capture_segment_manifest",
+      "semantic_result": "The service detected a corrupt/incomplete segment and committed quarantine/discard/gap truth without presenting playable finalized evidence.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.segment_corrupt.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_corrupt"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.segment_corrupt.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_corruptApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original segment recovery observation and prior manifest before committing the corrupt disposition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.segment_corrupt.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_corrupt_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.segment_corrupt.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_corrupt_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0",
+      "retention_decision": "DL-455"
+    },
+    {
+      "event_type": "testing.capture.segment_finalized",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1315",
+      "payload_unit": "CV-1315",
+      "storage_unit": "SP-1315",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_finalized",
+      "payload_schema_id": "pm.event_payload.testing.capture.segment_finalized.v1",
+      "scope_policy": "application_or_project",
+      "producer": "TestCaptureService.commit_segment_finalization",
+      "source_record_definition": "capture_segment_manifest",
+      "semantic_result": "A new immutable structurally complete raw Matroska segment was atomically finalized and its exact bytes and manifest were committed.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.segment_finalized.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_finalized"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.segment_finalized.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_finalizedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original segment sealing input, segment identity and captured span refs before finalization",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.segment_finalized.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_finalized_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.segment_finalized.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_finalized_requestApplicationV1"
+        }
+      }
+    },
+    {
+      "event_type": "testing.capture.segment_recovered",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1316",
+      "payload_unit": "CV-1316",
+      "storage_unit": "SP-1316",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_recovered",
+      "payload_schema_id": "pm.event_payload.testing.capture.segment_recovered.v1",
+      "scope_policy": "application_or_project",
+      "producer": "TestCaptureService.commit_segment_recovery",
+      "source_record_definition": "capture_segment_manifest",
+      "semantic_result": "Recovery atomically finalized a structurally complete interrupted segment as recovered_finalized, preserving original bytes and gaps.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.segment_recovered.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_recovered"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.segment_recovered.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_recoveredApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original segment recovery observation and prior manifest before committing the recovered disposition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.segment_recovered.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_recovered_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.segment_recovered.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_segment_recovered_requestApplicationV1"
+        }
+      }
+    },
+    {
+      "event_type": "testing.capture.started",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1317",
+      "payload_unit": "CV-1317",
+      "storage_unit": "SP-1317",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_started",
+      "payload_schema_id": "pm.event_payload.testing.capture.started.v1",
+      "scope_policy": "application_or_project",
+      "producer": "handlers::test_capture::testing_capture_start",
+      "source_record_definition": "test_capture_session",
+      "semantic_result": "The shared TestCaptureService began recording the exact permitted target with a governor permit and one declared encoder stream per admitted target stream.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.started.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_started"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.started.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_startedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original start command and admitted capture target/request before starting capture",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.started.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_started_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.started.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_started_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
+    },
+    {
+      "event_type": "testing.capture.stopped",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1318",
+      "payload_unit": "CV-1318",
+      "storage_unit": "SP-1318",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_stopped",
+      "payload_schema_id": "pm.event_payload.testing.capture.stopped.v1",
+      "scope_policy": "application_or_project",
+      "producer": "handlers::test_capture::testing_capture_stop",
+      "source_record_definition": "test_capture_session",
+      "semantic_result": "The explicit stop operation finalized its capture session with the exact complete, partial_with_gaps, failed_no_media, cancelled_with_evidence or interrupted_recoverable result.",
+      "retention_policy_ref": "RP-TELEMETRY-90D@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.stopped.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_stopped"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.stopped.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_stoppedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original stop command and prior active session before the stop transition",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.stopped.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_stopped_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.stopped.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_stopped_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0",
+      "retention_decision": "DL-454"
+    },
+    {
+      "event_type": "testing.capture.target_changed",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "TCME-1319",
+      "payload_unit": "CV-1319",
+      "storage_unit": "SP-1319",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_target_changed",
+      "payload_schema_id": "pm.event_payload.testing.capture.target_changed.v1",
+      "scope_policy": "application_or_project",
+      "producer": "handlers::test_capture::testing_capture_target_update",
+      "source_record_definition": "capture_target_switch_receipt",
+      "semantic_result": "An explicit generation-aware target switch was committed with old/new target, exact clock anchors and continuity disposition.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.capture.target_changed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_target_changed"
+        },
+        "application": {
+          "schema_id": "pm.event_payload.testing.capture.target_changed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_target_changedApplicationV1"
+        }
+      },
+      "pre_effect_input": "the original target-update command, requested target and prior session/target before the switch",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.capture.target_changed.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_target_changed_request"
+        },
+        "application": {
+          "schema_id": "pm.operation_request.testing.capture.target_changed.application.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_capture_target_changed_requestApplicationV1"
+        }
+      },
+      "application_retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_decision": "DL-453"
+    },
+    {
+      "event_type": "testing.runtime_enabled_for_adapter",
+      "family_revision": "1.0.0",
+      "outcome": "prepared",
+      "owner_unit": "ATS-1220",
+      "payload_unit": "CV-1320",
+      "storage_unit": "SP-1320",
+      "payload_schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_runtime_enabled_for_adapter",
+      "payload_schema_id": "pm.event_payload.testing.runtime_enabled_for_adapter.v1",
+      "scope_policy": "project_only",
+      "producer": "AutomatedTestingService.commit_adapter_readiness",
+      "source_record_definition": "adapter_readiness_source",
+      "semantic_result": "The Project-bound testing adapter changed from runtime-disabled to runtime-enabled after all five existing owner prerequisites were proven.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "retention_question": null,
+      "membership": "ABSENT",
+      "newly_authored": true,
+      "oracle_execution": "PHASE_2_EXECUTABLE_SYNTHETIC_NATIVE_NOT_RUN",
+      "payload_variants": {
+        "project": {
+          "schema_id": "pm.event_payload.testing.runtime_enabled_for_adapter.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_runtime_enabled_for_adapter"
+        }
+      },
+      "pre_effect_input": "the original adapter-readiness evaluation input, exact adapter/target, owner-selected prerequisite refs and prior disabled state before enablement",
+      "operation_phases": [
+        "pending",
+        "outcome_committed",
+        "event_committed",
+        "terminal",
+        "withdrawn"
+      ],
+      "operation_request_variants": {
+        "project": {
+          "schema_id": "pm.operation_request.testing.runtime_enabled_for_adapter.v1",
+          "schema_ref": "Plans/w3c_test_capture_event_contracts.schema.json#/$defs/testing_runtime_enabled_for_adapter_request"
+        }
+      }
+    }
+  ]
+}
