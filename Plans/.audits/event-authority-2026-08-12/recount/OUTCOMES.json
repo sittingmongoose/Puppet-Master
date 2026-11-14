@@ -554,6 +554,10 @@
   {
    "event_type": "todo.reordered",
    "outcome": "registered"
+  },
+  {
+   "event_type": "todo.status_changed",
+   "outcome": "registered"
   }
  ]
 }
