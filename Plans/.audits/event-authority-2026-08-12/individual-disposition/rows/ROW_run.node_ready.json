@@ -2,68 +2,68 @@
   "event_type": "run.node_ready",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to run.node_ready. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to run.node_ready. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-14.28 in admission merge 1 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-547); DL-077 admission record reports/event-authority-20260911/admission-records/run.node_ready.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261114/admission-merge-1/depth/run.node_ready.json (sha256 ddffcb6a759762605553db300cc770143ea96a0097c13aaa848155252be10039); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The checked Plans citations do not explicitly name the acceptance authority empowered to approve or withdraw `run.node_ready`."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:35157",
+      "note": "Independent EP/CV/SP units govern the prepared exact family version."
     },
     "producer": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The checked citations associate `run.node_ready` with scheduler, command, or storage behavior but do not explicitly name an accountable emitting component without inference."
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:10678",
+      "note": "Exact emitter and dependency/body/append/receipt/publication ordering explicitly adopt SP-286 full-value v2 and current durability amendments."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations name this event or its trigger but do not provide versioned registry membership for `run.node_ready`."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:4890-4938",
+      "note": "Registered at registry revision 2026-11-14.28 as #/families/73 (canonical row SHA-256 3bcf0dfef278fd225b5e77cfb975aaa49aec44c075c30995fe66d4c2e7445803); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations do not define an exhaustive, closed payload schema for `run.node_ready`; minimum fields or command arguments are not a closed event schema."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:35157",
+      "note": "Separate exact-version closed root schema; current known enum domains are closed. Conditional owner/source constraints remain normative and are not all schema-only predicates."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2341-2348",
-      "note": "The exact minimum payload directly binds run_id and node_id and adds readiness time, wake reason, and replan generation."
+      "citation": "Plans/Executor_Protocol.md:10701; Plans/Executor_Protocol.md:10726; Plans/storage-plan.md:38961",
+      "note": "EP-223 and SP-513 define this family's scope, hash preimage and source adapter. Complete original observations join immutable owner reads; F17 enforces primitive types at graph joins. Shared number/recipe adoption S-N1–S-N5 remains a sweep item."
     },
     "replay_idempotency": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations provide no event-specific replay or duplicate-application rule for `run.node_ready`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38164",
+      "note": "Exact family-local hash identity and same-identity digest conflict/replay rule; timestamp cannot mint a new identity."
     },
     "retention": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations provide no event-specific retention duration or deletion rule for `run.node_ready`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38173",
+      "note": "Case L-3 explicitly covers runtime/run/node/attempt; source anchor, caps and holds preserved. Existing generic index/checkpoint keep their policies."
     },
     "redaction_custody": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations provide no complete event-specific redaction and custody rule for `run.node_ready`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38175",
+      "note": "Exact source/first-receipt custody, coherent backup/restore, linked body independence and fresh permission/deletion checks defined."
     },
     "transitions": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations do not close the allowed predecessor/successor transition set for `run.node_ready`."
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:12029; Plans/Executor_Protocol.md:12039",
+      "note": "EP-223 defines this family's exhaustive predecessor/discriminator/successor table, actual owner predicates, post-state revision/sequence and admission/dependency/body/append/first-receipt/CAS/publication barrier; static cases check the table and rejection fences."
     },
     "consumers_checkpoints": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations do not identify every consumer and checkpoint-advance rule for `run.node_ready`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38949",
+      "note": "Exact read-only operating consumer explicitly adopts SP-278 using existing generic projector/checkpoint/schema, actual current frontier/CAS and nine-field token; no new stored value."
     },
     "compatibility_withdrawal": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations provide no complete compatibility and withdrawal contract for `run.node_ready`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38957; Plans/storage-plan.md:38961",
+      "note": "Own exact-version/alias dispatch and writer cutoff, original operation reconciliation, token invalidation and source-backed successor rebuild defined."
     },
     "positive_negative_oracles": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations provide no complete event-specific positive and negative oracle pair for `run.node_ready`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38164; Plans/storage-plan.md:38946; Plans/Contracts_V0.md:35159; Plans/storage-plan.md:38175; Plans/executor_event_type_fixtures.json:44392; Plans/executor_event_semantic_fixtures.json:380268; Plans/storage-plan.md:38961; Plans/executor_event_type_fixtures.json:46683; Plans/Automated_Testing_System.md:9942; Plans/storage-plan.md:38181; scripts/pm_executor_event_semantics.py:402; scripts/pm_executor_table_post_effects.py:53; scripts/pm_executor_table_workgraph_id.py:27; scripts/pm_executor_event_semantics.py:123; scripts/pm_executor_event_semantics.py:1227; scripts/pm_executor_event_semantics.py:833; scripts/pm_executor_event_semantics.py:709; scripts/pm_executor_event_semantics.py:526; scripts/pm_executor_event_semantics.py:508; scripts/pm_executor_event_semantics.py:1167",
+      "note": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN."
     }
   },
   "citations_checked": [
