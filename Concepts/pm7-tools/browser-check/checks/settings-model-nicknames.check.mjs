@@ -107,6 +107,11 @@ export const tests = {
 		await t.page.waitForTimeout(500);
 		const l3 = await f.evaluate(LIST, ID);
 		await t.check('FO-186 removing it brings the built-in back', l3.lines.some((x) => x.builtin && norm(x.nick) === 'nano banana') && !/nano/i.test(l3.value), JSON.stringify({ value: l3.value }));
+		/* removing the last line of your own leaves only the built-ins: the default, and the row is no longer Changed */
+		await f.locator(`#pm-settings-root [id="setting-${ID}"] .o55-nick-line[data-nick="fast"] [data-action="pm51-nick-remove"]`).click().catch(() => {});
+		await t.page.waitForTimeout(500);
+		const l4 = await f.evaluate((id) => { const row = document.querySelector(`#pm-settings-root [id="setting-${CSS.escape(id)}"]`); return { own: row ? row.querySelectorAll('.o55-nick-line:not(.is-builtin)').length : -1, changed: !!(row && (row.classList.contains('is-changed') || row.querySelector('.o55-changed:not(.o55-needed)'))) }; }, ID);
+		await t.check('FO-186 with no lines of your own the row is back to its default, not marked Changed', l4.own === 0 && !l4.changed, JSON.stringify(l4));
 	},
 	/* --set crops=1 (--set cropDir=, --set tag=head|main): the list, its picker open on a new line and a refusal, in
 	   Basic Dark, Glass Light and NieR Dark at 1920x1080 (--set looks= picks others) */

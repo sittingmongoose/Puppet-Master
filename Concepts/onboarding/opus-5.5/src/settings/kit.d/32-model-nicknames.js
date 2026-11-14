@@ -62,7 +62,9 @@ function o55NickRedraw(msg, focus) {
   });
 }
 function o55NickSave(next, said) {
-  if (!commitSettingValue(O55_NICK_ID, next)) return false;
+  /* no lines of your own is the default (only the built-ins): the row goes back to it and is no longer Changed */
+  const ok = Object.keys(next).length ? commitSettingValue(O55_NICK_ID, next) : restoreSettingDefault(O55_NICK_ID);
+  if (!ok) return false;
   saveState(); o55MarkChanged(O55_NICK_ID);
   if (said) showToast('Saved', said, 'success', 2200);
   return true;
