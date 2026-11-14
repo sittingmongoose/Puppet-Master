@@ -1,0 +1,27 @@
+{
+  "base": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "remote_ref_count": 528,
+  "distinct_owner_blobs": 178,
+  "prefixes": {
+    "BSD": {
+      "path": "Plans/Back_Seat_Driver.md",
+      "max": 37,
+      "collisions": []
+    },
+    "CV": {
+      "path": "Plans/Contracts_V0.md",
+      "max": 1100,
+      "collisions": []
+    },
+    "SP": {
+      "path": "Plans/storage-plan.md",
+      "max": 1101,
+      "collisions": []
+    },
+    "ATS": {
+      "path": "Plans/Automated_Testing_System.md",
+      "max": 380,
+      "collisions": []
+    }
+  }
+}

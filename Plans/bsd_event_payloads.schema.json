@@ -1,0 +1,1656 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/bsd-event-payloads/1.0.0/contracts.schema.json",
+  "title": "BSD event payload definitions prepared without admission",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
+    },
+    "safe_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#@~-]*$",
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "advice_emitted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "bsd_finding_id",
+        "finding_key",
+        "severity",
+        "finding_ref",
+        "delivery_basis",
+        "presentation_weight",
+        "raised_against_generation",
+        "latest_checked_generation",
+        "emission_boundary_ref",
+        "stale",
+        "unreconfirmed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.advice_emitted.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "bsd_finding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "finding_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "severity": {
+          "enum": [
+            "nit",
+            "concern",
+            "critical"
+          ]
+        },
+        "finding_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "delivery_basis": {
+          "enum": [
+            "reconfirmed",
+            "frozen_boundary",
+            "async_nit",
+            "terminal_timeout_stale"
+          ]
+        },
+        "presentation_weight": {
+          "enum": [
+            "note",
+            "aside"
+          ]
+        },
+        "raised_against_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "latest_checked_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "emission_boundary_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "stale": {
+          "type": "boolean"
+        },
+        "unreconfirmed": {
+          "type": "boolean"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.advice_emitted at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "assignment_paused": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "previous_state",
+        "state",
+        "pause_cause",
+        "pause_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.assignment_paused.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "type": "null"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "previous_state": {
+          "enum": [
+            "idle",
+            "queued",
+            "reviewing",
+            "holding",
+            "reconfirming",
+            "paused_quota",
+            "failed"
+          ]
+        },
+        "state": {
+          "const": "paused"
+        },
+        "pause_cause": {
+          "enum": [
+            "user",
+            "safety"
+          ]
+        },
+        "pause_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.assignment_paused at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "assignment_resumed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "previous_state",
+        "previous_pause_cause",
+        "resume_source_ref",
+        "cursor_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.assignment_resumed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "type": "null"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "previous_state": {
+          "const": "paused"
+        },
+        "previous_pause_cause": {
+          "enum": [
+            "user",
+            "safety"
+          ]
+        },
+        "resume_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "cursor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.assignment_resumed at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "assignment_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "stage_id",
+        "effective_mode",
+        "assignment_ref",
+        "cursor_ref",
+        "stable_prefix_hash",
+        "requested_effective_snapshot_ref",
+        "read_only_tool_profile_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.assignment_started.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "type": "null"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "stage_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "effective_mode": {
+          "enum": [
+            "Auto",
+            "On"
+          ]
+        },
+        "assignment_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "cursor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "stable_prefix_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "requested_effective_snapshot_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "read_only_tool_profile_id": {
+          "$ref": "#/$defs/identifier"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.assignment_started at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "assignment_stopped": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "previous_state",
+        "state",
+        "stop_source_ref",
+        "cursor_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.assignment_stopped.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "type": "null"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "previous_state": {
+          "enum": [
+            "idle",
+            "queued",
+            "reviewing",
+            "holding",
+            "reconfirming",
+            "paused",
+            "paused_quota",
+            "failed"
+          ]
+        },
+        "state": {
+          "const": "stopped"
+        },
+        "stop_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "cursor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.assignment_stopped at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "finding_cleared": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "bsd_finding_id",
+        "finding_key",
+        "previous_state",
+        "clear_basis",
+        "raised_against_generation",
+        "latest_checked_generation",
+        "finding_ref",
+        "clear_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.finding_cleared.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "bsd_finding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "finding_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "previous_state": {
+          "enum": [
+            "held",
+            "reconfirming"
+          ]
+        },
+        "clear_basis": {
+          "enum": [
+            "reconfirmation_silence",
+            "epoch_replaced"
+          ]
+        },
+        "raised_against_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "latest_checked_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "finding_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "clear_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.finding_cleared at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "finding_held": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "bsd_finding_id",
+        "finding_key",
+        "severity",
+        "raised_against_generation",
+        "hold_basis",
+        "finding_ref",
+        "evidence_fingerprint"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.finding_held.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "bsd_finding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "finding_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "severity": {
+          "enum": [
+            "nit",
+            "concern",
+            "critical"
+          ]
+        },
+        "raised_against_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hold_basis": {
+          "enum": [
+            "asynchronous_high_severity",
+            "terminal_nit"
+          ]
+        },
+        "finding_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "evidence_fingerprint": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.finding_held at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "finding_reconfirmed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "bsd_finding_id",
+        "finding_key",
+        "previous_state",
+        "previous_severity",
+        "severity",
+        "raised_against_generation",
+        "latest_checked_generation",
+        "reconfirmation_count",
+        "finding_ref",
+        "reconfirmation_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.finding_reconfirmed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "bsd_finding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "finding_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "previous_state": {
+          "enum": [
+            "held",
+            "reconfirming"
+          ]
+        },
+        "previous_severity": {
+          "enum": [
+            "nit",
+            "concern",
+            "critical"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "nit",
+            "concern",
+            "critical"
+          ]
+        },
+        "raised_against_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "latest_checked_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reconfirmation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "finding_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "reconfirmation_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.finding_reconfirmed at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "finding_suppressed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "bsd_finding_id",
+        "finding_key",
+        "suppression_reason",
+        "severity",
+        "evidence_fingerprint",
+        "finding_ref",
+        "suppression_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.finding_suppressed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "bsd_finding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "finding_key": {
+          "$ref": "#/$defs/identifier"
+        },
+        "suppression_reason": {
+          "enum": [
+            "duplicate_suppressed",
+            "content_free_suppressed"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "nit",
+            "concern",
+            "critical"
+          ]
+        },
+        "evidence_fingerprint": {
+          "$ref": "#/$defs/sha256"
+        },
+        "finding_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "suppression_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.finding_suppressed at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "output_quarantined": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "quarantine_id",
+        "quarantine_ref",
+        "reason",
+        "payload_hash",
+        "retained_payload_ref",
+        "consecutive_quarantine_count",
+        "reset_attempted",
+        "terminal_action"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.output_quarantined.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "quarantine_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "quarantine_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "reason": {
+          "enum": [
+            "malformed_output",
+            "mutating_instruction",
+            "credential_exfiltration",
+            "instruction_override",
+            "unsafe_content",
+            "tool_authority_violation"
+          ]
+        },
+        "payload_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "retained_payload_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "consecutive_quarantine_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reset_attempted": {
+          "type": "boolean"
+        },
+        "terminal_action": {
+          "enum": [
+            "re_prime",
+            "pause_bsd"
+          ]
+        }
+      },
+      "description": "Newly authored owner contract for bsd.output_quarantined at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "policy_changed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "policy_id",
+        "previous_policy_revision",
+        "changed_fields",
+        "policy_ref",
+        "policy_change_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.policy_changed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bsd_assignment_id": {
+          "type": "null"
+        },
+        "primary_run_id": {
+          "type": "null"
+        },
+        "epoch": {
+          "type": "null"
+        },
+        "primary_generation": {
+          "type": "null"
+        },
+        "review_cycle_id": {
+          "type": "null"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "policy_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "previous_policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "changed_fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "mode",
+              "model_selection",
+              "requested_model_id",
+              "requested_persona_id",
+              "trigger_sensitivity",
+              "read_only_tool_profile_id",
+              "catch_up_seconds",
+              "interruption_cooldown_turns",
+              "per_thread_cost_limit",
+              "per_stage_review_limit",
+              "retain_transcript",
+              "project_watch_instructions_ref",
+              "stage_defaults_ref"
+            ]
+          }
+        },
+        "policy_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_change_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.policy_changed at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "review_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "result",
+        "review_ref",
+        "failure_source_ref",
+        "failure_reason_ref",
+        "usage_attempt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.review_failed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "result": {
+          "const": "failed"
+        },
+        "review_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "failure_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "failure_reason_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "usage_attempt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "description": "Newly authored owner contract for bsd.review_failed at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "review_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "review_start_ref",
+        "trigger_kind",
+        "input_manifest_ref",
+        "redaction_receipt_ref",
+        "frozen_boundary",
+        "usage_attempt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.review_started.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "review_start_ref": {
+          "$ref": "#/$defs/safe_ref",
+          "description": "Exact immutable pre-dispatch review admission source from SP-1365, not the terminal pm.bsd.review_cycle.v1 record."
+        },
+        "trigger_kind": {
+          "enum": [
+            "pre_first_material_mutation",
+            "pre_high_risk_action",
+            "constraint_divergence",
+            "repeated_normalized_failure",
+            "environment_identity_change",
+            "major_verification_failure",
+            "pre_terminal_completion_claim",
+            "configured_stage_boundary",
+            "project_watch_rule",
+            "held_finding_reconfirmation"
+          ]
+        },
+        "input_manifest_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "redaction_receipt_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "frozen_boundary": {
+          "type": "boolean"
+        },
+        "usage_attempt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "description": "Newly authored owner contract for bsd.review_started at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "review_timed_out": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "result",
+        "review_ref",
+        "timeout_source_ref",
+        "deadline_ref",
+        "usage_attempt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.review_timed_out.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_cycle_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "result": {
+          "const": "timed_out"
+        },
+        "review_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "timeout_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "deadline_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "usage_attempt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "description": "Newly authored owner contract for bsd.review_timed_out at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    },
+    "workflow_binding_created": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "owner_operation_id",
+        "source_state_ref",
+        "policy_revision",
+        "binding_id",
+        "bsd_assignment_id",
+        "primary_run_id",
+        "epoch",
+        "primary_generation",
+        "review_cycle_id",
+        "primary_run_mutated",
+        "authority_granted",
+        "workflow_kind",
+        "workflow_id",
+        "binding_revision",
+        "previous_binding_ref",
+        "binding_ref",
+        "binding_source_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.bsd.workflow_binding_created.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "owner_operation_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_state_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "bsd_assignment_id": {
+          "type": "null"
+        },
+        "primary_run_id": {
+          "type": "null"
+        },
+        "epoch": {
+          "type": "null"
+        },
+        "primary_generation": {
+          "type": "null"
+        },
+        "review_cycle_id": {
+          "type": "null"
+        },
+        "primary_run_mutated": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        },
+        "workflow_kind": {
+          "enum": [
+            "assistant",
+            "prd_builder",
+            "planning_wizard",
+            "deep_plan",
+            "planunit_compile",
+            "plan_compile",
+            "worknode_generation",
+            "worknode_audit",
+            "worknode_execution",
+            "verification",
+            "remediation",
+            "certification"
+          ]
+        },
+        "workflow_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "binding_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "previous_binding_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binding_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "binding_source_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "description": "Newly authored owner contract for bsd.workflow_binding_created at 1.0.0; prepared without admission. Original-source, relational, number and format predicates are owner contracts with a phase-2 oracle plan."
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/advice_emitted"
+    },
+    {
+      "$ref": "#/$defs/assignment_paused"
+    },
+    {
+      "$ref": "#/$defs/assignment_resumed"
+    },
+    {
+      "$ref": "#/$defs/assignment_started"
+    },
+    {
+      "$ref": "#/$defs/assignment_stopped"
+    },
+    {
+      "$ref": "#/$defs/finding_cleared"
+    },
+    {
+      "$ref": "#/$defs/finding_held"
+    },
+    {
+      "$ref": "#/$defs/finding_reconfirmed"
+    },
+    {
+      "$ref": "#/$defs/finding_suppressed"
+    },
+    {
+      "$ref": "#/$defs/output_quarantined"
+    },
+    {
+      "$ref": "#/$defs/policy_changed"
+    },
+    {
+      "$ref": "#/$defs/review_failed"
+    },
+    {
+      "$ref": "#/$defs/review_started"
+    },
+    {
+      "$ref": "#/$defs/review_timed_out"
+    },
+    {
+      "$ref": "#/$defs/workflow_binding_created"
+    }
+  ]
+}
