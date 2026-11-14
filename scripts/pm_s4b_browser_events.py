@@ -2003,7 +2003,13 @@ row(D, 'derived_shape', 'derived_value_size', 'checkpoint_size', '/proposed',
 row(D, 'derived_shape', 'derived_value_schema', 'checkpoint_schema', '/proposed',
     'the full closed checkpoint owner schema accepts the value (format, allOf state and cursor rules kept)', 'empty',
     lambda w, m: V(schema_errors(CHECKPOINTS_ID, '/$defs/' + FAM[w['family']]['slug'] + '_index_checkpoint', PV(w))),
-    gates=('d_phys',), witnesses=[('schema_walk', 'checkpoint')])
+    gates=('d_phys',), witnesses=[
+        ('schema_walk', 'checkpoint'),
+        W('current with a withdrawal time (state allOf)', proposed=lambda v, c: dict(v, withdrawn_at_utc=WITHDRAWN_AT)),
+        W('current with a withdrawal receipt (state allOf)', proposed=lambda v, c: dict(v, withdrawal_receipt_ref='receipt:x')),
+        W('current with an incomplete filter (state allOf)', proposed=lambda v, c: dict(v, filter_complete=False)),
+        W('revision 0 naming a predecessor (CAS allOf)', variant='empty', proposed=lambda v, c: dict(v, previous_checkpoint_sha256=_hex('p'))),
+        W('empty cursor with a count (cursor allOf)', variant='empty', proposed=lambda v, c: dict(v, matched_count=1))])
 D_JOINS = (
     ('key', 'checkpoint_key_join', ('checkpoint_key',), lambda w: checkpoint_key(w['family'], w['store']['storage_instance_id'], w['project_id'])),
     ('storage_instance', 'storage_instance_join', ('storage_instance_id',), lambda w: w['store']['storage_instance_id']),
@@ -2109,7 +2115,10 @@ for _k in ('generation_id', 'frontier_revision', 'frontier_sha256'):
         witnesses=[(lambda k: W('selection moved: ' + k, store=lambda s, c: (s['selection'].update(**{k: ('eig_' + _hex('newer')) if k == 'generation_id' else (s['selection'][k] + 1 if k == 'frontier_revision' else _hex('newer-' + k))}), s)[1]))(_k)])
 row(RD, 'read', 'read_coverage', 'coverage_incomplete', '/request/sequence_id',
     'coverage reaches the requested sequence', 'true', lambda w, m: V(m.get('rd_covered')), gates=('rd_ok',),
-    witnesses=[W('request past coverage', request=lambda r, c: dict(r, sequence_id=43))])
+    witnesses=[W('request past coverage', request=lambda r, c: dict(r, sequence_id=43)),
+               W('retained original past the checkpoint coverage', checkpoint=lambda v, c: dict(
+                   v, index_through_sequence_id=40,
+                   source_cursor=dict(v['source_cursor'], last_sequence_id=40, last_event_id=mixed_log(c['family'])[39]['event_id'])))])
 row(RD, 'read_access', 'read_access', 'current_disclosure', '/store/access',
     'current Project access permits the read', 'true',
     lambda w, m: V(w['store']['access'].get(w['request']['project_id']) is True), gates=('rd_ok',),
@@ -2793,9 +2802,10 @@ def witness_list(r, family):
     return out
 
 
-def build_negatives(families=FAMILIES):
+def build_negatives(families=FAMILIES, sink=None, keep=False):
     """Every row's witnesses in every family it applies to. An explicit witness must be refused by exactly its row;
-    a generated one is credited only then. Returns (negatives, findings, coverage)."""
+    a generated one is credited only then. Each credited negative is passed to sink(negative, values) as it is built,
+    so no world is held; with keep=True the worlds are also returned. Returns (negatives, findings, coverage)."""
     negatives, findings = [], []
     coverage = {}
     for r in ROWS:
@@ -2813,12 +2823,15 @@ def build_negatives(families=FAMILIES):
                     if not gen:
                         findings.append({'row': r['id'], 'family': family, 'witness': label, 'build_error': repr(error)[:200]})
                     continue
-                refusals, _v = evaluate(world, boundary)
+                memo = Memo(world, boundary)
+                refusals, values = evaluate(world, boundary, memo)
                 want = [(r['id'], r['code'])]
                 if refusals == want:
                     credited += 1
-                    negatives.append({'row': r['id'], 'family': family, 'defect': label, 'boundary': boundary,
-                                      'case': world, 'generated': gen})
+                    n = {'row': r['id'], 'family': family, 'defect': label, 'boundary': boundary, 'generated': gen}
+                    if sink is not None:
+                        sink(dict(n, case=world, memo=memo), values)
+                    negatives.append(dict(n, case=world) if keep else n)
                 elif not refusals:
                     if not (gen and label.startswith(r['id'].replace('append_pred_', '') + ' candidate')):
                         findings.append({'row': r['id'], 'family': family, 'witness': label, 'accepted': True})
@@ -3208,24 +3221,23 @@ def main(argv=None):
             agree['frozen'] += 1
             if d:
                 failures.append({'frozen_agreement': cid, 'detail': d})
-    negatives, findings, coverage = build_negatives(families)
-    failures.extend({'negative_finding': f} for f in findings)
-    by_row = {}
-    for n in negatives:
-        by_row.setdefault(n['row'], set()).add(n['family'])
-        memo = Memo(n['case'], n['boundary'])
+    def sink(n, _values):
+        memo = n['memo']
         if n['boundary'] == 'append':
-            evaluate(n['case'], 'append', memo)
             d = predicate_agreement(n['case'], memo)
             agree['predicate'] += 1
             if d:
                 failures.append({'predicate_agreement': n['row'], 'family': n['family'], 'defect': n['defect'], 'detail': d})
         if n['boundary'] == 'retained':
-            evaluate(n['case'], 'retained', memo)
             d = frozen_agreement(n['case'], memo)
             agree['frozen'] += 1
             if d:
                 failures.append({'frozen_agreement': n['row'], 'family': n['family'], 'defect': n['defect'], 'detail': d})
+    negatives, findings, coverage = build_negatives(families, sink=sink)
+    failures.extend({'negative_finding': f} for f in findings)
+    by_row = {}
+    for n in negatives:
+        by_row.setdefault(n['row'], set()).add(n['family'])
     uncovered = sorted(k for k, v in coverage.items() if v['credited'] == 0)
     unexplained = [k for k in uncovered if k not in PER_FAMILY_ENTAILED_PAIRS()]
     if unexplained:

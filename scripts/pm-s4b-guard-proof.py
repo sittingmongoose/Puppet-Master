@@ -38,54 +38,52 @@ def _key(value):
 
 
 def collect(negative_limit, control_limit):
-    controls = W.build_controls()
-    negatives, build_findings, _coverage = W.build_negatives()
+    """Stream every control and credited single-defect negative through the complete checker and keep, per table, at
+    most control_limit control projections (interleaved across families) and negative_limit negative projections per
+    target row, each from a different family. No world is held after its projection."""
     slots = {t: {'controls': {}, 'negatives': {}, 'all_negatives': 0} for t in W.TABLES}
-    findings = list(build_findings)
-    # Interleave controls across families so every table's tool controls come from several families.
+    findings = []
     per_family = {}
-    for cid, boundary, case in controls:
-        per_family.setdefault(cid.split(':', 1)[1], []).append((cid, case, boundary, None))
+    for cid, boundary, case in W.build_controls():
+        per_family.setdefault(cid.split(':', 1)[1], []).append((cid, case, boundary))
     ordered = [per_family[f][i] for i in range(max(len(v) for v in per_family.values()))
                for f in W.FAMILIES if f in per_family and i < len(per_family[f])]
-    # Interleave families so each row's first witnesses come from different families.
-    by_family = {}
-    for index, n in enumerate(negatives):
-        by_family.setdefault(n['family'], []).append((index, n))
-    width = max(len(v) for v in by_family.values())
-    for position in range(width):
-        for family in W.FAMILIES:
-            if position < len(by_family[family]):
-                index, n = by_family[family][position]
-                ordered.append(('negative/%d' % index, n['case'], n['boundary'], n))
-    for cid, case, boundary, n in ordered:
+    del per_family
+    n_controls = len(ordered)
+    for cid, case, boundary in ordered:
         refusals, values = W.evaluate(case, boundary)
-        if n is None and refusals:
+        if refusals:
             findings.append({'control': cid, 'refusals': refusals})
-        if n is not None and refusals != [(n['row'], W.ROW_BY_ID[n['row']]['code'])]:
-            findings.append({'negative': cid, 'row': n['row'], 'refusals': refusals})
-        refusing_tables = {W.ROW_TABLE[r] for r, _c in refusals}
         for table, value in values.items():
             slot = slots[table]
             key = _key(value)
-            if table not in refusing_tables:
-                if key not in slot['controls'] and (n is None or len(slot['controls']) < control_limit):
-                    slot['controls'][key] = {'id': 'control/%s/%s' % (table, cid), 'value': value,
-                                             'boundary': TOOL_BOUNDARY[boundary], 'source': cid}
-            elif n is not None and refusals and W.ROW_TABLE[refusals[0][0]] == table:
-                slot['all_negatives'] += 1
-                same_target = sum(1 for e in slot['negatives'].values() if e['target'] == n['row'])
-                if key not in slot['negatives'] and same_target < negative_limit:
-                    slot['negatives'][key] = {'id': 'negative/%s/%s' % (table, cid), 'value': value,
-                                              'target': n['row'], 'code': W.ROW_BY_ID[n['row']]['code'],
-                                              'source': cid, 'defect': n['defect'], 'family': n['family']}
+            if key not in slot['controls'] and len(slot['controls']) < control_limit:
+                slot['controls'][key] = {'id': 'control/%s/%s' % (table, cid), 'value': value,
+                                         'boundary': TOOL_BOUNDARY[boundary], 'source': cid}
+    del ordered
+    used = {}
+    counter = {'negatives': 0}
+
+    def sink(n, values):
+        counter['negatives'] += 1
+        table = W.ROW_TABLE[n['row']]
+        slot = slots[table]
+        slot['all_negatives'] += 1
+        value = values[table]
+        key = _key(value)
+        fams = used.setdefault(n['row'], set())
+        if key in slot['negatives'] or n['family'] in fams or len(fams) >= negative_limit:
+            return
+        fams.add(n['family'])
+        slot['negatives'][key] = {'id': 'negative/%s/%s/%d' % (table, n['family'], counter['negatives']), 'value': value,
+                                  'target': n['row'], 'code': W.ROW_BY_ID[n['row']]['code'],
+                                  'source': n['family'] + ' ' + n['defect'], 'defect': n['defect'], 'family': n['family']}
+    _negatives, build_findings, _coverage = W.build_negatives(sink=sink)
+    findings.extend(build_findings)
     for table, slot in slots.items():
-        # Keep the boundary's real controls first, then fill from negatives that pass this table.
-        real = [c for c in slot['controls'].values() if not c['source'].startswith('negative/')]
-        other = [c for c in slot['controls'].values() if c['source'].startswith('negative/')]
-        slot['controls'] = (real + other)[:control_limit]
+        slot['controls'] = list(slot['controls'].values())[:control_limit]
         slot['negatives'] = list(slot['negatives'].values())
-    return slots, findings, len(controls), len(negatives)
+    return slots, findings, n_controls, counter['negatives']
 
 
 def table_rows(table):

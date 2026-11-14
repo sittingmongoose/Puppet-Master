@@ -35,14 +35,14 @@ MUTATIONS = [
     ('C06', 'append_copy_requested_account', "(lambda k: lambda w, m: EQ(E(w)[k], S(w)[COPY_SOURCE.get(k, k)]))(_k)",
      "(lambda k: lambda w, m: EQ(E(w)[k], S(w)['effective_account_ref' if k == 'requested_account_ref' else COPY_SOURCE.get(k, k)]))(_k)", 'control', ('append-linked:browser.routine.promoted', 'append_copy_requested_account')),
     ('C07', 'append_event_id', "lambda w, m: EQ(E(w)['event_id'], m.get('recomputed')[0])", "lambda w, m: EQ(E(w)['event_id'], E(w)['event_id'])", 'witness', None),
-    ('C08', 'append_producer_route', "def digest_reason(w, m):\n    return reason_of(digest_of, E(w))", "def digest_reason(w, m):\n    return None", 'witness', None),
+    ('C08', 'append_producer_route', "    lambda w, m: V(m.get('digest_reason')), gates=('pay_ok',),", "    lambda w, m: V(None), gates=('pay_ok',),", 'witness', None),
     ('C09', 'append_inline_limit', "lambda w, m: {'presented': physical_size(P(w)), 'limit': INLINE_LIMIT}, gates=('pay_dict',)",
      "lambda w, m: {'presented': physical_size(P(w)), 'limit': 2 * INLINE_LIMIT}, gates=('pay_dict',)", 'witness', None),
     ('C10', 'append_payload_integers', "    lambda w, m: V(payload_integer_reason(w['family'], P(w))), gates=('pay_dict',),",
      "    lambda w, m: V(None), gates=('pay_dict',),", 'witness', None),
     ('C11', 'append_observed_utc_z', "lambda w, m: V(reason_of(date_time, E(w)['observed_at_utc'], profile=STORAGE_UTC_Z))",
      "lambda w, m: V(reason_of(date_time, E(w)['observed_at_utc'], profile=EVENT_RECORD))", 'witness', None),
-    ('C12', 'append_storage_sequence', "(lambda k: lambda w, m: EQ(E(w)[k], w['storage_record'][k]))(_k)",
+    ('C12', 'append_storage_sequence_id', "(lambda k: lambda w, m: EQ(E(w)[k], w['storage_record'][k]))(_k)",
      "(lambda k: lambda w, m: EQ(E(w)[k], (E(w) if k == 'sequence_id' else w['storage_record'])[k]))(_k)", 'witness', None),
     ('C13', 'append_partition', "lambda w, m: EQ(w['scope_partition'], partition_of(E(w)['project_id']))",
      "lambda w, m: EQ(w['scope_partition'], w['scope_partition'])", 'witness', None),
@@ -96,7 +96,28 @@ MUTATIONS = [
      "    'withdrawal appends no event', 'eq', lambda w, m: EQ(w['log_before'], w['log_before']), gates=('wd_ok',),", 'witness', None),
     ('C38', 'rebuild_retired_head', "    ('retired_head', 'retired_join', lambda w: PV(w)['retired_generations'][:1], lambda w: [retired_core(w['prior'])]),",
      "    ('retired_head', 'retired_join', lambda w: PV(w)['retired_generations'][:1], lambda w: PV(w)['retired_generations'][:1]),", 'witness', None),
-    ('C39', 'derived_value_schema', "            elif part == 'state' and False:", "", 'skip', None),
+    ('C39', 'append_payload_schema', "PAYLOADS = _load('browser_event_payloads.schema.json')",
+     "PAYLOADS = _load('browser_event_payloads.schema.json')\nfor _d in PAYLOADS['$defs'].values():\n    _d.pop('unevaluatedProperties', None)", 'witness', None),
+    ('C40', 'derived_value_schema', "CHECKPOINTS = _load('browser_program_event_contracts.schema.json')",
+     "CHECKPOINTS = _load('browser_program_event_contracts.schema.json')\nfor _d in CHECKPOINTS['$defs'].values():\n    _d.pop('allOf', None)", 'witness', None),
+    ('C41', 'retained_frozen_payload_schema', "        out['payload_schema'] = (schema_errors(PAYLOADS_ID, '/$defs/' + FAM[family]['payload_def'], record['payload'])",
+     "        out['payload_schema'] = [] if True else (schema_errors(PAYLOADS_ID, '/$defs/' + FAM[family]['payload_def'], record['payload'])", 'witness', None),
+    ('C42', 'retry_no_append', "'a retry appends no second record', 'eq', lambda w, m: EQ(w['log_after'], w['log_before'])",
+     "'a retry appends no second record', 'eq', lambda w, m: EQ(w['log_after'], w['log_after'])", 'witness', None),
+    ('C43', 'read_coverage', "    return type(t) is int and type(w['request']['sequence_id']) is int and w['request']['sequence_id'] <= t",
+     "    return type(t) is int", 'witness', None),
+    ('C44', 'rebuild_publication_new', "                  'collection': [w['prior']['publication_id']] + [r['publication_id'] for r in w['prior']['retired_generations']]},",
+     "                  'collection': []},", 'witness', None),
+    ('C45', 'cleanup_remaining', "    lambda w, m: EQ(PV(w)['retired_generations'], [r for r in w['prior']['retired_generations'] if r['publication_id'] != w['target']]),",
+     "    lambda w, m: EQ(PV(w)['retired_generations'], PV(w)['retired_generations']),", 'witness', None),
+    ('C46', 'derived_prior_current', "    lambda w, m: V(w['prior'] is None or w['prior'].get('state') == 'current'), gates=('d_ok',),",
+     "    lambda w, m: V(True), gates=('d_ok',),", 'witness', None),
+    ('C47', 'append_source_family', "lambda w, m: EQ(S(w)['event_type'], w['family'])", "lambda w, m: EQ(w['family'], w['family'])", 'witness', None),
+    ('C48', 'retained_override', "            recipe_override=world['recipe_override'])", "            recipe_override=None)", 'witness', None),
+    ('C49', 'append_replay_only', "def policy_reason(w, m):\n    return reason_of(current_append_policy, E(w)['replay_policy'])",
+     "def policy_reason(w, m):\n    return reason_of(current_append_policy, 'dedupe_by_idempotency_key')", 'refused_at', 'append_replay_policy'),
+    ('C50', 'append_persisted_utc_z', "    lambda w, m: V(reason_of(date_time, E(w)['persisted_at_utc'], profile=STORAGE_UTC_Z)), gates=('env_ok',),",
+     "    lambda w, m: V(reason_of(date_time, E(w)['persisted_at_utc'], profile=EVENT_RECORD)), gates=('env_ok',),", 'witness', None),
 ]
 MUTATIONS = [m for m in MUTATIONS if m[4] != 'skip']
 
@@ -125,7 +146,11 @@ def prepare(scratch, mutation):
     text = (ROOT / CHECKER).read_text()
     if mutation[2] not in text:
         return None, 'old_text_not_found'
-    (d / 'pm_s4b_browser_events.py').write_text(text.replace(mutation[2], mutation[3], 1))
+    text = text.replace(mutation[2], mutation[3], 1)
+    # The scratch copy reads the repository's Plans and reports, and imports its own tables before the repository's.
+    text = text.replace("ROOT = Path(__file__).resolve().parents[1]", "ROOT = Path(%r)" % str(ROOT), 1)
+    text = text.replace("sys.path.insert(0, str(ROOT / 'scripts'))", "sys.path.append(str(ROOT / 'scripts'))", 1)
+    (d / 'pm_s4b_browser_events.py').write_text(text)
     gen = (ROOT / 'scripts/pm-s4b-table-generate.py').read_text().replace(
         "SCRIPTS = W.ROOT / 'scripts'", 'SCRIPTS = Path(__file__).resolve().parent')
     (d / 'pm-s4b-table-generate.py').write_text(gen)
@@ -157,7 +182,7 @@ def classify(mutation, base, mutated):
         return False, 'no baseline witness'
     for k in sorted(own):
         got = mutated['witnesses'].get(k)
-        if kind == 'witness' and got == []:
+        if got == []:
             return True, 'witness accepted: ' + k
         if kind == 'refused_at' and got and len(got) == 1 and got[0][0] == extra:
             return True, 'witness refused at %s: %s' % (extra, k)
