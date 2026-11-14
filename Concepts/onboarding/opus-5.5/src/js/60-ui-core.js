@@ -286,12 +286,15 @@
     if (asked === family && now.selectedMode === mode) return;
     /* repainting the page for a look is expected heavy work: it never counts toward low-resource mode */
     O55.motion.quiet(2500);
+    /* a pick ends a reveal still waiting or playing whichever way it goes on (R38-1): one made without a press or a key
+       before it (O55.ui.act, Demo Studio's tools, a direct call) into NieR, or on the instant path, left it to play over
+       the new look */
+    skipLook();
     /* into or out of NieR (the fifth theme, Q22), also while its moment still plays: NieR's own moment plays inside the
        window (O55.nierLook.pick) */
     if ((family === 'nier') !== (asked === 'nier') && O55.nierLook && O55.nierLook.pick) { O55.nierLook.pick(family, mode, originEl); return; }
     const motionOff = () => O55.motion.reduced() || O55.motion.lowResource;
     if (!document.startViewTransition || motionOff()) { apply(); return; }
-    skipLook();
     const r = originEl ? originEl.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
     const x = r.left + r.width / 2, y = r.top + r.height / 2, end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     document.documentElement.setAttribute('data-o55-vt', family);

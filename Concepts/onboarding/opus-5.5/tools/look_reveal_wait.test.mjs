@@ -120,7 +120,8 @@ function makePage() {
 	// eslint-disable-next-line no-new-func
 	const fns = new Function('scope', `with (scope) { ${PART}\n return { applyLook, onKey, close }; }`)(scope);
 	const page = {
-		current: null, vts, anims, log, holds, motion, attrs, winEvents, S, fns, doc: document,
+		current: null, vts, anims, log, holds, motion, attrs, winEvents, S, fns, doc: document, O55,
+		async visibility() { docListeners.filter((l) => l.type === 'visibilitychange').forEach((l) => l.fn({ type: 'visibilitychange' })); await settle(); },
 		get now() { return now; },
 		setTimeout(fn, ms) { const id = ++seq; timers.set(id, { at: now + Math.max(0, ms || 0), fn }); return id; },
 		async advance(ms) {
@@ -320,6 +321,28 @@ await test('deliberate keys still end a reveal: a letter, Backspace, a function 
 		await p.key(key);
 		expect(a.skipped > 0, `the key ${key} did not end the reveal`);
 	}
+});
+
+await test('R38-1a: a pick on the instant path (Reduced Motion on at its press) ends a reveal still waiting', async () => {
+	const p = makePage();
+	const a = await waitingAt(p, 'friendly');
+	p.motion.reduced = true;
+	p.pick('glass');
+	expect(a.skipped > 0, 'the instant pick left the earlier reveal waiting');
+	expect(p.holds.released === p.holds.begun, 'its held work was released');
+	await p.advance(1500);
+	expect(p.reveals().length === 0 && p.of(a).every((x) => x.played === 0), 'nothing of the earlier reveal plays later');
+});
+
+await test('R38-1b: a pick into NieR (its own moment, no View Transition) ends a reveal still waiting', async () => {
+	const p = makePage();
+	p.O55.nierLook = { pick() { p.log.push('nier pick'); } };
+	const a = await waitingAt(p, 'friendly');
+	p.pick('nier');
+	expect(p.log.includes('nier pick'), 'NieR\'s own path took the pick');
+	expect(a.skipped > 0, 'the NieR pick left the earlier reveal waiting');
+	await p.advance(1500);
+	expect(p.reveals().length === 0, 'nothing of the earlier reveal plays later');
 });
 
 for (const [label, turnOn] of [['Reduced Motion', (p) => { p.motion.reduced = true; }], ['low-resource mode', (p) => { p.motion.lowResource = true; }]]) {
