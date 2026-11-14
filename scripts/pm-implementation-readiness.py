@@ -2952,7 +2952,62 @@ def json_pointer_value(document: Any, pointer: str) -> Any:
     return current
 
 
-def event_family_payload_schema(family: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
+def payload_scope_edition_ids(schema: dict[str, Any]) -> dict[str, str] | None:
+    """{scope_kind: schema_id} when one closed payload lists exactly one id per scope edition.
+
+    The W3H and DCN prepared payloads close a single schema over the Project and application
+    editions and list both editions' ids in schema_id.enum. Their own checkers select the edition's
+    id by scope_kind: W3H payload_schema_id() gives '<x>.application.v<N>' to the application
+    edition and '<x>.v<N>' to the Project edition, and DCN's payload_schema_id and
+    application_payload_schema_id follow the same naming. The binding is that naming rule; when the
+    schema also binds scope_kind to schema_id through an allOf if/then/else (W3H), that binding
+    must agree with it. Anything else (one scope, another count of ids, ids the rule does not pair,
+    a contradicting if/then) resolves no edition.
+    """
+    properties = schema.get("properties") if isinstance(schema.get("properties"), dict) else {}
+    id_rule = properties.get("schema_id") if isinstance(properties.get("schema_id"), dict) else {}
+    scope_rule = properties.get("scope_kind") if isinstance(properties.get("scope_kind"), dict) else {}
+    ids, scopes = id_rule.get("enum"), scope_rule.get("enum")
+    if (not isinstance(ids, list) or not isinstance(scopes, list) or len(ids) != 2 or len(set(map(str, ids))) != 2
+            or not all(isinstance(value, str) for value in ids) or sorted(map(str, scopes)) != ["application", "project"]):
+        return None
+    named: dict[str, str] = {}
+    for value in ids:
+        match = re.fullmatch(r"(.+)\.application\.(v[0-9]+)", value)
+        if match and f"{match.group(1)}.{match.group(2)}" in ids:
+            named = {"application": value, "project": f"{match.group(1)}.{match.group(2)}"}
+    if not named:
+        return None
+    bound: dict[str, str] = {}
+    for clause in schema.get("allOf") if isinstance(schema.get("allOf"), list) else []:
+        condition = clause.get("if") if isinstance(clause, dict) else None
+        scope = (((condition or {}).get("properties") or {}).get("scope_kind") or {}).get("const") if isinstance(condition, dict) else None
+        if scope not in ("project", "application"):
+            continue
+        other = "project" if scope == "application" else "application"
+        for branch, branch_scope in (("then", scope), ("else", other)):
+            value = (((clause.get(branch) or {}).get("properties") or {}).get("schema_id") or {}).get("const")
+            if value is None:
+                continue
+            if bound.get(branch_scope, value) != value:
+                return None
+            bound[branch_scope] = value
+    if any(named[scope] != value for scope, value in bound.items()):
+        return None
+    return named
+
+
+def event_family_payload_schema(
+    family: dict[str, Any],
+    scope_kind: str | None = None,
+) -> tuple[dict[str, Any] | None, str | None]:
+    """The family's active payload schema and its id.
+
+    A schema that lists one id per scope edition (payload_scope_edition_ids) resolves the id of
+    the edition asked for: scope_kind when given (a payload_versions entry), otherwise the
+    family's top-level edition, the application edition for application_only families and the
+    Project edition for every other scope policy.
+    """
     inline = family.get("payload_schema")
     if isinstance(inline, dict):
         return inline, inline.get("$id")
@@ -2982,7 +3037,13 @@ def event_family_payload_schema(family: dict[str, Any]) -> tuple[dict[str, Any] 
         # resolves identity only; it does not admit the app producer or change
         # the fixed Event Authority kernel denominator.
         constant_id = schema.get('properties', {}).get('schema_id', {}).get('const')
-        return schema, schema.get("$id") or schema.get("schema_id") or constant_id
+        resolved = schema.get("$id") or schema.get("schema_id") or constant_id
+        if resolved is None:
+            editions = payload_scope_edition_ids(schema)
+            if editions is not None:
+                edition = scope_kind or ("application" if family.get("scope_policy") == "application_only" else "project")
+                resolved = editions.get(edition)
+        return schema, resolved
     except Exception:  # noqa: BLE001 - converted to a deterministic structural failure.
         return None, None
 
