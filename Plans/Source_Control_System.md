@@ -2189,3 +2189,2869 @@ preserved_exact_tokens: []
 negative_constraints:
 - No Event Authority admission, native readiness, retention choice or new user-visible behavior.
 ```
+
+## Prepared Source Control Event Authority contracts — W3B phase 1, 2026-11-05
+
+These are **newly authored owner contracts** for the nineteen deck-2 item 9.a A names. They extend only existing specified behavior after the per-family search recorded in `reports/event-authority-20261105/W3B-search.json`. None is admitted. Existing command rows keep `expected_event_types=[]` and handlers remain unavailable until separately reviewed admission and full native adoption. Application-only repository.inspect remains SCS-025 receipt-only and is not an alias or scope extension of these families. Each definition below stands on its own.
+
+### SCS-1250 — source_control.backend.detected prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1250
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.backend.detected@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-004, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.backend.detected;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.backend_detected.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::backend_detect owns this
+  exact Host/Environment detection observation. The exact-environment backend-detect handler has completed one bounded
+  read and committed its actual detection observation; a request or cached panel alone is insufficient. The original
+  request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.backend.detect
+  and its command_instance_id/idempotency/scope must join the actual source.  Native admission freezes actual owner
+  acceptance, permission/FileSafe and applicable capability/topology/revision/lease/credential evidence before effect.
+  The original fact is committed in source_control_backend_detected_fact via SP-1250, before this family''s append
+  is attempted. Adopt SP-286 and CV-339 by name, including strict stored full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1;
+  SP-336/SP-347 own group issuance and crash behavior. Do not expose this event or dependent terminal success before
+  the first issued receipt is resolved and joined to the original full EventRecord. For started facts append/resolve
+  precedes native dispatch; for successful completion facts the native outcome source precedes append and terminal
+  publication follows receipt. A failure to publish history never reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1250 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_backend_detected_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:backend_detected:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
+  RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
+  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.backend.detected`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_backend_detected_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
+  policies; no event reference retains their bodies implicitly. SP-1250 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-TELEMETRY-90D@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: One accepted detection operation produces one observation, including a proved empty detected-backends
+  set. Partial or unavailable observation remains explicitly partial or unavailable; it never means no backend.
+  Detection does not select, install, bind, authenticate or certify a backend. Required predicates for this exact
+  family: detected_backends is exactly the observed Git/Jujutsu set in the actual setup-state source; observation_state
+  and completeness agree with the original observation; empty is not substituted for unavailable; source Host/Environment/topology
+  equals the accepted backend.detect scope. Check every predicate separately; passing schema or a matching supplied
+  digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.backend_detected.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.backend_detected.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1250 binds key
+  source_control_event.backend_detected.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.backend_detected.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1210 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.backend.detected
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.backend.detected
+- pm.source_control_event.backend_detected.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1251 — source_control.backend.selected prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1251
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.backend.selected@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-004, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.backend.selected;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.backend_selected.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::backend_select owns this
+  exact Host/Environment selected backend. The backend-select handler has committed the explicitly requested effective
+  backend for the captured Host/Environment after verifying its current setup evidence. The original request is
+  the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.backend.select and its
+  command_instance_id/idempotency/scope must join the actual source.  Native admission freezes actual owner acceptance,
+  permission/FileSafe and applicable capability/topology/revision/lease/credential evidence before effect. The original
+  fact is committed in source_control_backend_selected_fact via SP-1251, before this family''s append is attempted.
+  Adopt SP-286 and CV-339 by name, including strict stored full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347
+  own group issuance and crash behavior. Do not expose this event or dependent terminal success before the first
+  issued receipt is resolved and joined to the original full EventRecord. For started facts append/resolve precedes
+  native dispatch; for successful completion facts the native outcome source precedes append and terminal publication
+  follows receipt. A failure to publish history never reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1251 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_backend_selected_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:backend_selected:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.backend.selected`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_backend_selected_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1251 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: A committed selection records the old and selected backend, preserving an absent prior selection
+  as null. Repeating the same command returns its original result. A view/profile preview, discovery, failed setup
+  or implicit Git fallback cannot select a backend; selection alone grants no installation, credential, binding
+  or mutation authority. Required predicates for this exact family: selected_backend equals the accepted request,
+  verified effective setup and original result; previous_backend equals the saved pre-selection value; selection
+  is committed, rather than a presentation-only profile preview. Check every predicate separately; passing schema
+  or a matching supplied digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.backend_selected.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.backend_selected.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1251 binds key
+  source_control_event.backend_selected.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.backend_selected.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1210 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.backend.selected
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.backend.selected
+- pm.source_control_event.backend_selected.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1252 — source_control.checkpoint.created prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1252
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.checkpoint.created@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-008, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.checkpoint.created;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.checkpoint_created.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::checkpoint_create owns
+  this backend-native checkpoint. The checkpoint-create handler has verified and durably saved the exact backend-native
+  checkpoint and its generation for recovery or handoff. The original request is the exact v2 legacy_exact wrapper
+  over the existing command request; cmd.source_control.checkpoint.create and its command_instance_id/idempotency/scope
+  must join the actual source.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable
+  capability/topology/revision/lease/credential evidence before effect. The original fact is committed in source_control_checkpoint_created_fact
+  via SP-1252, before this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored
+  full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose
+  this event or dependent terminal success before the first issued receipt is resolved and joined to the original
+  full EventRecord. For started facts append/resolve precedes native dispatch; for successful completion facts the
+  native outcome source precedes append and terminal publication follows receipt. A failure to publish history never
+  reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1252 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_checkpoint_created_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:checkpoint_created:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.checkpoint.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_created_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1252 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: The exact checkpoint ID/generation is absent before creation and resolves after it to its saved
+  native revision, purpose and source context. Duplicate command returns the original creation, while an occupied
+  different checkpoint or stale expected generation refuses. This is not FileSafe safe_point.created or restore_point.created.
+  Required predicates for this exact family: checkpoint ID, purpose and expected generation join the original create
+  request and saved checkpoint; checkpoint_revision is the actual Git or JJ native saved revision, with the exact
+  backend tag; the checkpoint exists durably before the created fact is published. Check every predicate separately;
+  passing schema or a matching supplied digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.checkpoint_created.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.checkpoint_created.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1252 binds key
+  source_control_event.checkpoint_created.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.checkpoint_created.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1211 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.checkpoint.created
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.checkpoint.created
+- pm.source_control_event.checkpoint_created.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1253 — source_control.checkpoint.restored prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1253
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.checkpoint.restored@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-008, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.checkpoint.restored;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.checkpoint_restored.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::checkpoint_restore owns
+  this restoration of one exact backend-native checkpoint. The checkpoint-restore handler has verified the exact
+  selected checkpoint and observed a successful native restoration under current writer, revision, topology, permission,
+  FileSafe and confirmation fences. The original request is the exact v2 legacy_exact wrapper over the existing
+  command request; cmd.source_control.checkpoint.restore and its command_instance_id/idempotency/scope must join
+  the actual source.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable capability/topology/revision/lease/credential
+  evidence before effect. The original fact is committed in source_control_checkpoint_restored_fact via SP-1253,
+  before this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored full-value
+  v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose this
+  event or dependent terminal success before the first issued receipt is resolved and joined to the original full
+  EventRecord. For started facts append/resolve precedes native dispatch; for successful completion facts the native
+  outcome source precedes append and terminal publication follows receipt. A failure to publish history never reruns
+  the native effect.
+
+
+  C4/C5 payload and identity: CV-1253 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_checkpoint_restored_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:checkpoint_restored:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.checkpoint.restored`, DL-453 (E-CARDS-3 item 1.a) has its saved
+  event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records
+  their own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_restored_fact`
+  (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep
+  the same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1253 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: One original restore command moves the captured workspace from its expected before revision to
+  the verified checkpoint-compatible after revision. Preserve original recovery/cleanup receipts. Unknown or partial
+  effects produce only the required typed operation outcome, never a restored fact. A later restore is a new operation,
+  not replay. Required predicates for this exact family: checkpoint ref, ID and generation resolve the same exact
+  selected checkpoint as the accepted restore request; restore_confirmation is true in the original request and
+  independent permission/FileSafe decisions admit the restore; after_revision matches independently observed native
+  restoration, not merely a zero exit code. Check every predicate separately; passing schema or a matching supplied
+  digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.checkpoint_restored.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.checkpoint_restored.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1253 binds key
+  source_control_event.checkpoint_restored.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.checkpoint_restored.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1211 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.checkpoint.restored
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.checkpoint.restored
+- pm.source_control_event.checkpoint_restored.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1254 — source_control.remote.fetch_completed prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1254
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.remote.fetch_completed@1.0.0, prepared without
+  admission under deck-2 item 9.a A. Reuse SCS-015 / SCS-016 / SCS-025, SCS-002/003 native command/lease authority
+  and Contracts_V0.md#EventRecord. Search and negative evidence: reports/event-authority-20261105/W3B-search.json
+  entry source_control.remote.fetch_completed; no existing exact closed event, producer/identity/consumer/checkpoint
+  or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.remote_fetch_completed.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::remote_fetch owns this
+  fetch verified successful completion. The fetch handler has resolved a known successful original operation receipt
+  and independently verified the actual target and after revision; CLI exit alone is insufficient. The original
+  request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.remote.fetch
+  and its command_instance_id/idempotency/scope must join the actual source.  Native admission freezes actual owner
+  acceptance, permission/FileSafe and applicable capability/topology/revision/lease/credential evidence before effect.
+  The original fact is committed in source_control_remote_fetch_completed_fact via SP-1254, before this family''s
+  append is attempted. Adopt SP-286 and CV-339 by name, including strict stored full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1;
+  SP-336/SP-347 own group issuance and crash behavior. Do not expose this event or dependent terminal success before
+  the first issued receipt is resolved and joined to the original full EventRecord. For started facts append/resolve
+  precedes native dispatch; for successful completion facts the native outcome source precedes append and terminal
+  publication follows receipt. A failure to publish history never reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1254 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_remote_fetch_completed_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:remote_fetch_completed:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.fetch_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_fetch_completed_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1254 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: One original started fetch operation reaches verified success. The completed fact resolves that
+  exact start and original target; blocked, failed, cancelled, recovery_required or effect_unknown stays in its
+  typed terminal receipt and cannot claim successful completion. Required predicates for this exact family: remote_target_ref
+  resolves the original captured repository/remote/instance/account/native revision, never remote display text;
+  writer, credential, capability, permission and FileSafe evidence joins the actual dispatch target; the original
+  successful receipt and native observation prove the exact after revision, with no unresolved effect. Check every
+  predicate separately; passing schema or a matching supplied digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.remote_fetch_completed.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.remote_fetch_completed.history.v1@1.0.0 is its operating audit
+  reader for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1254 binds
+  key source_control_event.remote_fetch_completed.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema
+  pm.storage_value.source_control_event.remote_fetch_completed.checkpoint.v1@1.0.0, exact SP-278 full-index publication
+  and nine-field durable read token (DL-076, no persisted redb_snapshot_id). Rebuild never executes a command, native
+  mutation, network request, lease grant/release, outbox, notification or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1212 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.fetch_completed
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.remote.fetch_completed
+- pm.source_control_event.remote_fetch_completed.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1255 — source_control.remote.fetch_started prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1255
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.remote.fetch_started@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-015 / SCS-016 / SCS-025, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.remote.fetch_started;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.remote_fetch_started.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::remote_fetch owns this
+  fetch dispatch start. The fetch handler has committed the exact admitted target, expected native revision, operation
+  and ObservableWork before its first native effect. The original request is the exact v2 legacy_exact wrapper over
+  the existing command request; cmd.source_control.remote.fetch and its command_instance_id/idempotency/scope must
+  join the actual source.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable
+  capability/topology/revision/lease/credential evidence before effect. The original fact is committed in source_control_remote_fetch_started_fact
+  via SP-1255, before this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored
+  full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose
+  this event or dependent terminal success before the first issued receipt is resolved and joined to the original
+  full EventRecord. For started facts append/resolve precedes native dispatch; for successful completion facts the
+  native outcome source precedes append and terminal publication follows receipt. A failure to publish history never
+  reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1255 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_remote_fetch_started_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:remote_fetch_started:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.fetch_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_fetch_started_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1255 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: One accepted fetch operation moves from admitted/no effect to started before native dispatch.
+  No second native attempt is authorized by an append retry. An operation that is refused before admission has no
+  started fact. Required predicates for this exact family: remote_target_ref resolves the original captured repository/remote/instance/account/native
+  revision, never remote display text; writer, credential, capability, permission and FileSafe evidence joins the
+  actual dispatch target; the start source is durable before the first native effect. Check every predicate separately;
+  passing schema or a matching supplied digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.remote_fetch_started.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.remote_fetch_started.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1255 binds key
+  source_control_event.remote_fetch_started.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.remote_fetch_started.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1212 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.fetch_started
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.remote.fetch_started
+- pm.source_control_event.remote_fetch_started.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1256 — source_control.remote.publish_completed prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1256
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.remote.publish_completed@1.0.0, prepared without
+  admission under deck-2 item 9.a A. Reuse SCS-015 / SCS-016 / SCS-025, SCS-002/003 native command/lease authority
+  and Contracts_V0.md#EventRecord. Search and negative evidence: reports/event-authority-20261105/W3B-search.json
+  entry source_control.remote.publish_completed; no existing exact closed event, producer/identity/consumer/checkpoint
+  or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.remote_publish_completed.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::remote_publish owns this
+  publish verified successful completion. The publish handler has resolved a known successful original operation
+  receipt and independently verified the actual target and after revision; CLI exit alone is insufficient. The original
+  request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.remote.publish
+  and its command_instance_id/idempotency/scope must join the actual source.  Native admission freezes actual owner
+  acceptance, permission/FileSafe and applicable capability/topology/revision/lease/credential evidence before effect.
+  The original fact is committed in source_control_remote_publish_completed_fact via SP-1256, before this family''s
+  append is attempted. Adopt SP-286 and CV-339 by name, including strict stored full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1;
+  SP-336/SP-347 own group issuance and crash behavior. Do not expose this event or dependent terminal success before
+  the first issued receipt is resolved and joined to the original full EventRecord. For started facts append/resolve
+  precedes native dispatch; for successful completion facts the native outcome source precedes append and terminal
+  publication follows receipt. A failure to publish history never reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1256 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_remote_publish_completed_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:remote_publish_completed:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.publish_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_publish_completed_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1256 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: One original started publish operation reaches verified success. The completed fact resolves that
+  exact start and original target; blocked, failed, cancelled, recovery_required or effect_unknown stays in its
+  typed terminal receipt and cannot claim successful completion. Fan-out is previewed and receipted per exact target
+  and is not atomic. A mirror mapping cannot duplicate publication. Required predicates for this exact family: remote_target_ref
+  resolves the original captured repository/remote/instance/account/native revision, never remote display text;
+  writer, credential, capability, permission and FileSafe evidence joins the actual dispatch target; the original
+  successful receipt and native observation prove the exact after revision, with no unresolved effect; partial fan-out
+  cannot be presented as all-target success or automatically retried. Check every predicate separately; passing
+  schema or a matching supplied digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.remote_publish_completed.history.v1@1.0.0 writes only this
+  family''s filtered passive history; reader.source_control.remote_publish_completed.history.v1@1.0.0 is its operating
+  audit reader for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1256
+  binds key source_control_event.remote_publish_completed.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)},
+  schema pm.storage_value.source_control_event.remote_publish_completed.checkpoint.v1@1.0.0, exact SP-278 full-index
+  publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id). Rebuild never executes
+  a command, native mutation, network request, lease grant/release, outbox, notification or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1213 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.publish_completed
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.remote.publish_completed
+- pm.source_control_event.remote_publish_completed.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1257 — source_control.remote.publish_started prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1257
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.remote.publish_started@1.0.0, prepared without
+  admission under deck-2 item 9.a A. Reuse SCS-015 / SCS-016 / SCS-025, SCS-002/003 native command/lease authority
+  and Contracts_V0.md#EventRecord. Search and negative evidence: reports/event-authority-20261105/W3B-search.json
+  entry source_control.remote.publish_started; no existing exact closed event, producer/identity/consumer/checkpoint
+  or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.remote_publish_started.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::remote_publish owns this
+  publish dispatch start. The publish handler has committed the exact admitted target, expected native revision,
+  operation and ObservableWork before its first native effect. The original request is the exact v2 legacy_exact
+  wrapper over the existing command request; cmd.source_control.remote.publish and its command_instance_id/idempotency/scope
+  must join the actual source.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable
+  capability/topology/revision/lease/credential evidence before effect. The original fact is committed in source_control_remote_publish_started_fact
+  via SP-1257, before this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored
+  full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose
+  this event or dependent terminal success before the first issued receipt is resolved and joined to the original
+  full EventRecord. For started facts append/resolve precedes native dispatch; for successful completion facts the
+  native outcome source precedes append and terminal publication follows receipt. A failure to publish history never
+  reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1257 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_remote_publish_started_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:remote_publish_started:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.publish_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_publish_started_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1257 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: One accepted publish operation moves from admitted/no effect to started before native dispatch.
+  No second native attempt is authorized by an append retry. An operation that is refused before admission has no
+  started fact. Fan-out is previewed and receipted per exact target and is not atomic. A mirror mapping cannot duplicate
+  publication. Required predicates for this exact family: remote_target_ref resolves the original captured repository/remote/instance/account/native
+  revision, never remote display text; writer, credential, capability, permission and FileSafe evidence joins the
+  actual dispatch target; the start source is durable before the first native effect; partial fan-out cannot be
+  presented as all-target success or automatically retried. Check every predicate separately; passing schema or
+  a matching supplied digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.remote_publish_started.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.remote_publish_started.history.v1@1.0.0 is its operating audit
+  reader for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1257 binds
+  key source_control_event.remote_publish_started.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema
+  pm.storage_value.source_control_event.remote_publish_started.checkpoint.v1@1.0.0, exact SP-278 full-index publication
+  and nine-field durable read token (DL-076, no persisted redb_snapshot_id). Rebuild never executes a command, native
+  mutation, network request, lease grant/release, outbox, notification or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1213 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.publish_started
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.remote.publish_started
+- pm.source_control_event.remote_publish_started.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1258 — source_control.remote.sync_completed prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1258
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.remote.sync_completed@1.0.0, prepared without
+  admission under deck-2 item 9.a A. Reuse SCS-015 / SCS-016 / SCS-025, SCS-002/003 native command/lease authority
+  and Contracts_V0.md#EventRecord. Search and negative evidence: reports/event-authority-20261105/W3B-search.json
+  entry source_control.remote.sync_completed; no existing exact closed event, producer/identity/consumer/checkpoint
+  or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.remote_sync_completed.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::remote_sync owns this
+  sync verified successful completion. The sync handler has resolved a known successful original operation receipt
+  and independently verified the actual target and after revision; CLI exit alone is insufficient. The original
+  request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.remote.sync
+  and its command_instance_id/idempotency/scope must join the actual source. The separately owned v2 local_reconcile_only
+  request is also accepted exactly as SCS-025 defines; it never inherits transport-only v1 fields or invents a command-instance
+  field absent from that selected schema.  Native admission freezes actual owner acceptance, permission/FileSafe
+  and applicable capability/topology/revision/lease/credential evidence before effect. The original fact is committed
+  in source_control_remote_sync_completed_fact via SP-1258, before this family''s append is attempted. Adopt SP-286
+  and CV-339 by name, including strict stored full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own
+  group issuance and crash behavior. Do not expose this event or dependent terminal success before the first issued
+  receipt is resolved and joined to the original full EventRecord. For started facts append/resolve precedes native
+  dispatch; for successful completion facts the native outcome source precedes append and terminal publication follows
+  receipt. A failure to publish history never reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1258 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_remote_sync_completed_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:remote_sync_completed:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.sync_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_sync_completed_fact` (the accepted request, native evidence refs and
+  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1258 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: One original started sync operation reaches verified success. The completed fact resolves that
+  exact start and original target; blocked, failed, cancelled, recovery_required or effect_unknown stays in its
+  typed terminal receipt and cannot claim successful completion. For sync local_reconcile_only preserve both original
+  and fork identities, fetched revision/fetch receipt and resolved native reconciliation strategy; require push_targets=[]
+  and publish_performed=false. Publication is a separate admitted operation. Required predicates for this exact
+  family: remote_target_ref resolves the original captured repository/remote/instance/account/native revision, never
+  remote display text; writer, credential, capability, permission and FileSafe evidence joins the actual dispatch
+  target; the original successful receipt and native observation prove the exact after revision, with no unresolved
+  effect; local_reconcile_only has an empty push-target set and no publication; resolved strategy and both original/fork
+  revisions match the accepted v2 request. Check every predicate separately; passing schema or a matching supplied
+  digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.remote_sync_completed.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.remote_sync_completed.history.v1@1.0.0 is its operating audit
+  reader for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1258 binds
+  key source_control_event.remote_sync_completed.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema
+  pm.storage_value.source_control_event.remote_sync_completed.checkpoint.v1@1.0.0, exact SP-278 full-index publication
+  and nine-field durable read token (DL-076, no persisted redb_snapshot_id). Rebuild never executes a command, native
+  mutation, network request, lease grant/release, outbox, notification or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1214 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.sync_completed
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.remote.sync_completed
+- pm.source_control_event.remote_sync_completed.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1259 — source_control.remote.sync_started prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1259
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.remote.sync_started@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-015 / SCS-016 / SCS-025, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.remote.sync_started;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.remote_sync_started.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::remote_sync owns this
+  sync dispatch start. The sync handler has committed the exact admitted target, expected native revision, operation
+  and ObservableWork before its first native effect. The original request is the exact v2 legacy_exact wrapper over
+  the existing command request; cmd.source_control.remote.sync and its command_instance_id/idempotency/scope must
+  join the actual source. The separately owned v2 local_reconcile_only request is also accepted exactly as SCS-025
+  defines; it never inherits transport-only v1 fields or invents a command-instance field absent from that selected
+  schema.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable capability/topology/revision/lease/credential
+  evidence before effect. The original fact is committed in source_control_remote_sync_started_fact via SP-1259,
+  before this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored full-value
+  v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose this
+  event or dependent terminal success before the first issued receipt is resolved and joined to the original full
+  EventRecord. For started facts append/resolve precedes native dispatch; for successful completion facts the native
+  outcome source precedes append and terminal publication follows receipt. A failure to publish history never reruns
+  the native effect.
+
+
+  C4/C5 payload and identity: CV-1259 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_remote_sync_started_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:remote_sync_started:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
+  RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
+  2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
+  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
+  `source_control.remote.sync_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
+  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
+  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
+  original source fact `source_control_remote_sync_started_fact` (the accepted request, native evidence refs and owner
+  result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
+  another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1259 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-OPERATIONAL-2555D@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: One accepted sync operation moves from admitted/no effect to started before native dispatch. No
+  second native attempt is authorized by an append retry. An operation that is refused before admission has no started
+  fact. For sync local_reconcile_only preserve both original and fork identities, fetched revision/fetch receipt
+  and resolved native reconciliation strategy; require push_targets=[] and publish_performed=false. Publication
+  is a separate admitted operation. Required predicates for this exact family: remote_target_ref resolves the original
+  captured repository/remote/instance/account/native revision, never remote display text; writer, credential, capability,
+  permission and FileSafe evidence joins the actual dispatch target; the start source is durable before the first
+  native effect; local_reconcile_only has an empty push-target set and no publication; resolved strategy and both
+  original/fork revisions match the accepted v2 request. Check every predicate separately; passing schema or a matching
+  supplied digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.remote_sync_started.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.remote_sync_started.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1259 binds key
+  source_control_event.remote_sync_started.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.remote_sync_started.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1214 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.remote.sync_started
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.remote.sync_started
+- pm.source_control_event.remote_sync_started.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1260 — source_control.repository.bound prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1260
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.repository.bound@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-002, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.repository.bound;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.repository_bound.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::repository_bind owns this
+  Project repository/workspace binding. The repository-bind handler has committed a verified repository/native-workspace
+  binding to the actual Project and exact source context. The original request is the exact v2 legacy_exact wrapper
+  over the existing command request; cmd.source_control.repository.bind and its command_instance_id/idempotency/scope
+  must join the actual source.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable
+  capability/topology/revision/lease/credential evidence before effect. The original fact is committed in source_control_repository_bound_fact
+  via SP-1260, before this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored
+  full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose
+  this event or dependent terminal success before the first issued receipt is resolved and joined to the original
+  full EventRecord. For started facts append/resolve precedes native dispatch; for successful completion facts the
+  native outcome source precedes append and terminal publication follows receipt. A failure to publish history never
+  reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1260 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_repository_bound_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:repository_bound:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.repository.bound`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_repository_bound_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
+  policies; no event reference retains their bodies implicitly. SP-1260 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: An absent binding becomes the verified binding; an identical retry returns the original result
+  and a competing binding refuses. Native identity, independent forge identity including none, Home Server and source
+  topology are preserved. No implicit hosting connection, clone or new Project is created by this event. Required
+  predicates for this exact family: binding resolves the requested Project/repository/backend/workspace and independent
+  forge binding; native_revision equals the verified existing checkout, never a path or remote-name guess; a conflicting
+  existing binding refuses without overwrite. Check every predicate separately; passing schema or a matching supplied
+  digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.repository_bound.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.repository_bound.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1260 binds key
+  source_control_event.repository_bound.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.repository_bound.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1215 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.repository.bound
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.repository.bound
+- pm.source_control_event.repository_bound.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1261 — source_control.repository.unbound prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1261
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.repository.unbound@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-010, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.repository.unbound;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.repository_unbound.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::repository_unbind owns
+  this removal of one exact Project repository binding. The repository-unbind handler has committed removal of the
+  exact existing binding after resolving dependency and active-work dispositions. The original request is the exact
+  v2 legacy_exact wrapper over the existing command request; cmd.source_control.repository.unbind and its command_instance_id/idempotency/scope
+  must join the actual source.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable
+  capability/topology/revision/lease/credential evidence before effect. The original fact is committed in source_control_repository_unbound_fact
+  via SP-1261, before this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored
+  full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose
+  this event or dependent terminal success before the first issued receipt is resolved and joined to the original
+  full EventRecord. For started facts append/resolve precedes native dispatch; for successful completion facts the
+  native outcome source precedes append and terminal publication follows receipt. A failure to publish history never
+  reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1261 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_repository_unbound_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:repository_unbound:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.repository.unbound`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_repository_unbound_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
+  policies; no event reference retains their bodies implicitly. SP-1261 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: The exact active binding becomes unbound; its ID and pre-removal context remain in history. This
+  event cannot prove deletion of repository bytes, lease cleanup, Project deletion or remote removal. Missing/changed
+  binding refuses; an acknowledged retry reads its original result. Required predicates for this exact family: the
+  pre-removal binding is the same captured Project/repository/workspace binding; dependency and active-work disposition
+  is actually settled in the original disposition receipt; only the selected binding is removed and native repository
+  bytes are not inferred deleted. Check every predicate separately; passing schema or a matching supplied digest
+  is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.repository_unbound.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.repository_unbound.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1261 binds key
+  source_control_event.repository_unbound.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.repository_unbound.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1215 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.repository.unbound
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.repository.unbound
+- pm.source_control_event.repository_unbound.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1262 — source_control.status.refreshed prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1262
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.status.refreshed@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-003, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.status.refreshed;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.status_refreshed.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::status_refresh owns this
+  bounded current native status observation. The status-refresh handler has committed the bounded native status
+  result for its captured repository and workspace under the read currentness fence. The original request is the
+  exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.status.refresh and its command_instance_id/idempotency/scope
+  must join the actual source.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable
+  capability/topology/revision/lease/credential evidence before effect. The original fact is committed in source_control_status_refreshed_fact
+  via SP-1262, before this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored
+  full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose
+  this event or dependent terminal success before the first issued receipt is resolved and joined to the original
+  full EventRecord. For started facts append/resolve precedes native dispatch; for successful completion facts the
+  native outcome source precedes append and terminal publication follows receipt. A failure to publish history never
+  reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1262 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_status_refreshed_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:status_refreshed:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
+  RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
+  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.status.refreshed`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_status_refreshed_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
+  policies; no event reference retains their bodies implicitly. SP-1262 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-TELEMETRY-90D@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: A fresh observation supersedes display freshness only. Partial, stale and unavailable results
+  keep those explicit states; no missing value becomes clean. Refresh performs no staged write, JJ snapshot, lease
+  acquisition, selection, publication or command retry. Required predicates for this exact family: status_snapshot_ref
+  resolves the original bounded native status result for this repository/workspace; observation_state and native_revision
+  agree with the actual observation and completeness; read-only observation did not execute hooks, filters or a
+  JJ snapshot. Check every predicate separately; passing schema or a matching supplied digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.status_refreshed.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.status_refreshed.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1262 binds key
+  source_control_event.status_refreshed.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.status_refreshed.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1216 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.status.refreshed
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.status.refreshed
+- pm.source_control_event.status_refreshed.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1263 — source_control.workspace.created prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1263
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.workspace.created@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-008, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.workspace.created;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.workspace_created.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::workspace_create owns
+  this backend-native workspace creation. The workspace-create handler has verified creation and binding of the
+  requested backend-native workspace in its exact source context. The original request is the exact v2 legacy_exact
+  wrapper over the existing command request; cmd.source_control.workspace.create and its command_instance_id/idempotency/scope
+  must join the actual source.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable
+  capability/topology/revision/lease/credential evidence before effect. The original fact is committed in source_control_workspace_created_fact
+  via SP-1263, before this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored
+  full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose
+  this event or dependent terminal success before the first issued receipt is resolved and joined to the original
+  full EventRecord. For started facts append/resolve precedes native dispatch; for successful completion facts the
+  native outcome source precedes append and terminal publication follows receipt. A failure to publish history never
+  reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1263 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_workspace_created_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:workspace_created:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.workspace.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_workspace_created_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies, native receipts, checkpoint contents, repository files and credential
+  resources keep their independently assigned policies; no event reference retains their bodies implicitly. SP-1263 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: A previously absent requested native workspace is created and bound once. Conflict-plan, ownership
+  and FileSafe/permission/writer fences precede effect. Git worktree and JJ workspace identities remain native;
+  a failed or unknown result cannot claim creation or create an implicit checkout. Required predicates for this
+  exact family: created_workspace_id equals the requested_workspace_id and observed native workspace; conflict plan
+  and current writer/permission/FileSafe evidence admit that exact destination; original receipt proves known successful
+  creation and exact caller return. Check every predicate separately; passing schema or a matching supplied digest
+  is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.workspace_created.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.workspace_created.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1263 binds key
+  source_control_event.workspace_created.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.workspace_created.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1216 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.workspace.created
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.workspace.created
+- pm.source_control_event.workspace_created.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1264 — source_control.workspace.opened prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1264
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.workspace.opened@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-010, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.workspace.opened;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.workspace_opened.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::workspace_open owns this
+  opening an existing native workspace. The workspace-open handler has successfully resolved and opened the exact
+  existing native workspace with a bounded current read result. The original request is the exact v2 legacy_exact
+  wrapper over the existing command request; cmd.source_control.workspace.open and its command_instance_id/idempotency/scope
+  must join the actual source.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable
+  capability/topology/revision/lease/credential evidence before effect. The original fact is committed in source_control_workspace_opened_fact
+  via SP-1264, before this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored
+  full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose
+  this event or dependent terminal success before the first issued receipt is resolved and joined to the original
+  full EventRecord. For started facts append/resolve precedes native dispatch; for successful completion facts the
+  native outcome source precedes append and terminal publication follows receipt. A failure to publish history never
+  reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1264 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_workspace_opened_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:workspace_opened:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
+  RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
+  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.workspace.opened`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_workspace_opened_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
+  policies; no event reference retains their bodies implicitly. SP-1264 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-TELEMETRY-90D@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: Opening records successful access to an existing workspace and returns the exact captured caller
+  context. It does not create/switch/remove a workspace, acquire a writer lease, initialize a backend or perform
+  a native mutation. A later deliberate open has a new operation; receipt replay does not reopen it. Required predicates
+  for this exact family: opened_workspace_id equals the existing requested native workspace and original open result;
+  native_revision/backend/currentness are actual read evidence; open is not substituted for workspace.switch or
+  creation. Check every predicate separately; passing schema or a matching supplied digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.workspace_opened.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.workspace_opened.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1264 binds key
+  source_control_event.workspace_opened.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.workspace_opened.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1217 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.workspace.opened
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.workspace.opened
+- pm.source_control_event.workspace_opened.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1265 — source_control.workspace.removed prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1265
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.workspace.removed@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-008, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.workspace.removed;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.workspace_removed.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::workspace_remove owns
+  this backend-native workspace removal disposition. The workspace-remove handler has completed the exact native
+  removal/binding disposition after ownership, dependency, active-work and data-disposition checks. The original
+  request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.workspace.remove
+  and its command_instance_id/idempotency/scope must join the actual source.  Native admission freezes actual owner
+  acceptance, permission/FileSafe and applicable capability/topology/revision/lease/credential evidence before effect.
+  The original fact is committed in source_control_workspace_removed_fact via SP-1265, before this family''s append
+  is attempted. Adopt SP-286 and CV-339 by name, including strict stored full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1;
+  SP-336/SP-347 own group issuance and crash behavior. Do not expose this event or dependent terminal success before
+  the first issued receipt is resolved and joined to the original full EventRecord. For started facts append/resolve
+  precedes native dispatch; for successful completion facts the native outcome source precedes append and terminal
+  publication follows receipt. A failure to publish history never reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1265 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_workspace_removed_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:workspace_removed:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.workspace.removed`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_workspace_removed_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies, native receipts, checkpoint contents, repository files and credential
+  resources keep their independently assigned policies; no event reference retains their bodies implicitly. SP-1265 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: The selected existing workspace reaches its native owner-defined removed disposition. Retain the
+  exact before identity and disposition receipt; removing a binding alone cannot prove deletion of bytes. No cleanup
+  proof follows from lease expiry. Failure or effect_unknown is not removed. Required predicates for this exact
+  family: removed_workspace_id matches the exact original workspace and native removal result; ownership/dependency/active-work/data-disposition
+  checks are independently settled; receipt distinguishes native removal from merely unbinding and does not infer
+  cleanup from expiry. Check every predicate separately; passing schema or a matching supplied digest is not source
+  authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.workspace_removed.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.workspace_removed.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1265 binds key
+  source_control_event.workspace_removed.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.workspace_removed.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1217 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.workspace.removed
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.workspace.removed
+- pm.source_control_event.workspace_removed.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1266 — source_control.workspace.switched prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1266
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.workspace.switched@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-009, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.workspace.switched;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.workspace_switched.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / handlers::source_control::workspace_switch owns
+  this switch to the exact native workspace. The workspace-switch handler has committed the switch to the explicitly
+  requested existing backend-native workspace under the applicable revision/topology and writer fences. The original
+  request is the exact v2 legacy_exact wrapper over the existing command request; cmd.source_control.workspace.switch
+  and its command_instance_id/idempotency/scope must join the actual source.  Native admission freezes actual owner
+  acceptance, permission/FileSafe and applicable capability/topology/revision/lease/credential evidence before effect.
+  The original fact is committed in source_control_workspace_switched_fact via SP-1266, before this family''s append
+  is attempted. Adopt SP-286 and CV-339 by name, including strict stored full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1;
+  SP-336/SP-347 own group issuance and crash behavior. Do not expose this event or dependent terminal success before
+  the first issued receipt is resolved and joined to the original full EventRecord. For started facts append/resolve
+  precedes native dispatch; for successful completion facts the native outcome source precedes append and terminal
+  publication follows receipt. A failure to publish history never reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1266 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_workspace_switched_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:workspace_switched:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
+  RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
+  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.workspace.switched`, DL-454
+  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
+  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
+  does not decide the separate original source fact `source_control_workspace_switched_fact` (the accepted request,
+  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
+  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
+  policies; no event reference retains their bodies implicitly. SP-1266 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-TELEMETRY-90D@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: The captured previous workspace selection moves to the requested exact workspace; retain both
+  identities and actual before/after revision. Focus, path, branch label or the compatibility select_worktree spelling
+  cannot dispatch a second operation. No workspace is created or removed. Required predicates for this exact family:
+  selected_workspace_id equals the original requested native workspace and observed switch result; previous_workspace_id
+  is the captured actual selection, not current UI focus; compatibility select_worktree normalization occurs before
+  one canonical command dispatch. Check every predicate separately; passing schema or a matching supplied digest
+  is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.workspace_switched.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.workspace_switched.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1266 binds key
+  source_control_event.workspace_switched.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.workspace_switched.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1218 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.workspace.switched
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.workspace.switched
+- pm.source_control_event.workspace_switched.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1267 — source_control.writer_lease.granted prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1267
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.writer_lease.granted@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-003, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.writer_lease.granted;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.writer_lease_granted.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / WriterLeaseCoordinator::grant owns this grant of
+  one native repository/workspace writer lease. The Source Control writer-lease coordinator has committed one active
+  lease for the exact repository/workspace/backend, holder, generation, epoch and expiry after reconciling any prior
+  authority. original_request is null; the actual authenticated WriterLeaseCoordinator acceptance and original lease
+  transition are the source, never a caller-created request.  Native admission freezes actual owner acceptance,
+  permission/FileSafe and applicable capability/topology/revision/lease/credential evidence before effect. The original
+  fact is committed in source_control_writer_lease_granted_fact via SP-1267, before this family''s append is attempted.
+  Adopt SP-286 and CV-339 by name, including strict stored full-value v2 custody and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347
+  own group issuance and crash behavior. Do not expose this event or dependent terminal success before the first
+  issued receipt is resolved and joined to the original full EventRecord. For started facts append/resolve precedes
+  native dispatch; for successful completion facts the native outcome source precedes append and terminal publication
+  follows receipt. A failure to publish history never reruns the native effect.
+
+
+  C4/C5 payload and identity: CV-1267 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_writer_lease_granted_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:writer_lease_granted:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.writer_lease.granted`, DL-453 (E-CARDS-3 item 1.a) has its saved
+  event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records
+  their own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_granted_fact`
+  (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep
+  the same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1267 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: A requested or reconciled lease becomes active only when no competing active writer exists and
+  prior obligations are clean. The event is evidence of the original grant; historical replay or backup restore
+  never grants a current lease or treats expiry as cleanup proof. Required predicates for this exact family: the
+  actual writer lease has the same repository/workspace/backend/holder/generation/epoch as the fact; no competing
+  active writer exists and required previous reconciliation is clean; acquired/expiry times and currentness are
+  verified by the lease owner, not supplied as payload authority. Check every predicate separately; passing schema
+  or a matching supplied digest is not source authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.writer_lease_granted.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.writer_lease_granted.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1267 binds key
+  source_control_event.writer_lease_granted.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.writer_lease_granted.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1218 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.writer_lease.granted
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.writer_lease.granted
+- pm.source_control_event.writer_lease_granted.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```
+
+### SCS-1268 — source_control.writer_lease.lost prepared owner contract
+
+```yaml
+plan_unit_id: SCS-1268
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: 'Newly authored owner contract for source_control.writer_lease.lost@1.0.0, prepared without admission
+  under deck-2 item 9.a A. Reuse SCS-003, SCS-002/003 native command/lease authority and Contracts_V0.md#EventRecord.
+  Search and negative evidence: reports/event-authority-20261105/W3B-search.json entry source_control.writer_lease.lost;
+  no existing exact closed event, producer/identity/consumer/checkpoint or withdrawal binding was found.
+
+
+  C1 membership/version: ABSENT. The proposed scope is project_only and payload pm.source_control_event.writer_lease_lost.payload.v1@1.0.0;
+  no alias, sibling admission, app edition or current append is authorized. Backend pre-repository commands use
+  their actual command Project lineage and exact Host/Environment, without a fabricated repo/workspace or writer
+  lease. SCS-025 null-Project repository.inspect remains a separate receipt-only action.
+
+
+  C2/C3 owner and producer: SourceControlOperationCoordinator / WriterLeaseCoordinator::lose owns this loss of one
+  native repository/workspace writer lease. The Source Control writer-lease coordinator has committed loss of the
+  previously active writer authority for the exact lease/holder/generation/epoch. original_request is null; the
+  actual authenticated WriterLeaseCoordinator acceptance and original lease transition are the source, never a caller-created
+  request.  Native admission freezes actual owner acceptance, permission/FileSafe and applicable capability/topology/revision/lease/credential
+  evidence before effect. The original fact is committed in source_control_writer_lease_lost_fact via SP-1268, before
+  this family''s append is attempted. Adopt SP-286 and CV-339 by name, including strict stored full-value v2 custody
+  and storage.first_append_receipt.resolve_full_value.v1; SP-336/SP-347 own group issuance and crash behavior. Do not expose this event or dependent
+  terminal success before the first issued receipt is resolved and joined to the original full EventRecord. For
+  started facts append/resolve precedes native dispatch; for successful completion facts the native outcome source
+  precedes append and terminal publication follows receipt. A failure to publish history never reruns the native
+  effect.
+
+
+  C4/C5 payload and identity: CV-1268 selects the closed schema and derives every payload field from that original
+  source. Original operation identity is allocated once from native owner acceptance, preserved before effect; no
+  timestamp, UI focus or fixture-supplied fresh flag identifies an operation. event_id is exactly evt_scs_writer_lease_lost_{hex(storage_instance_id)}_{hex(project_id)}_{hex(owner_operation_id)};
+  idempotency_key is exactly scs:writer_lease_lost:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}.
+  hex means lowercase complete strict UTF-8 byte encoding, without normalization, truncation or delimiter ambiguity.
+  Storage owns project~ base64url-no-pad partitioning, global event-ID integrity and scoped type/key lifetime. Use
+  CV-317 producer_semantic_digest over exactly its caller-owned semantic fields; exclude Storage-assigned metadata.
+  This family defines no new number/time or digest codec. Every required-present EventRecord lineage field joins
+  the original source, with actual thread/run lineage when present and null node/attempt where absent; actor and
+  requested/effective account refs are the actual authorized non-secret refs. Foreign family, scope, Project, operation,
+  source or backend identities refuse.
+
+
+  C6 replay/idempotency: new writes select dedupe_by_idempotency_key only. Same identity and same CV-317 semantic
+  digest returns the exact first original result without effect; different digest is idempotency_conflict. Current
+  append and retry reject projector_replay_only as replay_only_not_appendable. Resolve full original value before
+  every retry, continuation or recovered terminal; unavailable original authority remains unavailable, including
+  after an older backup. A genuinely new post-restore owner operation requires SP-286 fresh-operation admission.
+  Retained history verifies its authenticated original schema/recipe edition, independent of changed live setup,
+  revision, leases, credentials or retention settings. Historical projector_replay_only records valid when written
+  remain passive reads; mismatched source/recipe/withdrawn data refuse.
+
+
+  C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
+  RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
+  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
+  PENDING_RETENTION_DECISION: For `source_control.writer_lease.lost`, DL-453 (E-CARDS-3 item 1.a) has its saved event
+  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
+  own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_lost_fact` (the
+  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
+  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
+  Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
+  assigned policies; no event reference retains their bodies implicitly. SP-1268 keeps the source fact unavailable pending its exact policy; the event history policy is
+  RP-AUTHORITY-INDEFINITE@1.0.0.
+
+
+  C8 custody: original fact and original native evidence are held by the actual Home Server canonical store; agents,
+  Clients and panels are readers, never alternate source authorities. Preserve immutable source bytes/hash/version
+  and first-receipt custody in coherent Backup/restore closure under SCS-014 and SP-286. Revalidate read permission,
+  Project deletion/holds and exact source custody on every read/replay/recovery. Store IDs and authorized refs only,
+  no file or log bodies, credentials, private keys, tokens, protected auth/browser content, raw IPC endpoints or
+  credential-bearing locators. Never reconstruct canonical source or an operation receipt from a projection, index,
+  later current snapshot or event. Missing canonical evidence fences/discloses; derived damage quarantines then
+  rebuilds.
+
+
+  C9 transitions: An active lease moves to released, expired_pending_reconciliation, revoked or quarantined and
+  mutation is fenced before any further effect. Expiry/revocation does not settle cleanup; retain the actual reconciliation
+  state and obligations. Replaying loss neither releases a different lease nor acknowledges cleanup. Required predicates
+  for this exact family: prior active lease and resulting non-authorizing state belong to the same original holder/generation/epoch;
+  further mutation is fenced before effect after loss; expiry/revocation never becomes clean reconciliation or proof
+  of removed resources. Check every predicate separately; passing schema or a matching supplied digest is not source
+  authentication.
+
+
+  C10 consumers/checkpoints: projector.source_control.writer_lease_lost.history.v1@1.0.0 writes only this family''s
+  filtered passive history; reader.source_control.writer_lease_lost.history.v1@1.0.0 is its operating audit reader
+  for existing Source Control Diagnostics & Receipts and permitted Backup/history inspection. SP-1268 binds key
+  source_control_event.writer_lease_lost.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}, schema pm.storage_value.source_control_event.writer_lease_lost.checkpoint.v1@1.0.0,
+  exact SP-278 full-index publication and nine-field durable read token (DL-076, no persisted redb_snapshot_id).
+  Rebuild never executes a command, native mutation, network request, lease grant/release, outbox, notification
+  or usage charge.
+
+
+  C11 compatibility/withdrawal: retain exact 1.0.0 bytes and original recipe dispatch; no automatic alias, reinterpretation,
+  backfill or migration from command results. Unknown editions quarantine. Withdrawal first fences this family''s
+  append adapter and drains/quarantines accepted pending work at a recorded canonical cutoff under the owner/Storage
+  writer gate, retaining issued original results. Freeze its filtered consumer at the verified cutoff. A separately
+  reviewed successor reader and full governed rebuild verify all retained source/token joins before publication;
+  only then retire the old reader/checkpoint. Never reset a cursor to zero silently or delete source evidence to
+  withdraw a reader. Reader withdrawal cannot reactivate writes or erase retained history.
+
+
+  C12 oracle plan: ATS-1219 and reports/event-authority-20261105/W3B-oracle-plan.json entry source_control.writer_lease.lost
+  enumerate this family''s positive/negative obligations. Phase 2 (2026-11-13) executes them: scripts/pm_w3b_event_oracles.py refuses only through the generated Method B
+  guard tables scripts/pm_w3b_table_*.py, whose predicates are the refusal tests; Plans/w3b_event_fixtures.json holds
+  the positives and one-defect negatives, Plans/w3b_original_custody.json the sealed custody for SP-1101 retained
+  reads, and the gated shared scripts/pm_guard_isolation.py proves the rows. Sol/Astra review of phase 2 is separate.
+  Native execution NOT_RUN.'
+gui_related: false
+gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
+depends_on:
+- SCS-003
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission.
+- Every named identity, original source, receipt and read-token join is checked; no replay effect.
+- Pending retention or phase-2 oracles cannot be represented as DEPTH_PASS.
+validation_surfaces:
+- Plans/source_control_event_contracts.schema.json
+- Plans/source_control_event_preparation.json
+- reports/event-authority-20261105/W3B-oracle-plan.json
+risk_class: source_control_history_identity_custody_or_duplicate_effect
+reasoning_tier: high
+context_scope: w3b_source_control_event_authority
+implementation_surfaces:
+- Plans/Source_Control_System.md
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- deck 2 item 9.a A (2026-11-05)
+- Plans/Source_Control_System.md#3.2-canonical-events
+negative_constraints:
+- No admission, current writer activation, invented retention or native proof.
+- No new number/timestamp codec or lane-local guard-isolation machinery.
+preserved_exact_tokens:
+- source_control.writer_lease.lost
+- pm.source_control_event.writer_lease_lost.payload.v1
+- PENDING_RETENTION_DECISION
+- SP-286
+- SP-278
+- projector_replay_only
+```

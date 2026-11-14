@@ -1,0 +1,3104 @@
+{
+  "schema_id": "pm.source_control_event_storage_preparation.v1",
+  "schema_version": "1.0.0",
+  "status": "prepared_not_registered",
+  "rows": [
+    {
+      "family_id": "source_control_backend_detected_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.backend_detected.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.backend_detected.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/backend_detected_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1250",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::backend_detect"
+      ],
+      "consumers": [
+        "storage.source_control.backend_detected.append.v1@1.0.0",
+        "reader.source_control.backend_detected.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1250"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1250",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1250",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1250).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1250"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1250/SP-1250",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/backend_detected_fact"
+      }
+    },
+    {
+      "family_id": "source_control_backend_detected_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.backend_detected.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.backend_detected.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/backend_detected_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1250",
+      "producer": [
+        "projector.source_control.backend_detected.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.backend_detected.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1250"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1250",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1250",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_backend_detected_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1250"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1250/SP-1250",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/backend_detected_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_backend_selected_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.backend_selected.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.backend_selected.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/backend_selected_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1251",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::backend_select"
+      ],
+      "consumers": [
+        "storage.source_control.backend_selected.append.v1@1.0.0",
+        "reader.source_control.backend_selected.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1251"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1251",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1251",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1251).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1251"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1251/SP-1251",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/backend_selected_fact"
+      }
+    },
+    {
+      "family_id": "source_control_backend_selected_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.backend_selected.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.backend_selected.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/backend_selected_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1251",
+      "producer": [
+        "projector.source_control.backend_selected.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.backend_selected.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1251"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1251",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1251",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_backend_selected_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1251"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1251/SP-1251",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/backend_selected_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_checkpoint_created_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.checkpoint_created.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.checkpoint_created.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/checkpoint_created_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1252",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::checkpoint_create"
+      ],
+      "consumers": [
+        "storage.source_control.checkpoint_created.append.v1@1.0.0",
+        "reader.source_control.checkpoint_created.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1252"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1252",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1252",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1252).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1252"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1252/SP-1252",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/checkpoint_created_fact"
+      }
+    },
+    {
+      "family_id": "source_control_checkpoint_created_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.checkpoint_created.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.checkpoint_created.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/checkpoint_created_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1252",
+      "producer": [
+        "projector.source_control.checkpoint_created.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.checkpoint_created.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1252"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1252",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1252",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_checkpoint_created_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1252"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1252/SP-1252",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/checkpoint_created_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_checkpoint_restored_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.checkpoint_restored.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.checkpoint_restored.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/checkpoint_restored_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1253",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::checkpoint_restore"
+      ],
+      "consumers": [
+        "storage.source_control.checkpoint_restored.append.v1@1.0.0",
+        "reader.source_control.checkpoint_restored.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1253"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1253",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1253",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1253).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1253"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1253/SP-1253",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/checkpoint_restored_fact"
+      }
+    },
+    {
+      "family_id": "source_control_checkpoint_restored_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.checkpoint_restored.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.checkpoint_restored.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/checkpoint_restored_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1253",
+      "producer": [
+        "projector.source_control.checkpoint_restored.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.checkpoint_restored.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1253"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1253",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1253",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_checkpoint_restored_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1253"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1253/SP-1253",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/checkpoint_restored_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_remote_fetch_completed_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_fetch_completed.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_fetch_completed.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_fetch_completed_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1254",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::remote_fetch"
+      ],
+      "consumers": [
+        "storage.source_control.remote_fetch_completed.append.v1@1.0.0",
+        "reader.source_control.remote_fetch_completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1254"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1254",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1254",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1254).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1254"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1254/SP-1254",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_fetch_completed_fact"
+      }
+    },
+    {
+      "family_id": "source_control_remote_fetch_completed_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_fetch_completed.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_fetch_completed.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_fetch_completed_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1254",
+      "producer": [
+        "projector.source_control.remote_fetch_completed.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.remote_fetch_completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1254"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1254",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1254",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_remote_fetch_completed_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1254"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1254/SP-1254",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_fetch_completed_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_remote_fetch_started_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_fetch_started.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_fetch_started.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_fetch_started_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1255",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::remote_fetch"
+      ],
+      "consumers": [
+        "storage.source_control.remote_fetch_started.append.v1@1.0.0",
+        "reader.source_control.remote_fetch_started.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1255"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1255",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1255",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1255).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1255"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1255/SP-1255",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_fetch_started_fact"
+      }
+    },
+    {
+      "family_id": "source_control_remote_fetch_started_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_fetch_started.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_fetch_started.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_fetch_started_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1255",
+      "producer": [
+        "projector.source_control.remote_fetch_started.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.remote_fetch_started.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1255"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1255",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1255",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_remote_fetch_started_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1255"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1255/SP-1255",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_fetch_started_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_remote_publish_completed_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_publish_completed.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_publish_completed.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_publish_completed_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1256",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::remote_publish"
+      ],
+      "consumers": [
+        "storage.source_control.remote_publish_completed.append.v1@1.0.0",
+        "reader.source_control.remote_publish_completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1256"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1256",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1256",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1256).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1256"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1256/SP-1256",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_publish_completed_fact"
+      }
+    },
+    {
+      "family_id": "source_control_remote_publish_completed_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_publish_completed.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_publish_completed.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_publish_completed_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1256",
+      "producer": [
+        "projector.source_control.remote_publish_completed.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.remote_publish_completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1256"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1256",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1256",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_remote_publish_completed_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1256"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1256/SP-1256",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_publish_completed_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_remote_publish_started_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_publish_started.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_publish_started.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_publish_started_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1257",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::remote_publish"
+      ],
+      "consumers": [
+        "storage.source_control.remote_publish_started.append.v1@1.0.0",
+        "reader.source_control.remote_publish_started.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1257"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1257",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1257",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1257).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1257"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1257/SP-1257",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_publish_started_fact"
+      }
+    },
+    {
+      "family_id": "source_control_remote_publish_started_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_publish_started.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_publish_started.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_publish_started_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1257",
+      "producer": [
+        "projector.source_control.remote_publish_started.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.remote_publish_started.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1257"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1257",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1257",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_remote_publish_started_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1257"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1257/SP-1257",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_publish_started_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_remote_sync_completed_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_sync_completed.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_sync_completed.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_sync_completed_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1258",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::remote_sync"
+      ],
+      "consumers": [
+        "storage.source_control.remote_sync_completed.append.v1@1.0.0",
+        "reader.source_control.remote_sync_completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1258"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1258",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1258",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1258).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1258"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1258/SP-1258",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_sync_completed_fact"
+      }
+    },
+    {
+      "family_id": "source_control_remote_sync_completed_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_sync_completed.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_sync_completed.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_sync_completed_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1258",
+      "producer": [
+        "projector.source_control.remote_sync_completed.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.remote_sync_completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1258"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1258",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1258",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_remote_sync_completed_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1258"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1258/SP-1258",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_sync_completed_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_remote_sync_started_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_sync_started.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_sync_started.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_sync_started_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1259",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::remote_sync"
+      ],
+      "consumers": [
+        "storage.source_control.remote_sync_started.append.v1@1.0.0",
+        "reader.source_control.remote_sync_started.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1259"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1259",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1259",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1259).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1259"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1259/SP-1259",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_sync_started_fact"
+      }
+    },
+    {
+      "family_id": "source_control_remote_sync_started_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.remote_sync_started.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.remote_sync_started.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/remote_sync_started_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1259",
+      "producer": [
+        "projector.source_control.remote_sync_started.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.remote_sync_started.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1259"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1259",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1259",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_remote_sync_started_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1259"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1259/SP-1259",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_sync_started_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_repository_bound_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.repository_bound.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.repository_bound.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/repository_bound_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1260",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::repository_bind"
+      ],
+      "consumers": [
+        "storage.source_control.repository_bound.append.v1@1.0.0",
+        "reader.source_control.repository_bound.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1260"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1260",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1260",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1260).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1260"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1260/SP-1260",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/repository_bound_fact"
+      }
+    },
+    {
+      "family_id": "source_control_repository_bound_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.repository_bound.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.repository_bound.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/repository_bound_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1260",
+      "producer": [
+        "projector.source_control.repository_bound.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.repository_bound.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1260"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1260",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1260",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_repository_bound_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1260"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1260/SP-1260",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/repository_bound_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_repository_unbound_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.repository_unbound.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.repository_unbound.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/repository_unbound_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1261",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::repository_unbind"
+      ],
+      "consumers": [
+        "storage.source_control.repository_unbound.append.v1@1.0.0",
+        "reader.source_control.repository_unbound.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1261"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1261",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1261",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1261).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1261"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1261/SP-1261",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/repository_unbound_fact"
+      }
+    },
+    {
+      "family_id": "source_control_repository_unbound_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.repository_unbound.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.repository_unbound.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/repository_unbound_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1261",
+      "producer": [
+        "projector.source_control.repository_unbound.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.repository_unbound.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1261"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1261",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1261",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_repository_unbound_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1261"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1261/SP-1261",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/repository_unbound_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_status_refreshed_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.status_refreshed.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.status_refreshed.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/status_refreshed_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1262",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::status_refresh"
+      ],
+      "consumers": [
+        "storage.source_control.status_refreshed.append.v1@1.0.0",
+        "reader.source_control.status_refreshed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1262"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1262",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1262",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1262).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1262"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1262/SP-1262",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/status_refreshed_fact"
+      }
+    },
+    {
+      "family_id": "source_control_status_refreshed_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.status_refreshed.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.status_refreshed.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/status_refreshed_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1262",
+      "producer": [
+        "projector.source_control.status_refreshed.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.status_refreshed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1262"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1262",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1262",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_status_refreshed_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1262"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1262/SP-1262",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/status_refreshed_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_workspace_created_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.workspace_created.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.workspace_created.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/workspace_created_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1263",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::workspace_create"
+      ],
+      "consumers": [
+        "storage.source_control.workspace_created.append.v1@1.0.0",
+        "reader.source_control.workspace_created.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1263"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1263",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1263",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1263).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1263"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1263/SP-1263",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_created_fact"
+      }
+    },
+    {
+      "family_id": "source_control_workspace_created_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.workspace_created.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.workspace_created.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/workspace_created_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1263",
+      "producer": [
+        "projector.source_control.workspace_created.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.workspace_created.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1263"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1263",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1263",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_workspace_created_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1263"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1263/SP-1263",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_created_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_workspace_opened_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.workspace_opened.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.workspace_opened.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/workspace_opened_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1264",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::workspace_open"
+      ],
+      "consumers": [
+        "storage.source_control.workspace_opened.append.v1@1.0.0",
+        "reader.source_control.workspace_opened.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1264"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1264",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1264",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1264).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1264"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1264/SP-1264",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_opened_fact"
+      }
+    },
+    {
+      "family_id": "source_control_workspace_opened_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.workspace_opened.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.workspace_opened.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/workspace_opened_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1264",
+      "producer": [
+        "projector.source_control.workspace_opened.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.workspace_opened.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1264"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1264",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1264",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_workspace_opened_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1264"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1264/SP-1264",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_opened_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_workspace_removed_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.workspace_removed.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.workspace_removed.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/workspace_removed_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1265",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::workspace_remove"
+      ],
+      "consumers": [
+        "storage.source_control.workspace_removed.append.v1@1.0.0",
+        "reader.source_control.workspace_removed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1265"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1265",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1265",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1265).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1265"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1265/SP-1265",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_removed_fact"
+      }
+    },
+    {
+      "family_id": "source_control_workspace_removed_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.workspace_removed.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.workspace_removed.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/workspace_removed_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1265",
+      "producer": [
+        "projector.source_control.workspace_removed.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.workspace_removed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1265"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1265",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1265",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_workspace_removed_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1265"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1265/SP-1265",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_removed_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_workspace_switched_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.workspace_switched.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.workspace_switched.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/workspace_switched_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1266",
+      "producer": [
+        "SourceControlOperationCoordinator / handlers::source_control::workspace_switch"
+      ],
+      "consumers": [
+        "storage.source_control.workspace_switched.append.v1@1.0.0",
+        "reader.source_control.workspace_switched.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1266"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1266",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1266",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1266).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1266"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1266/SP-1266",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_switched_fact"
+      }
+    },
+    {
+      "family_id": "source_control_workspace_switched_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.workspace_switched.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.workspace_switched.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/workspace_switched_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1266",
+      "producer": [
+        "projector.source_control.workspace_switched.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.workspace_switched.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1266"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1266",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1266",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_workspace_switched_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1266"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1266/SP-1266",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_switched_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_writer_lease_granted_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.writer_lease_granted.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.writer_lease_granted.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/writer_lease_granted_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1267",
+      "producer": [
+        "SourceControlOperationCoordinator / WriterLeaseCoordinator::grant"
+      ],
+      "consumers": [
+        "storage.source_control.writer_lease_granted.append.v1@1.0.0",
+        "reader.source_control.writer_lease_granted.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1267"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1267",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1267",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1267).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1267"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1267/SP-1267",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/writer_lease_granted_fact"
+      }
+    },
+    {
+      "family_id": "source_control_writer_lease_granted_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.writer_lease_granted.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.writer_lease_granted.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/writer_lease_granted_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1267",
+      "producer": [
+        "projector.source_control.writer_lease_granted.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.writer_lease_granted.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1267"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1267",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1267",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_writer_lease_granted_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1267"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1267/SP-1267",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/writer_lease_granted_checkpoint"
+      }
+    },
+    {
+      "family_id": "source_control_writer_lease_lost_fact",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.writer_lease_lost.fact.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.writer_lease_lost.fact.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/writer_lease_lost_fact",
+      "owner_doc": "Plans/storage-plan.md#SP-1268",
+      "producer": [
+        "SourceControlOperationCoordinator / WriterLeaseCoordinator::lose"
+      ],
+      "consumers": [
+        "storage.source_control.writer_lease_lost.append.v1@1.0.0",
+        "reader.source_control.writer_lease_lost.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "owner_operation_id",
+        "event_id",
+        "idempotency_key",
+        "phase",
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "source_body",
+        "source_body_ref",
+        "first_append_receipt_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1268"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1268",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1268",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1268).",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1268"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1268/SP-1268",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/writer_lease_lost_fact"
+      }
+    },
+    {
+      "family_id": "source_control_writer_lease_lost_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "source_control_event.writer_lease_lost.checkpoint.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.source_control_event.writer_lease_lost.checkpoint.v1",
+      "value_schema_ref": "Plans/source_control_event_contracts.schema.json#/$defs/writer_lease_lost_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1268",
+      "producer": [
+        "projector.source_control.writer_lease_lost.history.v1@1.0.0"
+      ],
+      "consumers": [
+        "reader.source_control.writer_lease_lost.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "event_type",
+        "consumer_id",
+        "consumer_version",
+        "generic_token",
+        "through_sequence_id",
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "last_event_id",
+        "last_source_fact_ref"
+      ],
+      "replay_behavior": "Resolve exact original issued value without native effects; missing originals fence. Derived checkpoints rebuild passively through SP-278.",
+      "migration": "Explicit coordinator registration required before writer activation; no inferred store version or implicit migration.",
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1268"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-1268",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1268",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Source-coupled; no retained payload and no extension of source lifetime.",
+      "retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
+      "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "source_control_writer_lease_lost_fact"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1268"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "deferred_owner": "SCS-1268/SP-1268",
+      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/writer_lease_lost_checkpoint"
+      }
+    }
+  ]
+}
