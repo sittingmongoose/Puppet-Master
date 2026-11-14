@@ -47,6 +47,8 @@ const MINUS1 = 'Offset is -5';
 const MINUS2 = 'Offset is \u22125';
 const SYM1 = 'Deploy on Friday 🚀';
 const SYM2 = 'Deploy on Friday 🐢';
+const ZWJ1 = 'Role is \u{1F469}\u200D\u{1F4BB}';
+const ZWJ2 = 'Role is \u{1F469} \u{1F4BB}';
 const PORT1 = 'Port is 5433';
 const PORT2 = 'Port is 5434';
 const PUNCT1 = '!!!';
@@ -240,6 +242,7 @@ async function workSymbols(t, f, place, tag) {
 }
 
 // FO-205 (iv): the digit guard — the key keeps numbers, so two notes that differ only in a digit are both kept.
+// FO-205 round 2 (vii), in the same test: a zero-width joiner is kept in the key, so a joined emoji is its own note.
 async function workDigits(t, f, place, tag) {
 	let r = await read(f, place);
 	await t.check(`${tag}: the saved notes start from the six seeded ones`, r && r.texts.length === 6, JSON.stringify(r));
@@ -249,6 +252,15 @@ async function workDigits(t, f, place, tag) {
 	await add(t, f, place, PORT2);
 	r = await read(f, place);
 	await t.check(`${tag}: (iv) the note with the other port number is kept beside the first (eight notes)`, has(r, PORT1) && has(r, PORT2) && r.texts.length === 8 && (place === 'sheet' || r.count === '8 notes'), JSON.stringify(r));
+
+	// (vii) FO-205 round 2: a zero-width joiner is part of the note. 'woman + joiner + laptop' is one emoji, so the
+	// same words with the two emoji apart are a different note, and both are kept.
+	await add(t, f, place, ZWJ1);
+	r = await read(f, place);
+	await t.check(`${tag}: (vii) the note with a joined emoji is saved (nine notes)`, has(r, ZWJ1) && r.texts.length === 9, JSON.stringify(r));
+	await add(t, f, place, ZWJ2);
+	r = await read(f, place);
+	await t.check(`${tag}: (vii) the same words with the two emoji apart are kept beside it (ten notes)`, has(r, ZWJ1) && has(r, ZWJ2) && r.texts.length === 10 && (place === 'sheet' || r.count === '10 notes'), JSON.stringify(r));
 }
 
 // FO-205 (v): an empty key is a duplicate only of the very same trimmed NFKC text, so identical punctuation-only

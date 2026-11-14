@@ -58,10 +58,12 @@
      that differ only in their emoji are different notes; a dash (\p{Pd}) directly before a digit is read as a minus
      sign (U+2212) and kept, so '-5' and '−5' are one note. Other punctuation still drops out, so ASCII duplicates
      that differ only in case or punctuation still dedupe. An empty key (punctuation-only words) is a duplicate only
-     of the very same trimmed NFKC text. */
+     of the very same trimmed NFKC text.
+     FO-205 round 2: the zero-width joiners (U+200C, U+200D) stay too. A joined emoji (woman + joiner + laptop) is
+     one picture, not the two emoji with a space between them, and the same joiners shape Persian and Indic words. */
   const norm = t => String(t || '').normalize('NFKC').toLowerCase()
     .replace(/\p{Pd}(?=\p{Nd})/gu, '\u2212')
-    .replace(/[^\p{L}\p{M}\p{N}\p{S}]+/gu, ' ').trim();
+    .replace(/[^\p{L}\p{M}\p{N}\p{S}\u200C\u200D]+/gu, ' ').trim();
   function addNote(text, level) {
     const words = String(text || '').trim(); if (!words) return null;
     const key = norm(words);
