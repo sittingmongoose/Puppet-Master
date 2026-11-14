@@ -294,6 +294,10 @@
   {
    "event_type": "notebook.checkpoint_failed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "notebook.entry_committed",
+   "outcome": "registered"
   }
  ]
 }
