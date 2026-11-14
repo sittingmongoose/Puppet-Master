@@ -323,24 +323,54 @@
   /* ------------------------------------------------------------------ the router (6.3) */
   let diffTimer = 0, inputTimer = 0;
   const router = { source: null, pendingToasts: [] };
-  function schedule(src) {
+  function schedule(src, target) {
     if (feeding) return;
     if (src) router.source = src;
+    if (target) router.target = target;
     clearTimeout(diffTimer);
     requestAnimationFrame(() => { diffTimer = setTimeout(diff, 60); });
   }
   function hook(el) {
     if (!el || el.__psxRouted) return; el.__psxRouted = true;
-    el.addEventListener('change', (e) => schedule(srcOf(e.target)), true);
-    el.addEventListener('input', (e) => { clearTimeout(inputTimer); const src = srcOf(e.target); inputTimer = setTimeout(() => schedule(src), 250); }, true);
-    el.addEventListener('click', (e) => schedule(srcOf(e.target)), true);
-    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') schedule(srcOf(e.target)); }, true);
+    el.addEventListener('change', (e) => schedule(srcOf(e.target), e.target), true);
+    el.addEventListener('input', (e) => { clearTimeout(inputTimer); const src = srcOf(e.target), tg = e.target; inputTimer = setTimeout(() => schedule(src, tg), 250); }, true);
+    el.addEventListener('click', (e) => schedule(srcOf(e.target), e.target), true);
+    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') schedule(srcOf(e.target), e.target); }, true);
   }
   const srcOf = (t) => (t && t.closest && t.closest('.detail-inspector') && t.closest('.o55-insp-choice') ? 'panel' : t && t.closest && t.closest('#themeMenu') ? 'theme' : 'row');
+  /* Found while testing Jared's 2026-11-13 fixes (not on his list): a page the engine draws for the first time can fill a
+     row it held no value for (Safety › Rules fills Rules, in order), and the press that opened the page made the router
+     read that fill as a person's change: "Saved for everywhere", with a History entry. A move from "no value" that no
+     press on that row, its editor, a side panel, a list or the Details panel caused is the engine's first fill: it
+     becomes the row's starting value and nothing is written. Every later change routes as before. */
+  const FILL_SAFE = '.drawer-wrap, .pm51-popout, .pmr-menu, .detail-inspector, .psx-sheet';
+  // a press that only opens a page: a chapter, a page's tab, a manager's tab, the page index
+  const NAV = '.domain-link, .workspace-tab, .manager-tab, .page-index-title, .index-link, .pm51-index-tab, [data-action="navigate-domain"], [data-action="jump-workspace"], [data-action="pm51-tab"], [data-action="scroll-section"], [data-action="index-tab"]';
+  const isNav = (t) => !!(t && t.closest && t.closest(NAV));
+  function touched(id, t) {
+    if (!t || !t.closest) return false;
+    if (PSX.places && PSX.places.editing && PSX.places.editing.id === id) return true;
+    const q = CSS.escape(id);
+    return !!t.closest(`[id="setting-${q}"], [data-setting="${q}"], [data-setting-id="${q}"], ${FILL_SAFE}`);
+  }
   function diff() {
     const K = kimi(); if (!K || feeding) return;
     const st = K.getState().settings || {};
-    const moved = ENGINE_IDS.filter((id) => !same(st[id], PSX.last[id]));
+    let moved = ENGINE_IDS.filter((id) => !same(st[id], PSX.last[id]));
+    const tg = router.target; router.target = null;
+    const fills = moved.filter((id) => st[id] !== undefined && !touched(id, tg) && (PSX.last[id] === undefined || isNav(tg)));
+    if (fills.length) {
+      /* the fill is the page's own starting value: a row with no own value anywhere starts there (its default); a row
+         with one keeps it, and the next feed puts it back on the page */
+      fills.forEach((id) => {
+        PSX.last[id] = clone(st[id]);
+        if (DEF[id] && DEF[id].demoRow) return;
+        const r = PSX.resolve(id, S.ctx);
+        if (DEFAULTS[id] === undefined || (r && r.from && r.from.level === 'default' && !(r.varies || []).length)) DEFAULTS[id] = clone(st[id]);
+      });
+      PSX.fills = (PSX.fills || []).concat(fills);
+      moved = moved.filter((id) => !fills.includes(id));
+    }
     if (!moved.length) { router.source = null; return; }
     const src = router.source; router.source = null;
     // the theme pair is one change

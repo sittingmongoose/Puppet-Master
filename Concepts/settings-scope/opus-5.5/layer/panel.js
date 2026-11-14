@@ -197,11 +197,16 @@
     page.dataset.psxDone = sig;
     closeWord(head);
     const now = body.querySelector(':scope > .o55-insp-now');
-    if (now && now.classList.contains('is-per')) { perWhere(body, now, id); return; }
+    /* the page's per-thing view ("Each account has its own"): kept for a row that belongs to its thing. A row Plans'
+       inventory puts on the ladder (Sign-in method, Cooldown, Use this service: Everywhere, a computer, a project) keeps
+       the page's list of each one's value and gets Where it applies with its places, so each can be set (Jared
+       2026-11-13 #3) */
+    const laddered = !!(DEF[id] && DEF[id].inventory && (() => { const off = PSX.offered(DEF[id]); return off.computer || off.device || off.project; })());
+    if (now && now.classList.contains('is-per') && !laddered) { perWhere(body, now, id); return; }
     if (!DEF[id]) { offWhere(body, now, id); return; }
     body.querySelectorAll('[data-psx-block]').forEach((n) => n.remove());
     const r = PSX.resolve(id, S.ctx);
-    rewriteNow(now, id, r);
+    if (!(now && now.classList.contains('is-per'))) rewriteNow(now, id, r);
     hideEngineWhere(body);
     const where = whereBlock(id, r, { context: 'panel' });
     if (now) now.after(where); else body.insertBefore(where, body.firstChild);
