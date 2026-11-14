@@ -50,10 +50,14 @@
   }
   const notes = () => store().notes;
   const noteById = id => notes().find(n => n.id === id) || null;
-  const norm = t => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  /* FO-198: a note's identity keeps the letters and numbers of every script (NFKC, lowercase, \p{L}\p{N}); the old
+     ASCII-only key emptied every non-ASCII note, so two distinct notes shared one key and the second was dropped.
+     An empty key (emoji-only or punctuation-only words) is never a duplicate. */
+  const norm = t => String(t || '').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
   function addNote(text, level) {
     const words = String(text || '').trim(); if (!words) return null;
-    const same = notes().find(n => norm(n.text) === norm(words));
+    const key = norm(words);
+    const same = key ? notes().find(n => norm(n.text) === key) : null;
     if (same) { Object.assign(same, { level: level || same.level, archived: false, saved: 'Today' }); saveState(); return same; }
     const st = store(); const n = { id: 'u' + (++st.seq) + '-' + Date.now().toString(36), text: words, level: level === 'every' ? 'every' : 'project', saved: 'Today' };
     notes().unshift(n); saveState(); return n;
