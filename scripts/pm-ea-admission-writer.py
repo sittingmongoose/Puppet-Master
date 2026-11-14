@@ -695,7 +695,7 @@ _TEXT_CACHE: dict[str, str] = {}
 def file_text(rel: str) -> str | None:
     if rel not in _TEXT_CACHE:
         path = REPO / rel
-        _TEXT_CACHE[rel] = path.read_text(encoding="utf-8") if path.is_file() else None
+        _TEXT_CACHE[rel] = path.read_bytes().decode("utf-8") if path.is_file() else None
     return _TEXT_CACHE[rel]
 
 
@@ -761,6 +761,11 @@ def git(*args: str, check: bool = True) -> str:
     if check and result.returncode != 0:
         raise SystemExit("git " + " ".join(args) + " failed: " + result.stderr.strip())
     return result.stdout
+
+
+def read_raw(rel: str) -> str:
+    """The file's exact text: UTF-8 bytes decoded with no newline translation (some ledgers mix CRLF and LF)."""
+    return (REPO / rel).read_bytes().decode("utf-8")
 
 
 def write_text(rel: str, text: str, *, crlf: bool = False) -> None:
@@ -928,7 +933,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     et, row = fam["event_type"], fam["registry_row"]
     touched = []
     # 1. Registry append and revision.
-    raw = (REPO / REGISTRY).read_text(encoding="utf-8")
+    raw = read_raw(REGISTRY)
     registry = json.loads(raw)
     if render_registry(registry) != raw:
         raise SystemExit("registry serialization does not round-trip; refusing to rewrite it")
@@ -971,7 +976,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
                record_path=f"{RECORD_DIR}/{et}.json")
     # 3. The family's own Decision Log entry (appended; ends with a blank line so later
     #    appends never move its pinned section bytes).
-    log = (REPO / DECISION_LOG).read_text(encoding="utf-8")
+    log = read_raw(DECISION_LOG)
     if f"### {dl}:" in log or re.search(rf"(?m)^plan_unit_id: {dl}$", log):
         raise SystemExit(dl + " already exists in the Decision Log")
     if not log.endswith("\n\n"):
@@ -1024,15 +1029,20 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
                     f"(decision Plans/Decision_Log.md#{dl}); DL-077 admission record {ctx['record_path']}. The seal check judges "
                     "this family by that record (INDIVIDUAL_DISPOSITION_SCHEMA.md, DL-077 note); the bucket, disposition, cohort "
                     "pins and retained evidence stay as written, since the frozen schema has no registered J248 value.")
-        lines = (REPO / LEDGER).read_text(encoding="utf-8").split("\n")
-        hits = [i for i, line in enumerate(lines) if line and json.loads(line).get("event_type") == et]
+        lines = read_raw(LEDGER).split("\n")
+        hits = [i for i, line in enumerate(lines) if line.strip() and json.loads(line).get("event_type") == et]
         if len(hits) != 1:
             raise SystemExit("ledger row not unique: " + et)
-        ledger_row = json.loads(lines[hits[0]])
-        if json.dumps(ledger_row, ensure_ascii=False) != lines[hits[0]]:
+        line = lines[hits[0]]
+        ending = "\r" if line.endswith("\r") else ""
+        ledger_row = json.loads(line)
+        if json.dumps(ledger_row, ensure_ascii=False) + ending != line:
             raise SystemExit("ledger row serialization does not round-trip: " + et)
         ledger_row["disposition_rationale"] = ledger_row["disposition_rationale"] + sentence
-        lines[hits[0]] = json.dumps(ledger_row, ensure_ascii=False)
+        lines[hits[0]] = json.dumps(ledger_row, ensure_ascii=False) + ending
+        before_lines = read_raw(LEDGER).split("\n")
+        if len(before_lines) != len(lines) or sum(a != b for a, b in zip(before_lines, lines)) != 1:
+            raise SystemExit("ledger edit would change more than the family's own line: " + et)
         write_text(LEDGER, "\n".join(lines))
         touched.append(LEDGER)
         row_rel = f"{LEDGER_ROWS}/ROW_{et}.json"
@@ -1063,7 +1073,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         touched.append(OUTCOMES)
     # 6. Lane bookkeeping: a coordination ledger row flips to admitted with its prepared row.
     if fam["lane"] == "DCO":
-        craw = (REPO / COORDINATION_LEDGER).read_text(encoding="utf-8")
+        craw = read_raw(COORDINATION_LEDGER)
         cdoc = json.loads(craw)
         if json.dumps(cdoc, indent=2, ensure_ascii=False) + "\n" != craw:
             raise SystemExit("coordination ledger serialization does not round-trip")
@@ -1081,7 +1091,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         write_text(COORDINATION_LEDGER, json.dumps(cdoc, indent=2, ensure_ascii=False) + "\n")
         touched.append(COORDINATION_LEDGER)
     # 7. DL-078 checkpoint pins.
-    cur = (REPO / CURRENTNESS).read_text(encoding="utf-8")
+    cur = read_raw(CURRENTNESS)
     cur, n1 = re.subn(r'(?m)^EVENT_FAMILY_REGISTRY_REVISION = "[^"]+"$', f'EVENT_FAMILY_REGISTRY_REVISION = "{after["revision"]}"', cur)
     cur, n2 = re.subn(r"(?m)^EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = \d+$", f"EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = {after['family_count']}", cur)
     if (n1, n2) != (1, 1):
@@ -1106,7 +1116,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     write_text(CURRENTNESS, cur)
     touched.append(CURRENTNESS)
     for rel in TEST_PINS:
-        text = (REPO / rel).read_text(encoding="utf-8")
+        text = read_raw(rel)
         text, n = TEST_PIN.subn(f"APPROVED_CHECKPOINT_FAMILY_COUNT = {after['family_count']}  # moved under DL-078 by each registration", text)
         if n != 1:
             raise SystemExit("approved checkpoint pin not found exactly once in " + rel + " (run the census generalization first)")
@@ -1165,7 +1175,7 @@ def apply(args) -> int:
         if fam["event_type"] in live:
             # Resume: a family already written by this writer keeps the id it was given.
             record_path = REPO / RECORD_DIR / (fam["event_type"] + ".json")
-            record = json.loads(record_path.read_text(encoding="utf-8")) if record_path.is_file() else {}
+            record = json.loads(read_raw(str(record_path.relative_to(REPO)))) if record_path.is_file() else {}
             if record.get("decision_ref") != f"Plans/Decision_Log.md#{dl}":
                 raise SystemExit(f"{fam['event_type']} is registered without this run's record for {dl}")
             continue
