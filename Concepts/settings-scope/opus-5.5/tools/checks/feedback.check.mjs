@@ -748,6 +748,14 @@ async function jPath(t, level) {
 	return null;
 }
 /* what the path ended in: the picker over the page, the row's own editor for that place, or an inline editor */
+// wait until the picker (when open) holds one place for four samples, with the app root back where a person sees it
+const J_STILL = async () => {
+	const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+	for (let el = document.getElementById('pm-settings-root'); el; el = el.parentElement) { if (el.scrollTop && getComputedStyle(el).overflowY === 'hidden') el.scrollTop = 0; }
+	if (document.scrollingElement && document.scrollingElement.scrollTop) document.scrollingElement.scrollTop = 0;
+	let last = '', same = 0;
+	for (let i = 0; i < 40 && same < 4; i++) { const p = document.querySelector('.psx-mpick'); const r = p ? p.getBoundingClientRect() : null; const k = r ? `${Math.round(r.top)},${Math.round(r.bottom)}` : 'none'; same = k === last ? same + 1 : 0; last = k; await wait(50); }
+};
 const J_EDITOR = () => {
 	const insp = document.querySelector('#pm-settings-root .detail-inspector');
 	const pick = document.querySelector('.psx-mpick');
@@ -1913,7 +1921,7 @@ export default async function (t) {
 				tally.paths++;
 				await t.root.waitForFunction(() => !!document.querySelector('.psx-mpick') || !!document.querySelector('#pm-settings-root .detail-inspector .psx-wedit'), null, { timeout: 3000, polling: 50 }).catch(() => {});
 				await settle(t, 260);
-				const e = await run(t, J_EDITOR);
+				await run(t, J_STILL); const e = await run(t, J_EDITOR);
 				const where = `${id} · ${p.how === 'add' ? `+ Set for a ${level}… › ${p.name}` : `${p.name}’s Change`}`;
 				const pk = e.pick;
 				await t.check(`${where}: the shared model picker opens over the page (fixed, outside the panel, inside the window), never a plain list or a text box`, !!pk && pk.fixed && !pk.inPanel && pk.onScreen && !(e.inline && (e.inline.select || e.inline.text !== null)), JSON.stringify({ pick: pk && { fixed: pk.fixed, inPanel: pk.inPanel, onScreen: pk.onScreen, n: pk.options.length }, inline: e.inline }));
@@ -1967,7 +1975,7 @@ export default async function (t) {
 			if (await jOpen(t, NK)) {
 				const p = await jPath(t, 'project');
 				await t.root.waitForFunction(() => !!document.querySelector('#pm-settings-root .detail-inspector .psx-nicks'), null, { timeout: 3000, polling: 50 }).catch(() => {});
-				const e = await run(t, J_EDITOR);
+				await run(t, J_STILL); const e = await run(t, J_EDITOR);
 				await t.check(`${NK} (batch 4) · + Set for a project… › ${p && p.name}: a nickname list whose model side is the shared picker`, !!e.inline && e.inline.nicks && e.inline.nickAdd, JSON.stringify(e.inline));
 				if (e.inline && e.inline.nicks && e.line) {
 					const W0 = `${J_PANEL} .psx-wedit:not(.o55-leaving *)`;
@@ -1976,7 +1984,7 @@ export default async function (t) {
 					await jPress(t, t.root.locator(`${W0} .psx-nick [data-psx-mpick]`).last());
 					await t.root.waitForFunction(() => !!document.querySelector('.psx-mpick'), null, { timeout: 3000, polling: 50 }).catch(() => {});
 					await settle(t, 200);
-					const pk = await run(t, J_EDITOR);
+					await run(t, J_STILL); const pk = await run(t, J_EDITOR);
 					const opt = (pk.pick && pk.pick.options.find((o) => o.value === 'anthropic/claude-sonnet-4')) || (pk.pick && pk.pick.options.find((o) => o.value && o.value.includes('/')));
 					await t.check(`${NK} (batch 4): the model side opens the shared picker over the page, with no depth to set`, !!pk.pick && pk.pick.fixed && !pk.pick.inPanel && !!opt && /no depth|presets keep/i.test(pk.pick.text), JSON.stringify(pk.pick && { n: pk.pick.options.length, text: pk.pick.text.slice(-120) }));
 					if (opt) { await t.root.locator(`.psx-mpick [role="option"][data-value="${opt.value}"]`).first().click(); await t.root.locator('.psx-mpick [data-psx-mpick-done]').first().click(); await settle(t, 150); }
@@ -2016,7 +2024,7 @@ export default async function (t) {
 				paths++;
 				await t.root.waitForFunction(() => !!document.querySelector('.psx-mpick, .drawer-wrap.is-open .drawer') || !!document.querySelector('#pm-settings-root .detail-inspector .psx-wedit'), null, { timeout: 3000, polling: 50 }).catch(() => {});
 				await settle(t, 100);
-				const e = await run(t, J_EDITOR);
+				await run(t, J_STILL); const e = await run(t, J_EDITOR);
 				const d = main.def;
 				const objectish = (d && typeof d === 'object' && !Array.isArray(d)) || (Array.isArray(d) && !d.every((x) => typeof x === 'string')) || r.type === 'keyvalue' || main.control === 'keyvalue';
 				const numeric = !Array.isArray(d) && (J_NUMERIC.includes(main.control) || r.type === 'number' || r.type === 'slider');
@@ -2129,7 +2137,7 @@ export default async function (t) {
 			else { const c = t.root.locator(`${J_INSP} [data-psx-key="everywhere::change"]`).first(); if (await c.count()) { await jPress(t, c); p = { how: 'change', name: 'Everywhere' }; } }
 			if (!p) { bad.push(`${r.id}: no path`); continue; }
 			await t.root.waitForFunction(() => !!document.querySelector('#pm-settings-root .detail-inspector .psx-wedit'), null, { timeout: 3000, polling: 50 }).catch(() => {});
-			const e = await run(t, J_EDITOR);
+			await run(t, J_STILL); const e = await run(t, J_EDITOR);
 			if (!e.inline || !e.line) { bad.push(`${r.id}: no inline editor (${JSON.stringify(e).slice(0, 80)})`); await jClean(t); continue; }
 			n++;
 			const W0 = `${J_PANEL} .psx-wedit:not(.o55-leaving *)`;

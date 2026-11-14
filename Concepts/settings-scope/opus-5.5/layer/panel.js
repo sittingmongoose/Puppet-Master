@@ -1039,7 +1039,9 @@
   function startNew(id, level, key) {
     // Jared 2026-11-13 (item 3): a map or a list of records goes to the row's own editor for that place
     if (editorKind(id) === 'row') { PSX.places.openRow(id, level, key); return; }
-    editing = { id, level, key, value: PSX.resolve(id, S.ctx).asked !== undefined ? PSX.resolve(id, S.ctx).asked : PSX.resolve(id, S.ctx).value, isNew: true };
+    // the nickname list is per item: a new place starts with no lines of its own (everywhere's still apply there)
+    const start = editorKind(id) === 'nicknames' ? {} : PSX.resolve(id, S.ctx).asked !== undefined ? PSX.resolve(id, S.ctx).asked : PSX.resolve(id, S.ctx).value;
+    editing = { id, level, key, value: start, isNew: true };
     rerender();
     if (editorKind(id) === 'model') { openPickerSoon(); return; }
     setTimeout(() => { const root = (PSX.panel.own && PSX.panel.own.isConnected ? PSX.panel.own : D.querySelector('#pm-settings-root .detail-inspector')); const f = root && root.querySelector('[data-psx-edit-control]'); if (f) f.focus(); }, 30);
