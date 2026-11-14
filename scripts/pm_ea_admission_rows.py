@@ -1,0 +1,549 @@
+#!/usr/bin/env python3
+"""Derived registry-row rules for Event Authority admission merges (PNC-019 S5, stream E).
+
+Only the six DCO families carry a prepared registry row (Plans/coordination_event_admission.json
+registry_row); every other family's row is derived here from its reviewed grade in reports/ and
+its lane contract in canon. Each field comes from a named source and is recorded in the row's
+provenance; a field no source states, or two sources state differently, raises Gap, which blocks
+that family instead of being guessed. scripts/pm-ea-admission-writer.py imports these rules and
+owns the mechanics (commits, records, depth files, ledgers, pins).
+
+The rules, in order of precedence (each is a function below):
+- family_id and family_revision: the reviewed grade; where the grade minted no id, the live
+  registry convention event-family-<event type with . and _ as ->.
+- scope_policy: the lane contract, else a scope token stated once by the graded scope_identity
+  evidence, else the payload schema's scope_kind enum; any disagreement blocks.
+- payload editions: the lane contract's refs, each resolved exactly as readiness resolves it.
+- semantic and payload owners: the lane contract, else the graded owner_doc and
+  closed_payload_schema evidence; each must resolve to the document that declares the unit.
+- retention: the graded retention cell's policy ids cross-checked with the lane contract;
+  an application edition takes a named -APPLICATION- policy, else the Project policy only when
+  that policy is shared by registered application editions.
+- payload_versions: the DL-300 approval-pair form; legacy: no aliases, reject_unhandled_secrets,
+  identity pointers from the payload's own identity fields.
+"""
+
+from __future__ import annotations
+
+
+from __future__ import annotations
+
+import copy
+import hashlib
+import importlib.util
+import json
+import re
+import sys
+from pathlib import Path
+from typing import Any
+
+
+REPO = Path(__file__).resolve().parents[1]
+PLANS = REPO / "Plans"
+
+REGISTRY_SCHEMA = "Plans/event_family_registry.schema.json"
+COORDINATION_LEDGER = "Plans/coordination_event_admission.json"
+STORAGE_REGISTRY = "Plans/storage_value_registry.json"
+
+EVIDENCE_FIELDS = (
+    "membership_version", "owner_doc", "producer", "closed_payload_schema", "scope_identity",
+    "replay_idempotency", "retention", "redaction_custody", "transitions", "consumers_checkpoints",
+    "compatibility_withdrawal", "positive_negative_oracles",
+)
+# Storage policies of derived or index stores, never an event history's own policy.
+DERIVED_STORE_POLICIES = {"RP-PROJECTION-3GEN", "RP-EVENT-INDEX-SOURCE"}
+# Policies a registered application edition already shares with its Project edition
+# (Goal, approval and Goal-run precedents in the live registry). Any other policy needs
+# its application edition stated by the lane.
+SCOPE_SHARED_POLICIES = {"RP-AUTHORITY-INDEFINITE", "RP-RUNTIME-365D"}
+IDENTITY_KEYS = ("project_id", "thread_id", "run_id", "node_id", "attempt_id")
+
+SELF_GRADES = {
+    "DX": "reports/event-authority-20261104/DX.self-grade.json",
+    "DCN": "reports/event-authority-20261104/DCN-self-grade.json",
+    "DCO": "reports/event-authority-20261104/DCO-self-grade.json",
+    "DDBG": "reports/event-authority-20261104/DDBG.self-grade.json",
+    "DM": "reports/event-authority-20261104/DM-self-grade.json",
+    "W3A": "reports/event-authority-20261105/W3A-self-grade.json",
+    "W3B": "reports/event-authority-20261105/W3B-self-grade.json",
+    "W3C": "reports/event-authority-20261105/W3C-self-grade.json",
+    "W3F": "reports/event-authority-20261105/W3F-self-grade.json",
+    "W3G": "reports/event-authority-20261105/W3G.self-grade.json",
+    "W3H": "reports/event-authority-20261105/W3H-self-grade.json",
+}
+
+
+# ---------------------------------------------------------------- helpers
+
+def sha256_bytes(raw: bytes) -> str:
+    return hashlib.sha256(raw).hexdigest()
+
+
+def sha256_file(path: Path) -> str:
+    return sha256_bytes(path.read_bytes())
+
+
+def canonical_sha256(value: Any) -> str:
+    """The DL-077 recipe: sorted keys, compact separators, UTF-8."""
+    return sha256_bytes(json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8"))
+
+
+def load(rel: str) -> Any:
+    return json.loads((REPO / rel).read_text(encoding="utf-8"))
+
+
+def render_registry(doc: dict) -> str:
+    return json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
+
+
+def load_module(name: str, rel: str):
+    spec = importlib.util.spec_from_file_location(name, REPO / rel)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+_UNIT_INDEX: dict[str, list[str]] | None = None
+
+
+def unit_index() -> dict[str, list[str]]:
+    """plan_unit_id -> owner documents that declare it (top-level Plans/*.md only)."""
+    global _UNIT_INDEX
+    if _UNIT_INDEX is None:
+        index: dict[str, list[str]] = {}
+        for path in sorted(PLANS.glob("*.md")):
+            for match in re.finditer(r"(?m)^plan_unit_id: ([A-Z][A-Z0-9]*-[0-9]+)\s*$", path.read_text(encoding="utf-8")):
+                index.setdefault(match.group(1), []).append("Plans/" + path.name)
+        _UNIT_INDEX = index
+    return _UNIT_INDEX
+
+
+def unit_ref(unit: str) -> str | None:
+    docs = unit_index().get(unit, [])
+    return docs[0] + "#" + unit if len(docs) == 1 else None
+
+
+def split_ref(ref: str) -> tuple[str, str]:
+    path, _, pointer = ref.partition("#")
+    return path, "#" + pointer if pointer else "#"
+
+
+def policy_ids(text: str) -> list[str]:
+    return sorted(set(re.findall(r"RP-[A-Z0-9]+(?:-[A-Z0-9]+)*", text)))
+
+
+def policy_ref(token: str) -> dict | None:
+    match = re.fullmatch(r"(RP-[A-Z0-9-]+)(?:@([0-9]+\.[0-9]+\.[0-9]+))?", token.strip())
+    if not match:
+        return None
+    return {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": match.group(1),
+            "policy_version": match.group(2) or "1.0.0"}
+
+
+class Gap(Exception):
+    """A field no source states, or sources that disagree. Blocks the family."""
+
+
+def grade_rows(lane: str) -> dict[str, dict]:
+    doc = load(SELF_GRADES[lane])
+    rows = doc.get("rows") if isinstance(doc, dict) and "rows" in doc else doc.get("families")
+    return {row["event_type"]: row for row in rows}
+
+
+# ---------------------------------------------------------------- lane contracts
+
+def find_by_event(rows: list, event_type: str, key: str = "event_type") -> tuple[int, dict]:
+    hits = [(i, r) for i, r in enumerate(rows) if isinstance(r, dict) and r.get(key) == event_type]
+    if len(hits) != 1:
+        raise Gap(f"lane contract rows naming the family: {len(hits)}")
+    return hits[0]
+
+
+def lane_contract(lane: str, event_type: str) -> dict:
+    """Normalized lane facts: scope, payload editions, owner refs and retention as each lane states them.
+
+    Keys: scope_policy, editions {scope: 'path#pointer'}, retention {scope: 'RP@v'} (may be
+    partial), owners {semantic, payload, storage} (may be partial), contract_ref, prepared_row.
+    """
+    out: dict[str, Any] = {"owners": {}, "retention": {}, "editions": {}, "scope_policy": None,
+                           "contract_ref": None, "prepared_row": None}
+    if lane == "DCO":
+        doc = load(COORDINATION_LEDGER)
+        i, row = find_by_event(doc["rows"], event_type)
+        out.update(contract_ref=f"{COORDINATION_LEDGER}#/rows/{i}", prepared_row=copy.deepcopy(row["registry_row"]))
+        return out
+    if lane == "DX":
+        rel = "Plans/executor_event_contracts.json"
+        i, row = find_by_event(load(rel)["families"], event_type)
+        rp = row["retention_policy_ref"]
+        out.update(scope_policy=row["scope_policy"], contract_ref=f"{rel}#/families/{i}",
+                   editions={"project": row["schema_ref"] + "#"},
+                   retention={"project": f"{rp['policy_id']}@{rp['policy_version']}"},
+                   owners={"semantic": row["semantic_owner"], "payload": row["payload_owner"],
+                           "storage": row["storage_owner"]})
+        return out
+    if lane == "DCN":
+        rel = "Plans/card2_event_contracts.json"
+        i, row = find_by_event(load(rel)["families"], event_type)
+        rp = row["retention_policy_ref"]
+        token = f"{rp['policy_id']}@{rp['policy_version']}"
+        scopes = ("application", "project") if row["scope_policy"] == "application_or_project" else ("project",)
+        out.update(scope_policy=row["scope_policy"], contract_ref=f"{rel}#/families/{i}",
+                   editions={s: row["payload_schema_ref"] for s in scopes},
+                   retention={s: token for s in scopes},
+                   owners={"semantic": row["semantic_owner_doc"] + "#" + row["semantic_unit"],
+                           "payload": "Plans/Contracts_V0.md#" + row["contract_unit"],
+                           "storage": "Plans/storage-plan.md#" + row["storage_unit"]})
+        return out
+    if lane == "DM":
+        rel = "Plans/small_owner_event_fixtures.json"
+        i, row = find_by_event(load(rel)["families"], event_type)
+        scopes = ("application", "project") if row["scope_policy"] == "application_or_project" else ("project",)
+        out.update(scope_policy=row["scope_policy"], contract_ref=f"{rel}#/families/{i}",
+                   editions={s: row["schema"] + "#" for s in scopes},
+                   retention={"project": row["retention_policy_ref"]})
+        return out
+    if lane == "DDBG":
+        rel = "Plans/debug_investigation_event_payloads.schema.json"
+        suffix = event_type.removeprefix("debug.investigation.")
+        if suffix == event_type or suffix not in load(rel).get("$defs", {}):
+            raise Gap("no debug investigation payload definition for the family")
+        out.update(contract_ref=f"{rel}#/$defs/{suffix}", editions={"project": f"{rel}#/$defs/{suffix}"})
+        return out
+    if lane == "W3A":
+        rel = "reports/event-authority-20261105/W3A-contracts.json"
+        i, row = find_by_event(load(rel)["contracts"], event_type)
+        ret = row["retention_policy_ref"]
+        ref = row["payload_schema_ref"]
+        if isinstance(ret, dict) and set(ret) == {"application", "project"}:
+            scope, scopes, retention = "application_or_project", ("application", "project"), dict(ret)
+        else:
+            # One policy for the family: its scope comes from the graded scope evidence.
+            scope, scopes, retention = None, ("project",), {"project": ret}
+        out.update(scope_policy=scope, contract_ref=f"{rel}#/contracts/{i}",
+                   editions={s: ref for s in scopes}, retention=retention,
+                   owners={"semantic": unit_ref(row["owner_unit"]), "payload": unit_ref(row["envelope_unit"]),
+                           "storage": unit_ref(row["storage_unit"])})
+        return out
+    if lane == "W3B":
+        rel = "Plans/source_control_event_preparation.json"
+        i, row = find_by_event(load(rel)["families"], event_type)
+        scopes = ("application", "project") if row["scope_policy"] == "application_or_project" else ("project",)
+        out.update(scope_policy=row["scope_policy"], contract_ref=f"{rel}#/families/{i}",
+                   editions={s: row["payload_schema_ref"] for s in scopes},
+                   retention={"project": row["retention_policy_ref"]},
+                   owners={"semantic": row["semantic_owner"], "payload": row["payload_owner"],
+                           "storage": row["storage_owner"]})
+        return out
+    if lane == "W3C":
+        rel = "reports/event-authority-20261105/W3C-contracts.json"
+        i, row = find_by_event(load(rel)["families"], event_type)
+        variants = row.get("payload_variants") or {}
+        out.update(scope_policy=row["scope_policy"], contract_ref=f"{rel}#/families/{i}",
+                   editions={s: v["schema_ref"] for s, v in variants.items()},
+                   retention={"project": row["retention_policy_ref"]},
+                   owners={"semantic": unit_ref(row["owner_unit"]), "payload": unit_ref(row["payload_unit"]),
+                           "storage": unit_ref(row["storage_unit"])})
+        return out
+    if lane == "W3F":
+        rel = "reports/event-authority-20261105/W3F-row-outcomes.jsonl"
+        rows = [json.loads(line) for line in (REPO / rel).read_text(encoding="utf-8").splitlines() if line.strip()]
+        i, row = find_by_event(rows, event_type)
+        slug = event_type.replace(".", "_")
+        schema = f"Plans/event_payloads/w3f/{slug}.schema.json"
+        if not (REPO / schema).is_file():
+            raise Gap("no W3F payload schema file for the family")
+        cv = [u for u in row["owner_units"] if u.startswith("CV-")]
+        sp = [u for u in row["owner_units"] if u.startswith("SP-")]
+        out.update(contract_ref=f"{rel}#{i + 1}", editions={"project": schema + "#"},
+                   owners={"payload": unit_ref(cv[0]) if len(cv) == 1 else None,
+                           "storage": unit_ref(sp[0]) if len(sp) == 1 else None})
+        if row["retention_policy_ref"] != "PENDING_RETENTION_DECISION":
+            out["retention"] = {"project": row["retention_policy_ref"]}
+        return out
+    if lane == "W3G":
+        rel = "Plans/event_authority_w3g/contracts.json"
+        i, row = find_by_event(load(rel)["families"], event_type)
+        selectors = row.get("payload_selectors") or {}
+        editions = {}
+        for name, ref in selectors.items():
+            scope = "application" if name.startswith("Application") else "project" if name.startswith("Project") else None
+            if scope is None or scope in editions:
+                raise Gap("W3G payload selector names no single scope: " + name)
+            editions[scope] = ref
+        out.update(scope_policy=row["scope_policy"], contract_ref=f"{rel}#/families/{i}", editions=editions,
+                   retention=dict(row.get("retention_by_scope") or {}),
+                   owners={"semantic": f"{row['owner_doc']}#{row['owner_unit']}", "payload": unit_ref(row["cv"]),
+                           "storage": unit_ref(row["sp"])})
+        return out
+    if lane == "W3H":
+        rel = "reports/event-authority-20261105/W3H-outcomes.json"
+        i, row = find_by_event(load(rel)["rows"], event_type)
+        scopes = ("application", "project") if row["scope"] == "application_or_project" else ("project",)
+        out.update(scope_policy=row["scope"], contract_ref=f"{rel}#/rows/{i}",
+                   editions={s: row["payload_schema_ref"] for s in scopes},
+                   retention={"project": row["retention_policy"]},
+                   owners={"semantic": unit_ref(row["owner_unit"]), "payload": unit_ref(row["cv_unit"]),
+                           "storage": unit_ref(row["sp_unit"])})
+        return out
+    raise Gap("no lane adapter for " + lane)
+
+
+# ---------------------------------------------------------------- derivation
+
+def grade_cells_ok(grade: dict) -> None:
+    cells = grade.get("cells") or {}
+    if set(cells) != set(EVIDENCE_FIELDS):
+        raise Gap("reviewed grade does not carry exactly the twelve criteria")
+    statuses = {f: cells[f].get("status") for f in EVIDENCE_FIELDS}
+    if statuses["membership_version"] != "ABSENT" or any(statuses[f] != "PASS" for f in EVIDENCE_FIELDS[1:]):
+        raise Gap("reviewed grade is not 11 PASS with membership ABSENT: " + json.dumps(statuses))
+
+
+def graded_unit(grade: dict, field: str) -> str | None:
+    for item in grade["cells"][field].get("evidence") or []:
+        unit = item.get("unit")
+        if isinstance(unit, str) and re.fullmatch(r"[A-Z][A-Z0-9]*-[0-9]+", unit):
+            path = item.get("path")
+            ref = unit_ref(unit)
+            if ref and ref.split("#")[0] == path:
+                return ref
+    return None
+
+
+def graded_retention(grade: dict) -> dict[str, str]:
+    """Project and application history policies named by the reviewed retention cell."""
+    cell = grade["cells"]["retention"]
+    text = json.dumps([cell.get("finding"), [e.get("quote") for e in cell.get("evidence") or []]], ensure_ascii=False)
+    ids = [p for p in policy_ids(text) if p not in DERIVED_STORE_POLICIES]
+    app = [p for p in ids if "-APPLICATION-" in p]
+    project = [p for p in ids if "-APPLICATION-" not in p]
+    out = {}
+    if len(project) == 1:
+        out["project"] = project[0]
+    if len(app) == 1:
+        out["application"] = app[0]
+    return out
+
+
+SCOPE_TOKENS = ("application_or_project", "project_only", "application_only")
+
+
+def scope_from_grade(grade: dict) -> str | None:
+    """A scope policy token stated exactly once by the reviewed scope_identity cell's own evidence."""
+    cell = grade["cells"]["scope_identity"]
+    text = " ".join([str(cell.get("finding") or "")] + [str(e.get("quote") or "") for e in cell.get("evidence") or []])
+    found = {t for t in SCOPE_TOKENS if re.search(r"(?<![a-z_])" + t + r"(?![a-z_])", text)}
+    return found.pop() if len(found) == 1 else None
+
+
+def scope_object(schema: dict) -> tuple[str, dict]:
+    """The payload's own scope carrier: top level, or a closed `context`/`scope` object."""
+    props = schema.get("properties") or {}
+    if "scope_kind" in props:
+        return "", props
+    for name in ("context", "scope"):
+        inner = (props.get(name) or {}).get("properties") or {}
+        if "scope_kind" in inner:
+            return "/" + name, inner
+    return "", props
+
+
+def scope_from_schema(schema: dict) -> str | None:
+    prop = scope_object(schema)[1].get("scope_kind") or {}
+    values = prop.get("enum") or ([prop["const"]] if "const" in prop else [])
+    values = set(values)
+    if values == {"project", "application"}:
+        return "application_or_project"
+    if values == {"project"}:
+        return "project_only"
+    if values == {"application"}:
+        return "application_only"
+    return None
+
+
+def identity_pointers(schema: dict) -> dict[str, list[str]]:
+    """Each kernel identity key the payload carries, at the payload's top level or in its scope carrier."""
+    props = schema.get("properties") or {}
+    carriers = [("", props)] + [("/" + name, (props.get(name) or {}).get("properties") or {}) for name in ("scope", "context")]
+    pointers: dict[str, list[str]] = {"project_id": [], "thread_id": []}
+    for key in IDENTITY_KEYS:
+        for prefix, carrier in carriers:
+            if key in carrier:
+                pointers[key] = ["/payload" + prefix + "/" + key]
+                break
+    return {k: v for k, v in pointers.items() if v or k in ("project_id", "thread_id")}
+
+
+def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[dict, dict]:
+    """The registry row and the source of each of its fields."""
+    event_type = family["event_type"]
+    family_id, revision = grade.get("family_id"), grade.get("family_revision")
+    provenance: dict[str, Any] = {"family_id": SELF_GRADES[family["lane"]], "family_revision": SELF_GRADES[family["lane"]]}
+    if family_id is None or (isinstance(family_id, str) and family_id.startswith("candidate-only:")):
+        # Every live registry row is named event-family-<event type, dots and underscores as hyphens>.
+        family_id = "event-family-" + re.sub(r"[._]", "-", event_type)
+        provenance["family_id"] = "registry naming convention (every live row); the reviewed grade minted none"
+    if not isinstance(family_id, str) or not re.fullmatch(r"event-family-[a-z0-9]+(?:-[a-z0-9]+)*", family_id):
+        raise Gap("reviewed grade names no registry family_id")
+    if not isinstance(revision, str):
+        raise Gap("reviewed grade names no family_revision")
+    if contract["prepared_row"] is not None:
+        row = contract["prepared_row"]
+        if (row.get("event_type"), row.get("family_id"), row.get("family_revision")) != (event_type, family_id, revision):
+            raise Gap("prepared registry row disagrees with the reviewed grade's family identity")
+        return row, {"row": contract["contract_ref"] + "/registry_row (prepared, appended unchanged)"}
+
+    # Payload editions resolve exactly as readiness resolves them.
+    editions = {}
+    for scope, ref in sorted(contract["editions"].items()):
+        path, pointer = split_ref(ref)
+        probe = {"payload_schema_ref": {"path": path, "json_pointer": pointer, "schema_id": "?"}}
+        schema, schema_id = readiness.event_family_payload_schema(probe)
+        if schema is None or not isinstance(schema_id, str) or not schema_id:
+            raise Gap(f"{scope} payload {ref} has no single resolvable schema id (readiness resolver)")
+        editions[scope] = {"path": path, "json_pointer": pointer, "schema_id": schema_id, "schema": schema}
+    if not editions:
+        raise Gap("no payload edition stated")
+    provenance["payload_editions"] = contract["contract_ref"]
+
+    scope_policy = contract["scope_policy"]
+    graded_scope = scope_from_grade(grade)
+    schema_scope = scope_from_schema(next(iter(editions.values()))["schema"])
+    if scope_policy is not None:
+        provenance["scope_policy"] = contract["contract_ref"]
+    elif graded_scope is not None:
+        scope_policy = graded_scope
+        provenance["scope_policy"] = SELF_GRADES[family["lane"]] + " scope_identity evidence"
+    else:
+        scope_policy = schema_scope
+        provenance["scope_policy"] = "payload schema scope_kind"
+    for other in (graded_scope, schema_scope):
+        if other is not None and other != scope_policy:
+            raise Gap(f"scope policy sources disagree: {scope_policy} vs {other}")
+    if scope_policy not in ("project_only", "application_or_project", "application_only"):
+        raise Gap("scope policy not stated")
+    needed = {"project_only": {"project"}, "application_only": {"application"},
+              "application_or_project": {"project", "application"}}[scope_policy]
+    if scope_policy == "application_or_project" and set(editions) == {"project"}:
+        # One closed payload serving both scopes (the DM precedent of a nullable project_id).
+        editions["application"] = dict(editions["project"])
+    if set(editions) != needed:
+        raise Gap(f"payload editions {sorted(editions)} do not match scope policy {scope_policy}")
+
+    # Owners: the graded owner and payload units, cross-checked with the lane's own refs.
+    owners = dict(contract["owners"])
+    graded_owner = graded_unit(grade, "owner_doc")
+    if owners.get("semantic") is None:
+        owners["semantic"] = graded_owner
+        provenance["semantic_owner_doc"] = SELF_GRADES[family["lane"]] + " owner_doc evidence"
+    else:
+        provenance["semantic_owner_doc"] = contract["contract_ref"]
+    cv_units = [u for u in grade.get("current_owner_units") or [] if u.startswith("CV-")]
+    if owners.get("payload") is None:
+        graded_payload = graded_unit(grade, "closed_payload_schema")
+        if graded_payload and graded_payload.split("#")[1].startswith("CV-"):
+            owners["payload"] = graded_payload
+        elif cv_units:
+            owners["payload"] = unit_ref(cv_units[0])
+        provenance["payload_owner_doc"] = SELF_GRADES[family["lane"]] + " closed_payload_schema evidence / current_owner_units"
+    else:
+        provenance["payload_owner_doc"] = contract["contract_ref"]
+    for key in ("semantic", "payload"):
+        ref = owners.get(key)
+        if not ref:
+            raise Gap(f"{key} owner unit not stated")
+        doc, _, unit = ref.partition("#")
+        if not (REPO / doc).is_file() or (re.fullmatch(r"[A-Z][A-Z0-9]*-[0-9]+", unit) and unit_ref(unit) != ref):
+            raise Gap(f"{key} owner ref {ref} does not resolve to its declaring document")
+
+    # Retention: the reviewed retention cell, cross-checked with the lane contract.
+    graded = graded_retention(grade)
+    stated = {s: v.split("@")[0] for s, v in contract["retention"].items()}
+    retention: dict[str, dict] = {}
+    for scope in sorted(needed):
+        candidates = {x for x in (graded.get(scope), stated.get(scope)) if x}
+        if scope == "application" and not candidates:
+            project = graded.get("project") or stated.get("project")
+            if project in SCOPE_SHARED_POLICIES:
+                candidates = {project}
+                provenance["retention_application"] = "shared with the Project edition (" + project + ", registry precedent)"
+        if len(candidates) != 1:
+            raise Gap(f"{scope} retention not stated exactly once (graded {graded.get(scope)}, lane {stated.get(scope)})")
+        token = candidates.pop()
+        version = None
+        for s, v in contract["retention"].items():
+            if v.split("@")[0] == token and "@" in v:
+                version = v.split("@")[1]
+        ref = policy_ref(token + ("@" + version if version else ""))
+        policies = {(p["policy_id"], p["policy_version"]) for p in load(STORAGE_REGISTRY)["retention_policies"]}
+        if ref is None or (ref["policy_id"], ref["policy_version"]) not in policies:
+            raise Gap(f"{scope} retention {token} is not a registered policy object")
+        retention[scope] = ref
+    provenance["retention"] = SELF_GRADES[family["lane"]] + " retention cell; " + str(contract["contract_ref"])
+
+    top_scope = "project" if "project" in editions else "application"
+    top = editions[top_scope]
+    source_refs = []
+    for ref in (owners["semantic"], owners["payload"], owners.get("storage")):
+        if ref and ref not in source_refs:
+            source_refs.append(ref)
+    for scope in sorted(editions):
+        ref = editions[scope]["path"] + editions[scope]["json_pointer"]
+        if ref not in source_refs:
+            source_refs.append(ref)
+    if contract["contract_ref"].startswith("Plans/") and contract["contract_ref"] not in source_refs:
+        source_refs.append(contract["contract_ref"])
+    source_refs.append(SELF_GRADES[family["lane"]])
+
+    row: dict[str, Any] = {
+        "family_id": family_id,
+        "family_revision": revision,
+        "event_type": event_type,
+        "scope_policy": scope_policy,
+        "semantic_owner_doc": owners["semantic"],
+        "payload_owner_doc": owners["payload"],
+        "payload_schema_id": top["schema_id"],
+        "payload_schema_ref": {"path": top["path"], "json_pointer": top["json_pointer"], "schema_id": top["schema_id"]},
+        "legacy": {
+            "aliases": [],
+            "admitted_extensions": [],
+            "identity_json_pointers": identity_pointers(top["schema"]),
+            "referenced_event_id_pointer": None,
+            "redaction": {"mode": "reject_unhandled_secrets", "transform_id": None, "transform_version": None},
+        },
+        "source_refs": source_refs,
+        "retention_policy_ref": retention[top_scope],
+    }
+    if len(editions) > 1:
+        row["payload_versions"] = [
+            {
+                "scope_kind": scope,
+                "payload_schema_id": editions[scope]["schema_id"],
+                "payload_schema_ref": {"path": editions[scope]["path"], "json_pointer": editions[scope]["json_pointer"],
+                                       "schema_id": editions[scope]["schema_id"]},
+                "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+                "producer_admission": "requires_owner_adoption",
+                "append_owner_ref": owners["semantic"],
+                "read_owner_ref": owners["semantic"],
+                "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+                "retention_policy_ref": retention[scope],
+            }
+            for scope in sorted(editions)
+        ]
+        row["payload_selection_policy"] = "exact_scope_and_schema_id_no_fallback"
+    provenance["identity_json_pointers"] = "top-level payload schema properties"
+    provenance["payload_versions"] = "DL-300 approval-pair precedent: CV-366 graph, requires_owner_adoption, BRS-033"
+    return row, provenance
+
+
+def schema_failures(row: dict) -> list[str]:
+    from jsonschema import Draft202012Validator
+    from referencing import Registry, Resource
+    schema = load(REGISTRY_SCHEMA)
+    resource = Resource.from_contents(schema)
+    registry = Registry().with_resource(schema["$id"], resource)
+    sub = {"$ref": schema["$id"] + "#/$defs/family"}
+    validator = Draft202012Validator(sub, registry=registry)
+    return sorted(e.message[:200] for e in validator.iter_errors(row))
