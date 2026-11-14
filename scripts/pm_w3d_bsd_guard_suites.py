@@ -155,7 +155,7 @@ def main(argv=None):
             (out / f'{phase}.json').write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
             (out / f'{phase}.md').write_text(g.markdown(report) + '\n')
         status = report.get('status')
-        if status != 'pass':
+        if str(status).lower() != 'pass':  # the gated tool reports PASS in uppercase
             exit_code = 1
         print(f'{phase}: {status}', file=sys.stderr)
     summary = dict(counts=counts, phases={p: (r.get('status') if isinstance(r, dict) else str(r)) for p, r in results.items()})

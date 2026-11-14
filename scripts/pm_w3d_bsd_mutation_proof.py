@@ -42,7 +42,7 @@ DERIVATIONS = [
     ('R04 wrapper subject', 'obs_source', "same(wrapper.get('subject_id'), payload.get(fam['subject_field']))", 'True', 'SR02_wrapper_subject', None, None),
     ('R05 committed wrapper membership', 'obs_source', "payload.get('source_state_ref') in W['committed_wrappers']", 'True', 'SR06_committed_wrapper', None, None),
     ('R06 operation committed', 'obs_source', "W['operation_committed'] is True", 'True', 'SR07_operation_source', None, None),
-    ('R07 full value commitment', 'obs_receipt', "same(\n            custody.get('original_event_value_commitment', {}).get('sha256'), commitment)", 'True', 'RC08_full_value', None, None),
+    ('R07 full value commitment', 'obs_receipt', "same(custody.get('original_event_value_commitment', {}).get('sha256'), commitment)", 'True', 'RC08_full_value', None, None),
     ('R08 prior head CAS', 'obs_receipt', "same(W['head_expected'], prior)", 'True', 'RC25_head_cas', None, None),
     ('R09 head subject', 'obs_receipt', "same(head.get('subject_id'), W['native']['subject_id'])", 'True', 'RC26_head_subject', None, None),
     ('R10 sealed receipt presence', 'obs_history', 'len(sealed) >= 1', 'True', 'HI01_receipt_present', None, None),
@@ -61,7 +61,7 @@ DERIVATIONS = [
     ('O07 settlement receipt ref', 'obs_receipt', "same(row.get('first_append_receipt_ref'), W['receipt_ref'])", 'True', 'RC19_settlement_ref', None, None),
     ('O08 checkpoint storage', 'obs_checkpoint', "cand.get('storage_instance_id') == STORAGE", 'True', 'CP02_checkpoint_storage', None, None),
     ('O09 publication fence', 'obs_cas', "request.get('fence') == W['storage_fence']", 'True', 'CS06_fence_current', None, None),
-    ('O10 withdrawal cutoff', 'obs_withdrawal', "D['cutoff_recorded'] is True", 'True', 'WD01_cutoff_recorded', None, None),
+    ('O10 withdrawal selector', 'obs_withdrawal', "D['governance']['selectors'].get(fam['event_type']) == 'withdrawn'", 'True', 'WD03_selector_withdrawn', None, None),
 ]
 
 
@@ -81,12 +81,23 @@ def execute(fam, case):
         return {'exception': type(error).__name__, 'message': str(error)}, None
 
 
+def bind(fn, function):
+    """Bind under the module name and in the checker's observer dispatch table (PNC-019 s4d dispatches by table)."""
+    old = getattr(m, fn)
+    setattr(m, fn, function)
+    for key, value in list(m.OBSERVERS.items()):
+        if value is old:
+            m.OBSERVERS[key] = function
+
+
 def replace(fn, old, new):
     original = getattr(m, fn)
     source = inspect.getsource(original)
     if source.count(old) != 1:
         raise ValueError((fn, old, source.count(old)))
-    exec(compile(source.replace(old, new), '<W3D derivation mutation>', 'exec'), m.__dict__)
+    namespace = {}
+    exec(compile(source.replace(old, new), '<W3D derivation mutation>', 'exec'), m.__dict__, namespace)
+    bind(fn, namespace[fn])
     return original
 
 
@@ -154,7 +165,7 @@ def main(argv=None):
                     reason='Both sites of the replay-only invariant removed; the independent append_once refusal stays enabled.',
                     killed=actual is None and not error and peer_actual==expected(peer) and not peer_error))
             finally:
-                m.obs_envelope = fn
+                bind('obs_envelope', fn)
             # Real derivations: every matching single-defect witness in every applicable family.
             for label, fn, old, new, row, fragment, slug in DERIVATIONS:
                 witnesses = [(f,c) for f,c in catalog if c['kind']=='negative' and c.get('row')==row and (slug is None or f['slug']==slug)]
@@ -176,11 +187,15 @@ def main(argv=None):
                         # now-inconsistent observation; record that exact expected diagnostic.
                         expected_extra = ('RetainedDispatcher disagrees with HI01-HI05/HI13'
                                           if label.startswith('R10') and case['kind'] == 'negative' else None)
-                        outcomes.append(dict(family=fam['slug'], case=case['id'], kind=case['kind'], expected=None,
+                        # PNC-019 s4d: finding_ref is also joined to the owner decision (OW_finding_ref_join), a
+                        # duplicate site of the same value; the weakened pattern's witness must reach exactly it.
+                        want = (['owner_advice_emitted', 'OW_finding_ref_join', 'owner_finding_ref_mismatch']
+                                if label.startswith('R01') and case['kind'] == 'negative' else None)
+                        outcomes.append(dict(family=fam['slug'], case=case['id'], kind=case['kind'], expected=want,
                                              actual=actual, expected_extra=expected_extra, extra=error,
-                                             matches=actual is None and error == expected_extra))
+                                             matches=actual == want and error == expected_extra))
                 finally:
-                    setattr(m,fn,original)
+                    bind(fn, original)
                 restore_bad=[]
                 for fam,case in witnesses:
                     actual,error=execute(fam,case)
