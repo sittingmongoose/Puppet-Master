@@ -52,10 +52,21 @@ EVIDENCE_FIELDS = (
 )
 # Storage policies of derived or index stores, never an event history's own policy.
 DERIVED_STORE_POLICIES = {"RP-PROJECTION-3GEN", "RP-EVENT-INDEX-SOURCE"}
-# Policies a registered application edition already shares with its Project edition
-# (Goal, approval and Goal-run precedents in the live registry). Any other policy needs
-# its application edition stated by the lane.
-SCOPE_SHARED_POLICIES = {"RP-AUTHORITY-INDEFINITE", "RP-RUNTIME-365D"}
+# Policies an application edition shares with its Project edition, each with the canon that says so.
+# Any other policy (a per-Project allowance such as RP-TELEMETRY-90D or RP-OPERATIONAL-2555D) needs the
+# application edition's own policy stated by the reviewed grade or the lane.
+SCOPE_SHARED_POLICIES = {
+    # Shared by registered application editions (the Goal, Goal-run and approval rows of the live registry).
+    "RP-AUTHORITY-INDEFINITE", "RP-RUNTIME-365D",
+    # The count is per thread in an application chat exactly as in a Project chat; cardinality_scope=thread
+    # is the policy's own scope for both, not an application counterpart bucket (Plans/storage-plan.md:17567,
+    # DL-292, SP-349). DL-456 states it for the four session-prompt histories ("in Project and application
+    # chats alike", storage-plan.md:17682; CV-1461..1464 item 7).
+    "RP-CHAT-THREAD-LIFETIME",
+    # SP-351 gives the same object, with no application counterpart, to the Goal records' application
+    # editions (Plans/storage-plan.md:30723-30730); the policy has no counting scope.
+    "RP-GOAL-THREAD-LIFETIME",
+}
 IDENTITY_KEYS = ("project_id", "thread_id", "run_id", "node_id", "attempt_id")
 
 SELF_GRADES = {
