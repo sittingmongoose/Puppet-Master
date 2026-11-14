@@ -538,9 +538,11 @@ def _t_token_registered_unpinned(root: Path, h: ModuleType) -> None:
 
 
 def _t_token_ledger_unpinned(root: Path, h: ModuleType) -> None:
+    # an exclusion with no landed row: an empty pin set grants every disposition subset,
+    # so only the "a cited row names the token" requirement refuses it
     def change(row: dict[str, Any]) -> None:
         row["source_rows"] = [pin for pin in row["source_rows"] if "window_start_line" in pin]
-    _edit_token(root, h, "fx.alias.recorded", change)
+    _edit_token(root, h, "fx.excluded68.recorded", change)
 
 
 def _t_token_recount_unpinned(root: Path, h: ModuleType) -> None:
