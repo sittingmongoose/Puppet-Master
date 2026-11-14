@@ -410,6 +410,10 @@
   {
    "event_type": "testing.capture.health_recovered",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.interrupted",
+   "outcome": "registered"
   }
  ]
 }
