@@ -51,6 +51,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--only')
+    parser.add_argument('--only-prefix')
     parser.add_argument('--retained-snapshots',action='store_true')
     args=parser.parse_args()
     args.out.mkdir(parents=True,exist_ok=True)
@@ -65,6 +66,8 @@ def main():
     summaries=[]
     for label,script,options in commands:
         if args.only and label!=args.only:
+            continue
+        if args.only_prefix and not label.startswith(args.only_prefix):
             continue
         memory_floor()
         before=snapshot()

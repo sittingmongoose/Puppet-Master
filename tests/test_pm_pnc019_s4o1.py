@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_pnc019_s4o1 as cells
 import pm_pnc019_retained_snapshot as retained
+import pm_pnc019_s4o1_atomic as atomic
 from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time, format_checker
 from pm_event_numbers import Refusal
 
@@ -86,14 +87,37 @@ class OracleAttribution(unittest.TestCase):
         self.assertNotEqual(retained.snapshot(owner)[0],before)
 
     def test_snapshot_preserves_float_bits_and_large_integers(self):
-        self.assertNotEqual(retained.freeze(-0.0),retained.freeze(0.0))
-        self.assertEqual(retained.freeze(10**4399)[0],'int')
+        class Owner:
+            value=-0.0
+            def authenticated_original(self,ref):
+                return self.value
+        owner=Owner();owner.value=-0.0
+        before=retained.snapshot(owner)[0]
+        owner.value=0.0
+        self.assertNotEqual(retained.snapshot(owner)[0],before)
+        owner.value=10**4399
+        self.assertEqual(len(retained.snapshot(owner)[0]),64)
 
     def test_unsupported_snapshot_is_never_an_unchanged_store(self):
-        cyclic={}
-        cyclic['cycle']=cyclic
-        with self.assertRaisesRegex(TypeError,'cyclic'):
-            retained.freeze(cyclic)
+        class Opaque:
+            def __reduce__(self):
+                raise AssertionError('custom serialization must not execute')
+        with self.assertRaisesRegex(TypeError,'unsupported'):
+            retained.supported_store({'opaque':Opaque()})
+
+    def test_forged_upstream_flip_cannot_hide_another_owner_refusal(self):
+        schema={'properties':{'x':{'type':'string','minLength':1,'pattern':'.+'}}}
+        case={'keyword':'minLength','schema_path':'/properties/x/minLength','instance_path':'/x',
+              'replacement':'','member':None,'single_clause_flip':True,'restored':True}
+        self.assertFalse(atomic.reproduce_cut(schema,Draft202012Validator(schema),{'x':'ok'},case,Draft202012Validator))
+        del schema['properties']['x']['pattern']
+        self.assertTrue(atomic.reproduce_cut(schema,Draft202012Validator(schema),{'x':'ok'},case,Draft202012Validator))
+
+    def test_array_and_branch_occurrences_keep_integer_indices(self):
+        schema={'allOf':[{'properties':{'x':{'type':'array','items':{'type':'string','minLength':1}}}}]}
+        case={'keyword':'minLength','schema_path':'/allOf/0/properties/x/items/minLength',
+              'instance_path':'/x/0','replacement':'','member':None}
+        self.assertTrue(atomic.reproduce_cut(schema,Draft202012Validator(schema),{'x':['ok']},case,Draft202012Validator))
 
 
 if __name__ == '__main__':

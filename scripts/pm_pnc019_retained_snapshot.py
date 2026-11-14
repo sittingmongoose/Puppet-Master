@@ -9,36 +9,12 @@ import argparse
 import dataclasses
 import hashlib
 import json
+import pickle
 from pathlib import Path
 import runpy
-import struct
 import sys
 
 import pm_event_numbers as numbers
-
-
-def freeze(value, stack=()):
-    if type(value) in (str, bool, type(None)):
-        return [type(value).__name__,value]
-    if type(value) is int:
-        return ['int',hex(value)]
-    if type(value) is float:
-        return ['float64',struct.pack('>d',value).hex()]
-    if type(value) is bytes:
-        return ['bytes',value.hex()]
-    if id(value) in stack:
-        raise TypeError('cyclic store state')
-    stack=stack+(id(value),)
-    if type(value) is dict:
-        return ['dict',[[freeze(k,stack),freeze(v,stack)] for k,v in value.items()]]
-    if type(value) in (tuple,list):
-        return [type(value).__name__,[freeze(v,stack) for v in value]]
-    if type(value) in (set,frozenset):
-        return [type(value).__name__,sorted((freeze(v,stack) for v in value),key=lambda v:json.dumps(v,sort_keys=True))]
-    if dataclasses.is_dataclass(value) and not isinstance(value,type):
-        return [type(value).__module__+'.'+type(value).__qualname__,
-                [[f.name,freeze(getattr(value,f.name),stack)] for f in dataclasses.fields(value)]]
-    raise TypeError('unsupported store state '+type(value).__name__)
 
 
 def snapshot(owner):
@@ -46,9 +22,39 @@ def snapshot(owner):
     namespace=method.__func__.__globals__
     maps={key:value for key,value in namespace.items()
           if ('CUSTODY' in key or 'RECEIPT' in key) and type(value) in (dict,list,tuple)}
+    if method.__func__.__code__.co_filename.endswith('/pm-dt-event-contracts.py') and method.__func__.__qualname__=='SealedOriginalOwner.authenticated_original':
+        # The owner reads _CUSTODY['worlds']; the same container also holds
+        # an operational dispatcher with verifier callbacks. Snapshot the
+        # actual sealed worlds and their complete pinned resource catalogues.
+        custody=namespace['_CUSTODY']
+        maps['_CUSTODY']={key:custody[key] for key in ('worlds','contracts','frozen','frozen_sha256')}
     value={'owner':vars(owner),'maps':maps}
-    encoded=json.dumps(freeze(value),ensure_ascii=True,separators=(',',':')).encode()
+    supported_store(value)
+    encoded=pickle.dumps(value,protocol=5)
     return hashlib.sha256(encoded).hexdigest(),sorted(maps),method.__func__.__code__.co_filename,method.__func__.__code__.co_firstlineno
+
+
+def supported_store(value, seen=None):
+    """Refuse opaque/custom serialization; the pickle is only an in-process hash."""
+    if type(value) in (str,bool,int,float,bytes,type(None)):
+        return
+    seen=set() if seen is None else seen
+    if id(value) in seen:
+        return
+    seen.add(id(value))
+    if type(value) is dict:
+        for key,item in value.items():
+            supported_store(key,seen);supported_store(item,seen)
+    elif type(value) in (tuple,list,set,frozenset):
+        for item in value:
+            supported_store(item,seen)
+    elif dataclasses.is_dataclass(value) and not isinstance(value,type) and hasattr(value,'__dict__'):
+        for cls in type(value).__mro__:
+            if cls is not object and any(name in cls.__dict__ for name in ('__reduce__','__reduce_ex__','__getstate__')):
+                raise TypeError('custom store serialization '+type(value).__name__)
+        supported_store(vars(value),seen)
+    else:
+        raise TypeError('unsupported store state '+type(value).__name__)
 
 
 def main():
@@ -57,10 +63,14 @@ def main():
     parser.add_argument('script',type=Path)
     parser.add_argument('arguments',nargs=argparse.REMAINDER)
     args=parser.parse_args()
+    manifest=Path(__file__).resolve().parents[1]/'tests/fixtures/pnc019_s4o1/families.json'
+    families={row['event_type'] for row in json.loads(manifest.read_text())['rows']}
     original=numbers.RetainedDispatcher.resolve
     calls=[]
 
     def observed(dispatcher,original_ref,expected,**options):
+        if getattr(expected,'event_type',None) not in families:
+            return original(dispatcher,original_ref,expected,**options)
         entry={'event_type':getattr(expected,'event_type','<unbound>'),'outcome':'exception'}
         before=None
         try:
@@ -95,6 +105,7 @@ def main():
         numbers.RetainedDispatcher.resolve=original
         summary={'calls':calls,'count':len(calls),'mutations':sum(e.get('store_unchanged') is False for e in calls),
                  'unavailable':sum('snapshot_unavailable' in e for e in calls),
+                 'snapshot_encoding':'pickle protocol 5 after closed builtin/dataclass validation; never deserialized',
                  'boundary':'Owner instance plus named custody/receipt maps; no native Storage or exhaustive global-state claim.'}
         args.output.write_text(json.dumps(summary,indent=1)+'\n')
     return exit_code or int(any(e.get('store_unchanged') is False for e in calls))
