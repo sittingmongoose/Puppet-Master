@@ -21,8 +21,9 @@
 //   gaps     no gap between animation frames over --set gap=34 ms in that span.
 // Logged per change: click -> first frame, its parts (the click's own task, the time to ready), the reveal's length,
 // its frames, its long tasks and its longest gap; NieR's own path (into or out of NieR, no View Transition) is logged,
-// not judged. Then one change under Reduced Motion: no View Transition starts, the theme is written in the click's own
-// task, and the chat's hooks and the after-layout callback run at once, as before (the hold is the reveal's only).
+// not judged. Then one change each under the system's Reduced Motion, the app's own Reduce motion (html[data-motion]) and
+// low-resource mode: no View Transition starts, the theme is written in the click's own task, and the chat's hooks and
+// the after-layout callback run at once, as before (the hold is the reveal's only).
 //
 // --set seq=<a,b,...>   the picks, families and modes (default friendly,retro,glass,nier,basic,light,glass,dark,friendly,basic:
 //                       all five looks and both modes, as lead tool lookchange.check.mjs made them)
@@ -124,15 +125,21 @@ async function surface(t, sandbox) {
 		await t.check(`${name}: no frame gap over ${GAP} ms in the reveal`, gaps.length === 0, `${gaps.length} of ${r.frames}: ${JSON.stringify(gaps.slice(0, 8))}`);
 	}
 	await t.check(`${tag}: at least six changes took the View Transition`, rows.filter((r) => r.vt).length >= 6, `${rows.filter((r) => r.vt).length} of ${rows.length}`);
-	// Reduced Motion: unchanged (no reveal, no hold)
-	await t.emulate({ reducedMotion: 'reduce' });
-	await f.waitForTimeout(600);
-	const rm = await pick((await f.evaluate(() => window.O55.theme().chosen)) === 'retro' ? 'friendly' : 'retro');
-	if (rm) {
-		t.log(`${tag}: Reduced Motion ${rm.from} -> ${rm.arg}: view transition ${JSON.stringify(rm.vt)}, written ${rm.write} ms, hooks ${JSON.stringify(rm.hook)}, after-layout ${JSON.stringify(rm.after)}`);
-		await t.check(`${tag}: Reduced Motion: no View Transition, the theme written at the click`, !rm.vt && rm.write != null && rm.write < 1000, `vt ${JSON.stringify(rm.vt)}, written ${rm.write} ms`);
-		await t.check(`${tag}: Reduced Motion: the chat's hooks and the after-layout callback run at once`, rm.hook.length > 0 && rm.hook[0] - rm.write < 1000 && rm.after.length > 0 && rm.after[0] - rm.write < 1000, `written ${rm.write}, hooks ${JSON.stringify(rm.hook)}, after-layout ${JSON.stringify(rm.after)}`);
-	}
+	// Reduced Motion (the system's, and the app's own switch, html[data-motion="reduced"]) and low-resource mode: unchanged
+	// (no reveal, no hold): each a change of its own
+	const instant = async (label, on, off) => {
+		await on(); await f.waitForTimeout(600);
+		const rm = await pick((await f.evaluate(() => window.O55.theme().chosen)) === 'retro' ? 'friendly' : 'retro');
+		await off(); await f.waitForTimeout(600);
+		if (!rm) return;
+		t.log(`${tag}: ${label} ${rm.from} -> ${rm.arg}: view transition ${JSON.stringify(rm.vt)}, written ${rm.write} ms, hooks ${JSON.stringify(rm.hook)}, after-layout ${JSON.stringify(rm.after)}`);
+		await t.check(`${tag}: ${label}: no View Transition, the theme written at the click`, !rm.vt && rm.write != null && rm.write < 1000, `vt ${JSON.stringify(rm.vt)}, written ${rm.write} ms`);
+		await t.check(`${tag}: ${label}: the chat's hooks and the after-layout callback run at once`, rm.hook.length > 0 && rm.hook[0] - rm.write < 1000 && rm.after.length > 0 && rm.after[0] - rm.write < 1000, `written ${rm.write}, hooks ${JSON.stringify(rm.hook)}, after-layout ${JSON.stringify(rm.after)}`);
+	};
+	await instant('Reduced Motion', () => t.emulate({ reducedMotion: 'reduce' }), () => t.emulate({ reducedMotion: 'no-preference' }));
+	await instant('in-app Reduce motion', () => f.evaluate(() => { const h = document.documentElement; h.__plcMotion = h.getAttribute('data-motion'); h.setAttribute('data-motion', 'reduced'); }),
+		() => f.evaluate(() => { const h = document.documentElement, was = h.__plcMotion; if (was == null) h.removeAttribute('data-motion'); else h.setAttribute('data-motion', was); }));
+	await instant('low-resource mode', () => f.evaluate(() => window.O55.motion.setLowResource(true, 'scenario')), () => f.evaluate(() => window.O55.motion.setLowResource(false, null)));
 	await t.emulate({ reducedMotion: 'no-preference' });
 }
 
