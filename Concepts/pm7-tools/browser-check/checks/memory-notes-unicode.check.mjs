@@ -14,6 +14,16 @@
 // 'café' then 'cafe', are both kept as distinct notes — the deliberate choice being that NFKC does not strip accents, so
 // an accented word and its unaccented spelling are different notes ( accents are identity, not noise ).
 // Fails main 87793bb7fd (the Japanese pair and the emoji pair); the FO-204 mark pairs fail 936910536c; passes the fix.
+// FO-205 (wonder-max-12h F-1/F-2/F-3, 2026-11-14): the duplicate key keeps symbols (\p{S}: currency, math, emoji)
+// beside \p{L}\p{M}\p{N}, and a dash (\p{Pd}) directly before a digit is read as a minus sign (U+2212) and kept.
+// By real Add clicks, on each surface, through the page AND the sheet:
+// (i) 'Budget is $500' then 'Budget is €500' are both kept; (ii) 'Offset is +5' then 'Offset is -5' are both kept,
+// and 'Offset is −5' (U+2212) afterwards keeps one copy of the minus note; (iii) 'Deploy on Friday 🚀' then
+// 'Deploy on Friday 🐢' are both kept; (iv) 'Port is 5433' then 'Port is 5434' are both kept (the digit guard,
+// which passes on main too); (v) '!!!' added twice and '🚀🚀' added twice each stay one row — an empty key is a
+// duplicate only of the very same trimmed NFKC text; (vi) with 'Café résumé' saved, a decomposed query ('cafe' plus
+// U+0301) and a full-width query ('ＣＡＦ'), typed with keyboard insertText, each find the note — search compares
+// NFKC + lowercase on both sides. Cases (i), (ii), (iii), (v), (vi) fail main 9bfa159274 and 9d225891b9; (iv) passes all.
 const WS = 'context-memory';
 const BODY = `[data-continuous-workspace-body="${WS}"]`;
 const JP1 = '回答は日本語でお願いします。';
@@ -30,6 +40,20 @@ const TH1 = 'ก่า';
 const TH2 = 'ก้า';
 const LAT1 = 'café';
 const LAT2 = 'cafe';
+const CUR1 = 'Budget is $500';
+const CUR2 = 'Budget is €500';
+const PLUS1 = 'Offset is +5';
+const MINUS1 = 'Offset is -5';
+const MINUS2 = 'Offset is \u22125';
+const SYM1 = 'Deploy on Friday 🚀';
+const SYM2 = 'Deploy on Friday 🐢';
+const PORT1 = 'Port is 5433';
+const PORT2 = 'Port is 5434';
+const PUNCT1 = '!!!';
+const EMO3 = '🚀🚀';
+const SEARCH1 = 'Café résumé';
+const Q_DECOMPOSED = 'cafe\u0301';
+const Q_FULLWIDTH = 'ＣＡＦ';
 
 async function settings(t, surface, [w, h] = [1390, 900]) {
 	await t.viewport(w, h);
@@ -180,6 +204,105 @@ async function workMarks(t, f, place, tag) {
 	await t.check(`${tag}: the unaccented spelling is kept as its own note — NFKC does not strip accents (twelve notes)`, has(r, LAT1) && has(r, LAT2) && r.texts.length === 12 && (place === 'sheet' || r.count === '12 notes'), JSON.stringify(r));
 }
 
+// FO-205 (i)-(iii): notes that differ only in a symbol keep their own identity, in one place (page or sheet).
+// A dash directly before a digit is a minus sign, so the ASCII-hyphen and U+2212 spellings of the same minus
+// note are one note, while the plus and minus notes are two.
+async function workSymbols(t, f, place, tag) {
+	let r = await read(f, place);
+	await t.check(`${tag}: the saved notes start from the six seeded ones`, r && r.texts.length === 6, JSON.stringify(r));
+
+	// (i) two notes that differ only in their currency symbol: both are kept
+	await add(t, f, place, CUR1);
+	r = await read(f, place);
+	await t.check(`${tag}: (i) the first currency note is saved (seven notes)`, has(r, CUR1) && r.texts.length === 7, JSON.stringify(r));
+	await add(t, f, place, CUR2);
+	r = await read(f, place);
+	await t.check(`${tag}: (i) the note with the other currency symbol is kept beside the first (eight notes)`, has(r, CUR1) && has(r, CUR2) && r.texts.length === 8 && (place === 'sheet' || r.count === '8 notes'), JSON.stringify(r));
+
+	// (ii) the plus and minus notes are distinct; the same minus written with U+2212 keeps one copy
+	await add(t, f, place, PLUS1);
+	r = await read(f, place);
+	await t.check(`${tag}: (ii) the plus note is saved (nine notes)`, has(r, PLUS1) && r.texts.length === 9, JSON.stringify(r));
+	await add(t, f, place, MINUS1);
+	r = await read(f, place);
+	await t.check(`${tag}: (ii) the minus note is kept beside the plus note (ten notes)`, has(r, PLUS1) && has(r, MINUS1) && r.texts.length === 10, JSON.stringify(r));
+	await add(t, f, place, MINUS2);
+	r = await read(f, place);
+	await t.check(`${tag}: (ii) the minus note written with U+2212 keeps one copy of the minus note (still ten notes)`, has(r, PLUS1) && times(r, MINUS1) === 1 && !has(r, MINUS2) && r.texts.length === 10 && (place === 'sheet' || r.count === '10 notes'), JSON.stringify(r));
+
+	// (iii) two notes that differ only in their emoji: both are kept
+	await add(t, f, place, SYM1);
+	r = await read(f, place);
+	await t.check(`${tag}: (iii) the first emoji note is saved (eleven notes)`, has(r, SYM1) && r.texts.length === 11, JSON.stringify(r));
+	await add(t, f, place, SYM2);
+	r = await read(f, place);
+	await t.check(`${tag}: (iii) the note with the other emoji is kept beside the first (twelve notes)`, has(r, SYM1) && has(r, SYM2) && r.texts.length === 12 && (place === 'sheet' || r.count === '12 notes'), JSON.stringify(r));
+}
+
+// FO-205 (iv): the digit guard — the key keeps numbers, so two notes that differ only in a digit are both kept.
+async function workDigits(t, f, place, tag) {
+	let r = await read(f, place);
+	await t.check(`${tag}: the saved notes start from the six seeded ones`, r && r.texts.length === 6, JSON.stringify(r));
+	await add(t, f, place, PORT1);
+	r = await read(f, place);
+	await t.check(`${tag}: (iv) the first port note is saved (seven notes)`, has(r, PORT1) && r.texts.length === 7, JSON.stringify(r));
+	await add(t, f, place, PORT2);
+	r = await read(f, place);
+	await t.check(`${tag}: (iv) the note with the other port number is kept beside the first (eight notes)`, has(r, PORT1) && has(r, PORT2) && r.texts.length === 8 && (place === 'sheet' || r.count === '8 notes'), JSON.stringify(r));
+}
+
+// FO-205 (v): an empty key is a duplicate only of the very same trimmed NFKC text, so identical punctuation-only
+// or emoji-only notes stay one row instead of multiplying.
+async function workEmptyKey(t, f, place, tag) {
+	let r = await read(f, place);
+	await t.check(`${tag}: the saved notes start from the six seeded ones`, r && r.texts.length === 6, JSON.stringify(r));
+
+	await add(t, f, place, PUNCT1);
+	r = await read(f, place);
+	await t.check(`${tag}: (v) a punctuation-only note is saved (seven notes)`, has(r, PUNCT1) && times(r, PUNCT1) === 1 && r.texts.length === 7, JSON.stringify(r));
+	await add(t, f, place, PUNCT1);
+	let toasts = await f.evaluate(TOASTS);
+	await t.page.waitForTimeout(700);
+	toasts = [...new Set([...toasts, ...(await f.evaluate(TOASTS))])];
+	r = await read(f, place);
+	await t.check(`${tag}: (v) the same punctuation-only note again keeps one copy (still seven notes)`, times(r, PUNCT1) === 1 && r.texts.length === 7 && (place === 'sheet' || r.count === '7 notes'), JSON.stringify(r));
+	await t.check(`${tag}: (v) the duplicate punctuation-only add answers with the existing “Memory added” notice`, toasts.includes('Memory added'), JSON.stringify(toasts));
+
+	await add(t, f, place, EMO3);
+	r = await read(f, place);
+	await t.check(`${tag}: (v) an emoji-only note is saved beside it (eight notes)`, has(r, PUNCT1) && has(r, EMO3) && r.texts.length === 8, JSON.stringify(r));
+	await add(t, f, place, EMO3);
+	r = await read(f, place);
+	await t.check(`${tag}: (v) the same emoji-only note again keeps one copy (still eight notes)`, times(r, EMO3) === 1 && has(r, PUNCT1) && r.texts.length === 8 && (place === 'sheet' || r.count === '8 notes'), JSON.stringify(r));
+}
+
+// FO-205 (vi): search compares NFKC + lowercase on both sides, so a decomposed or a full-width query finds a
+// composed note. The queries go in through the keyboard (insertText), as typed.
+async function workSearch(t, f, place, tag) {
+	let r = await read(f, place);
+	await t.check(`${tag}: the saved notes start from the six seeded ones`, r && r.texts.length === 6, JSON.stringify(r));
+	await add(t, f, place, SEARCH1);
+	r = await read(f, place);
+	await t.check(`${tag}: (vi) the accented note is saved (seven notes)`, has(r, SEARCH1) && r.texts.length === 7, JSON.stringify(r));
+
+	const box = f.locator(`${scope(place)} .mm-search input[type="search"]`).first();
+	await box.click();
+	await box.fill('');
+	await t.page.keyboard.insertText(Q_DECOMPOSED);
+	await t.page.waitForTimeout(350);
+	r = await read(f, place);
+	await t.check(`${tag}: (vi) a decomposed query (cafe + U+0301) finds the composed note (one row)`, has(r, SEARCH1) && r.texts.length === 1, JSON.stringify(r));
+	await box.fill('');
+	await t.page.waitForTimeout(300);
+	await box.click();
+	await t.page.keyboard.insertText(Q_FULLWIDTH);
+	await t.page.waitForTimeout(350);
+	r = await read(f, place);
+	await t.check(`${tag}: (vi) a full-width query (ＣＡＦ) finds the note (one row)`, has(r, SEARCH1) && r.texts.length === 1, JSON.stringify(r));
+	await box.fill('');
+	await t.page.waitForTimeout(300);
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	const T = (name, fn) => { tests[`${name} (${surface})`] = async (t) => { if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; } await fn(t); }; };
@@ -204,6 +327,54 @@ for (const surface of ['normal', 'sandbox']) {
 	T('FO-204 the chat’s Memory sheet keeps notes that differ only in combining marks', async (t) => {
 		const f = await sheet(t, surface);
 		await workMarks(t, f, 'sheet', 'the chat’s Memory sheet');
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(400);
+	});
+
+	T('FO-205 the Memory page keeps notes that differ only in a symbol', async (t) => {
+		const f = await settings(t, surface);
+		await workSymbols(t, f, 'page', 'Settings › Memory');
+	});
+
+	T('FO-205 the chat’s Memory sheet keeps notes that differ only in a symbol', async (t) => {
+		const f = await sheet(t, surface);
+		await workSymbols(t, f, 'sheet', 'the chat’s Memory sheet');
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(400);
+	});
+
+	T('FO-205 the Memory page keeps notes that differ only in a digit', async (t) => {
+		const f = await settings(t, surface);
+		await workDigits(t, f, 'page', 'Settings › Memory');
+	});
+
+	T('FO-205 the chat’s Memory sheet keeps notes that differ only in a digit', async (t) => {
+		const f = await sheet(t, surface);
+		await workDigits(t, f, 'sheet', 'the chat’s Memory sheet');
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(400);
+	});
+
+	T('FO-205 the Memory page keeps one row for identical empty-key notes', async (t) => {
+		const f = await settings(t, surface);
+		await workEmptyKey(t, f, 'page', 'Settings › Memory');
+	});
+
+	T('FO-205 the chat’s Memory sheet keeps one row for identical empty-key notes', async (t) => {
+		const f = await sheet(t, surface);
+		await workEmptyKey(t, f, 'sheet', 'the chat’s Memory sheet');
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(400);
+	});
+
+	T('FO-205 the Memory page search normalises the query', async (t) => {
+		const f = await settings(t, surface);
+		await workSearch(t, f, 'page', 'Settings › Memory');
+	});
+
+	T('FO-205 the chat’s Memory sheet search normalises the query', async (t) => {
+		const f = await sheet(t, surface);
+		await workSearch(t, f, 'sheet', 'the chat’s Memory sheet');
 		await t.page.keyboard.press('Escape');
 		await t.page.waitForTimeout(400);
 	});

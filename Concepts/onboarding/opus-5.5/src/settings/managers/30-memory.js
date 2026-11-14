@@ -53,13 +53,19 @@
   /* FO-198: a note's identity keeps the letters, marks and numbers of every script (NFKC, lowercase, \p{L}\p{M}\p{N});
      the old ASCII-only key emptied every non-ASCII note, so two distinct notes shared one key and the second was dropped.
      FO-204: the combining marks (\p{M}) stay too — vowel and tone marks are what tell Hindi 'सिर' from 'सुर' and Thai
-     'ก่า' from 'ก้า', and stripping them collapsed those pairs into one note. An empty key (emoji-only or
-     punctuation-only words) is never a duplicate. */
-  const norm = t => String(t || '').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{M}\p{N}]+/gu, ' ').trim();
+     'ก่า' from 'ก้า', and stripping them collapsed those pairs into one note.
+     FO-205: symbols (\p{S}: currency, math, emoji) stay as well, so '$500' and '€500', '+5' and '-5', 🚀 and 🐢 are
+     different notes; a dash (\p{Pd}) directly before a digit is read as a minus sign (U+2212) and kept, so '-5' and '−5'
+     are one note. Other punctuation still drops out, so ASCII duplicates that differ only in case or punctuation still
+     dedupe. An empty key (punctuation-only words) is a duplicate only of the very same trimmed NFKC text. */
+  const norm = t => String(t || '').normalize('NFKC').toLowerCase()
+    .replace(/\p{Pd}(?=\p{Nd})/gu, '\u2212')
+    .replace(/[^\p{L}\p{M}\p{N}\p{S}]+/gu, ' ').trim();
   function addNote(text, level) {
     const words = String(text || '').trim(); if (!words) return null;
     const key = norm(words);
-    const same = key ? notes().find(n => norm(n.text) === key) : null;
+    const same = key ? notes().find(n => norm(n.text) === key)
+      : notes().find(n => String(n.text || '').trim().normalize('NFKC') === words.normalize('NFKC'));
     if (same) { Object.assign(same, { level: level || same.level, archived: false, saved: 'Today' }); saveState(); return same; }
     const st = store(); const n = { id: 'u' + (++st.seq) + '-' + Date.now().toString(36), text: words, level: level === 'every' ? 'every' : 'project', saved: 'Today' };
     notes().unshift(n); saveState(); return n;
@@ -69,8 +75,8 @@
   const UI = { page: { q: '', level: 'all', arch: false }, sheet: { q: '', level: 'all', arch: false } };
   let flash = '', flashTimer = 0;
   function visible(place) {
-    const u = UI[place], q = u.q.trim().toLowerCase();
-    return notes().filter(n => (u.level === 'all' || n.level === u.level) && (!q || n.text.toLowerCase().includes(q)));
+    const u = UI[place], q = u.q.trim().normalize('NFKC').toLowerCase();
+    return notes().filter(n => (u.level === 'all' || n.level === u.level) && (!q || n.text.normalize('NFKC').toLowerCase().includes(q)));
   }
   function rowHtml(n, place) {
     return `<div class="mm-row${n.archived ? ' is-archived' : ''}${flash === n.id ? ' is-flash' : ''}" data-mm-note="${a(n.id)}">`
