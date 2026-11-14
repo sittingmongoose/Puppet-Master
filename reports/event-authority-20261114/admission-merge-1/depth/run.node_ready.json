@@ -1,0 +1,491 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-14.20",
+  "sha256": "a4f93c3342f44d5260f7224b676382ec34af4c7d1382d8f7f4371241c29c871b",
+  "family_count": 66,
+  "row_pointer": "#/families/65"
+ },
+ "base_commit": "3ddaccb0db313761b3a840a95172703d1b7b0c7e",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "run.node_ready",
+   "family_id": "event-family-run-node-ready",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-14.20 as #/families/65 (canonical row SHA-256 3bcf0dfef278fd225b5e77cfb975aaa49aec44c075c30995fe66d4c2e7445803); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/65",
+       "line_start": 4298,
+       "line_end": 4346,
+       "quote": "\"event_type\": \"run.node_ready\"",
+       "quote_line": 4301,
+       "file_sha256": "a4f93c3342f44d5260f7224b676382ec34af4c7d1382d8f7f4371241c29c871b",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Independent EP/CV/SP units govern the prepared exact family version.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-513",
+       "line_start": 35157,
+       "line_end": 35157,
+       "quote": "run.node_ready@1.0.0` uses the independently closed schema `Plans/event_payload_run_node_ready.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/run_node_ready/1.0.0",
+       "quote_check": "exact",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact emitter and dependency/body/append/receipt/publication ordering explicitly adopt SP-286 full-value v2 and current durability amendments.",
+     "evidence": [
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-223",
+       "line_start": 10678,
+       "line_end": 10678,
+       "quote": "Sequence is owner admission -> immutable dependency/body commit -> validate/append -> first receipt -> terminal publication and dependent dispatch. This exact family explicitly adopts SP-286",
+       "quote_check": "exact",
+       "file_sha256": "abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Separate exact-version closed root schema; current known enum domains are closed. Conditional owner/source constraints remain normative and are not all schema-only predicates.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-513",
+       "line_start": 35157,
+       "line_end": 35157,
+       "quote": "independently closed schema `Plans/event_payload_run_node_ready.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/run_node_ready/1.0.0`). It is a proposed payload ve",
+       "quote_check": "exact",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "EP-223 and SP-513 define this family's scope, hash preimage and source adapter. Complete original observations join immutable owner reads; F17 enforces primitive types at graph joins. Shared number/recipe adoption S-N1–S-N5 remains a sweep item.",
+     "evidence": [
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-223",
+       "line_start": 10701,
+       "line_end": 10701,
+       "quote": "Every payload field below has this independently bound source read. Dot paths name normalized observations of those owners, not new physical keys:",
+       "quote_check": "exact",
+       "file_sha256": "abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-223",
+       "line_start": 10726,
+       "line_end": 10726,
+       "quote": "The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, time",
+       "quote_check": "exact",
+       "file_sha256": "abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38961,
+       "line_end": 38961,
+       "quote": "For `run.node_ready` independently, select numeric and format rules from authenticated write-time Storage custody, per retained original and per stored source/dependency record. New writes a",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact family-local hash identity and same-identity digest conflict/replay rule; timestamp cannot mint a new identity.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38164,
+       "line_end": 38164,
+       "quote": "Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedup",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Case L-3 explicitly covers runtime/run/node/attempt; source anchor, caps and holds preserved. Existing generic index/checkpoint keep their policies.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38173,
+       "line_end": 38173,
+       "quote": "Source event retention_policy_ref = `{\"policy_id\": \"RP-RUNTIME-365D\", \"policy_version\": \"1.0.0\", \"registry_schema_id\": \"pm.storage_value_registry.v2\"}`. Case L-3 explicitly names Runtime/run",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact source/first-receipt custody, coherent backup/restore, linked body independence and fresh permission/deletion checks defined.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38175,
+       "line_end": 38175,
+       "quote": "Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coheren",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "EP-223 defines this family's exhaustive predecessor/discriminator/successor table, actual owner predicates, post-state revision/sequence and admission/dependency/body/append/first-receipt/CAS/publication barrier; static cases check the table and rejection fences.",
+     "evidence": [
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-223",
+       "line_start": 12029,
+       "line_end": 12029,
+       "quote": "The lifecycle table for `run.node_ready` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionall",
+       "quote_check": "exact",
+       "file_sha256": "abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-223",
+       "line_start": 12039,
+       "line_end": 12039,
+       "quote": "Ordering barrier for `run.node_ready`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/d",
+       "quote_check": "exact",
+       "file_sha256": "abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact read-only operating consumer explicitly adopts SP-278 using existing generic projector/checkpoint/schema, actual current frontier/CAS and nine-field token; no new stored value.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38949,
+       "line_end": 38949,
+       "quote": "The exact operating consumer is `executor.run_node_ready.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopt",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Own exact-version/alias dispatch and writer cutoff, original operation reconciliation, token invalidation and source-backed successor rebuild defined.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38957,
+       "line_end": 38957,
+       "quote": "Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.run_node_r",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38961,
+       "line_end": 38961,
+       "quote": "For `run.node_ready` independently, select numeric and format rules from authenticated write-time Storage custody, per retained original and per stored source/dependency record. New writes a",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38164,
+       "line_end": 38164,
+       "quote": "Before admission, dedupe lookup, receipt return or any effect, reject projector_replay_only as replay_only_not_appendable and reject any other policy for this current writer.",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38946,
+       "line_end": 38946,
+       "quote": "For `run.node_ready` independently, adopt EventRecord and SP-337 before append: the uncompressed canonical MessagePack logical body (SP-1100 `pm.seglog_frame_v2.event_value.canonical_msgpack.v1`) may ",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-513",
+       "line_start": 35159,
+       "line_end": 35159,
+       "quote": "For `run.node_ready` independently, every timestamp (including nested score observations) must consume its entire RFC3339 UTC string through the final Z,",
+       "quote_check": "exact",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38175,
+       "line_end": 38175,
+       "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime.",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "scripts/pm_executor_event_semantics.py",
+       "unit": "canonical",
+       "line_start": 402,
+       "line_end": 402,
+       "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None",
+       "quote_check": "exact",
+       "file_sha256": "5c0f93f2cbe23a80c35327efe8e729a42f8a472d5cb54d73f44a5e84a364081b"
+      },
+      {
+       "path": "Plans/executor_event_type_fixtures.json",
+       "unit": "#/families/run.node_ready",
+       "line_start": 44392,
+       "line_end": 44392,
+       "quote": "\"case\": \"F14-inline-sequence-boolean-true\"",
+       "quote_check": "exact",
+       "file_sha256": "e431e1b5250015f5eee97a455846b207b563f76c2f9cc608037f33ef8af5988c"
+      },
+      {
+       "path": "Plans/executor_event_semantic_fixtures.json",
+       "unit": "#/families/run.node_ready",
+       "line_start": 380268,
+       "line_end": 380268,
+       "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\"",
+       "quote_check": "exact",
+       "file_sha256": "3285863095dd8db7b57394e8540d823cdeecef82b5d181022fba96a17cbd6b01"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38961,
+       "line_end": 38961,
+       "quote": "For `run.node_ready` independently, select numeric and format rules from authenticated write-time Storage custody, per retained original and per stored source/dependency record. New writes a",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "scripts/pm_executor_table_post_effects.py",
+       "unit": "validate_capture",
+       "line_start": 53,
+       "line_end": 53,
+       "quote": "g.Guard('EF07_effects_equal'",
+       "quote_check": "exact",
+       "file_sha256": "e5e1b492bea22cadf7a108ffa5bf9733e0a0b054b87b34935caf9131d0cb4d3b"
+      },
+      {
+       "path": "Plans/executor_event_type_fixtures.json",
+       "unit": "#/families/run.node_ready",
+       "line_start": 46683,
+       "line_end": 46683,
+       "quote": "\"case\": \"F17-effect-worker_dispatches-boolean\"",
+       "quote_check": "exact",
+       "file_sha256": "e431e1b5250015f5eee97a455846b207b563f76c2f9cc608037f33ef8af5988c"
+      },
+      {
+       "path": "scripts/pm_executor_table_workgraph_id.py",
+       "unit": "validate_workgraph_id",
+       "quote": "g.Guard('WG01_string_type'",
+       "line_start": 27,
+       "line_end": 27,
+       "quote_check": "exact",
+       "file_sha256": "6ead6b9021e7bc2122c608212872fc238ef91d9b82893b0ec62f60acfc3d2afb"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-256",
+       "line_start": 9942,
+       "line_end": 9942,
+       "quote": "`run.node_ready` sweep acceptance independently runs every refusal of the DX checkers for this family through named rows of the Method B guard tables (`scripts/pm_executor_table_*.",
+       "quote_check": "exact",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-513",
+       "line_start": 38181,
+       "line_end": 38181,
+       "quote": "writes and current identity inputs use `executor-jcs-binary64-v1`: RFC8785 bytes qualified under CV-1100 (each integer's binary64 value and its emitted JCS decimal must both equal the original integer",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "scripts/pm_executor_event_semantics.py",
+       "unit": "refuse",
+       "line_start": 123,
+       "line_end": 123,
+       "quote": "def refuse(phase, facts, suffix='', message=None):",
+       "quote_check": "exact",
+       "file_sha256": "5c0f93f2cbe23a80c35327efe8e729a42f8a472d5cb54d73f44a5e84a364081b"
+      },
+      {
+       "path": "scripts/pm_executor_event_semantics.py",
+       "unit": "_validate_history",
+       "line_start": 1227,
+       "line_end": 1227,
+       "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)",
+       "quote_check": "exact",
+       "file_sha256": "5c0f93f2cbe23a80c35327efe8e729a42f8a472d5cb54d73f44a5e84a364081b"
+      },
+      {
+       "path": "scripts/pm_executor_event_semantics.py",
+       "unit": "validate_capture",
+       "line_start": 833,
+       "line_end": 833,
+       "quote": "admit_integer_slots(contract['schema_ref'], payload)",
+       "quote_check": "exact",
+       "file_sha256": "5c0f93f2cbe23a80c35327efe8e729a42f8a472d5cb54d73f44a5e84a364081b"
+      },
+      {
+       "path": "scripts/pm_executor_event_semantics.py",
+       "unit": "instant",
+       "line_start": 709,
+       "line_end": 709,
+       "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',",
+       "quote_check": "exact",
+       "file_sha256": "5c0f93f2cbe23a80c35327efe8e729a42f8a472d5cb54d73f44a5e84a364081b"
+      },
+      {
+       "path": "scripts/pm_executor_event_semantics.py",
+       "unit": "shared_date_time_refusal",
+       "line_start": 526,
+       "line_end": 526,
+       "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)",
+       "quote_check": "exact",
+       "file_sha256": "5c0f93f2cbe23a80c35327efe8e729a42f8a472d5cb54d73f44a5e84a364081b"
+      },
+      {
+       "path": "scripts/pm_executor_event_semantics.py",
+       "unit": "strict_format_checker",
+       "line_start": 508,
+       "line_end": 508,
+       "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))",
+       "quote_check": "exact",
+       "file_sha256": "5c0f93f2cbe23a80c35327efe8e729a42f8a472d5cb54d73f44a5e84a364081b"
+      },
+      {
+       "path": "scripts/pm_executor_event_semantics.py",
+       "unit": "frozen_verifier",
+       "line_start": 1167,
+       "line_end": 1167,
+       "quote": "with datetime_edition(version):",
+       "quote_check": "exact",
+       "file_sha256": "5c0f93f2cbe23a80c35327efe8e729a42f8a472d5cb54d73f44a5e84a364081b"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DX.self-grade.json",
+      "sha256": "e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
