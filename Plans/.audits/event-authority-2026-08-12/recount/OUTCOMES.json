@@ -162,6 +162,10 @@
   {
    "event_type": "forge.mirror.status_changed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.sync_completed",
+   "outcome": "registered"
   }
  ]
 }
