@@ -32,17 +32,28 @@ def custody_original_segment_ref(value, context):
     return None
 
 
+def custody_receipt_number(value, context):
+    record = value['custody_receipt_number']
+    if record['applies'] is not True:
+        return None
+    if record['value'] != []:
+        return 'custody_receipt_number'
+    return None
+
+
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('storage_instance_binding', g.Invariant('/storage_record/storage_instance_id', 'the independently issued Storage context matches the source partition'), 'storage_instance_binding', storage_instance_binding),
         g.Guard('custody_group_digest', g.Invariant('/custody/group_digest', 'equals the independently issued Storage custody field'), 'custody_group_digest', custody_group_digest),
         g.Guard('custody_original_segment_ref', g.Invariant('/custody/original_segment_ref', 'equals the independently issued Storage custody field'), 'custody_original_segment_ref', custody_original_segment_ref),
+        g.Guard('custody_receipt_number', g.Invariant('/custody/first_append_receipt', 'every copied first-receipt integer uses the shared exact uint64 profile'), 'custody_receipt_number', custody_receipt_number),
     ])
 
     def check(value):
         table.require('storage_instance_binding', value, context)
         table.require('custody_group_digest', value, context)
         table.require('custody_original_segment_ref', value, context)
+        table.require('custody_receipt_number', value, context)
         return True
     return g.Case(table, check, context)

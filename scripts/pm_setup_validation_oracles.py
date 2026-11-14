@@ -213,6 +213,8 @@ for _field in MIGRATION_FIELDS:
 add('storage_instance_binding', 'equal', '/storage_record/storage_instance_id', 'the independently issued Storage context matches the source partition')
 for _field in ('group_digest', 'original_segment_ref'):
     add('custody_' + _field, 'equal', '/custody/' + _field, 'equals the independently issued Storage custody field')
+add('custody_receipt_number', 'empty', '/custody/first_append_receipt',
+    'every copied first-receipt integer uses the shared exact uint64 profile')
 
 TABLES = tuple(f'{i:03d}' for i in range((len(ROWS) + 7) // 8))
 TABLE_ROWS = {table: ROWS[int(table) * 8:(int(table) + 1) * 8] for table in TABLES}
@@ -633,6 +635,11 @@ def views(case, boundary=None):
     put('custody_schema', value=custody_errors)
     if custody_errors:
         return result
+    custody_numbers = [r for k in UINT_FIELDS
+                       if (r := reason(storage_uint64, case['custody']['first_append_receipt'][k]))]
+    put('custody_receipt_number', value=custody_numbers)
+    if custody_numbers:
+        return result
     expected = expected_custody(case)
     for field in ('storage_instance_id', 'event_id', 'scope_partition', 'event_type', 'idempotency_key',
                   'producer_semantic_digest', 'first_append_receipt', 'original_event_value_commitment'):
@@ -892,6 +899,11 @@ def all_cases():
         add_negative('receipt-unknown-field', 'receipt_schema', lambda c: c['receipt'].update(unknown_field=True))
         add_negative('receipt-integral-float', 'receipt_number', lambda c: c['receipt'].update(sequence_id=41.0))
         add_negative('custody-unknown-field', 'custody_schema', lambda c: c['custody'].update(unknown_field=True))
+        for field in UINT_FIELDS:
+            def change(c, field=field):
+                receipt = c['custody']['first_append_receipt']
+                receipt[field] = float(receipt[field])
+            add_negative('custody-receipt-integral-float-' + field, 'custody_receipt_number', change)
         add_negative('foreign-storage-bytes', 'storage_value', lambda c: c['storage_record'].update(value_hex='00'))
         add_negative('foreign-storage-instance','storage_instance_binding',
                      lambda c:c['storage_record'].update(storage_instance_id='22222222-2222-4222-8222-222222222222'))

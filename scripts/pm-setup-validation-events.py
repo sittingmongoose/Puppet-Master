@@ -236,6 +236,15 @@ def extra_checks():
             c=copy.deepcopy(base);c['payload'][field]+='\n'
             record(family+':trailing-LF-'+field,W.evaluate(c)[0],[(f'payload_{field}_pattern',f'payload_{field}_pattern')])
         forms=('false','0',False,None,[],{'nested':1})
+        for field in W.UINT_FIELDS:
+            for index,value in enumerate(forms):
+                c=copy.deepcopy(base);c['custody']['first_append_receipt'][field]=copy.deepcopy(value)
+                record(family+f':nested-custody-type-{field}-{index}',W.evaluate(c)[0],[('custody_schema','custody_schema')])
+            c=copy.deepcopy(base)
+            custody=copy.deepcopy(base['custody'])
+            custody['first_append_receipt'][field]=float(custody['first_append_receipt'][field])
+            c['sealed_store'][0]['receipt_hex']=W.pack(custody).hex();c['boundary']='retained'
+            record(family+':frozen-nested-custody-number-'+field,W.evaluate(c)[0],[('retained_dispatch','retained_dispatch')])
         for where,field,code in [('payload','occurrence','payload_occurrence_type'),
                                  ('event','sequence_id','event_schema'),
                                  ('event','producer_sequence_id','event_schema'),
