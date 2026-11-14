@@ -18,6 +18,10 @@
   {
    "event_type": "assistant_plan.build_started",
    "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.cancelled",
+   "outcome": "registered"
   }
  ]
 }
