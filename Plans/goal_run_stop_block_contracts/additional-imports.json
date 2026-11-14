@@ -152,5 +152,203 @@
     "target": "https://puppetmaster.local/proposals/stop_block.v1/native/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
     "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
     "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/receipt/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/dispatch/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/changes/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/tests/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/auditor/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/auditor_cycles/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/source_control/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/finalization/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/validators/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/repairs/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "from_location": "/$defs/OriginalCompletionInput/properties/promotions/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/receipt/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/dispatch/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/changes/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/tests/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/auditor/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/auditor_cycles/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/source_control/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/finalization/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/validators/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/repairs/items/$ref"
+  },
+  {
+    "realm": "cancelled_native_consumer",
+    "original_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+    "target": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/8f6e260e566eb311b91bcca7eb73d2fe39efed81e415c89f6e228fe623ce82fd.schema.json",
+    "path": "Plans/workflow_standard_source_contracts/inputs/Plans/plans_to_code_handoff.schema.json",
+    "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+    "from_resource": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+    "from_location": "/$defs/OriginalCompletionInput/properties/promotions/items/$ref"
   }
 ]
