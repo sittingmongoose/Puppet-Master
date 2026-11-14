@@ -54,6 +54,8 @@ REQUIRED_PNC019_SOURCE_HASH_PATHS = _pnc019_currentness.REQUIRED_PNC019_SOURCE_H
 pnc019_event_authority_clearance_failures = _pnc019_currentness.pnc019_event_authority_clearance_failures
 pnc019_event_authority_failures_for_registry = _pnc019_currentness.pnc019_event_authority_failures_for_registry
 pnc019_source_hash_failures = _pnc019_currentness.pnc019_source_hash_failures
+event_authority_checkpoint = _pnc019_currentness.event_authority_checkpoint
+event_authority_evidence_refs = _pnc019_currentness.event_authority_evidence_refs
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -5152,6 +5154,59 @@ def pnc019_case_l_preflight_source_failures() -> list[dict[str, Any]]:
     return failures
 
 
+def event_authority_edition_triad_checks() -> dict[str, bool]:
+    """Open, closed and tampered fixture editions through the governed helper.
+
+    The fixture mirrors the real paths in a temporary tree; the helper's real
+    clearance code runs on it unchanged. Only the expected refusal counts.
+    """
+    import shutil
+    import tempfile
+
+    scripts_dir = str(Path(__file__).resolve().parent)
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    import pm_event_authority_closure_fixture as fixture
+
+    residual_errors = {"event_denominator_unresolved", "event_family_contract_depth_unresolved"}
+
+    def clearance_errors(root: Path) -> set[str]:
+        return {
+            failure.get("error")
+            for failure in pnc019_event_authority_clearance_failures(root)
+        }
+
+    checks: dict[str, bool] = {}
+    with tempfile.TemporaryDirectory(prefix="pm-readiness-ea-triad-") as td:
+        base = Path(td)
+        open_root = base / "open"
+        closed_root = base / "closed"
+        fixture.build(open_root, _pnc019_currentness, closed=False)
+        fixture.build(closed_root, _pnc019_currentness, closed=True)
+        checks["event_authority_open_edition_keeps_both_residuals"] = clearance_errors(open_root) == residual_errors
+        checks["event_authority_closed_edition_clears_both_residuals"] = (
+            clearance_errors(closed_root) == set()
+            and event_authority_checkpoint(closed_root).denominator_status == "CLOSED"
+        )
+        for name in (
+            "cpu_row_reopened",
+            "depth_cell_partial",
+            "token_uncovered",
+            "continuity_cohort_mismatch",
+            "runtime_boundary_claimed",
+            "bound_input_drift",
+        ):
+            mutate, expected, _group = fixture.TAMPERS[name]
+            root = base / f"tamper-{name}"
+            shutil.copytree(closed_root, root)
+            mutate(root, _pnc019_currentness)
+            found = clearance_errors(root)
+            checks[f"event_authority_tampered_{name}_edition_fails_closed"] = (
+                expected in found and residual_errors <= found
+            )
+    return checks
+
+
 def case_l_non_event_materialization_failures() -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     required_json = [
@@ -5689,7 +5744,11 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
         path_label="self-test:event-family-registry-residual",
         include_residuals=True,
     )
-    checks["event_denominator_residual_remains_fail_closed"] = any(
+    # The live residuals follow the installed edition: present while it is open,
+    # absent only once a CLOSED edition re-verifies (PNC-019 S7). The open /
+    # closed / tampered triads below prove each direction on fixture editions.
+    live_checkpoint = event_authority_checkpoint(ROOT)
+    live_denominator_residual = any(
         failure.get("error") == "event_denominator_unresolved"
         and failure.get("registered_kernel_rows") == EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT
         and failure.get("quarantined_row_count") == 252
@@ -5703,12 +5762,19 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
         == "unknown_or_unregistered_event_types_quarantine_without_checkpoint_advance"
         for failure in residual_failures
     )
-    checks["event_contract_depth_residual_remains_fail_closed"] = any(
+    live_depth_residual = any(
         failure.get("error") == "event_family_contract_depth_unresolved"
         and failure.get("registered_kernel_rows") == EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT
         and failure.get("contract_depth_complete") is False
         for failure in residual_failures
     )
+    checks["event_denominator_residual_tracks_live_edition"] = (
+        live_denominator_residual is not live_checkpoint.complete_denominator_known
+    )
+    checks["event_contract_depth_residual_tracks_live_edition"] = (
+        live_depth_residual is not live_checkpoint.contract_depth_complete
+    )
+    checks.update(event_authority_edition_triad_checks())
     missing_event_row = clone(event_registry)
     missing_event_row["families"] = [
         row for row in missing_event_row["families"] if row.get("event_type") != "run.started"
@@ -9979,6 +10045,9 @@ def cmd_validate_case_l(args: argparse.Namespace) -> int:
         )
     except Exception:
         pass
+    # The boundary reports the installed edition's re-verified state, never a literal.
+    event_checkpoint = event_authority_checkpoint(ROOT)
+    event_closed = event_checkpoint.complete_denominator_known and event_checkpoint.contract_depth_complete
     report = {
         "schema_id": "pm.implementation_readiness.case_l_non_event_validation_report.v1",
         "generated_at_utc": utc_now(),
@@ -9988,13 +10057,17 @@ def cmd_validate_case_l(args: argparse.Namespace) -> int:
         "event_authority_boundary": {
             "registered_kernel_rows": EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT,
             "quarantined_row_count": EVENT_FAMILY_QUARANTINED_ROW_COUNT,
-            "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
+            "denominator_status": event_checkpoint.denominator_status,
             "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
-            "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,
-            "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
-            "complete_denominator_known": False,
-            "contract_depth_complete": False,
-            "disposition": "excluded_from_this_non_event_pass_and_still_fail_closed",
+            "evidence_currentness": event_checkpoint.evidence_currentness,
+            "evidence_refs": event_authority_evidence_refs(event_checkpoint),
+            "complete_denominator_known": event_checkpoint.complete_denominator_known,
+            "contract_depth_complete": event_checkpoint.contract_depth_complete,
+            "disposition": (
+                "excluded_from_this_non_event_pass_event_authority_closed_by_reverified_edition"
+                if event_closed
+                else "excluded_from_this_non_event_pass_and_still_fail_closed"
+            ),
         },
         "claim_boundary": "Static non-event materialization validation only; not runtime, certification, buildability, governance, or Case L closure.",
     }
