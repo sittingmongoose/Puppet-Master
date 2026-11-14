@@ -1,0 +1,483 @@
+{
+  "lane": "s4x",
+  "base_commit": "090bafbbe9ee2184b64b3d61d153ad58eafc3413",
+  "existing_decisions_only": true,
+  "new_ids": [],
+  "union_sha256_before": "c5f28f3e295303b8b754d3ba0eddbb42d79c844622b980acf31cd0ed6323735d",
+  "union_write_rule": "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER_WRITE_RULE.md",
+  "parent_action": "Merge only these nine rows into canonical individual-disposition/LEDGER.jsonl, preserving all other rows and immutable cohort/bucket pins. Memory rows wait for surviving family admission per PNC019-SCOPE section 6 S4.",
+  "memory_contract": {
+    "semantic_owner": "Plans/assistant-memory-subsystem.md#AMS-130",
+    "identity_replay_withdrawal": "Plans/Contracts_V0.md#CV-785",
+    "storage": "Plans/storage-plan.md#SP-765",
+    "oracles": "Plans/Automated_Testing_System.md#ATS-380",
+    "registry_membership": "ABSENT",
+    "application_gate": "Apply memory exclusions after memory.gist_state_changed admission; this lane neither admits it nor claims 12/12 registered depth.",
+    "checker": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s4x/memory-contract.json",
+      "sha256": "ca4cde7669931a11e47553d418aab8df0f5041bc1fbe361d9b7f8ad3fb9f9653",
+      "status": "PASS",
+      "positives": 113,
+      "negatives": 3114,
+      "native_execution": "NOT_RUN",
+      "admission": "ABSENT"
+    }
+  },
+  "rows": [
+    {
+      "event_type": "browser.session.navigated",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "authority_ref": "Plans/Decision_Log.md#DL-405",
+      "reason": "Navigate/Reload keeps current URL and no session navigation history; Browser Program remains separately governed.",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_browser.session.navigated.json",
+      "row_before_sha256": "4b2b87dedce0df4dde01b2a3280aa0f7291d87b3615a6767f7b58dccf5d287f1",
+      "row_after_sha256": "a390ba7f0f15bc3ee048ba4bcf0d9635f7bb419925c97f41cc2a43d33ef45853",
+      "union_before_disposition": "KEEP_QUARANTINED",
+      "plans_citations": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 4550,
+          "line_end": 4550,
+          "sha256": "9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f",
+          "quote": "### DL-405: Manual Browser sessions name their workspace without duplicate history"
+        },
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "line_start": 16141,
+          "line_end": 16141,
+          "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+          "quote": "53-name census. browser.session.navigated and browser.session.resized are retired; Navigate/Reload retain their"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 17618,
+          "line_end": 17618,
+          "sha256": "8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8",
+          "quote": "**Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided."
+        }
+      ],
+      "apply_after": null
+    },
+    {
+      "event_type": "browser.session.resized",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "authority_ref": "Plans/Decision_Log.md#DL-405",
+      "reason": "Viewport stays on the session record; resize does not create a session history event.",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_browser.session.resized.json",
+      "row_before_sha256": "f4c4517e3411144d460aad64da021bf090bd507eeb12d7b51bc3f61c586de24b",
+      "row_after_sha256": "8706306ab88e5b79f65205931df2b94751fe5a11931eb57cf31fe22544244001",
+      "union_before_disposition": "KEEP_QUARANTINED",
+      "plans_citations": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 4550,
+          "line_end": 4550,
+          "sha256": "9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f",
+          "quote": "### DL-405: Manual Browser sessions name their workspace without duplicate history"
+        },
+        {
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "line_start": 16141,
+          "line_end": 16141,
+          "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+          "quote": "53-name census. browser.session.navigated and browser.session.resized are retired; Navigate/Reload retain their"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 17618,
+          "line_end": 17618,
+          "sha256": "8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8",
+          "quote": "**Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided."
+        }
+      ],
+      "apply_after": null
+    },
+    {
+      "event_type": "memory.gist.verification_requested",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "authority_ref": "Plans/Decision_Log.md#DL-407",
+      "reason": "Verification request retains only its command result and creates zero history events.",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.verification_requested.json",
+      "row_before_sha256": "3315a3bebac9b0a7e0c66291c60c15a7062b0ecce1ed32774559d9a5e5362898",
+      "row_after_sha256": "aa83ffd9cbbe38e78caeda2af0f8f567ec52afa458770afdf2f4c3ed49937d43",
+      "union_before_disposition": "KEEP_QUARANTINED",
+      "plans_citations": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 4582,
+          "line_end": 4582,
+          "sha256": "9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f",
+          "quote": "### DL-407: Memory changes use one complete state-change contract"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4804,
+          "line_end": 4804,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "DL-407 retires memory.gist.verification_requested, memory.gist.verified, memory.gist.verification_failed, memory.gist.updated,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4788,
+          "line_end": 4788,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "RealMemoryProvider records one real successful MemoryGist change for each successful verify, edit, pin, unpin,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4796,
+          "line_end": 4796,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "exception; it does not invent a second verification rule. Requested verification and failed verification keep"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4888,
+          "line_end": 4888,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "changed_fields is exactly"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 17618,
+          "line_end": 17618,
+          "sha256": "8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8",
+          "quote": "**Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided."
+        }
+      ],
+      "apply_after": "memory.gist_state_changed admission"
+    },
+    {
+      "event_type": "memory.gist.verified",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "authority_ref": "Plans/Decision_Log.md#DL-407",
+      "reason": "Successful verification creates one surviving state-change event only for an actual canonical mutation.",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.verified.json",
+      "row_before_sha256": "25956c1c4a7256bc33bb140a83233bfc70c72d80eb29e2d331feced9e58c5fb1",
+      "row_after_sha256": "168800e175c5ddc65e35b516aff74cea75e0ac0ba09e751fdc982b03e175f546",
+      "union_before_disposition": "KEEP_QUARANTINED",
+      "plans_citations": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 4582,
+          "line_end": 4582,
+          "sha256": "9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f",
+          "quote": "### DL-407: Memory changes use one complete state-change contract"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4804,
+          "line_end": 4804,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "DL-407 retires memory.gist.verification_requested, memory.gist.verified, memory.gist.verification_failed, memory.gist.updated,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4788,
+          "line_end": 4788,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "RealMemoryProvider records one real successful MemoryGist change for each successful verify, edit, pin, unpin,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4796,
+          "line_end": 4796,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "exception; it does not invent a second verification rule. Requested verification and failed verification keep"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4888,
+          "line_end": 4888,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "changed_fields is exactly"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 17618,
+          "line_end": 17618,
+          "sha256": "8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8",
+          "quote": "**Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided."
+        }
+      ],
+      "apply_after": "memory.gist_state_changed admission"
+    },
+    {
+      "event_type": "memory.gist.verification_failed",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "authority_ref": "Plans/Decision_Log.md#DL-407",
+      "reason": "Failed verification retains only its command result and creates zero history events.",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.verification_failed.json",
+      "row_before_sha256": "118329a46b2778ca4e24675cfc4fda88c09c4f2d1c5264a2adeec2fc39d5bf8d",
+      "row_after_sha256": "20a7340e35466f8b64d9781cb91cea2df0159b4a5d623f7f6649608021ac19a4",
+      "union_before_disposition": "KEEP_QUARANTINED",
+      "plans_citations": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 4582,
+          "line_end": 4582,
+          "sha256": "9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f",
+          "quote": "### DL-407: Memory changes use one complete state-change contract"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4804,
+          "line_end": 4804,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "DL-407 retires memory.gist.verification_requested, memory.gist.verified, memory.gist.verification_failed, memory.gist.updated,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4788,
+          "line_end": 4788,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "RealMemoryProvider records one real successful MemoryGist change for each successful verify, edit, pin, unpin,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4796,
+          "line_end": 4796,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "exception; it does not invent a second verification rule. Requested verification and failed verification keep"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4888,
+          "line_end": 4888,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "changed_fields is exactly"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 17618,
+          "line_end": 17618,
+          "sha256": "8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8",
+          "quote": "**Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided."
+        }
+      ],
+      "apply_after": "memory.gist_state_changed admission"
+    },
+    {
+      "event_type": "memory.gist.updated",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "authority_ref": "Plans/Decision_Log.md#DL-407",
+      "reason": "Successful edit or automatic mutation creates one surviving event with the exact complete canonical delta.",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.updated.json",
+      "row_before_sha256": "da8e46d5dad0fd6e7c40fb3decbf23ed5c2ad4398159634eed298053fc630f17",
+      "row_after_sha256": "1a364855c815a16e08000a0d804e3de3020a8f6b4486c5101aedec3cfdc085f0",
+      "union_before_disposition": "KEEP_QUARANTINED",
+      "plans_citations": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 4582,
+          "line_end": 4582,
+          "sha256": "9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f",
+          "quote": "### DL-407: Memory changes use one complete state-change contract"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4804,
+          "line_end": 4804,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "DL-407 retires memory.gist.verification_requested, memory.gist.verified, memory.gist.verification_failed, memory.gist.updated,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4788,
+          "line_end": 4788,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "RealMemoryProvider records one real successful MemoryGist change for each successful verify, edit, pin, unpin,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4796,
+          "line_end": 4796,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "exception; it does not invent a second verification rule. Requested verification and failed verification keep"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4888,
+          "line_end": 4888,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "changed_fields is exactly"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 17618,
+          "line_end": 17618,
+          "sha256": "8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8",
+          "quote": "**Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided."
+        }
+      ],
+      "apply_after": "memory.gist_state_changed admission"
+    },
+    {
+      "event_type": "memory.gist.pinned",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "authority_ref": "Plans/Decision_Log.md#DL-407",
+      "reason": "A real false-to-true pin mutation creates one surviving state-change event.",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.pinned.json",
+      "row_before_sha256": "c9219e0ce4ddb81b422088d7913be259f52707f54579b1bef740f098149350f3",
+      "row_after_sha256": "5457be9c5d0cfb99ac437f3498127586da9b424a5102796d8482858d0773b90c",
+      "union_before_disposition": "KEEP_QUARANTINED",
+      "plans_citations": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 4582,
+          "line_end": 4582,
+          "sha256": "9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f",
+          "quote": "### DL-407: Memory changes use one complete state-change contract"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4804,
+          "line_end": 4804,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "DL-407 retires memory.gist.verification_requested, memory.gist.verified, memory.gist.verification_failed, memory.gist.updated,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4788,
+          "line_end": 4788,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "RealMemoryProvider records one real successful MemoryGist change for each successful verify, edit, pin, unpin,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4796,
+          "line_end": 4796,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "exception; it does not invent a second verification rule. Requested verification and failed verification keep"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4888,
+          "line_end": 4888,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "changed_fields is exactly"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 17618,
+          "line_end": 17618,
+          "sha256": "8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8",
+          "quote": "**Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided."
+        }
+      ],
+      "apply_after": "memory.gist_state_changed admission"
+    },
+    {
+      "event_type": "memory.gist.unpinned",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "authority_ref": "Plans/Decision_Log.md#DL-407",
+      "reason": "A real true-to-false unpin mutation creates one surviving state-change event.",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.unpinned.json",
+      "row_before_sha256": "fc76166dff00d3f5f5cc6b7f02303a1fbffe31f0487e0d6b0493242ceab6e061",
+      "row_after_sha256": "1b219fcb353ced662a7a8da3677c0a56441f314f39cdbd4057d10cc8e5364c0a",
+      "union_before_disposition": "KEEP_QUARANTINED",
+      "plans_citations": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 4582,
+          "line_end": 4582,
+          "sha256": "9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f",
+          "quote": "### DL-407: Memory changes use one complete state-change contract"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4804,
+          "line_end": 4804,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "DL-407 retires memory.gist.verification_requested, memory.gist.verified, memory.gist.verification_failed, memory.gist.updated,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4788,
+          "line_end": 4788,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "RealMemoryProvider records one real successful MemoryGist change for each successful verify, edit, pin, unpin,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4796,
+          "line_end": 4796,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "exception; it does not invent a second verification rule. Requested verification and failed verification keep"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4888,
+          "line_end": 4888,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "changed_fields is exactly"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 17618,
+          "line_end": 17618,
+          "sha256": "8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8",
+          "quote": "**Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided."
+        }
+      ],
+      "apply_after": "memory.gist_state_changed admission"
+    },
+    {
+      "event_type": "memory.gist.discarded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "authority_ref": "Plans/Decision_Log.md#DL-407",
+      "reason": "Discard changes verification_state to Discarded and creates one surviving state-change event.",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_memory.gist.discarded.json",
+      "row_before_sha256": "464c3d08097feb3787b506c00bff62fbd1b1b432f43653414da1ee2d72523388",
+      "row_after_sha256": "af937971d1de945ce6f55b5ffca25464470eb4249b8ee9fe6673b48dc8eb2ac0",
+      "union_before_disposition": "KEEP_QUARANTINED",
+      "plans_citations": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 4582,
+          "line_end": 4582,
+          "sha256": "9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f",
+          "quote": "### DL-407: Memory changes use one complete state-change contract"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4804,
+          "line_end": 4804,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "DL-407 retires memory.gist.verification_requested, memory.gist.verified, memory.gist.verification_failed, memory.gist.updated,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4788,
+          "line_end": 4788,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "RealMemoryProvider records one real successful MemoryGist change for each successful verify, edit, pin, unpin,"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4796,
+          "line_end": 4796,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "exception; it does not invent a second verification rule. Requested verification and failed verification keep"
+        },
+        {
+          "path": "Plans/assistant-memory-subsystem.md",
+          "line_start": 4888,
+          "line_end": 4888,
+          "sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911",
+          "quote": "changed_fields is exactly"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 17618,
+          "line_end": 17618,
+          "sha256": "8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8",
+          "quote": "**Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided."
+        }
+      ],
+      "apply_after": "memory.gist_state_changed admission"
+    }
+  ],
+  "local_ledger": "Plans/.audits/event-authority-2026-08-12/individual-disposition/deepen/PNC019-s4x/LEDGER.jsonl",
+  "local_ledger_sha256": "13c3671e550f860c4c16ae1fe64620fef103f5be0e370e9bf2903bd8446a6c40"
+}
