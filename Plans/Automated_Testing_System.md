@@ -14436,7 +14436,7 @@ context_scope: event_authority_pnc019_s3bo
 implementation_surfaces:
 - scripts/pm-s3bo-check.py
 - scripts/pm-s3bo-table-generate.py
-- scripts/pm_s3bo_table_*.py
+- scripts/pm_s3bo_oracles.py
 node_compile_hint:
   mode: contract_only
   create_worknodes: false

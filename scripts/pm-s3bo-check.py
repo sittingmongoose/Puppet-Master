@@ -134,6 +134,15 @@ def batteries(out):
              ('above_binary64',(1<<53)+1,None),('huge',w.loads_current_json('1'+'0'*4399),'physical_value')]
     for control in controls:
         base=control['value'];f=base['family']
+        if f in ('storage.deletion_lifecycle_changed','storage.value_quarantine_changed'):
+            field='ordinal' if f=='storage.deletion_lifecycle_changed' else 'occurrence'
+            row='deletion_ordinal' if field=='ordinal' else 'quarantine_occurrence'
+            inventory.append({'family':f,'field':['source',field],'number_call':'current_integer','bounds':{'minimum':1}})
+            for label,replacement,target in [('boolean',True,'integer_domain'),('huge',w.loads_current_json('1'+'0'*4399),row)]:
+                case=copy.deepcopy(base);case['source'][field]=replacement
+                errors,_=w.evaluate(case);expected=[(target,c.code(target))]
+                results.append({'family':f,'path':['source',field],'sample':label,'expected':expected,
+                                'actual':errors,'pass':errors==expected})
         for path,value,schema in w.integers(base['event']['payload'],w.schema_for(f)):
             inventory.append({'family':f,'field':['payload',*path],'number_call':'current_integer','bounds':{k:schema[k] for k in ('minimum','maximum') if k in schema}})
             for label,replacement,target in attacks:

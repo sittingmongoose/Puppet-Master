@@ -633,9 +633,24 @@ def operands(case):
     if type(case['receipt']) is not dict or not set(receipt_document['$defs']['AppendReceipt']['required']) <= case['receipt'].keys():
         put('receipt_schema',schema_errors(receipt_schema,case['receipt']))
         return v
-    source = case['source']; ids = identity(family, source, p)
+    source = case['source']
+    source_number_error=None;source_count_ready=True
+    if family=='storage.deletion_lifecycle_changed':
+        source_number_error=caught(current_integer,source['ordinal'],minimum=1)
+        source_count_ready=source_number_error is None and source['ordinal']==len(case['record_history'])+1
+    elif family=='storage.value_quarantine_changed':
+        source_number_error=caught(current_integer,source['occurrence'],minimum=1)
+        purged_count=sum(r.get('state')=='purged' and r.get('source_family_id')==source['source_family_id']
+                         and r.get('source_locator_ref')==source['source_locator_ref']
+                         and r.get('raw_sha256')==source['raw_sha256'] for r in case['record_history'])
+        source_count_ready=source_number_error is None and source['occurrence']==purged_count+1
+    # Do not stringify an unadmitted arbitrary-precision count. Native counts
+    # come from the complete original sequence; source admission owns a forged
+    # value before its decimal identity recipe is reached, without a digit cap.
+    ids = identity(family, source, p) if source_count_ready else {}
     numeric = [caught(current_integer, value, minimum=schema.get('minimum'), maximum=schema.get('maximum'))
                for _path, value, schema in integers(p, schema_for(family))]
+    if source_number_error:numeric.append(source_number_error)
     if 'auxiliary' in case:
         numeric += [caught(current_integer,value,minimum=schema.get('minimum'),maximum=schema.get('maximum'))
                     for _path,value,schema in integers(case['auxiliary']['value'],case['auxiliary']['schema'])]
@@ -663,7 +678,7 @@ def operands(case):
     put('scope_partition',case.get('scope_partition',partition(source['project_id'])),partition(source['project_id']))
     put('project_join',event['project_id'],source['project_id'])
     put('payload_project',p.get('project_id'),source['project_id'], 'project_id' in schema_for(family).get('properties',{}))
-    put('application_key',event['idempotency_key'],ids.get('idempotency_key'),family in ('storage.deletion_lifecycle_changed','storage.value_quarantine_changed','restore_point.applied'))
+    put('application_key',event['idempotency_key'],ids.get('idempotency_key'),bool(ids) and family in ('storage.deletion_lifecycle_changed','storage.value_quarantine_changed','restore_point.applied'))
     put('event_identity',event['event_id'],ids.get('event_id'),bool(ids))
     for key in ('deletion_id','quarantine_id','application_id'):
         if key in ids: put('subject_identity',p.get(key),ids[key])
@@ -720,9 +735,9 @@ def operands(case):
             if error:errors.append((path,error))
         put('auxiliary_time',errors)
     put('emitter',case['emitter'],EMITTERS[family],family in ('storage.deletion_lifecycle_changed','storage.value_quarantine_changed','restore_point.applied','restore_point.corrupt','safe_point.recovery_unavailable'))
-    put('deletion_ordinal',source['ordinal'],len(case['record_history'])+1,family=='storage.deletion_lifecycle_changed')
+    put('deletion_ordinal',source['ordinal'],len(case['record_history'])+1,family=='storage.deletion_lifecycle_changed' and source_number_error is None)
     purged=[r for r in case['record_history'] if r.get('state')=='purged' and r.get('source_family_id')==source['source_family_id'] and r.get('source_locator_ref')==source['source_locator_ref'] and r.get('raw_sha256')==source['raw_sha256']]
-    put('quarantine_occurrence',source['occurrence'],len(purged)+1,family=='storage.value_quarantine_changed')
+    put('quarantine_occurrence',source['occurrence'],len(purged)+1,family=='storage.value_quarantine_changed' and source_number_error is None)
     put('corrupt_terminal',case['terminal_commits'],[],family=='restore_point.corrupt')
     put('dedupe_available',case['retry_key'],list(case['dedupe_store']))
     prior=case['dedupe_store'].get(case['retry_key'])
@@ -757,7 +772,7 @@ def operands(case):
             if error:token_errors.append((path,error))
     put('token_numbers',token_errors)
     put('token_schema',schema_errors(token_schema,case['live_token']) if not token_errors else [],applies=not token_errors)
-    if 'quarantine_disposal' in case:
+    if 'quarantine_disposal' in case and source_count_ready:
         disposal=case['quarantine_disposal'];error=quarantine_resolution_error(case)
         event=disposal['resolution_event']
         if event is not None:

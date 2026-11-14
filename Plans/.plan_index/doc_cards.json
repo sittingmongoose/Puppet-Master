@@ -2110,7 +2110,7 @@
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_packet_audit_census.py",
         "scripts/pm_packet_audit_verdicts.py",
-        "scripts/pm_s3bo_table_*.py",
+        "scripts/pm_s3bo_oracles.py",
         "tests/fixtures/pm7_shared",
         "tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json",
         "tests/fixtures/usage_gui",
@@ -2410,7 +2410,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "0d7636438fddb1a705f38c84af0e13b87a06711ce28e4a299f9a64b035da676f",
+      "sha256": "951249a5c18103ffec316acb995c164c88ef033baf4a657386d8a69fd27a157e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 189,
@@ -24203,7 +24203,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-14T20:53:45Z",
+  "generated_at_utc": "2026-11-14T21:22:19Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
