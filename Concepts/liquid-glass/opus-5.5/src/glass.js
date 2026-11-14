@@ -1462,7 +1462,8 @@
        plate, which follows it 1:1: neither has a chip here. Settings' chapters and Usage's pages were here already. */
     { sel: '.pmw-strip', items: '.pmw-tab', many: true, kind: 'lens', active: '[data-active]', pad: 0, magRest: 1, mark: true, under: true,
       pick: function (strip) { return strip.hasAttribute('data-column') || strip.classList.contains('is-dragging') ? null : strip.querySelector('.pmw-tab[data-active]'); },
-      follow: function (strip) { return [strip]; } },
+      /* (and its tab list: a chosen tab grows when its close x shows, and under Reduce Motion nothing else syncs it) */
+      follow: function (strip) { return [strip, strip.querySelector(':scope > .pmw-tablist')]; } },
   ];
   /* the onboarding step rail's mark of a step: its bead and its word, those of them that are drawn; null when neither is */
   function railMark(i) { return unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); }
@@ -3257,8 +3258,10 @@
     /* the frost is drawn for one viewport: a resize mid-crossfade ends it */
     window.addEventListener('resize', function () { endFrostFade(); });
     /* data-col-top: the onboarding window's column, held at a top and centred again on a window resize, moves its tab strips
-       with no size changing (60-ui-core.js holdColumn); its layer is HOT, so their chips sync after that frame's layout (SW-25) */
-    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open', 'data-col-top'] });
+       with no size changing (60-ui-core.js holdColumn); its layer is HOT, so their chips sync after that frame's layout (SW-25).
+       data-active: Home's panel tabs mark the chosen tab with it alone (FO-197); under Reduce Motion nothing else synced
+       their chip, which stayed on the tab left in one press of five (Alexis, sandbox) */
+    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open', 'data-col-top', 'data-active'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { if (dragHeld()) { entries.forEach(function (en) { heldScopes.push(en.target); }); flushHeldSoon(); return; } entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     /* The title bar lays out the brand, the project box and then the page tabs, so whenever the box changes width (another
        project's name, a long name, its badge, the density fold) the tabs move, and the chosen tab's chip is this lens. On
