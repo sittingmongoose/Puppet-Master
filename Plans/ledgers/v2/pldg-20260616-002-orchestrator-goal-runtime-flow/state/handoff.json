@@ -7,12 +7,13 @@
     "Migration validation passes after governance-seal migration proof refresh.",
     "The later explicit governance seal refreshed generated governance artifacts where allowed; WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, production build tasks, final node queues, and implementation files were not created.",
     "2026-11-05: DL-336 and corr-0010 restore the five GRS-027 lost rules in active owner units and retire three old strategy spellings under coordinator resolution A1; independent review and degraded finish remain separate product questions.",
-    "2026-11-05: DL-337, DL-338 and corr-0011 record Jared's answers: independent review stays a free choice, on by default (atom-0055 risk-tier rule retired), and an exhausted repair budget stops blocked with an optional DL-081 exception request (atom-0049 token degraded retired)."
+    "2026-11-05: DL-337, DL-338 and corr-0011 record Jared's answers: independent review stays a free choice, on by default (atom-0055 risk-tier rule retired), and an exhausted repair budget stops blocked with an optional DL-081 exception request (atom-0049 token degraded retired).",
+    "2026-11-14: corr-0012 places atom-0017's seven exact tokens and the input/output contracts field mapping in PNC-012 (owner prose only; schema, fixture and gate companions pending), closing the closure re-audit outcomes at lines 1831, 1832, 1835 and 1837."
   ],
   "current_phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
   "cursor": {
     "last_decision_id": "dec-0029",
-    "last_event_id": "evt-0018",
+    "last_event_id": "evt-0019",
     "next_queue_id": null
   },
   "deferred_questions": [],
@@ -43,7 +44,7 @@
     "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/final_readiness_review_20260616.json"
   ],
   "schema_id": "pm.bootstrap_ledger_handoff.v1",
-  "updated_at_utc": "2026-11-05T17:10:37Z",
+  "updated_at_utc": "2026-11-14T13:17:44Z",
   "validation_state": {
     "forbidden_artifacts": "not_created",
     "governance_status": "sealed",
@@ -55,6 +56,6 @@
     "pm_plan_migration_validate": "pass_after_archive17_hash_refresh",
     "strict_canonical_plan_target": "Plans/Goal_Runtime_System.md",
     "pm_plan_index_generate": "pass_5354_planunits_19198_acceptance_units",
-    "pm_bootstrap_ledger_validate_summary": "104_atoms_18_events_1_compile_queue_item_3306_planunits_checked"
+    "pm_bootstrap_ledger_validate_summary": "104_atoms_19_events_2_compile_queue_items_3762_planunits_checked"
   }
 }
