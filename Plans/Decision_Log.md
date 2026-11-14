@@ -33309,3 +33309,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-537: Event Authority registers run.node_backoff_expired (admission merge 1)
+
+```yaml
+plan_unit_id: DL-537
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `run.node_backoff_expired` as family `event-family-run-node-backoff-expired` revision 1.0.0 in admission merge 1 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the families ready then are admitted in a first merge. `run.node_backoff_expired` is one of the rows DL-039 confirmed as persisted but unregistered and kept quarantined until its contract was complete; DL-414 requires every such row to reach its one outcome, and DL-039 authorized registering these rows family by family. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `run.node_backoff_expired`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-14.17 (63 families, SHA-256 861bbedac670bb8d9356a1fb461a12d7646bb6371eab6bbfc365411ed73e346a) to 2026-11-14.18 (64 families, SHA-256 e029e0876d99dd79b3046b62a22bbc5e7294f5d4dd5718ed608aca4c72d11eda). The appended row, canonical SHA-256 53f23965c13aa62c99d9201cdcc4df4bb7a98bbd569657920862b2a7a5dfda2e, has scope policy project_only, payload `https://puppetmaster.local/schemas/event_payloads/run_node_backoff_expired/1.0.0` at Plans/event_payload_run_node_backoff_expired.schema.json#, semantic owner Plans/Executor_Protocol.md#EP-221, payload owner Plans/Contracts_V0.md#CV-511 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-14.18 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 64 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261114/admission-merge-1/depth/run.node_backoff_expired.json (SHA-256 c843645cf9049399077d1d0d88b64d064678fb28737cc829c90a975f86e1db5d) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261104/DX.self-grade.json (SHA-256 e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/run.node_backoff_expired.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `run.node_backoff_expired`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for run.node_backoff_expired, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/run.node_backoff_expired.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-14.18 and 64 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_1
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "Plans/Decision_Log.md#DL-039 (confirmed_persisted_unregistered row, registered family by family)"
+- "reports/event-authority-20261104/DX.self-grade.json; SHA-256 e46b63901753d818d1ce94ff6b5cb2b23ef2d23cbae3a21af047830d0c748edb"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/INT2/admission-readiness-final.json; SHA-256 58566991d8f8a012b87e49afb36f0578576ed24f73122362d84ff365901507be"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["run.node_backoff_expired", "event-family-run-node-backoff-expired", "2026-11-14.18", "e029e0876d99dd79b3046b62a22bbc5e7294f5d4dd5718ed608aca4c72d11eda", "53f23965c13aa62c99d9201cdcc4df4bb7a98bbd569657920862b2a7a5dfda2e", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
