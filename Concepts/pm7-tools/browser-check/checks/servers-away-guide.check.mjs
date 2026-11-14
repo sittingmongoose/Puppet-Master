@@ -244,6 +244,54 @@ export const tests = {
 		const conn = await main(f);
 		await t.check('its Connect step makes no file and promises no certificate', /Your proxy/.test(conn) && !/reverse_proxy|server_name|certificate/i.test(conn), conn.slice(0, 300));
 	},
+	async 'FO-180: the Custom domain sheet’s summary follows who runs the proxy'(t) {
+		/* the sheet the route row opens after the guide saves, not the guide window itself: its summary is the
+		   panel's .pm51-hero-summary; a proxy of the person's own must not be promised a settings file */
+		const OWN_SUMMARY = 'Your own address through a reverse proxy you already run. Nothing is made for it; your proxy sends it here. It is a public address, so sign-in is still required.';
+		const FILE_SUMMARY = 'Your own address through your own reverse proxy. Puppet Master makes its settings file; your proxy runs it. It is a public address, so sign-in is still required.';
+		const sheetSummary = (f) => f.evaluate(() => { const w = [...document.querySelectorAll('.drawer-wrap:not([data-closing="1"])')].find((x) => { const ti = x.querySelector('.pm51-panel-title'); return ti && ti.textContent.trim() === 'Custom domain'; }); const s = w && w.querySelector('.pm51-hero-summary'); return s ? s.textContent.trim() : ''; });
+		const openSheet = async (f) => {
+			await f.locator(`${BLOCK} .pm51-servers-route[data-route="domain"] .pm51-item-title`).first().click();
+			await f.waitForFunction(() => { const w = [...document.querySelectorAll('.drawer-wrap:not([data-closing="1"])')].find((x) => { const ti = x.querySelector('.pm51-panel-title'); return ti && ti.textContent.trim() === 'Custom domain'; }); return !!(w && w.querySelector('.pm51-hero-summary')); }, null, { timeout: 6000 });
+			await sleep(f, 400);
+		};
+		/* Check step: run the check, then Continue to the Recap and Save; the guide closes itself */
+		const saveWizard = async (f) => {
+			await f.locator(`${WIN} [data-action="pm51-servers-key-check"]`).first().click(); await sleep(f, 700);
+			await cont(f); await cont(f);
+			await f.waitForFunction((W) => !document.querySelector(W), WIN, { timeout: 6000 });
+			await sleep(f, 600);
+		};
+		const f = await openAway(t);
+		/* a proxy the person already runs: the guide's I have one already path, by real clicks */
+		await setUp(f, 'domain');
+		await f.locator(`${WIN} select.o55-aw-host`).selectOption('existing'); await sleep(f, 600);
+		await f.locator(`${WIN} .o55-aw-dom`).fill('pm.example.com');
+		await f.locator(`${WIN} [data-action="pm51-servers-w-aflag"][data-key="forwarded"]`).first().click();
+		await cont(f); /* Connect: nothing is made for a proxy of your own */
+		await cont(f); /* Check */
+		await saveWizard(f);
+		await openSheet(f);
+		let sum = await sheetSummary(f);
+		await t.check('own proxy: the summary says nothing is made for it and the proxy sends it here', sum === OWN_SUMMARY, sum);
+		await t.check('own proxy: the summary does not say Puppet Master makes its settings file', !/makes its settings file/.test(sum), sum);
+		await t.shot('fo180-domain-own-summary', 'Custom domain sheet with a proxy of your own: the summary says nothing is made for it');
+		/* Caddy: Puppet Master makes the settings file; the summary keeps the original text */
+		await f.locator('.drawer-wrap:not([data-closing="1"]) [data-action="pm51-servers-route-redo"]').first().click();
+		await f.waitForSelector(WIN, { timeout: 6000 }); await sleep(f, 700);
+		await f.locator(`${WIN} select.o55-aw-host`).selectOption('file'); await sleep(f, 600);
+		await f.locator(`${WIN} select.o55-aw-proxy`).selectOption('Caddy'); await sleep(f, 300);
+		await f.locator(`${WIN} .o55-aw-dom`).fill('pm.example.com');
+		const fwd = f.locator(`${WIN} [data-action="pm51-servers-w-aflag"][data-key="forwarded"]`).first();
+		if ((await fwd.getAttribute('aria-checked')) !== 'true') { await fwd.click(); await sleep(f, 300); }
+		await cont(f); /* Connect: the Caddy settings file */
+		await f.locator(`${WIN} [data-action="pm51-servers-w-aflag"][data-key="added"]`).first().click();
+		await cont(f); /* Check */
+		await saveWizard(f);
+		await openSheet(f);
+		sum = await sheetSummary(f);
+		await t.check('Caddy: the summary keeps the original text, Puppet Master makes its settings file', sum === FILE_SUMMARY, sum);
+	},
 	async '1.10: the check lists every owner check before a way in is called ready'(t) {
 		const f = await openAway(t);
 		await setUp(f, 'vpn');
