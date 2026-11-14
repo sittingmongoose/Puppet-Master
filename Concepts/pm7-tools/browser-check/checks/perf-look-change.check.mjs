@@ -12,6 +12,11 @@
 // theme's write (html's setAttribute, wrapped by the check), ready, the reveal's first frame (the first animation frame
 // after the circle starts: after 'o55:reveal' where the page holds the circle until its frames flow, else after ready)
 // and finished. Per change that takes the transition:
+//   played   the circle really played (review R33): the page said it started it ('o55:reveal'), the transition was not
+//            skipped (its skipTransition, wrapped by the check, was not called, and ready did not fail), and from the
+//            circle's first frame to finished it ran at least its length less 50 ms (760 ms, Retro 520 ms) with at least
+//            one frame per 34 ms of that length. A page without 'o55:reveal' (one that starts the circle at ready) fails
+//            this row and its other rows are still judged from ready; a skipped transition fails every row below;
 //   held     the app beneath holds still until the reveal has ended, and its work for the look still runs after it:
 //            a hook of the check added with PM56_HOST.onTheme (the chat's own theme hooks, app.js renderApp among them,
 //            run in that list) and a callback of the check asked of PM_AFTER_LAYOUT at the theme's write (the queue Home,
@@ -19,7 +24,9 @@
 //            f05274e219 both ran before the reveal's first frame;
 //   tasks    no long task (PerformanceObserver 'longtask', over --set task=50 ms) overlaps the reveal, from its first
 //            frame to finished;
-//   gaps     no gap between animation frames over --set gap=34 ms in that span.
+//   gaps     no gap between animation frames over --set gap=50 ms in that span (the lead's ruling, 2026-11-14: a
+//            single 35-50 ms gap on Alexis's PC is the host's, not the reveal's; gaps over --set note=34 ms and up to
+//            the bar are counted and logged per reveal as a NOTE, never failed).
 // Logged per change: click -> first frame, its parts (the click's own task, the time to ready), the reveal's length,
 // its frames, its long tasks and its longest gap; NieR's own path (into or out of NieR, no View Transition) is logged,
 // not judged. Then one change each under the system's Reduced Motion, the app's own Reduce motion (html[data-motion]) and
@@ -28,7 +35,7 @@
 //
 // --set seq=<a,b,...>   the picks, families and modes (default friendly,retro,glass,nier,basic,light,glass,dark,friendly,basic:
 //                       all five looks and both modes, as lead tool lookchange.check.mjs made them)
-// --set task=<ms>, --set gap=<ms>   the bars (defaults 50, 34)
+// --set task=<ms>, --set gap=<ms>   the bars (defaults 50, 50); --set note=<ms> the NOTE floor for gaps (default 34)
 // Both surfaces (--set sandbox=0 and 1). About 70 s a surface.
 const SEQ = ['friendly', 'retro', 'glass', 'nier', 'basic', 'light', 'glass', 'dark', 'friendly', 'basic'];
 
@@ -50,8 +57,14 @@ const ARM = () => {
 	if (window.PM56_HOST && window.PM56_HOST.onTheme) window.PM56_HOST.onTheme(() => { if (S.on) S.hook.push(performance.now()); });
 	const svt = document.startViewTransition && document.startViewTransition.bind(document);
 	if (svt) document.startViewTransition = function (cb) {
-		const vt = svt(cb), rec = { start: performance.now(), ready: 0, readyFirst: 0, play: 0, first: 0, end: 0 };
+		const vt = svt(cb), rec = { start: performance.now(), ready: 0, readyFirst: 0, play: 0, first: 0, end: 0, skipped: false };
 		if (S.on && !S.vt) S.vt = rec;
+		// a skip by the page (a press, a key, close(), the next pick, Reduced Motion found at ready), or by a newer
+		// transition, which the browser skips the old one for
+		if (S.last && !S.last.end) S.last.skipped = true;
+		S.last = rec;
+		const skip = vt.skipTransition && vt.skipTransition.bind(vt);
+		if (skip) vt.skipTransition = function skipTransition() { rec.skipped = true; return skip(); };
 		vt.ready.then(() => { rec.ready = performance.now(); requestAnimationFrame((ts) => { rec.readyFirst = ts; }); }).catch(() => { rec.skipped = true; });
 		vt.finished.finally(() => { rec.end = performance.now(); });
 		return vt;
@@ -75,7 +88,8 @@ const READ = () => {
 		hook: S.hook.map((x) => Math.round(x - c)), after: S.after.map((x) => Math.round(x - c)), askAfter: S.askAfter,
 		frames: d.length, maxGap: Math.round(Math.max(0, ...d)), gaps: d.map((g, i) => [Math.round(ts[i] - c), Math.round(g)]),
 		ltIn: inWin.map(rel), ltAll: S.lt.filter((e) => e[0] + e[1] >= c - 50).map(rel),
-		theme: document.documentElement.getAttribute('data-theme')
+		theme: document.documentElement.getAttribute('data-theme'),
+		family: window.O55 && window.O55.theme ? window.O55.theme().chosen : null
 	};
 };
 
@@ -110,24 +124,33 @@ async function surface(t, sandbox) {
 		return { arg, from: th.chosen + '-' + th.mode, ...(await f.evaluate(READ)) };
 	};
 	const seq = t.args.seq ? String(t.args.seq).split(',') : SEQ;
-	const TASK = +(t.args.task || 50), GAP = +(t.args.gap || 34);
+	const TASK = +(t.args.task || 50), GAP = +(t.args.gap || 50), NOTE = +(t.args.note || 34);
 	const rows = [];
 	for (const arg of seq) { const r = await pick(arg); if (r) { rows.push(r); await f.waitForTimeout(800); } }
+	let noted = 0;
 	for (const r of rows) {
 		const name = `${tag}: ${r.from} -> ${r.arg}`;
 		const v = r.vt;
 		t.log(`${name}: ${v ? `click->first ${v.first} ms (click task ${(r.ltAll.find((e) => e[0] <= 20) || [0, 0])[1]} ms, ready at ${v.ready}, circle played at ${v.play == null ? 'ready' : v.play}), reveal ${v.end - v.first} ms, ${r.frames} frames, longest gap ${r.maxGap} ms, long tasks in it ${JSON.stringify(r.ltIn)}` : 'no View Transition (NieR\'s own path)'}; theme written at ${r.write}, chat hook at ${JSON.stringify(r.hook)}, after-layout at ${JSON.stringify(r.after)}; all long tasks ${JSON.stringify(r.ltAll.slice(0, 10))}`);
 		if (!v) continue;
 		if (!v.first || !v.end) { await t.check(`${name}: the reveal played (ready, first frame, finished)`, false, JSON.stringify(v)); continue; }
-		const hookOk = r.hook.length > 0 && r.hook.every((x) => x >= v.end) && r.hook[0] <= v.end + 3000;
-		await t.check(`${name}: held: the chat's theme hooks run after the reveal, not during it`, hookOk, `reveal ends ${v.end} ms; hooks at ${JSON.stringify(r.hook)}`);
-		const afterOk = r.askAfter && r.after.length > 0 && r.after.every((x) => x >= v.end) && r.after[0] <= v.end + 3000;
-		await t.check(`${name}: held: an after-layout callback asked at the theme's write runs after the reveal`, afterOk, `theme written ${r.write} ms, reveal ends ${v.end} ms; ran at ${JSON.stringify(r.after)}`);
+		const circle = r.family === 'retro' ? 520 : 760, len = v.end - v.first, least = Math.floor(circle / 34);
+		const played = v.play != null && !v.skipped && len >= circle - 50 && r.frames >= least;
+		await t.check(`${name}: played: the circle really played (o55:reveal, not skipped, its ${circle} ms with frames)`, played,
+			`o55:reveal ${v.play == null ? 'not seen' : `at ${v.play} ms`}; ${v.skipped ? 'skipped' : 'not skipped'}; first frame ${v.first} ms to finished ${v.end} ms = ${len} ms (at least ${circle - 50}); ${r.frames} frames (at least ${least})`);
+		// a skipped transition passes none of the rows below: its end is early, and what it measured is not a reveal
+		const skipped = v.skipped ? 'skipped, not judged; ' : '';
+		const hookOk = !v.skipped && r.hook.length > 0 && r.hook.every((x) => x >= v.end) && r.hook[0] <= v.end + 3000;
+		await t.check(`${name}: held: the chat's theme hooks run after the reveal, not during it`, hookOk, `${skipped}reveal ends ${v.end} ms; hooks at ${JSON.stringify(r.hook)}`);
+		const afterOk = !v.skipped && r.askAfter && r.after.length > 0 && r.after.every((x) => x >= v.end) && r.after[0] <= v.end + 3000;
+		await t.check(`${name}: held: an after-layout callback asked at the theme's write runs after the reveal`, afterOk, `${skipped}theme written ${r.write} ms, reveal ends ${v.end} ms; ran at ${JSON.stringify(r.after)}`);
 		const over = r.ltIn.filter((e) => e[1] > TASK);
-		await t.check(`${name}: no task over ${TASK} ms in the reveal`, over.length === 0, `reveal ${v.first}-${v.end} ms; long tasks ${JSON.stringify(r.ltIn)}`);
-		const gaps = r.gaps.filter((g) => g[1] > GAP);
-		await t.check(`${name}: no frame gap over ${GAP} ms in the reveal`, gaps.length === 0, `${gaps.length} of ${r.frames}: ${JSON.stringify(gaps.slice(0, 8))}`);
+		await t.check(`${name}: no task over ${TASK} ms in the reveal`, !v.skipped && over.length === 0, `${skipped}reveal ${v.first}-${v.end} ms; long tasks ${JSON.stringify(r.ltIn)}`);
+		const gaps = r.gaps.filter((g) => g[1] > GAP), near = r.gaps.filter((g) => g[1] > NOTE && g[1] <= GAP);
+		if (near.length) { noted += near.length; t.log(`${name}: NOTE ${near.length} frame gap(s) of ${NOTE + 1}-${GAP} ms in the reveal (counted, not failed): ${JSON.stringify(near.slice(0, 8))}`); }
+		await t.check(`${name}: no frame gap over ${GAP} ms in the reveal`, !v.skipped && gaps.length === 0, `${skipped}${gaps.length} of ${r.frames}: ${JSON.stringify(gaps.slice(0, 8))}; ${near.length} of ${NOTE + 1}-${GAP} ms (NOTE)`);
 	}
+	t.log(`${tag}: NOTE ${noted} frame gap(s) of ${NOTE + 1}-${GAP} ms across ${rows.filter((r) => r.vt).length} reveals`);
 	await t.check(`${tag}: at least six changes took the View Transition`, rows.filter((r) => r.vt).length >= 6, `${rows.filter((r) => r.vt).length} of ${rows.length}`);
 	// Reduced Motion (the system's, and the app's own switch, html[data-motion="reduced"]) and low-resource mode: unchanged
 	// (no reveal, no hold): each a change of its own
