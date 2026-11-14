@@ -74,8 +74,8 @@ projects-redesign.
 ## How it reaches PMConcept7
 
 `index.html` adds, in order (its `STEPS`, which `tools/build_standalone.py` parses): `layer/core.css`, `world.js`,
-`resolve.js`, `guard.js`, `feed.js`, `rows.css`, `rows.js`, `panel.css`, `panel.js`, `managers.js`, `copy.js`, `moments.js`,
-`board.js`, `boot.js`.
+`resolve.js`, `guard.js`, `feed.js`, `rows.css`, `rows.js`, `panel.css`, `panel.js`, `places.js`, `managers.js`, `copy.js`,
+`moments.js`, `board.js`, `boot.js`.
 
 | File | What |
 |---|---|
@@ -85,6 +85,7 @@ projects-redesign.
 | `layer/feed.js` | adopts every inventory row; feeds each project's resolved values into `PM_SETTINGS_PROJECT_SNAPSHOTS` and switches project with `PM_ACTIVE_PROJECT_ID` + `PM12_KIMI.reloadProject()`; pushes single values with `PM12_KIMI.setSettingFromHost`; the router that routes a person's change to its level; the note's words; the hold on the engine's own Saved toast |
 | `layer/rows.js`, `rows.css` | the end of the row (five options) in a fixed column, the Changed mark (four options), lines under rows, the header and its Change menu, the row menu (option D, right-click, long-press), the Projects folder row |
 | `layer/panel.js`, `panel.css` | the panel's blocks, the 1.7 checks and previews, the inline Change editor, Esc order |
+| `layer/places.js` | setting a value for one place (Jared, 2026-11-13): `PSX.places.limits` and `check` (each row's limits from the same source as its main control, for the editor and for `PSX.write`), the shared model picker as an overlay (`picker`), and the row's own editor opened for a place (`openRow`) |
 | `layer/managers.js` | Providers & Accounts, MCP servers, Servers |
 | `layer/copy.js` | the copy-settings sheet, with Split v2's strings (`tools/diff_strings.py` diffs them) |
 | `layer/moments.js` | the 17 moments and History |
@@ -388,6 +389,46 @@ runner, `sudo`, or `rm -rf` followed by `*` is broad. A specific script path fol
 home read (§3.3, §4.2, PS-026, PS-145), a deletion on the remote (PS-146), and a looser rule from a repository, which
 stays held (PS-144). Nothing YOLO runs without asking becomes an Always rule (PS-144 "YOLO ordinary auto-allow creates
 neither an Always rule nor a FileSafe approved-command entry").
+
+## Jared's review fixes (2026-11-13)
+
+Jared's eight items are in `BRIEF-jared-1113-fixes.md` in the share folder; `CONCEPT-FIX-REPORT-A.md` has the triage,
+the before and after pictures and the runs. Items 1 (the row's own list), 2, 6 and 7 are PMConcept7's (stream F) and
+happen the same on bare PMConcept7; item 4 waits for Jared; item 8 is the Projects concept's. This layer's part:
+
+- **#1, model rows in Where it applies.** Change and + Set for a project… on a model row (Plans' inventory type
+  `model_picker`) open the shared model picker over the page: the Details panel picker's rows, maker strip, search and
+  the chat's maker marks (`PM56_PICKERS.providerMark`) in the kit's own popout (`.pm51-popout`, fixed, on the body), never
+  a plain list or a text box. Its first choice is the row's inherit choice in the inventory's words
+  (`option_labels.inherit`, "Same as Everyday model") with the model it resolves to at that place ("Claude Opus 4
+  here", "through Everyday model" when the source itself follows another); the row's own words (Default, None,
+  Automatic) come next, then every model you can use (the inventory's examples, then `PM51.readyModels()`). The
+  thinking depth is inside it (Model's own, Low, Medium, High for a model that reasons); a model with its own depth is
+  one atomic value (`{ model, effort }`, SSYS-059), and the engine's row is fed the model. Lines and notes read the
+  inventory's words too ("Same as Everyday model (Claude Opus 4)"), never the engine's global "Same as the project".
+- **#3, every Set for… path can set the value.** A key-value map or a list of records opens the row's own editor
+  (PMConcept7's, through `open-structured-setting`) loaded with that place's value and a line saying whose value it is;
+  its Save goes to that place through the router and the guard, with the note naming the place, and an unchanged Save
+  still gives the place its own. Several choices get their own checkboxes (they were a free text box), a list offers
+  exactly what its main control lists (`PM51.settingRows`, so the choices a manager adds are there), and no line is
+  left with a disabled Change.
+- **#5, the same limits on every path.** `places.js` takes each row's limits from its main control: Plans' inventory
+  range (Randomness `0.0-2.0`), the base row's min, max, step, unit and scale (`PM51.rowMeta`, read at that place when
+  a bound follows another setting), the engine setting's own (a slider's), a list's choices, a model row's models and
+  depths. The per-place editor shows a number box in the row's units with its range in words and the row's automatic
+  value as its own choice ("Use model default"); Save asks the same check `PSX.write` does, so a value past the limits
+  is refused on every path with the reason ("It can’t be more than 2").
+- **Plans batch 4 (DL-479), when it lands.** `ai.models.model-alias` becomes the one Model nicknames list, per_item:
+  `resolve.js` `PER_ITEM` resolves each nickname on its own (normalized per Models §6.7, the most specific place's
+  line wins), its per-place editor lists a project's own lines with the model side in the shared picker (no depth), and
+  the check refuses two nicknames that normalize the same, a nickname that is a model's own name and a model you can't
+  use. Nothing here reads the retired `media.image.model-aliases`. PMConcept7 draws the old row until stream F's FO-186.
+
+Checks: `feedback.check.mjs --set only=jared1113` (`--set j1113=models,paths,limits` narrows it, `--set j1113max=N`
+walks only the first N rows). `models` presses Change and + Set for… on every model row, `paths` walks every adopted
+row's + Set for a computer… / device… / project… with real presses and carries the first three of each kind through a
+Save, `limits` types a value past the limits into every bounded row's per-place editor and writes one through
+`PSX.write` at every place each row offers.
 
 ## Inventory alignment (2026-11-13)
 
