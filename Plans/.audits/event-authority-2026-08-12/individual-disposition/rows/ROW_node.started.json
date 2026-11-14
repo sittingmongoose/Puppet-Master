@@ -2,68 +2,68 @@
   "event_type": "node.started",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to node.started. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to node.started. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-14.19 in admission merge 1 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-538); DL-077 admission record reports/event-authority-20260911/admission-records/node.started.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261114/admission-merge-1/depth/node.started.json (sha256 fcfb790cef640468767906d59c8cef609289fc11122d822bb1de13ca734174e8); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "membership_version": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No cited versioned registry membership exists for this exact token."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:4449-4500",
+      "note": "Registered at registry revision 2026-11-14.19 as #/families/64 (canonical row SHA-256 6ab674aa98a401f628cfdaf9aa8197db9dc08ec9cf2a1895abc06919ea1ff912); before this commit the family was absent."
     },
     "owner_doc": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No citation explicitly assigns accountable semantic authority for this exact token."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:34671",
+      "note": "Independent EP/CV/SP units govern the prepared exact family version."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:928-940",
-      "note": "The runtime event catalog explicitly names executor as producer for `node.started`."
+      "citation": "Plans/Executor_Protocol.md:10678",
+      "note": "Exact emitter and dependency/body/append/receipt/publication ordering explicitly adopt SP-286 full-value v2 and current durability amendments."
     },
     "closed_payload_schema": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No citation closes the persisted payload schema, field types, optionality, and unknown-field behavior for this exact token."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:34671",
+      "note": "Separate exact-version closed root schema; current known enum domains are closed. Conditional owner/source constraints remain normative and are not all schema-only predicates."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:937",
-      "note": "The exact catalog row requires run_id, node_id, and attempt_id for `node.started`, closing its minimum scope identity."
+      "citation": "Plans/Executor_Protocol.md:10701; Plans/Executor_Protocol.md:10726; Plans/storage-plan.md:38421",
+      "note": "EP-214 and SP-504 define this family's scope, hash preimage and source adapter. Complete original observations join immutable owner reads; F17 enforces primitive types at graph joins. Shared number/recipe adoption S-N1–S-N5 remains a sweep item."
     },
     "replay_idempotency": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No citation defines replay and idempotency behavior for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38164",
+      "note": "Exact family-local hash identity and same-identity digest conflict/replay rule; timestamp cannot mint a new identity."
     },
     "retention": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No citation defines event-specific retention for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38173",
+      "note": "Case L-3 explicitly covers runtime/run/node/attempt; source anchor, caps and holds preserved. Existing generic index/checkpoint keep their policies."
     },
     "redaction_custody": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No citation assigns redaction policy and custody for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38175",
+      "note": "Exact source/first-receipt custody, coherent backup/restore, linked body independence and fresh permission/deletion checks defined."
     },
     "transitions": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No citation closes legal predecessor/successor transitions for this exact token."
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:11141; Plans/Executor_Protocol.md:11151",
+      "note": "EP-214 defines this family's exhaustive predecessor/discriminator/successor table, actual owner predicates, post-state revision/sequence and admission/dependency/body/append/first-receipt/CAS/publication barrier; static cases check the table and rejection fences."
     },
     "consumers_checkpoints": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No citation defines complete consumer checkpoint and failure behavior for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38409",
+      "note": "Exact read-only operating consumer explicitly adopts SP-278 using existing generic projector/checkpoint/schema, actual current frontier/CAS and nine-field token; no new stored value."
     },
     "compatibility_withdrawal": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No citation defines compatibility normalization and withdrawal criteria for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38417; Plans/storage-plan.md:38421",
+      "note": "Own exact-version/alias dispatch and writer cutoff, original operation reconciliation, token invalidation and source-backed successor rebuild defined."
     },
     "positive_negative_oracles": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No citation supplies both positive and negative persisted-event oracles for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38164; Plans/storage-plan.md:38406; Plans/Contracts_V0.md:34673; Plans/storage-plan.md:38175; Plans/executor_event_type_fixtures.json:18253; Plans/executor_event_semantic_fixtures.json:165280; Plans/storage-plan.md:38421; Plans/executor_event_type_fixtures.json:21474; Plans/Automated_Testing_System.md:9748; Plans/storage-plan.md:38181; scripts/pm_executor_event_semantics.py:402; scripts/pm_executor_table_post_effects.py:53; scripts/pm_executor_table_workgraph_id.py:27; scripts/pm_executor_event_semantics.py:123; scripts/pm_executor_event_semantics.py:1227; scripts/pm_executor_event_semantics.py:833; scripts/pm_executor_event_semantics.py:709; scripts/pm_executor_event_semantics.py:526; scripts/pm_executor_event_semantics.py:508; scripts/pm_executor_event_semantics.py:1167",
+      "note": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN."
     }
   },
   "citations_checked": [
