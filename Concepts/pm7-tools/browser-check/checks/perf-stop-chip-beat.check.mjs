@@ -518,6 +518,7 @@ export default async function (t) {
 			await t.check(`${look}: in every frame from the first change on, the loop is never made anew and never jumps (hand-over and main-thread place)`, ev.restarts.length === 0 && ev.worst <= 1,
 				`${ev.restarts.length ? 'new loops ' + ev.restarts.join(', ') + '; ' : ''}worst ${(ev.worst * 100).toFixed(0)}%${ev.where ? ': ' + ev.where : ''}`);
 			const ph = inPhase(R), nier = look.startsWith('nier');
+			t.log(`${look}: one pulse: ${ph.n} frames with both loops, worst ${ph.worst.toFixed(5)} of a loop${ph.where ? ` (${ph.where})` : ''}`);
 			await t.check(`${look}: one pulse: in every frame the backlight is at the glyph's place in the loop (to 0.002 of a loop)${R.marks.some((m) => m.kind === 'window') ? ', through the onboarding window' : ''}${R.marks.some((m) => m.kind === 'theme') ? ', through a light/dark change' : ''}`,
 				nier ? ph.n === 0 || ph.worst <= 0.002 : ph.n > 60 && ph.worst <= 0.002,
 				ph.n ? `${ph.n} frames, worst ${ph.worst.toFixed(4)} of a loop${ph.where ? ` (${ph.where})` : ''}` : (nier ? 'no backlight (NieR Mode)' : 'no frame with both loops: could not judge'));
@@ -551,6 +552,7 @@ export default async function (t) {
 				const te = everyFrame(T);
 				await t.check(`${look} light/dark: in every frame from the light/dark change on, neither loop is made anew or jumps`, te.restarts.length === 0 && te.worst <= 1, `${te.restarts.length ? 'new loops ' + te.restarts.join(', ') + '; ' : ''}worst ${(te.worst * 100).toFixed(0)}%${te.where ? ': ' + te.where : ''}`);
 				const tp = inPhase(T);
+				t.log(`${look} light/dark: one pulse: ${tp.n} frames with both loops, worst ${tp.worst.toFixed(5)} of a loop${tp.where ? ` (${tp.where})` : ''}`);
 				await t.check(`${look} light/dark: one pulse: in every frame the backlight is at the glyph's place in the loop (to 0.002 of a loop), through the light/dark change and back`, tp.n > 60 && tp.worst <= 0.002, `${tp.n} frames, worst ${tp.worst.toFixed(4)} of a loop${tp.where ? ` (${tp.where})` : ''}`);
 			}
 		}
