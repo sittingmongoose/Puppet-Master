@@ -126,6 +126,10 @@
   {
    "event_type": "forge.connection.reauthorized",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.connection.validated",
+   "outcome": "registered"
   }
  ]
 }
