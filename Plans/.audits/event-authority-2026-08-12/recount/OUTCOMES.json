@@ -390,6 +390,10 @@
   {
    "event_type": "session_prompt.rejected",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.backend.detected",
+   "outcome": "registered"
   }
  ]
 }
