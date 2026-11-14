@@ -59,11 +59,13 @@
      sign (U+2212) and kept, so '-5' and '−5' are one note. Other punctuation still drops out, so ASCII duplicates
      that differ only in case or punctuation still dedupe. An empty key (punctuation-only words) is a duplicate only
      of the very same trimmed NFKC text.
-     FO-205 round 2: the zero-width joiners (U+200C, U+200D) stay too. A joined emoji (woman + joiner + laptop) is
-     one picture, not the two emoji with a space between them, and the same joiners shape Persian and Indic words. */
+     FO-205 rounds 2-3: the key now drops ONLY punctuation (\p{P}) and spaces (\p{Z}, \s), and keeps everything else,
+     the invisible format characters (\p{Cf}) included. A joined emoji (woman + zero-width joiner + laptop) is one
+     picture, the England and Scotland flags differ only in their invisible tag characters, and the same joiners
+     shape Persian and Indic words; turning any of them into a space merged distinct notes and lost the second. */
   const norm = t => String(t || '').normalize('NFKC').toLowerCase()
     .replace(/\p{Pd}(?=\p{Nd})/gu, '\u2212')
-    .replace(/[^\p{L}\p{M}\p{N}\p{S}\u200C\u200D]+/gu, ' ').trim();
+    .replace(/[\p{P}\p{Z}\s]+/gu, ' ').trim();
   function addNote(text, level) {
     const words = String(text || '').trim(); if (!words) return null;
     const key = norm(words);
