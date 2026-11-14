@@ -350,6 +350,10 @@
   {
    "event_type": "source_control.remote.sync_completed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.remote.sync_started",
+   "outcome": "registered"
   }
  ]
 }
