@@ -1955,10 +1955,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 137,
+        "False": 138,
         "True": 47
       },
-      "heading_count": 270,
+      "heading_count": 272,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
@@ -2114,9 +2114,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 14149,
+      "line_count": 14204,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 184,
+      "plan_unit_count": 185,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -2301,7 +2301,8 @@
         "ATS-1281",
         "ATS-1282",
         "ATS-1283",
-        "ATS-1230"
+        "ATS-1230",
+        "ATS-2300"
       ],
       "reasoning_tiers": [
         "high",
@@ -2340,6 +2341,7 @@
         "event_authority_oracle",
         "event_authority_original_custody_and_scope",
         "event_identity_custody_and_false_evidence",
+        "event_oracle_coverage_drift",
         "event_original_authority_or_replay_loss",
         "event_source_identity_or_replay_drift",
         "evidence_authority_and_false_completion",
@@ -2399,10 +2401,10 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+      "sha256": "7427590b6e0acfe45f048d3f0c1d9071b8ac59e17675ea7f2b0debe26232f35c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 182,
+        "accepted": 183,
         "draft": 1,
         "superseded": 1
       },
@@ -2419,7 +2421,7 @@
         "owner_contract": 1,
         "requirement": 64,
         "schema_contract": 3,
-        "validation_contract": 3,
+        "validation_contract": 4,
         "validation_criterion": 33,
         "validation_gate": 9,
         "verification_contract": 19
@@ -2579,6 +2581,7 @@
         "python3 scripts/pm-dch-guard-tables.py --out <guard-tables-dir>",
         "python3 scripts/pm-dch-table-generate.py scripts --check",
         "python3 scripts/pm-debug-investigation-events.py",
+        "python3 scripts/pm-ds-table-generate.py --check",
         "python3 scripts/pm-ds15-deck2-contracts.py --family <family>",
         "python3 scripts/pm-ds15-event-contracts.py",
         "python3 scripts/pm-ds15-guard-tables.py --out <dir>",
@@ -2650,6 +2653,8 @@
         "python3 scripts/pm_dch_round5_regressions.py --out <round5-regressions.json>",
         "python3 scripts/pm_dch_stop.py",
         "python3 scripts/pm_ds15_p2b_cases.py --check",
+        "python3 scripts/pm_ds_p2a_cases.py --check",
+        "python3 scripts/pm_ds_p2b_cases.py --check",
         "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm_filesafe_event_contracts.py",
@@ -2668,6 +2673,7 @@
         "python3 scripts/pm_goal_run_stop_block_oracles.py",
         "python3 scripts/pm_memory_archive_events.py",
         "python3 scripts/pm_memory_maintenance_events.py",
+        "python3 scripts/pm_terminal_workgroup_compatibility.py --self-test",
         "python3 scripts/pm_w3b_event_oracles.py",
         "python3 scripts/pm_w3f_event_oracles.py",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
@@ -24145,7 +24151,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-14T16:55:46Z",
+  "generated_at_utc": "2026-11-14T19:34:04Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -24153,13 +24159,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 4861,
+      "False": 4862,
       "True": 3931
     },
-    "plan_unit_count": 8792,
+    "plan_unit_count": 8793,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 8512,
+      "accepted": 8513,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -24259,7 +24265,7 @@
       "surface_default_policy": 1,
       "ui_wiring_rule": 1,
       "validation": 13,
-      "validation_contract": 3,
+      "validation_contract": 4,
       "validation_criterion": 37,
       "validation_gate": 9,
       "validation_requirement": 3,

@@ -7547,6 +7547,7 @@
     "SCS-014",
     "SP-254",
     "SRV-013",
+    "ATS-2300",
     "SP-273",
     "DL-349",
     "F3-590",
@@ -18372,6 +18373,26 @@
       "edge_type": "depends_on",
       "from": "ATS-230",
       "to": "SP-460"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2300",
+      "to": "ATS-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2300",
+      "to": "ATS-040"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2300",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-2300",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -142334,7 +142355,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-14T16:55:46Z",
+  "generated_at_utc": "2026-11-14T19:34:04Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -157856,6 +157877,23 @@
       },
       "status": "accepted",
       "unit_type": "verification_contract"
+    },
+    {
+      "context_scope": "event_authority_pnc019_s2",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-2300",
+      "reasoning_tier": "high",
+      "risk_class": "event_oracle_coverage_drift",
+      "source_location": {
+        "heading": "ATS-2300 - Executable oracles of the five DS families (post-August repair register)",
+        "heading_level": 3,
+        "heading_line": 14153,
+        "line": 14155,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_contract"
     },
     {
       "context_scope": "collaborative_event_oracles_collaboration_created",
@@ -291807,10 +291845,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 23489,
+    "depends_on_edge_count": 23493,
     "downstream_blocked_node_count": 0,
-    "edge_count": 26707,
-    "node_count": 8792,
+    "edge_count": 26711,
+    "node_count": 8793,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0
