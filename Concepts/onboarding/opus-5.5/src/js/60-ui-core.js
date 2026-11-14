@@ -340,19 +340,29 @@
          task at the first frame, and on a look's first use a GPU pause of 165-592 ms while the new look is rastered
          (Alexis, t-b14); started at ready, the circle's fast first part was spent inside them, the part Jared misses. So the
          animations wait at their first keyframe (the circle at 0: the old picture stays on screen) and start together on
-         the second of two frames less than 34 ms apart, or 900 ms after ready at the latest; at once on a low-resource
+         the third of three frames on time in a row, or 900 ms after ready at the latest; at once on a low-resource
          computer or a hidden page. 'o55:reveal' is sent on window as they start (the kit check times the circle from it). */
       anims.forEach((a) => { try { a.pause(); } catch (_) { /* gone */ } });
-      let go = false, last = null, cap = 0;
+      /* While it waits, the new picture is clipped to a path whose box is the whole viewport but which shows only two
+         1-pixel squares in opposite corners: a picture closed to nothing is not drawn at all, and a look's first raster
+         (the GPU pause) then came on the circle's first frame, 244-255 ms on a first Glass pick (Alexis, t-b16), however
+         long it had waited; clipped this way the whole new look is drawn while the old picture still shows. Made after the
+         circles, so it is the clip that applies until play() takes it away. Frames flow when three come on time in a row. */
+      const W = innerWidth, H = innerHeight, corners = `path('M0 0h1v1h-1z M${W - 1} ${H - 1}h1v1h-1z')`;
+      const holds = ['root'].concat(still ? ['o55-win'] : []).map((name) => document.documentElement.animate({ clipPath: [corners, corners] },
+        { pseudoElement: `::view-transition-new(${name})`, duration: 60000 }));
+      let go = false, last = null, onTime = 0, cap = 0;
       const play = () => {
         if (go) return;
         go = true; clearTimeout(cap);
+        holds.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } });
         anims.forEach((a) => { try { a.play(); } catch (_) { /* gone */ } });
         try { window.dispatchEvent(new Event('o55:reveal')); } catch (_) { /* none */ }
       };
       const flowing = (now) => {
         if (go || S.vt !== vt) return;
-        if (last != null && now - last < 34) { play(); return; }
+        onTime = last != null && now - last < 34 ? onTime + 1 : 0;
+        if (onTime >= 2) { play(); return; }
         last = now; O55.motion.real.raf(flowing);
       };
       if (O55.motion.lowResource || document.hidden) play();
