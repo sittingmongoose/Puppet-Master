@@ -179,8 +179,10 @@
     DEFAULTS[id] = clone(s.value);
     /* the page's old shape for a row Plans' inventory now types otherwise (Model nicknames: the page's text box holds "",
        the inventory's default is the empty map {}): the inventory's default, so the panel says "No nicknames yet" */
-    const inv = PSX.factsOf && PSX.factsOf(id);
-    if (inv && inv.default && typeof inv.default === 'object' && !(s.value && typeof s.value === 'object') && !PSX.holds(id, inv.default)) DEFAULTS[id] = clone(inv.default);
+    // only a row the inventory types as a map or a list (a path's structured default, "relative to the computer's home",
+    // still reads as the path the page holds)
+    const inv = PSX.factsOf && PSX.factsOf(id), invType = PSX.layering && PSX.layering.types[id];
+    if (inv && ['keyvalue', 'list', 'multiselect'].includes(invType) && inv.default && typeof inv.default === 'object' && !(s.value && typeof s.value === 'object') && !PSX.holds(id, inv.default)) DEFAULTS[id] = clone(inv.default);
     if (everywhereValue !== undefined && !same(everywhereValue, s.value)) {
       const seed = rule.home === 'computer' ? { level: 'computer', key: 'here' } : rule.home === 'project' ? { level: 'project', key: 'tastebook' } : { level: 'everywhere', key: null };
       SEED[id] = Object.assign(seed, { value: clone(everywhereValue) });
