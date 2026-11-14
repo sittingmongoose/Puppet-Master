@@ -419,7 +419,8 @@
   /* Input never waits for the look reveal. While a view transition plays, the browser hands every click to the page
      root, and on a heavy page on a slow computer the reveal outlasted a second: an early Continue was lost. A press
      during the reveal ends it at once, and the click goes to whatever was under the pointer. A key ends it the same way
-     wherever focus is (any key but a lone modifier, as a moment's snap takes them), and so does close(): Escape, or the
+     wherever focus is (any key pressed, not repeated, but a lone modifier, as a moment's snap takes them; a key-up never
+     does: Space picks a look on its key-up), and so does close(): Escape, or the
      Close button by keyboard, closed the window beneath the old window's picture (R33). skipLook() is the one
      interruption: the transition is skipped and its wait's end (applyLook's endWait()) runs at once, in the same task. */
   function skipLook() {
@@ -433,7 +434,9 @@
     skipLook();
     S.vtPress = { x: e.clientX, y: e.clientY, t: performance.now() };
   }, true);
-  document.addEventListener('keydown', (e) => { if (S.vt && !/^(Shift|Control|Alt|Meta|CapsLock|Fn)$/.test(e.key)) skipLook(); }, true);
+  /* (a key held down repeats: a look picked by keyboard, Enter on its row, began its reveal with that key, and its
+     repeats are not new input) */
+  document.addEventListener('keydown', (e) => { if (S.vt && !e.repeat && !/^(Shift|Control|Alt|Meta|CapsLock|Fn)$/.test(e.key)) skipLook(); }, true);
   document.addEventListener('click', (e) => {
     const k = S.vtPress; if (!k) return;
     S.vtPress = null;

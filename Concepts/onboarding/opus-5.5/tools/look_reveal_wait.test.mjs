@@ -7,7 +7,8 @@
 //   R33-2  a key during the wait ends it at once, as a press does: Escape (onKey closes the window), the Close button
 //          by keyboard, close() itself; the held work is released then, not at the transition's finish;
 //   R33-3  Reduced Motion or low-resource mode switched on between the press and ready skips the reveal at ready and
-//          releases the held work at once.
+//          releases the held work at once;
+//   and a pick made by keyboard (Enter or Space on a look row) is never ended by its own key: its repeats and key-up.
 // Run: node Concepts/onboarding/opus-5.5/tools/look_reveal_wait.test.mjs [other 60-ui-core.js, e.g. from an older commit]
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -130,9 +131,9 @@ function makePage() {
 			now = until; await settle();
 		},
 		async frame(dt = 16.7) { now += dt; const q = frames.splice(0); q.forEach((fn) => fn(now)); await settle(); },
-		async key(key, target = document.body) {
-			const e = { type: 'keydown', key, target, shiftKey: false, metaKey: false, preventDefault() {}, stopPropagation() {}, closest: () => null };
-			docListeners.filter((l) => l.type === 'keydown' && l.capture).forEach((l) => l.fn(e));
+		async key(key, target = document.body, { type = 'keydown', repeat = false } = {}) {
+			const e = { type, key, repeat, target, shiftKey: false, metaKey: false, preventDefault() {}, stopPropagation() {}, closest: () => null };
+			docListeners.filter((l) => l.type === type).forEach((l) => l.fn(e));
 			await settle();
 			return e;
 		},
@@ -243,6 +244,42 @@ await test('R33-2c: close() (the Close button by keyboard, Skip, the tour) durin
 	expect(p.of(a).every((x) => x.state === 'idle'), 'the paused circles and corner clips are cancelled');
 	await p.advance(1500);
 	expect(p.of(a).every((x) => x.played === 0) && p.reveals().length === 0, 'nothing of the reveal plays after the close');
+});
+
+await test('a pick by keyboard is never ended by its own key: Enter (click on keydown), its repeats and its key-up', async () => {
+	const p = makePage();
+	await p.key('Enter'); // the row's keydown: nothing plays yet; its default action is the click that picks
+	const a = p.pick('glass');
+	a.capture(); await settle(); a.makeReady(); await settle();
+	await p.key('Enter', undefined, { repeat: true }); // the key held: the browser repeats keydown (and clicks the row again)
+	p.pick('glass'); // (the repeat's click: the look asked for already, nothing new)
+	await p.key('Enter', undefined, { repeat: true });
+	await p.key('Enter', undefined, { type: 'keyup' });
+	expect(a.skipped === 0, `the pick's own key ended its reveal (skipTransition called ${a.skipped} time(s))`);
+	expect(p.vts.length === 1, 'the repeat started no second transition');
+	await p.frame(); await p.frame(); await p.frame();
+	expect(p.reveals().length === 1 && p.of(a).some((x) => x.played > 0), 'the circle plays');
+});
+
+await test('a pick by keyboard is never ended by its own key: Space (click on key-up), its repeats before it', async () => {
+	const p = makePage();
+	await p.key(' '); await p.key(' ', undefined, { repeat: true }); await p.key(' ', undefined, { repeat: true });
+	const a = p.pick('retro'); // the click comes with the key-up
+	await p.key(' ', undefined, { type: 'keyup' });
+	a.capture(); await settle(); a.makeReady(); await settle();
+	expect(a.skipped === 0, `the pick's own key ended its reveal (skipTransition called ${a.skipped} time(s))`);
+	await p.frame(); await p.frame(); await p.frame();
+	expect(p.reveals().length === 1, 'the circle plays');
+});
+
+await test('a new key pressed during a keyboard pick\'s reveal still ends it (a repeat does not, a fresh press does)', async () => {
+	const p = makePage();
+	await p.key('Enter');
+	const a = await waitingAt(p, 'friendly');
+	await p.key('Enter', undefined, { repeat: true });
+	expect(a.skipped === 0, 'a repeat does not end it');
+	await p.key('ArrowDown');
+	expect(a.skipped > 0, 'a fresh key ends it');
 });
 
 for (const [label, turnOn] of [['Reduced Motion', (p) => { p.motion.reduced = true; }], ['low-resource mode', (p) => { p.motion.lowResource = true; }]]) {
