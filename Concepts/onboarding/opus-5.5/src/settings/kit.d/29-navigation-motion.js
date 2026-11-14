@@ -1,7 +1,13 @@
-/* Navigation acknowledges the destination before building it. The outgoing chapter starts moving on the compositor
-   before the build task, then the incoming chapter arrives after its first layout. No snapshot capture pauses the
-   compositor, and no duplicate live IDs or rows are introduced. Rapid requests coalesce to the latest destination. */
-let o55NavTicket = 0, o55NavRunning = false, o55NavLeaving = null;
+/* Navigation acknowledges the destination before building it: the switcher's chip leaves for the chosen chapter (glass.js
+   STRIPS, the left bar) and a section tab's ink moves, in the frame of the press, while the old chapter is still painted;
+   the build follows. No snapshot capture pauses the compositor, and no duplicate live IDs or rows are introduced. Rapid
+   requests coalesce to the latest destination.
+   FO-196 (Jared, 2026-11-13: "the settings page when switching chapters has really janky animations on all themes"): the
+   chapter itself has one entrance, its layout's own (.page-enter, pageIn: 4 px and a tenth of its opacity, which each look
+   times, Retro in steps, and Reduce Motion stills). This stage also faded the old chapter to .55 and lifted it 4 px while
+   the new one was built, then dropped it 8 px and brought the new one in from .55 and 4 px low on top of pageIn's 4 px:
+   the chapter rose 8 px, from a dim hold (the heading 165 -> 157 px in Basic, 184 -> 176 in Glass; triage-motion). */
+let o55NavTicket = 0, o55NavRunning = false;
 const o55NavWaits = new Set();
 function o55NavVisible() {
   const panel = document.getElementById('panel-settings');
@@ -25,7 +31,6 @@ function o55NavAck(selector) {
 function o55NavCancel() {
   ++o55NavTicket;
   o55NavWaits.forEach(cancel => cancel());
-  if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
   o55NavAck(null);
 }
 /* ResizeObserver can skip a delivery, or the tab can hide before its queued frame. Bound both waits, disconnect
@@ -43,7 +48,7 @@ function o55NavWait(ticket, node, next) {
     ready = new ResizeObserver(finish); ready.observe(node);
   } else o55AfterPaint(finish);
 }
-function o55NavRun(work, selector, chapter, prepare) {
+function o55NavRun(work, selector, chapter, prepare) {   /* (chapter: a chapter changes; its entrance is the layout's own) */
   if (o55NavRunning) return work();
   o55NavCancel();
   if (!o55NavVisible()) return work();
@@ -54,27 +59,9 @@ function o55NavRun(work, selector, chapter, prepare) {
     o55NavRunning = true;
     try { work(); } finally { o55NavRunning = false; o55NavAck(null); }
   };
-  const stage = root.querySelector('#workspace-stage');
-  const moving = chapter && !o55Still() && stage;
-  if (moving) o55NavLeaving = stage.animate([
-    { opacity: 1, transform: 'none' }, { opacity: .55, transform: 'translateY(-4px)' }
-  ], { duration: 260, easing: 'ease-out', fill: 'forwards' });
   const complete = () => {
     if (ticket !== o55NavTicket) return;
     try { commit(); } catch (error) { o55NavCancel(); throw error; }
-    const next = root.querySelector('#workspace-stage');
-    const arrive = () => {
-      if (ticket !== o55NavTicket) return;
-      if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
-      /* The in-place shell patch retains #workspace-stage while replacing its chapter children. That retained
-         container still needs the incoming motion; identity alone does not mean the old chapter survived. */
-      if (!next || !next.isConnected || !moving) return;
-      next.animate([{ opacity: .55, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
-        { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
-    };
-    if (moving && next && typeof ResizeObserver === 'function') {
-      o55NavWait(ticket, next, arrive);
-    } else arrive();
   };
   o55NavWait(ticket, null, () => {
     if (ticket !== o55NavTicket) return;
