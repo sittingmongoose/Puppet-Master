@@ -1014,8 +1014,10 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     write_text(ctx["record_path"], record_text)
     touched.append(ctx["record_path"])
     problems = frozen.admission_record_problems(record, row)
-    if problems:
+    unexpected = [p for p in problems if p not in args.accept_record_problem]
+    if unexpected:
         raise SystemExit(f"{et}: the frozen check refuses the record just written: {problems}")
+    state["record_problems"] = problems
     # 5. CPU ledger rationale or recount OUTCOMES row.
     if fam["kind"] == "cpu":
         sentence = (f" Registered at registry revision {after['revision']} in admission merge 1 under DL-078, DL-096 and DL-400 "
@@ -1111,7 +1113,8 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         write_text(rel, text)
         touched.append(rel)
     state["results"].append({"event_type": et, "dl": dl, "registry_after": after, "record": ctx["record_path"],
-                             "depth": depth_rel, "row_sha256": ctx["row_sha256"]})
+                             "depth": depth_rel, "row_sha256": ctx["row_sha256"],
+                             "record_problems": state.pop("record_problems")})
     return touched
 
 
@@ -1125,8 +1128,8 @@ def commit_message(fam: dict, dl: str, result: dict) -> str:
         f"the row appended with canonical SHA-256 {result['row_sha256'][:12]}...; its Decision Log entry {dl} "
         f"(DL-096 decision entry); its DL-077 admission record {result['record']}; its 12/12 depth assessment "
         f"{result['depth']}; its {what}; the DL-078 checkpoint pins. The frozen seal check's own "
-        "admission_record_problems returns no problem for the record. Shards and the plan index are regenerated "
-        "once per merge, not here.\n"
+        "admission_record_problems returns " + (json.dumps(result["record_problems"]) if result["record_problems"] else "no problem")
+        + " for the record. Shards and the plan index are regenerated once per merge, not here.\n"
     )
 
 
@@ -1253,6 +1256,8 @@ def main(argv=None) -> int:
     a.add_argument("--only", default="")
     a.add_argument("--limit", type=int, default=0)
     a.add_argument("--require-three-digit", action="store_true")
+    a.add_argument("--accept-record-problem", action="append", default=[],
+                   help="a frozen-check record problem this run may leave (dry runs only, e.g. decision_ref for DL ids above 999)")
     a.add_argument("--allow-new-base", action="store_true")
     a.add_argument("--commit", action="store_true")
     a.add_argument("--results", default="")
