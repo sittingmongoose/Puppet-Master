@@ -731,15 +731,19 @@ async function jPath(t, level) {
 	const add = t.root.locator(`${J_INSP} [data-psx-key="add:${level}"]`).first();
 	if (await add.count()) {
 		// the menu that is open (one closing a moment ago is still in the page, .is-closing, until it is hidden); a press
-		// that landed as the panel was redrawn opens none, and is pressed once more
+		// that landed as the panel was redrawn opens none, or a redraw closes the menu under the press: pressed again
 		const menu = () => t.root.waitForFunction(() => !!document.querySelector('.pmr-menu.is-open:not(.is-closing) .pmr-mi'), null, { timeout: 2000, polling: 50 }).then(() => true, () => false);
-		await jPress(t, add);
-		let ok = await menu();
-		if (!ok && (await add.count())) { await jPress(t, add); ok = await menu(); }
-		if (ok) {
-			const item = t.root.locator('.pmr-menu.is-open:not(.is-closing)').last().locator('.pmr-mi:not([aria-disabled="true"]):not([disabled])').first();
-			if (await item.count()) { const name = (await item.innerText()).split('\n')[0].trim(); await item.click(); return { how: 'add', name }; }
-			await t.page.keyboard.press('Escape');
+		for (let attempt = 0; attempt < 3; attempt++) {
+			if (!(await add.count())) break;
+			await jPress(t, add);
+			if (!(await menu())) continue;
+			try {
+				const item = t.root.locator('.pmr-menu.is-open:not(.is-closing)').last().locator('.pmr-mi:not([aria-disabled="true"]):not([disabled])').first();
+				if (!(await item.count())) { await t.page.keyboard.press('Escape'); break; }
+				const name = (await item.innerText({ timeout: 3000 })).split('\n')[0].trim();
+				await item.click({ timeout: 4000 });
+				return { how: 'add', name };
+			} catch (e) { await settle(t, 300); }
 		}
 	}
 	// a place that has its own already (or a computer row's own line): its Change
@@ -1167,7 +1171,7 @@ export default async function (t) {
 			return out;
 		}, INVA);
 		await t.check(`inventory alignment: the page reads this tree’s Plans/settings_inventory.json (${align.source ? `${align.source.rows} rows, schema ${align.source.schema_version}` : 'none'})`, !!INVA && !!align.source && align.source.sha256 === INVENTORY_SHA, JSON.stringify({ page: align.source, tree: INVENTORY_SHA }));
-		await t.check(`inventory alignment: all ${align.checked} drawn rows the inventory lists follow it, its combine exactly (${align.ladder} on the ladder, ${align.perItem.length} of them per_item; ${align.owner} owner-held, ${align.actions} of them actions naming their owner; ${align.look.length} engine-painted look details keep their Theme view; ${align.notListed.length} not listed: ${align.notListed.join(', ')})`, !!INVA && align.checked > 800 && align.bad.length === 0 && align.perItem.length === 3 && align.actions > 60, `${align.bad.length} mismatched: ` + align.bad.slice(0, 25).join(' | '));
+		await t.check(`inventory alignment: all ${align.checked} drawn rows the inventory lists follow it, its combine exactly (${align.ladder} on the ladder, ${align.perItem.length} of them per_item; ${align.owner} owner-held, ${align.actions} of them actions naming their owner; ${align.look.length} engine-painted look details keep their Theme view; ${align.notListed.length} not listed: ${align.notListed.join(', ')})`, !!INVA && align.checked > 800 && align.bad.length === 0 && ['safety.rules.per-tool-permissions', 'safety.protection.web-tool-permissions', 'safety.rules.rule-editor'].every((i) => align.perItem.includes(i)) && align.actions > 60, `${align.bad.length} mismatched: ` + align.bad.slice(0, 25).join(' | '));
 		await astraWhere(t);
 		// real panels, one owner-held row of each kind: an action, a field kept by its owner, a key, the Rules file, a row a project can choose inside its owner
 		for (const kind of ['action', 'owned', 'secret', 'projection', 'project']) {
