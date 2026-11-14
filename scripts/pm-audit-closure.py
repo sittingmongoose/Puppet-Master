@@ -2011,6 +2011,21 @@ def validate_reaudit_row(
             errors.append(f"{label}: a not_supported re-audit appends a reopened row")
     if len(errors) != before or record is None:
         return None
+    if "registry_self_anchor" in hashes:
+        # Self-exclusion cannot authenticate this row's own claim or identity.
+        # Rebuild them from the bound record and predecessor instead. The append
+        # timestamp is an input; both generated timestamps must agree with it.
+        try:
+            expected = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, row["created_at"])
+        except (AnchorError, KeyError, TypeError) as exc:
+            errors.append(f"{label}: cannot rebuild self-excluding re-audit row: {exc}")
+            return None
+        # The marker is checked separately against this registry by registry_row_resolver.
+        expected["hashes"]["registry_self_anchor"] = hashes["registry_self_anchor"]
+        differing = sorted(field for field, value in expected.items() if row.get(field) != value)
+        if differing:
+            errors.append(f"{label}: self-excluding re-audit generated fields differ from bound record and predecessor: {differing}")
+            return None
     return {"target": line, "verdict": record.get("verdict"), "later_closure_id": record.get("later_closure_id")}
 
 

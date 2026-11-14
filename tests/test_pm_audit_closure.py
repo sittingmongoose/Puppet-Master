@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import copy
 import importlib.util
 import io
 import json
@@ -344,6 +345,9 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
     def test_later_matching_row_stales_self_anchor(self) -> None:
         self.prepare_record()
         self.assertEqual(self.append()[0], 0)
+        report = pm_audit_closure.validate_registry(self.registry)
+        self.assertEqual(report["errors"], [])
+        self.assertEqual(report["unsuperseded_stale_hash_count"], 0)
         other = pm_audit_closure._self_test_registry_row(
             closure_id="closure-later", owner_docs=[self.registry_ref], closure_evidence=[self.registry_ref],
             detail_keys=["later finding"], hashes=self.target["hashes"],
@@ -353,6 +357,33 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         report = pm_audit_closure.validate_registry(self.registry)
         self.assertEqual(report["unsuperseded_stale_hash_count"], 1)
         self.assertTrue(any(self.anchor in error and "is stale" in error for error in report["errors"]), report)
+
+    def test_self_excluding_generated_fields_cannot_be_tampered(self) -> None:
+        self.prepare_record()
+        code, appended = self.append()
+        self.assertEqual((code, appended["appended"], appended["errors"]), (0, 1, []))
+        report = pm_audit_closure.validate_registry(self.registry)
+        self.assertEqual(report["errors"], [])
+        self.assertEqual(report["unsuperseded_stale_hash_count"], 0)
+        original = pm_audit_closure.read_jsonl(self.registry, [])
+        for field, value in original[-1].items():
+            if field == "_line_no":
+                continue
+            with self.subTest(field=field):
+                rows = copy.deepcopy(original)
+                if field in ("created_at", "updated_at"):
+                    changed = "2000-01-01T00:00:00Z" if value != "2000-01-01T00:00:00Z" else "2001-01-01T00:00:00Z"
+                elif isinstance(value, list):
+                    changed = value + ["tampered"]
+                elif isinstance(value, dict):
+                    changed = {**value, "tampered": True}
+                else:
+                    changed = value + " tampered"
+                rows[-1][field] = changed
+                pm_audit_closure.write_jsonl(self.registry, rows)
+                report = pm_audit_closure.validate_registry(self.registry)
+                self.assertTrue(report["errors"], report)
+                self.assertEqual(report["superseded_row_count"], 0, report)
 
     def test_stale_set_at_later_recheck_uses_self_exclusion(self) -> None:
         self.prepare_record()
