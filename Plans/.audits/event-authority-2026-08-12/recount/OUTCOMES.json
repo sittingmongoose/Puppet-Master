@@ -134,6 +134,10 @@
   {
    "event_type": "forge.mirror.connected",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.degraded",
+   "outcome": "registered"
   }
  ]
 }
