@@ -335,7 +335,7 @@ export const tests = {
 			const end = data.samples[data.samples.length - 1].s[RAIL.sel];
 			const onEnd = end && end.lens && end.onBox && end.lensOp > 0.5 && Math.abs(end.lens[0] + end.lens[2] / 2 - (end.onBox[0] + end.onBox[2] / 2)) < 3;
 			await t.check(`${look}: the chip rests on the chosen tab (${end && end.on})`, !!onEnd, JSON.stringify(end));
-			keep.push({ look, phases, frames: fr.map((x) => ({ t: +x.t.toFixed(2), box: x.box.map((v) => +v.toFixed(2)), src: x.src, gap: !!x.gap, real: x.real ? x.real.map((v) => +v.toFixed(2)) : undefined })), data });
+			keep.push({ look, phases, frames: fr.map((x) => ({ t: +x.t.toFixed(2), box: x.box.map((v) => +v.toFixed(2)), src: x.src, gap: !!x.gap, real: x.real ? x.real.map((v) => +v.toFixed(2)) : undefined, model: x.modelBox ? x.modelBox.map((v) => +v.toFixed(2)) : undefined, late: x.late || undefined })), data });
 		}
 		if (t.args.dump) { const fs = await import('node:fs'); fs.writeFileSync(String(t.args.dump), JSON.stringify(keep.map((k) => ({ ...k, pageMarks: t.__pageMarks || [] })))); }
 	}
