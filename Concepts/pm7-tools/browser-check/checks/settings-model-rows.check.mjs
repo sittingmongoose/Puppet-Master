@@ -104,11 +104,18 @@ const ctlSel = (id, scope) => scope === 'panel'
 	? `#panel-settings .pm51-panel :is(.o55-msel[data-o55-msel="${id}"], .pm51-dd:has(> select.pm51-media-model), .pm51-dd:has(> select[data-action="pm51-media-fb-add"])) [role="combobox"]`
 	: `#pm-settings-root :is(.o55-msel[data-o55-msel="${id}"] [role="combobox"], [id="setting-${id}"] .setting-control [role="combobox"], [data-setting-id="${id}"] .setting-control [role="combobox"])`;
 
-/* where each row is, reached by presses; returns the control's scope ('page' or 'panel') or null */
+/* where each row is, reached by presses; returns the control's scope ('page' or 'panel') or null. A narrow cell folds
+   the chapter rail into a menu and the abilities' list into a drawer, so the way there is pressed at 1920 and the
+   cell's own size is back before the control is opened and judged. */
 async function reach(t, f, id) {
 	const place = PLACE[id] || 'models';
 	/* a row already on screen (the Models page's nine) is pressed where it is */
 	if (['models', 'bsd'].includes(place) && (await f.evaluate(CTL, [id, 'page'])).found) return 'page';
+	const narrow = SIZE[0] < 1200;
+	if (narrow) { await t.viewport(1920, 1080); await t.page.waitForTimeout(400); }
+	try { return await reachAt(t, f, id, place); } finally { if (narrow) { await t.viewport(SIZE[0], SIZE[1]); await t.page.waitForTimeout(600); } }
+}
+async function reachAt(t, f, id, place) {
 	if (place === 'models') { await goPage(t, f, 'ai', 'providers', 'models'); return 'page'; }
 	if (place === 'bsd') { await goPage(t, f, 'ai', 'bsd', 'overview'); return 'page'; }
 	if (place === 'account') {
@@ -121,13 +128,7 @@ async function reach(t, f, id) {
 	if (place.startsWith('media:') || place === 'vision') {
 		const route = place === 'vision' ? 'image-understanding' : place.slice(6);
 		await goPage(t, f, 'ai', 'media', 'abilities');
-		/* a narrow Settings folds the abilities' list into a drawer: the ability is picked where the list shows (1920),
-		   then the cell's own size is back before its model field is opened and judged */
-		const rowSel = `#pm-settings-root .pm51-roster .resource-row[data-id="${route}"]`;
-		const narrow = !(await f.locator(rowSel).first().isVisible().catch(() => false));
-		if (narrow) { await t.viewport(1920, 1080); await t.page.waitForTimeout(400); }
-		await press(t, f, rowSel, route);
-		if (narrow) { await t.viewport(SIZE[0], SIZE[1]); await t.page.waitForTimeout(500); }
+		await press(t, f, `#pm-settings-root .pm51-roster .resource-row[data-id="${route}"]`, route);
 		if (place === 'vision') {
 			await press(t, f, `#pm-settings-root [data-action="pm51-media-fallbacks"][data-route="${route}"]`, 'If that fails, use › Edit');
 			const mine = f.locator('#panel-settings .pm51-panel [data-action="pm51-media-vision-mode"][data-value="choose a specific model"]').first();
