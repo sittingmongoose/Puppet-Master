@@ -234,6 +234,10 @@
   {
    "event_type": "forge.review.version_created",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.webhook.delivery_failed",
+   "outcome": "registered"
   }
  ]
 }
