@@ -102,6 +102,10 @@
   {
    "event_type": "execution_window.created",
    "outcome": "registered"
+  },
+  {
+   "event_type": "execution_window.invalidated",
+   "outcome": "registered"
   }
  ]
 }
