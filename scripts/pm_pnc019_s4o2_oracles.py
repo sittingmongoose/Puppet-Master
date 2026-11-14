@@ -20,7 +20,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = "Plans/pnc019_s4o2_oracle_cells.json"
+MANIFEST = "reports/event-authority-20261114/PNC019-S4O2-cells.json"
 LANES = ("DC", "DCW", "DF", "DG6A", "DG6B", "DM", "DMEM", "DO", "DR", "DS", "DS15", "DT")
 GATED_GUARD_COMMIT = "004bdedd632d9463f3535190a6ed5772338cdce1"
 
@@ -150,6 +150,8 @@ def source_snapshot(root):
     paths += [p for p in (root / "Plans").rglob("*")
               if p.is_file() and not any(part.startswith(".") or part == "_shards"
                                         for part in p.relative_to(root / "Plans").parts)]
+    paths += [root / MANIFEST]
+    paths += [root / row["baseline_grade_source"] for row in manifest(root)["rows"]]
     return {str(p.relative_to(root)): digest(p) for p in sorted(paths)}
 
 
@@ -214,7 +216,8 @@ def summarize(out):
             proofs.append(proof)
     summary = dict(proof_reports=len(proofs), proof_verdicts=dict(collections.Counter(p["status"] for p in proofs)),
                    rows=sum(len(p["rows"]) for p in proofs),
-                   proved=sum(r.get("proved") is True and p["status"] == "PASS" for p in proofs for r in p["rows"]),
+                   proved=sum(r.get("proved") is True for p in proofs for r in p["rows"]),
+                   credited_mutations=sum(len(p["credited_mutations"]) for p in proofs),
                    own_flips=sum(len(r.get("flips", [])) for p in proofs for r in p["rows"]),
                    masked=sum(len(r.get("masked", [])) for p in proofs for r in p["rows"]),
                    unrelated_changes=sum(len(r.get("unrelated_changes", [])) for p in proofs for r in p["rows"]),

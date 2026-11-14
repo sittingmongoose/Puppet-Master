@@ -164,7 +164,14 @@ def run(out):
             credited.append(negative["id"])
     sources = ["scripts/pm_dg6a_custody.py", "scripts/pm-panel-event-contracts-check.py",
                "scripts/pm-alert-event-contracts-check.py", path, "scripts/pm_guard_isolation.py",
-               "scripts/pm_pnc019_s4o2_retained.py"]
+               "scripts/pm_pnc019_s4o2_retained.py", "scripts/pm_pnc019_s4o2_oracles.py",
+               "scripts/pm_dg6a_tables.py", "scripts/pm-dg6a-domain.py",
+               "scripts/pm_event_numbers.py", "scripts/pm_event_datetime.py",
+               "scripts/pm-implementation-readiness.py"]
+    for family in load("Plans/panel_event_contracts/manifest.json")["families"]:
+        sources.extend([family["payload_schema"], "Plans/event_payloads/" + family["slug"] + ".schema.json",
+                        "Plans/panel_event_contracts/" + family["slug"] + ".fixtures.json",
+                        "Plans/panel_event_contracts/" + family["checkpoint"] + ".schema.json"])
     report = dict(status="PASS" if all(r["passed"] for r in results) and proof["status"] == "PASS"
                   and len(credited) == len(negatives) else "FAIL",
                   cases=results, guard_status=proof["status"], credited_mutations=credited,

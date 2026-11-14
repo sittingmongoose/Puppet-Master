@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import pm_guard_isolation as g
 import pm_pnc019_s4o2_oracles as cells
 import pm_runtime_artifact_table_append_policy as policy
+import pm_dg6a_table_history_custody as custody_table
 
 
 class ExactMutationCredit(unittest.TestCase):
@@ -91,6 +92,23 @@ class Assignment(unittest.TestCase):
             jobs = list(cells.proof_jobs(lane, names, Path("/oracle-evidence")))
             self.assertTrue(jobs, lane)
             self.assertTrue(all((ROOT / command[0]).is_file() for _, command in jobs), lane)
+
+    def test_other_unproved_rows_remove_engine_credit(self):
+        path = "scripts/pm_dg6a_table_history_custody.py"
+        control = {field: True for field in custody_table.FIELDS}
+        negative = {field: False for field in custody_table.FIELDS}
+        suite = g.Suite("S4o2 partial actual custody table", custody_table.case,
+                        [g.Control("control", control, "retained_history")],
+                        [g.Negative("missing", negative, "HC01_original_located", "original_unavailable",
+                                    "control", "Missing independently sealed original")], (path,), ROOT,
+                        non_guards=[g.NonGuard(path, "case", "return", "return g.Case(table, check, context)",
+                                              "Return the fresh execution object.")])
+        report = g.run(suite)
+        self.assertEqual(report["status"], "FAIL")
+        own = next(r for r in report["rows"] if r["id"] == "HC01_original_located")
+        self.assertIn("missing", own["flips"])
+        self.assertFalse(own["proved"])
+        self.assertFalse(cells.mutation_credit(report, report["negatives"][0]))
 
 
 if __name__ == "__main__":

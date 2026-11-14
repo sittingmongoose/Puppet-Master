@@ -18,13 +18,13 @@ from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urldefrag, urljoin
 
-from jsonschema import Draft202012Validator, validators
+from jsonschema import Draft202012Validator, FormatChecker, validators
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
-from pm_event_datetime import EVENT_RECORD, format_checker
+from pm_event_datetime import EVENT_RECORD, date_time
 from pm_event_numbers import Refusal, current_integer
-from pm_pnc019_s4o2_oracles import ROOT, manifest
+from pm_pnc019_s4o2_oracles import ROOT, MANIFEST, manifest
 
 
 @lru_cache(maxsize=None)
@@ -46,6 +46,26 @@ def exact_integer(checker, value):
 
 Validator = validators.extend(Draft202012Validator,
                               type_checker=Draft202012Validator.TYPE_CHECKER.redefine("integer", exact_integer))
+
+
+def current_formats():
+    # The shared returned checker is deliberately immutable. Compose an owned
+    # registry from the same shared predicate, preserving its exact profile.
+    formats = FormatChecker()
+
+    @formats.checks("date-time", raises=Refusal)
+    def event_record_format(value):
+        return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value
+
+    @formats.checks("pm-uint", raises=Refusal)
+    def current_integer_format(value):
+        # Exactly DCW's owner call: nullable slots defer null to their `type`;
+        # every non-null value goes through the shared current_integer.
+        if value is not None:
+            current_integer(value)
+        return True
+
+    return formats
 
 
 def at(value, path):
@@ -168,7 +188,7 @@ def validator(path, document, pointer, registry):
         registry = registry.with_resource(document["$id"], resource)
         base = document["$id"]
     root = dict(document, **{"$ref": "#/" + "/".join(pointer)}) if pointer else document
-    return Validator(root, registry=registry, format_checker=format_checker(profile=EVENT_RECORD))
+    return Validator(root, registry=registry, format_checker=current_formats())
 
 
 def error_keys(valid, value):
@@ -220,18 +240,27 @@ def replacements(keyword, node, value):
     if keyword == "minLength":
         return ["x" * max(0, node[keyword] - 1)]
     if keyword == "maxLength":
-        return ([value + "\n", value + "x" * max(1, node[keyword] + 1 - len(value))]
-                if type(value) is str else []) + ["x" * (node[keyword] + 1)]
+        cap = node[keyword]
+        prefix = "2026-11-04T00:00:00."
+        temporal = prefix + "1" * max(1, cap - len(prefix)) + "Z"
+        return ([value + "\n", value + "x" * max(1, cap + 1 - len(value)),
+                 value + "x" * max(0, cap - len(value)) + "\n"]
+                if type(value) is str else []) + [temporal, "x" * (cap + 1)]
     if keyword == "pattern" and type(value) is str:
-        return [prefix + value[1:] for prefix in ("!", "/", " ", "g", "z")] + [value + "\n"]
+        return [prefix + value[1:] for prefix in ("!", "/", " ", "g", "z")] + [value + "\n",
+                "2026-11-04T00:00:00z", "2026-11-04T01:00:00+01:00"]
     if keyword == "format":
         return ["2026-02-30T00:00:00Z", "2026-11-04T24:00:00Z", "not a format", "\n"]
     if keyword == "minItems":
         return [value[:max(0, node[keyword] - 1)]]
     if keyword == "maxItems" and value:
-        return [[copy.deepcopy(value[0]) for _ in range(node[keyword] + 1)]]
+        repeated = [copy.deepcopy(value[0]) for _ in range(node[keyword] + 1)]
+        unique = ([value[0] + "_" + str(i) for i in range(node[keyword] + 1)]
+                  if type(value[0]) is str else repeated)
+        return [unique, repeated]
     if keyword == "uniqueItems" and node[keyword] and value:
-        return [copy.deepcopy(value) + [copy.deepcopy(value[0])]]
+        return [[copy.deepcopy(value[0]) for _ in range(max(2, node.get("minItems", 0)))],
+                copy.deepcopy(value) + [copy.deepcopy(value[0])]]
     return []
 
 
@@ -253,7 +282,7 @@ def entailment(node, keyword):
             continue
         permitted = [node[earlier]] if earlier == "const" else node[earlier]
         assertion = {keyword: node[keyword]}
-        check = Validator(assertion, format_checker=format_checker(profile=EVENT_RECORD))
+        check = Validator(assertion, format_checker=current_formats())
         if permitted and all(not list(check.iter_errors(v)) for v in permitted):
             return dict(earlier_keyword=earlier,
                         proof="Every value permitted by this %s satisfies the unchanged %s assertion; an input violating it necessarily violates %s too. This is an implication, not a first-refusal-order certificate." % (earlier, keyword, earlier),
@@ -376,7 +405,7 @@ def main():
                if not any(part.startswith(".") or part == "_shards" for part in p.relative_to(ROOT / "Plans").parts)}
     sources.update({"scripts/" + name: hashlib.sha256((ROOT / "scripts" / name).read_bytes()).hexdigest()
                     for name in ("pm_pnc019_s4o2_schema_cells.py", "pm_event_numbers.py", "pm_event_datetime.py")})
-    sources["Plans/pnc019_s4o2_oracle_cells.json"] = hashlib.sha256((ROOT / "Plans/pnc019_s4o2_oracle_cells.json").read_bytes()).hexdigest()
+    sources[MANIFEST] = hashlib.sha256((ROOT / MANIFEST).read_bytes()).hexdigest()
     result = []
     for row in rows:
         try:

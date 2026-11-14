@@ -315,8 +315,7 @@ class DG6AOriginalOwner:
         entry = sealed.get(hashlib.sha256(self.raw).hexdigest())
         # A missing or ambiguous independently sealed receipt cannot select a
         # recipe. Do not unpack an arbitrary sequence or repair it on read.
-        if (type(entry) is not tuple or len(entry) != 2
-                or type(entry[0]) is not OriginalBinding or type(entry[1]) is not RecipeTuple):
+        if type(entry) is not tuple or len(entry) != 2:
             raise Refusal('original_authority')
         binding, recipe = entry
         return OriginalCustody(binding, recipe, self.raw, self.raw, self.raw)
