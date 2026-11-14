@@ -117,9 +117,16 @@ def main(argv=None):
     parser.add_argument('--max-rss', type=int, default=2048)
     parser.add_argument('--pause-when-low', type=int, default=8)
     parser.add_argument('--resume-at', type=int, default=9)
+    parser.add_argument('--collect-cache')
     args = parser.parse_args(argv)
 
-    collected, counts = collect(progress=lambda f: print(f'collected {f}', file=sys.stderr))
+    if args.collect_cache and Path(args.collect_cache).exists():
+        blob = json.loads(Path(args.collect_cache).read_text())
+        collected, counts = blob['collected'], blob['counts']
+    else:
+        collected, counts = collect(progress=lambda f: print(f'collected {f}', file=sys.stderr))
+        if args.collect_cache:
+            Path(args.collect_cache).write_text(json.dumps(dict(collected=collected, counts=counts), sort_keys=True))
     if args.collect_only:
         text = json.dumps(dict(counts=counts, phases={p: dict(controls=len(s['controls']), negatives=len(s['negatives']))
                                                      for p, s in collected.items()}), indent=1, sort_keys=True)

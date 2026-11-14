@@ -1427,6 +1427,7 @@ def obs_withdrawal(W):
 
 
 def observe(phase, W):
+    phase = rows_spec.base_phase(phase)
     if phase in ('admission', 'admission_config'):
         return obs_admission(W)
     if phase == 'eligibility':
@@ -1507,10 +1508,10 @@ class UnattributedObservation(Exception):
 def refusal(phase_name, facts):
     """First refusing row of one table as (row, code), or None; records the evaluation for the suites."""
     fields, rows = table(phase_name)
-    extra = sorted(k for k in facts if k not in fields)
-    if extra:
-        raise UnattributedObservation(f'{phase_name}: {extra}')
-    observed = {k: facts.get(k) is True for k in fields}
+    missing = sorted(k for k in fields if k not in facts)
+    if missing:
+        raise UnattributedObservation(f'{phase_name}: missing {missing}')
+    observed = {k: facts[k] is True for k in fields}
     first = None
     for name, predicate, context in rows:
         code = predicate(observed, context)
@@ -1523,13 +1524,15 @@ def refusal(phase_name, facts):
 
 
 def run_path(path, W):
-    """Evaluate a path's phases in order; return (phase_name, row, code, failing_rows) or None."""
+    """Evaluate a path's phases in order; return (base_phase, row, code, failing_rows) or None."""
     fam = W['fam']
     for name in rows_spec.path_phases(path, fam):
-        first, observed = refusal(name, observe(name, W))
+        facts = observe(name, W)
+        first, observed = refusal(name, facts)
         if first is not None:
-            failing = [k for k, v in observed.items() if v is not True]
-            return (name, first[0], first[1], failing)
+            base = rows_spec.base_phase(name)
+            failing = [r[0] for r in rows_spec.all_phases()[base][1] if facts.get(r[1]) is not True]
+            return (base, first[0], first[1], failing)
     return None
 
 

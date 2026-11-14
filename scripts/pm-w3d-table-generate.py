@@ -50,7 +50,7 @@ def render(phase, title, rows):
 def main():
     check = '--check' in sys.argv[1:]
     stale = []
-    phases = rows_spec.all_phases()
+    phases = rows_spec.chunked_phases()
     expected = set()
     for phase, (title, rows) in phases.items():
         path = ROOT / 'scripts' / f'{PREFIX}{phase}.py'
@@ -61,11 +61,15 @@ def main():
                 stale.append(path.name)
         else:
             path.write_text(text)
-    extra = sorted(p.name for p in (ROOT / 'scripts').glob(PREFIX + '*.py') if p.name not in expected)
+    extra = sorted(p for p in (ROOT / 'scripts').glob(PREFIX + '*.py') if p.name not in expected)
+    if not check:
+        for p in extra:
+            p.unlink()
+    extra_names = [p.name for p in extra]
     total = sum(len(r) for _, r in phases.values())
-    print(f'{len(phases)} tables, {total} rows; stale {len(stale)}; extra {len(extra)}')
-    if stale or extra:
-        print('stale:', stale[:10], 'extra:', extra[:10])
+    print(f'{len(phases)} tables, {total} rows; stale {len(stale)}; extra {len(extra_names)}')
+    if stale or (check and extra_names):
+        print('stale:', stale[:10], 'extra:', extra_names[:10])
         return 1
     return 0
 

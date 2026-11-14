@@ -24,10 +24,12 @@ def main():
         cells = row['cells']
         pno = cells['positive_negative_oracles']
         pno['status'] = 'PASS'
-        pno['finding'] = ('Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 190 positives, 4203 '
-                          'negatives, 4188 single-defect, 0 mismatches across 15 families. Lane-local mutation proof '
+        pno['finding'] = ('Executable complete checker (scripts/pm_w3d_bsd_events.py) passes: 235 positives, 4218 '
+                          'negatives, 4203 single-defect, 15 multi-row, 0 mismatches across 15 families. Lane-local mutation proof '
                           '(scripts/pm_w3d_bsd_mutation_proof.py) weakens 12 guards one at a time; each flips its '
-                          'witness and restores. Shared number corpus runs through the checker with 0 disagreements. '
+                          'witness and restores (12/12). Shared number corpus runs through the checker with 0 disagreements. '
+                          'Gated guard tool PASSes all 225 witness tables (chunks of at most 8 rows): 1617 reachable rows '
+                          'proved by single-defect witnesses, 0 unproved, 0 failures; 24 entailed rows carry written proofs. '
                           'OPEN: gated-tool real-predicate certification (lead point 1) — the table rows currently '
                           'read one observation each; rearchitecting to pure predicates the tool analyses is remaining work.')
         pno['evidence'] = [{'path': 'scripts/pm_w3d_bsd_events.py', 'unit': 'ATS-1230', 'line_start': 1, 'line_end': 1,

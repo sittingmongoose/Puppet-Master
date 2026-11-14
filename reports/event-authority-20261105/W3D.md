@@ -235,7 +235,7 @@ start `a6749a55292b1bd9e17f41c36d32c88a6e098c9c`. Two gated merges, in order, ea
 
 `scripts/pm_w3d_bsd_events.py` is the complete checker over the 15 families; `scripts/pm_w3d_bsd_rows.py`
 is the row inventory and `scripts/pm-w3d-table-generate.py` generates the Method B table modules
-(`scripts/pm_w3d_bsd_table_*.py`, 72 tables, 1641 rows). Every refusal goes through a named guard row evaluated in
+(`scripts/pm_w3d_bsd_table_*.py`, 249 tables = 30 small + 219 chunks of at most 8 rows, 1641 rows). Every refusal goes through a named guard row evaluated in
 row order on an observation the checker derives from the complete boundary input. The checker builds a
 complete world (native owner decision, captured source, payload, envelope, admission, operation, packs,
 custody/receipt, head, retry, publication, retained read, replay, withdrawal) and regenerates every
@@ -249,9 +249,23 @@ single-defect witness in every family; the witness-requirement is asserted by th
 
 ### Guard tables and the gated tool
 
-`scripts/pm_w3d_bsd_guard_suites.py` collects the checker's observations (4393 cases, 14811 records,
-48 phases) and builds one Method B suite per phase; `--all` runs the gated tool on each. The tool's own
-summaries are in the evidence directory. **Credit is exactly what the tool reports.**
+`scripts/pm_w3d_bsd_guard_suites.py` collects the checker's observations (4453 cases, 39914 records) and
+builds one Method B suite per table. Per the lead's 2026-11-14 directive, every table larger than 8 rows is
+split in the generator (`scripts/pm-w3d-table-generate.py`) into chunks of at most 8 rows, keeping every row
+and the checker's first-refusal order; each row keeps its own single-defect witness. This yields **249 tables
+(30 small + 219 chunks), 1641 rows**: 225 witness tables and 24 entailed tables (below).
+`scripts/pm_w3d_bsd_guard_chunked.py` runs the gated tool on each witness table at concurrency 4, each run
+under `systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0`, as one long-job (9m28s). The six
+already-PASSed small tables (cas, eligibility, replay, retry, scan, withdrawal) are reused only after verifying
+the table module is byte-identical to the generator render (SHA-256 unchanged) and the rebuilt suite's
+control/negative digests match the stored report (suite inputs unchanged). The tool's own per-table summaries
+are in the evidence directory. **Credit is exactly what the tool reports.**
+
+**Gated-tool result: all 225 witness tables PASS — 1617 reachable rows, each refused first at exactly its row
+by one single-defect witness (1617 negatives, 225 controls, 43860 evaluations, 87945 factories); 0 unproved
+guards, 0 failures, 0 masked negatives, 0 duplicates.** The remaining 24 rows are entailed (no single-defect
+witness by construction) and carry the written proofs below. The chunking leaves the complete checker
+unchanged: 235 positives / 4218 negatives / 4203 single-row / 15 multi-row / 0 mismatches / 0 unresolved refs.
 
 **Lead point 1 (real predicates) — open item, honest status:** the current table predicates read one
 boolean observation per row (`value[field] is not True`); the real comparison logic lives in the
@@ -357,6 +371,7 @@ override (HI13), incoherent backup (HI14).
 | number self-test (`--scope numbers`) | 0 | pass, 276 positives |
 | number corpus through checker | 0 | pass, 0 disagreements, 0 untracked |
 | mutation proof (12 guards) | 0 | pass, 12/12 flip+restore |
+| gated guard tool (225 witness tables, chunks ≤8 rows) | 0 | all PASS; 1617 reachable rows proved, 0 unproved / 0 failures; 6 small tables reused (table SHA-256 + suite inputs verified unchanged) |
 | shard check | 0 | pass, 3095 shards, 99 sources, 0 failures |
 | index generate | 0 | pass |
 | index validate | 1 | 760 base-drift failures (739 plan_unit_removed_without_ledger_decision, 21 plan_unit_removal_ledger_invalid); **0 name BSD/W3D**; origin/main moved to `290742ce3d` after the branch base — these are units added on main after the base, listed as base failures |
@@ -369,8 +384,9 @@ Regeneration touched only this lane's documents: `Plans/Back_Seat_Driver.md`, `P
 ### Grades before/after
 
 Membership stays ABSENT (no admission). Native execution stays NOT_RUN. `positive_negative_oracles` moves from
-PARTIAL (plan only) to executable-oracle evidence: the complete checker passes with single-defect witnesses and the
-lane-local mutation proof passes; the gated-tool real-predicate certification (lead point 1) remains the open item.
+PARTIAL (plan only) to executable-oracle evidence: the complete checker passes with single-defect witnesses, the
+lane-local mutation proof passes 12/12, and the gated tool PASSes all 225 witness tables (1617 reachable rows proved,
+0 unproved). The gated-tool real-predicate certification (lead point 1) remains the open item.
 `retention` moves from PARTIAL to bound for all 15 families (13 RP-RUNTIME-365D, 2 RP-AUTHORITY-INDEFINITE per DL-453).
 The self-grade (`W3D-self-grade.json`) records the per-cell evidence.
 

@@ -11,6 +11,7 @@ Row names map to the phase-1 plan guards in Plans/bsd_event_oracle_plan.json;
 the phase-2 report records the mapping. Codes are the checker's refusal strings.
 """
 import json
+import re
 from pathlib import Path
 
 import pm_w3d_bsd_spec as spec
@@ -556,6 +557,37 @@ def all_phases():
     return _ALL_PHASES_CACHE
 
 
+CHUNK_SIZE = 8
+_CHUNK_SUFFIX = re.compile(r'__c\d+$')
+
+
+def base_phase(phase):
+    return _CHUNK_SUFFIX.sub('', phase)
+
+
+def is_chunk(phase):
+    return base_phase(phase) != phase
+
+
+def chunk_names(base):
+    rows = all_phases()[base][1]
+    if len(rows) <= CHUNK_SIZE:
+        return [base]
+    n = (len(rows) + CHUNK_SIZE - 1) // CHUNK_SIZE
+    return [f'{base}__c{i}' for i in range(n)]
+
+
+def chunked_phases():
+    out = {}
+    for phase, (title, rows) in all_phases().items():
+        if len(rows) <= CHUNK_SIZE:
+            out[phase] = (title, rows)
+            continue
+        for i in range(0, len(rows), CHUNK_SIZE):
+            out[f'{phase}__c{i // CHUNK_SIZE}'] = (f'{title} [chunk {i // CHUNK_SIZE}]', rows[i:i + CHUNK_SIZE])
+    return out
+
+
 def phase_name(phase, fam):
     if phase == 'payload':
         return f'payload_{fam["slug"]}'
@@ -574,8 +606,8 @@ def path_phases(path, fam):
     out = []
     for phase in PATHS[path]:
         if phase == 'source' and fam['slug'] == 'review_started':
-            out.append('start_body_review_started')
+            out.extend(chunk_names('start_body_review_started'))
         name = phase_name(phase, fam)
         if name is not None:
-            out.append(name)
+            out.extend(chunk_names(name))
     return out
