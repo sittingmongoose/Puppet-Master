@@ -64,9 +64,16 @@
                 then this project's rules, and a rule a more specific place also has (the same tool pattern, condition and
                 profile) is kept only there. No protective reordering: PS-144 says its combination "is not per-field
                 profile merging or a reordering of independent granular durable-rule specificity".
+       nicknames ai.models.model-alias, the one Model nicknames list (Plans batch 4, DL-479; Models §6.7): "Each
+                nickname resolves on its own (per_item, keyed by the normalized nickname): a project's line wins for
+                that nickname, and nicknames set only Everywhere still apply in the project". Nicknames normalize per
+                §6.7 (lowercase; spaces, underscores and hyphens collapse), so "Fast model" and "fast-model" are one
+                line; the most specific place that has a line for it wins, spelled as that place wrote it.
      A per_item row with no rule here would be a new kind of item: it keeps the most specific value whole and says so
      (out.perItemGap), and the check fails on it. */
-  const PER_ITEM = { 'safety.rules.per-tool-permissions': 'answers', 'safety.protection.web-tool-permissions': 'answers', 'safety.rules.rule-editor': 'rules' };
+  const PER_ITEM = { 'safety.rules.per-tool-permissions': 'answers', 'safety.protection.web-tool-permissions': 'answers', 'safety.rules.rule-editor': 'rules', 'ai.models.model-alias': 'nicknames' };
+  // a nickname's stable name (Models §6.7): lowercase, with spaces, underscores and hyphens collapsed
+  const nickKey = (k) => String(k).trim().toLowerCase().replace(/[\s_-]+/g, ' ');
   const ANSWERS = ['deny', 'ask', 'allow'];
   const RANK = { default: 0, everywhere: 1, computer: 2, device: 2, project: 3 };
   const isMap = (v) => !!v && typeof v === 'object' && !Array.isArray(v);
@@ -96,6 +103,12 @@
         value[k] = clone(own(win, k));
         items.push({ key: k, value: clone(own(win, k)), from: { level: win.level, key: win.key }, careful });
       });
+    } else if (kind === 'nicknames') {
+      // each nickname on its own: the most specific place with a line for it wins; the others still apply
+      value = {};
+      const seen = new Map();
+      layers.forEach((L) => { if (isMap(L.value)) Object.keys(L.value).forEach((k) => seen.set(nickKey(k), { L, k })); });
+      [...seen.values()].forEach(({ L, k }) => { value[k] = clone(L.value[k]); items.push({ key: k, value: clone(L.value[k]), from: { level: L.level, key: L.key }, careful: null }); });
     } else {
       value = [];
       const lists = layers.filter((L) => Array.isArray(L.value)), names = lists.map((L) => new Set(L.value.map(ruleKey)));
