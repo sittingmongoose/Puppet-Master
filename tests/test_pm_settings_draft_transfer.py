@@ -179,6 +179,28 @@ class ModelDefaultsContractTests(unittest.TestCase):
             with self.subTest(mutation=mutation):
                 self.assertTrue(self.check(doc))
 
+    def test_one_nickname_list_replaces_the_media_box(self):
+        self.assertEqual(self.check(self.inventory), [])
+        old, key = 'media.image.model-aliases', 'ai.models.model-alias'
+        rows = {row['id']: row for row in self.inventory['settings']}
+        self.assertNotIn(old, rows)
+        self.assertEqual(self.inventory['compatibility_reads'][old]['replacement_ids'], [key])
+        with self.assertRaises(ValueError):
+            self.resolve(rows[key], {'everywhere': {'opus': 'service/model'}, 'computer': {'opus': 'service/other'}})
+        for mutation in ('computer_level', 'whole_map', 'factory_entries', 'no_replacement'):
+            doc = copy.deepcopy(self.inventory)
+            row = next(row for row in doc['settings'] if row['id'] == key)
+            if mutation == 'computer_level':
+                row['layering']['may_differ_by'] = ['everywhere', 'computer', 'project']
+            elif mutation == 'whole_map':
+                row['layering']['combine'] = 'most_specific'
+            elif mutation == 'factory_entries':
+                row['default'] = {'nano banana': 'gemini-2.5-flash-image'}
+            else:
+                doc['compatibility_reads'][old]['replacement_ids'] = []
+            with self.subTest(mutation=mutation):
+                self.assertTrue(self.check(doc))
+
     def test_census_cannot_hide_a_missing_model_row(self):
         doc = copy.deepcopy(self.inventory)
         key = 'ai.models.low-effort-worker-model'

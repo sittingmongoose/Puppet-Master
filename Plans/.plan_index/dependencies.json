@@ -7711,6 +7711,7 @@
     "MACS-006",
     "DL-473",
     "DL-474",
+    "DL-479",
     "SP-348",
     "SSYS-061",
     "SSYS-063",
@@ -35490,6 +35491,26 @@
       "edge_type": "depends_on",
       "from": "DL-478",
       "to": "PNC-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-479",
+      "to": "MS-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-479",
+      "to": "MS-053"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-479",
+      "to": "SSYS-059"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-479",
+      "to": "SSYS-077"
     },
     {
       "edge_type": "depends_on",
@@ -129367,7 +129388,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-13T15:36:36Z",
+  "generated_at_utc": "2026-11-13T23:00:16Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -171173,6 +171194,23 @@
       "unit_type": "decision"
     },
     {
+      "context_scope": "settings_nicknames_batch4_20261113",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-479",
+      "reasoning_tier": "high",
+      "risk_class": "model_nickname_list_and_retirement_drift",
+      "source_location": {
+        "heading": "DL-479 - One Model Nicknames List For Chat And Media Models",
+        "heading_level": 3,
+        "heading_line": 32458,
+        "line": 32460,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
       "context_scope": "event_authority_retention_deck4",
       "gui_related": false,
       "owner_doc": "Plans/Decision_Log.md",
@@ -207290,8 +207328,8 @@
       "source_location": {
         "heading": "MS-001 - Models System Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 7504,
-        "line": 7506,
+        "heading_line": 7515,
+        "line": 7517,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207307,8 +207345,8 @@
       "source_location": {
         "heading": "MS-002 - Models SSOT And DRY Compliance Boundary",
         "heading_level": 3,
-        "heading_line": 1395,
-        "line": 1397,
+        "heading_line": 1402,
+        "line": 1404,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207324,8 +207362,8 @@
       "source_location": {
         "heading": "MS-003 - Owner Section Requirements And Reference Inventory",
         "heading_level": 3,
-        "heading_line": 1450,
-        "line": 1452,
+        "heading_line": 1457,
+        "line": 1459,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207341,8 +207379,8 @@
       "source_location": {
         "heading": "MS-004 - Provider Model Precedence Owner Boundary",
         "heading_level": 3,
-        "heading_line": 1506,
-        "line": 1508,
+        "heading_line": 1513,
+        "line": 1515,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207358,8 +207396,8 @@
       "source_location": {
         "heading": "MS-005 - Three Axis Settings And Deterministic Precedence",
         "heading_level": 3,
-        "heading_line": 1561,
-        "line": 1563,
+        "heading_line": 1568,
+        "line": 1570,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207375,8 +207413,8 @@
       "source_location": {
         "heading": "MS-006 - Resolver Input And Emit Shape",
         "heading_level": 3,
-        "heading_line": 1627,
-        "line": 1629,
+        "heading_line": 1634,
+        "line": 1636,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207392,8 +207430,8 @@
       "source_location": {
         "heading": "MS-007 - Concern Lifecycle And Consumer Boundaries",
         "heading_level": 3,
-        "heading_line": 1681,
-        "line": 1683,
+        "heading_line": 1688,
+        "line": 1690,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207409,8 +207447,8 @@
       "source_location": {
         "heading": "MS-008 - Requested Effective Identity And Storage Account Continuity",
         "heading_level": 3,
-        "heading_line": 1737,
-        "line": 1739,
+        "heading_line": 1744,
+        "line": 1746,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207426,8 +207464,8 @@
       "source_location": {
         "heading": "MS-009 - Execution Unit Defaults Worker Policy And Delegation",
         "heading_level": 3,
-        "heading_line": 1794,
-        "line": 1796,
+        "heading_line": 1801,
+        "line": 1803,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207443,8 +207481,8 @@
       "source_location": {
         "heading": "MS-010 - Compatibility Cleanup And Stale Tier Routing",
         "heading_level": 3,
-        "heading_line": 1848,
-        "line": 1850,
+        "heading_line": 1855,
+        "line": 1857,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207460,8 +207498,8 @@
       "source_location": {
         "heading": "MS-011 - GUI Help Labels Receipts And Subject Open Presentation",
         "heading_level": 3,
-        "heading_line": 1904,
-        "line": 1906,
+        "heading_line": 1911,
+        "line": 1913,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207477,8 +207515,8 @@
       "source_location": {
         "heading": "MS-012 - Canonical Model ID Grammar And Persistence Boundary",
         "heading_level": 3,
-        "heading_line": 1961,
-        "line": 1963,
+        "heading_line": 1968,
+        "line": 1970,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207494,8 +207532,8 @@
       "source_location": {
         "heading": "MS-013 - Collision Safe GUI Indexing And Display Name Policy",
         "heading_level": 3,
-        "heading_line": 2015,
-        "line": 2017,
+        "heading_line": 2022,
+        "line": 2024,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207511,8 +207549,8 @@
       "source_location": {
         "heading": "MS-014 - Runtime Platform Distinction And Usage Evidence Fields",
         "heading_level": 3,
-        "heading_line": 2070,
-        "line": 2072,
+        "heading_line": 2077,
+        "line": 2079,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207528,8 +207566,8 @@
       "source_location": {
         "heading": "MS-015 - Selection Priority And Retired Gemini CLI Evidence",
         "heading_level": 3,
-        "heading_line": 2126,
-        "line": 2128,
+        "heading_line": 2133,
+        "line": 2135,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207545,8 +207583,8 @@
       "source_location": {
         "heading": "MS-016 - Provider And Model Option Scopes",
         "heading_level": 3,
-        "heading_line": 2185,
-        "line": 2187,
+        "heading_line": 2192,
+        "line": 2194,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207562,8 +207600,8 @@
       "source_location": {
         "heading": "MS-017 - Capability Matrix Fields And Data Driven Checks",
         "heading_level": 3,
-        "heading_line": 2239,
-        "line": 2241,
+        "heading_line": 2246,
+        "line": 2248,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207579,8 +207617,8 @@
       "source_location": {
         "heading": "MS-018 - Dynamic Catalog Discovery And Selectable Unit Snapshots",
         "heading_level": 3,
-        "heading_line": 2308,
-        "line": 2310,
+        "heading_line": 2315,
+        "line": 2317,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207596,8 +207634,8 @@
       "source_location": {
         "heading": "MS-019 - System Role Name Mapping",
         "heading_level": 3,
-        "heading_line": 2362,
-        "line": 2364,
+        "heading_line": 2369,
+        "line": 2371,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207613,8 +207651,8 @@
       "source_location": {
         "heading": "MS-020 - Compaction Threshold Metadata",
         "heading_level": 3,
-        "heading_line": 2415,
-        "line": 2417,
+        "heading_line": 2422,
+        "line": 2424,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207630,8 +207668,8 @@
       "source_location": {
         "heading": "MS-021 - Provider Transform And Cache Capability Semantics",
         "heading_level": 3,
-        "heading_line": 2467,
-        "line": 2469,
+        "heading_line": 2474,
+        "line": 2476,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207647,8 +207685,8 @@
       "source_location": {
         "heading": "MS-022 - Runtime Specific Request Shaping And API Family Evidence",
         "heading_level": 3,
-        "heading_line": 2525,
-        "line": 2527,
+        "heading_line": 2532,
+        "line": 2534,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207664,8 +207702,8 @@
       "source_location": {
         "heading": "MS-023 - Availability Lifecycle And Finish Reason Handling",
         "heading_level": 3,
-        "heading_line": 2585,
-        "line": 2587,
+        "heading_line": 2592,
+        "line": 2594,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207681,8 +207719,8 @@
       "source_location": {
         "heading": "MS-024 - Pricing Metadata Versioning",
         "heading_level": 3,
-        "heading_line": 2644,
-        "line": 2646,
+        "heading_line": 2651,
+        "line": 2653,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207698,8 +207736,8 @@
       "source_location": {
         "heading": "MS-025 - Billing Entity Cost Attribution",
         "heading_level": 3,
-        "heading_line": 2696,
-        "line": 2698,
+        "heading_line": 2703,
+        "line": 2705,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207715,8 +207753,8 @@
       "source_location": {
         "heading": "MS-026 - Free Tier Billing Provenance Display",
         "heading_level": 3,
-        "heading_line": 2747,
-        "line": 2749,
+        "heading_line": 2754,
+        "line": 2756,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207732,8 +207770,8 @@
       "source_location": {
         "heading": "MS-027 - OpenCode Reference Pricing Formula",
         "heading_level": 3,
-        "heading_line": 2800,
-        "line": 2802,
+        "heading_line": 2807,
+        "line": 2809,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207749,8 +207787,8 @@
       "source_location": {
         "heading": "MS-028 - Provider Sensitive Token Counting",
         "heading_level": 3,
-        "heading_line": 2861,
-        "line": 2863,
+        "heading_line": 2868,
+        "line": 2870,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207766,8 +207804,8 @@
       "source_location": {
         "heading": "MS-029 - Context Breakdown Usage View",
         "heading_level": 3,
-        "heading_line": 2919,
-        "line": 2921,
+        "heading_line": 2926,
+        "line": 2928,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207783,8 +207821,8 @@
       "source_location": {
         "heading": "MS-030 - Bedrock Region Prefix Lookup",
         "heading_level": 3,
-        "heading_line": 2981,
-        "line": 2983,
+        "heading_line": 2988,
+        "line": 2990,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207800,8 +207838,8 @@
       "source_location": {
         "heading": "MS-031 - Two Gemini Providers Structural Anchor",
         "heading_level": 3,
-        "heading_line": 3040,
-        "line": 3042,
+        "heading_line": 3047,
+        "line": 3049,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207817,8 +207855,8 @@
       "source_location": {
         "heading": "MS-032 - Web Capability Mirror And Site Reader Routing",
         "heading_level": 3,
-        "heading_line": 3088,
-        "line": 3090,
+        "heading_line": 3095,
+        "line": 3097,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207834,8 +207872,8 @@
       "source_location": {
         "heading": "MS-033 - Model Native Websearch Classification",
         "heading_level": 3,
-        "heading_line": 3150,
-        "line": 3152,
+        "heading_line": 3157,
+        "line": 3159,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207851,8 +207889,8 @@
       "source_location": {
         "heading": "MS-034 - DuckDuckGo And Google Adapter Semantics",
         "heading_level": 3,
-        "heading_line": 3203,
-        "line": 3205,
+        "heading_line": 3210,
+        "line": 3212,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207868,8 +207906,8 @@
       "source_location": {
         "heading": "MS-035 - Firecrawl Identity And Config Registry",
         "heading_level": 3,
-        "heading_line": 3261,
-        "line": 3263,
+        "heading_line": 3268,
+        "line": 3270,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207885,8 +207923,8 @@
       "source_location": {
         "heading": "MS-036 - Firecrawl Deployment Disclosure Boundary",
         "heading_level": 3,
-        "heading_line": 3323,
-        "line": 3325,
+        "heading_line": 3330,
+        "line": 3332,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207902,8 +207940,8 @@
       "source_location": {
         "heading": "MS-037 - Tavily Heavy Mode Non Default Policy",
         "heading_level": 3,
-        "heading_line": 3376,
-        "line": 3378,
+        "heading_line": 3383,
+        "line": 3385,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207919,8 +207957,8 @@
       "source_location": {
         "heading": "MS-038 - Web Operation Input Surface Mirror",
         "heading_level": 3,
-        "heading_line": 3432,
-        "line": 3434,
+        "heading_line": 3439,
+        "line": 3441,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207936,8 +207974,8 @@
       "source_location": {
         "heading": "MS-039 - Webresearch Tiering And Automation Session Boundary",
         "heading_level": 3,
-        "heading_line": 3491,
-        "line": 3493,
+        "heading_line": 3498,
+        "line": 3500,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207953,8 +207991,8 @@
       "source_location": {
         "heading": "MS-040 - Persona Runtime Preference Schema",
         "heading_level": 3,
-        "heading_line": 3546,
-        "line": 3548,
+        "heading_line": 3553,
+        "line": 3555,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207970,8 +208008,8 @@
       "source_location": {
         "heading": "MS-041 - Persona Preference Priority And Fallback",
         "heading_level": 3,
-        "heading_line": 3606,
-        "line": 3608,
+        "heading_line": 3613,
+        "line": 3615,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -207987,8 +208025,8 @@
       "source_location": {
         "heading": "MS-042 - Unsupported Runtime Controls Skipped State",
         "heading_level": 3,
-        "heading_line": 3663,
-        "line": 3665,
+        "heading_line": 3670,
+        "line": 3672,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208004,8 +208042,8 @@
       "source_location": {
         "heading": "MS-043 - Variants Section Anchor",
         "heading_level": 3,
-        "heading_line": 3718,
-        "line": 3720,
+        "heading_line": 3725,
+        "line": 3727,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208021,8 +208059,8 @@
       "source_location": {
         "heading": "MS-044 - Variant Definition",
         "heading_level": 3,
-        "heading_line": 3766,
-        "line": 3768,
+        "heading_line": 3773,
+        "line": 3775,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208038,8 +208076,8 @@
       "source_location": {
         "heading": "MS-045 - Built In Variant Resolution",
         "heading_level": 3,
-        "heading_line": 3818,
-        "line": 3820,
+        "heading_line": 3825,
+        "line": 3827,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208055,8 +208093,8 @@
       "source_location": {
         "heading": "MS-046 - Custom Variant Config Schema",
         "heading_level": 3,
-        "heading_line": 3875,
-        "line": 3877,
+        "heading_line": 3882,
+        "line": 3884,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208072,8 +208110,8 @@
       "source_location": {
         "heading": "MS-047 - Disabled Variants Visibility",
         "heading_level": 3,
-        "heading_line": 3934,
-        "line": 3936,
+        "heading_line": 3941,
+        "line": 3943,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208089,8 +208127,8 @@
       "source_location": {
         "heading": "MS-048 - Variant Cycling Surfaces",
         "heading_level": 3,
-        "heading_line": 3986,
-        "line": 3988,
+        "heading_line": 3993,
+        "line": 3995,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208106,8 +208144,8 @@
       "source_location": {
         "heading": "MS-049 - Active Variant Priority And Persistence",
         "heading_level": 3,
-        "heading_line": 4039,
-        "line": 4041,
+        "heading_line": 4046,
+        "line": 4048,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208123,8 +208161,8 @@
       "source_location": {
         "heading": "MS-050 - Persona Default Variant Schema",
         "heading_level": 3,
-        "heading_line": 4094,
-        "line": 4096,
+        "heading_line": 4101,
+        "line": 4103,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208140,8 +208178,8 @@
       "source_location": {
         "heading": "MS-051 - Persona Variant Preselection",
         "heading_level": 3,
-        "heading_line": 4148,
-        "line": 4150,
+        "heading_line": 4155,
+        "line": 4157,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208157,8 +208195,8 @@
       "source_location": {
         "heading": "MS-052 - Model Alias Resolution",
         "heading_level": 3,
-        "heading_line": 4201,
-        "line": 4203,
+        "heading_line": 4208,
+        "line": 4210,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208174,8 +208212,8 @@
       "source_location": {
         "heading": "MS-053 - Canonical Media Alias Registry",
         "heading_level": 3,
-        "heading_line": 4257,
-        "line": 4259,
+        "heading_line": 4265,
+        "line": 4267,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208191,8 +208229,8 @@
       "source_location": {
         "heading": "MS-054 - GUI Model Label ID Separation",
         "heading_level": 3,
-        "heading_line": 4320,
-        "line": 4322,
+        "heading_line": 4330,
+        "line": 4332,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208208,8 +208246,8 @@
       "source_location": {
         "heading": "MS-055 - Chat Model Picker Display Contract",
         "heading_level": 3,
-        "heading_line": 4372,
-        "line": 4374,
+        "heading_line": 4382,
+        "line": 4384,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208225,8 +208263,8 @@
       "source_location": {
         "heading": "MS-056 - Picker Selection Requested Override",
         "heading_level": 3,
-        "heading_line": 4431,
-        "line": 4433,
+        "heading_line": 4441,
+        "line": 4443,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208242,8 +208280,8 @@
       "source_location": {
         "heading": "MS-057 - Settings Models Availability Display",
         "heading_level": 3,
-        "heading_line": 4487,
-        "line": 4489,
+        "heading_line": 4497,
+        "line": 4499,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208259,8 +208297,8 @@
       "source_location": {
         "heading": "MS-058 - Model Refresh And Threshold Actions",
         "heading_level": 3,
-        "heading_line": 4575,
-        "line": 4577,
+        "heading_line": 4586,
+        "line": 4588,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208276,8 +208314,8 @@
       "source_location": {
         "heading": "MS-059 - Runtime Qualified Effort Capability",
         "heading_level": 3,
-        "heading_line": 4633,
-        "line": 4635,
+        "heading_line": 4644,
+        "line": 4646,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208293,8 +208331,8 @@
       "source_location": {
         "heading": "MS-060 - Effort GUI Requested Effective Disclosure",
         "heading_level": 3,
-        "heading_line": 4694,
-        "line": 4696,
+        "heading_line": 4705,
+        "line": 4707,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208310,8 +208348,8 @@
       "source_location": {
         "heading": "MS-061 - Legacy Effort Wording Supersession",
         "heading_level": 3,
-        "heading_line": 4749,
-        "line": 4751,
+        "heading_line": 4760,
+        "line": 4762,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208327,8 +208365,8 @@
       "source_location": {
         "heading": "MS-062 - Detailed Inspector Runtime Identity",
         "heading_level": 3,
-        "heading_line": 4804,
-        "line": 4806,
+        "heading_line": 4815,
+        "line": 4817,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208344,8 +208382,8 @@
       "source_location": {
         "heading": "MS-063 - OpenCode Baseline Deltas Anchor",
         "heading_level": 3,
-        "heading_line": 4857,
-        "line": 4859,
+        "heading_line": 4868,
+        "line": 4870,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208361,8 +208399,8 @@
       "source_location": {
         "heading": "MS-064 - OpenCode Model Baseline",
         "heading_level": 3,
-        "heading_line": 4904,
-        "line": 4906,
+        "heading_line": 4915,
+        "line": 4917,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208378,8 +208416,8 @@
       "source_location": {
         "heading": "MS-065 - Puppet Master Non GUI Model Deltas",
         "heading_level": 3,
-        "heading_line": 4960,
-        "line": 4962,
+        "heading_line": 4971,
+        "line": 4973,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208395,8 +208433,8 @@
       "source_location": {
         "heading": "MS-066 - Puppet Master GUI Model Deltas",
         "heading_level": 3,
-        "heading_line": 5017,
-        "line": 5019,
+        "heading_line": 5028,
+        "line": 5030,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208412,8 +208450,8 @@
       "source_location": {
         "heading": "MS-067 - Acceptance Model Identity And Selection",
         "heading_level": 3,
-        "heading_line": 5071,
-        "line": 5073,
+        "heading_line": 5082,
+        "line": 5084,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208429,8 +208467,8 @@
       "source_location": {
         "heading": "MS-068 - Acceptance Persona Fallback",
         "heading_level": 3,
-        "heading_line": 5128,
-        "line": 5130,
+        "heading_line": 5139,
+        "line": 5141,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208446,8 +208484,8 @@
       "source_location": {
         "heading": "MS-069 - Acceptance Variant Resolution And Validation",
         "heading_level": 3,
-        "heading_line": 5187,
-        "line": 5189,
+        "heading_line": 5198,
+        "line": 5200,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208463,8 +208501,8 @@
       "source_location": {
         "heading": "MS-070 - Acceptance Model Picker And Settings UI",
         "heading_level": 3,
-        "heading_line": 5249,
-        "line": 5251,
+        "heading_line": 5260,
+        "line": 5262,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208480,8 +208518,8 @@
       "source_location": {
         "heading": "MS-071 - Persona Runtime Controls Addendum Header",
         "heading_level": 3,
-        "heading_line": 5307,
-        "line": 5309,
+        "heading_line": 5318,
+        "line": 5320,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208497,8 +208535,8 @@
       "source_location": {
         "heading": "MS-072 - Persona Runtime Request Set",
         "heading_level": 3,
-        "heading_line": 5355,
-        "line": 5357,
+        "heading_line": 5366,
+        "line": 5368,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208514,8 +208552,8 @@
       "source_location": {
         "heading": "MS-073 - Provider Capability Matrix Application Gate",
         "heading_level": 3,
-        "heading_line": 5412,
-        "line": 5414,
+        "heading_line": 5423,
+        "line": 5425,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208531,8 +208569,8 @@
       "source_location": {
         "heading": "MS-074 - Effective Selection Identity Fields",
         "heading_level": 3,
-        "heading_line": 5466,
-        "line": 5468,
+        "heading_line": 5477,
+        "line": 5479,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208548,8 +208586,8 @@
       "source_location": {
         "heading": "MS-075 - Effective Selection Precedence Chain",
         "heading_level": 3,
-        "heading_line": 5539,
-        "line": 5541,
+        "heading_line": 5550,
+        "line": 5552,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208565,8 +208603,8 @@
       "source_location": {
         "heading": "MS-076 - Direct Coding Plan Runtime Surfaces",
         "heading_level": 3,
-        "heading_line": 5604,
-        "line": 5606,
+        "heading_line": 5615,
+        "line": 5617,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208582,8 +208620,8 @@
       "source_location": {
         "heading": "MS-077 - Coding Plan Product Labels In Picker Recommendation Surfaces",
         "heading_level": 3,
-        "heading_line": 5666,
-        "line": 5668,
+        "heading_line": 5677,
+        "line": 5679,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208599,8 +208637,8 @@
       "source_location": {
         "heading": "MS-078 - Interview GUI UX Gemini Stage Default",
         "heading_level": 3,
-        "heading_line": 5721,
-        "line": 5723,
+        "heading_line": 5732,
+        "line": 5734,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208616,8 +208654,8 @@
       "source_location": {
         "heading": "MS-079 - Provider Persona Capability Matrix Baseline",
         "heading_level": 3,
-        "heading_line": 5785,
-        "line": 5787,
+        "heading_line": 5796,
+        "line": 5798,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208633,8 +208671,8 @@
       "source_location": {
         "heading": "MS-080 - Capability Support Granularity And Adapter Routing",
         "heading_level": 3,
-        "heading_line": 5852,
-        "line": 5854,
+        "heading_line": 5863,
+        "line": 5865,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208650,8 +208688,8 @@
       "source_location": {
         "heading": "MS-081 - Direct Coding Plan Adapter Identity Facts",
         "heading_level": 3,
-        "heading_line": 5918,
-        "line": 5920,
+        "heading_line": 5929,
+        "line": 5931,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208667,8 +208705,8 @@
       "source_location": {
         "heading": "MS-082 - Talkativeness Derived Persona Control",
         "heading_level": 3,
-        "heading_line": 5980,
-        "line": 5982,
+        "heading_line": 5991,
+        "line": 5993,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208684,8 +208722,8 @@
       "source_location": {
         "heading": "MS-083 - Canonical Capability Snapshot Resolver Contract",
         "heading_level": 3,
-        "heading_line": 6040,
-        "line": 6042,
+        "heading_line": 6051,
+        "line": 6053,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208701,8 +208739,8 @@
       "source_location": {
         "heading": "MS-084 - Account Routing Capability Metadata Snapshot",
         "heading_level": 3,
-        "heading_line": 6126,
-        "line": 6128,
+        "heading_line": 6137,
+        "line": 6139,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208718,8 +208756,8 @@
       "source_location": {
         "heading": "MS-085 - Talkativeness Snapshot Bridge And GUI Gating Rule",
         "heading_level": 3,
-        "heading_line": 6198,
-        "line": 6200,
+        "heading_line": 6209,
+        "line": 6211,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208735,8 +208773,8 @@
       "source_location": {
         "heading": "MS-086 - Unsupported Persona Control Skip Disclosure",
         "heading_level": 3,
-        "heading_line": 6252,
-        "line": 6254,
+        "heading_line": 6263,
+        "line": 6265,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208752,8 +208790,8 @@
       "source_location": {
         "heading": "MS-087 - Persona Control GUI Support States",
         "heading_level": 3,
-        "heading_line": 6311,
-        "line": 6313,
+        "heading_line": 6322,
+        "line": 6324,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208769,8 +208807,8 @@
       "source_location": {
         "heading": "MS-088 - Runtime Surface Effective Choice Display",
         "heading_level": 3,
-        "heading_line": 6371,
-        "line": 6373,
+        "heading_line": 6382,
+        "line": 6384,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208786,8 +208824,8 @@
       "source_location": {
         "heading": "MS-089 - OpenCode Role Baseline And Persona Canonicalization",
         "heading_level": 3,
-        "heading_line": 6428,
-        "line": 6430,
+        "heading_line": 6439,
+        "line": 6441,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208803,8 +208841,8 @@
       "source_location": {
         "heading": "MS-090 - Effective Runtime Acceptance Criteria",
         "heading_level": 3,
-        "heading_line": 6489,
-        "line": 6491,
+        "heading_line": 6500,
+        "line": 6502,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208820,8 +208858,8 @@
       "source_location": {
         "heading": "MS-091 - Provider Failure Class Versus Model Fallback",
         "heading_level": 3,
-        "heading_line": 6548,
-        "line": 6550,
+        "heading_line": 6559,
+        "line": 6561,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208837,8 +208875,8 @@
       "source_location": {
         "heading": "MS-092 - Runtime Retry Fallback Ownership Split And Attempt Snapshots",
         "heading_level": 3,
-        "heading_line": 6605,
-        "line": 6607,
+        "heading_line": 6616,
+        "line": 6618,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208854,8 +208892,8 @@
       "source_location": {
         "heading": "MS-093 - Requested Effective Model Retry Canonical Alignment",
         "heading_level": 3,
-        "heading_line": 6667,
-        "line": 6669,
+        "heading_line": 6678,
+        "line": 6680,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208871,8 +208909,8 @@
       "source_location": {
         "heading": "MS-094 - Attempt Snapshot Identity Stability Across Retries",
         "heading_level": 3,
-        "heading_line": 6719,
-        "line": 6721,
+        "heading_line": 6730,
+        "line": 6732,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208888,8 +208926,8 @@
       "source_location": {
         "heading": "MS-095 - UI Artifact Snapshot ID Consumption",
         "heading_level": 3,
-        "heading_line": 6774,
-        "line": 6776,
+        "heading_line": 6785,
+        "line": 6787,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208905,8 +208943,8 @@
       "source_location": {
         "heading": "MS-096 - Child Run Runtime Snapshot Visibility And Effort Resolution",
         "heading_level": 3,
-        "heading_line": 6826,
-        "line": 6828,
+        "heading_line": 6837,
+        "line": 6839,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208922,8 +208960,8 @@
       "source_location": {
         "heading": "MS-097 - Default Crew Runtime Settings And Copilot Normalization",
         "heading_level": 3,
-        "heading_line": 6883,
-        "line": 6885,
+        "heading_line": 6894,
+        "line": 6896,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208939,8 +208977,8 @@
       "source_location": {
         "heading": "MS-098 - Provider Model Policy Inputs And Audit Scope",
         "heading_level": 3,
-        "heading_line": 6946,
-        "line": 6948,
+        "heading_line": 6957,
+        "line": 6959,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208956,8 +208994,8 @@
       "source_location": {
         "heading": "MS-099 - Provider Model Selection Precedence Chain",
         "heading_level": 3,
-        "heading_line": 7015,
-        "line": 7017,
+        "heading_line": 7026,
+        "line": 7028,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208973,8 +209011,8 @@
       "source_location": {
         "heading": "MS-100 - Settings Resolution Policy Modes",
         "heading_level": 3,
-        "heading_line": 7085,
-        "line": 7087,
+        "heading_line": 7096,
+        "line": 7098,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -208990,8 +209028,8 @@
       "source_location": {
         "heading": "MS-101 - Provider Capability And Multi Account Selection Gate",
         "heading_level": 3,
-        "heading_line": 7147,
-        "line": 7149,
+        "heading_line": 7158,
+        "line": 7160,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209007,8 +209045,8 @@
       "source_location": {
         "heading": "MS-102 - Cost Budget Fallback Concern",
         "heading_level": 3,
-        "heading_line": 7209,
-        "line": 7211,
+        "heading_line": 7220,
+        "line": 7222,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209024,8 +209062,8 @@
       "source_location": {
         "heading": "MS-103 - Clamp Substitution Reason Code Taxonomy",
         "heading_level": 3,
-        "heading_line": 7266,
-        "line": 7268,
+        "heading_line": 7277,
+        "line": 7279,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209041,8 +209079,8 @@
       "source_location": {
         "heading": "MS-104 - Clamp Substitution Semantics And Partial Evidence Disclosure",
         "heading_level": 3,
-        "heading_line": 7324,
-        "line": 7326,
+        "heading_line": 7335,
+        "line": 7337,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209058,8 +209096,8 @@
       "source_location": {
         "heading": "MS-105 - Selection Reason Payload Contract",
         "heading_level": 3,
-        "heading_line": 7380,
-        "line": 7382,
+        "heading_line": 7391,
+        "line": 7393,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209075,8 +209113,8 @@
       "source_location": {
         "heading": "MS-106 - Selection Reason Audit Trail Traceability",
         "heading_level": 3,
-        "heading_line": 7453,
-        "line": 7455,
+        "heading_line": 7464,
+        "line": 7466,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209092,8 +209130,8 @@
       "source_location": {
         "heading": "MS-107 - Provider Model Precedence Owner Pointer Compile Addendum",
         "heading_level": 3,
-        "heading_line": 7591,
-        "line": 7593,
+        "heading_line": 7602,
+        "line": 7604,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209109,8 +209147,8 @@
       "source_location": {
         "heading": "MS-108 - Goal Runtime Model Role Resolution Consumer",
         "heading_level": 3,
-        "heading_line": 7628,
-        "line": 7630,
+        "heading_line": 7639,
+        "line": 7641,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209126,8 +209164,8 @@
       "source_location": {
         "heading": "MS-109 - Orchestrator Capability Lane Binding Policy",
         "heading_level": 3,
-        "heading_line": 7692,
-        "line": 7694,
+        "heading_line": 7703,
+        "line": 7705,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209143,8 +209181,8 @@
       "source_location": {
         "heading": "MS-110 - Condensed Plans-To-Code Model Settings",
         "heading_level": 3,
-        "heading_line": 7797,
-        "line": 7799,
+        "heading_line": 7808,
+        "line": 7810,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209160,8 +209198,8 @@
       "source_location": {
         "heading": "MS-111 - Plans-To-Code Model Resolution Receipt",
         "heading_level": 3,
-        "heading_line": 7891,
-        "line": 7893,
+        "heading_line": 7902,
+        "line": 7904,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209177,8 +209215,8 @@
       "source_location": {
         "heading": "MS-112 - Planning Product Role Routing Consumers",
         "heading_level": 3,
-        "heading_line": 7956,
-        "line": 7958,
+        "heading_line": 7967,
+        "line": 7969,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209245,8 +209283,8 @@
       "source_location": {
         "heading": "MS-116 - Vision Bridge Requested Effective Route Resolution",
         "heading_level": 3,
-        "heading_line": 8016,
-        "line": 8018,
+        "heading_line": 8027,
+        "line": 8029,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209262,8 +209300,8 @@
       "source_location": {
         "heading": "MS-117 - Teach Teacher Low End Model Setting",
         "heading_level": 3,
-        "heading_line": 8107,
-        "line": 8109,
+        "heading_line": 8118,
+        "line": 8120,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209279,8 +209317,8 @@
       "source_location": {
         "heading": "MS-118 - Free Models Wrapper Catalog And Route Readiness Identity",
         "heading_level": 3,
-        "heading_line": 8262,
-        "line": 8264,
+        "heading_line": 8273,
+        "line": 8275,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209296,8 +209334,8 @@
       "source_location": {
         "heading": "MS-119 - Free Models Auto Apply Source Resolver And Runtime Adapter Boundary",
         "heading_level": 3,
-        "heading_line": 8350,
-        "line": 8352,
+        "heading_line": 8361,
+        "line": 8363,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209313,8 +209351,8 @@
       "source_location": {
         "heading": "MS-120 - Free Models Top-10 Precedence And Deterministic Fallback Eligibility",
         "heading_level": 3,
-        "heading_line": 8440,
-        "line": 8442,
+        "heading_line": 8451,
+        "line": 8453,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209330,8 +209368,8 @@
       "source_location": {
         "heading": "MS-121 - Free Models Availability Reason Model And Setup Eligibility",
         "heading_level": 3,
-        "heading_line": 8664,
-        "line": 8666,
+        "heading_line": 8675,
+        "line": 8677,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209347,8 +209385,8 @@
       "source_location": {
         "heading": "MS-122 - First-Run Paid Provider And Free Models Sequencing",
         "heading_level": 3,
-        "heading_line": 8524,
-        "line": 8526,
+        "heading_line": 8535,
+        "line": 8537,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209364,8 +209402,8 @@
       "source_location": {
         "heading": "MS-123 - P0-PROVIDER-METADATA-REPLAY",
         "heading_level": 3,
-        "heading_line": 8758,
-        "line": 8760,
+        "heading_line": 8769,
+        "line": 8771,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209381,8 +209419,8 @@
       "source_location": {
         "heading": "MS-124 - P0-PROVIDER-CAPABILITY-EPOCH",
         "heading_level": 3,
-        "heading_line": 8843,
-        "line": 8845,
+        "heading_line": 8854,
+        "line": 8856,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209398,8 +209436,8 @@
       "source_location": {
         "heading": "MS-125 - P0-REASONING-REPLAY-MATRIX",
         "heading_level": 3,
-        "heading_line": 8924,
-        "line": 8926,
+        "heading_line": 8935,
+        "line": 8937,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209415,8 +209453,8 @@
       "source_location": {
         "heading": "MS-126 - P0-EFFORT-POLICY-SETTLEMENT",
         "heading_level": 3,
-        "heading_line": 9003,
-        "line": 9005,
+        "heading_line": 9014,
+        "line": 9016,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209432,8 +209470,8 @@
       "source_location": {
         "heading": "MS-127 - P0-PROVIDER-CAPABILITY-EPOCH-2",
         "heading_level": 3,
-        "heading_line": 9090,
-        "line": 9092,
+        "heading_line": 9101,
+        "line": 9103,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209449,8 +209487,8 @@
       "source_location": {
         "heading": "MS-128 - P1-MODEL-SELECTION-ROUTER",
         "heading_level": 3,
-        "heading_line": 9176,
-        "line": 9178,
+        "heading_line": 9187,
+        "line": 9189,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209466,8 +209504,8 @@
       "source_location": {
         "heading": "MS-129 - P2-MODEL-CATALOG-CONFIDENCE-UI",
         "heading_level": 3,
-        "heading_line": 9257,
-        "line": 9259,
+        "heading_line": 9268,
+        "line": 9270,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209483,8 +209521,8 @@
       "source_location": {
         "heading": "MS-130 - P0-ENTITLEMENT-QUOTA-SETTLEMENT",
         "heading_level": 3,
-        "heading_line": 9345,
-        "line": 9347,
+        "heading_line": 9356,
+        "line": 9358,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209500,8 +209538,8 @@
       "source_location": {
         "heading": "MS-131 - provider_policy",
         "heading_level": 3,
-        "heading_line": 9424,
-        "line": 9426,
+        "heading_line": 9435,
+        "line": 9437,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209517,8 +209555,8 @@
       "source_location": {
         "heading": "MS-132 - provider_metadata_replay",
         "heading_level": 3,
-        "heading_line": 9494,
-        "line": 9496,
+        "heading_line": 9505,
+        "line": 9507,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209534,8 +209572,8 @@
       "source_location": {
         "heading": "MS-133 - provider_error_observability",
         "heading_level": 3,
-        "heading_line": 9562,
-        "line": 9564,
+        "heading_line": 9573,
+        "line": 9575,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209551,8 +209589,8 @@
       "source_location": {
         "heading": "MS-134 - Platform Specs Retirement And Capability Snapshot Authority",
         "heading_level": 3,
-        "heading_line": 9630,
-        "line": 9632,
+        "heading_line": 9641,
+        "line": 9643,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209568,8 +209606,8 @@
       "source_location": {
         "heading": "MS-135 - Provider Capability, Fallback, Lifecycle, And Error Schema Closure",
         "heading_level": 3,
-        "heading_line": 9699,
-        "line": 9701,
+        "heading_line": 9710,
+        "line": 9712,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209585,8 +209623,8 @@
       "source_location": {
         "heading": "MS-136 - Model Capability Usage Signal Display Contract",
         "heading_level": 3,
-        "heading_line": 9773,
-        "line": 9775,
+        "heading_line": 9784,
+        "line": 9786,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209602,8 +209640,8 @@
       "source_location": {
         "heading": "MS-137 - Requested Effective Route And Capability Evidence Layers",
         "heading_level": 3,
-        "heading_line": 9843,
-        "line": 9845,
+        "heading_line": 9854,
+        "line": 9856,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209619,8 +209657,8 @@
       "source_location": {
         "heading": "Continuity Capability Snapshot Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 9892,
-        "line": 9896,
+        "heading_line": 9903,
+        "line": 9907,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209636,8 +209674,8 @@
       "source_location": {
         "heading": "MS-139 - Original complete Models activation resolution custody",
         "heading_level": 3,
-        "heading_line": 9929,
-        "line": 9955,
+        "heading_line": 9940,
+        "line": 9966,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -209653,8 +209691,8 @@
       "source_location": {
         "heading": "MS-199 - Event Authority model.catalog_refreshed 1.0.0 — newly authored owner contract under DL-045.",
         "heading_level": 3,
-        "heading_line": 10013,
-        "line": 10015,
+        "heading_line": 10024,
+        "line": 10026,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -268181,10 +268219,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 21021,
+    "depends_on_edge_count": 21025,
     "downstream_blocked_node_count": 0,
-    "edge_count": 24239,
-    "node_count": 8165,
+    "edge_count": 24243,
+    "node_count": 8166,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0

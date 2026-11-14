@@ -37,7 +37,9 @@ MODEL_RETIRED_IDS = frozenset((
     'ai.models.subagent-effort', 'personas.tuning.default-model',
     'personas.tuning.default-platform', 'personas.tuning.reasoning-effort',
     'extensions.commands.command-model', 'media.image.provider',
+    'media.image.model-aliases',
 ))
+NICKNAMES_ID = 'ai.models.model-alias'
 
 
 def model_defaults_failures(inventory):
@@ -98,6 +100,14 @@ def model_defaults_failures(inventory):
         errors.append('model_defaults: Teach must default to the smallest available model')
     if rows.get('safety.approvals.bsd-model', {}).get('model_picker', {}).get('inherit_from') != 'ai.models.auditor-model':
         errors.append('model_defaults: BSD does not follow Checking finished work')
+    nicknames = rows.get(NICKNAMES_ID, {})
+    layer = nicknames.get('layering', {})
+    if (nicknames.get('type') != 'keyvalue' or nicknames.get('default') != {}
+            or layer.get('home') != 'everywhere' or layer.get('may_differ_by') != ['everywhere', 'project']
+            or layer.get('combine') != 'per_item'):
+        errors.append('model_nicknames: not one Everywhere/Project list resolved per nickname (DL-479)')
+    if compat.get('media.image.model-aliases', {}).get('replacement_ids') != [NICKNAMES_ID]:
+        errors.append('model_nicknames: media nicknames do not read into Model nicknames (DL-479)')
     return errors
 
 
@@ -150,7 +160,7 @@ def resolve_setting(row, own_values, *, os_reduce_motion=False):
             return min((c, p), key=order.index)
         return requested
     if combine == 'per_item' and values:
-        raise ValueError('per-item maps require the owning permission/tool resolver')
+        raise ValueError('per-item maps require the owning domain resolver (Permissions maps, Models nicknames)')
     return requested
 
 

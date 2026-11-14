@@ -1741,7 +1741,7 @@
    }
   }
  },
- "commit": "f8b20986082fe7b11ca5c22770ec042ee34e3327",
+ "commit": "65f5bba1f5a428340813ec1c22d311ddfbbd6c02",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -2229,8 +2229,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-13T17:06:09Z",
- "run_dir": "Plans/.plan_migration/pds-20261113-002-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-14T06:15:02Z",
+ "run_dir": "Plans/.plan_migration/pds-20261114-002-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
