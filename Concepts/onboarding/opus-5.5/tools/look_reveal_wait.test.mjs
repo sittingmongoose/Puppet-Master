@@ -8,7 +8,9 @@
 //          by keyboard, close() itself; the held work is released then, not at the transition's finish;
 //   R33-3  Reduced Motion or low-resource mode switched on between the press and ready skips the reveal at ready and
 //          releases the held work at once;
-//   and a pick made by keyboard (Enter or Space on a look row) is never ended by its own key: its repeats and key-up.
+//   and a pick made by keyboard (Enter or Space on a look row) is never ended by its own key: its repeats and key-up;
+//   R35-1  nor by a key that is not deliberate input to the page: IME composition keydowns, dead keys, AltGr, lock,
+//          media, volume, brightness and launch keys, PrintScreen, Unidentified; deliberate keys still end it.
 // Run: node Concepts/onboarding/opus-5.5/tools/look_reveal_wait.test.mjs [other 60-ui-core.js, e.g. from an older commit]
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -131,8 +133,8 @@ function makePage() {
 			now = until; await settle();
 		},
 		async frame(dt = 16.7) { now += dt; const q = frames.splice(0); q.forEach((fn) => fn(now)); await settle(); },
-		async key(key, target = document.body, { type = 'keydown', repeat = false } = {}) {
-			const e = { type, key, repeat, target, shiftKey: false, metaKey: false, preventDefault() {}, stopPropagation() {}, closest: () => null };
+		async key(key, target = document.body, { type = 'keydown', repeat = false, ...extra } = {}) {
+			const e = Object.assign({ type, key, code: key, repeat, isComposing: false, keyCode: 0, target, shiftKey: false, metaKey: false, preventDefault() {}, stopPropagation() {}, closest: () => null }, extra);
 			docListeners.filter((l) => l.type === type).forEach((l) => l.fn(e));
 			await settle();
 			return e;
@@ -280,6 +282,44 @@ await test('a new key pressed during a keyboard pick\'s reveal still ends it (a 
 	expect(a.skipped === 0, 'a repeat does not end it');
 	await p.key('ArrowDown');
 	expect(a.skipped > 0, 'a fresh key ends it');
+});
+
+await test('R35-1: IME composition keydowns never end a reveal (Process, isComposing, keyCode 229, the commit\'s Enter)', async () => {
+	const p = makePage();
+	const a = await waitingAt(p, 'friendly');
+	for (const [key, extra] of [['Process', { isComposing: true, keyCode: 229 }], ['a', { isComposing: true }], ['Unidentified', { keyCode: 229 }], ['Process', { keyCode: 229 }], ['Enter', { isComposing: true, keyCode: 229 }]]) {
+		await p.key(key, undefined, extra);
+		expect(a.skipped === 0, `a composition keydown ${JSON.stringify({ key, ...extra })} ended the reveal`);
+	}
+});
+
+await test('R35-1: keys that are not input to the page never end a reveal (dead keys, AltGr, locks, media, volume, brightness, launch, PrintScreen, Unidentified)', async () => {
+	const p = makePage();
+	const a = await waitingAt(p, 'glass');
+	for (const key of ['Dead', 'AltGraph', 'Control', 'NumLock', 'ScrollLock', 'CapsLock', 'MediaPlayPause', 'MediaTrackNext', 'AudioVolumeUp', 'AudioVolumeMute', 'BrightnessUp', 'LaunchMail', 'BrowserBack', 'PrintScreen', 'Unidentified']) {
+		await p.key(key); await p.key(key, undefined, { type: 'keyup' });
+		expect(a.skipped === 0, `the key ${key} ended the reveal`);
+	}
+});
+
+await test('R35-1: the activating key held down never ends its reveal, even when its auto-repeat does not say so; pressed again after its key-up, it does', async () => {
+	const p = makePage();
+	await p.key('Enter'); // the pick's own keydown
+	const a = await waitingAt(p, 'retro');
+	await p.key('Enter'); await p.key('Enter'); // auto-repeat without the repeat flag (no key-up between)
+	expect(a.skipped === 0, 'the held activating key ended its own reveal');
+	await p.key('Enter', undefined, { type: 'keyup' });
+	await p.key('Enter');
+	expect(a.skipped > 0, 'the same key pressed again after its key-up ends the reveal');
+});
+
+await test('deliberate keys still end a reveal: a letter, Backspace, a function key', async () => {
+	for (const key of ['a', 'Backspace', 'F2']) {
+		const p = makePage();
+		const a = await waitingAt(p, 'friendly');
+		await p.key(key);
+		expect(a.skipped > 0, `the key ${key} did not end the reveal`);
+	}
 });
 
 for (const [label, turnOn] of [['Reduced Motion', (p) => { p.motion.reduced = true; }], ['low-resource mode', (p) => { p.motion.lowResource = true; }]]) {

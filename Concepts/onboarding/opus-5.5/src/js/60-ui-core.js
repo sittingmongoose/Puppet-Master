@@ -419,10 +419,10 @@
   /* Input never waits for the look reveal. While a view transition plays, the browser hands every click to the page
      root, and on a heavy page on a slow computer the reveal outlasted a second: an early Continue was lost. A press
      during the reveal ends it at once, and the click goes to whatever was under the pointer. A key ends it the same way
-     wherever focus is (any key pressed, not repeated, but a lone modifier, as a moment's snap takes them; a key-up never
-     does: Space picks a look on its key-up), and so does close(): Escape, or the
-     Close button by keyboard, closed the window beneath the old window's picture (R33). skipLook() is the one
-     interruption: the transition is skipped and its wait's end (applyLook's endWait()) runs at once, in the same task. */
+     wherever focus is (a deliberate key, below; a key-up never does: Space picks a look on its key-up), and so does
+     close(): Escape, or the Close button by keyboard, closed the window beneath the old window's picture (R33).
+     skipLook() is the one interruption: the transition is skipped and its wait's end (applyLook's endWait()) runs at
+     once, in the same task. */
   function skipLook() {
     const vt = S.vt, endWait = S.vtEnd;
     if (!vt) return;
@@ -434,9 +434,22 @@
     skipLook();
     S.vtPress = { x: e.clientX, y: e.clientY, t: performance.now() };
   }, true);
-  /* (a key held down repeats: a look picked by keyboard, Enter on its row, began its reveal with that key, and its
-     repeats are not new input) */
-  document.addEventListener('keydown', (e) => { if (S.vt && !e.repeat && !/^(Shift|Control|Alt|Meta|CapsLock|Fn)$/.test(e.key)) skipLook(); }, true);
+  /* Only a deliberate key ends it (R35). A key held down is not pressed again: a look picked by keyboard (Enter on its
+     row) began its reveal with that key, and its auto-repeat (flagged or not) is not new input; a key counts again once
+     it has come up. Nor is a key that says nothing to the page: an IME's composition (isComposing, 'Process', keyCode
+     229, the Enter that commits it), a dead key's accent, a modifier or lock (AltGr among them), the system's own keys
+     (media, volume, brightness, launch, browser, power, PrintScreen) or one the browser cannot name. */
+  const keysDown = new Set(), keyOf = (e) => e.code || e.key;
+  const notInput = (e) => e.isComposing || e.keyCode === 229
+    || /^(Process|Dead|Unidentified|Shift|Control|Alt|AltGraph|Meta|OS|Super|Hyper|CapsLock|NumLock|ScrollLock|Fn|FnLock|Symbol|SymbolLock|PrintScreen)$/.test(e.key)
+    || /^(Audio|Media|Volume|Launch|Browser|Brightness|Mic|Power|WakeUp|Sleep|Standby|Eject|Hibernate|LogOff)/.test(e.key);
+  document.addEventListener('keydown', (e) => {
+    const k = keyOf(e), again = e.repeat || keysDown.has(k);
+    keysDown.add(k);
+    if (S.vt && !again && !notInput(e)) skipLook();
+  }, true);
+  document.addEventListener('keyup', (e) => { keysDown.delete(keyOf(e)); }, true);
+  window.addEventListener('blur', () => keysDown.clear());
   document.addEventListener('click', (e) => {
     const k = S.vtPress; if (!k) return;
     S.vtPress = null;
