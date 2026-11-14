@@ -330,8 +330,12 @@
     vt.ready.then(() => {
       const retro = family === 'retro';
       /* (variant B: the window is a picture of its own, revealed by the same circle as the ground) */
+      const timing = { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)' };
       ['root'].concat(still ? ['o55-win'] : []).forEach((name) => document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
-        { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)', pseudoElement: `::view-transition-new(${name})` }));
+        Object.assign({ pseudoElement: `::view-transition-new(${name})` }, timing)));
+      /* (variant B: the window's old picture gives way where the circle has passed, 20-motion.css --o55-vt-r) */
+      if (still) document.documentElement.animate({ '--o55-vt-r': ['0px', end + 'px'], '--o55-vt-x': [x + 'px', x + 'px'], '--o55-vt-y': [y + 'px', y + 'px'] },
+        Object.assign({ pseudoElement: '::view-transition-old(o55-win)', fill: 'forwards' }, timing));
       /* the window's own colour transitions end here too, as NieR's path ends them (syncTheme): about 500 of its elements
          eased from the old colours inside the circle and were restyled in every frame of the reveal (the rig's frames,
          25 ms each on the VM). At ready the new look's style is computed, so asking forces nothing. */
@@ -342,7 +346,9 @@
     vt.finished.finally(() => {
       O55.motion.quiet(2500);
       /* (variant B: the app takes the new look now, in the frame of the transition's own end restyle) */
-      if (still && S.vt === vt) { document.documentElement.removeAttribute('data-o55-vt-still'); document.documentElement.removeAttribute('data-o55-vt-b'); }
+      if (still && S.vt === vt) {
+        document.documentElement.removeAttribute('data-o55-vt-still'); document.documentElement.removeAttribute('data-o55-vt-b');
+      }
       release();
       if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); }
     });

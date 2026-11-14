@@ -121,6 +121,15 @@ html[data-o55-vt-b]::view-transition-group(*.o55-held), html[data-o55-vt-b]::vie
 html[data-o55-vt-b]::view-transition-new(*.o55-held) { animation: none; opacity: 0; }
 html[data-o55-vt-b]::view-transition-group(o55-win) { animation: none; }
 html[data-o55-vt-b]::view-transition-old(o55-win), html[data-o55-vt-b]::view-transition-new(o55-win) { animation: none; mix-blend-mode: normal; }
+/* the window is see-through (its scrim dims the app at 74%): its old picture is shown outside the circle only, as the
+   circle grows (--o55-vt-r, animated with the circle; 60-ui-core.js). Left whole under the new one, the two scrims
+   dimmed the app's old picture to about 7% inside the circle (VM screenshot, t-b4). */
+@property --o55-vt-r { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@property --o55-vt-x { syntax: '<length-percentage>'; inherits: false; initial-value: 50%; }
+@property --o55-vt-y { syntax: '<length-percentage>'; inherits: false; initial-value: 50%; }
+html[data-o55-vt-b]::view-transition-old(o55-win) {
+  -webkit-mask-image: radial-gradient(circle at var(--o55-vt-x) var(--o55-vt-y), transparent var(--o55-vt-r), #000 calc(var(--o55-vt-r) + 0.5px));
+  mask-image: radial-gradient(circle at var(--o55-vt-x) var(--o55-vt-y), transparent var(--o55-vt-r), #000 calc(var(--o55-vt-r) + 0.5px)); }
 html[data-o55-open] body > [data-o55-held] { contain-intrinsic-size: auto 0px auto 0px; }
 /* (in the new state the parts have no name, so each picture is the old one alone, at the old part's box: named in the
    new state too, a group took the hidden part's new box, which is empty under content-visibility, and the old picture
