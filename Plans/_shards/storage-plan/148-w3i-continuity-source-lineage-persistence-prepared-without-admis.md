@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L64782-L66098
 
-Source SHA256: `955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a`
+Source SHA256: `21ebcc20fe4b16674b48b8cb8f9bd2c81a8eb8929a6ed79b86ebd7f050fdd6a9`
 
 ---
 
@@ -308,7 +308,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -370,7 +370,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -432,7 +432,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -494,7 +494,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -556,7 +556,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -618,7 +618,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -680,7 +680,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -742,7 +742,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -804,7 +804,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -866,7 +866,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -913,7 +913,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: |-
   Newly authored owner contract for bsd.policy_changed, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_policy_changed_operation, bsd_policy_changed_projection and bsd_policy_changed_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
   The canonical operation key is bsd_policy_changed_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
-  The derived projection key is bsd_policy_changed_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_policy_changed_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.policy_changed@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently "PENDING_RETENTION_DECISION". A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The derived projection key is bsd_policy_changed_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_policy_changed_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.policy_changed@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-AUTHORITY-INDEFINITE", "policy_version": "1.0.0"} (DL-453 item 1.a, Back Seat Driver Project editions). A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
   The exact operational reader is reader.bsd.policy_changed@1.0.0 for Settings::bsd_policy_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.policy_changed/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
   Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
 gui_related: false
@@ -928,7 +928,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -990,7 +990,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -1053,7 +1053,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -1115,7 +1115,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -1162,7 +1162,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: |-
   Newly authored owner contract for bsd.workflow_binding_created, prepared without admission. SP-318's physical_family_registration_pending and handler_unavailable remain in force. SP-1365 separately stages the exact original lifecycle-source wrappers. The candidate rows in Plans/bsd_event_storage_candidates.json for bsd_workflow_binding_created_operation, bsd_workflow_binding_created_projection and bsd_workflow_binding_created_checkpoint are reviewable proposed values, not appended registry families, storage admission, a budget decision or a readiness-denominator change. An integrator must separately admit exact physical families/migration/budgets after review; no event can be made writable by these candidate rows alone. Each value uses its exact closed Plans/bsd_event_storage_contracts.schema.json definition.
   The canonical operation key is bsd_workflow_binding_created_operation.v1:{scope_partition}:{hex(owner_operation_id)}; state pending_event carries the original authenticated source, event ID, key, semantic digest and durable SP-337 payload reference. state complete additionally requires the exact original first AppendReceipt. It never stores a second EventRecord or copied private body. Operation refs and their packs remain while original pending/result/receipt custody is needed, under RP-EVENT-IDENTITY-APPROOT; that lifetime protects identity and an immutable receipt, not linked content. It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload packs together. Missing original is unavailable; it cannot be reconstructed from a GUI model or a supplied hash.
-  The derived projection key is bsd_workflow_binding_created_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_workflow_binding_created_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.workflow_binding_created@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently "PENDING_RETENTION_DECISION". A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
+  The derived projection key is bsd_workflow_binding_created_projection.v1:{scope_partition}:{hex(owner_operation_id)}. It holds only the original source/event refs and Storage identities. The derived checkpoint key is bsd_workflow_binding_created_checkpoint.v1:{scope_partition}:{storage_instance_id} for projector.bsd.workflow_binding_created@1.0.0. Both use RP-PROJECTION-3GEN with holds; source event retention is independently {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-AUTHORITY-INDEFINITE", "policy_version": "1.0.0"} (DL-453 item 1.a, Back Seat Driver Project editions). A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes referenced bodies before limits, rather than leaving an oversized operation value. Canonical/derived placement and actual disk budgets require existing SP-340 admission, never unbounded storage.
   The exact operational reader is reader.bsd.workflow_binding_created@1.0.0 for PlanningWorkflow::bsd_stage_binding_projection. It explicitly adopts SP-278 reader.storage.event_record_index@1.0.0, its CURRENT-selected actual root, globally complete verified source selection/coverage, authenticated generation anchor and advancing frontier. It scans in ascending Storage sequence, never timestamp order; the examined cursor cannot regress. It scans the complete captured range with exactly the bsd.workflow_binding_created/Project/version filter, resolves full values/payload refs, verifies actual storage_instance_id, partition, sequence/event/payload/source joins and original full-value custody before processing a match. Verified nonmatches are scanned; corruption, unsupported input or missing proof is unavailable/degraded, never skipped as empty. Apply the immutable event reference to only its rebuildable derived row. In one actual redb transaction compare-and-swap the entire old checkpoint and atomically commit all changed rows with last_scanned_sequence, last_matched_event_id, source selection and the nine-field durable read token. An empty source has a null cursor; a nonempty zero-match range still advances its examined cursor. Each durable token field is rejoined to actual Storage controls, then the current live snapshot supplies its transient tenth redb_snapshot_id field. Same generation alone cannot prove a frontier unchanged. Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.
   Historical inspection validates authenticated original admission/schema/recipe and source custody before the retained event, but never reruns current live-epoch/state/precondition checks. Current access, deletion and withdrawal checks still apply. Genuine older history after a live change stays readable; substituted or withdrawn originals refuse. Schema/version selection cannot be caller-chosen to weaken validation. Complete withdrawal fences writer admission at the actual cutoff, resolves pending issued results, invalidates reader/checkpoint publications and requires governed successor rebuild; missing source is explicitly unavailable, not a rebuilt success. Physical replay/restore/migration remains unimplemented and unadmitted.
 gui_related: false
@@ -1177,7 +1177,7 @@ unblocks: []
 acceptance_criteria:
 - Exact family semantics, payload, original-source identity and retry custody are bound.
 - No unregistered append, physical admission or native/runtime success is implied.
-- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+- Executable oracles with gated guard-isolation proof, strict derivation mutations, the per-slot shared corpus and plan coverage are in place (PNC-019 lane s4d); independent review still precedes any admission.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
