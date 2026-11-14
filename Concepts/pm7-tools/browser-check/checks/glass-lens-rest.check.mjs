@@ -381,6 +381,74 @@ async function abandonCheck(t, f, x, tag, how) {
 	await t.check(`held: a hold abandoned by ${how} with no pointerup comes back to the chosen item and rests unbent ${what}`, row.restMs >= 400 && row.restBent === 0 && row.movingFlat === 0 && row.backOnChosen, JSON.stringify(row));
 }
 
+/* R43 F1 (2026-11-14): two pointers, by CDP touch points. Touch 1 holds the chosen page tab; touch 2 goes down off every
+   strip and control and lifts while touch 1 stays: the lens bends in every frame until touch 1 lifts (a lens stays bent
+   until the last pointer holding it ends), then rests. Frames are judged by the page's own pointer event times */
+async function twoPointerCheck(t, f, x, tag) {
+	const what = `${tag} ${x.strip} (the chosen item; touch 2 lifts first)`;
+	const off = await offsetOf(t, f), c = x.cur, p1 = { x: off.x + c.x + c.w / 2, y: off.y + c.y + c.h / 2 };
+	const q = await f.evaluate(() => {
+		for (const [fx, fy] of [[0.62, 0.55], [0.45, 0.62], [0.3, 0.75], [0.7, 0.8], [0.5, 0.9]]) {
+			const x = innerWidth * fx, y = innerHeight * fy, e = document.elementFromPoint(x, y);
+			if (e && !e.closest('button, a, input, textarea, select, label, [role], [tabindex], nav, [contenteditable], [draggable="true"], canvas, i.lg-lens')) return { x, y, el: e.tagName.toLowerCase() + '.' + String(e.className).split(' ')[0] };
+		}
+		return null;
+	});
+	if (!q) { await t.check(`held: two pointers: a point off every control for touch 2 ${what}`, false, 'none found'); return; }
+	const p2 = { x: off.x + q.x, y: off.y + q.y };
+	await f.evaluate(() => {
+		const g = window.__g; g.pev = [];
+		if (!g.pevOn) { g.pevOn = true; for (const k of ['pointerdown', 'pointerup', 'pointercancel', 'lostpointercapture']) document.addEventListener(k, (e) => { if (g.pev) g.pev.push([k, e.pointerId, e.pointerType, Math.round(performance.now())]); }, true); }
+	});
+	await f.evaluate((i) => window.__g.watch(i), x.lens);
+	await t.page.waitForTimeout(120);
+	const cdp = await t.page.context().newCDPSession(t.page), pt = (p, id) => ({ x: p.x, y: p.y, id });
+	await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [pt(p1, 1)] });
+	await t.page.waitForTimeout(400);
+	await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [pt(p1, 1), pt(p2, 2)] });
+	await t.page.waitForTimeout(250);
+	await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [pt(p1, 1)] });   /* touch 2 lifts, touch 1 stays */
+	await t.page.waitForTimeout(1000);
+	await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+	await t.page.waitForTimeout(900);
+	await cdp.detach().catch(() => {});
+	const fr = await f.evaluate(() => window.__g.stop());
+	const ev = await f.evaluate(() => { const v = window.__g.pev || []; window.__g.pev = null; return v; });
+	const downs = ev.filter((e) => e[0] === 'pointerdown'), id1 = downs[0] && downs[0][1], id2 = downs[1] && downs[1][1];
+	const up = (id) => ev.find((e) => e[0] === 'pointerup' && e[1] === id), up1 = up(id1), up2 = up(id2);
+	const cancel1 = ev.find((e) => e[0] === 'pointercancel' && e[1] === id1);
+	const valid = downs.length >= 2 && id1 !== id2 && !!up1 && !!up2 && up2[3] < up1[3] && !(cancel1 && cancel1[3] < up1[3]);
+	const mid = valid ? fr.filter((z) => z.t > up2[3] + 20 && z.t < up1[3] - 5) : [], after = valid ? fr.filter((z) => z.t > up1[3] + 300) : [];
+	const row = { valid, events: ev.map((e) => `${e[0].replace('lostpointercapture', 'lostcap').replace('pointer', '')}#${e[1]}${e[2] === 'touch' ? '' : '/' + e[2]}@${e[3]}`), touch2: q.el,
+		stillHeld: mid.length, stillHeldMs: mid.length > 1 ? mid[mid.length - 1].t - mid[0].t : 0, stillHeldFlat: mid.filter((z) => !z.bend).length, after: after.length, afterBent: after.filter((z) => z.bend).length };
+	t.log(`two-pointers ${what}: ${JSON.stringify(row)}`);
+	await t.check(`held: with touch 1 still on the chosen item, touch 2's release does not end its bend ${what}`, valid && row.stillHeldMs >= 600 && row.stillHeldFlat === 0, JSON.stringify(row));
+	await t.check(`held: when touch 1 lifts too it rests unbent ${what}`, valid && row.after >= 5 && row.afterBent === 0, JSON.stringify(row));
+}
+
+/* R43 F2 (2026-11-14): a hold carried through a look change. The button is held on the chosen page tab in Glass; the
+   look changes to Basic Dark with the button down (the app's theme call, no pointer event, as from the keyboard), so
+   the lens is parked; the button is released in Basic Dark; back in Glass the lens must rest with its plain tint, no url() */
+async function parkHoldCheck(t, f, x, tag, look, { W, H }) {
+	const what = `${tag} ${x.strip} (held into Basic Dark, released there, back to ${look})`;
+	const off = await offsetOf(t, f), c = x.cur, at = { x: off.x + c.x + c.w / 2, y: off.y + c.y + c.h / 2 };
+	await t.page.mouse.move(at.x, at.y); await t.page.waitForTimeout(400);
+	await t.page.mouse.down(); await t.page.waitForTimeout(400);
+	const during = await f.evaluate((i) => { const l = window.__g.all()[i]; return l ? /url\(/.test(getComputedStyle(l).backdropFilter || '') : null; }, x.lens);
+	await t.app.look('basic-dark');
+	await t.page.waitForTimeout(600);
+	await t.page.mouse.up(); await t.page.waitForTimeout(600);
+	await t.app.look(look);
+	await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
+	await t.page.waitForTimeout(1500);
+	await parkPointer(t.page, W, H);
+	const s = await f.evaluate(() => window.__g.settle(4000));
+	const r = await f.evaluate(() => window.__g.rest());
+	const row = { bentWhileHeld: during, settled: s.settled, laid: r.laid, wrong: r.bent.slice(0, 3), inline: r.inline.slice(0, 3) };
+	t.log(`park-hold ${what}: ${JSON.stringify(row)}`);
+	await t.check(`held: a hold carried into a parked lens and released there comes back at rest, its plain tint and no url() ${what}`, during === true && s.settled && r.laid >= 1 && r.bent.length === 0 && r.inline.length === 0, JSON.stringify(row));
+}
+
 /* Usage's range: pressed on its chosen button, slid 40 px and back, released there */
 async function scrubCheck(t, f, x, tag) {
 	const off = await offsetOf(t, f), c = x.cur;
@@ -530,6 +598,13 @@ async function appPart(t, surface, W, H) {
 					const y = (await f.evaluate(() => window.__g.targets())).find((z) => z.strip === 'nav.page-tabs' && z.other);
 					if (y) await abandonCheck(t, f, y, tag, how); else await t.check(`held: the page tabs have their lens for ${how} ${tag}`, false, '');
 				}
+				/* R43 F1 and F2: two pointers on one lens; a hold carried through a parked lens */
+				await parkPointer(t.page, W, H); await f.evaluate(() => window.__g.settle(4000));
+				const x2 = (await f.evaluate(() => window.__g.targets())).find((z) => z.strip === 'nav.page-tabs' && z.other);
+				if (x2) await twoPointerCheck(t, f, x2, tag); else await t.check(`held: the page tabs have their lens for two pointers ${tag}`, false, '');
+				await parkPointer(t.page, W, H); await f.evaluate(() => window.__g.settle(4000));
+				const x3 = (await f.evaluate(() => window.__g.targets())).find((z) => z.strip === 'nav.page-tabs' && z.other);
+				if (x3) await parkHoldCheck(t, f, x3, tag, look, { W, H }); else await t.check(`held: the page tabs have their lens for a parked hold ${tag}`, false, '');
 			}
 			const xs = await presses(t, f, tag, { hold: Number(t.args.hold || 1100) });
 			if (view === 'usage') { const r = xs.find((x) => x.strip === '#pmuRange'); if (r) { await scrubCheck(t, f, r, tag); await scrubNewCheck(t, f, r, tag); } else await t.check(`scrub: Usage's range has its lens ${tag}`, false, JSON.stringify(xs)); }
