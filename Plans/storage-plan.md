@@ -30523,7 +30523,33 @@ canonical_text: "SSYS-002/059/060 own semantics. This unit alone freezes physica
   \ lifetimes remain with their own owners. Legal/investigation holds, required references, recovery,\
   \ rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting\
   \ access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission,\
-  \ native proof or governance clearance is granted.\n"
+  \ native proof or governance clearance is granted.\n\nPNC-019 s4r signed-answer closure for `settings.theme.updated`.\n\
+  \nSigned E8-4 closes the `settings.theme.updated` historical-bytes cell as `CLOSED_NOT_APPLICABLE`:\
+  \ Jared wrote, verbatim, \"If they are retired already, PM isnt built yet...how would anything have\
+  \ records in them, they would have never been used....\" There are no saved records under this retired\
+  \ spelling, so no historical population, migration, retention policy, expiry anchor or keep-rule is\
+  \ assigned. Do not invent retained bytes or enable a writer. DL-408 still routes live theme changes\
+  \ solely to `settings.layer.changed`. Its older dedicated DRY-guard readability requirement remains\
+  \ intact and creates no saved records for these retired generic Settings names.\n\nSigned answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\
+  \ card `E8-4`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25\
+  \ UTC); SHA-256 `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log\
+  \ ID is minted here; integration records the later entry.\n\nThis signed binding supersedes earlier\
+  \ pending-retention language for this exact facet, including the prior s4r pending question; other source,\
+  \ checkpoint, custody and admission requirements remain with their existing owners.\n\nPNC-019 s4r signed-answer\
+  \ closure for `settings.updated`.\n\nSigned E8-4 closes the `settings.updated` historical-bytes cell\
+  \ as `CLOSED_NOT_APPLICABLE`: Jared wrote, verbatim, \"If they are retired already, PM isnt built yet...how\
+  \ would anything have records in them, they would have never been used....\" There are no saved records\
+  \ under this retired spelling, so no historical population, migration, retention policy, expiry anchor\
+  \ or keep-rule is assigned. Do not invent retained bytes or enable a writer. DL-408 still routes live\
+  \ Settings changes solely to `settings.layer.changed`. Its readability text concerns the older dedicated\
+  \ DRY-guard spelling and remains a compatibility obligation, not evidence that either retired generic\
+  \ Settings spelling has saved records. This clarification preserves that readability text without creating\
+  \ records or applying a keep-rule to an empty population.\n\nSigned answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\
+  \ card `E8-4`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25\
+  \ UTC); SHA-256 `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log\
+  \ ID is minted here; integration records the later entry.\n\nThis signed binding supersedes earlier\
+  \ pending-retention language for this exact facet, including the prior s4r pending question; other source,\
+  \ checkpoint, custody and admission requirements remain with their existing owners.\n"
 gui_related: false
 gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
 depends_on:
@@ -34911,7 +34937,28 @@ canonical_text: "Newly authored owner contract under DL-045 for usage.event only
   \ lifetimes remain with their own owners. Legal/investigation holds, required references, recovery,\
   \ rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting\
   \ access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission,\
-  \ native proof or governance clearance is granted.\n"
+  \ native proof or governance clearance is granted.\n\nPNC-019 s4r signed-answer closure for `usage.event`.\n\
+  \nSigned E8-1 option A resolves the `usage.event` history binding: select the existing `ai.usage.usage-retention`\
+  \ setting under SP-341/UF-108, not a fixed ordinary-telemetry policy. The setting remains 90 days by\
+  \ default with its existing allowed choices. For each Project or application entry, `retention_binding.setting_key\
+  \ = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`: the first successful\
+  \ save of that exact entry that survives a restart supplies the immutable anchor. Retry, replay, reprocessing,\
+  \ compaction, backup restore and later settlement/correction of the entry never reset that anchor; a\
+  \ genuinely separate entry has its own first-save anchor. Read the configured window and apply it from\
+  \ that preserved anchor in both seglog and Parquet; unlimited means no age expiry. If the original anchor\
+  \ or setting cannot be authenticated, refuse expiry rather than substitute occurrence, observation,\
+  \ source-result, run-finish or recovery time. There is no count eviction. Daily account/provider/model\
+  \ totals remain canonical, backed up and permanent; commit their accounting before detail cleanup and\
+  \ never rebuild them from expired detail. Holds, required references, recovery, rollback and protected\
+  \ backups still block deletion. This is the existing setting-driven policy selector, not a newly minted\
+  \ policy ID. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime\
+  \ is transferred from this event answer. `PENDING_RETENTION_BINDING` is resolved for this event; separate\
+  \ admission, storage implementation and native proof remain required.\n\nSigned answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\
+  \ card `E8-1`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25\
+  \ UTC); SHA-256 `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log\
+  \ ID is minted here; integration records the later entry.\n\nThis signed binding supersedes earlier\
+  \ pending-retention language for this exact facet, including the prior s4r pending question; other source,\
+  \ checkpoint, custody and admission requirements remain with their existing owners.\n"
 gui_related: false
 gui_classification_reason: Technical event persistence and contract custody.
 depends_on: [DL-045]
@@ -40610,7 +40657,24 @@ canonical_text: "### SP-627 — Stop request and canonical assistant-turn result
   \ lifetimes remain with their own owners. Legal/investigation holds, required references, recovery,\
   \ rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting\
   \ access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission,\
-  \ native proof or governance clearance is granted.\n"
+  \ native proof or governance clearance is granted.\n\nPNC-019 s4r signed-answer closure for `chat.response_stop_requested`.\n\
+  \nSigned E8-2 option A assigns the saved `dch_stop_outcome` (the existing canonical `assistant_turn_stop_outcome`\
+  \ family specified in SP-627) exactly the Stop request history's `RP-CHAT-THREAD-LIFETIME@1.0.0` policy\
+  \ under DL-401 G15. The governing chat is the one in the original authenticated Stop request, joined\
+  \ through `stop_request_event_id`, actual Storage instance, scope and thread; it cannot be replaced\
+  \ by the current caller's chat. Keep and delete the result with that same chat in Project and application\
+  \ scope. Apply the same shared 250,000-entry thread count and linked-successor rule without early eviction,\
+  \ the immediate deletion-hide rule, unheld active-copy purge within 24 hours and backup-byte purge within\
+  \ 30 days. Holds delay physical purge without restoring visibility. Independent first receipts, work\
+  \ records and referenced bodies keep their own policies. This resolves the saved outcome's pending retention\
+  \ question and adds no second history event, new record family, count allowance, hold exception or writer\
+  \ admission. Exact-key custody, full storage materialization and original request/result barriers remain\
+  \ required before actual writes.\n\nSigned answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\
+  \ card `E8-2`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25\
+  \ UTC); SHA-256 `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log\
+  \ ID is minted here; integration records the later entry.\n\nThis signed binding supersedes earlier\
+  \ pending-retention language for this exact facet, including the prior s4r pending question; other source,\
+  \ checkpoint, custody and admission requirements remain with their existing owners.\n"
 gui_related: false
 gui_classification_reason: Persistence, contract or verification of the existing Stop behavior.
 depends_on:

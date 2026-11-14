@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L50475-L54248
+Source lines: L50475-L54265
 
-Source SHA256: `bf57f2c287d8f882f832e7473eb6499ebad89a8f9f1c74ff8431d6edc83cf275`
+Source SHA256: `483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f`
 
 ---
 
@@ -2521,7 +2521,24 @@ canonical_text: "Newly authored owner contract for bundle.annotation_state_chang
   \ source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation\
   \ holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
   \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n\nPNC-019 s4r\
+  \ signed-answer closure for `bundle.annotation_state_changed`.\n\nSigned E8-3 option A assigns the existing\
+  \ `bundle.annotation_state_changed` compatibility mapping custody the same `RP-AUTHORITY-INDEFINITE@1.0.0`\
+  \ policy as the annotation history it maps, already assigned by DL-401 G16. Preserve the mapping's exact\
+  \ original history identity, owning scope and source relationships; no new operation value or mapping\
+  \ family is created. There is no age or count expiry. Ordinary deletion of a described note, object\
+  \ or chat does not delete this separate safe mapping custody or retain deleted content. Explicit Delete\
+  \ Puppet Master project data and the existing authorized application-data deletion rules remain subject\
+  \ to all independent holds, references, recovery and backup protections. Storage pressure refuses new\
+  \ writes, never evicts permanent custody. The derived History checkpoint independently retains DL-500's\
+  \ `RP-PROJECTION-3GEN@1.0.0`; this source-custody answer grants no longer lifetime or access to referenced\
+  \ bodies. The mapping retention question is resolved; admission and native conformance remain separate.\n\
+  \nSigned answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\
+  \ card `E8-3`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25\
+  \ UTC); SHA-256 `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log\
+  \ ID is minted here; integration records the later entry.\n\nThis signed binding supersedes earlier\
+  \ pending-retention language for this exact facet, including the prior s4r pending question; other source,\
+  \ checkpoint, custody and admission requirements remain with their existing owners.\n"
 gui_related: true
 gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
 split_recommended: false

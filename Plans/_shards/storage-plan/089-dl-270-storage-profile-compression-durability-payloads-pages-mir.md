@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L29574-L32157
+Source lines: L29574-L32183
 
-Source SHA256: `697878635813b1c2e65e5b48e3e687acb61060886193deca88ce034b7b270e7f`
+Source SHA256: `225a9611c73a4651be781b5fb3e8eccd8f4c6b8a1b20d23de5b44cbf9aee3774`
 
 ---
 
@@ -960,7 +960,33 @@ canonical_text: "SSYS-002/059/060 own semantics. This unit alone freezes physica
   \ lifetimes remain with their own owners. Legal/investigation holds, required references, recovery,\
   \ rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting\
   \ access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission,\
-  \ native proof or governance clearance is granted.\n"
+  \ native proof or governance clearance is granted.\n\nPNC-019 s4r signed-answer closure for `settings.theme.updated`.\n\
+  \nSigned E8-4 closes the `settings.theme.updated` historical-bytes cell as `CLOSED_NOT_APPLICABLE`:\
+  \ Jared wrote, verbatim, \"If they are retired already, PM isnt built yet...how would anything have\
+  \ records in them, they would have never been used....\" There are no saved records under this retired\
+  \ spelling, so no historical population, migration, retention policy, expiry anchor or keep-rule is\
+  \ assigned. Do not invent retained bytes or enable a writer. DL-408 still routes live theme changes\
+  \ solely to `settings.layer.changed`. Its older dedicated DRY-guard readability requirement remains\
+  \ intact and creates no saved records for these retired generic Settings names.\n\nSigned answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\
+  \ card `E8-4`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25\
+  \ UTC); SHA-256 `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log\
+  \ ID is minted here; integration records the later entry.\n\nThis signed binding supersedes earlier\
+  \ pending-retention language for this exact facet, including the prior s4r pending question; other source,\
+  \ checkpoint, custody and admission requirements remain with their existing owners.\n\nPNC-019 s4r signed-answer\
+  \ closure for `settings.updated`.\n\nSigned E8-4 closes the `settings.updated` historical-bytes cell\
+  \ as `CLOSED_NOT_APPLICABLE`: Jared wrote, verbatim, \"If they are retired already, PM isnt built yet...how\
+  \ would anything have records in them, they would have never been used....\" There are no saved records\
+  \ under this retired spelling, so no historical population, migration, retention policy, expiry anchor\
+  \ or keep-rule is assigned. Do not invent retained bytes or enable a writer. DL-408 still routes live\
+  \ Settings changes solely to `settings.layer.changed`. Its readability text concerns the older dedicated\
+  \ DRY-guard spelling and remains a compatibility obligation, not evidence that either retired generic\
+  \ Settings spelling has saved records. This clarification preserves that readability text without creating\
+  \ records or applying a keep-rule to an empty population.\n\nSigned answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\
+  \ card `E8-4`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25\
+  \ UTC); SHA-256 `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log\
+  \ ID is minted here; integration records the later entry.\n\nThis signed binding supersedes earlier\
+  \ pending-retention language for this exact facet, including the prior s4r pending question; other source,\
+  \ checkpoint, custody and admission requirements remain with their existing owners.\n"
 gui_related: false
 gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
 depends_on:
