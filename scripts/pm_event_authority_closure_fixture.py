@@ -29,6 +29,12 @@ DEPTH_ADMITTED = "reports/fixture/depth-admitted.json"
 DEPTH_DUPLICATE = "reports/fixture/depth-duplicate.json"
 VALIDATOR_STUB = "scripts/pm-event-authority-currentness.py"
 EVENTS_DOC = "Plans/fixture_events.md"
+# machine inputs, one per derivation route of the required source set
+HISTORICAL_INPUT = "Plans/fixture_machine_input.json"      # August inventory
+INDEX_INPUT = "Plans/fixture_index_input.json"             # Plans/00-plans-index.md
+PAYLOAD_INPUT = "Plans/fixture_payload.schema.json"        # registry payload_schema_ref
+EXPLICIT_INPUT = "Plans/runtime_integration_disposition.json"  # explicit shared-runtime input
+UNREQUIRED_FILE = "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json"
 
 
 def _sha(data: bytes) -> str:
@@ -152,6 +158,8 @@ def build(root: Path, helper: ModuleType, *, closed: bool) -> None:
     # an identifier whose only occurrence window is in the registry file, which the
     # registered rows also pin as parsed rows: the two reads must not share a cache
     families[0]["payload_schema_id"] = "pm.fx.known_schema"
+    families[0]["payload_owner_doc"] = "Plans/storage-plan.md#eventrecord-owner"
+    families[1]["payload_schema_ref"] = {"path": PAYLOAD_INPUT}
     _write(root, helper.EVENT_FAMILY_REGISTRY_REL_PATH, {
         "schema_id": helper.EVENT_FAMILY_REGISTRY_SCHEMA_ID,
         "schema_version": helper.EVENT_FAMILY_REGISTRY_SCHEMA_VERSION,
@@ -161,18 +169,18 @@ def build(root: Path, helper: ModuleType, *, closed: bool) -> None:
     # token -> (S6 rule, Plans line naming it); ledger and recount rows below back the non-mechanical ones
     non_events = {
         "cmd.fx.run": ("command_namespace", "The cmd.fx.run command emits nothing."),
-        "pm.fx.schema_id": ("identifier_namespace", "Schema pm.fx.schema_id is an identifier."),
-        "fx.manifest.json": ("filename_reference", "The file fx.manifest.json holds the manifest."),
-        "fx.layout_v2": ("version_identifier", "Key fx.layout_v2 is a version tag."),
-        "payload.fx_field": ("field_or_ui_path", "Field payload.fx_field is a payload path."),
+        "pm.fx.schema_id": ("identifier_namespace", "Schema pm.fx.schema_id is an identifier; it emits nothing."),
+        "fx.manifest.json": ("filename_reference", "The file fx.manifest.json holds the manifest; nothing is appended."),
+        "fx.layout_v2": ("version_identifier", "Key fx.layout_v2 is a version tag; nothing is appended."),
+        "payload.fx_field": ("field_or_ui_path", "Field payload.fx_field is a payload path; nothing is appended."),
         "fx.cited.thing": ("negative_context_reference", "fx.cited.thing must not emit an EventRecord."),
-        "fx.alias.recorded": ("landed_alias", "fx.alias.recorded is an alias."),
-        "fx.holding.recorded": ("holding_quarantine", "fx.holding.recorded stays in the holding bucket."),
-        "fx.cpu_excluded.recorded": ("landed_exclusion", "fx.cpu_excluded.recorded was reclassified."),
-        "fx.excluded68.recorded": ("landed_exclusion", "fx.excluded68.recorded is an excluded July row."),
-        "cmd.fx.legacy": ("landed_exclusion", "cmd.fx.legacy was excluded by its census row."),
-        "fx.recount_x.recorded": ("recount_outcome", "fx.recount_x.recorded was excluded at recount."),
-        "pm.fx.recount_identifier": ("recount_outcome", "pm.fx.recount_identifier was excluded at recount."),
+        "fx.alias.recorded": ("landed_alias", "fx.alias.recorded is an alias; nothing is appended."),
+        "fx.holding.recorded": ("holding_quarantine", "fx.holding.recorded stays in the holding bucket; nothing is appended."),
+        "fx.cpu_excluded.recorded": ("landed_exclusion", "fx.cpu_excluded.recorded was reclassified; nothing is appended."),
+        "fx.excluded68.recorded": ("landed_exclusion", "fx.excluded68.recorded is an excluded July row; nothing is appended."),
+        "cmd.fx.legacy": ("landed_exclusion", "cmd.fx.legacy was excluded by its census row; it emits nothing."),
+        "fx.recount_x.recorded": ("recount_outcome", "fx.recount_x.recorded was excluded at recount; nothing is appended."),
+        "pm.fx.recount_identifier": ("recount_outcome", "pm.fx.recount_identifier was excluded at recount; it emits nothing."),
     }
     window_docs = {"pm.fx.known_schema": helper.EVENT_FAMILY_REGISTRY_REL_PATH}
     events_text = "# Fixture events\n\n" + "".join(f"The {name} event is appended.\n" for name in registered)
@@ -181,9 +189,22 @@ def build(root: Path, helper: ModuleType, *, closed: bool) -> None:
     _write(root, "Plans/storage-plan.md", "# Storage\n\nEA-27 `{}` union `{}`; EA-29 `{}`.\n".format(
         helper.EA27_CANON_SHA256, helper.EA27_UNION_ROWS_CANON_SHA256, helper.EA29_CANON_SHA256))
     _write(root, "Plans/Plan_To_Node_Compilation.md", "# PNC\n\n- " + helper.EVENT_AUTHORITY_RUNTIME_BOUNDARY_BASIS_QUOTE + "\n")
-    _write(root, "Plans/Decision_Log.md", "# Decisions\n\n### DL-900: fixture exclusion\n\nfx.excluded.recorded is not an event family.\n\n### DL-901: other\n\nNothing.\n")
-    _write(root, "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json", '{"const": "local_deterministic_clean_room"}\n')
-    _write(root, VALIDATOR_STUB, "# fixture stand-in; EXCLUSIONS: runtime producer conformance is a later independent lane\n")
+    _write(root, "Plans/Decision_Log.md", "# Decisions\n\n### DL-900: fixture\n\nNothing here.\n")
+    _write(root, UNREQUIRED_FILE, '{"const": "local_deterministic_clean_room"}\n')
+    _write(root, VALIDATOR_STUB, "# fixture stand-in for the currentness tool\n")
+    # the machine-input routes, and derived outputs that every route must leave out
+    _write(root, "Plans/00-plans-index.md", f"# Index\n\nMachine inputs: {INDEX_INPUT}, Plans/.plan_index/node_readiness_report.json, Plans/missing_input.json.\n")
+    for relative in (HISTORICAL_INPUT, INDEX_INPUT, EXPLICIT_INPUT):
+        _write(root, relative, {"fixture_machine_input": relative})
+    _write(root, PAYLOAD_INPUT, {"type": "object", "additionalProperties": False})
+    for relative in helper.EA_DERIVED_VALIDATION_OUTPUTS:
+        _write(root, relative, {"derived_output": relative})
+    _write(root, helper.EA_HISTORICAL_INVENTORY_REL_PATH, {"sources": [
+        {"path": helper.EVENT_FAMILY_REGISTRY_REL_PATH},
+        {"path": HISTORICAL_INPUT},
+        {"path": "Plans/.implementation_readiness/pnc019_certification_receipt.json"},
+        {"path": EVENTS_DOC},
+    ]})
 
     frozen = helper.EA_FROZEN_AUDIT_ROOT
     cohorts = {
@@ -229,7 +250,8 @@ def build(root: Path, helper: ModuleType, *, closed: bool) -> None:
         "schema_id": helper.EA_RECOUNT_OUTCOMES_SCHEMA_ID,
         "rows": [{"event_type": n, "outcome": "registered" if n == names["admitted"][1] else "excluded"} for n in recount_names],
     })
-    _write(root, helper.EA_FROZEN_VALIDATOR_REL_PATH, "# frozen validator stand-in\n")
+    _write(root, helper.EA_FROZEN_VALIDATOR_REL_PATH, "# frozen validator stand-in\nRECOUNT_RECEIPT_SHA = \"{}\"  # declared pin\nRECOUNT_LIST_SHA = \"{}\"  # declared pin\n".format(
+        _sha((root / helper.EA_RECOUNT_RECEIPT_REL_PATH).read_bytes()), _sha((root / helper.EA_RECOUNT_LIST_REL_PATH).read_bytes())))
     _write(root, helper.EA_FROZEN_RECEIPT_DIR_REL_PATH + "/event_authority_validator_receipt.json", "{}\n")
 
     by_name = {f["event_type"]: f for f in families}
@@ -243,23 +265,26 @@ def build(root: Path, helper: ModuleType, *, closed: bool) -> None:
             "depth_assessment": {"path": DEPTH_ADMITTED, "sha256": _sha(depth_admitted)},
         })
 
-    tokens = sorted(set(registered) | set(non_events) | set(window_docs))
     rules = {name: "registered" for name in registered}
     rules.update({name: rule for name, (rule, _line) in non_events.items()})
     rules["pm.fx.known_schema"] = "identifier_namespace"
-    context_class = {"negative_context_reference": "explicit_non_event_or_forbidden_family"}
-    occurrence_rows = [{
-        "exact_token": token,
-        "registered": token in by_name,
-        "primary_mechanical_classification": "registered_event_family_declaration" if token in by_name else context_class.get(rules[token], "ambiguous_event_like_token"),
-        "occurrence_count": 1,
-    } for token in tokens]
-    occurrences = _jsonl(occurrence_rows)
     paths = _paths(helper)
+    occurrence_rows, occurrences = _census(root, helper)
+    unexpected = sorted({row["exact_token"] for row in occurrence_rows} - set(rules))
+    missing = sorted(set(rules) - {row["exact_token"] for row in occurrence_rows})
+    if unexpected or missing:
+        raise AssertionError(f"fixture census differs from its design: unexpected {unexpected}, missing {missing}")
+    discovery = {row["exact_token"]: row["primary_mechanical_classification"] for row in occurrence_rows}
+    if discovery["fx.cited.thing"] != "explicit_non_event_or_forbidden_family" or discovery["fx.layout_v2"] == "explicit_non_event_or_forbidden_family":
+        raise AssertionError(f"fixture census classes differ from the context-rule design: {discovery}")
     _write(root, paths["occurrences"], occurrences)
     _write(root, TOKEN_LEDGER, _jsonl([
-        _token_row(root, helper, token, rules[token], occurrence_rows, window_docs.get(token, EVENTS_DOC)) for token in tokens
+        _token_row(root, helper, row["exact_token"], rules[row["exact_token"]], occurrence_rows, window_docs.get(row["exact_token"], EVENTS_DOC))
+        for row in occurrence_rows
     ]))
+    _write(root, f"{helper.EVENT_AUTHORITY_AUDIT_ROOT}/adjudication/EXPECTED_252_EVENT_TYPES.tsv", "".join(f"fx.quarantined_{i:03d}.recorded\n" for i in range(252)))
+    for group in "abcdefg":
+        _write(root, f"{helper.EVENT_AUTHORITY_AUDIT_ROOT}/adjudication/source_groups/group_{group}.jsonl", _jsonl([{"group": group}]))
 
     _write(root, paths["manifest"], {
         "union": {"row_count": 252, "unique_event_type_count": 252, "quarantined_row_count": 252, "exact_set_equality": True},
@@ -303,6 +328,15 @@ def build(root: Path, helper: ModuleType, *, closed: bool) -> None:
             raise AssertionError(f"pristine CLOSED fixture does not verify: {failures}")
 
 
+def _census(root: Path, helper: ModuleType) -> tuple[list[dict[str, Any]], bytes]:
+    """The fixture's occurrence census, by the same code the generator and the CLOSED consumer use."""
+    required = helper.event_authority_required_sources(root)
+    sources = {path: (root / path).read_bytes() for path in required}
+    registered = {row["event_type"] for row in _read(root, helper.EVENT_FAMILY_REGISTRY_REL_PATH)["families"]}
+    rows = helper.event_authority_census_rows(sources, registered)
+    return rows, helper.event_authority_census_blob(rows)
+
+
 def _frozen_receipt(root: Path, helper: ModuleType) -> dict[str, Any]:
     registry = _read(root, helper.EVENT_FAMILY_REGISTRY_REL_PATH)
     live = {f["event_type"] for f in registry["families"]}
@@ -339,18 +373,20 @@ def reseal(
     refresh_frozen: bool = True,
     declared: list[str] | None = None,
     frozen_override: Callable[[dict[str, Any]], None] | None = None,
+    recensus: bool = True,
 ) -> None:
-    """Rewrite every hash, pin and status field over the current inputs."""
+    """Rewrite every hash, pin and status field over the current inputs, as the generator would."""
     paths = _paths(helper)
     registry_raw = (root / helper.EVENT_FAMILY_REGISTRY_REL_PATH).read_bytes()
     registry = json.loads(registry_raw)
     live = sorted(f["event_type"] for f in registry["families"])
     sources = []
-    for path in sorted((root / "Plans").glob("*.md")):
-        raw = path.read_bytes()
-        sources.append({"path": path.relative_to(root).as_posix(), "authority_class": "direct_canonical_plan_prose", "bytes": len(raw), "sha256": _sha(raw)})
-    sources.append({"path": helper.EVENT_FAMILY_REGISTRY_REL_PATH, "authority_class": "registered_machine_input", "bytes": len(registry_raw), "sha256": _sha(registry_raw)})
-    _write(root, paths["inventory"], {"sources": sources})
+    for path, authority_class in sorted(helper.event_authority_required_sources(root).items()):
+        raw = (root / path).read_bytes()
+        sources.append({"path": path, "authority_class": authority_class, "bytes": len(raw), "sha256": _sha(raw)})
+    _write(root, paths["inventory"], {"sources": sources, "explicit_exclusions": helper.EA_SOURCE_EXCLUSIONS})
+    if recensus:
+        _write(root, paths["occurrences"], _census(root, helper)[1])
     status = _read(root, paths["status"])
     status["registry"] = {
         "path": helper.EVENT_FAMILY_REGISTRY_REL_PATH,
@@ -359,7 +395,7 @@ def reseal(
         "live_family_count": len(live),
         "event_types_sha256": _sha(("\n".join(live) + "\n").encode()),
     }
-    artifacts = [paths[k] for k in ("inventory", "occurrences", "status", "readme", "quarantine", "manifest")]
+    artifacts = [path for path in helper.EA_EDITION_ARTIFACT_REL_PATHS if path not in helper.EVENT_AUTHORITY_CLOSURE_ARTIFACT_REL_PATHS]
     receipt: dict[str, Any] = {
         "validator_path": VALIDATOR_STUB,
         "validator_sha256": _sha((root / VALIDATOR_STUB).read_bytes()),
@@ -394,7 +430,7 @@ def reseal(
             raise AssertionError(f"fixture closure inputs unreadable: {_failures}")
         evidence_raw = _write(root, paths["evidence"], evidence)
         status = helper.build_closed_status(status, evidence, _sha(evidence_raw))
-        artifacts += [paths["evidence"], paths["frozen_receipt"], paths["continuity"]]
+        artifacts = list(helper.EA_EDITION_ARTIFACT_REL_PATHS)
         receipt.update({"event_authority_closed": True, "separate_claims": dict(helper.EVENT_AUTHORITY_SEPARATE_CLAIMS)})
     _write(root, paths["status"], status)
     receipt["artifact_hashes"] = {p: _sha((root / p).read_bytes()) for p in artifacts}
@@ -675,6 +711,113 @@ def _t_evidence_edited_in_place(root: Path, h: ModuleType) -> None:
     _refresh_artifact(root, h, paths["status"])
 
 
+def _edit_inventory(root: Path, h: ModuleType, change: Callable[[dict[str, Any]], None]) -> None:
+    """Edit the edition's inventory and re-bind it in VALIDATOR_RECEIPT.json (the omit-and-re-bind route)."""
+    _edit_json(root, _paths(h)["inventory"], change)
+    _refresh_artifact(root, h, _paths(h)["inventory"])
+
+
+def _drop_source(path: str) -> Callable[[dict[str, Any]], None]:
+    return lambda doc: doc.__setitem__("sources", [row for row in doc["sources"] if row["path"] != path])
+
+
+def _t_inventory_omits_machine_input(root: Path, h: ModuleType) -> None:
+    # the reviewer's R1: leave an index-registered machine input out, re-bind, then let it drift
+    _edit_inventory(root, h, _drop_source(INDEX_INPUT))
+    _write(root, INDEX_INPUT, {"tampered_schema": True})
+
+
+def _t_inventory_omits_registry_input(root: Path, h: ModuleType) -> None:
+    _edit_inventory(root, h, _drop_source(PAYLOAD_INPUT))
+    _write(root, PAYLOAD_INPUT, {"tampered_schema": True})
+
+
+def _t_inventory_omits_historical_input(root: Path, h: ModuleType) -> None:
+    _edit_inventory(root, h, _drop_source(HISTORICAL_INPUT))
+    _write(root, HISTORICAL_INPUT, {"tampered_schema": True})
+
+
+def _t_inventory_omits_plans_doc(root: Path, h: ModuleType) -> None:
+    _edit_inventory(root, h, _drop_source("Plans/Decision_Log.md"))
+
+
+def _t_inventory_path_substituted(root: Path, h: ModuleType) -> None:
+    # a required row replaced by another file's path, size and hash: internally consistent, wrong file
+    raw = (root / UNREQUIRED_FILE).read_bytes()
+
+    def change(doc: dict[str, Any]) -> None:
+        row = next(row for row in doc["sources"] if row["path"] == PAYLOAD_INPUT)
+        row.update({"path": UNREQUIRED_FILE, "bytes": len(raw), "sha256": _sha(raw)})
+    _edit_inventory(root, h, change)
+    _write(root, PAYLOAD_INPUT, {"tampered_schema": True})
+
+
+def _t_inventory_extra_derived_row(root: Path, h: ModuleType) -> None:
+    # the derived PNC-019 receipt put back into the inventory (the finding-3 cycle)
+    relative = "Plans/.implementation_readiness/pnc019_certification_receipt.json"
+    raw = (root / relative).read_bytes()
+    _edit_inventory(root, h, lambda doc: doc["sources"].append(
+        {"path": relative, "authority_class": "registered_machine_input", "bytes": len(raw), "sha256": _sha(raw)}))
+
+
+def _t_inventory_reclassed(root: Path, h: ModuleType) -> None:
+    def change(doc: dict[str, Any]) -> None:
+        next(row for row in doc["sources"] if row["path"] == HISTORICAL_INPUT)["authority_class"] = "direct_canonical_plan_prose"
+    _edit_inventory(root, h, change)
+
+
+def _t_inventory_exclusions_edited(root: Path, h: ModuleType) -> None:
+    _edit_inventory(root, h, lambda doc: doc.__setitem__(
+        "explicit_exclusions", [row for row in doc["explicit_exclusions"] if "pnc019_certification_receipt" not in row["pattern"]]))
+
+
+def _t_census_token_omitted(root: Path, h: ModuleType) -> None:
+    # the reviewer's note: a token dropped from the census and the S6 ledger together, re-bound
+    _edit_jsonl(root, _paths(h)["occurrences"], lambda rows: rows.__setitem__(slice(None), [r for r in rows if r["exact_token"] != "cmd.fx.legacy"]))
+    _edit_jsonl(root, TOKEN_LEDGER, lambda rows: rows.__setitem__(slice(None), [r for r in rows if r["exact_token"] != "cmd.fx.legacy"]))
+    reseal(root, h, recensus=False)
+
+
+def _t_artifact_entry_omitted(root: Path, h: ModuleType) -> None:
+    paths = _paths(h)
+    _edit_json(root, paths["receipt"], lambda doc: doc["artifact_hashes"].pop(paths["readme"]))
+    _write(root, paths["readme"], "# an unbound README\n")
+
+
+def _t_artifact_entry_extra(root: Path, h: ModuleType) -> None:
+    paths = _paths(h)
+    _edit_json(root, paths["receipt"], lambda doc: doc["artifact_hashes"].__setitem__(EVENTS_DOC, _sha((root / EVENTS_DOC).read_bytes())))
+
+
+def _t_token_ledger_pin_omitted(root: Path, h: ModuleType) -> None:
+    # a conflicting landed row is left out of the token's citations
+    _edit_jsonl(root, h.EA_CENSUS_ADJUDICATION_REL_PATH, lambda rows: _set_row(rows, "event_type", "fx.alias.recorded", disposition="KEEP_QUARANTINED"))
+    _edit_token(root, h, "fx.alias.recorded", _drop_pins(h.EA_CENSUS_ADJUDICATION_REL_PATH))
+
+
+def _t_token_ledger_rule_without_row(root: Path, h: ModuleType) -> None:
+    _relabel(root, h, "fx.layout_v2", "EXCLUDED_BY_LANDED_ROW")
+
+
+def _t_recount_name_dropped(root: Path, h: ModuleType) -> None:
+    # a recount name dropped from the list and its outcomes together, its token relabelled
+    name = "pm.fx.recount_identifier"
+    _write(root, h.EA_RECOUNT_LIST_REL_PATH, [row for row in _read(root, h.EA_RECOUNT_LIST_REL_PATH) if row["name"] != name])
+    _edit_json(root, h.EA_RECOUNT_OUTCOMES_REL_PATH, lambda doc: doc.__setitem__("rows", [r for r in doc["rows"] if r["event_type"] != name]))
+    def change(row: dict[str, Any]) -> None:
+        row.update(disposition="NON_EVENT_IDENTIFIER_REFERENCE", resolution_state="mechanical", rule_id="identifier_namespace", **{"class": "identifier_namespace"})
+        row["source_rows"] = [pin for pin in row["source_rows"] if "window_start_line" in pin]
+    _edit_token(root, h, name, change)
+
+
+def _t_known37_family_added(root: Path, h: ModuleType) -> None:
+    # a post-August family moved into Known37 so it needs no admission record
+    name = _names(h)["admitted"][-1]
+    _edit_json(root, h.EA_KNOWN37_REL_PATH, lambda doc: (doc["event_types"].append(name), doc.__setitem__("count", len(doc["event_types"]))))
+    (root / f"{h.EA_ADMISSION_RECORD_DIR_REL_PATH}/{name}.json").unlink()
+    reseal(root, h)
+
+
 # name -> (mutation, the one refusal that counts as its kill, predicate group)
 TAMPERS: dict[str, tuple[Callable[[Path, ModuleType], None], str, str]] = {
     "cpu_row_reopened": (_t_cpu_row_reopened, "event_authority_closure_cpu_rows_open", "denominator"),
@@ -713,11 +856,26 @@ TAMPERS: dict[str, tuple[Callable[[Path, ModuleType], None], str, str]] = {
     "runtime_basis_removed": (_t_runtime_basis_removed, "event_authority_closure_runtime_boundary_basis_missing", "runtime_boundary"),
     "runtime_boundary_claimed": (_t_runtime_boundary_claimed, "event_authority_currentness_status_closure_inconsistent", "runtime_boundary"),
     "receipt_says_open": (_t_receipt_says_open, "event_authority_currentness_receipt_closure_mismatch", "edition_binding"),
-    "closure_artifact_unbound": (_t_closure_artifact_unbound, "event_authority_currentness_closure_artifact_unbound", "edition_binding"),
+    "closure_artifact_unbound": (_t_closure_artifact_unbound, "event_authority_currentness_artifact_set_mismatch", "edition_binding"),
     "status_unknown_state": (_t_status_unknown_state, "event_authority_currentness_status_not_unknown_open", "edition_binding"),
     "evidence_unavailable": (_t_evidence_unavailable, "event_authority_closure_evidence_unavailable", "edition_binding"),
     "evidence_edited_in_place": (_t_evidence_edited_in_place, "event_authority_closure_evidence_mismatch", "edition_binding"),
     "bound_input_drift": (_t_bound_input_drift, "event_authority_closure_input_drift", "currentness"),
+    "inventory_omits_machine_input": (_t_inventory_omits_machine_input, "event_authority_closure_source_set_mismatch", "source_set"),
+    "inventory_omits_registry_input": (_t_inventory_omits_registry_input, "event_authority_closure_source_set_mismatch", "source_set"),
+    "inventory_omits_historical_input": (_t_inventory_omits_historical_input, "event_authority_closure_source_set_mismatch", "source_set"),
+    "inventory_omits_plans_doc": (_t_inventory_omits_plans_doc, "event_authority_closure_source_set_mismatch", "source_set"),
+    "inventory_path_substituted": (_t_inventory_path_substituted, "event_authority_closure_source_set_mismatch", "source_set"),
+    "inventory_extra_derived_row": (_t_inventory_extra_derived_row, "event_authority_closure_source_set_mismatch", "source_set"),
+    "inventory_reclassed": (_t_inventory_reclassed, "event_authority_closure_source_set_mismatch", "source_set"),
+    "inventory_exclusions_edited": (_t_inventory_exclusions_edited, "event_authority_closure_exclusions_mismatch", "source_set"),
+    "census_token_omitted": (_t_census_token_omitted, "event_authority_closure_census_mismatch", "source_set"),
+    "artifact_entry_omitted": (_t_artifact_entry_omitted, "event_authority_currentness_artifact_set_mismatch", "edition_binding"),
+    "artifact_entry_extra": (_t_artifact_entry_extra, "event_authority_currentness_artifact_set_mismatch", "edition_binding"),
+    "token_ledger_pin_omitted": (_t_token_ledger_pin_omitted, "event_authority_closure_token_source_invalid", "token_ledger"),
+    "token_ledger_rule_without_row": (_t_token_ledger_rule_without_row, "event_authority_closure_token_source_invalid", "token_ledger"),
+    "recount_name_dropped": (_t_recount_name_dropped, "event_authority_closure_recount_list_invalid", "denominator"),
+    "known37_family_added": (_t_known37_family_added, "event_authority_closure_known37_invalid", "denominator"),
     "bound_input_added": (_t_bound_input_added, "event_authority_closure_input_drift", "currentness"),
 }
 

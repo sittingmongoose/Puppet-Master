@@ -16,6 +16,7 @@ import json
 import math
 import os
 import re
+from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any
@@ -149,11 +150,6 @@ EVENT_AUTHORITY_RUNTIME_BOUNDARY = {
             "path": "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json",
             "unit": "#/properties/generated_by/properties/mode",
             "quote": "local_deterministic_clean_room",
-        },
-        {
-            "path": "scripts/pm-event-authority-currentness.py",
-            "unit": "EXCLUSIONS src/**/*.rs",
-            "quote": "runtime producer conformance is a later independent lane",
         },
     ],
 }
@@ -309,6 +305,267 @@ EA_CONTINUITY_COHORTS = (
 HELPER_REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
+# ---------------------------------------------------------------------------
+# The edition's source set and occurrence census: one implementation, used by
+# the generator to write an edition and by the CLOSED consumer to re-derive both
+# from the live tree instead of trusting the edition's own inventory or token
+# list (s7 fix 1: an omitted inventory row, re-bound, must not hide drift).
+# ---------------------------------------------------------------------------
+EA_HISTORICAL_INVENTORY_REL_PATH = (
+    f"{EA_FROZEN_AUDIT_ROOT}/closed-world-census/CURRENT_SOURCE_INVENTORY.FRESH_20260812T0900.json"
+)
+EA_DIRECT_PROSE_CLASS = "direct_canonical_plan_prose"
+EA_MACHINE_INPUT_CLASS = "registered_machine_input"
+EA_EXPLICIT_NEW_MACHINE_INPUTS = (
+    "Plans/runtime_integration_disposition.json",
+    "Plans/shared_runtime_contracts.schema.json",
+)
+EA_DERIVED_VALIDATION_OUTPUTS = (
+    # This report consumes Event Authority currentness. Including its raw bytes
+    # in the Event Authority source manifest creates a self-invalidating cycle:
+    # regenerating the report makes the audit stale, while regenerating the
+    # audit changes the report's next validation result. It is derived evidence,
+    # not an event-family semantic source.
+    "Plans/.implementation_readiness/buildability_gate_report.json",
+    # The node-readiness report also consumes the PNC/Event Authority result.
+    # Hashing it into the audit makes `pm-plan-index generate` invalidate the
+    # evidence used to compute the report that it just wrote.
+    "Plans/.plan_index/node_readiness_report.json",
+    # The PNC-019 certification receipt binds this audit's VALIDATOR_RECEIPT.json
+    # (REQUIRED_PNC019_SOURCE_HASH_PATHS). Inventorying the receipt's bytes here
+    # leaves no fixed point: each harness run drifts the edition, and each new
+    # edition stales the receipt's binding (PNC-019 scope finding 3).
+    "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+)
+EA_SOURCE_EXCLUSIONS = [
+    {"pattern": "Plans/.audits/**", "reason": "audit evidence is validation-only and cannot originate product authority; this audit is also excluded from its own corpus"},
+    {"pattern": "Plans/.evidence/**", "reason": "generated governance evidence"},
+    {"pattern": "Plans/_shards/**", "reason": "generated mirrors of canonical Plans"},
+    {"pattern": "Plans/.plan_index/**", "reason": "generated PlanUnit/index/readiness outputs; node readiness consumes this audit and is excluded to prevent a self-invalidating currentness cycle"},
+    {"pattern": "Plans/.plan_migration/** except the two inherited registered hash/alias inputs", "reason": "migration evidence rather than live product authority; retained exceptions are drift-custody inputs and cannot originate event membership"},
+    {"pattern": "Plans/ledgers/** except the historically registered ledger_registry.json and plan_unit.schema.json", "reason": "source-lineage memory, not canonical product prose"},
+    {"pattern": "Plans/Spec_Lock.json, Plans/auto_decisions.jsonl", "reason": "governance artifacts, not event-family semantic owners"},
+    {"pattern": "Plans/.implementation_readiness/buildability_gate_report.json", "reason": "derived validator output that consumes this audit; excluded to prevent a self-invalidating currentness cycle"},
+    {"pattern": "Plans/.implementation_readiness/pnc019_certification_receipt.json", "reason": "derived PNC-019 certification receipt that binds this audit's VALIDATOR_RECEIPT.json; excluded to prevent a self-invalidating currentness cycle"},
+    {"pattern": "other generated readiness outputs except machine inputs inherited from the registered August inventory or referenced by the live index", "reason": "included exceptions are validation/checkpoint custody only and cannot originate event-family membership"},
+    {"pattern": "Concepts/**, reports/**, output/**", "reason": "prototype, report, or generated-output surfaces outside canonical Plans"},
+    {"pattern": "src/**/*.rs", "reason": "no current Rust product implementation exists; runtime producer conformance is a later independent lane"},
+]
+EA_TOKEN_RE = re.compile(r"(?<![A-Za-z0-9_./-])([a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)+)(?![A-Za-z0-9_./-])")
+EA_EVENT_CUE_RE = re.compile(
+    r"\b(?:event[_ -]?type|event family|eventrecord|persist(?:ed|s|ing)? event|"
+    r"seglog|canonical ledger|emit(?:s|ted|ting)?|append(?:s|ed|ing)?|"
+    r"expected_event_types|domain event|event stream|event payload|event schema)\b",
+    re.I,
+)
+EA_NEGATIVE_RE = re.compile(
+    r"\b(?:must not|does not|do not|never|no)\b.{0,100}\b(?:emit|eventrecord|event family|persisted event)\b|"
+    r"\b(?:not an?|without an?)\s+(?:eventrecord|event family|persisted event)",
+    re.I,
+)
+EA_COMPAT_RE = re.compile(r"\b(?:compatibility|legacy|retired|stale|supersed(?:e|ed)|source[- ]lineage|alias)\b", re.I)
+EA_SCHEMA_RE = re.compile(r"\b(?:schema|fixture|example|sample|draft|candidate)\b", re.I)
+EA_EVENT_VERB_RE = re.compile(EA_EVENT_VERB_PATTERN)
+EA_CENSUS_PRIORITY = {
+    "registered_event_family_declaration": 0,
+    "likely_persisted_event_candidate": 1,
+    "schema_or_fixture_event_example": 2,
+    "compatibility_or_source_lineage": 3,
+    "explicit_non_event_or_forbidden_family": 4,
+    "non_event_command": 5,
+    "schema_or_identifier_non_event": 6,
+    "ambiguous_event_like_token": 7,
+}
+EA_EDITION_ARTIFACT_REL_PATHS = tuple(sorted(
+    (
+        EVENT_AUTHORITY_SOURCE_INVENTORY_REL_PATH,
+        EVENT_AUTHORITY_OCCURRENCES_REL_PATH,
+        EVENT_AUTHORITY_STATUS_REL_PATH,
+        f"{EVENT_AUTHORITY_AUDIT_ROOT}/README.md",
+        f"{EVENT_AUTHORITY_AUDIT_ROOT}/adjudication/EXPECTED_252_EVENT_TYPES.tsv",
+        EVENT_AUTHORITY_QUARANTINE_LEDGER_REL_PATH,
+        EVENT_AUTHORITY_GROUP_MANIFEST_REL_PATH,
+        *(f"{EVENT_AUTHORITY_AUDIT_ROOT}/adjudication/source_groups/group_{g}.jsonl" for g in "abcdefg"),
+        *EVENT_AUTHORITY_CLOSURE_ARTIFACT_REL_PATHS,
+    )
+))
+
+
+def event_authority_machine_input_candidates(root: Path, *, historical_inventory: Path | None = None) -> set[str]:
+    """Machine inputs the edition must inventory, before the derived-output exclusion."""
+    root = Path(root)
+    historical = Path(historical_inventory) if historical_inventory is not None else root / EA_HISTORICAL_INVENTORY_REL_PATH
+    old = json.loads(historical.read_text(encoding="utf-8"))
+    paths = {row["path"] for row in old["sources"] if not row["path"].endswith(".md")}
+    index_text = (root / "Plans/00-plans-index.md").read_text(encoding="utf-8")
+    for match in re.finditer(r"Plans/[A-Za-z0-9_./-]+\.(?:json|jsonl)", index_text):
+        candidate = match.group(0).rstrip(".,;:)")
+        if (root / candidate).is_file() and not candidate.startswith("Plans/.audits/"):
+            paths.add(candidate)
+    registry = json.loads((root / EVENT_FAMILY_REGISTRY_REL_PATH).read_text(encoding="utf-8"))
+    for row in registry["families"]:
+        ref = row.get("payload_schema_ref")
+        if isinstance(ref, dict) and isinstance(ref.get("path"), str):
+            candidate = ref["path"]
+            if (root / candidate).is_file():
+                paths.add(candidate)
+    paths |= {p for p in EA_EXPLICIT_NEW_MACHINE_INPUTS if (root / p).is_file()}
+    return paths
+
+
+def event_authority_required_sources(root: Path, *, historical_inventory: Path | None = None) -> dict[str, str]:
+    """Every source the edition must inventory, with its authority class, derived from the live tree."""
+    root = Path(root)
+    direct = {p.relative_to(root).as_posix() for p in (root / "Plans").glob("*.md") if p.is_file()}
+    machine = event_authority_machine_input_candidates(root, historical_inventory=historical_inventory)
+    machine -= set(EA_DERIVED_VALIDATION_OUTPUTS)
+    required = {path: EA_MACHINE_INPUT_CLASS for path in machine}
+    required.update({path: EA_DIRECT_PROSE_CLASS for path in direct})
+    return required
+
+
+def event_authority_census_classify(token: str, window: str, registered: set[str], suffix: str) -> tuple[str, list[str]]:
+    if token.startswith("cmd."):
+        return "non_event_command", ["cmd_namespace"]
+    if token.startswith(("pm.", "https.", "www.")):
+        return "schema_or_identifier_non_event", ["schema_or_identifier_namespace"]
+    if token in registered:
+        return "registered_event_family_declaration", ["registered_exact_type"]
+    if EA_NEGATIVE_RE.search(window):
+        return "explicit_non_event_or_forbidden_family", ["explicit_negative_event_context"]
+    if EA_COMPAT_RE.search(window):
+        return "compatibility_or_source_lineage", ["compatibility_or_source_lineage_context"]
+    if (suffix == ".json" or EA_SCHEMA_RE.search(window)) and EA_EVENT_CUE_RE.search(window):
+        return "schema_or_fixture_event_example", ["schema_or_fixture_context", "event_language_context"]
+    if EA_EVENT_CUE_RE.search(window) and EA_EVENT_VERB_RE.search(token.rsplit(".", 1)[-1]):
+        return "likely_persisted_event_candidate", ["event_language_context", "event_like_terminal_verb"]
+    return "ambiguous_event_like_token", ["event_language_context_only"]
+
+
+def event_authority_census_rows(sources: dict[str, bytes], registered: set[str]) -> list[dict[str, Any]]:
+    """The occurrence census over repository-relative source bytes (the edition's EVENT_OCCURRENCES rows)."""
+    # One alternation finds "some registered type is a substring of the line"
+    # exactly as the per-type `in` scan did, at a fraction of the cost.
+    registered_re = re.compile("|".join(re.escape(t) for t in sorted(registered))) if registered else None
+    by_token: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for path in sorted(sources):
+        lines = sources[path].decode("utf-8", errors="replace").splitlines()
+        stripped = [line.strip() for line in lines]
+        suffix = PurePosixPath(path).suffix
+        for i, line in enumerate(lines):
+            lo, hi = max(0, i - 1), min(len(lines), i + 2)
+            window = " ".join(stripped[lo:hi])
+            if not EA_EVENT_CUE_RE.search(window) and not (registered_re is not None and registered_re.search(line)):
+                continue
+            for match in EA_TOKEN_RE.finditer(line):
+                token = match.group(1)
+                disposition, cues = event_authority_census_classify(token, window, registered, suffix)
+                context = stripped[i]
+                by_token[token].append({
+                    "path": path,
+                    "line": i + 1,
+                    "context": context,
+                    "context_sha256": _sha256_bytes(context.encode()),
+                    "extraction_cues": cues,
+                    "mechanical_classification": disposition,
+                })
+    rows = []
+    for token in sorted(by_token):
+        occs = sorted(by_token[token], key=lambda x: (x["path"], x["line"], x["context_sha256"]))
+        classes = sorted({x["mechanical_classification"] for x in occs}, key=lambda x: EA_CENSUS_PRIORITY[x])
+        if token in registered:
+            primary = "registered_event_family_declaration"
+        elif "likely_persisted_event_candidate" in classes and "explicit_non_event_or_forbidden_family" in classes:
+            primary = "contested_positive_and_negative_event_evidence"
+        else:
+            primary = classes[0]
+        rows.append({
+            "exact_token": token,
+            "registered": token in registered,
+            "primary_mechanical_classification": primary,
+            "all_mechanical_classifications": classes,
+            "occurrence_count": len(occs),
+            "occurrences": occs,
+            "authority_boundary": "discovery_only_owner_adjudication_required" if token not in registered else "registry_membership_observed_not_depth_certified",
+        })
+    return rows
+
+
+def event_authority_census_blob(rows: list[dict[str, Any]]) -> bytes:
+    return b"".join(json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode() + b"\n" for row in rows)
+
+
+_CENSUS_CACHE: dict[str, bytes] = {}
+
+
+def _census_blob_for(sources: dict[str, bytes], registered: set[str]) -> bytes:
+    # The census is a pure function of these bytes; recompute once per process.
+    key = _canonical_sha256([sorted((path, _sha256_bytes(data)) for path, data in sources.items()), sorted(registered)])
+    if key not in _CENSUS_CACHE:
+        _CENSUS_CACHE[key] = event_authority_census_blob(event_authority_census_rows(sources, registered))
+    return _CENSUS_CACHE[key]
+
+
+def event_authority_closed_custody_failures(
+    root: Path,
+    *,
+    inventory: Any,
+    occurrences_raw: bytes,
+    artifact_hashes: Any,
+    historical_inventory: Path | None = None,
+) -> list[dict[str, Any]]:
+    """A CLOSED edition's inventory, exclusions, artifact set and census, each re-derived from the live tree."""
+    root = Path(root)
+    failures: list[dict[str, Any]] = []
+    try:
+        required = event_authority_required_sources(root, historical_inventory=historical_inventory)
+    except Exception as exc:  # noqa: BLE001 - an underivable source set never clears.
+        return [{"error": "event_authority_closure_source_set_mismatch", "detail": f"required source set underivable: {exc}"}]
+    rows = inventory.get("sources") if isinstance(inventory, dict) else None
+    listed: dict[str, Any] = {}
+    duplicates: list[Any] = []
+    for row in rows if isinstance(rows, list) else []:
+        path = row.get("path") if isinstance(row, dict) else None
+        if not isinstance(path, str) or path in listed:
+            duplicates.append(path)
+            continue
+        listed[path] = row.get("authority_class")
+    omitted = sorted(set(required) - set(listed))
+    extra = sorted(set(listed) - set(required))
+    reclassed = sorted(path for path in set(required) & set(listed) if listed[path] != required[path])
+    if not isinstance(rows, list) or omitted or extra or reclassed or duplicates:
+        failures.append({
+            "error": "event_authority_closure_source_set_mismatch",
+            "omitted": omitted[:50],
+            "extra": extra[:50],
+            "reclassed": reclassed[:50],
+            "duplicates": duplicates[:50],
+        })
+    if not isinstance(inventory, dict) or inventory.get("explicit_exclusions") != EA_SOURCE_EXCLUSIONS:
+        failures.append({"error": "event_authority_closure_exclusions_mismatch"})
+    bound = set(artifact_hashes) if isinstance(artifact_hashes, dict) else set()
+    if bound != set(EA_EDITION_ARTIFACT_REL_PATHS):
+        failures.append({
+            "error": "event_authority_currentness_artifact_set_mismatch",
+            "missing": sorted(set(EA_EDITION_ARTIFACT_REL_PATHS) - bound),
+            "extra": sorted(bound - set(EA_EDITION_ARTIFACT_REL_PATHS)),
+        })
+    try:
+        sources = {path: _read_rel(root, path) for path in required}
+        registered = {row["event_type"] for row in _strict_json(_read_rel(root, EVENT_FAMILY_REGISTRY_REL_PATH))["families"]}
+        census = _census_blob_for(sources, registered)
+    except Exception as exc:  # noqa: BLE001
+        failures.append({"error": "event_authority_closure_census_mismatch", "detail": f"census underivable: {exc}"})
+        return failures
+    if census != occurrences_raw:
+        failures.append({
+            "error": "event_authority_closure_census_mismatch",
+            "recomputed_sha256": _sha256_bytes(census),
+            "edition_sha256": _sha256_bytes(occurrences_raw),
+        })
+    return failures
+
+
 @dataclass(frozen=True)
 class EventAuthorityCheckpoint:
     """Expected registry checkpoint plus clearance read from the installed edition."""
@@ -412,9 +669,12 @@ def event_authority_audit_failures(root: Path) -> list[dict[str, Any]]:
             or receipt.get("separate_claims") != EVENT_AUTHORITY_SEPARATE_CLAIMS
         ):
             failures.append({"error": "event_authority_currentness_receipt_closure_mismatch"})
-        for closure_artifact in EVENT_AUTHORITY_CLOSURE_ARTIFACT_REL_PATHS:
-            if closure_artifact not in artifact_hashes:
-                failures.append({"error": "event_authority_currentness_closure_artifact_unbound", "artifact_path": closure_artifact})
+        try:
+            occurrences_raw = (root / EVENT_AUTHORITY_OCCURRENCES_REL_PATH).read_bytes()
+        except OSError:
+            occurrences_raw = b""
+        failures.extend(event_authority_closed_custody_failures(
+            root, inventory=inventory, occurrences_raw=occurrences_raw, artifact_hashes=artifact_hashes))
         failures.extend(event_authority_closure_failures(root, status=status))
     else:
         if receipt.get("evidence_valid") is not True or receipt.get("event_authority_closed") is not False:
@@ -921,6 +1181,15 @@ def _closure_frozen_check(
         })
 
 
+def _frozen_declared_pins(root: Path) -> dict[str, str]:
+    """The SHA-256 constants the frozen validator itself declares for its immutable inputs."""
+    try:
+        text = _read_rel(root, EA_FROZEN_VALIDATOR_REL_PATH).decode("utf-8", errors="replace")
+    except (ClosureInputError, OSError):
+        return {}
+    return {name: value for name, value in re.findall(r'(?m)^([A-Z][A-Z0-9_]*_SHA) = "([0-9a-f]{64})"', text)}
+
+
 def _closure_denominator(
     root: Path,
     live: dict[str, dict[str, Any]],
@@ -939,7 +1208,18 @@ def _closure_denominator(
     if cpu_open:
         failures.append({"error": "event_authority_closure_cpu_rows_open", "count": len(cpu_open), "sample": cpu_open[:20]})
 
-    recount_list = _strict_json(_read_rel(root, EA_RECOUNT_LIST_REL_PATH))
+    recount_list_raw = _read_rel(root, EA_RECOUNT_LIST_REL_PATH)
+    declared = _frozen_declared_pins(root)
+    if (
+        declared.get("RECOUNT_LIST_SHA") != _sha256_bytes(recount_list_raw)
+        or declared.get("RECOUNT_RECEIPT_SHA") != _sha_rel(root, EA_RECOUNT_RECEIPT_REL_PATH)
+    ):
+        failures.append({"error": "event_authority_closure_recount_list_invalid", "detail": "recount list or receipt bytes differ from the frozen validator's declared pins"})
+    pinned = _strict_json(_read_rel(root, EA_COHORT_PINS_REL_PATH)).get("cohorts", {})
+    pinned_known37 = (pinned.get("known37") or {}).get("event_types") if isinstance(pinned, dict) else None
+    if not isinstance(pinned_known37, list) or sorted(pinned_known37) != sorted(known37):
+        failures.append({"error": "event_authority_closure_known37_invalid", "detail": "Known37 differs from the immutable cohort pins"})
+    recount_list = _strict_json(recount_list_raw)
     if not isinstance(recount_list, list) or not all(isinstance(row, dict) and isinstance(row.get("name"), str) for row in recount_list):
         raise ClosureInputError("recount list malformed")
     recount_names = [row["name"] for row in recount_list]
@@ -1175,9 +1455,14 @@ def _closure_token_ledger(
             raise ClosureInputError("occurrence ledger malformed")
         occurrences[row["exact_token"]] = row
     ledger_paths = set(_landed_ledger_paths(root))
-    ledger_history: set[str] = set()
-    for path in ledger_paths:
-        ledger_history |= {row.get("event_type") for row in _strict_jsonl(_read_rel(root, path)) if isinstance(row, dict)}
+    # Every landed row naming each token, from the live ledgers: a ledger-rule row
+    # must cite exactly these, so a conflicting row cannot be left out (fix 1).
+    landed_rows: dict[str, set[tuple[str, int]]] = {}
+    for path in sorted(ledger_paths):
+        for n, value in enumerate(_strict_jsonl(_read_rel(root, path))):
+            if isinstance(value, dict) and isinstance(value.get("event_type"), str):
+                landed_rows.setdefault(value["event_type"], set()).add((path, n))
+    ledger_history = set(landed_rows)
     event_verb = re.compile(EA_EVENT_VERB_PATTERN)
     # parsed documents and text lines are cached apart: one file can be both
     cache: dict[str, Any] = {}
@@ -1236,9 +1521,15 @@ def _closure_token_ledger(
                         problem = "no current registry row pin"
                 elif rule in ("landed_exclusion", "landed_alias", "holding_quarantine"):
                     values = [_pin_value(root, pin, cache) for pin in pins if pin.get("path") in ledger_paths]
+                    cited = {
+                        (pin["path"], int(pin["json_pointer"][1:]) if str(pin.get("json_pointer", ""))[1:].isdigit() else -1)
+                        for pin in pins if pin.get("path") in ledger_paths
+                    }
                     names_token = values and all(isinstance(v, dict) and v.get("event_type") == token for v in values)
                     dispositions = {v.get("disposition") for v in values if isinstance(v, dict)}
-                    if not names_token:
+                    if cited != landed_rows.get(token, set()):
+                        problem = "the row does not cite every landed ledger row naming the token"
+                    elif not names_token:
                         problem = "no current landed ledger row pin naming the token"
                     elif rule == "landed_exclusion" and not dispositions <= EA_LEDGER_FINAL_EXCLUDED:
                         problem = "a cited ledger row does not exclude the token"

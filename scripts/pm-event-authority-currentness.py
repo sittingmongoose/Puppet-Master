@@ -24,7 +24,7 @@ import re
 import subprocess
 import sys
 import tempfile
-from collections import Counter, defaultdict
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import NamedTuple
@@ -60,62 +60,19 @@ EXPECTED_GROUPS = {
     "g": (4, "5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db"),
 }
 
-TOKEN_RE = re.compile(r"(?<![A-Za-z0-9_./-])([a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)+)(?![A-Za-z0-9_./-])")
-EVENT_CUE_RE = re.compile(
-    r"\b(?:event[_ -]?type|event family|eventrecord|persist(?:ed|s|ing)? event|"
-    r"seglog|canonical ledger|emit(?:s|ted|ting)?|append(?:s|ed|ing)?|"
-    r"expected_event_types|domain event|event stream|event payload|event schema)\b",
-    re.I,
-)
-NEGATIVE_RE = re.compile(
-    r"\b(?:must not|does not|do not|never|no)\b.{0,100}\b(?:emit|eventrecord|event family|persisted event)\b|"
-    r"\b(?:not an?|without an?)\s+(?:eventrecord|event family|persisted event)",
-    re.I,
-)
-COMPAT_RE = re.compile(r"\b(?:compatibility|legacy|retired|stale|supersed(?:e|ed)|source[- ]lineage|alias)\b", re.I)
-SCHEMA_RE = re.compile(r"\b(?:schema|fixture|example|sample|draft|candidate)\b", re.I)
-EVENT_VERB_RE = re.compile(
-    r"(?:^|_)(?:started|completed|failed|cancelled|canceled|stopped|blocked|created|deleted|"
-    r"updated|changed|detected|applied|expired|replanned|scheduled|progressed|recorded|"
-    r"evaluated|captured|invoked|denied|requested|required|restored|opened|closed|"
-    r"disconnected|connected|renamed|moved|exported|appended|unavailable|degraded)$"
-)
-EXPLICIT_NEW_MACHINE_INPUTS = {
-    "Plans/runtime_integration_disposition.json",
-    "Plans/shared_runtime_contracts.schema.json",
-}
-DERIVED_VALIDATION_OUTPUTS = {
-    # This report consumes Event Authority currentness. Including its raw bytes
-    # in the Event Authority source manifest creates a self-invalidating cycle:
-    # regenerating the report makes the audit stale, while regenerating the
-    # audit changes the report's next validation result. It is derived evidence,
-    # not an event-family semantic source.
-    "Plans/.implementation_readiness/buildability_gate_report.json",
-    # The node-readiness report also consumes the PNC/Event Authority result.
-    # Hashing it into the audit makes `pm-plan-index generate` invalidate the
-    # evidence used to compute the report that it just wrote.
-    "Plans/.plan_index/node_readiness_report.json",
-    # The PNC-019 certification receipt binds this audit's VALIDATOR_RECEIPT.json
-    # (REQUIRED_PNC019_SOURCE_HASH_PATHS). Inventorying the receipt's bytes here
-    # leaves no fixed point: each harness run drifts the edition, and each new
-    # edition stales the receipt's binding (PNC-019 scope finding 3).
-    "Plans/.implementation_readiness/pnc019_certification_receipt.json",
-}
-EXCLUSIONS = [
-    {"pattern": "Plans/.audits/**", "reason": "audit evidence is validation-only and cannot originate product authority; this audit is also excluded from its own corpus"},
-    {"pattern": "Plans/.evidence/**", "reason": "generated governance evidence"},
-    {"pattern": "Plans/_shards/**", "reason": "generated mirrors of canonical Plans"},
-    {"pattern": "Plans/.plan_index/**", "reason": "generated PlanUnit/index/readiness outputs; node readiness consumes this audit and is excluded to prevent a self-invalidating currentness cycle"},
-    {"pattern": "Plans/.plan_migration/** except the two inherited registered hash/alias inputs", "reason": "migration evidence rather than live product authority; retained exceptions are drift-custody inputs and cannot originate event membership"},
-    {"pattern": "Plans/ledgers/** except the historically registered ledger_registry.json and plan_unit.schema.json", "reason": "source-lineage memory, not canonical product prose"},
-    {"pattern": "Plans/Spec_Lock.json, Plans/auto_decisions.jsonl", "reason": "governance artifacts, not event-family semantic owners"},
-    {"pattern": "Plans/.implementation_readiness/buildability_gate_report.json", "reason": "derived validator output that consumes this audit; excluded to prevent a self-invalidating currentness cycle"},
-    {"pattern": "Plans/.implementation_readiness/pnc019_certification_receipt.json", "reason": "derived PNC-019 certification receipt that binds this audit's VALIDATOR_RECEIPT.json; excluded to prevent a self-invalidating currentness cycle"},
-    {"pattern": "other generated readiness outputs except machine inputs inherited from the registered August inventory or referenced by the live index", "reason": "included exceptions are validation/checkpoint custody only and cannot originate event-family membership"},
-    {"pattern": "Concepts/**, reports/**, output/**", "reason": "prototype, report, or generated-output surfaces outside canonical Plans"},
-    {"pattern": "src/**/*.rs", "reason": "no current Rust product implementation exists; runtime producer conformance is a later independent lane"},
-]
-
+# The census regular expressions, the derived-output exclusions and the explicit
+# exclusions live in scripts/pm_pnc019_currentness.py: the CLOSED consumer
+# re-derives the source set and census with the same code (s7 fix 1). These names
+# stay for existing importers (the S6 classifier loads this module).
+TOKEN_RE = ea_closure.EA_TOKEN_RE
+EVENT_CUE_RE = ea_closure.EA_EVENT_CUE_RE
+NEGATIVE_RE = ea_closure.EA_NEGATIVE_RE
+COMPAT_RE = ea_closure.EA_COMPAT_RE
+SCHEMA_RE = ea_closure.EA_SCHEMA_RE
+EVENT_VERB_RE = ea_closure.EA_EVENT_VERB_RE
+EXPLICIT_NEW_MACHINE_INPUTS = set(ea_closure.EA_EXPLICIT_NEW_MACHINE_INPUTS)
+DERIVED_VALIDATION_OUTPUTS = set(ea_closure.EA_DERIVED_VALIDATION_OUTPUTS)
+EXCLUSIONS = ea_closure.EA_SOURCE_EXCLUSIONS
 
 def canonical_json(value: object) -> bytes:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
@@ -139,22 +96,7 @@ def git_output(*args: str) -> str:
 
 
 def machine_path_candidates() -> set[str]:
-    old = read_json(HISTORICAL_INVENTORY)
-    paths = {row["path"] for row in old["sources"] if not row["path"].endswith(".md")}
-    index_text = (PLANS / "00-plans-index.md").read_text(encoding="utf-8")
-    for match in re.finditer(r"Plans/[A-Za-z0-9_./-]+\.(?:json|jsonl)", index_text):
-        candidate = match.group(0).rstrip(".,;:)")
-        if (ROOT / candidate).is_file() and not candidate.startswith("Plans/.audits/"):
-            paths.add(candidate)
-    registry = read_json(PLANS / "event_family_registry.json")
-    for row in registry["families"]:
-        ref = row.get("payload_schema_ref")
-        if isinstance(ref, dict) and isinstance(ref.get("path"), str):
-            candidate = ref["path"]
-            if (ROOT / candidate).is_file():
-                paths.add(candidate)
-    paths |= {p for p in EXPLICIT_NEW_MACHINE_INPUTS if (ROOT / p).is_file()}
-    return paths
+    return ea_closure.event_authority_machine_input_candidates(ROOT, historical_inventory=HISTORICAL_INVENTORY)
 
 
 def machine_paths() -> set[str]:
@@ -171,74 +113,11 @@ def source_paths() -> list[Path]:
 
 
 def classify(token: str, window: str, registered: set[str], path: Path) -> tuple[str, list[str]]:
-    if token.startswith("cmd."):
-        return "non_event_command", ["cmd_namespace"]
-    if token.startswith(("pm.", "https.", "www.")):
-        return "schema_or_identifier_non_event", ["schema_or_identifier_namespace"]
-    if token in registered:
-        return "registered_event_family_declaration", ["registered_exact_type"]
-    if NEGATIVE_RE.search(window):
-        return "explicit_non_event_or_forbidden_family", ["explicit_negative_event_context"]
-    if COMPAT_RE.search(window):
-        return "compatibility_or_source_lineage", ["compatibility_or_source_lineage_context"]
-    if (path.suffix == ".json" or SCHEMA_RE.search(window)) and EVENT_CUE_RE.search(window):
-        return "schema_or_fixture_event_example", ["schema_or_fixture_context", "event_language_context"]
-    if EVENT_CUE_RE.search(window) and EVENT_VERB_RE.search(token.rsplit(".", 1)[-1]):
-        return "likely_persisted_event_candidate", ["event_language_context", "event_like_terminal_verb"]
-    return "ambiguous_event_like_token", ["event_language_context_only"]
+    return ea_closure.event_authority_census_classify(token, window, registered, path.suffix)
 
 
 def build_occurrences(frozen: dict[Path, bytes], registered: set[str]) -> list[dict]:
-    by_token: dict[str, list[dict]] = defaultdict(list)
-    for path in sorted(frozen, key=rel):
-        lines = frozen[path].decode("utf-8", errors="replace").splitlines()
-        for i, line in enumerate(lines):
-            lo, hi = max(0, i - 1), min(len(lines), i + 2)
-            window = " ".join(x.strip() for x in lines[lo:hi])
-            if not EVENT_CUE_RE.search(window) and not any(t in line for t in registered):
-                continue
-            for match in TOKEN_RE.finditer(line):
-                token = match.group(1)
-                disposition, cues = classify(token, window, registered, path)
-                context = line.strip()
-                by_token[token].append({
-                    "path": rel(path),
-                    "line": i + 1,
-                    "context": context,
-                    "context_sha256": sha(context.encode()),
-                    "extraction_cues": cues,
-                    "mechanical_classification": disposition,
-                })
-    priority = {
-        "registered_event_family_declaration": 0,
-        "likely_persisted_event_candidate": 1,
-        "schema_or_fixture_event_example": 2,
-        "compatibility_or_source_lineage": 3,
-        "explicit_non_event_or_forbidden_family": 4,
-        "non_event_command": 5,
-        "schema_or_identifier_non_event": 6,
-        "ambiguous_event_like_token": 7,
-    }
-    rows = []
-    for token in sorted(by_token):
-        occs = sorted(by_token[token], key=lambda x: (x["path"], x["line"], x["context_sha256"]))
-        classes = sorted({x["mechanical_classification"] for x in occs}, key=lambda x: priority[x])
-        if token in registered:
-            primary = "registered_event_family_declaration"
-        elif "likely_persisted_event_candidate" in classes and "explicit_non_event_or_forbidden_family" in classes:
-            primary = "contested_positive_and_negative_event_evidence"
-        else:
-            primary = classes[0]
-        rows.append({
-            "exact_token": token,
-            "registered": token in registered,
-            "primary_mechanical_classification": primary,
-            "all_mechanical_classifications": classes,
-            "occurrence_count": len(occs),
-            "occurrences": occs,
-            "authority_boundary": "discovery_only_owner_adjudication_required" if token not in registered else "registry_membership_observed_not_depth_certified",
-        })
-    return rows
+    return ea_closure.event_authority_census_rows({rel(p): data for p, data in frozen.items()}, registered)
 
 
 def current_git_custody() -> dict:
@@ -730,7 +609,10 @@ def validate_data(inventory: dict, rows_blob: bytes, status: dict, artifact_hash
         # live tree and compares it with what this edition stored.
         checks["status_closed_by_recomputed_evidence"] = not ea_closure.event_authority_closure_failures(ROOT, edition_dir=AUDIT, status=status)
         checks["runtime_conformance_recorded_not_run"] = status.get("runtime_producer_conformance") == ea_closure.EVENT_AUTHORITY_RUNTIME_BOUNDARY
-        checks["closure_artifacts_bound"] = all(path in artifact_hashes for path in ea_closure.EVENT_AUTHORITY_CLOSURE_ARTIFACT_REL_PATHS)
+        # Inventory, exclusions, artifact set and census re-derived from the live tree.
+        checks["closed_custody_rederives"] = not ea_closure.event_authority_closed_custody_failures(
+            ROOT, inventory=inventory, occurrences_raw=rows_blob, artifact_hashes=artifact_hashes,
+            historical_inventory=HISTORICAL_INVENTORY)
     else:
         checks["status_remains_fail_closed"] = (
             status["status"] == "UNKNOWN_OPEN"
@@ -911,7 +793,7 @@ def self_test() -> int:
         tests["continuity_unknown_classification_rejected"] = compute_continuity_receipt(closed_root, ea27, ea29)["unmapped_rows"] == ["f.new_class"]
 
     # The helper's copy of the event-verb pattern (context rules) must stay this tool's.
-    tests["helper_event_verb_pattern_matches_census"] = ea_closure.EA_EVENT_VERB_PATTERN == EVENT_VERB_RE.pattern
+    tests["helper_event_verb_pattern_matches_census"] = EVENT_VERB_RE is ea_closure.EA_EVENT_VERB_RE
 
     # Other tools load this script by path without registering it in sys.modules.
     spec = importlib.util.spec_from_file_location("pm_ea_currentness_by_path", Path(__file__))
