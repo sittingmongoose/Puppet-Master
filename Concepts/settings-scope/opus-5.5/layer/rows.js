@@ -122,6 +122,9 @@
     let devv = viewDev && demo && DEF[id].screen ? { name: placeName('device', S.ctx.device), text: vt(id, r.asked !== undefined ? r.asked : r.value) } : null;
     // Light or dark is the second half of Theme: it shows the viewed device's half too
     if (viewDev && id === 'general.visual.theme-mode') devv = { name: placeName('device', S.ctx.device), text: PSX.themePair(PSX.resolve('general.visual.theme', S.ctx).value)['general.visual.theme-mode'] };
+    /* a value the page's own control can't hold (world.js holds: Plans' inventory made the row a map, the page still draws
+       a text box) is said in words in the control's place, with Change opening the per-place editor where it comes from */
+    if (!devv && demo && kind === 'row' && r && opt !== 'today') { const v = r.asked !== undefined ? r.asked : r.value; if (!PSX.holds(id, v)) devv = { words: true, name: '', text: vt(id, v) }; }
     const sig = JSON.stringify([opt, S.opt.changed, wd.word, wd.here, wd.sentence, wd.mark2, ln, changed, kind, devv]);
     // the engine's in-place redraw can patch a row back while keeping this attribute: check the drawing is still there
     if (btn.dataset.psxDone === sig && row.dataset.psxDone === sig && intact(row, btn, opt, wd, ln, sync ? null : changed, kind) && !!row.querySelector(':scope > .setting-control > .psx-devval') === !!devv) return;
@@ -173,9 +176,19 @@
     ctl.querySelectorAll(':scope > .psx-devval').forEach((n) => n.remove());
     row.classList.toggle('psx-devview', !!devv);
     if (!devv) return;
-    const el = D.createElement('span'); el.className = 'psx-devval'; el.setAttribute('data-o55-foreign', '');
-    el.innerHTML = `<span class="psx-devval-v" title="${esc(devv.name)}’s screen">${esc(devv.text)}</span><button type="button" class="psx-tb" data-psx-devchange="1" aria-label="Change ${esc(label(id))} for ${esc(devv.name)}’s screen">Change</button>`;
-    el.querySelector('button').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openPanel(btn); });
+    const el = D.createElement('span'); el.className = 'psx-devval' + (devv.words ? ' psx-valwords' : ''); el.setAttribute('data-o55-foreign', '');
+    if (devv.words) {
+      el.innerHTML = `<span class="psx-devval-v">${esc(devv.text)}</span><button type="button" class="psx-tb" data-psx-wordschange="1" aria-label="Change ${esc(label(id))}">Change</button>`;
+      el.querySelector('button').addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const r = PSX.resolve(id, S.ctx), tg = PSX.targetFor ? PSX.targetFor(id, r, S.ctx, 'row') : { level: 'everywhere', key: null };
+        if (PSX.panel && PSX.panel.editAt) PSX.panel.editAt(id, tg || { level: 'everywhere', key: null });
+        openPanel(btn);
+      });
+    } else {
+      el.innerHTML = `<span class="psx-devval-v" title="${esc(devv.name)}’s screen">${esc(devv.text)}</span><button type="button" class="psx-tb" data-psx-devchange="1" aria-label="Change ${esc(label(id))} for ${esc(devv.name)}’s screen">Change</button>`;
+      el.querySelector('button').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openPanel(btn); });
+    }
     ctl.appendChild(el);
   }
   function intact(row, btn, opt, wd, ln, changed, kind) {

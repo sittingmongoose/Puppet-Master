@@ -59,10 +59,22 @@
   const layering = (() => {
     const raw = W.PSX_LAYERING;
     if (!raw || !Array.isArray(raw.settings)) { try { console.warn('[psx] Plans’ inventory layering is missing: rows use the concept’s own heuristic'); } catch (e) { /* no console */ } return null; }
-    const rows = {}, types = {};
-    raw.settings.forEach((r) => { if (r && r.id && r.layering) { rows[r.id] = r.layering; types[r.id] = r.type || null; } });
-    return { source: raw.source || null, groups: raw.groups || {}, rows, types };
+    const rows = {}, types = {}, facts = {};
+    /* Jared 2026-11-13: each row's own limits and words come from the same inventory row: its options (choices, or a
+       range such as Randomness's "0.0-2.0"), its option_labels (a model row's "Same as Everyday model") and its
+       model_picker block (where inherit comes from, depth inside the picker) */
+    raw.settings.forEach((r) => { if (r && r.id && r.layering) { rows[r.id] = r.layering; types[r.id] = r.type || null; facts[r.id] = { options: Array.isArray(r.options) ? r.options : null, labels: r.option_labels || null, picker: r.model_picker || null, default: r.default }; } });
+    return { source: raw.source || null, groups: raw.groups || {}, rows, types, facts };
   })();
+  // a row's inventory facts (options, option_labels, model_picker, default), or null
+  const factsOf = (id) => (layering && layering.facts && layering.facts[id]) || null;
+  // a model row: the inventory's type model_picker (the shared chat model picker, with depth inside it)
+  const isModel = (id) => !!(layering && layering.types[id] === 'model_picker');
+  /* a model row's value: a model id, the row's own words ("inherit", "Default", "None", "auto"), or one atomic choice of
+     a model and its thinking depth, { model, effort } (SSYS-059: "Keep the model and its optional effort as one atomic
+     value from one level") */
+  const modelOf = (v) => (v && typeof v === 'object' && !Array.isArray(v) ? v.model : v);
+  const effortOf = (v) => (v && typeof v === 'object' && !Array.isArray(v) && v.effort ? v.effort : '');
   // a row's layering, or null when the inventory doesn't list it
   const layerOf = (id) => (layering && layering.rows[id]) || null;
   // the inventory's title for a row's group (its owner's page), from the id's first two parts
@@ -491,9 +503,37 @@
     const s = setting(id);
     return s && W.PM51.rowLabel ? W.PM51.rowLabel(s) : id;
   }
+  /* Can the page's own control for a row hold this value? Plans' inventory can give a row a type the page's control
+     doesn't have yet (batch 4 made Model nicknames a key-value map while the page still draws a text box until
+     stream F's FO-186). A control holds what it was made for: a map (keyvalue), a list (list, multiselect, reorder),
+     anything that isn't an object or a list. A value it can't hold is never put into it (feed.js) and is said in
+     words in its place (rows.js), and the base control is used again as soon as it can hold the value. */
+  const HOLDS_MAP = ['keyvalue'], HOLDS_LIST = ['list', 'multiselect', 'reorder', 'keyvalue'];
+  function holds(id, v) {
+    if (v === null || typeof v !== 'object') return true;
+    const s = setting(id), c = s && s.control;
+    if (!c) return true;
+    return Array.isArray(v) ? HOLDS_LIST.includes(c) : HOLDS_MAP.includes(c);
+  }
+  // a map or a list said in words, counted with the row's own noun ("No nicknames yet", "1 nickname", "2 nicknames")
+  function countWords(id, v) {
+    const n = Array.isArray(v) ? v.length : Object.keys(v || {}).length;
+    const words = String(label(id) || '').trim().split(/\s+/);
+    const plural = (words[words.length - 1] || 'items').toLowerCase().replace(/[^a-z-]/g, '') || 'items';
+    const one = /ies$/.test(plural) ? plural.replace(/ies$/, 'y') : /s$/.test(plural) ? plural.slice(0, -1) : plural;
+    return n === 0 ? `No ${plural} yet` : n === 1 ? `1 ${one}` : `${n} ${plural}`;
+  }
   /* the value as the row says it ("Claude Opus 4", "On", "60 seconds", "3 rules") */
   function vt(id, v) {
     if (v === undefined) return 'Not set';
+    /* a model row reads the inventory's own words: "inherit" is "Same as Everyday model" (option_labels.inherit), never
+       the engine's global "Same as the project"; a model with its own depth names both */
+    if (v && typeof v === 'object' && !isModel(id) && !holds(id, v)) return countWords(id, v);
+    if (isModel(id)) {
+      const f = factsOf(id) || {};
+      if (v === 'inherit' && f.labels && f.labels.inherit) return f.labels.inherit;
+      if (v && typeof v === 'object' && !Array.isArray(v)) { const m = vt(id, modelOf(v)); return effortOf(v) ? `${m} · ${effortOf(v)} thinking` : m; }
+    }
     if (id === 'system.mcp.timeout') { const n = Number(v); return n >= 1000 ? `${+(n / 1000).toFixed(1)} seconds` : `${n} ms`; }
     if (id === 'memory.assembly.project-rules') { const n = String(v || '').split('\n').filter((x) => x.trim()).length; return n ? `${n} rule${n === 1 ? '' : 's'}` : 'No rules'; }
     if (id === 'system.advanced.cli-path-claude' && v === 'Auto-detected') return 'Found automatically';
@@ -767,10 +807,10 @@
   }
 
   Object.assign(PSX, {
-    D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip, paths, layering, layerOf, groupOf,
+    D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip, paths, layering, layerOf, groupOf, factsOf, isModel, modelOf, effortOf,
     store, COMPUTERS, HOSTS, DEVICES, PROJECTS, MENU_PROJECTS, projectById, DEFAULTS, DEF, IDS, REASONS, computerIds, home,
     homeName: () => placeName('computer', home()), bagOf,
-    projectName, placeName, askerName, label, vt, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,
+    projectName, placeName, askerName, label, vt, holds, countWords, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,
     note, hideNote, sheet, topSheet, closeSheets, sheets, menu
   });
 })(window);
