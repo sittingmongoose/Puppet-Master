@@ -19,7 +19,7 @@
 // that, then Measured again; a word followed by a 200 ms long task before the next frame; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
 // so the pace turns to waiting while held), closed, then a word. For each change:
 //   - at once: a word changes data-flow and the loop's length by the frame after it; the quiet one comes 900 ms after
-//     the last word (the module's timer on the word's age; up to --set late=<ms>, default 150, later on a busy page);
+//     the last word (the module's timer on the word's age; up to --set late=<ms>, default 150, plus the main thread's long tasks after it fell due);
 //   - no jump, on what the compositor shows: at every sample (taken after each frame), the loop's place on the wall
 //     clock under the timing just sampled equals its place under the timing of the sample before to within one frame
 //     at the faster pace (no allowance for a sample two back) (the step the square makes when the frame hands the new timing over); the main thread's own view
@@ -77,13 +77,17 @@ const PACE = async ({ speed, windowPart }) => {
 	const mc = new MessageChannel();
 	mc.port1.onmessage = () => { if (!sampling) return; try { rows.push(read()); } catch (e) { errors.push(String(e)); } };
 	const tick = () => { if (!sampling) return; mc.port2.postMessage(0); requestAnimationFrame(tick); };
+	// the main thread's long tasks (a late quiet timer is late by them: a Settings save, the onboarding window's restyle,
+	// the check's own 200 ms task)
+	const longs = [];
+	let lto = null; try { lto = new PerformanceObserver((l) => { for (const e of l.getEntries()) longs.push({ s: e.startTime, e: e.startTime + e.duration }); }); lto.observe({ type: 'longtask', buffered: false }); } catch (e) { lto = null; }
 	const mo = new MutationObserver((ms) => { for (const m of ms) { const v = m.target.getAttribute('data-flow'); if (m.attributeName === 'data-flow' && v !== m.oldValue && m.target.getAttribute('data-ss') === 'stop') flips.push({ i: rows.length, now: performance.now(), to: v }); } });
 	const last = () => rows[rows.length - 1] || {};
 	const frac = () => { const g = last().g; return g && g.place != null ? g.place % 1 : null; };
 	const until = async (pred, ms = 9000) => { const end = performance.now() + ms; while (!pred()) { if (performance.now() > end) return false; await frame(); } return true; };
 	let feeding = false, nextWord = 0, lastWord = 0;
 	const word = () => { SS.token(); lastWord = performance.now(); };
-	const mark = (name, extra) => marks.push({ name, i: rows.length, now: performance.now(), frac: frac(), ...extra });
+	const mark = (name, extra) => marks.push({ name, i: rows.length, now: performance.now(), ft: document.timeline.currentTime, frac: frac(), ...extra });
 	// words are released inside a frame callback every 100 ms, as turn-stream.js:352 and thought-stream.js:229 release
 	// them (R32 F4: a timer released them between frames, a path the app does not use)
 	const feedTick = () => { if (!feeding) return; if (performance.now() >= nextWord) { word(); nextWord = performance.now() + 100; } requestAnimationFrame(feedTick); };
@@ -176,13 +180,20 @@ const PACE = async ({ speed, windowPart }) => {
 		await sleep(300);
 	} catch (e) { errors.push(String(e && e.message || e)); }
 	feedOff();
-	sampling = false; mo.disconnect();
+	sampling = false; mo.disconnect(); if (lto) lto.disconnect();
 	await frame();
 	D.pauseWorking();
 	await sleep(400);
 	const after = { ss: chip() && chip().getAttribute('data-ss'), debug: SS.debug() };
 	// tie each quiet change to its flip
-	for (const m of marks) if (m.kind === 'quiet') { const fl = flips.find((x) => x.to === 'waiting' && x.now >= m.wordAt); if (fl) { m.i = fl.i; m.flipMs = Math.round(fl.now - m.wordAt); } }
+	for (const m of marks) if (m.kind === 'quiet') {
+		const fl = flips.find((x) => x.to === 'waiting' && x.now >= m.wordAt);
+		if (!fl) continue;
+		m.i = fl.i; m.flipMs = Math.round(fl.now - m.wordAt);
+		// how long the main thread was held by long tasks between the timer's due time (900 ms after the word) and the change
+		const from = m.wordAt + 900, to = fl.now;
+		m.blockedMs = Math.round(longs.reduce((sum, x) => sum + Math.max(0, Math.min(x.e, to) - Math.max(x.s, from)), 0));
+	}
 	return { rows, marks, flips, errors, after, otherDesc };
 };
 
@@ -204,7 +215,14 @@ function pair(R, i, layer, maxRate, frame) {
 	const placed = (x) => x.state === 'paused' || x.s != null;
 	if (placed(a) && placed(b)) {
 		const h0 = shownAt(a, r1.w), h1 = shownAt(b, r1.w);
-		if (h0 >= 0 || h1 >= 0) { out.hand = +Math.abs(h1 - h0).toFixed(5); out.handBound = +(frame / Math.min(a.dur, b.dur) * 1.1 + 0.002).toFixed(5); }
+		if (h0 >= 0 || h1 >= 0) {
+			// a change made in a frame that follows a long task can be handed over late by that task's tail, a step of at
+			// most (the late time) x (the two paces' difference): the bound grows with the gap between the two samples by
+			// that much (the lead's ruling, 2026-11-14: the session's first Settings save, 853 ms between samples, 0.0151)
+			const gap = r1.w - r0.w, late = Math.max(0, gap - frame) * Math.abs(1 / b.dur - 1 / a.dur);
+			out.hand = +Math.abs(h1 - h0).toFixed(5); out.handBound = +(frame / Math.min(a.dur, b.dur) * 1.1 + 0.002 + late).toFixed(5);
+			if (gap > 100) { out.gap = Math.round(gap); out.lateAllow = +late.toFixed(5); }
+		}
 	}
 	// the main thread's view is from the frame's own time: not judged when that time lags the wall clock by more than
 	// a frame or two at the sample (a busy frame that began before a long task) or the samples are far apart; the
@@ -294,7 +312,7 @@ function everyFrame(R) {
 				if (ms <= wc.limitMs && ms <= R.rows[i].w - R.rows[i - 1].w + frame) { out.known.push(`${layer === 'g' ? 'glyph' : 'backlight'} ${Math.round(ms)} ms (${x.hand} of a loop) at +${Math.round(R.rows[i].w - R.rows[wc.from].w)} ms after the ${wc.what}`); continue; }
 			}
 			const over = Math.max(x.hand != null ? x.hand / x.handBound : 0, x.place != null ? (x.place < x.floor ? 99 : Math.abs(x.place) / x.placeBound) : 0);
-			if (over > out.worst) { const a = R.rows[i - 1][layer], b = R.rows[i][layer]; out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: hand-over ${x.hand ?? '-'} (bound ${x.handBound ?? '-'}), main-thread place ${x.place ?? 'stale frame'} (bound ${x.placeBound ?? '-'}), length ${a.dur} -> ${b.dur}, delay ${a.delay} -> ${b.delay}, start ${a.s == null ? '-' : Math.round(a.s)} -> ${b.s == null ? '-' : Math.round(b.s)}, ${a.state} -> ${b.state}, window ${R.rows[i - 1].win ? 'open' : 'closed'} -> ${R.rows[i].win ? 'open' : 'closed'}, ${Math.round(R.rows[i].w - R.rows[i - 1].w)} ms between samples, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
+			if (over > out.worst) { const a = R.rows[i - 1][layer], b = R.rows[i][layer]; out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: hand-over ${x.hand ?? '-'} (bound ${x.handBound ?? '-'}${x.gap != null ? `, of which ${x.lateAllow} for a late hand-over: ${x.gap} ms between samples` : ''}), main-thread place ${x.place ?? 'stale frame'} (bound ${x.placeBound ?? '-'}), length ${a.dur} -> ${b.dur}, delay ${a.delay} -> ${b.delay}, start ${a.s == null ? '-' : Math.round(a.s)} -> ${b.s == null ? '-' : Math.round(b.s)}, ${a.state} -> ${b.state}, window ${R.rows[i - 1].win ? 'open' : 'closed'} -> ${R.rows[i].win ? 'open' : 'closed'}, ${Math.round(R.rows[i].w - R.rows[i - 1].w)} ms between samples, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
 		}
 	}
 	return out;
@@ -385,7 +403,7 @@ export default async function (t) {
 			const rows = judge(R, look);
 			for (const e of R.errors) t.log(`${look}: ${e}`);
 			await t.check(`${look}: the run went through every change`, R.errors.length === 0 && R.rows.length > 60, R.errors.join('; ') || `${R.rows.length} frames sampled`);
-			for (const r of rows) t.log(`${look} ${r.layer}: ${r.name}${r.frac != null ? ` at ${r.frac} of the loop` : ''}: ${r.restart ? 'NEW LOOP' : `hand-over ${r.hand ?? '-'} (bound ${r.handBound ?? '-'}), ${r.stale ? 'main thread: a frame after a long task, not judged' : `main-thread place +${r.place} (bound ${r.placeBound}), value ${r.value} (bound ${r.valueBound})`}`}, length ${r.from} -> ${r.to}, ${r.dt} ms between samples, theme ${r.themes}${r.flipMs != null ? `, ${r.flipMs} ms after the last word` : ''}`);
+			for (const r of rows) t.log(`${look} ${r.layer}: ${r.name}${r.frac != null ? ` at ${r.frac} of the loop` : ''}: ${r.restart ? 'NEW LOOP' : `hand-over ${r.hand ?? '-'} (bound ${r.handBound ?? '-'}${r.gap != null ? `, of which ${r.lateAllow} for a late hand-over: ${r.gap} ms between samples` : ''}), ${r.stale ? 'main thread: a frame after a long task, not judged' : `main-thread place +${r.place} (bound ${r.placeBound}), value ${r.value} (bound ${r.valueBound})`}`}, length ${r.from} -> ${r.to}, ${r.dt} ms between samples, theme ${r.themes}${r.flipMs != null ? `, ${r.flipMs} ms after the last word` : ''}`);
 			const bad = rows.filter((r) => r.restart || (r.ok === false));
 			await t.check(`${look}: no change makes the loop jump (at the hand-over within a frame at the faster pace; on the main thread place within a frame, scale and opacity within the fastest ordinary frame)`, rows.length > 0 && bad.length === 0,
 				bad.length ? bad.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}, value ${r.value ?? '-'}/${r.valueBound ?? '-'}`}`).join('; ') : `${rows.length} changes judged`);
@@ -397,13 +415,17 @@ export default async function (t) {
 				`${ev.restarts.length ? 'new loops ' + ev.restarts.join(', ') + '; ' : ''}worst ${(ev.worst * 100).toFixed(0)}%${ev.where ? ': ' + ev.where : ''}`);
 			// at once: a word -> flowing with the flowing length in the next frame; the quiet change on time
 			const words = R.marks.filter((m) => m.kind === 'word' && m.i > 0 && m.i < R.rows.length);
-			// a word released inside frame N's callbacks shows by frame N + 1 (the sample after it)
-			const by = (m) => R.rows[Math.min(m.i + 1, R.rows.length - 1)];
+			// a word released inside frame N's callbacks shows by frame N + 1: the first sample taken after a frame later than
+			// the word's own (by frame time, not by counting samples: after a long task Chrome runs frames back to back and a
+			// sample posted from frame N - 1 can run after frame N, which put the count one sample early; s-5, Basic Dark)
+			const by = (m) => R.rows.find((r, i) => i >= m.i && m.ft != null && r.t > m.ft) || R.rows[R.rows.length - 1];
 			const slow = words.filter((m) => { const p = R.rows[m.i - 1], r = by(m); if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
 			await t.check(`${look}: a word turns the pace to flowing by the next frame`, words.length >= (alone ? 2 : 3) && slow.length === 0, slow.length ? slow.map((m) => `${m.name}: the frame after ${JSON.stringify(by(m).flow)} ${by(m).g && by(m).g.dur}`).join('; ') : `${words.length} words`);
 			const quiet = R.marks.filter((m) => m.kind === 'quiet');
-			const off = quiet.filter((m) => m.flipMs == null || m.flipMs < 880 || m.flipMs > 900 + late);
-			await t.check(`${look}: 900 ms without a word turns it to waiting (within ${late} ms after)`, quiet.length >= 2 && off.length === 0, quiet.map((m) => `${m.name}: ${m.flipMs == null ? 'no change' : m.flipMs + ' ms'}`).join('; '));
+			// allowed: `late` ms after 900, plus the time the main thread was held by long tasks after the timer fell due
+			// (R32 H3; the onboarding window's restyle made it 1093 ms in NieR and the check's own 200 ms task 1075 ms)
+			const off = quiet.filter((m) => m.flipMs == null || m.flipMs < 880 || m.flipMs > 900 + late + (m.blockedMs || 0));
+			await t.check(`${look}: 900 ms without a word turns it to waiting (within ${late} ms after, plus any long task after it fell due)`, quiet.length >= 2 && off.length === 0, quiet.map((m) => `${m.name}: ${m.flipMs == null ? 'no change' : m.flipMs + ' ms'}${m.blockedMs ? ` (${m.blockedMs} ms of long tasks after it fell due)` : ''}`).join('; '));
 			const d = R.after.debug || {};
 			await t.check(`${look}: once the run has ended nothing of the chip's is armed`, R.after.ss !== 'stop' && d.quiet === false && d.watching === false && d.pending !== true, JSON.stringify(R.after));
 		}
