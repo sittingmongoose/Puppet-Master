@@ -238,6 +238,10 @@
   {
    "event_type": "forge.webhook.delivery_failed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.webhook.delivery_recovered",
+   "outcome": "registered"
   }
  ]
 }
