@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L22908-L23045
+Source lines: L22908-L23047
 
-Source SHA256: `2f77300b15bd55655b9ad6bd0af7b35e0b6600efbf64d0a7fa3a03b2300e1bc1`
+Source SHA256: `e9195b196df882f26ef47de04127c31cebc970e93f97e32d238af74b18312115`
 
 ---
 
@@ -146,3 +146,5 @@ owner_hints:
   - Plans/storage-plan.md
   - Plans/Goal_Runtime_System.md
 ```
+
+Amended 2026-11-14 (DL-080 option 1, PNC-019 lane rv8b): `goal_run.replanned` gains the prepared current payload `pm.goal_runtime_event.goal_run_replanned.schema.v3` (CV-3100) for `all_writers.v8` births; the registered v2 root stays byte-identical as the historical reader until the S5b registry switch.

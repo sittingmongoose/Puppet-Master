@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8366-L8799
+Source lines: L8369-L8806
 
-Source SHA256: `aceef93973de0cd94201d09f598de316338cc13b17b073feb8c940061a673446`
+Source SHA256: `469474f87008a3d1d0a0f4d563e5fca7077288479c5df34e2863a24d51e18d63`
 
 ---
 
@@ -86,6 +86,8 @@ ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Pla
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
 
 Amended 2026-11-04 (DL-080, DL-045 depth): GRS-202 extends this projection to same-run goal_run.blocked and goal_run.stopped v3 rows for births whose Workflow source edition lists EP-200's writers; every other birth keeps the halt above.
+
+Amended 2026-11-14 (DL-080 option 1, PNC-019 lane rv8b): GRS-3101 adds the branch for genuine `all_writers.v8` births, which accept same-run `goal_run.replanned` v3 rows with started, certified and cancelled rows authenticated against the v8 source profiles; the branch is chosen by the authentic birth profile, and this unit's v7 branch is unchanged.
 
 ### GRS-200 - Current goal_run.stopped contract
 
@@ -289,6 +291,8 @@ owner_hints:
 **Why only qualifying births.** GRS-085 is bound to the `all_writers.v7` birth and the `prepare.v2` producer source. A v7 birth cannot produce these rows (EP-200), so extending its reducer would change nothing real and would risk accepting rows from an unlisted writer. The extension therefore applies only to the genuine EP-1110 fresh source edition under GRS-1110; its installed descriptor is independently authenticated and cannot be supplied as an admission flag.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/storage-plan.md#SP-428, ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Decision_Log.md#DL-080
+
+Amended 2026-11-14 (PNC-019 lane rv8b): `goal_run.replanned` now has its own contract (GRS-3100), and this branch still halts on it, because `all_writers.stop_block.v1` lists no Replan writer; replanned rows are read only by the v8 branch of GRS-3101.
 
 ### GRS-086 - Application Goal Birth Continuation And Versioned Custody
 

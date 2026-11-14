@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L7347-L8543
+Source lines: L7347-L8545
 
-Source SHA256: `d70296e2ebd016f379bedc3e2f784255cbcc5669e51de0219dc4f0fe1ba5f198`
+Source SHA256: `5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732`
 
 ---
 
@@ -393,6 +393,8 @@ ContractRef: ContractName:Plans/executor_cancellation_contracts/methods.json, Co
 
 
 **DG-OWN-A adoption.** Fresh stop/block adoption: EP-1110 supplies a separately named whole fresh source edition; EP-1111/EP-1112 are its original stop/block participants. Every v7/retained branch of this unit stays unchanged.
+
+Amended 2026-11-14 (DL-080 option 1, PNC-019 lane rv8b): on a genuine `all_writers.v8` birth (EP-3100) the Workflow writer list also names `owner.executor.workflow_run.replan.v1` (EP-3101), the optional/replanned materialization route this adoption excludes; D01 `update_workflow` observes that writer's native application and never issues it. Every other birth keeps the exclusion and RequiredOtherWorkflowWriterSource=false.
 
 ### EP-119 - Original bounded safe-stop, FileSafe and disposable Process sources
 

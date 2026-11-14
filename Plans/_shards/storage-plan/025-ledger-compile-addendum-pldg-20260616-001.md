@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L15449-L15559
+Source lines: L15449-L15561
 
-Source SHA256: `098f89c0d2b22a3a1d9a8c3c782cbba142091cb4e6933e392b18706d14116a1e`
+Source SHA256: `8e6af96d8353ca32e1e2718e0773f3390c1c3caecd5fa22c5ec090e62640a724`
 
 ---
 
@@ -119,3 +119,5 @@ owner_hints:
 - Plans/Contracts_V0.md
 - Plans/Runtime_Artifacts_Panel.md
 ```
+
+Amended 2026-11-14 (DL-080 option 1, PNC-019 lane rv8b): for `goal_run.replanned` the individually admitted projection route is the prepared v8 branch of GRS-3101 with SP-3102's values and checkpoint; no other projection consumes the family, and nothing is stored under it before a genuine v8 birth.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L9139-L10675
+Source lines: L9141-L10677
 
-Source SHA256: `d70296e2ebd016f379bedc3e2f784255cbcc5669e51de0219dc4f0fe1ba5f198`
+Source SHA256: `5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732`
 
 ---
 
@@ -925,7 +925,7 @@ command_payload_definitions:
       judgments:
         - key: command_kind
           choice: domain_action
-          gap_note: "Canon requires command_kind metadata on recovery commands (UI_Command_Catalog.md:6852) but states no value for this command; domain_action because it emits goal.replanned (Wiring_Matrix.production.json catalog.runtime_replan)."
+          gap_note: "Canon requires command_kind metadata on recovery commands (UI_Command_Catalog.md:6852) but states no value for this command; domain_action because its effect is the goal_run.replanned Event that EP-3101's Replan writer appends on an all_writers.v8 birth (Wiring_Matrix.production.json catalog.runtime_replan, amended 2026-11-14); goal.replanned is historical-only (GRS-070) and never its effect."
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: "No catalog row states disabled reasons for this command; chosen from the closed set: it needs the live blocked episode that exposes its allowed_action_id (UI_Command_Catalog.md:1246), and a stale blocked_sequence or projection refuses (UI_Command_Catalog.md:1220)."
