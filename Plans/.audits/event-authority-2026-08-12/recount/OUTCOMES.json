@@ -426,6 +426,10 @@
   {
    "event_type": "testing.capture.provenance_verified",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.redaction_applied",
+   "outcome": "registered"
   }
  ]
 }
