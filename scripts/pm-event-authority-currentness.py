@@ -910,6 +910,9 @@ def self_test() -> int:
         ea27.write_bytes(json_bytes({"union_rows": rows, "non_exact_pattern_rows": []}))
         tests["continuity_unknown_classification_rejected"] = compute_continuity_receipt(closed_root, ea27, ea29)["unmapped_rows"] == ["f.new_class"]
 
+    # The helper's copy of the event-verb pattern (context rules) must stay this tool's.
+    tests["helper_event_verb_pattern_matches_census"] = ea_closure.EA_EVENT_VERB_PATTERN == EVENT_VERB_RE.pattern
+
     # Other tools load this script by path without registering it in sys.modules.
     spec = importlib.util.spec_from_file_location("pm_ea_currentness_by_path", Path(__file__))
     by_path = importlib.util.module_from_spec(spec)

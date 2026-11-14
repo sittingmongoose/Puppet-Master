@@ -224,23 +224,61 @@ EA_DEPTH_CRITERIA = (
 )
 EA_EVIDENCE_LEDGER_PREFIXES = ("reports/", "Plans/.audits/event-authority-2026-08-12/")
 
-# S6 token-disposition ledger contract read by the closing edition.
-EA_TOKEN_LEDGER_SCHEMA_ID = "pm.event_authority.token_disposition_ledger.v1"
-EA_TOKEN_DISPOSITION_SOURCES = {
-    "registered_family": {"registry"},
-    "excluded_not_a_family": {"census_adjudication", "individual_disposition", "recount_outcome", "decision_log", "owner_citation"},
-    "alias_of_registered_family": {"census_adjudication", "individual_disposition", "decision_log", "owner_citation"},
-    "holding_bucket_not_admitted": {"individual_disposition"},
-    "non_event_identifier": {"mechanical_rule", "owner_citation"},
-    "non_event_owner_cited": {"owner_citation", "decision_log", "census_adjudication"},
-    "compatibility_lineage": {"decision_log", "owner_citation", "census_adjudication"},
+# S6 token-disposition ledger, in the row format of the S6 classifier
+# (scripts/pm-event-token-dispositions.py on plans/ea-pnc-s6c-20261114): one JSONL
+# row per census token with exact_token, disposition, resolution_state, rule_id
+# and source_rows pins. Final dispositions close a token; open ones refuse closure;
+# any other value is outside the reviewed vocabulary and refuses too.
+EA_TOKEN_FINAL_DISPOSITIONS = {
+    "REGISTERED_MEMBERSHIP_OBSERVED": ("observed", "registered"),
+    "EXCLUDED_BY_LANDED_ROW": ("disposed", "landed_exclusion"),
+    "EXCLUDED_BY_RECOUNT_OUTCOME": ("disposed", "recount_outcome"),
+    "ALIAS_ONLY_NOT_ADMITTED": ("disposed", "landed_alias"),
+    "HOLDING_QUARANTINE_OUTSIDE_D": ("disposed", "holding_quarantine"),
+    "NON_EVENT_COMMAND_REFERENCE": ("mechanical", "command_namespace"),
+    "NON_EVENT_IDENTIFIER_REFERENCE": ("mechanical", "identifier_namespace"),
+    "NON_EVENT_FILENAME_REFERENCE": ("mechanical", "filename_reference"),
+    "NON_EVENT_VERSION_IDENTIFIER": ("mechanical", "version_identifier"),
+    "NON_EVENT_FIELD_OR_UI_REFERENCE": ("mechanical", "field_or_ui_path"),
+    "NON_EVENT_NEGATIVE_CONTEXT_REFERENCE": ("mechanical", "negative_context_reference"),
+    "SCHEMA_FIXTURE_CONTEXT_REFERENCE": ("mechanical", "schema_fixture_reference"),
+    "LINEAGE_CONTEXT_REFERENCE": ("mechanical", "lineage_context_reference"),
 }
-EA_TOKEN_MECHANICAL_RULES = {
-    "cmd_namespace": re.compile(r"cmd\.[a-z0-9_.]+"),
-    "identifier_namespace": re.compile(r"(?:pm|https|www)\.[a-z0-9_.]+"),
-    "schema_or_version_id": re.compile(r"[a-z0-9_.]*(?:[._]v[0-9]+|\.schema)"),
-    "file_name": re.compile(r"[a-z0-9_.]+\.(?:json|jsonl|md|txt|bin|redb|xml|tmp|tsv|rs|py|toml|yaml|yml|db|sqlite|log|lock|png|svg|html)"),
+EA_TOKEN_OPEN_DISPOSITIONS = {
+    "PENDING_ADMISSION_OR_OWNER_EVIDENCE",
+    "PENDING_RECOUNT_OUTCOME",
+    "PREPARED_NOT_ADMITTED",
+    "OWNER_REVIEW_REQUIRED",
 }
+# The S6 classifier's exact lexical predicates (same regular expressions), applied
+# again here to every mechanical row of the matching rule.
+EA_TOKEN_LEXICAL_RULES = {
+    "command_namespace": lambda token: token.startswith("cmd."),
+    "identifier_namespace": lambda token: token.startswith(("pm.", "https.", "www.")),
+    "filename_reference": lambda token: re.search(r"\.(?:json|jsonl|md|txt|bin|redb|xml|tmp|tsv|rs|py|toml|yaml|yml|db)$", token) is not None,
+    "version_identifier": lambda token: re.search(r"(?:\.|_)v\d+$", token) is not None,
+    "field_or_ui_path": lambda token: re.search(
+        r"^(?:payload|details|diagnostic|original|page|task|rule|artifact|self|cause|actual|affected_scope|allowed_scope|"
+        r"cancellation_scope|retention_hold_record|tier_node|parallel_group|done|format|config|settings|ui|local|widget|catalog|home)\.",
+        token,
+    ) is not None,
+}
+EA_TOKEN_CONTEXT_RULES = {
+    "negative_context_reference": "explicit_non_event_or_forbidden_family",
+    "schema_fixture_reference": "schema_or_fixture_event_example",
+    "lineage_context_reference": "compatibility_or_source_lineage",
+}
+# Same pattern as EVENT_VERB_RE in scripts/pm-event-authority-currentness.py (its
+# self-test asserts equality): an event-like last segment never takes a context rule.
+EA_EVENT_VERB_PATTERN = (
+    r"(?:^|_)(?:started|completed|failed|cancelled|canceled|stopped|blocked|created|deleted|"
+    r"updated|changed|detected|applied|expired|replanned|scheduled|progressed|recorded|"
+    r"evaluated|captured|invoked|denied|requested|required|restored|opened|closed|"
+    r"disconnected|connected|renamed|moved|exported|appended|unavailable|degraded)$"
+)
+EA_LEDGER_FINAL_EXCLUDED = {"RECLASSIFY_TO_EXCLUDED", "RECONFIRM_EXCLUDE", "CONFIRM_EXACT_EXCLUDE", "REJECTED_LEXICAL_CANDIDATE"}
+EA_LEDGER_INTERIM = {"KEEP_QUARANTINED", "NEEDS_MORE_EVIDENCE"}
+EA_LEDGER_DIRS = (f"{EA_FROZEN_AUDIT_ROOT}/census-adjudication", f"{EA_FROZEN_AUDIT_ROOT}/individual-disposition")
 # Canon pins of the external July Event Authority artifacts (Plans/storage-plan.md,
 # the Event Authority currentness boundary paragraph). Finding 4 of PLAN.md.
 EA_CONTINUITY_RECEIPT_SCHEMA_ID = "pm.event_authority.ea27_ea29_continuity_receipt.v1"
@@ -672,7 +710,6 @@ EVENT_AUTHORITY_RESOLVED_CLOSURE_BLOCKERS = [
     {"blocker": EVENT_AUTHORITY_OPEN_CLOSURE_BLOCKERS[5], "resolution": "ea27_ea29_continuity_receipt", "evidence": "closure/EA27_EA29_CONTINUITY_RECEIPT.json"},
 ]
 _HEX64 = re.compile(r"[0-9a-f]{64}")
-_DECISION_REF = re.compile(r"Plans/Decision_Log\.md#(DL-\d{3,4})")
 
 
 class ClosureInputError(ValueError):
@@ -757,18 +794,6 @@ def _sha_rel(root: Path, relative: str) -> str | None:
 
 def _names_token(text: str, token: str) -> bool:
     return re.search(r"(?<![A-Za-z0-9_.])" + re.escape(token) + r"(?![A-Za-z0-9_]|\.[A-Za-z0-9_])", text) is not None
-
-
-def _decision_section(root: Path, number: str) -> bytes:
-    raw = _read_rel(root, "Plans/Decision_Log.md")
-    marker = ("### " + number + ":").encode()
-    if raw.count(marker) != 1:
-        raise ClosureInputError(f"{number} prose entry missing or duplicated")
-    start = raw.index(marker)
-    body_start = raw.index(b"\n", start) + 1
-    following = re.search(rb"(?m)^#{1,3} ", raw[body_start:])
-    end = body_start + following.start() if following else len(raw)
-    return raw[start:end]
 
 
 def closure_bound_input_paths(root: Path, *, token_ledger_path: str, depth_assessment_paths: list[str]) -> list[str]:
@@ -902,7 +927,7 @@ def _closure_denominator(
     known37: list[str],
     records: dict[str, dict[str, Any]],
     failures: list[dict[str, Any]],
-) -> tuple[dict[str, Any], dict[str, Any], list[dict[str, Any]], list[dict[str, Any]]]:
+) -> tuple[dict[str, Any], list[dict[str, Any]], set[str]]:
     ledger = _strict_jsonl(_read_rel(root, EA_DISPOSITION_LEDGER_REL_PATH))
     if not all(isinstance(row, dict) and isinstance(row.get("event_type"), str) for row in ledger):
         raise ClosureInputError("individual-disposition ledger malformed")
@@ -983,8 +1008,7 @@ def _closure_denominator(
         "recount_excluded": sum(1 for row in outcome_rows if row.get("outcome") == "excluded"),
         "recount_decision_cards": len(cards),
     }
-    ledger_by_type = {row["event_type"]: row for row in ledger}
-    return summary, ledger_by_type, outcome_rows, ledger
+    return summary, outcome_rows, set(recount_names)
 
 
 def _depth_rows(root: Path, relative: str, cache: dict[str, tuple[str, list[dict[str, Any]]]]) -> tuple[str, list[dict[str, Any]]]:
@@ -1073,92 +1097,63 @@ def _closure_depth(
     return {"criteria": list(EA_DEPTH_CRITERIA), "declared_assessments": list(declared), "families": families}
 
 
-_CENSUS_CATEGORIES_BY_DISPOSITION = {
-    "excluded_not_a_family": {"exact_excluded", "non_exact_excluded", "rejected_lexical_candidate"},
-    "alias_of_registered_family": {"alias"},
-    "non_event_owner_cited": {"exact_excluded", "non_exact_excluded", "rejected_lexical_candidate"},
-    "compatibility_lineage": {"alias", "exact_excluded", "non_exact_excluded"},
-}
-_LEDGER_DISPOSITION_BY_TOKEN_DISPOSITION = {
-    "excluded_not_a_family": ("RECLASSIFY_TO_EXCLUDED", None),
-    "alias_of_registered_family": ("RECLASSIFY_ALIAS", None),
-    "holding_bucket_not_admitted": ("KEEP_QUARANTINED", "quarantined_not_admitted"),
-}
-_SOURCE_KEYS = {
-    "registry": {"kind"},
-    "census_adjudication": {"kind"},
-    "individual_disposition": {"kind"},
-    "recount_outcome": {"kind"},
-    "decision_log": {"kind", "ref", "section_sha256"},
-    "owner_citation": {"kind", "path", "sha256", "line_start", "line_end"},
-    "mechanical_rule": {"kind", "rule"},
-}
+def _landed_ledger_paths(root: Path) -> list[str]:
+    """The two live top-level ledgers and their new-name supplements (the S6 classifier's set)."""
+    paths = []
+    for directory in EA_LEDGER_DIRS:
+        base = Path(root) / directory
+        for path in sorted(base.glob("*.jsonl")) if base.is_dir() else []:
+            if path.name == "LEDGER.jsonl" or path.name.endswith("-NEW-NAMES-LEDGER.jsonl"):
+                paths.append(path.relative_to(root).as_posix())
+    return paths
 
 
-def _token_source_problem(
-    root: Path,
-    token: str,
-    disposition: str,
-    source: Any,
-    live: dict[str, dict[str, Any]],
-    census: dict[str, dict[str, Any]],
-    ledger: dict[str, dict[str, Any]],
-    outcomes: dict[str, dict[str, Any]],
-) -> str | None:
-    if not isinstance(source, dict) or source.get("kind") not in _SOURCE_KEYS:
-        return "unknown source kind"
-    kind = source["kind"]
-    if set(source) != _SOURCE_KEYS[kind]:
-        return "source fields"
-    if kind not in EA_TOKEN_DISPOSITION_SOURCES[disposition]:
-        return f"source kind {kind} cannot grant {disposition}"
-    if kind == "registry":
-        return None if token in live else "token is not a registered family"
-    if kind == "census_adjudication":
-        row = census.get(token)
-        return None if row is not None and row.get("category") in _CENSUS_CATEGORIES_BY_DISPOSITION.get(disposition, set()) else "census row missing or category does not grant the disposition"
-    if kind == "individual_disposition":
-        row = ledger.get(token)
-        expected = _LEDGER_DISPOSITION_BY_TOKEN_DISPOSITION.get(disposition)
-        if row is None or expected is None or row.get("disposition") != expected[0]:
-            return "disposition-ledger row missing or does not grant the disposition"
-        if expected[1] is not None and row.get("bucket") != expected[1]:
-            return "disposition-ledger bucket does not grant the disposition"
-        return None
-    if kind == "recount_outcome":
-        row = outcomes.get(token)
-        return None if row is not None and row.get("outcome") == "excluded" else "recount outcome missing or not excluded"
-    if kind == "decision_log":
-        match = _DECISION_REF.fullmatch(str(source.get("ref")))
-        if match is None:
-            return "decision ref"
-        try:
-            section = _decision_section(root, match.group(1))
-        except (ClosureInputError, OSError) as exc:
-            return str(exc)
-        if _sha256_bytes(section) != source.get("section_sha256"):
-            return "decision section fingerprint"
-        return None if _names_token(section.decode("utf-8", errors="replace"), token) else "decision section does not name the token"
-    if kind == "owner_citation":
-        try:
-            relative = _safe_relative(source.get("path"))
-            if not relative.startswith("Plans/") or relative.startswith("Plans/.audits/"):
-                return "owner citation must cite canonical Plans"
+def _pin_value(root: Path, pin: dict[str, Any], cache: dict[str, Any]) -> Any:
+    """The JSON value a source-row pin names, read from the live file; ClosureInputError if it is not there."""
+    relative = _safe_relative(pin.get("path"))
+    if relative not in cache:
+        raw = _read_rel(root, relative)
+        doc = _strict_jsonl(raw) if relative.endswith(".jsonl") else _strict_json(raw)
+        cache[relative] = (_sha256_bytes(raw), doc)
+    file_sha, doc = cache[relative]
+    if pin.get("sha256") != file_sha:
+        raise ClosureInputError(f"stale pin: {relative}")
+    pointer = pin.get("json_pointer")
+    if not isinstance(pointer, str) or not pointer.startswith("/"):
+        raise ClosureInputError(f"pin without a JSON pointer: {relative}")
+    value = doc
+    for part in pointer[1:].split("/"):
+        part = part.replace("~1", "/").replace("~0", "~")
+        if isinstance(value, list) and part.isdigit() and int(part) < len(value):
+            value = value[int(part)]
+        elif isinstance(value, dict) and part in value:
+            value = value[part]
+        else:
+            raise ClosureInputError(f"pin points at nothing: {relative}{pointer}")
+    if pin.get("row_sha256") != _canonical_sha256(value):
+        raise ClosureInputError(f"pinned row changed: {relative}{pointer}")
+    return value
+
+
+def _window_pin_ok(root: Path, token: str, pin: dict[str, Any], cache: dict[str, Any]) -> bool:
+    """A Plans occurrence window: current file bytes, exact excerpt, and the token named in it."""
+    try:
+        relative = _safe_relative(pin.get("path"))
+        if not relative.startswith("Plans/") or relative.startswith("Plans/.audits/"):
+            return False
+        if relative not in cache:
             raw = _read_rel(root, relative)
-        except (ClosureInputError, OSError) as exc:
-            return str(exc)
-        start, end = source.get("line_start"), source.get("line_end")
-        lines = raw.decode("utf-8", errors="replace").splitlines()
-        if (
-            type(start) is not int
-            or type(end) is not int
-            or not 1 <= start <= end <= len(lines)
-            or _sha256_bytes(raw) != source.get("sha256")
-        ):
-            return "owner citation fingerprint or span"
-        return None if _names_token("\n".join(lines[start - 1:end]), token) else "owner citation span does not name the token"
-    rule = EA_TOKEN_MECHANICAL_RULES.get(source.get("rule"))
-    return None if rule is not None and rule.fullmatch(token) else "mechanical rule does not match the token"
+            cache[relative] = (_sha256_bytes(raw), raw.decode("utf-8", errors="replace").splitlines())
+        file_sha, lines = cache[relative]
+    except (ClosureInputError, OSError):
+        return False
+    if pin.get("sha256") != file_sha:
+        raise ClosureInputError(f"stale pin: {relative}")
+    start, end = pin.get("window_start_line"), pin.get("window_end_line")
+    if type(start) is not int or type(end) is not int or not 1 <= start <= end <= len(lines):
+        return False
+    excerpt = "\n".join(lines[start - 1:end])
+    return pin.get("excerpt") == excerpt and _names_token(excerpt, token)
 
 
 def _closure_token_ledger(
@@ -1166,59 +1161,128 @@ def _closure_token_ledger(
     relative: str,
     occurrences_raw: bytes,
     live: dict[str, dict[str, Any]],
-    ledger: dict[str, dict[str, Any]],
     outcome_rows: list[dict[str, Any]],
+    recount_names: set[str],
     failures: list[dict[str, Any]],
 ) -> dict[str, Any]:
     if not relative.startswith(EA_EVIDENCE_LEDGER_PREFIXES):
         raise ClosureInputError(f"token ledger outside reports/ or the frozen audit: {relative}")
     raw = _read_rel(root, relative)
-    doc = _strict_json(raw)
-    occurrences_sha256 = _sha256_bytes(occurrences_raw)
-    if not isinstance(doc, dict) or doc.get("schema_id") != EA_TOKEN_LEDGER_SCHEMA_ID or not isinstance(doc.get("rows"), list):
-        raise ClosureInputError("token ledger identity or rows malformed")
-    if doc.get("occurrences_sha256") != occurrences_sha256:
-        failures.append({"error": "event_authority_closure_token_ledger_stale", "ledger_occurrences_sha256": doc.get("occurrences_sha256"), "edition_occurrences_sha256": occurrences_sha256})
-    occurrence_tokens = set()
+    rows = _strict_jsonl(raw)
+    occurrences: dict[str, dict[str, Any]] = {}
     for row in _strict_jsonl(occurrences_raw):
         if not isinstance(row, dict) or not isinstance(row.get("exact_token"), str):
             raise ClosureInputError("occurrence ledger malformed")
-        occurrence_tokens.add(row["exact_token"])
-    census = {
-        row["event_type"]: row
-        for row in _strict_jsonl(_read_rel(root, EA_CENSUS_ADJUDICATION_REL_PATH))
-        if isinstance(row, dict) and isinstance(row.get("event_type"), str)
-    }
-    outcomes = {row["event_type"]: row for row in outcome_rows}
+        occurrences[row["exact_token"]] = row
+    ledger_paths = set(_landed_ledger_paths(root))
+    ledger_history: set[str] = set()
+    for path in ledger_paths:
+        ledger_history |= {row.get("event_type") for row in _strict_jsonl(_read_rel(root, path)) if isinstance(row, dict)}
+    event_verb = re.compile(EA_EVENT_VERB_PATTERN)
+    # parsed documents and text lines are cached apart: one file can be both
+    cache: dict[str, Any] = {}
+    line_cache: dict[str, Any] = {}
     seen: dict[str, str] = {}
     invalid: list[dict[str, Any]] = []
+    open_rows: list[str] = []
+    unknown: list[dict[str, Any]] = []
     bad_sources: list[dict[str, Any]] = []
+    stale: list[dict[str, Any]] = []
     registry_mismatch: list[str] = []
-    for row in doc["rows"]:
-        if not isinstance(row, dict) or set(row) != {"exact_token", "disposition", "source"} or not isinstance(row.get("exact_token"), str):
-            invalid.append({"row": row if isinstance(row, dict) else None, "detail": "row fields"})
+    for row in rows:
+        if (
+            not isinstance(row, dict)
+            or not isinstance(row.get("exact_token"), str)
+            or not isinstance(row.get("disposition"), str)
+            or not isinstance(row.get("source_rows"), list)
+            or not all(isinstance(pin, dict) for pin in row["source_rows"])
+        ):
+            invalid.append({"row": row.get("exact_token") if isinstance(row, dict) else None, "detail": "row fields"})
             continue
-        token, disposition = row["exact_token"], row["disposition"]
+        token, disposition, pins = row["exact_token"], row["disposition"], row["source_rows"]
         if token in seen:
             invalid.append({"exact_token": token, "detail": "duplicate token row"})
             continue
         seen[token] = disposition
-        if disposition not in EA_TOKEN_DISPOSITION_SOURCES:
-            failures.append({"error": "event_authority_closure_token_disposition_invalid", "exact_token": token, "disposition": disposition})
+        if disposition in EA_TOKEN_OPEN_DISPOSITIONS:
+            open_rows.append(token)
             continue
-        if (token in live) != (disposition == "registered_family"):
+        if disposition not in EA_TOKEN_FINAL_DISPOSITIONS:
+            unknown.append({"exact_token": token, "disposition": disposition})
+            continue
+        state, rule = EA_TOKEN_FINAL_DISPOSITIONS[disposition]
+        if (token in live) != (rule == "registered"):
             registry_mismatch.append(token)
-        problem = _token_source_problem(root, token, disposition, row["source"], live, census, ledger, outcomes)
+        problem = None
+        if row.get("resolution_state") != state or row.get("rule_id") != rule:
+            problem = "resolution_state or rule_id does not match the disposition"
+        elif token in ledger_history and rule not in ("registered", "landed_exclusion", "landed_alias", "holding_quarantine"):
+            problem = "a landed ledger row outranks this rule"
+        elif token in recount_names and rule not in ("registered", "recount_outcome"):
+            problem = "a recount name is registered or excluded by its recount outcome only"
+        else:
+            # Every repository pin must be current; the granting pins are resolved below.
+            for pin in pins:
+                path = pin.get("path")
+                if isinstance(path, str) and not path.startswith("/") and "json_pointer" not in pin and "window_start_line" not in pin:
+                    problem = "pin is neither a row pointer nor an occurrence window"
+            try:
+                if rule == "registered":
+                    granted = [
+                        _pin_value(root, pin, cache) for pin in pins
+                        if pin.get("path") == EVENT_FAMILY_REGISTRY_REL_PATH and "json_pointer" in pin
+                    ]
+                    if not any(isinstance(value, dict) and value.get("event_type") == token for value in granted):
+                        problem = "no current registry row pin"
+                elif rule in ("landed_exclusion", "landed_alias", "holding_quarantine"):
+                    values = [_pin_value(root, pin, cache) for pin in pins if pin.get("path") in ledger_paths]
+                    names_token = values and all(isinstance(v, dict) and v.get("event_type") == token for v in values)
+                    dispositions = {v.get("disposition") for v in values if isinstance(v, dict)}
+                    if not names_token:
+                        problem = "no current landed ledger row pin naming the token"
+                    elif rule == "landed_exclusion" and not dispositions <= EA_LEDGER_FINAL_EXCLUDED:
+                        problem = "a cited ledger row does not exclude the token"
+                    elif rule == "landed_alias" and dispositions != {"RECLASSIFY_ALIAS"}:
+                        problem = "a cited ledger row is not an alias row"
+                    elif rule == "holding_quarantine" and not (
+                        dispositions <= EA_LEDGER_INTERIM
+                        and all(v.get("category", v.get("bucket")) == "quarantined_not_admitted" for v in values)
+                    ):
+                        problem = "a cited ledger row is not a holding-bucket row"
+                elif rule == "recount_outcome":
+                    values = [_pin_value(root, pin, cache) for pin in pins if pin.get("path") == EA_RECOUNT_OUTCOMES_REL_PATH]
+                    if not any(isinstance(v, dict) and v.get("event_type") == token and v.get("outcome") == "excluded" for v in values):
+                        problem = "no current recount outcome pin excluding the token"
+                else:
+                    windows = [pin for pin in pins if "window_start_line" in pin]
+                    if not windows or not all(_window_pin_ok(root, token, pin, line_cache) for pin in windows):
+                        problem = "no current Plans occurrence window naming the token"
+                    elif rule in EA_TOKEN_LEXICAL_RULES and not EA_TOKEN_LEXICAL_RULES[rule](token):
+                        problem = "the lexical rule does not match the token"
+                    elif rule in EA_TOKEN_CONTEXT_RULES and (
+                        (occurrences.get(token) or {}).get("primary_mechanical_classification") != EA_TOKEN_CONTEXT_RULES[rule]
+                        or event_verb.search(token.rsplit(".", 1)[-1]) is not None
+                    ):
+                        problem = "the context rule does not match the token's census classification"
+            except ClosureInputError as exc:
+                stale.append({"exact_token": token, "detail": str(exc)})
+                continue
         if problem is not None:
             bad_sources.append({"exact_token": token, "disposition": disposition, "detail": problem})
     if invalid:
         failures.append({"error": "event_authority_closure_token_ledger_invalid", "count": len(invalid), "sample": invalid[:20]})
-    missing = sorted(occurrence_tokens - set(seen))
-    extra = sorted(set(seen) - occurrence_tokens)
+    missing = sorted(set(occurrences) - set(seen))
+    extra = sorted(set(seen) - set(occurrences))
     if missing or extra:
         failures.append({"error": "event_authority_closure_token_coverage_mismatch", "missing_count": len(missing), "missing_sample": missing[:20], "extra_count": len(extra), "extra_sample": extra[:20]})
+    if open_rows:
+        failures.append({"error": "event_authority_closure_token_disposition_open", "count": len(open_rows), "sample": sorted(open_rows)[:20]})
+    if unknown:
+        failures.append({"error": "event_authority_closure_token_disposition_invalid", "count": len(unknown), "sample": unknown[:20]})
     if registry_mismatch:
         failures.append({"error": "event_authority_closure_token_registry_mismatch", "count": len(registry_mismatch), "sample": sorted(registry_mismatch)[:20]})
+    if stale:
+        failures.append({"error": "event_authority_closure_token_ledger_stale", "count": len(stale), "sample": stale[:20]})
     if bad_sources:
         failures.append({"error": "event_authority_closure_token_source_invalid", "count": len(bad_sources), "sample": bad_sources[:20]})
     counts: dict[str, int] = {}
@@ -1227,8 +1291,9 @@ def _closure_token_ledger(
     return {
         "path": relative,
         "sha256": _sha256_bytes(raw),
-        "occurrences_sha256": occurrences_sha256,
-        "row_count": len(doc["rows"]),
+        "format": "S6 classifier TOKEN_DISPOSITIONS.jsonl rows",
+        "occurrences_sha256": _sha256_bytes(occurrences_raw),
+        "row_count": len(rows),
         "disposition_counts": dict(sorted(counts.items())),
     }
 
@@ -1351,8 +1416,9 @@ def compute_closure_evidence(
     depth = section("depth", lambda: _closure_depth(root, live, records, declared, failures))
     token_ledger = None
     if denominator_result is not None:
-        denominator, ledger_by_type, outcome_rows, _ledger = denominator_result
-        token_ledger = section("token_ledger", lambda: _closure_token_ledger(root, token_ledger_path, occurrences_raw, live, ledger_by_type, outcome_rows, failures))
+        denominator, outcome_rows, recount_names = denominator_result
+        token_ledger = section("token_ledger", lambda: _closure_token_ledger(
+            root, token_ledger_path, occurrences_raw, live, outcome_rows, recount_names, failures))
     section("continuity", lambda: _closure_continuity(root, continuity_receipt, failures))
     section("runtime_boundary", lambda: _closure_runtime_boundary(root, failures))
     if unreadable or denominator_result is None or depth is None or token_ledger is None:
