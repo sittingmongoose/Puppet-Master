@@ -635,5 +635,341 @@ class PmAuditClosureTerminalStateTests(unittest.TestCase):
             self.assertEqual(before, after)
 
 
+
+def replacement_identity(finding: dict, **changes) -> dict:
+    """The finding's identity fields with `changes` applied, keyed deterministically."""
+    row = {field: copy.deepcopy(finding[field]) for field in (
+        "finding_family", "ledger_id", "source_atom_ids", "plan_unit_ids", "owner_docs", "detail_keys", "exact_tokens",
+    )}
+    row.setdefault("consumer_docs", [])
+    row.update(changes)
+    row["finding_key"] = pm_audit_closure.compute_finding_key(row)
+    return row
+
+
+class PmAuditClosureMatrixReplacementTests(unittest.TestCase):
+    """PLS-026 (DL-511): an appended matrix row may replace one frozen row whose registry link does not hold."""
+
+    PASS_ID = "audit-replace-supplemental-20261114"
+    RECORD = "supplemental_closure_pass-20261114.json"
+
+    def setUp(self) -> None:
+        temporary = tempfile.TemporaryDirectory(prefix="pm-matrix-replace-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name).resolve()
+        self.audit_dir = self.root / "audit-replace"
+        self.audit_dir.mkdir()
+        self.registry = self.root / "_semantic_closure_registry.jsonl"
+        self.audit_refs = refs("audit-replace")
+        write_audit_report(self.audit_dir, self.audit_refs, status="BLOCKED", repair_required_count=1)
+        self.finding = finding_row(self.audit_refs, repair_required=True, level="blocker")
+        write_jsonl(self.audit_dir / "semantic_risks.jsonl", [self.finding])
+        write_complete_scope(self.audit_dir, self.audit_refs, finding_keys=[self.finding["finding_key"]])
+        write_jsonl(self.audit_dir / "repair_impact_matrix.jsonl", [impact_row(self.audit_refs, self.finding)])
+        # The live registry closure has the corrected owner; the frozen matrix row still carries the old one.
+        self.corrected = replacement_identity(self.finding, owner_docs=["Plans/Corrected.md"])
+        self.registry_rows = [
+            {**registry_row(self.audit_refs, self.corrected, "closure-old"), **self.corrected},
+            {**registry_row(self.audit_refs, self.corrected, "closure-new"), **self.corrected},
+        ]
+        self.frozen = closure_matrix_row(self.audit_refs, self.finding)
+        self.frozen["registry_closure_id"] = "closure-old"
+
+    # -- fixture builders -------------------------------------------------------------------
+    def replacing_row(self, target: int = 1, *, record: str | None = None, pass_id: str | None = None, **changes) -> dict:
+        row = closure_matrix_row(self.audit_refs, self.finding)
+        row.update({field: copy.deepcopy(value) for field, value in self.corrected.items()})
+        row.update({
+            "registry_closure_id": "closure-new",
+            "closure_reason": "corrected owner routing (test)",
+            "replaces_matrix_line": target,
+            "replaces_row_sha256": "0" * 64,  # filled in by write()
+            "replacement_reason": "the frozen row links a registry closure whose finding identity it does not share",
+            "supplemental_pass": {"pass_id": pass_id or self.PASS_ID, "record": record or self.RECORD},
+        })
+        row.update(changes)
+        return row
+
+    @staticmethod
+    def line(row: dict) -> str:
+        return json.dumps(row, sort_keys=True)
+
+    def write(self, rows: list[dict], *, frozen_rows: int = 1, records: dict[str, dict] | None = None,
+              bind: bool = True, list_in_record: bool = True) -> None:
+        """Write the matrix and pass record(s). With `bind`, each replacing row gets the SHA-256 of the
+        line it names. Each record pins the first `frozen_rows` lines (or its own `frozen_rows`)."""
+        lines: list[str] = []
+        for row in rows:
+            if bind and "replaces_matrix_line" in row and isinstance(row["replaces_matrix_line"], int) \
+                    and 0 < row["replaces_matrix_line"] <= len(lines):
+                row["replaces_row_sha256"] = pm_audit_closure.sha256_text(lines[row["replaces_matrix_line"] - 1])
+            lines.append(self.line(row))
+        (self.audit_dir / "repair_closure_matrix.jsonl").write_text("".join(text + "\n" for text in lines), encoding="utf-8")
+        write_jsonl(self.registry, self.registry_rows)
+        records = records if records is not None else {self.RECORD: {"pass_id": self.PASS_ID, "frozen_rows": frozen_rows}}
+        for name, spec in records.items():
+            pinned = spec["frozen_rows"]
+            closures = []
+            for index, row in enumerate(rows, 1):
+                if list_in_record and row.get("supplemental_pass", {}).get("record") == name and "replaces_matrix_line" in row:
+                    closures.append({
+                        "appended_line": index,
+                        "appended_row_sha256": pm_audit_closure.sha256_text(lines[index - 1]),
+                        "replaces_matrix_line": row["replaces_matrix_line"],
+                    })
+            (self.audit_dir / name).write_text(json.dumps({
+                "schema_id": "pm.audit_supplemental_closure_pass.v1",
+                "pass_id": spec["pass_id"],
+                "audit_id": "audit-replace",
+                "matrix": {
+                    "path": "repair_closure_matrix.jsonl",
+                    "original_rows": pinned,
+                    "original_sha256": pm_audit_closure.sha256_text("".join(text + "\n" for text in lines[:pinned])),
+                },
+                "closures": closures,
+            }, sort_keys=True), encoding="utf-8")
+
+    def validate(self) -> dict:
+        return pm_audit_closure.validate_audit_dir(
+            self.audit_dir, require_matrix=True, require_effective_status=False,
+            source_artifacts=None, registry_path=self.registry,
+        )
+
+    def frozen_link_error(self, report: dict) -> bool:
+        return any(":1: registry row finding_key does not match matrix finding_key" in error for error in report["errors"])
+
+    def refusals(self, report: dict) -> list[str]:
+        return [error for error in report["errors"] if "does not replace" in error or "more than one replacing row" in error]
+
+    # -- the rules --------------------------------------------------------------------------
+    def test_unreplaced_bad_frozen_link_still_fails(self) -> None:
+        self.write([self.frozen])
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report), report["errors"])
+        self.assertNotIn("matrix_replacements", report)
+
+    def test_valid_replacement_is_judged_instead_of_the_frozen_link(self) -> None:
+        frozen_line = self.line(self.frozen)
+        self.write([self.frozen, self.replacing_row()])
+        report = self.validate()
+        self.assertEqual(report["errors"], [])
+        self.assertEqual(report["matrix_replacements"], [{"replaced_line": 1, "replacing_line": 2}])
+        # The frozen row stays as history, and the replacement adds no second closure.
+        self.assertEqual((self.audit_dir / "repair_closure_matrix.jsonl").read_text(encoding="utf-8").split("\n")[0], frozen_line)
+        self.assertEqual(report["status_counts"], {"repaired": 1})
+        self.assertEqual(report["repair_required_count"], 0)
+        self.assertEqual(report["terminal_repair_state"], "repair_validated")
+
+    def test_replacement_of_an_unknown_line_is_refused(self) -> None:
+        self.write([self.frozen, self.replacing_row(target=7)])
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any("line 7 is not a matrix row" in error for error in self.refusals(report)), report["errors"])
+
+    def test_replacing_row_inside_the_pinned_prefix_is_refused(self) -> None:
+        # A record that pins line 2 as frozen makes line 2 history, not an appended correction.
+        self.write([self.frozen, self.replacing_row(target=1)], frozen_rows=2)
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any("must be appended after the 2 frozen rows" in error for error in self.refusals(report)))
+
+    def test_replacement_of_a_line_after_the_pinned_prefix_is_refused(self) -> None:
+        appended = closure_matrix_row(self.audit_refs, self.finding)
+        appended["registry_closure_id"] = "closure-old"
+        self.write([self.frozen, appended, self.replacing_row(target=2)])
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any("line 2 is not one of the 1 frozen rows" in error for error in self.refusals(report)), report["errors"])
+        self.assertNotIn("matrix_replacements", report)
+
+    def test_replacement_of_a_non_frozen_row_is_refused(self) -> None:
+        appended = closure_matrix_row(self.audit_refs, self.finding)
+        appended.update({"registry_closure_id": "closure-old",
+                         "supplemental_pass": {"pass_id": "earlier-pass", "record": "supplemental_closure_pass-20261105.json"}})
+        self.write([appended, self.replacing_row(target=1)])
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any("is an appended or replacing row" in error for error in self.refusals(report)), report["errors"])
+
+    def test_duplicate_replacements_are_refused(self) -> None:
+        self.write([self.frozen, self.replacing_row(), self.replacing_row(closure_reason="second correction (test)")])
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any("is named by more than one replacing row (lines 2, 3)" in error for error in self.refusals(report)))
+        self.assertNotIn("matrix_replacements", report)
+
+    def test_a_replacement_is_never_itself_replaced(self) -> None:
+        # A later pass that pins the first replacement as part of its own prefix still cannot replace it.
+        later = "supplemental_closure_pass-20261115.json"
+        rows = [self.frozen, self.replacing_row(), self.replacing_row(target=2, record=later, pass_id="later-pass")]
+        self.write(rows, records={self.RECORD: {"pass_id": self.PASS_ID, "frozen_rows": 1},
+                                  later: {"pass_id": "later-pass", "frozen_rows": 2}})
+        report = self.validate()
+        self.assertTrue(any(":3: does not replace" in error and "never itself replaced" in error for error in report["errors"]))
+        # The first replacement still holds; the chain adds nothing.
+        self.assertFalse(self.frozen_link_error(report))
+        self.assertEqual(report["matrix_replacements"], [{"replaced_line": 1, "replacing_line": 2}])
+
+    def test_replacing_row_whose_own_link_does_not_hold_is_not_honored(self) -> None:
+        self.registry_rows[1]["closed_by_audit_id"] = "another-audit"
+        self.registry_rows[1]["audit_ids"] = ["another-audit"]
+        self.write([self.frozen, self.replacing_row()])
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any(":2: does not replace line 1" in error and "own registry link does not hold" in error
+                            for error in report["errors"]), report["errors"])
+        self.assertTrue(any(":2: registry row closed_by_audit_id does not match" in error for error in report["errors"]))
+        self.assertNotIn("matrix_replacements", report)
+
+    def test_replacing_row_whose_identity_differs_from_its_registry_closure_is_not_honored(self) -> None:
+        # Same finding_key string on both rows, but one side's identity gives another deterministic key.
+        for side in ("matrix", "registry"):
+            with self.subTest(side=side):
+                self.registry_rows[1] = {**registry_row(self.audit_refs, self.corrected, "closure-new"), **self.corrected}
+                if side == "registry":
+                    self.registry_rows[1]["owner_docs"] = ["Plans/Other.md"]
+                    replacing = self.replacing_row()
+                else:
+                    replacing = self.replacing_row(owner_docs=["Plans/Other.md"])
+                self.write([self.frozen, replacing])
+                report = self.validate()
+                self.assertTrue(self.frozen_link_error(report))
+                self.assertTrue(any("own registry link does not hold" in error for error in report["errors"]), report["errors"])
+                self.assertNotIn("matrix_replacements", report)
+
+    def test_replacement_must_bind_the_frozen_bytes(self) -> None:
+        self.write([self.frozen, self.replacing_row()], bind=False)
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any("does not match the exact bytes of line 1" in error for error in self.refusals(report)))
+
+    def test_replacement_must_be_listed_in_its_pass_record(self) -> None:
+        self.write([self.frozen, self.replacing_row()], list_in_record=False)
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any("must list this replacement once" in error for error in self.refusals(report)))
+
+    def test_replacement_needs_its_pass_record(self) -> None:
+        self.write([self.frozen, self.replacing_row()], records={})
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any("is missing or reached through a symbolic link" in error for error in self.refusals(report)))
+
+    def test_pass_record_must_pin_the_frozen_prefix(self) -> None:
+        self.write([self.frozen, self.replacing_row()])
+        record_path = self.audit_dir / self.RECORD
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+        record["matrix"]["original_sha256"] = "f" * 64
+        record_path.write_text(json.dumps(record), encoding="utf-8")
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any("are not the bytes its supplemental pass record pinned" in error for error in self.refusals(report)))
+
+    def test_replacement_keeps_the_source_row_and_closure_status(self) -> None:
+        for changes, expected in (({"source_row": 2}, "must close the same source row as line 1"),
+                                  ({"closure_status": "false_positive"}, "must keep the closure_status of line 1")):
+            with self.subTest(changes=changes):
+                if "closure_status" in changes:
+                    self.registry_rows[1]["closure_status"] = "false_positive"
+                self.write([self.frozen, self.replacing_row(**changes)])
+                report = self.validate()
+                self.assertTrue(self.frozen_link_error(report))
+                self.assertTrue(any(expected in error for error in self.refusals(report)), report["errors"])
+                self.registry_rows[1]["closure_status"] = "repaired"
+
+    def test_replacement_fields_need_a_reason(self) -> None:
+        self.write([self.frozen, self.replacing_row(replacement_reason=" ")])
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report))
+        self.assertTrue(any("replacement_reason must be non-empty" in error for error in self.refusals(report)))
+
+
+class PmAuditClosureLegacyReplacementCoverageTests(unittest.TestCase):
+    """A replacing row stands in for its frozen row: it adds no over-coverage of a non-actionable source row."""
+
+    NAME = "audit-20260617-099-replacement-coverage"
+
+    def setUp(self) -> None:
+        temporary = tempfile.TemporaryDirectory(prefix="pm-matrix-replace-legacy-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name).resolve()
+        patcher = patch.object(pm_audit_closure, "ROOT", self.root)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        frozen_files = ["audit_report.json", "repair_closure_matrix.jsonl", "semantic_risks.jsonl"]
+        patcher = patch.object(pm_audit_closure, "legacy_audit_state",
+                               lambda audit_dir: {"historical_matrix_lines": 1, "frozen_files": list(frozen_files)})
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        self.audit_dir = self.root / "Plans" / ".audits" / self.NAME
+        self.audit_dir.mkdir(parents=True)
+        self.registry = self.root / "Plans" / ".audits" / "_semantic_closure_registry.jsonl"
+        self.audit_refs = refs(self.NAME)
+        write_audit_report(self.audit_dir, self.audit_refs, status="PASS_WITH_WARNINGS", repair_required_count=0)
+        # A June-style row: neither repair_required nor finding_level, so the inference judges it (non-actionable).
+        source = {**self.audit_refs, "classification": "source_lineage_only", "finding_family": "test_family",
+                  "source_atom_ids": ["atom-0001"], "plan_unit_ids": ["PU-001"], "owner_docs": ["Plans/Test.md"],
+                  "detail_keys": ["detail"], "exact_tokens": ["token"]}
+        source["finding_key"] = pm_audit_closure.compute_finding_key(source)
+        write_jsonl(self.audit_dir / "semantic_risks.jsonl", [source])
+        write_complete_scope(self.audit_dir, self.audit_refs, finding_keys=[source["finding_key"]])
+        self.source = source
+        self.corrected = replacement_identity(source, owner_docs=["Plans/Corrected.md"])
+
+    def run_case(self, appended: dict | None) -> dict:
+        frozen = closure_matrix_row(self.audit_refs, self.source)
+        frozen["registry_closure_id"] = "closure-old"
+        frozen_line = json.dumps(frozen, sort_keys=True)
+        lines = [frozen_line]
+        if appended is not None:
+            if "replaces_matrix_line" in appended:
+                appended["replaces_row_sha256"] = pm_audit_closure.sha256_text(frozen_line)
+            lines.append(json.dumps(appended, sort_keys=True))
+        (self.audit_dir / "repair_closure_matrix.jsonl").write_text("".join(text + "\n" for text in lines), encoding="utf-8")
+        (self.audit_dir / "supplemental_closure_pass-20261114.json").write_text(json.dumps({
+            "schema_id": "pm.audit_supplemental_closure_pass.v1",
+            "pass_id": "legacy-replace-pass",
+            "audit_id": self.NAME,
+            "matrix": {"path": "repair_closure_matrix.jsonl", "original_rows": 1,
+                       "original_sha256": pm_audit_closure.sha256_text(frozen_line + "\n")},
+            "closures": [{"appended_line": 2, "appended_row_sha256": pm_audit_closure.sha256_text(lines[-1]),
+                          "replaces_matrix_line": 1}] if len(lines) == 2 else [],
+        }), encoding="utf-8")
+        write_jsonl(self.registry, [
+            {**registry_row(self.audit_refs, self.corrected, closure_id), **self.corrected}
+            for closure_id in ("closure-old", "closure-new")
+        ])
+        return pm_audit_closure.validate_audit_dir(
+            self.audit_dir, require_matrix=True, require_effective_status=False,
+            source_artifacts=["semantic_risks.jsonl"], registry_path=self.registry,
+        )
+
+    def corrected_row(self, **extra) -> dict:
+        row = closure_matrix_row(self.audit_refs, self.source)
+        row.update({field: copy.deepcopy(value) for field, value in self.corrected.items()})
+        row.update({"registry_closure_id": "closure-new", "closure_reason": "corrected (test)",
+                    "supplemental_pass": {"pass_id": "legacy-replace-pass", "record": "supplemental_closure_pass-20261114.json"}})
+        row.update(extra)
+        return row
+
+    def over_coverage_kept(self, report: dict) -> bool:
+        return any("non-actionable source rows" in error for error in report["errors"])
+
+    def test_replacing_row_adds_no_over_coverage(self) -> None:
+        before = self.run_case(None)
+        self.assertFalse(self.over_coverage_kept(before), before["errors"])
+        self.assertEqual(before["legacy_format_rule"]["demoted_by_kind"].get("inferred_actionability_over_coverage"), 1)
+        self.assertTrue(any(":1: registry row finding_key does not match" in error for error in before["errors"]))
+
+        replaced = self.run_case(self.corrected_row(replaces_matrix_line=1, replacement_reason="corrected owner (test)"))
+        self.assertEqual(replaced["errors"], [])
+        self.assertEqual(replaced["matrix_replacements"], [{"replaced_line": 1, "replacing_line": 2}])
+        self.assertEqual(replaced["legacy_format_rule"]["demoted_by_kind"].get("inferred_actionability_over_coverage"), 1)
+
+        # The same row appended without naming the frozen row is a second, newer closure: over-coverage is kept.
+        appended = self.run_case(self.corrected_row())
+        self.assertTrue(self.over_coverage_kept(appended), appended["errors"])
+
+
 if __name__ == "__main__":
     unittest.main()

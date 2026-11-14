@@ -3686,6 +3686,180 @@ def validate_audit_correction(
     }
 
 
+SUPPLEMENTAL_PASS_SCHEMA = "pm.audit_supplemental_closure_pass.v1"
+SUPPLEMENTAL_PASS_RECORD_RE = re.compile(r"^supplemental_closure_pass-\d{8}\.json$")
+# PLS-026 / DL-511: the fields with which an appended matrix row replaces one frozen row.
+MATRIX_REPLACEMENT_FIELDS = ("replaces_matrix_line", "replaces_row_sha256", "replacement_reason")
+
+
+def matrix_registry_link_problems(
+    row: dict[str, Any], label: str, registry_by_id: dict[str, dict[str, Any]], audit_name: str,
+) -> tuple[list[str], bool]:
+    """The registry-link errors of one closure-matrix row, and whether its identity fields give
+    the same deterministic key as those of the registry closure it names."""
+    problems: list[str] = []
+    registry_closure_id = row.get("registry_closure_id")
+    if not isinstance(registry_closure_id, str) or not registry_closure_id.strip():
+        return [f"{label}: registry_closure_id must be non-empty"], False
+    if registry_closure_id not in registry_by_id:
+        return [f"{label}: registry_closure_id {registry_closure_id} is not present in registry"], False
+    registry_row = registry_by_id[registry_closure_id]
+    identity_agrees = compute_finding_key(row) == compute_finding_key(registry_row)
+    if registry_row.get("finding_key") != row.get("finding_key"):
+        problems.append(f"{label}: registry row finding_key does not match matrix finding_key")
+    if registry_row.get("closure_status") != str(row.get("closure_status", "")):
+        problems.append(f"{label}: registry row closure_status does not match matrix closure_status")
+    if audit_name not in registry_row.get("audit_ids", []):
+        problems.append(f"{label}: registry row audit_ids does not include {audit_name}")
+    if registry_row.get("closed_by_audit_id") != audit_name:
+        problems.append(f"{label}: registry row closed_by_audit_id does not match {audit_name}")
+    return problems, identity_agrees
+
+
+def _supplemental_pass_record(
+    audit_dir: Path, row: dict[str, Any], cache: dict[str, Any],
+) -> tuple[dict[str, Any] | None, str | None]:
+    """The supplemental_closure_pass record a replacing row names, or the reason it cannot be used."""
+    provenance = row.get("supplemental_pass")
+    if not isinstance(provenance, dict):
+        return None, "a replacing row needs a supplemental_pass object that names its supplemental_closure_pass record"
+    name = provenance.get("record")
+    prefix = f"Plans/.audits/{audit_dir.name}/"
+    if isinstance(name, str) and name.startswith(prefix):
+        name = name[len(prefix):]
+    if not isinstance(name, str) or not SUPPLEMENTAL_PASS_RECORD_RE.fullmatch(name):
+        return None, "supplemental_pass.record must name a supplemental_closure_pass-<YYYYMMDD>.json file of this audit directory"
+    if name not in cache:
+        path = audit_dir / name
+        record: Any = None
+        problem = None
+        if path_has_symlink(path) or not path.is_file():
+            problem = f"supplemental pass record {name} is missing or reached through a symbolic link"
+        else:
+            try:
+                record = strict_json_loads(path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeDecodeError, json.JSONDecodeError, AnchorError) as exc:
+                problem = f"supplemental pass record {name} is not strict JSON: {exc}"
+        if problem is None:
+            matrix = record.get("matrix") if isinstance(record, dict) else None
+            if not isinstance(record, dict) or record.get("schema_id") != SUPPLEMENTAL_PASS_SCHEMA:
+                problem = f"supplemental pass record {name} is not a {SUPPLEMENTAL_PASS_SCHEMA} object"
+            elif record.get("audit_id") != audit_dir.name:
+                problem = f"supplemental pass record {name} names another audit"
+            elif not isinstance(record.get("closures"), list):
+                problem = f"supplemental pass record {name} has no closures list"
+            elif not isinstance(matrix, dict) or matrix.get("path") != "repair_closure_matrix.jsonl" \
+                    or not _is_int(matrix.get("original_rows")) or matrix["original_rows"] < 1 \
+                    or not _is_sha256(matrix.get("original_sha256")):
+                problem = (f"supplemental pass record {name} must pin the frozen matrix rows "
+                           "(matrix.path, matrix.original_rows, matrix.original_sha256)")
+        cache[name] = (record if problem is None else None, problem)
+    record, problem = cache[name]
+    if problem is None and provenance.get("pass_id") != record.get("pass_id"):
+        problem = f"supplemental_pass.pass_id does not match the pass_id of {name}"
+    return (record if problem is None else None), problem
+
+
+def matrix_replacement_candidates(
+    audit_dir: Path,
+    matrix_path: Path,
+    rows: list[dict[str, Any]],
+    legacy_state: dict[str, Any] | None,
+    errors: list[str],
+) -> dict[int, int]:
+    """The structurally valid PLS-026 replacements of one closure matrix: {frozen line: replacing line}.
+
+    A supplemental closure pass may append a corrected row that names, in replaces_matrix_line, the
+    one frozen row it replaces, with replaces_row_sha256 (the SHA-256 of that row's exact line) and
+    a replacement_reason. A frozen row lies inside the matrix prefix that the replacing row's own
+    supplemental_closure_pass record pins (matrix.original_rows and matrix.original_sha256), inside
+    the historical rows when the legacy format rule applies, and carries neither supplemental_pass
+    nor a replacement field. The replacing row is appended after that prefix, closes the same source
+    row with the same closure_status, and the record lists it once (replaces_matrix_line,
+    appended_line, appended_row_sha256). A frozen row is replaced at most once, and a replacing or
+    appended row is never replaced, so there are no chains. Every refusal is an error and changes
+    nothing: both rows are then judged as they stand. The caller honors a candidate only when the
+    replacing row's own registry link holds.
+    """
+    claims = [row for row in rows if any(field in row for field in MATRIX_REPLACEMENT_FIELDS)]
+    if not claims:
+        return {}
+    try:
+        raw_lines = _lines(matrix_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError):
+        raw_lines = []
+    rows_by_line = {row["_line_no"]: row for row in rows}
+    historical = (legacy_state or {}).get("historical_matrix_lines")
+    records: dict[str, Any] = {}
+    by_target: dict[int, list[int]] = {}
+    for row in claims:
+        line = row["_line_no"]
+        label = f"{rel(matrix_path)}:{line}"
+        target = row.get("replaces_matrix_line")
+        digest = row.get("replaces_row_sha256")
+        reason = row.get("replacement_reason")
+        problems: list[str] = []
+        if not _is_int(target) or target < 1:
+            problems.append("replaces_matrix_line must be a positive integer line number")
+            target = None
+        if not _is_sha256(digest):
+            problems.append("replaces_row_sha256 must be the SHA-256 of the replaced line")
+        if not isinstance(reason, str) or not reason.strip():
+            problems.append("replacement_reason must be non-empty")
+        record, record_problem = _supplemental_pass_record(audit_dir, row, records)
+        if record_problem:
+            problems.append(record_problem)
+        if record is not None:
+            frozen_rows = record["matrix"]["original_rows"]
+            prefix = "".join(text + "\n" for text in raw_lines[:frozen_rows])
+            if frozen_rows > len(raw_lines) or sha256_text(prefix) != record["matrix"]["original_sha256"]:
+                problems.append(f"the first {frozen_rows} matrix rows are not the bytes its supplemental pass record pinned")
+            if line <= frozen_rows:
+                problems.append(f"a replacing row must be appended after the {frozen_rows} frozen rows its supplemental pass record pins")
+            if target is not None and target > frozen_rows:
+                problems.append(f"line {target} is not one of the {frozen_rows} frozen rows its supplemental pass record pins")
+            entries = [
+                entry for entry in record["closures"]
+                if isinstance(entry, dict) and entry.get("replaces_matrix_line") == target and entry.get("appended_line") == line
+            ]
+            if target is not None and (len(entries) != 1 or entries[0].get("appended_row_sha256") != sha256_text(raw_lines[line - 1])):
+                problems.append("its supplemental pass record must list this replacement once "
+                                "(replaces_matrix_line, appended_line and appended_row_sha256 of this exact line)")
+        if target is not None:
+            frozen = rows_by_line.get(target)
+            if isinstance(historical, int) and target > historical:
+                problems.append(f"line {target} is not one of the {historical} historical rows of this legacy directory")
+            if frozen is None:
+                problems.append(f"line {target} is not a matrix row")
+            elif "supplemental_pass" in frozen or any(field in frozen for field in MATRIX_REPLACEMENT_FIELDS):
+                problems.append(f"line {target} is an appended or replacing row, not a frozen row; a replacement is never itself replaced")
+            else:
+                if target > len(raw_lines) or sha256_text(raw_lines[target - 1]) != digest:
+                    problems.append(f"replaces_row_sha256 does not match the exact bytes of line {target}")
+                artifact = frozen.get("source_artifact")
+                frozen_key = source_row_key(artifact, frozen.get("source_row")) if isinstance(artifact, str) else None
+                artifact = row.get("source_artifact")
+                own_key = source_row_key(artifact, row.get("source_row")) if isinstance(artifact, str) else None
+                if frozen_key is None or own_key != frozen_key:
+                    problems.append(f"a replacing row must close the same source row as line {target}")
+                if str(row.get("closure_status", "")) != str(frozen.get("closure_status", "")):
+                    problems.append(f"a replacing row must keep the closure_status of line {target}")
+        if problems:
+            errors.append(f"{label}: does not replace a frozen row (PLS-026): " + "; ".join(problems))
+            continue
+        by_target.setdefault(target, []).append(line)
+    candidates: dict[int, int] = {}
+    for target, lines in sorted(by_target.items()):
+        if len(lines) > 1:
+            errors.append(
+                f"{rel(matrix_path)}:{target}: is named by more than one replacing row (lines {', '.join(map(str, lines))}); "
+                "a frozen row is replaced at most once, so none of them replaces it"
+            )
+            continue
+        candidates[target] = lines[0]
+    return candidates
+
+
 def validate_audit_dir(
     audit_dir: Path,
     *,
@@ -3828,6 +4002,23 @@ def validate_audit_dir(
     status_counts: dict[str, int] = {}
     open_matrix_rows: list[dict[str, Any]] = []
 
+    # PLS-026 (DL-511): an appended row may replace one frozen row. It is honored only when its own
+    # registry link holds with an identity that gives the registry closure's deterministic key; the
+    # frozen row's registry link is then judged through it, and the replacing row, which closes the
+    # same source row with the same status, adds no coverage line or status count of its own.
+    rows_by_line = {row["_line_no"]: row for row in rows}
+    replaced_by: dict[int, int] = {}
+    for target, line in sorted(matrix_replacement_candidates(audit_dir, matrix_path, rows, legacy_state, errors).items()):
+        replacing = rows_by_line[line]
+        problems, identity_agrees = matrix_registry_link_problems(
+            replacing, f"{rel(matrix_path)}:{line}", registry_by_id, audit_dir.name)
+        if problems or not identity_agrees or replacing.get("finding_key") != compute_finding_key(replacing):
+            errors.append(f"{rel(matrix_path)}:{line}: does not replace line {target} (PLS-026): its own registry link "
+                          f"does not hold, so line {target} is judged as it stands")
+        else:
+            replaced_by[target] = line
+    replacing_lines = set(replaced_by.values())
+
     for row in rows:
         label = f"{rel(matrix_path)}:{row.get('_line_no')}"
         line_no = row.get("_line_no")
@@ -3838,12 +4029,13 @@ def validate_audit_dir(
         validate_ref_fields(row, audit_refs, label, errors, require=True, allow_row_scoped_refs=True,
                             origin=matrix_path, row_key=line_no)
         status = str(row.get("closure_status", ""))
-        status_counts[status] = status_counts.get(status, 0) + 1
+        if line_no not in replacing_lines:
+            status_counts[status] = status_counts.get(status, 0) + 1
         if status not in ALLOWED_STATUSES:
             errors.append(f"{label}: invalid closure_status {status}")
         if status == "reopened":
             errors.append(f"{label}: repair_closure_matrix rows must close the item, not use reopened")
-        if status in OPEN_STATUSES:
+        if status in OPEN_STATUSES and line_no not in replacing_lines:
             open_matrix_rows.append(
                 {
                     "source_artifact": row.get("source_artifact"),
@@ -3866,23 +4058,12 @@ def validate_audit_dir(
         closure_reason = row.get("closure_reason")
         if not isinstance(closure_reason, str) or not closure_reason.strip():
             errors.append(f"{label}: closure_reason must be non-empty")
-        registry_closure_id = row.get("registry_closure_id")
-        if not isinstance(registry_closure_id, str) or not registry_closure_id.strip():
-            errors.append(f"{label}: registry_closure_id must be non-empty")
-        elif registry_closure_id not in registry_by_id:
-            errors.append(f"{label}: registry_closure_id {registry_closure_id} is not present in registry")
-        else:
-            registry_row = registry_by_id[registry_closure_id]
-            if compute_finding_key(row) == compute_finding_key(registry_row):
+        if line_no not in replaced_by:
+            # A replaced frozen row's registry link is judged through its replacing row (above).
+            problems, identity_agrees = matrix_registry_link_problems(row, label, registry_by_id, audit_dir.name)
+            if identity_agrees:
                 legacy_context["matrix_identity_agrees"].add(line_no)
-            if registry_row.get("finding_key") != finding_key:
-                errors.append(f"{label}: registry row finding_key does not match matrix finding_key")
-            if registry_row.get("closure_status") != status:
-                errors.append(f"{label}: registry row closure_status does not match matrix closure_status")
-            if audit_dir.name not in registry_row.get("audit_ids", []):
-                errors.append(f"{label}: registry row audit_ids does not include {audit_dir.name}")
-            if registry_row.get("closed_by_audit_id") != audit_dir.name:
-                errors.append(f"{label}: registry row closed_by_audit_id does not match {audit_dir.name}")
+            errors.extend(problems)
         artifact = row.get("source_artifact")
         if artifact is not None and not isinstance(artifact, str):
             errors.append(f"{label}: source_artifact must be a string")
@@ -3894,7 +4075,8 @@ def validate_audit_dir(
             key = source_row_key(artifact, row.get("source_row"))
             if key:
                 covered.add(key)
-                cover_lines.setdefault(key, []).append(int(row.get("_line_no") or 0))
+                if line_no not in replacing_lines:
+                    cover_lines.setdefault(key, []).append(int(row.get("_line_no") or 0))
             else:
                 errors.append(f"{label}: source_row must be a non-empty string or integer")
 
@@ -3979,6 +4161,10 @@ def validate_audit_dir(
         report["effective_status_projection"] = effective_status_report
     if correction is not None:
         report["audit_correction"] = correction
+    if replaced_by:
+        report["matrix_replacements"] = [
+            {"replaced_line": target, "replacing_line": line} for target, line in sorted(replaced_by.items())
+        ]
     return apply_legacy_format_rule(audit_dir, report, legacy_context)
 
 
