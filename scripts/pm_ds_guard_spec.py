@@ -944,7 +944,27 @@ SPEC = {
 
     # ------------------------------------------------------------------ shared Browser admission gate (routes the DS Browser families reach)
     'gate_authority': ('reviewed authority binding dispatch', GATE, """
-        GA01_reviewed_binding | complete_browser_authority_binding_missing | the admission row's event type has an individually reviewed binding (created or reset)
+        GA01_reviewed_binding | complete_browser_authority_binding_missing | the admission row's event type has an individually reviewed binding (created, reset or one of the exact 51 Browser Program families)
+    """),
+    'gate_program_entry': ('Browser Program per-family binding entry (DL-046; lane s4b contracts)', GATE, """
+        GP01_program_family | browser_program_binding_missing | the admission row's event type is one of the exact 51 Browser Program names, never a prefix or sibling
+        GP02_one_contract | browser_program_contract_missing | the prepared Browser Program contracts list the event type exactly once
+        GP03_admission_row_index | browser_program_admission_row_mismatch | the contract's admission row index names this admission row's event type
+    """),
+    'gate_program_binding': ('Browser Program per-family binding (DL-046; lane s4b contracts)', GATE, """
+        GP04_family_identity | browser_program_family_identity | the admission row's family id and revision are the contract's
+        GP05_semantic_owner | browser_program_semantic_owner | the admission row's semantic owner is the contract's own Section 15 anchor
+        GP06_consumer_refs | browser_program_consumer_refs | the admission row's consumer refs hold the contract's SP and CV units
+        GP07_producer | browser_program_producer | the admission row's producer component is the contract's
+        GP08_payload_schema | browser_program_payload_schema | the admission row's payload schema id is the contract's
+        GP09_retention | browser_program_retention | the admission row's retention policy is the contract's
+        GP10_owner_record | browser_program_owner_record | the admission row's owner record contract is the contract's
+        GP11_authority_contract | browser_program_authority_contract | the admission row's authority contract is the contract's own Storage unit
+        GP12_section15_text | browser_program_section15_text | the Section 15 anchor section names the producer, publication, consumer, checkpoint family, CV and SP units and retention
+        GP13_contract_unit_text | browser_program_contract_unit_text | the CV unit names the family, its payload schema id and its identity, replay and inline-limit terms
+        GP14_storage_unit_text | browser_program_storage_unit_text | the SP unit names the family, its checkpoint family, key, schema, writer, consumer and retention terms
+        GP15_checkpoint_row | browser_program_checkpoint_row | the Storage registry holds exactly one checkpoint row with the contract's key, consumer, writer, schema and checkpoint retention
+        GP16_checkpoint_schema | browser_program_checkpoint_schema | the contract's checkpoint schema ref resolves to a definition
     """),
     'gate_semantic': ('Browser payload semantics', GATE, """
         GS01_run_attempt_paired | run_attempt_scope_mismatch | run and attempt are both present or both absent
