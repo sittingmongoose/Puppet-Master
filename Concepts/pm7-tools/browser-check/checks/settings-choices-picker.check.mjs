@@ -737,16 +737,24 @@ export const tests = {
 		await t.check('On/Off: "Your choices" keeps its two radios and no picker', b.block && b.radios === 2 && b.combos === 0, `radios ${b.radios}, combobox ${b.combos}`);
 		await closeDetails(t, f);
 		/* opus-recheck-b10d127 F2: long single-choice lists Jared did not choose stay tick lists (the picker goes on
-		   exactly the 13 model settings and the 11 he chose, by id). At least 3 of these 5 must open here. */
+		   exactly the model settings and the 11 he chose, by id). At least 3 of these 4 must open here. FO-182 (Jared,
+		   2026-11-13): the model settings are now every model_picker row of the inventory, so the Back Seat Driver's
+		   model left this set: it is a model setting and its Details shows the picker (asserted below). */
 		let others = 0;
-		for (const id of ['code.terminal.theme', 'code.terminal.font-family', 'safety.approvals.bsd-persona', 'safety.approvals.bsd-model', 'ai.accounts.soft-warning-level']) {
+		for (const id of ['code.terminal.theme', 'code.terminal.font-family', 'safety.approvals.bsd-persona', 'ai.accounts.soft-warning-level']) {
 			if (!(await openDetails(t, f, id, true))) { t.log(`${id}: no Details reachable from its page here`); continue; }
 			others++;
 			const o = await f.evaluate(() => { const i = document.querySelector('#panel-settings .detail-inspector'); return { radios: i.querySelectorAll('.o55-insp-block [role="radio"]').length, combos: i.querySelectorAll('.o55-insp-block [role="combobox"]').length }; });
 			await t.check(`${id} (not chosen by Jared): stays a tick list (${o.radios} radios)`, o.radios > 6 && o.combos === 0, `radios ${o.radios}, combobox ${o.combos}`);
 			await closeDetails(t, f);
 		}
-		await t.check(`at least 3 of the 5 long lists Jared did not choose open here (${others})`, others >= 3, `${others} opened`);
+		await t.check(`at least 3 of the 4 long lists Jared did not choose open here (${others})`, others >= 3, `${others} opened`);
+		/* FO-182: a model setting the inventory names (model_picker), here the Back Seat Driver's model, is the picker */
+		if (await openDetails(t, f, 'safety.approvals.bsd-model', true)) {
+			const m = await f.evaluate(BLOCK, 'safety.approvals.bsd-model');
+			await t.check(`FO-182 safety.approvals.bsd-model (an inventory model row): "Your choices" is the picker (${m.combos} combobox, ${m.radios} radios)`, m.combos === 1 && m.radios === 0, `combobox ${m.combos}, radios ${m.radios}`);
+			await closeDetails(t, f);
+		}
 		/* a list that takes several choices stays a tick list, however long ("Ways to fix, in order": 10) */
 		if (!(await openDetails(t, f, 'planning.verification.repair-strategies'))) return;
 		const mp = await f.evaluate(() => { const i = document.querySelector('#panel-settings .detail-inspector'); return { checks: i.querySelectorAll('.o55-insp-block [role="checkbox"]').length, combos: i.querySelectorAll('.o55-insp-block [role="combobox"]').length }; });
