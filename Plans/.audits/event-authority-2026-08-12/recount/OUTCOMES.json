@@ -458,6 +458,10 @@
   {
    "event_type": "testing.capture.target_changed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.runtime_enabled_for_adapter",
+   "outcome": "registered"
   }
  ]
 }
