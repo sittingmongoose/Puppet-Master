@@ -346,6 +346,10 @@
   {
    "event_type": "runtime.quota_resume_consent_changed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "runtime.quota_wait_started",
+   "outcome": "registered"
   }
  ]
 }
