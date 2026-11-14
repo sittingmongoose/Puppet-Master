@@ -386,6 +386,10 @@
   {
    "event_type": "source_control.writer_lease.granted",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.writer_lease.lost",
+   "outcome": "registered"
   }
  ]
 }
