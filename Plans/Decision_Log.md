@@ -37401,3 +37401,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-630: Event Authority registers notebook.entry_committed (admission merge 1)
+
+```yaml
+plan_unit_id: DL-630
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `notebook.entry_committed` as family `event-family-notebook-entry-committed` revision 1.0.0 in admission merge 1 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the families ready then are admitted in a first merge. `notebook.entry_committed` is one of the 249 names of the 2026-11-04 census recount (bucket e). Jared's answer to card EA-P1, option A ("Add each once its definition passes every check"), admits each such name once its full definition, its record and both reviews pass; DL-039's no bulk registration stands. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `notebook.entry_committed`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-14.110 (156 families, SHA-256 ecba00fc0fb6fe3205c91ab81876bd012fd5b485ec2d9b0d133e4feb7347d092) to 2026-11-14.111 (157 families, SHA-256 6764764d479395e1822ebbfca58041424029d09d61196874fdf574a2aabeb9d7). The appended row, canonical SHA-256 1ae5d87e42a720b6514c2bbf6e5ae007c68fe0d577026e8160ceb1f0493c2b29, has scope policy application_or_project, payload `pm.event_payload.notebook.entry_committed.v1` at Plans/event_authority_w3g/payloads/notebook_entry_committed.schema.json#/$defs/ProjectPayloadV1, semantic owner Plans/Working_Notebook.md#WN-1516, payload owner Plans/Contracts_V0.md#CV-1516 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Its payload versions are application `pm.event_payload.notebook.entry_committed.application.v1` (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `pm.event_payload.notebook.entry_committed.v1` (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-14.111 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 157 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261114/admission-merge-1/depth/notebook.entry_committed.json (SHA-256 7eb57a8f517403a8e7008a19645185c89e625be345afab27579ffc6a2a6575fa) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261105/W3G.self-grade.json (SHA-256 6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/notebook.entry_committed.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `notebook.entry_committed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for notebook.entry_committed, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/notebook.entry_committed.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-14.111 and 157 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_1
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json (recount name)"
+- "reports/event-authority-20261105/W3G.self-grade.json; SHA-256 6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/INT3/admission-readiness.json; SHA-256 815ed8bfdc86b5fe565fac1cc5549fc590fa7b72cd9606fcb589f947bf8eaa8f"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["notebook.entry_committed", "event-family-notebook-entry-committed", "2026-11-14.111", "6764764d479395e1822ebbfca58041424029d09d61196874fdf574a2aabeb9d7", "1ae5d87e42a720b6514c2bbf6e5ae007c68fe0d577026e8160ceb1f0493c2b29", "Add each once its definition passes every check", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
