@@ -1,0 +1,56 @@
+{
+  "profile": "pm.executor.workflow_source.all_writers.stop_block.v1",
+  "predecessor": "pm.executor.workflow_source.all_writers.v7",
+  "predecessor_descriptor_sha256": "0f71cf4a5fa992489ca217c110417f126d63b46e26e92eb95e2ab48a233517f5",
+  "status": "DRAFT_BLOCKED_OWNER_CLOCK_CONFLICT_NOT_INSTALLABLE",
+  "members": [
+    {
+      "path": "Plans/goal_run_stop_block_contracts/additional-imports.json",
+      "sha256": "fa3d02fa7cb602f6a65ec2911be8ef250c69419792da62816a4ef89a90c68914"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/contracts.schema.json",
+      "sha256": "393fdb03c9a3e4de0a16b0559b31ed1701ef6e619716fba3b2da9dc123584339"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/inherited-method-banks.json",
+      "sha256": "106656facebcb2174920214287f7ec560fb63de547e54d09dacfb0ea075a2582"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/methods.json",
+      "sha256": "b9fa4b082dd8ceb5ba16158bf478f49d0b1eef6a94619d0ae60fa36793bf1443"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/native-wrapper-bindings.json",
+      "sha256": "de75f6fdb11dadd210f88d1c66dd968c2f943b37bc76677b12354384776d94bf"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/oracle-fixtures.json",
+      "sha256": "a0839338f1aceeab8a64353c8eed4e726465d382b485af24f2af7fbbfce08f7e"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/physical-families.json",
+      "sha256": "27db77eb16aee65240168ac45ed2542d8f4de6132c51cf58bb116ca29a068222"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/protocol.md",
+      "sha256": "02a302e2aab688c5488275e88ab390b1134a0aa19d613fdc0f824107a4b7f98b"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "sha256": "1c534446316d3b42929fda28e378fcdd3d0b990f185e887b01d22e0ee1fb404e"
+    },
+    {
+      "path": "Plans/goal_run_stop_block_contracts/resource-map.json",
+      "sha256": "7a7114bc808a871413689550294cf7cbb7796e9663620e9c81354873f9d93216"
+    }
+  ],
+  "writers": [
+    "owner.executor.workflow_run.stop.v1",
+    "owner.executor.workflow_run.block.v1"
+  ],
+  "birth": "Install complete inherited native/producer/coordinator participants with fresh resource-map tuples and both original new writers before actual native birth; coissue original birth and own initialized control under absent-key CAS. No retrospective enrollment.",
+  "old_realms": "Every retained original realm and old birth remains exact; new resource namespace cannot be selected by a caller.",
+  "selector_gate": "Actual selector integration O11 is separate; a descriptor or self-consistent hash never grants Event admission.",
+  "blocking_condition": "Unresolved GRS-202 consecutive projected Event clock versus inherited original native non-emitting body-revision updates. No fresh birth, writer or projector adoption until owner adjudication; see protocol.md and the lane report."
+}

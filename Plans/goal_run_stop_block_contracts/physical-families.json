@@ -1,0 +1,115 @@
+{
+  "status": "PREPARED_NO_REGISTRY_CHANGE",
+  "codec": "CV-339 canonical MessagePack; exact source owner number domains; shared number-rule adoption is a separate sweep",
+  "component": "hex = lowercase hex of exact nonempty UTF-8 bytes; K = unpadded base64url of the same bytes; canonical roundtrip only, no normalization",
+  "families": [
+    {
+      "family": "goal_run_stop_intent",
+      "key": "goal_run_stop_intent.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(goal_run_id)}:{hex(operation_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageStopIntent",
+      "retention": "existing RP-AUTHORITY-INDEFINITE@1.0.0 original-operation custody; no hold on referenced content",
+      "backup": "coherent with original native/D01/cause and Event/SP-286 first custody; preserve exact original bytes and issuing provenance",
+      "max_inline_value_bytes": 16384,
+      "large_parts": "StoredPart uses SP-337 before enclosing wrapper is encoded; never inline a full source graph or a nested full Event twice"
+    },
+    {
+      "family": "goal_run_stop_control",
+      "key": "goal_run_stop_control.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(goal_run_id)}:{hex(operation_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageStopControl",
+      "retention": "existing RP-AUTHORITY-INDEFINITE@1.0.0 original-operation custody; no hold on referenced content",
+      "backup": "coherent with original native/D01/cause and Event/SP-286 first custody; preserve exact original bytes and issuing provenance",
+      "max_inline_value_bytes": 16384,
+      "large_parts": "StoredPart uses SP-337 before enclosing wrapper is encoded; never inline a full source graph or a nested full Event twice"
+    },
+    {
+      "family": "goal_run_stop_native_result",
+      "key": "goal_run_stop_native_result.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(goal_run_id)}:{hex(operation_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageStopNativeResult",
+      "retention": "existing RP-AUTHORITY-INDEFINITE@1.0.0 original-operation custody; no hold on referenced content",
+      "backup": "coherent with original native/D01/cause and Event/SP-286 first custody; preserve exact original bytes and issuing provenance",
+      "max_inline_value_bytes": 16384,
+      "large_parts": "StoredPart uses SP-337 before enclosing wrapper is encoded; never inline a full source graph or a nested full Event twice"
+    },
+    {
+      "family": "goal_run_stop_origin",
+      "key": "goal_run_stop_origin.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(goal_run_id)}:{hex(operation_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageStopOrigin",
+      "retention": "existing RP-AUTHORITY-INDEFINITE@1.0.0 original-operation custody; no hold on referenced content",
+      "backup": "coherent with original native/D01/cause and Event/SP-286 first custody; preserve exact original bytes and issuing provenance",
+      "max_inline_value_bytes": 16384,
+      "large_parts": "StoredPart uses SP-337 before enclosing wrapper is encoded; never inline a full source graph or a nested full Event twice"
+    },
+    {
+      "family": "goal_run_stop_result",
+      "key": "goal_run_stop_result.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(goal_run_id)}:{hex(operation_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageStopResult",
+      "retention": "existing RP-AUTHORITY-INDEFINITE@1.0.0 original-operation custody; no hold on referenced content",
+      "backup": "coherent with original native/D01/cause and Event/SP-286 first custody; preserve exact original bytes and issuing provenance",
+      "max_inline_value_bytes": 16384,
+      "large_parts": "StoredPart uses SP-337 before enclosing wrapper is encoded; never inline a full source graph or a nested full Event twice"
+    },
+    {
+      "family": "goal_run_block_intent",
+      "key": "goal_run_block_intent.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(goal_run_id)}:{hex(operation_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageBlockIntent",
+      "retention": "existing RP-AUTHORITY-INDEFINITE@1.0.0 original-operation custody; no hold on referenced content",
+      "backup": "coherent with original native/D01/cause and Event/SP-286 first custody; preserve exact original bytes and issuing provenance",
+      "max_inline_value_bytes": 16384,
+      "large_parts": "StoredPart uses SP-337 before enclosing wrapper is encoded; never inline a full source graph or a nested full Event twice"
+    },
+    {
+      "family": "goal_run_block_control",
+      "key": "goal_run_block_control.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(goal_run_id)}:{hex(operation_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageBlockControl",
+      "retention": "existing RP-AUTHORITY-INDEFINITE@1.0.0 original-operation custody; no hold on referenced content",
+      "backup": "coherent with original native/D01/cause and Event/SP-286 first custody; preserve exact original bytes and issuing provenance",
+      "max_inline_value_bytes": 16384,
+      "large_parts": "StoredPart uses SP-337 before enclosing wrapper is encoded; never inline a full source graph or a nested full Event twice"
+    },
+    {
+      "family": "goal_run_block_native_result",
+      "key": "goal_run_block_native_result.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(goal_run_id)}:{hex(operation_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageBlockNativeResult",
+      "retention": "existing RP-AUTHORITY-INDEFINITE@1.0.0 original-operation custody; no hold on referenced content",
+      "backup": "coherent with original native/D01/cause and Event/SP-286 first custody; preserve exact original bytes and issuing provenance",
+      "max_inline_value_bytes": 16384,
+      "large_parts": "StoredPart uses SP-337 before enclosing wrapper is encoded; never inline a full source graph or a nested full Event twice"
+    },
+    {
+      "family": "goal_run_block_origin",
+      "key": "goal_run_block_origin.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(goal_run_id)}:{hex(operation_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageBlockOrigin",
+      "retention": "existing RP-AUTHORITY-INDEFINITE@1.0.0 original-operation custody; no hold on referenced content",
+      "backup": "coherent with original native/D01/cause and Event/SP-286 first custody; preserve exact original bytes and issuing provenance",
+      "max_inline_value_bytes": 16384,
+      "large_parts": "StoredPart uses SP-337 before enclosing wrapper is encoded; never inline a full source graph or a nested full Event twice"
+    },
+    {
+      "family": "goal_run_block_result",
+      "key": "goal_run_block_result.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(goal_run_id)}:{hex(operation_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageBlockResult",
+      "retention": "existing RP-AUTHORITY-INDEFINITE@1.0.0 original-operation custody; no hold on referenced content",
+      "backup": "coherent with original native/D01/cause and Event/SP-286 first custody; preserve exact original bytes and issuing provenance",
+      "max_inline_value_bytes": 16384,
+      "large_parts": "StoredPart uses SP-337 before enclosing wrapper is encoded; never inline a full source graph or a nested full Event twice"
+    },
+    {
+      "family": "goal_run_stop_block_projection",
+      "table": "goal_run_stop_block_projection.v1@{generation_id}",
+      "key": "goal_run_stop_block_projection.v1:{K(project_id)}:{K(goal_run_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageProjection",
+      "retention": "RP-PROJECTION-3GEN@1.0.0",
+      "backup": "derived, excluded; rebuild from surviving lawful originals",
+      "max_inline_value_bytes": 16384
+    },
+    {
+      "family": "goal_run_stop_block_checkpoint",
+      "table": "checkpoints",
+      "key": "goal_run_stop_block_checkpoint.v1:{K(storage_instance_id)}:{K(project_id)}:{K(goal_id)}:{K(goal_run_id)}",
+      "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StorageCheckpoint",
+      "retention": "RP-PROJECTION-3GEN@1.0.0",
+      "backup": "derived, excluded; rebuild from surviving lawful originals",
+      "max_inline_value_bytes": 16384
+    }
+  ]
+}
