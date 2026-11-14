@@ -144,6 +144,7 @@ def mapped(name, fam):
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('--json')
+    ap.add_argument('--full', help='also write the full per-row form (evidence)')
     args = ap.parse_args(argv)
     plan = json.loads((ROOT / 'Plans/bsd_event_oracle_plan.json').read_text())
     families, problems = [], []
@@ -232,8 +233,33 @@ def main(argv=None):
     out = dict(schema_id='pm.w3d.bsd.plan_coverage.v1', plan='Plans/bsd_event_oracle_plan.json',
                checker='scripts/pm_w3d_bsd_events.py', status='pass' if not problems else 'fail', totals=totals,
                families=families, problems=problems)
+    if args.full:
+        Path(args.full).write_text(json.dumps(out, indent=1, sort_keys=False) + '\n')
     if args.json:
-        Path(args.json).write_text(json.dumps(out, indent=1, sort_keys=False) + '\n')
+        # Compact committed form: one line per planned guard: [guard_id, status, ["row=witnesses" | "row=entailed:<table>"]].
+        def row_text(r):
+            if r.get('kind') == 'entailed':
+                return f"{r['row']}=entailed:{r.get('table')}"
+            if r.get('kind') in ('corpus', 'structural', 'not_applicable_in_family', 'missing'):
+                return f"{r['row']}={r['kind']}"
+            return f"{r['row']}={r['witnesses']}"
+        lines = ['{', f' "schema_id": "pm.w3d.bsd.plan_coverage.v1", "status": {json.dumps(out["status"])},',
+                 f' "plan": "Plans/bsd_event_oracle_plan.json", "checker": "scripts/pm_w3d_bsd_events.py",',
+                 f' "totals": {json.dumps(totals)},', f' "problems": {json.dumps(problems)},', ' "families": [']
+        for fi, fam in enumerate(families):
+            lines.append(f'  {{"event_type": {json.dumps(fam["event_type"])}, "guards": {fam["guards"]}, '
+                         f'"covered": {fam["covered"]}, "entailed_only": {fam["entailed_only"]}, "uncovered": {fam["uncovered"]},')
+            lines.append(f'   "positives": {json.dumps([[p["planned"], p["status"], p["cases"]] for p in fam["positives"]])},')
+            lines.append(f'   "retention": {json.dumps([fam["retention"]["status"], fam["retention"]["positives"], fam["retention"]["rows"]])},')
+            lines.append('   "entries": [')
+            for ei, e in enumerate(fam['entries']):
+                comma = ',' if ei < len(fam['entries']) - 1 else ''
+                lines.append('    ' + json.dumps([e['guard_id'], e['status'], [row_text(r) for r in e['rows']]]) + comma)
+            lines.append('   ]}' + (',' if fi < len(families) - 1 else ''))
+        lines += [' ]', '}']
+        text = '\n'.join(lines) + '\n'
+        json.loads(text)
+        Path(args.json).write_text(text)
     print(json.dumps(dict(status=out['status'], totals=totals, problems=problems[:30]), indent=1))
     return 0 if not problems else 1
 
