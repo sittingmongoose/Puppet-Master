@@ -1,0 +1,181 @@
+[
+  {
+    "name": "successor-components",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm_goal_own_c3_w12_successor_oracles.py",
+      "--output",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/successor-components.json"
+    ],
+    "exit_code": 0,
+    "seconds": 140.737,
+    "log_sha256": "42707f6c4445c4bcfee233abfa41c46db3b6a179164705a60e49a8e6202ecba6"
+  },
+  {
+    "name": "dg-current",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm_goal_current_writer_oracles.py",
+      "--guard-table",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/dg-current-guards.json"
+    ],
+    "exit_code": 0,
+    "seconds": 11.081,
+    "log_sha256": "72f6cee025d9f0d6fafac48aea29ea915be5731349ee38203cd0b2fa69e5190d"
+  },
+  {
+    "name": "dg-stop-block",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm_goal_run_stop_block_oracles.py",
+      "--guard-table",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/dg-stop-block-guards.json"
+    ],
+    "exit_code": 0,
+    "seconds": 8.064,
+    "log_sha256": "e6256807df8f2f0d3a20d4fe546dd862dbb8b54124e15ae2b86a2d6c95c5fc0c"
+  },
+  {
+    "name": "dg-lifecycle",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm_goal_lifecycle_successor_oracles.py",
+      "--guard-table",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/dg-lifecycle-guards.json"
+    ],
+    "exit_code": 0,
+    "seconds": 4.046,
+    "log_sha256": "49cd173869e99b378ea2a38bc3ef34018f4e1466dc37372ce6bf14601afe8556"
+  },
+  {
+    "name": "own-c",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm_goal_own_c_oracles.py",
+      "--output",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/own-c.json"
+    ],
+    "exit_code": 0,
+    "seconds": 1.035,
+    "log_sha256": "f9ff60986635e6c25705066e6c0a13cd49f65ca58ca6cedff3a6a9b58c59613c"
+  },
+  {
+    "name": "own-c-source",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm_goal_own_c_source_oracles.py",
+      "--output",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/own-c-source.json"
+    ],
+    "exit_code": 0,
+    "seconds": 3.043,
+    "log_sha256": "99fa316981341a7a9fa57c125edb1ea7e1b5aa286e79f95aef93219bc7ec0b3a"
+  },
+  {
+    "name": "lineage",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm-goal-runtime-lineage.py",
+      "--self-test"
+    ],
+    "exit_code": 0,
+    "seconds": 1.037,
+    "log_sha256": "acafb3c347ca830e44fe4c58aca50f1dfd14d67dc429205e8c0238148e9a91b3"
+  },
+  {
+    "name": "shard-generate",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm-shard-plans.py",
+      "--generate",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "seconds": 2.048,
+    "log_sha256": "31de6889d8fcd60f2816e9f66a1ac5ee72c47e04c757ce3f06544183de3378aa"
+  },
+  {
+    "name": "index-generate",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm-plan-index.py",
+      "generate"
+    ],
+    "exit_code": 0,
+    "seconds": 20.106,
+    "log_sha256": "03bcccec6b013fb5759fd6760b8bc0444c2bd750493d64f98a3505723e28b24a"
+  },
+  {
+    "name": "shard-check",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm-shard-plans.py",
+      "--check",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "seconds": 8.069,
+    "log_sha256": "9f38dd6289c5a6699973b5520db8f0b3b6545a5282af47751344ec6d909531e0"
+  },
+  {
+    "name": "index-validate",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit_code": 1,
+    "seconds": 23.116,
+    "log_sha256": "b4551916f94d27cc791af4b972679624eee8517634619ef5fe3220cdf953caf9"
+  },
+  {
+    "name": "dg-history",
+    "command": [
+      "/home/sittingmongoose/PM-Experiments/c3-w34-p2-20261105/venv/bin/python",
+      "scripts/pm_goal_history_reader_fixtures.py",
+      "--guard-table",
+      "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/dg-history-guards.json"
+    ],
+    "exit_code": 0,
+    "seconds": 938.205,
+    "log_sha256": "20b52d9128a0710a60ae929d7ff0e0ca4bd8ba7a22177cbec24892d9ae475745"
+  },
+  {
+    "name": "w12a-corpus",
+    "exit_code": 2,
+    "expected": "assertions pass; whole W1 NOT_COMPLETE",
+    "evidence": "corpus-v2.json"
+  },
+  {
+    "name": "w12a-provider-final",
+    "exit_code": 0,
+    "evidence": "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-20261105/provider-one-defect-final/result.json"
+  },
+  {
+    "name": "negative-success-sentinel",
+    "exit_code": 0,
+    "evidence": "negative-success-probe.json"
+  },
+  {
+    "name": "citation-audit",
+    "exit_code": 0,
+    "evidence": "citation-audit.json"
+  },
+  {
+    "name": "derived-scope",
+    "exit_code": 0,
+    "evidence": "derived-scope.json"
+  },
+  {
+    "name": "protected-inputs",
+    "exit_code": 0,
+    "evidence": "protected-inputs.json"
+  },
+  {
+    "name": "shared-scope",
+    "exit_code": 0,
+    "evidence": "shared-scope.json"
+  }
+]

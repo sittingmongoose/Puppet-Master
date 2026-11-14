@@ -18470,7 +18470,7 @@ All have `source_policy_ref=null`, `max_bytes=null`; only runtime has additional
 
 ### Goal Runtime persistence and dispatch
 
-The 21 v2 Goal roots at `Plans/event_payloads/goal_runtime/*.schema.json#` are authoritative validation schemas; current emission follows each exact event owner disposition. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. The legacy aggregate `Plans/goal_runtime_events.schema.json` is immutable reader-only input. V1 may enter only a registered legacy normalizer and `projector_replay_only`; it may rebuild disposable projections but may not emit, mutate, schedule, approve, charge, write a receipt, or certify.
+The 21 v2 Goal roots at `Plans/event_payloads/goal_runtime/*.schema.json#` are authoritative validation schemas; current emission follows each exact event owner disposition. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), `goal.scheduled` (GRS-062/CV-336), `goal.progressed` (GRS-069/CV-343), `goal.replanned` (GRS-070/CV-344), `goal.stopped` (GRS-071/CV-345) and `goal.verification_decided` (GRS-072/CV-346) are historical-only and admit no current writes under their individual owner rulings; their readers adopt SP-420 for original admission proof. The legacy aggregate `Plans/goal_runtime_events.schema.json` is immutable reader-only input. V1 may enter only a registered legacy normalizer and `projector_replay_only`; it may rebuild disposable projections but may not emit, mutate, schedule, approve, charge, write a receipt, or certify.
 
 All v2 rows use `replay_policy=dedupe_by_idempotency_key`, reject unhandled secrets, have no redaction transform, and use the matrix semantic identity tuple. Same identity/digest returns the original durable result; same identity/different digest is `idempotency_conflict`; unavailable proof is `dedupe_unavailable`. Stale CAS is `revision_conflict`. Unknown schema/event/enum, illegal transition, unresolved ref, identity join conflict, raw secret, viewer storage, or unknown recovery truth appends nothing and advances no checkpoint. Canonical receipts stay distinct from disposable projections.
 
@@ -21108,6 +21108,8 @@ acceptance_criteria:
 - Existing source/index retention, backup, holds, tombstones, authorization and secret-handling rules
   remain intact; the adapter owns no new retention clock or material.
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_child_status_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json
 - Plans/event_family_registry.json
@@ -21163,6 +21165,8 @@ At the original reader entry, before the first returning decoder, resolver, vali
 
 **Withdrawal.** Unsupported adapter/payload/envelope version disables the family read, preserves original bytes and indexes under their owners, and grants no fallthrough writer, parent projection or alias. Removing reader availability does not change registry membership or retention. Contract/schema/oracle materialization is not native proof, checker success, registry admission, WorkNode/readiness admission or a governance seal.
 
+**Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.child_status_changed` (`Plans/event_family_registry.json#/families/8`, payload `pm.goal_runtime_event.goal_child_status_changed.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-060 with CV-334 refuses current writers, so member 2 resolves for no `goal.child_status_changed` record. This reader's own rule already makes unresolved historical admission custody return `unavailable`. So every `goal.child_status_changed` lookup returns `unavailable` until member 2 is shown, and `original_admission` is never an unresolved obligation of this reader. No lookup of this family returns `verified_historical` under current canon. **Closed answer.** The ephemeral answer has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the request `{project_id, event_id, sequence_id}`. `reader_binding` is the constant `storage.goal_child_status_history_read.v1@1.0.0`. `kind` is `verified_historical | unresolved_historical_validation | unavailable`, with `original_validation` respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and the full SP-278 read token; `unavailable` carries null for both and an empty obligation array. `verified_historical` has an empty obligation array. `unresolved_historical_validation` has a nonempty unique array drawn only from `original_producer_authority`, `original_revision_cas`, `original_child_identity`, `original_child_transition`, `original_completion_receipt`, `original_result_or_receipt`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_row_predicate`, each naming one unproved D-R03 predicate of this row; it is allowed only when the current generic source read and permission authorize the complete raw observation. No answer adds dynamic source text, a partial or redacted original or a lifecycle claim. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.child_status_changed` EventRecord, they call `storage.goal_child_status_history_read.v1@1.0.0` with that record's own `{project_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_child_status_history_answer`; `Plans/goal_child_status_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-060, ContractName:Plans/Contracts_V0.md#CV-334, ContractName:Plans/Runtime_Artifacts_Panel.md, SchemaID:pm.storage_value.event_record_index.v2
 
 ### SP-277 - Historical Goal degradation direct source reader
@@ -21178,6 +21182,8 @@ unblocks: []
 reasoning_tier: high
 context_scope: goal_degraded_exact_family_historical_contract
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_degraded_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_degraded.schema.json
 - Plans/goal_runtime_events.schema.json
@@ -21343,6 +21349,8 @@ preserved_exact_tokens:
 - projector_replay_only
 ```
 
+**Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.degraded` (`Plans/event_family_registry.json#/families/11`, payload `pm.goal_runtime_event.goal_degraded.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-061 with CV-335 refuses current writers, so member 2 resolves for no `goal.degraded` record. This reader's own rule already makes unresolved historical admission custody return `unavailable`. So every `goal.degraded` lookup returns `unavailable` until member 2 is shown, and `original_admission` is never an unresolved obligation of this reader. No lookup of this family returns `verified_historical` under current canon. **Closed answer.** The ephemeral answer has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the request `{project_id, goal_id, event_id, sequence_id}`. `reader_binding` is the constant `storage.goal_degraded_history_read.v1@1.0.0`. `kind` is `verified_historical | unresolved_historical_validation | unavailable`, with `original_validation` respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and the full SP-278 read token; `unavailable` carries null for both and an empty obligation array. `verified_historical` has an empty obligation array. `unresolved_historical_validation` has a nonempty unique array drawn only from `original_producer_authority`, `original_revision_cas`, `original_predecessor_state`, `original_tier_predicate`, `original_exception_evidence`, `original_approval_evidence`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_row_predicate`, each naming one unproved D-R06 predicate of this row; it is allowed only when the current generic source read and permission authorize the complete raw observation. No answer adds dynamic source text, a partial or redacted original or a lifecycle claim. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.degraded` EventRecord, they call `storage.goal_degraded_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_degraded_history_answer`; `Plans/goal_degraded_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-061, ContractName:Plans/Contracts_V0.md#CV-335, ContractName:Plans/storage-plan.md#SP-277, ContractName:Plans/Decision_Log.md#DL-039
 
 ### SP-280 - Exact historical Goal scheduling contract
@@ -21358,6 +21366,8 @@ unblocks: []
 reasoning_tier: high
 context_scope: goal_scheduled_exact_family_historical_contract
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_scheduled_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_scheduled.schema.json
 - Plans/goal_runtime_events.schema.json
@@ -21520,6 +21530,8 @@ preserved_exact_tokens:
 - none_required
 - storage.goal_scheduled_history_read.v1
 ```
+
+**Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.scheduled` (`Plans/event_family_registry.json#/families/16`, payload `pm.goal_runtime_event.goal_scheduled.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-062 with CV-336 refuses current writers, so member 2 resolves for no `goal.scheduled` record. This reader's own rule already makes unresolved historical admission custody return `unavailable`. So every `goal.scheduled` lookup returns `unavailable` until member 2 is shown, and `original_admission` is never an unresolved obligation of this reader. No lookup of this family returns `verified_historical` under current canon. **Closed answer.** The ephemeral answer has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the request `{project_id, goal_id, event_id, sequence_id}`. `reader_binding` is the constant `storage.goal_scheduled_history_read.v1@1.0.0`. `kind` is `verified_historical | unresolved_historical_validation | unavailable`, with `original_validation` respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and the full SP-278 read token; `unavailable` carries null for both and an empty obligation array. `verified_historical` has an empty obligation array. `unresolved_historical_validation` has a nonempty unique array drawn only from `original_producer_authority`, `original_revision_cas`, `original_predecessor_state`, `original_queue_admission`, `original_budget_snapshot`, `original_permission_evidence`, `original_recovery_truth`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_row_predicate`, each naming one unproved D-R11 predicate of this row; it is allowed only when the current generic source read and permission authorize the complete raw observation. No answer adds dynamic source text, a partial or redacted original or a lifecycle claim. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.scheduled` EventRecord, they call `storage.goal_scheduled_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_scheduled_history_answer`; `Plans/goal_scheduled_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-062, ContractName:Plans/Contracts_V0.md#CV-336, ContractName:Plans/storage-plan.md#SP-280, ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-045
 
@@ -25166,7 +25178,74 @@ owner_hints:
 - Plans/Contracts_V0.md
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated adopts U1-U7/W1, SP-1130 and SP-1132. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
+Amended 2026-11-04 (DL-045 depth): the v3 event ID and event idempotency key captured in ProducerMetadata follow SP-421.
+
 ContractRef: ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/storage-plan.md#SP-287, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/goal_update_schema_resources.json
+
+### SP-421 - Goal update event identity recipe
+
+```yaml
+plan_unit_id: SP-421
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04) for exactly goal.updated, Project edition, payload pm.goal_runtime_event.goal_updated.schema.v3. At U0 source admission the original update producer derives D = SHA256(JCS(["pm.goal.updated.command.v1", "project", storage_instance_id, project_id, thread_id, command_id, command_instance_id, operation_id, goal_id])) from the admitted SourceAudit: command_id, command_instance_id and operation_id from normalized_identity, scope from its owner_identity and the source scope, goal_id from the requested existing Goal. Event ID is goal.updated.v1:{D}; event idempotency key is goal.updated.command.v1:{D}. ProducerMetadata and the frozen ProducerInput carry exactly these two values. The SIR command idempotency key in normalized_identity stays unchanged and separate.
+gui_related: false
+gui_classification_reason: Defines internal event identity or withdrawal custody; no visual surface.
+split_recommended: false
+depends_on:
+- SP-299
+- SP-286
+- CV-342
+- GRS-068
+- SIR-049
+- DL-045
+unblocks: []
+acceptance_criteria:
+- ProducerMetadata.event_id equals goal.updated.v1:{D} and ProducerMetadata.idempotency_key equals goal.updated.command.v1:{D}, with D computed from the admitted SourceAudit only.
+- ProducerInput frozen at event_ready repeats both values byte for byte; no later stage recomputes or replaces them.
+- A retry, recovery or restore of the same original operation yields the same D; a new operation yields a new D even for identical text.
+- A lost acknowledgement resolves through SP-286 retained receipt resolution for this event ID and key, never through a fresh ID.
+validation_surfaces:
+- Plans/goal_update_command_custody.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_update_event_identity_drift
+reasoning_tier: high
+context_scope: goal_update_event_identity
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (items 8 and 9)
+preserved_exact_tokens:
+- pm.goal.updated.command.v1
+- "goal.updated.v1:{D}"
+- "goal.updated.command.v1:{D}"
+negative_constraints:
+- No schema, wrapper, key or payload change; the recipe constrains values of existing members only.
+- No reuse of the goal.created recipe, its domain string or its identifiers.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated adopts W1/SP-1132 original identity/custody/replay oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
+**Members and encoding.** JCS is RFC 8785 over the nine-member array in the order given; every member is the exact nonempty string from its source, with no Unicode normalization, trimming or case folding. SHA-256 output is 64 lowercase hexadecimal digits. `command_id` is the constant `cmd.chat.goal.update` that `NormalizedIdentity` fixes for both the direct Save source and a resolved approval source, so the recipe does not depend on which source authenticated the change. The scope literal is `project`: the application edition keeps its own CV-366 `application@1` identity and is not covered here.
+
+**Search (DL-045).** Scope: GRS-068, SP-299 and its six prose sections, CV-342, SIR-049, `Plans/goal_update_command_custody.schema.json`, `Plans/goal_update_schema_resources.json`, `Plans/goal_updated_consumer_contracts.schema.json` and the Known-37 common-v2 section 7.1, plus a whole-`Plans/` search for `goal.updated.v`, `goal.updated.command` and `evt_goal_`. Found: SP-299 captures "the complete original producer metadata with its original event ID ... and replay identity" at source admission and types both members as `non_empty_string`; section 7.1's v2 recipe is superseded for active updates (SP-299, event version section). Negative evidence: no unit derives the v3 event ID or event idempotency key. This recipe is new and is not inferred from `goal.created` (SP-294), whose domain string, command and members differ.
+
+**Use.** The producer computes D once, at U0, from the admitted original source, before any body reservation, so a crash at any later stage finds the same values in Progress. Storage's `dedupe_by_idempotency_key` uses the event idempotency key; same key and digest return the original receipt (SP-286), same key with a different digest is `idempotency_conflict`, and `dedupe_unavailable` appends nothing. U3 publication uses exactly the frozen values; a lost acknowledgement leaves `event_unknown`, resolved only from retained original append custody by this event ID and key.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-045
 
 ### SP-300 - Exact historical goal.progressed source reader
 
@@ -25209,6 +25288,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_progressed_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_progressed.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -25268,6 +25350,8 @@ This exact family owner explicitly assigns no durable effect: no state projector
 
 This binding selects the unchanged authoritative whole v2 payload and original supported EventRecord envelope only. Existing separately owned legacy v1 reader/upgrader routes remain unchanged; this contract adds no legacy conversion, v1 output or current-write route. The original generic source envelope/version admission remains independently mandatory. The original retained frame and referenced records keep their existing separate clocks; RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 remain the exact source/index assignments. Original source translation must have authentic committed identity-preserving authority, with immutable target birth and later current suffix checked separately. No old original control file is reacquired merely to recreate disposed admission evidence, and no reference creates a new content hold. An old coherent snapshot may finish only under its actual still-valid owner lease/fence and may never claim a newer boundary. No fixture, schema result or hypothetical historical positive establishes native reader availability.
 
+**Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.progressed` (`Plans/event_family_registry.json#/families/13`, payload `pm.goal_runtime_event.goal_progressed.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-069 with CV-343 refuses current writers, so member 2 resolves for no `goal.progressed` record. This reader's own rule reports a missing admission fact as an unresolved obligation. So every `goal.progressed` lookup whose current generic source read and permission authorize the complete raw observation returns `unresolved_historical_validation` with `original_admission` among its obligations, and every other lookup returns `unavailable`. No lookup of this family returns `verified_historical` under current canon. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.progressed` EventRecord, they call `storage.goal_progressed_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_progressed_history_answer`; `Plans/goal_progressed_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-069, ContractName:Plans/Contracts_V0.md#CV-343, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_progressed.schema.v2
 
 ### SP-301 - Exact historical goal.replanned source reader
@@ -25311,6 +25395,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_replanned_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_replanned.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -25370,6 +25457,8 @@ This exact family owner explicitly assigns no durable effect: no state projector
 
 This binding selects the unchanged authoritative whole v2 payload and original supported EventRecord envelope only. Existing separately owned legacy v1 reader/upgrader routes remain unchanged; this contract adds no legacy conversion, v1 output or current-write route. The original generic source envelope/version admission remains independently mandatory. The original retained frame and referenced records keep their existing separate clocks; RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 remain the exact source/index assignments. Original source translation must have authentic committed identity-preserving authority, with immutable target birth and later current suffix checked separately. No old original control file is reacquired merely to recreate disposed admission evidence, and no reference creates a new content hold. An old coherent snapshot may finish only under its actual still-valid owner lease/fence and may never claim a newer boundary. No fixture, schema result or hypothetical historical positive establishes native reader availability.
 
+**Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.replanned` (`Plans/event_family_registry.json#/families/15`, payload `pm.goal_runtime_event.goal_replanned.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-070 with CV-344 refuses current writers, so member 2 resolves for no `goal.replanned` record. This reader's own rule reports a missing admission fact as an unresolved obligation. So every `goal.replanned` lookup whose current generic source read and permission authorize the complete raw observation returns `unresolved_historical_validation` with `original_admission` among its obligations, and every other lookup returns `unavailable`. No lookup of this family returns `verified_historical` under current canon. The production wiring row `catalog.runtime_replan` still lists `goal.replanned` as an expected event of `cmd.runtime.replan`; GRS-070 refuses that emission, the row is not writer admission, and a record appended through it would have no member 2. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.replanned` EventRecord, they call `storage.goal_replanned_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_replanned_history_answer`; `Plans/goal_replanned_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-070, ContractName:Plans/Contracts_V0.md#CV-344, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_replanned.schema.v2
 
 ### SP-302 - Exact historical goal.stopped source reader
@@ -25413,6 +25502,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_stopped_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_stopped.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -25472,6 +25564,8 @@ This exact family owner explicitly assigns no durable effect: no state projector
 
 This binding selects the unchanged authoritative whole v2 payload and original supported EventRecord envelope only. Existing separately owned legacy v1 reader/upgrader routes remain unchanged; this contract adds no legacy conversion, v1 output or current-write route. The original generic source envelope/version admission remains independently mandatory. The original retained frame and referenced records keep their existing separate clocks; RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 remain the exact source/index assignments. Original source translation must have authentic committed identity-preserving authority, with immutable target birth and later current suffix checked separately. No old original control file is reacquired merely to recreate disposed admission evidence, and no reference creates a new content hold. An old coherent snapshot may finish only under its actual still-valid owner lease/fence and may never claim a newer boundary. No fixture, schema result or hypothetical historical positive establishes native reader availability.
 
+**Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.stopped` (`Plans/event_family_registry.json#/families/17`, payload `pm.goal_runtime_event.goal_stopped.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-071 with CV-345 refuses current writers, so member 2 resolves for no `goal.stopped` record. This reader's own rule reports a missing admission fact as an unresolved obligation. So every `goal.stopped` lookup whose current generic source read and permission authorize the complete raw observation returns `unresolved_historical_validation` with `original_admission` among its obligations, and every other lookup returns `unavailable`. No lookup of this family returns `verified_historical` under current canon. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.stopped` EventRecord, they call `storage.goal_stopped_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_stopped_history_answer`; `Plans/goal_stopped_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-071, ContractName:Plans/Contracts_V0.md#CV-345, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_stopped.schema.v2
 
 ### SP-303 - Exact historical goal.verification_decided source reader
@@ -25515,6 +25609,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_verification_decided_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -25574,7 +25671,78 @@ This exact family owner explicitly assigns no durable effect: no state projector
 
 This binding selects the unchanged authoritative whole v2 payload and original supported EventRecord envelope only. Existing separately owned legacy v1 reader/upgrader routes remain unchanged; this contract adds no legacy conversion, v1 output or current-write route. The original generic source envelope/version admission remains independently mandatory. The original retained frame and referenced records keep their existing separate clocks; RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 remain the exact source/index assignments. Original source translation must have authentic committed identity-preserving authority, with immutable target birth and later current suffix checked separately. No old original control file is reacquired merely to recreate disposed admission evidence, and no reference creates a new content hold. An old coherent snapshot may finish only under its actual still-valid owner lease/fence and may never claim a newer boundary. No fixture, schema result or hypothetical historical positive establishes native reader availability.
 
+**Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.verification_decided` (`Plans/event_family_registry.json#/families/20`, payload `pm.goal_runtime_event.goal_verification_decided.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-072 with CV-346 refuses current writers, so member 2 resolves for no `goal.verification_decided` record. This reader's own rule reports a missing admission fact as an unresolved obligation. So every `goal.verification_decided` lookup whose current generic source read and permission authorize the complete raw observation returns `unresolved_historical_validation` with `original_admission` among its obligations, and every other lookup returns `unavailable`. No lookup of this family returns `verified_historical` under current canon. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.verification_decided` EventRecord, they call `storage.goal_verification_decided_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_verification_decided_history_answer`; `Plans/goal_verification_decided_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-072, ContractName:Plans/Contracts_V0.md#CV-346, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_verification_decided.schema.v2
+
+### SP-420 - Historical Goal record original admission proof
+
+```yaml
+plan_unit_id: SP-420
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04). It binds the "original lawful historical admission" fact that the seven historical Goal readers require and that none of them named: SP-271 (goal.child_status_changed), SP-277 (goal.degraded), SP-280 (goal.scheduled), SP-300 (goal.progressed), SP-301 (goal.replanned), SP-302 (goal.stopped) and SP-303 (goal.verification_decided). Each reader adopts it by name in its own amendment and states its own outcome; this unit decides no family's answer by itself.
+  For a retained EventRecord of one of those families, original lawful admission is proved only by both members of one pair. Member 1, first-receipt custody: the record's own event_append_receipt_custody row, resolved through SP-286's retained original receipt resolution for the record's exact storage instance, event ID, idempotency key, event type and payload schema ID, or that same row carried through SP-286's identity-preserving restore admission. Member 2, original writer admission: an owner unit, accepted when that receipt was issued, that named a writer for that exact family and payload schema ID, together with the approved registry checkpoint that carried that family revision at that time. Neither member stands in for the other.
+  Retained bytes, a valid schema, an index row, a timestamp, a hash, backup provenance, the registry membership row or the absence of a current writer prove neither member. Registered membership is not producer admission (DL-045). A root that a materialization selects "for new writes" is not a named writer.
+  Current canon resolves member 2 for no record of any of the seven families (per-family search below). Until an owner shows such a unit and checkpoint for a family, each reader answers as its own amendment states, and no lookup of these families returns verified_historical.
+gui_related: false
+gui_classification_reason: Defines a storage custody predicate for internal historical readers; no visual surface.
+split_recommended: false
+depends_on:
+- SP-286
+- SP-271
+- SP-277
+- SP-280
+- SP-300
+- SP-301
+- SP-302
+- SP-303
+- DL-039
+- DL-045
+unblocks: []
+acceptance_criteria:
+- A historical record of the seven families counts as lawfully admitted only when its own retained SP-286 first-receipt custody row and an owner unit plus approved registry checkpoint that admitted a writer for its exact family and payload schema ID both resolve.
+- Bytes, schema validity, index rows, timestamps, hashes, backup provenance, registry membership or writer absence never stand in for either member.
+- An identity-preserving restore carries member 1 unchanged and never supplies member 2.
+- Each of the seven readers adopts this unit by name and states its own outcome when member 2 is unresolved; this unit decides none of them.
+validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: historical_goal_admission_laundering
+reasoning_tier: high
+context_scope: historical_goal_original_admission
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 5)
+preserved_exact_tokens:
+- event_append_receipt_custody
+- verified_historical
+- original_admission
+negative_constraints:
+- No registry, schema, retention or stored-byte change, no current writer, and no claim that a historical instance of any of the seven families exists.
+- No inference of writer admission from membership, schema promotion, root selection, a wiring expectation or a sibling family.
+owner_hints:
+- Plans/storage-plan.md
+- Plans/Goal_Runtime_System.md
+```
+
+**Why a pair.** SP-286 custody proves that Storage issued the record's first receipt; it records no producer contract. The registry row proves membership; it records no writer. Original admission needs both facts at the time of the original append, so the proof joins them. A restored record keeps its original receipt custody (SP-286 restore admission) and cannot gain writer admission it never had.
+
+**Per-family search (DL-045), 2026-11-04, at `origin/main` `be4766513f`.** Scope: every `Plans/*.md` and `Plans/*.json` file that names one of the seven event types, the whole Decision Log and `reports/event-authority-20260911/admission-records/`. Found for every family: its historical-only owner unit, which refuses current writers (GRS-060, GRS-061, GRS-062, GRS-069, GRS-070, GRS-071, GRS-072, with CV-334, CV-335, CV-336, CV-343, CV-344, CV-345, CV-346; CV-366 and GRS-086 restate zero writes in both scopes); the payload-minima matrix rows; and the Known-37 materialization, which says that "new writes select exactly one self-contained v2 root per event" but marks authority and persistence behavior `NON_EXECUTABLE_UNDER_THIS_TRANSACTION` and names no emitter. One production wiring row, `catalog.runtime_replan` in `Plans/Wiring_Matrix.production.json`, lists `goal.replanned` as an expected event of `cmd.runtime.replan`; GRS-070 refuses that emission, and a wiring expectation is not writer admission. No admission record names any of the seven. Negative evidence: no owner unit, Decision Log entry or admission record names an admitted writer for any of the seven registered payload versions, so member 2 resolves for no record.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Decision_Log.md#DL-045
+
+**Conditional original-lawful oracle (round 1 clarification).** The search conclusion above is an absence of demonstrated original writer admission in current canon, not a claim that retirement invalidates an authentic retained original. For each adopting reader, if the exact original first receipt and accepted-at-issue writer/checkpoint pair is supplied through authentic retained custody, the original contract predicates determine historical validation independently of today's live state and writer availability. Synthetic original-lawful fixtures test this conditional rule and supply no evidence that such a real instance exists. Missing proof retains each reader's own unavailable/unresolved outcome. SP-431, SP-432 and SP-433 individually adopt this same proof prerequisite with unavailable for missing original admission; their own units decide the answer.
 
 ### SP-304 - Original cancellation stages and custody
 
@@ -25634,6 +25802,9 @@ negative_constraints:
   receipt.
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2, SP-1131 and SP-1133. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ##### Original operation stages
 
@@ -25751,7 +25922,140 @@ The complete method contract is `Plans/goal_cancel_contracts/methods.json`. Its 
 
 SP-214's historical cancelled-v2 event projection and checkpoints apply only to the admitted old route; they do not define a current cancelled state or a current durable projector. SP-305 supersedes only the generic execution-association/possible-assignment dependencies in these stages. Every other remaining source integration is explicit there.
 
+Amended 2026-11-04 (DL-045 depth): the v3 event ID and event idempotency key captured at C-source follow SP-422, and writer cutoff, reader withdrawal and rebuild fences follow SP-423.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
+
+### SP-422 - Goal cancellation event identity recipe
+
+```yaml
+plan_unit_id: SP-422
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04) for exactly goal.cancelled, Project edition, payload pm.goal_runtime_event.goal_cancelled.schema.v3. At C-source the original cancellation producer derives D = SHA256(JCS(["pm.goal.cancelled.command.v1", "project", storage_instance_id, project_id, thread_id, command_id, command_instance_id, operation_id, goal_id])) from the admitted SourceAudit: command_id, command_instance_id and operation_id from normalized_identity, scope from its owner_identity and the source scope, goal_id from the requested Goal. Event ID is goal.cancelled.v1:{D}; event idempotency key is goal.cancelled.command.v1:{D}. SourceAudit.producer_metadata carries exactly these values, and every later stage, including the GRS-078/SP-310 Workflow late-assignment profile, keeps them.
+gui_related: false
+gui_classification_reason: Defines internal event identity or withdrawal custody; no visual surface.
+split_recommended: false
+depends_on:
+- SP-304
+- SP-310
+- SP-286
+- CV-347
+- GRS-073
+- GRS-078
+- DL-045
+unblocks: []
+acceptance_criteria:
+- SourceAudit.producer_metadata.event_id equals goal.cancelled.v1:{D} and its idempotency_key equals goal.cancelled.command.v1:{D}, computed at C-source only.
+- The payload operation_id, cancellation_id and command_instance_id equal the normalized_identity members used in D.
+- The Workflow late-assignment profile assigns only sequence_id late; event ID and idempotency key never change after C-source.
+- A lost acknowledgement resolves through SP-286 retained receipt resolution for this event ID and key, never through a fresh ID.
+validation_surfaces:
+- Plans/goal_cancel_command_custody.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_cancel_event_identity_drift
+reasoning_tier: high
+context_scope: goal_cancel_event_identity
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (items 8 and 9)
+preserved_exact_tokens:
+- pm.goal.cancelled.command.v1
+- "goal.cancelled.v1:{D}"
+- "goal.cancelled.command.v1:{D}"
+negative_constraints:
+- No schema, wrapper, key or payload change; the recipe constrains values of existing members only.
+- No reuse of the goal.created or goal.updated recipe, domain string or identifiers.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2/SP-1133 original identity/custody/replay oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
+**Members and encoding.** JCS is RFC 8785 over the nine-member array in the order given; members are exact nonempty strings with no normalization, and SHA-256 output is 64 lowercase hexadecimal digits. `command_id` is the constant `cmd.chat.goal.cancel` that the cancellation `NormalizedIdentity` fixes. `operation_id` is the same value SP-304 calls the cancellation operation O and the payload carries as both `operation_id` and `cancellation_id`. The scope literal is `project`; the application edition keeps its own CV-366 identity.
+
+**Search (DL-045).** Scope: GRS-073..078, SP-304, SP-305, SP-306, SP-310, CV-347, SIR-050..052, `Plans/goal_cancel_command_custody.schema.json`, `Plans/goal_cancel_contracts/`, `Plans/goal_workflow_cancel_contracts/` and the Known-37 common-v2 section 7.1, plus a whole-`Plans/` search for `goal.cancelled.v`, `goal.cancelled.command` and `evt_goal_`. Found: SP-304 says "Event identity, occurrence, actor/account/causality and idempotency originate here" (C-source) and GRS-078 says C-event keeps "The original accepted event ID, idempotency key"; ProducerMetadata types both as `non_empty_string`. Negative evidence: no unit derives them. This recipe is new and is not inferred from a sibling.
+
+**Use.** D is computed once at C-source, before any Stop effect, so C-stop, C-receipt, C-event and terminal recovery read the same values from SourceAudit. Dedupe, conflict and `dedupe_unavailable` follow Storage's `dedupe_by_idempotency_key`; same key and digest return the original receipt through SP-286. Under the Workflow profile SP-310's event template keeps identities as fixed terms and its sole late term is `sequence_id`, so the late assignment cannot change either value.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-045
+
+### SP-423 - Goal cancellation writer cutoff and reader withdrawal
+
+```yaml
+plan_unit_id: SP-423
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04) for exactly goal.cancelled v3, all three original routes (no association, bound Plan, Workflow late assignment). Writer cutoff: when the StorageMigrationCoordinator withdraws the cancellation mutation role, C-source refuses every new cmd.chat.goal.cancel before any Stop effect; an operation already past C-source finishes or stays pending only through its own original stages and is never rolled back, re-dispatched or given a fresh identity. Reader withdrawal: withdrawing the audit, event-inspection or legacy_v2_reader role refuses disclosure without deleting rows, receipts or EventRecords. Rebuild fence: a reinstalled role resumes only from complete original custody captured before the withdrawal; nothing is regenerated from current state.
+gui_related: false
+gui_classification_reason: Defines internal event identity or withdrawal custody; no visual surface.
+split_recommended: false
+depends_on:
+- SP-304
+- SP-305
+- SP-310
+- SP-313
+- SP-287
+- SP-286
+- GRS-073
+- GRS-078
+- DL-045
+unblocks: []
+acceptance_criteria:
+- After mutation-role withdrawal, C-source refuses new cancellations with no Stop, receipt, body, event or control effect.
+- An operation admitted before the cutoff keeps its SourceAudit, progress epochs, receipts and identity; it resolves only through its original stages or stays pending.
+- Read-role withdrawal refuses disclosure and deletes nothing; the whole v2 resource stays at #/legacy_v2_reader.
+- Reinstallation needs complete pre-withdrawal custody; missing custody stays unavailable and is never rebuilt from current Goal state.
+- Unenrolled binding representations are refused at C-source until the separate SP-305 source migration admits them.
+validation_surfaces:
+- Plans/goal_cancel_command_custody.schema.json
+- Plans/goal_cancel_contracts/semantic-obligations.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_cancel_withdrawal_drift
+reasoning_tier: high
+context_scope: goal_cancel_withdrawal
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (items 8 and 9)
+preserved_exact_tokens:
+- legacy_v2_reader
+- StorageMigrationCoordinator
+negative_constraints:
+- No deletion, rollback, compensating event, replacement writer or automatic route switch on withdrawal.
+- No invented mapping for unenrolled binding representations.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/SP-1131 migration/withdrawal and W2/SP-1133 reader fences. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
+**Writer-admission cutoff.** The cutoff is the coordinator's withdrawal of the installed cancellation mutation role (SP-304's enrolled families and roles, and for the Workflow profile SP-310's three families). It is checked at C-source's final predicate, so a request admitted before the cutoff is the only kind that can still reach C-stop. Such an operation's later stages each recheck their own installed role: a stage whose role is gone stops before its effect and leaves the operation pending with every genuine earlier Stop, receipt, D05/D06 and append effect preserved (SP-304, GRS-078). It never becomes `no_effect` without the original no-effect proof, and it never gets a new event ID or idempotency key (SP-422). No other writer, the application sibling or the v2 root takes over.
+
+**Reader withdrawal.** The retained audit reader, the current-event inspection reader (SP-304; SP-313 inspector v2 for the Workflow profile) and `#/legacy_v2_reader` are separate roles. Withdrawing one refuses disclosure through it, deletes nothing, leaves the others as installed and grants no fallback reading. A withdrawn reader returns unavailable rather than a reinterpretation by another version.
+
+**Rebuild fence.** No goal.cancelled projection or family checkpoint exists to rebuild. A reinstalled writer or reader starts from the complete original custody that SP-304's coherent backup and its terminal snapshots retained before the withdrawal; missing custody stays unavailable, and nothing is regenerated from current Goal, Plan or Workflow state.
+
+**Unenrolled binding representations.** SP-305 keeps their mapping as a separate technical source-migration dependency. Until that migration admits a binding, C-source refuses a cancellation whose execution binding exists only in an unenrolled representation, before any effect; this unit defines no mapping and infers no `none`.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-305, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/storage-plan.md#SP-313, ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/Decision_Log.md#DL-045
 
 ### SP-305 - Execution binding custody and original append reservation
 
@@ -25810,6 +26114,9 @@ negative_constraints:
   receipt.
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts SP-1131 M1-M9 unenrolled mapping, distinct from fresh enrolled birth and cancellation. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ##### Concrete codec and possible-assignment custody
 
@@ -26625,6 +26932,9 @@ negative_constraints:
 - No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2/SP-1133 original Workflow and late-assignment boundaries. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
 
 
@@ -26738,6 +27048,77 @@ source_lineage:
 source_atom_ids: []
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.started adopts W3/SP-1134 original source, full row/checkpoint and atomic current-cutover oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
+
+Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for started-v3 follow SP-424.
+
+### SP-424 - Workflow started-v3 writer cutoff and reader withdrawal
+
+```yaml
+plan_unit_id: SP-424
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04) for exactly goal_run.started v3. Writer cutoff: when the StorageMigrationCoordinator withdraws the original workflow_start_original.v2 publication role, no new Start reaches its append; a Start already committed to start_event_pending keeps its candidate, commit and outbox and resolves only through its own retained original custody and SP-286, never by replay or a fresh event. Reader withdrawal: each of inspect_original, read_retained_native, read_historical and read_current is withdrawn separately and refuses with unavailable; owner.goal_run.started.project_prefix.v1 stops advancing and keeps its current generation as is. Rebuild fence: after reinstallation the projector stages a new generation from genuine survivors; it never resumes a checkpoint written before the withdrawal.
+gui_related: false
+gui_classification_reason: Defines internal event identity or withdrawal custody; no visual surface.
+split_recommended: false
+depends_on:
+- SP-311
+- SP-312
+- SP-309
+- SP-278
+- SP-286
+- GRS-079
+- BRS-027
+- DL-045
+unblocks: []
+acceptance_criteria:
+- After publication-role withdrawal no new goal_run.started v3 is appended, and a pending Start is resolved only from its own retained original custody.
+- Each of the four readers is withdrawn on its own, returns unavailable and deletes nothing.
+- A withdrawn projector writes nothing; its current generation stays readable only through installed readers and retires under RP-PROJECTION-3GEN.
+- Reinstallation stages a new generation from a full SP-278 scan and cuts over only after revalidation; no pre-withdrawal checkpoint or frontier is reused.
+- Withdrawal switches no default view to SP-312 and admits no v2 or application writer.
+validation_surfaces:
+- Plans/goal_run_started_consumer_contracts/methods.json
+- Plans/goal_run_started_consumer_contracts/consumer.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_run_started_withdrawal_drift
+reasoning_tier: high
+context_scope: goal_run_started_withdrawal
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (items 8 and 9)
+preserved_exact_tokens:
+- workflow_start_original.v2
+- owner.goal_run.started.project_prefix.v1
+- RP-PROJECTION-3GEN
+negative_constraints:
+- No replayed Start, reconstructed body, fabricated event or new publication receipt.
+- No automatic default-view switch or reinterpretation by another reader version.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.started adopts W3/SP-1134 original source withdrawal and rebuild oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
+**Writer-admission cutoff.** The cutoff is the coordinator's withdrawal of the original Start publication role under `workflow_start_original.v2` (EP-120, SP-309). The Start publisher checks it at its final predicate before append. A Start whose candidate and commit are already durable (`start_event_pending`) is not rolled back: its retained original custody and SP-286 first-receipt resolution decide whether the event was issued, and an unissued one stays pending with its outbox, never replayed or given a new event value. No v2 writer, application sibling or other route appends `goal_run.started` in its place.
+
+**Reader withdrawal.** `inspect_original`, `read_retained_native`, `read_historical` and `read_current` (SP-311) are four roles. Withdrawing one makes that method return unavailable and leaves the others as installed. Withdrawing `owner.goal_run.started.project_prefix.v1` stops all projection and checkpoint writes; the current generation stays as committed and is retired under `RP-PROJECTION-3GEN` like any retired generation. No read repairs, and no default view switches to SP-312's combined projector (SP-312 already refuses an automatic switch).
+
+**Rebuild fence.** A reinstalled projector does not trust the frozen checkpoint: it reserves a slot, stages a new generation with a fresh seed and anchor over a full SP-278 global scan, and cuts over only after SP-311's source and custody revalidation. Unsupported same-run rows still halt the stage before them. The derived file stays never backed up (BRS-027); a restore rebuilds rather than restores this projection.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-311, ContractName:Plans/storage-plan.md#SP-312, ContractName:Plans/Goal_Runtime_System.md#GRS-079, ContractName:Plans/Backup_Restore_System.md#BRS-027, ContractName:Plans/Decision_Log.md#DL-045
 
 ### SP-312 - Complete cancelled-v3 source consumer and versioned combined projector
 
@@ -26907,6 +27288,274 @@ source_lineage:
 source_atom_ids: []
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.cancelled adopts W4/SP-1135 original source, combined row/checkpoint and atomic current-cutover oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
+
+Amended 2026-11-04 (DL-045 depth): writer cutoff, reader withdrawal and rebuild fences for cancelled-v3 and the combined projector follow SP-425.
+
+### SP-425 - Workflow cancelled-v3 writer cutoff and reader withdrawal
+
+```yaml
+plan_unit_id: SP-425
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04) for exactly goal_run.cancelled v3. Writer cutoff: when the StorageMigrationCoordinator withdraws the original D06 positive-cancellation publication role (EP-118/EP-121), no new cancelled-v3 Event is appended; a cancellation whose native body change is committed resolves only from its retained original custody and SP-286, never by a second Event. Reader withdrawal: inspect_original, read_retained_native, read_historical, read_current_started and read_current_cancelled are withdrawn separately and refuse with unavailable; the versioned combined projector stops advancing. Rebuild fence: after reinstallation the combined projector stages a new generation from genuine survivors and never resumes a pre-withdrawal checkpoint; the started-only SP-311 projector is unaffected.
+gui_related: false
+gui_classification_reason: Defines internal event identity or withdrawal custody; no visual surface.
+split_recommended: false
+depends_on:
+- SP-312
+- SP-311
+- SP-278
+- SP-286
+- GRS-080
+- BRS-028
+- DL-045
+unblocks: []
+acceptance_criteria:
+- After D06 publication-role withdrawal no new goal_run.cancelled v3 is appended, and committed native cancellation is resolved only from retained original custody.
+- Each of the five readers is withdrawn on its own, returns unavailable and deletes nothing; the cancelled-v2 resource stays unchanged.
+- A withdrawn combined projector writes nothing; its current generation retires under RP-PROJECTION-3GEN.
+- Reinstallation stages a new generation from a full SP-278 scan and cuts over only after revalidation; no pre-withdrawal checkpoint is reused, and an old started-v3 root is never converted.
+- Withdrawal switches no default view and admits no v2 or application writer.
+validation_surfaces:
+- Plans/goal_run_cancelled_consumer_contracts
+- Plans/goal_run_cancelled_consumer_schema_resources.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_run_cancelled_withdrawal_drift
+reasoning_tier: high
+context_scope: goal_run_cancelled_withdrawal
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (items 8 and 9)
+preserved_exact_tokens:
+- RP-PROJECTION-3GEN
+- read_current_cancelled
+negative_constraints:
+- No second cancelled Event, replayed D06, reconstructed body or new publication receipt.
+- No conversion of a started-only root into a combined root.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.cancelled adopts W4/SP-1135 original source withdrawal and rebuild oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
+**Writer-admission cutoff.** The cutoff is the coordinator's withdrawal of the original D06 positive-cancellation publication role (EP-118, EP-121) for cancelled-v3. The publisher checks it at its final predicate before append. A run whose native body is already `cancelled` keeps that body and its D06 effects; whether its Event was issued is decided only by retained original custody and SP-286, and an unissued Event stays pending, never re-emitted with a new value. Already-terminal native runs still get no new cancelled Event (GRS-080). No v2 writer or application sibling takes over.
+
+**Reader withdrawal.** The five SP-312 methods are separate roles: withdrawing one makes it return unavailable and leaves the rest as installed. Withdrawing the combined projector stops every projection and checkpoint write; its current generation stays as committed and retires under `RP-PROJECTION-3GEN`. The started-only SP-311 projector and readers are unaffected. No default view switches because of a withdrawal.
+
+**Rebuild fence.** A reinstalled combined projector stages a new generation with a fresh anchor over a full SP-278 global scan and cuts over only after SP-312's revalidation; it never resumes a pre-withdrawal checkpoint. BRS-028 already bars converting an old started-v3 root into the combined root; a restore rebuilds this derived projection.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-312, ContractName:Plans/Goal_Runtime_System.md#GRS-080, ContractName:Plans/Backup_Restore_System.md#BRS-028, ContractName:Plans/Decision_Log.md#DL-045
+
+### SP-426 - Current goal_run.stopped persistence, identity and withdrawal
+
+```yaml
+plan_unit_id: SP-426
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04), for exactly goal_run.stopped v3, Project edition. Append: EP-200's stop writer appends the frozen EventRecord pm.event.v0 2.0.0 with payload pm.goal_runtime_event.goal_run_stopped.schema.v3 through the ordinary Storage append path; SP-286 first-AppendReceipt custody is adopted by name and its retained original receipt resolution answers a lost acknowledgement. Identity: D = SHA256(JCS(["pm.goal_run.stopped.v1", "project", storage_instance_id, project_id, goal_id, goal_run_id, decimal(expected_goal_run_revision), operation_id])); event ID goal_run.stopped.v1:{D}; event idempotency key and inner idempotency_key goal_run.stopped.writer.v1:{D}. Custody: the canonical seglog record and its SP-286 custody row are the originals; project event backup and restore keep them coherent; reads apply current Project access, deletion and hold checks. Retention stays the registry assignment RP-AUTHORITY-INDEFINITE@1.0.0. Withdrawal: writer cutoff at the writer's final predicate, per-reader withdrawal without deletion, and rebuild fences by new generation only. Prepared without admission.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- SP-286
+- SP-278
+- CV-420
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Only EP-200's stop writer appends; the first receipt is retained under SP-286 and returned on lost acknowledgement.
+- Event ID and both idempotency keys equal the recipe over the admitted operation; a retry of the same operation yields the same values.
+- Same key and digest return the original receipt; same key and different digest is idempotency_conflict; unavailable proof appends nothing.
+- Withdrawal deletes nothing, rolls nothing back and switches no reader; reinstallation rebuilds a new projection generation.
+- The registry row keeps v2 until its own admission landing; the prepared row is recorded in the lane report.
+validation_surfaces:
+- Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json
+- Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json
+- Plans/goal_run_stop_block_oracle_fixtures.json
+- python3 scripts/pm_goal_run_stop_block_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_run_stopped_persistence
+reasoning_tier: high
+context_scope: goal_run_stopped_persistence
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 3)
+preserved_exact_tokens:
+- "pm.goal_run.stopped.v1"
+- "goal_run.stopped.v1:{D}"
+- "goal_run.stopped.writer.v1:{D}"
+negative_constraints:
+- No registry, retention or application-edition change.
+- No second event for the same operation and no fresh identity on retry.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Members.** `operation_id` is the operation of the dispatching `cmd.orchestrator.pause` or `cmd.runtime.abort_run` command instance as the stop writer admitted it; `expected_goal_run_revision` is written as canonical decimal. The inner payload `idempotency_key` equals the event idempotency key, so the payload carries its own dedupe identity. A pause and an abort of the same run at the same revision are different operations and get different identities; only one can pass the revision check.
+
+**Custody of the settlement and safe-point refs.** `settlement_refs` and `safe_point_ref` name records the bounded safe-stop owner holds (SP-309); this event holds references only, creates no hold on them and never reconstructs them. A reader that cannot resolve a referenced record reports it unresolved; it never infers settlement.
+
+**Withdrawal.** Writer cutoff is the coordinator's withdrawal of EP-200's stop writer, checked at its final predicate before append; a stop past native update but before append stays pending and resolves only from retained original custody and SP-286. Readers are withdrawn one by one and return unavailable. The GRS-202 projection is rebuilt only by a new generation from a full SP-278 scan. The v2 payload stays a historical reader; no v2 writer returns.
+
+**Search (DL-045).** Scope: SP-214, SP-278, SP-286, SP-309..317, CV-339, BRS-024..029 and the registry row. Found: the v2 row selects `RP-AUTHORITY-INDEFINITE`; no unit defines an identity recipe, append order or withdrawal for this family. Negative evidence: none of these is defined; all are newly authored.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Decision_Log.md#DL-080
+
+### SP-427 - Current goal_run.blocked persistence, identity and withdrawal
+
+```yaml
+plan_unit_id: SP-427
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04), for exactly goal_run.blocked v3, Project edition. Append: EP-200's block writer appends the frozen EventRecord pm.event.v0 2.0.0 with payload pm.goal_runtime_event.goal_run_blocked.schema.v3 through the ordinary Storage append path; SP-286 first-AppendReceipt custody is adopted by name and its retained original receipt resolution answers a lost acknowledgement. Identity: D = SHA256(JCS(["pm.goal_run.blocked.v1", "project", storage_instance_id, project_id, goal_id, goal_run_id, decimal(expected_goal_run_revision), operation_id])); event ID goal_run.blocked.v1:{D}; event idempotency key and inner idempotency_key goal_run.blocked.writer.v1:{D}. Custody: the canonical seglog record and its SP-286 custody row are the originals; project event backup and restore keep them coherent; reads apply current Project access, deletion and hold checks. Retention stays the registry assignment RP-AUTHORITY-INDEFINITE@1.0.0. Withdrawal: writer cutoff at the writer's final predicate, per-reader withdrawal without deletion, and rebuild fences by new generation only. Prepared without admission.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- SP-286
+- SP-278
+- CV-421
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Only EP-200's block writer appends; the first receipt is retained under SP-286 and returned on lost acknowledgement.
+- Event ID and both idempotency keys equal the recipe over the admitted operation; a retry of the same operation yields the same values.
+- Same key and digest return the original receipt; same key and different digest is idempotency_conflict; unavailable proof appends nothing.
+- Withdrawal deletes nothing, rolls nothing back and switches no reader; reinstallation rebuilds a new projection generation.
+- The registry row keeps v2 until its own admission landing; the prepared row is recorded in the lane report.
+validation_surfaces:
+- Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json
+- Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json
+- Plans/goal_run_stop_block_oracle_fixtures.json
+- python3 scripts/pm_goal_run_stop_block_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_run_blocked_persistence
+reasoning_tier: high
+context_scope: goal_run_blocked_persistence
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 3)
+preserved_exact_tokens:
+- "pm.goal_run.blocked.v1"
+- "goal_run.blocked.v1:{D}"
+- "goal_run.blocked.writer.v1:{D}"
+negative_constraints:
+- No registry, retention or application-edition change.
+- No second event for the same operation and no fresh identity on retry.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Members.** `operation_id` is the scheduler block operation the block writer admitted; each `blocked -> blocked` needs a new revision, so a repeated block gets a new identity only through a new revision and new evidence. The inner payload `idempotency_key` equals the event idempotency key.
+
+**Custody of the block receipt and preserved work.** `block_receipt_ref` and `preserved_work_refs` name records their own owners hold (Permissions, Storage or the approval owner for the receipt; the Workflow for preserved work). The event holds references only, creates no hold and never reconstructs them.
+
+**Application edition.** The application payload version DL-300 registered stays dormant (`requires_owner_adoption`, GRS-086); this unit defines Project custody only and does not touch it.
+
+**Withdrawal.** Writer cutoff is the coordinator's withdrawal of EP-200's block writer, checked before append; a block past native update but before append stays pending and resolves only from retained original custody and SP-286. Readers are withdrawn one by one. The GRS-202 projection is rebuilt only by a new generation. The v2 payload stays a historical reader.
+
+**Search (DL-045).** Scope: SP-214, SP-278, SP-286, SP-309..317, SP-351, CV-339, CV-366, BRS-024..029 and the registry row. Negative evidence: no identity recipe, append order, custody or withdrawal is defined for the Project edition; all are newly authored.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Decision_Log.md#DL-080
+
+### SP-428 - Run-history projection delta for stopped and blocked rows
+
+```yaml
+plan_unit_id: SP-428
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04): the Storage side of GRS-202. For a qualifying birth the mandatory run projection (GRS-085, with SP-317's projection and SP-312's started/cancelled checkpoint lineage) gains two supported same-run rows, goal_run.blocked v3 and goal_run.stopped v3. The projected value adds the current lifecycle status (started, blocked, stopped, cancelled or certified), the projected GoalRun revision and the last supported event ID. Each accepted row and the checkpoint's processed prefix and frontier commit in one Storage write transaction under the CAS fences SP-311 and SP-312 already use, adopting SP-278 with the nine-field durable token (DL-076). A halted row never advances the checkpoint. The new value is a new projection profile version; existing generations are never rewritten, and a qualifying run's projection is built in a new generation from a full scan.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- GRS-202
+- GRS-085
+- SP-278
+- SP-311
+- SP-312
+- SP-317
+- SP-426
+- SP-427
+- DL-076
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- A supported blocked or stopped row and the checkpoint advance together or not at all.
+- The stored checkpoint token is the nine-field durable token; no redb_snapshot_id is persisted.
+- Non-qualifying births and v2 rows halt before the row and advance nothing.
+- The new profile version is built only in a new generation; no existing generation or root is converted.
+validation_surfaces:
+- Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json
+- Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json
+- Plans/goal_run_stop_block_oracle_fixtures.json
+- python3 scripts/pm_goal_run_stop_block_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: run_history_projection_gap
+reasoning_tier: high
+context_scope: grs085_stop_block_extension_storage
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 3)
+preserved_exact_tokens:
+- "SP-278"
+- "DL-076"
+- "goal_run.blocked"
+- "goal_run.stopped"
+negative_constraints:
+- No action authority, resume or replan from a projected value.
+- No conversion of a started-only, started/cancelled or certified root.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Value delta.** The added members are `lifecycle_status` (`started | blocked | stopped | cancelled | certified`), `projected_goal_run_revision` (canonical nonnegative integer) and `last_supported_event_id`. A blocked row also records its `blocked_reason_code` and `block_receipt_ref`; a stopped row records `stop_reason_code`, `resumable` and `safe_point_ref`. They are copied from the verified original row only; nothing is derived from current native state.
+
+**Physical families and retention.** The value and checkpoint stay in the derived redb file and are never backed up (DL-270, BRS-027/028); a restore rebuilds them. `RP-PROJECTION-3GEN` governs generations. The schema version of the new profile and its physical key recipe are fixed when the fresh Workflow source edition that qualifies a birth is written; until then no qualifying birth exists and nothing is stored under this profile.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-312, ContractName:Plans/storage-plan.md#SP-317, ContractName:Plans/Decision_Log.md#DL-080
 
 ### SP-313 - Whole original Workflow cancellation inspection custody
 
@@ -27054,6 +27703,9 @@ negative_constraints:
 - No native writer/capability, projector/checkpoint, Event depth or runtime qualification
   from source adoption.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts W2/SP-1133 whole private current-inspection entry/helper/final boundaries. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
 
@@ -27286,6 +27938,9 @@ gui_classification_reason: Original source, native authority/custody, schema, st
   no new visual presentation.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.certified adopts W5/SP-1136 original v7/prepare.v2 coordinator and original receipt boundaries. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ContractRef: ContractName:Plans/storage-plan.md#SP-316, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
 
 
@@ -27359,6 +28014,9 @@ node_compile_hint:
 gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
   no new visual presentation.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.certified adopts W5/SP-1136 full original P4-P8 consumer, row/checkpoint and cutover oracles. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-317, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
 
@@ -29183,6 +29841,14 @@ negative_constraints:
 owner_hints:
   - "Plans/storage-plan.md"
 ```
+
+**Historical Goal readers (2026-11-04, DL-045).** When `pm inspect`, or the record inspector (F3-666) that matches it, opens an EventRecord of `goal.child_status_changed`, `goal.degraded`, `goal.scheduled`, `goal.progressed`, `goal.replanned`, `goal.stopped` or `goal.verification_decided`, it calls that family's own historical reader (SP-271, SP-277, SP-280, SP-300, SP-301, SP-302 or SP-303 respectively) with the record's own selector and takes the record's historical interpretation and validation disposition only from that reader's answer. `pm tail`, `pm export` and `pm db dump` call none of them. This adds no verb, no output file and no write.
+
+For exactly `goal.evidence_captured`, `pm inspect` and F3-666 call `storage.goal_evidence_captured_history_read.v1@1.0.0` under SP-431 with the original record's selector, taking historical interpretation and validation only from that answer; pm tail/export/db dump do not call it. GRS-205/CV-424 prohibit every current writer in both scopes.
+
+For exactly `goal.receipt_recorded`, `pm inspect` and F3-666 call `storage.goal_receipt_recorded_history_read.v1@1.0.0` under SP-432 with the original record's selector, taking historical interpretation and validation only from that answer; pm tail/export/db dump do not call it. GRS-206/CV-425 prohibit every current writer in both scopes.
+
+For exactly `goal.tool_check_recorded`, `pm inspect` and F3-666 call `storage.goal_tool_check_recorded_history_read.v1@1.0.0` under SP-433 with the original record's selector, taking historical interpretation and validation only from that answer; pm tail/export/db dump do not call it. GRS-207/CV-426 prohibit every current writer in both scopes.
 
 ### SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction
 
@@ -44559,3 +45225,814 @@ This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` se
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-558, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-401
 
 **Physical numbers and retained reads for `safe_point.restored` (sweep part 2B numbers).** Storage-assigned sequence, generation and offset integers keep their exact domains end to end under SP-1100: each schema integer slot is admitted by the shared CV-1100 exact-integer call within its own schema bounds, and physical bytes dispatch by purpose (EVENT_VALUE for the CV-339 full-value commitment, APP_PHYSICAL for application bodies) with no float narrowing, signed-zero erasure or lane ceiling; an integer outside a profile's encodable range refuses through its guard row instead of truncating. History reads, retries, recovery and rebuilds resolve every retained original through SP-1101's authenticated dispatcher over the sealed custody catalogue: the recorded write-time edition and frozen resource manifest select the frozen verifier, forged or downgraded custody resolves to no verifier, and current-writer number guards never run on retained bytes. The ordered custody, first-receipt and retention rules above are unchanged. CV-1101 is adopted: observed_at_utc and persisted_at_utc use date_time with the storage_utc_z profile, and every other timestamp this family validates uses date_time with the EventRecord profile. The SP-1101 frozen verifier checks retained originals with those profiles.
+
+### SP-429 - Project goal.blocked identity custody and observation
+
+```yaml
+plan_unit_id: SP-429
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored goal.blocked v3 identity, SP-286 custody, original-body publication order and read-only
+  none_required observation; no event-built Goal state.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-203
+- SP-286
+- SP-287
+- SP-278
+unblocks: []
+acceptance_criteria:
+- Same original operation and semantic body resolve original receipts while Storage-only metadata differs.
+- Project v3 and historical whole-v2 stay distinct; writer/reader withdrawal preserves custody.
+- No family projection or durable checkpoint; SP-278 remains mandatory for event reads.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json
+- Plans/goal_lifecycle_successor_fixtures.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: sp-429_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Newly authored exact-family owner contract under DL-045.** Search for `goal.blocked` in GRS-048/050/064, GREPLAY-004..010, SP-287, the old Known-37 recipe, CV-366, Goal source/custody schemas and live Plans found no current event recipe or passive reader for this successor; GRS-203 records the original-source gap. This unit supplies no writer installation.
+
+**Identity and frozen input.** Let D be lowercase SHA-256 of RFC 8785 JCS of `["pm.goal.blocked.lifecycle.v1", "project", storage_instance_id, project_id, thread_id, goal_id, str(before_revision), continuation_id, owning_run_id, next_attempt_ref]`, with the original null next_attempt_ref retained as null. Event ID is `goal.blocked.v1:{D}`, idempotency key `goal.blocked.lifecycle.v1:{D}`. Each string is exact; no Unicode/whitespace normalization or final LF. The original continuation tuple, operation ID and body-mutation intent digest are frozen; a change is a new admitted operation, never an equal retry. CV-339's producer_semantic_digest covers exactly its enumerated caller fields and excludes sequence_id/observed_at_utc/persisted_at_utc. Normal append and retry reject projector_replay_only before dedupe. For equal selected identity/body, synchronously caught-up custody resolves the exact original event and SP-286 first receipt; differing body conflicts; unavailable proof appends nothing. No retry repeats a body mutation, provider call, notification, Usage charge or dispatch. This recipe supersedes the old v2 recipe only for this v3 Project successor, never an app key.
+
+**Custody and publication.** Adopt SP-286 by name for first receipt, immutable complete producer input and independent original full-value commitment. GRS-203's body-before-event order and fenced unknown results are mandatory. The same exact body/control reservation key and ordinary revision/currentness are used across host owners; no second Goal state machine or event-built body exists. SP-287 owns canonical body/history/origin/control and body receipt; Storage owns original EventRecord/first receipt. Coherent backup/identity-preserving restore preserves their joins and original terminal meaning, not guessed current state. Original event/dedupe/receipt authority remains RP-AUTHORITY-INDEFINITE@1.0.0; body and source content retain DL-047 bound-thread lifetime and referenced evidence retains its actual owner clock. Refs create no hold. Current read permission, tombstones, legal holds and reject-unhandled-secrets remain mandatory. A missing original receipt/source is unavailable, not reconstructed from a projection. Inline payloads are capped at 16 KiB by SP-337; oversized body values use its BLAKE3/byte-size/media-type payload-reference ownership, never raw embedded objective/output. This prepared event is bounded metadata; a missing exact payload-reference resolution contract refuses that edition rather than inventing an encoding.
+
+**Consumers and exact checkpoint disposition.** Current Activity/body/history/continuation consume `reader.goal.body@1.0.0` and `reader.goal.objective_history@1.0.0` under GRS-064/SP-287. They read already committed canonical custody; they never build Goal state from this event. The existing SP-339 pm inspect / F3-666 raw record inspector, pm tail and pm export retain their own generic exact EventRecord reads and exact schema dispatch. This family adds no separately needed interpretation adapter or output binding. Generic current lookup independently requires SP-278's complete actual index/root/generation dataset, immutable birth anchor, global frontier/token/source-selection/frame/translation proof and current permission/deletion/hold/secret/maintenance fences, joining all represented Project/thread/Goal/event/sequence/Storage identities. Original body receipt and SP-286 first-receipt/full-value custody retain their separate owners; inspecting the event proves no terminal producer result or current lifecycle authority. Lawful body purge cannot recreate objective/history/source content. The generic inspector's bounded output stays exactly its existing contract; no new output shape is invented.
+
+For this exact family, no family-specific event consumer/projector is required beyond those explicitly adopted generic reads and the existing canonical body consumers. Its family durable checkpoint is individually `none_required`: no projector, replay cursor, acknowledgment, idempotency ledger, outbox or owned write. The generic SP-278 checkpoint remains mandatory. The complete old v2 resource and original predicates keep their separate supported historical dispatch; no v2-to-v3 or app fallback exists. Native source/writer availability remains refused on GRS-203's concrete original-host-source dependency, independent of this consumer disposition.
+
+**Withdrawal.** A writer cutoff prevents new reservations/append before dedupe, preserving genuinely accepted original pending effects for the exact source/result resolver. It grants no retry under a new identity or event rollback. Reader withdrawal stops this exact binding; source, first receipts, old schemas, original meaning and retention remain. Rebuild may rebuild only the generic disposable index under a new admitted generation and full SP-278 fences; it cannot recreate canonical body, evidence, first receipts or a family projector. App and other payload versions never become fallbacks.
+
+### SP-430 - Project goal.completed identity custody and observation
+
+```yaml
+plan_unit_id: SP-430
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored goal.completed v3 identity, SP-286 custody, original-body publication order and read-only
+  none_required observation; no event-built Goal state.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-204
+- SP-286
+- SP-287
+- SP-278
+unblocks: []
+acceptance_criteria:
+- Same original operation and semantic body resolve original receipts while Storage-only metadata differs.
+- Project v3 and historical whole-v2 stay distinct; writer/reader withdrawal preserves custody.
+- No family projection or durable checkpoint; SP-278 remains mandatory for event reads.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json
+- Plans/goal_lifecycle_successor_fixtures.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: sp-430_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Newly authored exact-family owner contract under DL-045.** Search for `goal.completed` in GRS-048/050/064, GREPLAY-004..010, SP-287, the old Known-37 recipe, CV-366, Goal source/custody schemas and live Plans found no current event recipe or passive reader for this successor; GRS-204 records the original-source gap. This unit supplies no writer installation.
+
+**Identity and frozen input.** Let D be lowercase SHA-256 of RFC 8785 JCS of `["pm.goal.completed.lifecycle.v1", "project", storage_instance_id, project_id, thread_id, goal_id, str(before_revision), continuation_id, owning_run_id, next_attempt_ref]`, with the original null next_attempt_ref retained as null. Event ID is `goal.completed.v1:{D}`, idempotency key `goal.completed.lifecycle.v1:{D}`. Each string is exact; no Unicode/whitespace normalization or final LF. The original continuation tuple, operation ID and body-mutation intent digest are frozen; a change is a new admitted operation, never an equal retry. CV-339's producer_semantic_digest covers exactly its enumerated caller fields and excludes sequence_id/observed_at_utc/persisted_at_utc. Normal append and retry reject projector_replay_only before dedupe. For equal selected identity/body, synchronously caught-up custody resolves the exact original event and SP-286 first receipt; differing body conflicts; unavailable proof appends nothing. No retry repeats a body mutation, provider call, notification, Usage charge or dispatch. This recipe supersedes the old v2 recipe only for this v3 Project successor, never an app key.
+
+**Custody and publication.** Adopt SP-286 by name for first receipt, immutable complete producer input and independent original full-value commitment. GRS-204's body-before-event order and fenced unknown results are mandatory. The same exact body/control reservation key and ordinary revision/currentness are used across host owners; no second Goal state machine or event-built body exists. SP-287 owns canonical body/history/origin/control and body receipt; Storage owns original EventRecord/first receipt. Coherent backup/identity-preserving restore preserves their joins and original terminal meaning, not guessed current state. Original event/dedupe/receipt authority remains RP-AUTHORITY-INDEFINITE@1.0.0; body and source content retain DL-047 bound-thread lifetime and referenced evidence retains its actual owner clock. Refs create no hold. Current read permission, tombstones, legal holds and reject-unhandled-secrets remain mandatory. A missing original receipt/source is unavailable, not reconstructed from a projection. Inline payloads are capped at 16 KiB by SP-337; oversized body values use its BLAKE3/byte-size/media-type payload-reference ownership, never raw embedded objective/output. This prepared event is bounded metadata; a missing exact payload-reference resolution contract refuses that edition rather than inventing an encoding.
+
+**Consumers and exact checkpoint disposition.** Current Activity/body/history/continuation consume `reader.goal.body@1.0.0` and `reader.goal.objective_history@1.0.0` under GRS-064/SP-287. They read already committed canonical custody; they never build Goal state from this event. The existing SP-339 pm inspect / F3-666 raw record inspector, pm tail and pm export retain their own generic exact EventRecord reads and exact schema dispatch. This family adds no separately needed interpretation adapter or output binding. Generic current lookup independently requires SP-278's complete actual index/root/generation dataset, immutable birth anchor, global frontier/token/source-selection/frame/translation proof and current permission/deletion/hold/secret/maintenance fences, joining all represented Project/thread/Goal/event/sequence/Storage identities. Original body receipt and SP-286 first-receipt/full-value custody retain their separate owners; inspecting the event proves no terminal producer result or current lifecycle authority. Lawful body purge cannot recreate objective/history/source content. The generic inspector's bounded output stays exactly its existing contract; no new output shape is invented.
+
+For this exact family, no family-specific event consumer/projector is required beyond those explicitly adopted generic reads and the existing canonical body consumers. Its family durable checkpoint is individually `none_required`: no projector, replay cursor, acknowledgment, idempotency ledger, outbox or owned write. The generic SP-278 checkpoint remains mandatory. The complete old v2 resource and original predicates keep their separate supported historical dispatch; no v2-to-v3 or app fallback exists. Native source/writer availability remains refused on GRS-204's concrete original-host-source dependency, independent of this consumer disposition.
+
+**Withdrawal.** A writer cutoff prevents new reservations/append before dedupe, preserving genuinely accepted original pending effects for the exact source/result resolver. It grants no retry under a new identity or event rollback. Reader withdrawal stops this exact binding; source, first receipts, old schemas, original meaning and retention remain. Rebuild may rebuild only the generic disposable index under a new admitted generation and full SP-278 fences; it cannot recreate canonical body, evidence, first receipts or a family projector. App and other payload versions never become fallbacks.
+
+### SP-431 - Historical goal.evidence_captured reader custody
+
+```yaml
+plan_unit_id: SP-431
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Individually bind storage.goal_evidence_captured_history_read.v1@1.0.0, unchanged whole-v2 original
+  predicates, SP-420 custody and full SP-278 proof; current-source admission absence returns unavailable; no owned
+  durable effect.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-205
+- SP-278
+- SP-286
+- SP-420
+unblocks: []
+acceptance_criteria:
+- Complete original source/admission/identity and final current disclosure fences precede every answer.
+- Lawful retained originals survive writer retirement; forged/withdrawn originals do not.
+- Family checkpoint none_required, with mandatory generic checkpoint and unchanged retention.
+validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- Plans/goal_evidence_captured_history_contract_fixtures.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: sp-431_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Per-family current-source search (2026-11-04).** Searched all live top-level Plans documents/JSON, exact-family v2 and app resources, Goal/Workflow/Permissions source graphs, production wiring and admission records for `goal.evidence_captured` at `0c40a7809826bcf509bbb16483bbdd8f4c48760b`. Found old D-R07/Known-37 schema-minima/identity listings and the unadopted CV-366 application selector; no current original producer, admitted source edition, family read/checkpoint binding or admission record names this exact event. GRS-048/049/052/064 and GRS-065 retain the ownership move in DL-079. E-CARDS-1 Card 3 A (DL-409 on unlanded origin/plans/ea-cards1-answers-20261104) confirms it for both scopes and approves withdrawal of this exact unused app edition at the next registry checkpoint. No new product or retention decision is taken.
+**Newly authored exact historical reader under DL-045.** `storage.goal_evidence_captured_history_read.v1@1.0.0` accepts exactly {project_id, goal_id, event_id, sequence_id} under current Project/audit permission and reads only `pm.goal_runtime_event.goal_evidence_captured.schema.v2` / `goal.evidence_captured` with the original supported EventRecord. The unused app edition has never had an adopted writer; it is not a readable historical fallback. Unsupported app/future/legacy input uses only its separately pre-existing exact route, or unavailable. No default fill, conversion, stripping or rehashing of original bytes.
+
+**Physical identity and independent original proof.** Explicitly adopt SP-278's actual admitted `reader.storage.event_record_index@1.0.0`: key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`, partition exactly project~base64url_no_pad(UTF8(project_id)), full source frame cursor/bounds/CRC/durable watermark, actual Storage/root/generation dataset, immutable birth anchor, complete global frontier/source-selection token including other-project/application records, actual source translation and later append suffix. Join selector and all represented envelope/payload identities, complete token Storage/key/ref/generation/dataset and source_selection Storage, authentic original frame/value/digests and generic current checkpoint. A same-generation nonmatching append invalidates an old token. No matching-row maximum, detached hash or coherent obsolete snapshot supplies current authority.
+
+Individually adopt SP-420's two-member proof for this exact record: its own retained original SP-286 first-receipt custody joined on Storage/event/key/type/schema, plus the owner unit accepted at original issue and approved registry checkpoint that admitted this exact writer/version. GRS-205's search finds no such admitted writer today. Missing original admission for this reader is unavailable, not verified and not synthetic unresolved content. If an authentic original pair is later established, validate D-R07's complete original row/source/authority/revision/CAS/runtime/reference/idempotency predicates under that original contract, even when the current writer is retired or the live Goal has changed. Goal evidence collection moved to the actual Workflow/run evidence owner; GoalRecordV2 carries no evidence ledger. Preserve original evidence_kind/source_spans/content_hash/currentness/redaction and optional snapshot/retention refs. Non-validator spans, artifact snapshots, outer/inner redaction equality, provenance/hash/span bounds, original source/permission and nonterminal-state preservation are required. Unknown currentness cannot satisfy verification or completion. Original source/reference/tier/predicate evidence not preserved is unresolved historical validation only if current generic source/access independently permits the complete raw observation. Forged, withdrawn, unavailable or unsupported source is unavailable; current live state is never an original predicate.
+
+**Closed output and final disclosure.** Exactly the eight fields kind, reader_binding, selector, original_event, original_validation, unresolved_obligations, read_token, action_authority, materialized separately at `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_evidence_captured_history_answer`. Binding is `storage.goal_evidence_captured_history_read.v1@1.0.0`; action_authority=none. verified_historical/verified has exact original EventRecord/full SP-278 token and no obligations; unresolved_historical_validation/unresolved has them with a nonempty unique enumerated original obligation list; unavailable/unavailable has null original_event/token and no obligations. Invalid current source/access cannot become unresolved content. Independently capture real original source/admission/selector and current owner/access/deletion/hold/maintenance fences before helpers, derive the whole permitted value before output builders, then compare the complete candidate/source/token/current fence after the last helper in one pure predicate immediately before disclosure. Every independently callable resolver/validator/output helper repeats that boundary for its own actual input and typed result. No helper/witness or unchanged invalid bytes replace native origin proof.
+
+**Consumer, replay and custody.** SP-339 pm inspect / F3-666 call this exact binding for its original event and consume only its historical interpretation. Repeated reads recompute the same observation under current source/fence, never append or replay an action. This family's checkpoint is individually none_required: no durable state projector, cursor, idempotency ledger, acknowledgment, receipt or any owned write. SP-278's generic checkpoint remains mandatory. Canonical source/first receipts retain RP-AUTHORITY-INDEFINITE@1.0.0; lookup/index retains RP-EVENT-INDEX-SOURCE@1.0.0. Referenced evidence/output/receipt retention, thread deletion, permissions, holds, backup and identity-preserving restore follow their existing separate owners. A ref creates no hold or right to reacquire disposed source/control bytes; canonical receipts are not rebuildable from index/events. Reject unhandled secrets rather than partially redacting an original. This reader performs no quarantine/recovery write or payload resurrection. Bodies above the current 16 KiB ingest cap follow SP-337 under their source owner; no new over-limit inline positive or payload-reference codec is claimed here.
+
+**Withdrawal.** Current writers in both scopes are already cut off by GRS-205, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
+
+### SP-432 - Historical goal.receipt_recorded reader custody
+
+```yaml
+plan_unit_id: SP-432
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Individually bind storage.goal_receipt_recorded_history_read.v1@1.0.0, unchanged whole-v2 original
+  predicates, SP-420 custody and full SP-278 proof; current-source admission absence returns unavailable; no owned
+  durable effect.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-206
+- SP-278
+- SP-286
+- SP-420
+unblocks: []
+acceptance_criteria:
+- Complete original source/admission/identity and final current disclosure fences precede every answer.
+- Lawful retained originals survive writer retirement; forged/withdrawn originals do not.
+- Family checkpoint none_required, with mandatory generic checkpoint and unchanged retention.
+validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- Plans/goal_receipt_recorded_history_contract_fixtures.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: sp-432_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Per-family current-source search (2026-11-04).** Searched all live top-level Plans documents/JSON, exact-family v2 and app resources, Goal/Workflow/Permissions source graphs, production wiring and admission records for `goal.receipt_recorded` at `0c40a7809826bcf509bbb16483bbdd8f4c48760b`. Found old D-R09/Known-37 schema-minima/identity listings and the unadopted CV-366 application selector; no current original producer, admitted source edition, family read/checkpoint binding or admission record names this exact event. GRS-048/049/052/064 and GRS-065 retain the ownership move in DL-079. E-CARDS-1 Card 3 A (DL-409 on unlanded origin/plans/ea-cards1-answers-20261104) confirms it for both scopes and approves withdrawal of this exact unused app edition at the next registry checkpoint. No new product or retention decision is taken.
+**Newly authored exact historical reader under DL-045.** `storage.goal_receipt_recorded_history_read.v1@1.0.0` accepts exactly {project_id, goal_id, event_id, sequence_id} under current Project/audit permission and reads only `pm.goal_runtime_event.goal_receipt_recorded.schema.v2` / `goal.receipt_recorded` with the original supported EventRecord. The unused app edition has never had an adopted writer; it is not a readable historical fallback. Unsupported app/future/legacy input uses only its separately pre-existing exact route, or unavailable. No default fill, conversion, stripping or rehashing of original bytes.
+
+**Physical identity and independent original proof.** Explicitly adopt SP-278's actual admitted `reader.storage.event_record_index@1.0.0`: key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`, partition exactly project~base64url_no_pad(UTF8(project_id)), full source frame cursor/bounds/CRC/durable watermark, actual Storage/root/generation dataset, immutable birth anchor, complete global frontier/source-selection token including other-project/application records, actual source translation and later append suffix. Join selector and all represented envelope/payload identities, complete token Storage/key/ref/generation/dataset and source_selection Storage, authentic original frame/value/digests and generic current checkpoint. A same-generation nonmatching append invalidates an old token. No matching-row maximum, detached hash or coherent obsolete snapshot supplies current authority.
+
+Individually adopt SP-420's two-member proof for this exact record: its own retained original SP-286 first-receipt custody joined on Storage/event/key/type/schema, plus the owner unit accepted at original issue and approved registry checkpoint that admitted this exact writer/version. GRS-206's search finds no such admitted writer today. Missing original admission for this reader is unavailable, not verified and not synthetic unresolved content. If an authentic original pair is later established, validate D-R09's complete original row/source/authority/revision/CAS/runtime/reference/idempotency predicates under that original contract, even when the current writer is retired or the live Goal has changed. The actual Workflow/run owns certification and receipts; Goal V2 has no certification tier, child receipt graph or receipt-driven state. Preserve original receipt/kind/tier/output/dependency refs and original certifier decision. Require pre-existing valid original receipt, exact dependency completeness, original exception approval/residual-risk evidence and rejection/block reason evidence. The original running|verifying|repairing|degraded|blocked state is preserved; terminal/created/scheduled/paused/stopped originals reject. Recording receipt history never completes a current Goal. Original source/reference/tier/predicate evidence not preserved is unresolved historical validation only if current generic source/access independently permits the complete raw observation. Forged, withdrawn, unavailable or unsupported source is unavailable; current live state is never an original predicate.
+
+**Closed output and final disclosure.** Exactly the eight fields kind, reader_binding, selector, original_event, original_validation, unresolved_obligations, read_token, action_authority, materialized separately at `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_receipt_recorded_history_answer`. Binding is `storage.goal_receipt_recorded_history_read.v1@1.0.0`; action_authority=none. verified_historical/verified has exact original EventRecord/full SP-278 token and no obligations; unresolved_historical_validation/unresolved has them with a nonempty unique enumerated original obligation list; unavailable/unavailable has null original_event/token and no obligations. Invalid current source/access cannot become unresolved content. Independently capture real original source/admission/selector and current owner/access/deletion/hold/maintenance fences before helpers, derive the whole permitted value before output builders, then compare the complete candidate/source/token/current fence after the last helper in one pure predicate immediately before disclosure. Every independently callable resolver/validator/output helper repeats that boundary for its own actual input and typed result. No helper/witness or unchanged invalid bytes replace native origin proof.
+
+**Consumer, replay and custody.** SP-339 pm inspect / F3-666 call this exact binding for its original event and consume only its historical interpretation. Repeated reads recompute the same observation under current source/fence, never append or replay an action. This family's checkpoint is individually none_required: no durable state projector, cursor, idempotency ledger, acknowledgment, receipt or any owned write. SP-278's generic checkpoint remains mandatory. Canonical source/first receipts retain RP-AUTHORITY-INDEFINITE@1.0.0; lookup/index retains RP-EVENT-INDEX-SOURCE@1.0.0. Referenced evidence/output/receipt retention, thread deletion, permissions, holds, backup and identity-preserving restore follow their existing separate owners. A ref creates no hold or right to reacquire disposed source/control bytes; canonical receipts are not rebuildable from index/events. Reject unhandled secrets rather than partially redacting an original. This reader performs no quarantine/recovery write or payload resurrection. Bodies above the current 16 KiB ingest cap follow SP-337 under their source owner; no new over-limit inline positive or payload-reference codec is claimed here.
+
+**Withdrawal.** Current writers in both scopes are already cut off by GRS-206, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
+
+### SP-433 - Historical goal.tool_check_recorded reader custody
+
+```yaml
+plan_unit_id: SP-433
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Individually bind storage.goal_tool_check_recorded_history_read.v1@1.0.0, unchanged whole-v2 original
+  predicates, SP-420 custody and full SP-278 proof; current-source admission absence returns unavailable; no owned
+  durable effect.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-207
+- SP-278
+- SP-286
+- SP-420
+unblocks: []
+acceptance_criteria:
+- Complete original source/admission/identity and final current disclosure fences precede every answer.
+- Lawful retained originals survive writer retirement; forged/withdrawn originals do not.
+- Family checkpoint none_required, with mandatory generic checkpoint and unchanged retention.
+validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- Plans/goal_tool_check_recorded_history_contract_fixtures.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: sp-433_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Per-family current-source search (2026-11-04).** Searched all live top-level Plans documents/JSON, exact-family v2 and app resources, Goal/Workflow/Permissions source graphs, production wiring and admission records for `goal.tool_check_recorded` at `0c40a7809826bcf509bbb16483bbdd8f4c48760b`. Found old D-R13/Known-37 schema-minima/identity listings and the unadopted CV-366 application selector; no current original producer, admitted source edition, family read/checkpoint binding or admission record names this exact event. GRS-048/049/052/064 and GRS-065 retain the ownership move in DL-079. E-CARDS-1 Card 3 A (DL-409 on unlanded origin/plans/ea-cards1-answers-20261104) confirms it for both scopes and approves withdrawal of this exact unused app edition at the next registry checkpoint. No new product or retention decision is taken.
+**Newly authored exact historical reader under DL-045.** `storage.goal_tool_check_recorded_history_read.v1@1.0.0` accepts exactly {project_id, goal_id, event_id, sequence_id} under current Project/audit permission and reads only `pm.goal_runtime_event.goal_tool_check_recorded.schema.v2` / `goal.tool_check_recorded` with the original supported EventRecord. The unused app edition has never had an adopted writer; it is not a readable historical fallback. Unsupported app/future/legacy input uses only its separately pre-existing exact route, or unavailable. No default fill, conversion, stripping or rehashing of original bytes.
+
+**Physical identity and independent original proof.** Explicitly adopt SP-278's actual admitted `reader.storage.event_record_index@1.0.0`: key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`, partition exactly project~base64url_no_pad(UTF8(project_id)), full source frame cursor/bounds/CRC/durable watermark, actual Storage/root/generation dataset, immutable birth anchor, complete global frontier/source-selection token including other-project/application records, actual source translation and later append suffix. Join selector and all represented envelope/payload identities, complete token Storage/key/ref/generation/dataset and source_selection Storage, authentic original frame/value/digests and generic current checkpoint. A same-generation nonmatching append invalidates an old token. No matching-row maximum, detached hash or coherent obsolete snapshot supplies current authority.
+
+Individually adopt SP-420's two-member proof for this exact record: its own retained original SP-286 first-receipt custody joined on Storage/event/key/type/schema, plus the owner unit accepted at original issue and approved registry checkpoint that admitted this exact writer/version. GRS-207's search finds no such admitted writer today. Missing original admission for this reader is unavailable, not verified and not synthetic unresolved content. If an authentic original pair is later established, validate D-R13's complete original row/source/authority/revision/CAS/runtime/reference/idempotency predicates under that original contract, even when the current writer is retired or the live Goal has changed. The executing Workflow/run owns tool checks and evidence; Permissions owns policy/approval resolution. Goal V2 has no tool-check loop or Goal-owned worker authority. Preserve tool_call_id/name/check_kind/result/policy_decision and original output/log refs. Passed+allow/not_applicable needs an original output/log; failed/blocked/unknown needs an original log; approval_required needs original common approval/block proof and cannot pass; deny cannot pass. All output stays by reference with original secret handling. Preserve scheduled|running|verifying|repairing|degraded|blocked; any state change was a separately named event. Original source/reference/tier/predicate evidence not preserved is unresolved historical validation only if current generic source/access independently permits the complete raw observation. Forged, withdrawn, unavailable or unsupported source is unavailable; current live state is never an original predicate.
+
+**Closed output and final disclosure.** Exactly the eight fields kind, reader_binding, selector, original_event, original_validation, unresolved_obligations, read_token, action_authority, materialized separately at `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_tool_check_recorded_history_answer`. Binding is `storage.goal_tool_check_recorded_history_read.v1@1.0.0`; action_authority=none. verified_historical/verified has exact original EventRecord/full SP-278 token and no obligations; unresolved_historical_validation/unresolved has them with a nonempty unique enumerated original obligation list; unavailable/unavailable has null original_event/token and no obligations. Invalid current source/access cannot become unresolved content. Independently capture real original source/admission/selector and current owner/access/deletion/hold/maintenance fences before helpers, derive the whole permitted value before output builders, then compare the complete candidate/source/token/current fence after the last helper in one pure predicate immediately before disclosure. Every independently callable resolver/validator/output helper repeats that boundary for its own actual input and typed result. No helper/witness or unchanged invalid bytes replace native origin proof.
+
+**Consumer, replay and custody.** SP-339 pm inspect / F3-666 call this exact binding for its original event and consume only its historical interpretation. Repeated reads recompute the same observation under current source/fence, never append or replay an action. This family's checkpoint is individually none_required: no durable state projector, cursor, idempotency ledger, acknowledgment, receipt or any owned write. SP-278's generic checkpoint remains mandatory. Canonical source/first receipts retain RP-AUTHORITY-INDEFINITE@1.0.0; lookup/index retains RP-EVENT-INDEX-SOURCE@1.0.0. Referenced evidence/output/receipt retention, thread deletion, permissions, holds, backup and identity-preserving restore follow their existing separate owners. A ref creates no hold or right to reacquire disposed source/control bytes; canonical receipts are not rebuildable from index/events. Reject unhandled secrets rather than partially redacting an original. This reader performs no quarantine/recovery write or payload resurrection. Bodies above the current 16 KiB ingest cap follow SP-337 under their source owner; no new over-limit inline positive or payload-reference codec is claimed here.
+
+**Withdrawal.** Current writers in both scopes are already cut off by GRS-207, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
+
+## DG-OWN-C original source and boundary contracts (2026-11-05)
+
+### SP-1130 - Goal update approval original custody
+
+```yaml
+plan_unit_id: SP-1130
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.updated, U6-U7 defines goal_update_proposal.v1:G:k(proposal_command_instance_id)
+  and goal_update_approval_resolution.v1:G:k(approval_id), full original request/source/decision capture, existing
+  thread-content versus content-free audit policies, whole MessagePack values and 16 KiB limits, SP-337 pack-before-reference
+  durability, independent original byte resolution, coherent backup, restore and capability withdrawal. The
+  existing approval owner issues these originals; neither schema nor wrapper authenticates it.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SP-299
+- SP-337
+- SP-340
+- HITL-1130
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal update approval original custody). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### SP-1131 - Goal cancellation unenrolled binding and old Stop migration
+
+```yaml
+plan_unit_id: SP-1131
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.cancelled, M1-M9 is the separate
+  source migration consumed by SP-305 and SP-423. Original StorageMigrationCoordinator joins all six actual
+  owners, exact original source/association/pending/receipt images and effective host Stop, derives the full
+  existing binding/control edition and atomically publishes complete mapping/result with original CAS/fences.
+  goal_binding_migration_result.v1:G:k(migration_id) records first immutable enrolled, blocked_unresolved or
+  withdrawn outcome. Missing representations never become empty; unknown effects and old Stop survive. The
+  full source snapshots are transient; compact original mapping/result uses existing authority custody without
+  extending source lifetime. Recover from actual first transaction/result; never retry birth after an unknown
+  commit.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SP-305
+- SP-423
+- GRS-074
+- SP-340
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+- python3 scripts/pm_goal_dg_cb_oracles.py
+- Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation unenrolled binding and old Stop migration). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+DG-CB (2026-11-12) executes this migration as complete TEST_ONLY original paths on the shared owner adapters (C5 capture and mapping, C6 atomic installation, recovery and withdrawal); see `Plans/goal_own_c_contracts/protocol.md` (DG-CB paragraph after M9) and `Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json`. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### SP-1132 - goal.updated original custody and oracle boundary adoption
+
+```yaml
+plan_unit_id: SP-1132
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.updated, W1 adopts SP-299 and
+  its complete original physical/source schema/method banks, SP-286 first/full-value receipt, exact envelope/payload
+  selector and Storage metadata custody. No new event-derived projector or checkpoint is created. Exercise
+  actual receipt/source resolution, retained history after live change, helper/final refusal, unknown/lost
+  acknowledgement and exact stored-part limits/reference paths only where existing roots allow them. Native
+  execution remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SP-299
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal.updated original custody and oracle boundary adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### SP-1133 - goal.cancelled original custody and oracle boundary adoption
+
+```yaml
+plan_unit_id: SP-1133
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.cancelled, W2 adopts SP-304 and
+  its complete original physical/source schema/method banks, SP-286 first/full-value receipt, exact envelope/payload
+  selector and Storage metadata custody. No new event-derived projector or checkpoint is created. Exercise
+  actual receipt/source resolution, retained history after live change, helper/final refusal, unknown/lost
+  acknowledgement and exact stored-part limits/reference paths only where existing roots allow them. Native
+  execution remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SP-304
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal.cancelled original custody and oracle boundary adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### SP-1134 - goal_run.started original custody and oracle boundary adoption
+
+```yaml
+plan_unit_id: SP-1134
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal_run.started, W3 adopts SP-311
+  and its complete original physical/source schema/method banks, SP-286 first/full-value receipt, exact envelope/payload
+  selector and Storage metadata custody. Keep its existing own full projection/checkpoint schema, physical
+  keys, whole-root CAS, all nine durable SP-278 token fields, atomic row/checkpoint advance, generation cutover
+  and withdrawal; passive reads own no durable progress. Exercise actual receipt/source resolution, retained
+  history after live change, helper/final refusal, unknown/lost acknowledgement and exact stored-part limits/reference
+  paths only where existing roots allow them. Native execution remains NOT_RUN. Amended 2026-11-11 (DG-S, DL-045)
+  the TEST_ONLY Storage owner allocates sequences, times, first custody, packs, seeds and transactions for the
+  W3 corpus `scripts/pm_goal_dg_s_oracles.py`, which checks all nine durable token fields, atomic row and checkpoint
+  CAS with child-process cuts, staging and cutover, three generations with the 604800-second retirement window
+  and holds, withdrawal and rebuild. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SP-311
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.started original custody and oracle boundary adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### SP-1135 - goal_run.cancelled original custody and oracle boundary adoption
+
+```yaml
+plan_unit_id: SP-1135
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal_run.cancelled, W4 adopts SP-312
+  and its complete original physical/source schema/method banks, SP-286 first/full-value receipt, exact envelope/payload
+  selector and Storage metadata custody. Keep its existing own full projection/checkpoint schema, physical
+  keys, whole-root CAS, all nine durable SP-278 token fields, atomic row/checkpoint advance, generation cutover
+  and withdrawal; passive reads own no durable progress. Exercise actual receipt/source resolution, retained
+  history after live change, helper/final refusal, unknown/lost acknowledgement and exact stored-part limits/reference
+  paths only where existing roots allow them. Native execution remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SP-312
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.cancelled original custody and oracle boundary adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### SP-1136 - goal_run.certified original custody and oracle boundary adoption
+
+```yaml
+plan_unit_id: SP-1136
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal_run.certified, W5 adopts SP-317
+  and its complete original physical/source schema/method banks, SP-286 first/full-value receipt, exact envelope/payload
+  selector and Storage metadata custody. Keep its existing own full projection/checkpoint schema, physical
+  keys, whole-root CAS, all nine durable SP-278 token fields, atomic row/checkpoint advance, generation cutover
+  and withdrawal; passive reads own no durable progress. Exercise actual receipt/source resolution, retained
+  history after live change, helper/final refusal, unknown/lost acknowledgement and exact stored-part limits/reference
+  paths only where existing roots allow them. Native execution remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- SP-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.certified original custody and oracle boundary adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### SP-1138 - Explicitly selected GoalRun projection reference successors
+
+```yaml
+plan_unit_id: SP-1138
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Newly authored owner contract under DL-045 and C3-W34 part-2 technical ruling. The started and cancelled contracts are separately authored and independently selected; no family borrows a sibling source. SP-311/SP-312 whole Event identity, original whole-value commitment and SP-337 payload references are joined to actual original custody. Every complete stored row, checkpoint and operation is measured at 16 KiB; oversized metadata and checkpoint contents use separately verified pack references. Original banks, schemas, URIs, hashes, Event selectors, producer editions and historical bytes remain unchanged. Rebuild into a fresh isolated successor generation with full original sources and atomic fenced row/checkpoint publication and cutover; never rewrite old rows in place. Pack durability, access and source lifetime are independently rechecked at every helper and final boundary. Native remains NOT_RUN. ATS-1120 requires complete original-path W3/W4 or an exact technical blocker, never closure from schema specimens.
+gui_related: false
+gui_classification_reason: Internal source custody and stored representation; no visual presentation.
+split_recommended: false
+depends_on: [SP-337]
+unblocks: []
+acceptance_criteria:
+- Full original value reconstruction and original source predicates apply before every effect or disclosure.
+- Old whole bytes remain unchanged and all new stored parts and operations respect 16 KiB.
+- An incomplete original-root corpus remains explicitly blocked; native execution is NOT_RUN.
+validation_surfaces:
+- Plans/goal_run_projection_reference_contracts/started.md
+- Plans/goal_run_projection_reference_contracts/started.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/started.physical.json
+- Plans/goal_run_projection_reference_contracts/started.resources.json
+- Plans/goal_run_projection_reference_contracts/started.methods.json
+- Plans/goal_run_projection_reference_contracts/cancelled.md
+- Plans/goal_run_projection_reference_contracts/cancelled.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/cancelled.physical.json
+- Plans/goal_run_projection_reference_contracts/cancelled.resources.json
+- Plans/goal_run_projection_reference_contracts/cancelled.methods.json
+- scripts/pm_goal_own_c3_w34_reference_oracles.py
+risk_class: projection_reference_or_original_source_substitution
+reasoning_tier: high
+context_scope: c3_w34_reference_successor
+implementation_surfaces:
+- Plans/goal_run_projection_reference_contracts/started.md
+- Plans/goal_run_projection_reference_contracts/started.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/started.physical.json
+- Plans/goal_run_projection_reference_contracts/started.resources.json
+- Plans/goal_run_projection_reference_contracts/started.methods.json
+- Plans/goal_run_projection_reference_contracts/cancelled.md
+- Plans/goal_run_projection_reference_contracts/cancelled.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/cancelled.physical.json
+- Plans/goal_run_projection_reference_contracts/cancelled.resources.json
+- Plans/goal_run_projection_reference_contracts/cancelled.methods.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-311
+- Plans/storage-plan.md#SP-312
+- Plans/storage-plan.md#SP-337
+negative_constraints:
+- No event registry change, admission, original-source hash restamping or new retention policy.
+- No in-place rewrite, source-lifetime extension, action authority or native proof from a projection.
+```
+
+
+### SP-1139 - Certified projection bounded reference physical edition
+
+```yaml
+plan_unit_id: SP-1139
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored owner contract under DL-045 for exactly goal_run.certified. Plans/goal_run_projection_reference_contracts/certified.md
+  and certified.physical.json define the additive reference.v1 projection and checkpoint Storage selections.
+  Preserve SP-317/P5 base64url UTF-8 key components, original whole-value commitment, complete identity/receipt
+  joins, all nine durable token fields, profile_digest, root_revision, full preimage/afterimage CAS and actual
+  transaction identity. Deterministically choose inline, event_reference, then record_reference by measuring
+  BOTH complete row and complete operation against 16384 bytes in original CV-339 MessagePack. Checkpoint also
+  uses its complete logical-value reference when necessary. Actual pack/index durability precedes referencing
+  acknowledgement; full bytes/media/BLAKE3/size, original-source lifetime, independent disclosure and withdrawal
+  checks remain mandatory. Preserve RP-PROJECTION-3GEN and each original source policy; no new hold/archive.
+  Rebuild a fresh dataset, replay complete authentic prefix and cut over atomically. BRS-031 restores authority
+  and rebuilds derived state. Original v5 physical selections remain history.
+gui_related: false
+gui_classification_reason: Defines original source custody, derived physical representation and acceptance,
+  without visual presentation.
+depends_on:
+- SP-317
+- SP-337
+- SP-340
+unblocks: []
+acceptance_criteria:
+- Preserve all complete original source, scope, custody, phase and lifetime predicates through explicit successor
+  selection.
+- Measure complete stored values and operations; rebuild and atomically cut over without rewriting predecessors.
+- Report representation components separately from complete original semantic tuples and native NOT_RUN.
+validation_surfaces:
+- scripts/pm_goal_own_c3_w5_projection_oracles.py
+- Plans/goal_run_projection_reference_contracts/certified.md
+risk_class: original_source_custody_or_reference_representation_drift
+reasoning_tier: high
+context_scope: dg_own_c3_w5_part3_20261105
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_run_projection_reference_contracts/certified.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/certified.methods.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/DG-OWN-C3.md#part-3-for-c3-w34-split-and-c3-w5
+negative_constraints:
+- No Event registry admission, changed original bank/hash/header, retention/deletion policy, native installation
+  or governance seal.
+- No full oracle PASS from schema, size or source-shaped component controls.
+```
+
+ContractRef: ContractName:Plans/goal_run_projection_reference_contracts/certified.md

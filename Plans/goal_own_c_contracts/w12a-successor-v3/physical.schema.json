@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_updated_physical/3.0.0/value.schema.json",
+  "title": "Newly authored goal.updated TEST_ONLY physical successor; no event admission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "logical_schema_id",
+    "logical_schema_version",
+    "owner_identity_sha256",
+    "source_lifetime",
+    "value_sha256",
+    "record",
+    "payload_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.goal.updated.physical.v3"
+    },
+    "schema_version": {
+      "const": "3.0.0"
+    },
+    "logical_schema_id": {
+      "type": "string"
+    },
+    "logical_schema_version": {
+      "type": "string"
+    },
+    "source_lifetime": {
+      "enum": [
+        "bound_thread",
+        "authority_indefinite"
+      ]
+    },
+    "value_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "record": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "payload_ref": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "size",
+            "media_type"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "media_type": {
+              "const": "application/vnd.puppetmaster.goal-value+msgpack"
+            }
+          }
+        }
+      ]
+    },
+    "owner_identity_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "minLength": 64,
+      "maxLength": 64
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "record": {
+          "type": "object"
+        },
+        "payload_ref": {
+          "type": "null"
+        }
+      }
+    },
+    {
+      "properties": {
+        "record": {
+          "type": "null"
+        },
+        "payload_ref": {
+          "type": "object"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "index_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "size",
+        "media_type",
+        "offset",
+        "stored_size",
+        "compression",
+        "sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "media_type": {
+          "const": "application/vnd.puppetmaster.goal-value+msgpack"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stored_size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "compression": {
+          "const": "zstd-3"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      }
+    },
+    "reference_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "namespace",
+        "operation",
+        "row_key_sha256",
+        "reference"
+      ],
+      "properties": {
+        "namespace": {
+          "enum": [
+            "body",
+            "update"
+          ]
+        },
+        "operation": {
+          "enum": [
+            "acquire",
+            "release"
+          ]
+        },
+        "row_key_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "reference": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "payload_id",
+            "row_physical_sha256",
+            "source_identity_sha256",
+            "source_lifetime"
+          ],
+          "properties": {
+            "payload_id": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "row_physical_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "source_identity_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "source_lifetime": {
+              "enum": [
+                "bound_thread",
+                "authority_indefinite"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

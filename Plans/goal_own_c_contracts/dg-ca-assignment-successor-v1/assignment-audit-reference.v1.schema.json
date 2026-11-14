@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json",
+  "$comment": "Newly authored DG-CA successor, 2026-11-12, under the general successor rule (lanes/DG-OWN-C3.md). TEST_ONLY executable selection; native evidence stays NOT_RUN and is a separate claim. The predecessor family goal_cancel_assignment_audit and its root goal_execution_binding_custody.schema.json#/$defs/StorageAssignmentAudit stay byte-exact and readable as history. The complete, unchanged StorageAssignmentAudit value is stored as one SP-337 content-addressed pack in Storage canonical MessagePack; this compact wrapper keeps scope, identity, the input commitment and the pack reference only, and every reader resolves and verifies the pack before use.",
+  "$defs": {
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "PackReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blake3",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "blake3": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216
+        },
+        "media_type": {
+          "const": "application/vnd.pm.goal-cancel-assignment-audit+msgpack"
+        }
+      }
+    },
+    "AssignmentAuditReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "assignment_attempt",
+        "complete_original_input_commitment",
+        "audit_schema_ref",
+        "audit_value_codec",
+        "audit_value_sha256",
+        "audit_payload",
+        "original_issuer_transaction_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignment_attempt": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "complete_original_input_commitment": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "audit_schema_ref": {
+          "const": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageAssignmentAudit"
+        },
+        "audit_value_codec": {
+          "const": "pm.storage.canonical_msgpack.v1"
+        },
+        "audit_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "audit_payload": {
+          "$ref": "#/$defs/PackReference"
+        },
+        "original_issuer_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "StorageAssignmentAuditReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_cancel_assignment_audit_reference.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/AssignmentAuditReference"
+        }
+      }
+    }
+  }
+}

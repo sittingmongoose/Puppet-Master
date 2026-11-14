@@ -1,0 +1,29 @@
+{
+  "status": "NEWLY_AUTHORED_ADDITIVE_SELECTION_NOT_INSTALLED",
+  "source_package_selection": {
+    "path": "Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json",
+    "sha256": "da84ffb39a990021c49bbcd11ae9cbc700bdcf679ea285a4a65eaba40e4265d7"
+  },
+  "original_resource_map": {
+    "path": "Plans/goal_run_certified_consumer_contracts/source-package.v2/resource-realms.json",
+    "sha256": "37bbb87f92c86add8555e8f35498b4e609bd270fe38941396ff2fba72896ea66"
+  },
+  "original_imports": {
+    "path": "Plans/goal_run_certified_consumer_contracts/source-package.v2/imports.json",
+    "sha256": "f10b6d46c07297e337cbc8e50c9b3859691c76f9aac5f92cc46bf71662e22cb9"
+  },
+  "additional_imports": {
+    "path": "Plans/goal_run_projection_reference_contracts/certified.imports.json",
+    "sha256": "2ab433d87b0abdf2562386b9fd9346f30def1d0acd4fee6c45b47005c6f62445"
+  },
+  "successor_resource": {
+    "path": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+    "sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+    "retrieval_uri": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0"
+  },
+  "realm": "consumer",
+  "whole_resource_locations": "reports/event-authority-20261105/DG-OWN-C3-W5-source-locations.json",
+  "network_fallback": false,
+  "ambient_fallback": false,
+  "rule": "Add only the new whole resource to consumer. Resolve original resources in their exact original isolated realms; only enumerated exact crossings are allowed."
+}

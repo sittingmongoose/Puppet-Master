@@ -1,0 +1,709 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "rubric": {
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ]
+  },
+  "membership_note": "Existing goal_run.cancelled registration and all Storage rows remain unchanged; no admission or re-admission.",
+  "native_execution": "NOT_RUN",
+  "status_meaning": "Self-grade by the drafting worker; an independent grader and the Sol and Astra reviewers check it later.",
+  "assessment_id": "EA-DG-OWN-C3-W34B-20261105",
+  "assessment_kind": "scoped_routing_qualified_original_corpus_incomplete",
+  "assessed_tree": {
+    "base_commit": "751bf01adec0b3175c115a80f0f46c03d27af864",
+    "branch": "plans/ea-goal-own-c3-w34b-20261105",
+    "canonical_Plans_changed": true
+  },
+  "rows": [
+    {
+      "event_type": "goal_run.cancelled",
+      "family_id": "event-family-goal-run-cancelled",
+      "family_revision": "3.0.0",
+      "disposition": "CURRENT_WRITER",
+      "drafted_by_lane_dg": true,
+      "pass_count": 10,
+      "prior_pass_count_d1a": 10,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Row event-family-goal-run-cancelled at 3.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_run_cancelled.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission.",
+          "evidence": [
+            {
+              "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+              "unit": "root",
+              "line_start": 786,
+              "line_end": 786,
+              "quote": "\"$id\": \"pm.goal_runtime_event.goal_run_cancelled.schema.v3\",",
+              "excerpt_sha256": "bded8eafc9894f0ecf09de99b1dea18045076b8303324b0b56b2c16667cf8ed9",
+              "file_sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7801,
+              "line_end": 7801,
+              "quote": "This source adoption changes only the existing event-family-goal-run-cancelled row to revision 3.0.0",
+              "excerpt_sha256": "593913efb788e5e2246a4ebdbbafc7960f0ca3b73876c3779853762a05d9ad28",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\"",
+              "excerpt_sha256": "3f5768a30d176acdbe9417fd49da767de0e94a663200f7c5ad89d2975600f3f0",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/1",
+              "line_start": 93,
+              "line_end": 93,
+              "quote": "\"family_id\": \"event-family-goal-run-cancelled\"",
+              "excerpt_sha256": "39fc26dcc7c04eb28d11207f61fa3aece10abcb8504736535d59e5e7747e7a5e",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "semantic_owner_doc is the GRS-080 PlanUnit (positive cancelled-v3 semantics) and payload_owner_doc the SP-312 PlanUnit (cancelled-v3 consumer and combined projector); both govern v3.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/1",
+              "line_start": 97,
+              "line_end": 97,
+              "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#GRS-080\",",
+              "excerpt_sha256": "c0571aabb457aa575a9776bab3dae7511d0d74d38f20d8586153e34b1cb9ed62",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/1",
+              "line_start": 98,
+              "line_end": 98,
+              "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#SP-312\",",
+              "excerpt_sha256": "1c19d9c926e2934997748465166f15162c0d4f24d5c5c8d5fb9280c71a519f86",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7799,
+              "line_end": 7799,
+              "quote": "### GRS-080 - Positive original cancelled-v3 semantics and bounded read roles",
+              "excerpt_sha256": "2b10239dae5eb509c4b82e013ae3cff78707f57a359cc58611a79e39bb60d473",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-312",
+              "line_start": 26661,
+              "line_end": 26661,
+              "quote": "This unit adopts the complete positive-D06 cancelled-v3 reader and bounded started/cancelled successor projector source.",
+              "excerpt_sha256": "e0998f762d5fb8e7e867ff8026b5119ea3cb2723c774fc03ed68f9f62448ff62",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Positive D06 terminal service (EP-118, original_bounded_safe_stop_terminal_publication.v1; EP-121) after full D05 success: prepare EventCandidate, Intent, Control, Origin; then publish native after-images, compact D06 records, the goal_run.cancelled v3 EventRecord with its own first barrier, and D01 in one coordinated outcome. Triggered only by the GRS-078 Goal cancel profile. SP-312 depends on SP-286.",
+          "evidence": [
+            {
+              "path": "Plans/Executor_Protocol.md",
+              "unit": "EP-121",
+              "line_start": 8452,
+              "line_end": 8452,
+              "quote": "EP118's complete positive original_bounded_safe_stop_terminal_publication.v1 registration, D06 v3 methods and D01 coissued original outcome remain the exact producer authority.",
+              "excerpt_sha256": "ce06435612b328332adac080acf9c20008eb0a0dffa250f1f6ac8aaa95bcfebf",
+              "file_sha256": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Executor_Protocol.md",
+              "unit": "EP-118 Positive D06",
+              "line_start": 7624,
+              "line_end": 7624,
+              "quote": "Prepare derives the complete producer EventCandidate for the nonterminal branch, then Intent, initial Control and method-specific prepare Origin at exact absent operation keys.",
+              "excerpt_sha256": "50cbd1c3fa2d6ff1a611084d528be7fc1888cfff669f0f000cffdf71008f205d",
+              "file_sha256": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Executor_Protocol.md",
+              "unit": "EP-118 Positive D06",
+              "line_start": 7626,
+              "line_end": 7626,
+              "quote": "original typed goal_run.cancelled/v3 EventRecord/own first barrier and D01 update/head/pointer/origin in the authentic coordinated outcome",
+              "excerpt_sha256": "a1e951b9393260a8aeefb8627b295b29ec1835c9a937e619154603da7f3c88f4",
+              "file_sha256": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "Exact ordered original effects (GRS-078)",
+              "line_start": 7623,
+              "line_end": 7623,
+              "quote": "D06 performs its original cancelled run transition and its own original `goal_run.cancelled` event plus first receipt",
+              "excerpt_sha256": "453da042fc2fde77a3017357813a9532f775b4ab3488a73a2f6954f962048a51",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "v3 root is closed (additionalProperties and unevaluatedProperties false) with a closed event payload whose cancel_reason is const user_cancelled; Workflow clocks replace the Goal expected revision. GRS-080 selects the whole resource, so it matches current precedence; the resource's 'PROPOSED' $comment is stale byte-pinned text.",
+          "evidence": [
+            {
+              "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+              "unit": "root",
+              "line_start": 788,
+              "line_end": 788,
+              "quote": "\"additionalProperties\": false,",
+              "excerpt_sha256": "caf6261bd51214e3f0e1f79bb4be170af948f47d47080f04b366668a8b5af3bd",
+              "file_sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+              "unit": "root",
+              "line_start": 895,
+              "line_end": 895,
+              "quote": "\"unevaluatedProperties\": false",
+              "excerpt_sha256": "3012344da2fc54fec7bbe525b328ec127fa0c0e07816bc5fbd740361688ea0ec",
+              "file_sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7807,
+              "line_end": 7807,
+              "quote": "Only user_cancelled is admitted by this positive route.",
+              "excerpt_sha256": "3bb99f158e7ffb94a74f3f3e595f38f05cc4f4f58d06d9529cf5881a62de2392",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7805,
+              "line_end": 7805,
+              "quote": "An expected Goal revision from v2 is not silently reinterpreted as the Workflow clock.",
+              "excerpt_sha256": "cc1229b9c0fdbe8fba101a9c52bfbf113c780dbb24c9ecc86871713b511a1773",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "application_or_project (Project edition project-scoped; app edition dormant) scope; exact v3 idempotency key over scope_partition, event type, project, goal, goal_revision, both Workflow revisions, goal_run_id, 'user_cancelled' and mutation_started (GRS-080, EP-118, SP-312); Storage owns scope_partition and inner/outer keys match; all envelope fields must equal the original EventCandidate.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7809,
+              "line_end": 7809,
+              "quote": "The exact idempotency key is pm.goal-runtime-event.v3: plus lowercase SHA-256 of RFC8785 JCS",
+              "excerpt_sha256": "560015d8de10852081319052fb66f226266292101ea103cd4b6719f83dfcc2b7",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7809,
+              "line_end": 7809,
+              "quote": "Storage owns reversible scope_partition. Inner and outer keys byte-equal.",
+              "excerpt_sha256": "3c3777705c23254e74330d3a2227b7d321d027ac4a30e2ac2a5c88574c6a569d",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7805,
+              "line_end": 7805,
+              "quote": "Inner and outer payload schemas/names/identity and keys match the entire genuine original EventCandidate and first original stored Event",
+              "excerpt_sha256": "cecc9f743a85b22547193158e8ff8a68cf649b03a44e232072738be634326d32",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-366",
+              "line_start": 24130,
+              "line_end": 24130,
+              "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
+              "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
+              "file_sha256": "3b7e18721a0a8661d5c9d0a985b5cc47dae9a6b944a8144240254f2400595e19",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Same key and digest returns the first original Event/receipt/transition with no second append, timestamp or revision; a changed digest is D06 immutable_conflict via Storage idempotency_conflict; dedupe_unavailable stays with Storage. D06 recovery resolves the original candidate/Intent/Control and actual append outcome; unknown outcomes stay recovery_required without regenerating anything.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7809,
+              "line_end": 7809,
+              "quote": "Original same-key/same-digest custody returns the first original Event/receipt/transition; no second append, timestamp or revision.",
+              "excerpt_sha256": "bcc8a3c9f22aa5a0e045c2200e59d43a51b21fbc487f17bb65499b626e27ff1c",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Executor_Protocol.md",
+              "unit": "EP-118 Positive D06",
+              "line_start": 7635,
+              "line_end": 7635,
+              "quote": "Storage idempotency_conflict maps to D06 immutable_conflict",
+              "excerpt_sha256": "541c0e9ce6b00c8590f1b24f5b4637a9d9b25d01363a5f18f215f5ea6fda61b1",
+              "file_sha256": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Executor_Protocol.md",
+              "unit": "EP-118 Positive D06",
+              "line_start": 7628,
+              "line_end": 7628,
+              "quote": "Unknown outcomes remain prepared/recovery_required, preserving all prior effects and never regenerating timestamps, candidate, receipt or conflicting intent.",
+              "excerpt_sha256": "5516a84bc0afaf9bfceb0020cb1fef396673ea6a808522384ac1488fa9bfde65",
+              "file_sha256": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Registered RP-AUTHORITY-INDEFINITE@1.0.0, restated by SP-312/BRS-028 for the original cancelled event; the owned v4 combined projection and checkpoint use RP-PROJECTION-3GEN exactly (three generations, retired plus seven days); source metadata keeps its own policies. No open choice.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/1",
+              "line_start": 138,
+              "line_end": 138,
+              "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+              "excerpt_sha256": "fe0cb5dfc30383cc74c52093250d8f4d225ea27919f5d113322bd9c010552237",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-312 Source-coupled retention",
+              "line_start": 26751,
+              "line_end": 26751,
+              "quote": "Original cancelled remains RP-AUTHORITY-INDEFINITE subject to its actual deletion/hold/backup rules.",
+              "excerpt_sha256": "c4481aef5d301f93707f8d158fd2509015903c47088e974d5ecdfdcfea69f171",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-312 Concrete successor projection and checkpoint",
+              "line_start": 26721,
+              "line_end": 26721,
+              "quote": "RP-PROJECTION-3GEN applies exactly: max three total staged/current/retired generations",
+              "excerpt_sha256": "c92ede2df1e4f09a33dcf57786fdf8aefebddab7ef814bee886f972e1f2812ec",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/1",
+              "line_start": 176,
+              "line_end": 176,
+              "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\"",
+              "excerpt_sha256": "f4776185c240196af8b33743802fc7cb3b7c60361d6115f4b9d9254aeb6f0f31",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Registry rejects unhandled secrets; SP-309 compact custody holds no credentials. BRS-028 keeps mandatory backup of D06/D05/D01/Start/Goal/Storage/effect authority, treats the full Event in projections as source content with per-generation disclosure fences, and restores derived units only after tombstones/permissions/holds; current reads recheck owner and Goal controls.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/1",
+              "line_start": 118,
+              "line_end": 118,
+              "quote": "\"mode\": \"reject_unhandled_secrets\",",
+              "excerpt_sha256": "69b326f5100c3747e56823aea733477b3b41747a52c403f57851d9d32534e475",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Backup_Restore_System.md",
+              "unit": "BRS-028",
+              "line_start": 1788,
+              "line_end": 1788,
+              "quote": "Original non-rebuildable D06/D05/D01/Start/Goal/Storage/effect authority keeps its existing exact family keys, full schemas, native provenance and mandatory backup/disclosure rules",
+              "excerpt_sha256": "596cb8aadf19c94f53fe4bee4a9d015451fb97effded6e993ad517be60a0e127",
+              "file_sha256": "e5a9d31d5d95fee9b0e3f9e5d7baaddc97d1fcfc8388cf94ccad063a7a4952db",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Backup_Restore_System.md",
+              "unit": "BRS-028",
+              "line_start": 1792,
+              "line_end": 1792,
+              "quote": "Every current, staged, retired or held generation has an independent actual source disclosure fence.",
+              "excerpt_sha256": "42463e8789a98a6a540a1db78ba33b257a5b4350d174091f628e2e72b6bd1653",
+              "file_sha256": "e5a9d31d5d95fee9b0e3f9e5d7baaddc97d1fcfc8388cf94ccad063a7a4952db",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Backup_Restore_System.md",
+              "unit": "BRS-028",
+              "line_start": 1798,
+              "line_end": 1798,
+              "quote": "Restore first honors current tombstones, deletion, permissions and holds",
+              "excerpt_sha256": "e8f7dba6453381ce5c04681ce1d76b549fbea93a0948c59672f58c217d4caebb",
+              "file_sha256": "e5a9d31d5d95fee9b0e3f9e5d7baaddc97d1fcfc8388cf94ccad063a7a4952db",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "GRS-080 re-adopts D-R17 for v3: a genuine legal nonterminal Workflow (including blocked or stopped) becomes cancelled with body revision +1 and activation unchanged; already-terminal state is preserved with no event; effect dispositions must be durable before append; activation_aborted stays a separate route. Goal lifecycle, Stop and association are untouched.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7803,
+              "line_end": 7803,
+              "quote": "D-R17 and EP118 own positive native cancellation from a genuine legal nonterminal Workflow, including blocked or stopped.",
+              "excerpt_sha256": "665147ff5900970d65bc90265606750316f3c141970d545702dcff8def129ea8",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7803,
+              "line_end": 7803,
+              "quote": "Already terminal native state is preserved byte-for-byte without a new cancelled Event",
+              "excerpt_sha256": "486b0f912320bb81df9e5851cc2e4fdf21d02ee53a5206e1780521171ce163dc",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-080",
+              "line_start": 7807,
+              "line_end": 7807,
+              "quote": "Every required disposition became durable before append.",
+              "excerpt_sha256": "c5843785af6fd103ef2158ca9898bba5de38b306cc846dd2d086197ed64a23aa",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "CV-1136 explicitly selects the older scoped-routing successor together with SP-1138 reference projections. Complete original method/source integration, prefix/CAS/crash/cutover and fresh current boundaries remain unexecuted. Corrected W4 K prose uses SP-312 base64url; the inherited representation harness still uses hard-coded hex specimens.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-312 Concrete successor projection and checkpoint",
+              "line_start": 26715,
+              "line_end": 26715,
+              "quote": "Only owner.goal_run.started_cancelled.project_prefix.v1 may derive this versioned row/checkpoint.",
+              "excerpt_sha256": "02114c8e8bacd9b7feae4fc33a2a96a2d839bbb6c6ca4981d959d173ba5b2bed",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_cancelled_consumer_contracts/physical-families.json",
+              "unit": "families",
+              "line_start": 26,
+              "line_end": 26,
+              "quote": "\"key\": \"goal_run_started_cancelled_checkpoint.v1:K(storage_instance_id):K(project_id):K(goal_id):K(goal_run_id)\",",
+              "excerpt_sha256": "ddbb9db8f01bc934d31db1b3cbff86cdb0e112b308b7f13297d6e7f0623304ce",
+              "file_sha256": "b41e2a8bfdea13cea278e7ef16c965efcbd94b172d1778b2ad81a86dc9c90ad8",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-312 Exact delta registration",
+              "line_start": 26765,
+              "line_end": 26765,
+              "quote": "pm.goal_run_started_cancelled_checkpoint.v1@1.0.0",
+              "excerpt_sha256": "b9cecdbeddcc48a4c4e3738746b8f5e2bcb011e8dd05a5f93dc41d8a7027312b",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-312 Concrete successor projection and checkpoint",
+              "line_start": 26717,
+              "line_end": 26717,
+              "quote": "The immutable birth anchor includes the complete nine-field durable generic token.",
+              "excerpt_sha256": "c2d713859ae66e1c8f3b349cf17a89740113b09f626940a6cc1efeea4ab94f5e",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-311",
+              "line_start": 26505,
+              "line_end": 26505,
+              "quote": "The same applies to CancelledProjection in SP-312.",
+              "excerpt_sha256": "0bb8ef4c1d2d8da9774ee888f02dc6cf3924c0c1e882ea0d10c99eec42e60571",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+              "unit": "CancelledProjection",
+              "line_start": 1103,
+              "line_end": 1103,
+              "quote": "\"CancelledProjection\": {",
+              "excerpt_sha256": "fdb1f262cda34416fee66714bf3184bfd3a67879cfb2292050d181d834552ca9",
+              "file_sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-1136",
+              "line_start": 24943,
+              "line_end": 24943,
+              "quote": "Eager qualification includes every unused schema branch.",
+              "file_sha256": "3b7e18721a0a8661d5c9d0a985b5cc47dae9a6b944a8144240254f2400595e19",
+              "excerpt_sha256": "c1785391d495dd3725ffa8adcda8272601cbbb8c0da38493e96f82c2f28f9030",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-425: D06 publication-role withdrawal as writer cutoff, per-method reader withdrawal, combined projector stop and new-generation rebuild fence; GRS-080 routes.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-425",
+              "line_start": 26841,
+              "line_end": 26841,
+              "quote": "Rebuild fence: after reinstallation the combined projector stages a new generation",
+              "excerpt_sha256": "89c9aa57acc95d3b32ab45169b8a494d30f92c0caaf8e0714eab74716ca7c675",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The new setup/qualification suite covers exact scoped imports and method roots. Full original D06/D05/Goal/Stop/effect/current/projector positive and isolated negative tuples remain unimplemented. Qualification and inherited representation cases do not close W4; native NOT_RUN alone is not the reason for PARTIAL.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-210",
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "goal_run.cancelled: the SP-312 combined projector rule table.",
+              "excerpt_sha256": "fdbb19588ee8992dd4725f340da4cabc69f8b4c58af451e83194aa005a11f20d",
+              "file_sha256": "0bc0707040f6fd36ac75b7eadfebcd84ff8ff38a5b2256f1e1a860d1f955a8a3",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Common complete-path fixture and guard rules",
+              "line_start": 85,
+              "line_end": 85,
+              "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
+              "excerpt_sha256": "042e904a2eed162b3149e716a37d561bf23fc95f6038f2e96643ca5c84b302d8",
+              "file_sha256": "6292b1ab6341f7071afbe64e7ecf046dfccfbf050b75febe79cc4a9dd5bb5fc3",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Part 2 source witness qualification",
+              "line_start": 100,
+              "line_end": 100,
+              "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
+              "excerpt_sha256": "d56e8b9f02a667d5799ea15de2a04c87b14adbc31e5255f1bd3365375efe9295",
+              "file_sha256": "6292b1ab6341f7071afbe64e7ecf046dfccfbf050b75febe79cc4a9dd5bb5fc3",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_cancelled_w4_contracts/protocol.md",
+              "unit": "Completion accounting",
+              "line_start": 33,
+              "line_end": 33,
+              "quote": "Whole W4 closure stays NOT_COMPLETE",
+              "file_sha256": "ead32b7b982456e227b563c6530c47dab923e38b7170a1e42035e6b6f3178d02",
+              "excerpt_sha256": "7372f973c41f23484d7f55c76120595bd286736fc99d8680a25684f3d3d37088",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W34 part2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "The W4 routing repair and key-description correction do not close the unimplemented complete original semantic corpus."
+        }
+      },
+      "remaining_gaps": [
+        "W4 original positive D06/D05/Goal Stop/SourceAudit/binding/SchedulerStop/FileSafe/process causal graph, distinct operations and complete native/first Event receipts.",
+        "W4 mutation=false and mutation=true full original settlements/rollback, exhaustive effect census, genuine empty final flush and sticky failure histories.",
+        "W4 separately fresh CurrentRead, CurrentSuccessfulReadback, CurrentGoalStopArgument, current Start/D05 and current D06 controls at every independently callable boundary.",
+        "W4 original Start/native-v7 dispatch, historical-versus-current admission and complete original inspection/consumer helpers and final disclosure.",
+        "W4 full generic global prefix, nine-field token/source joins, legal combined reducer, complete row/checkpoint CAS, crash/retry, staging/cutover and SP-425 withdrawal/reinstall.",
+        "W4 whole original semantic SP-337 reference tuples and complete physical-key recipe coverage; inherited hard-coded hex representation fixtures do not implement SP-312 K.",
+        "Shared guard-isolation and number-domain/retained-recipe sweep remain independent obligations; no local proof engine or number codec added."
+      ],
+      "normative_depth_complete": false,
+      "disposition_evidence": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "unit": "EP-121",
+          "line_start": 8452,
+          "line_end": 8452,
+          "quote": "EP118's complete positive original_bounded_safe_stop_terminal_publication.v1 registration, D06 v3 methods and D01 coissued original outcome remain the exact producer authority.",
+          "excerpt_sha256": "ce06435612b328332adac080acf9c20008eb0a0dffa250f1f6ac8aaa95bcfebf",
+          "file_sha256": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
+          "quote_check": "exact"
+        }
+      ],
+      "static_checks_seen": [
+        "scripts/pm_goal_own_c3_w34b_oracles.py",
+        "scripts/pm_goal_own_c3_w34b_roots.py",
+        "scripts/pm_goal_current_writer_oracles.py",
+        "scripts/pm_goal_own_c_oracles.py"
+      ],
+      "prior_pass_count_pinned_base": 10,
+      "whole_root_closure": "NOT_COMPLETE_ORIGINAL_CORPUS_NOT_EXECUTED",
+      "full_path_oracles_added": 0,
+      "notes": "The explicit older scoped route qualifies schema resolution only. No full original semantic corpus or unfillable technical blocker is established. Existing native-v7 companions remain separate available editions, not a missing-source blocker.",
+      "current_owner_units": [
+        "GRS-080",
+        "EP-121",
+        "SP-312",
+        "SP-425",
+        "GRS-1137",
+        "SP-1138",
+        "ATS-1120",
+        "CV-1136"
+      ]
+    }
+  ],
+  "static_checks_seen": [
+    "W4 scoped-routing qualification in scripts/pm_goal_own_c3_w34b_oracles.py; complete original path count remains zero.",
+    "Fresh command exits are recorded in C3-W34b/checks.json and the branch report; predecessor representation counts are prior evidence, not a new original-path pass."
+  ],
+  "pass_counts": {
+    "goal_run.cancelled": 10
+  }
+}

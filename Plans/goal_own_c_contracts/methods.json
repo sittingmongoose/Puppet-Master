@@ -1,0 +1,167 @@
+{
+  "schema_id": "pm.goal_own_c.methods.v1",
+  "status": "NEWLY_AUTHORED_OWNER_CONTRACT_NOT_NATIVE_INSTALLATION",
+  "proposal_handler": {
+    "command_id": "cmd.chat.goal.propose_update",
+    "handler": "handlers::goal_runtime::goal_propose_update",
+    "request": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/GoalUpdateProposalRequest",
+    "result": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest",
+    "supersedes_unresolved_descriptive_refs": [
+      "Plans/goal_runtime_contracts.schema.json#/$defs/GoalUpdateProposalRequest",
+      "Plans/goal_runtime_contracts.schema.json#/$defs/ApprovalRequest"
+    ],
+    "existing_resource_banks_unchanged": true
+  },
+  "methods": [
+    {
+      "method": "owner.hitl.goal_update.capture.v1",
+      "actual_owner": "HITL",
+      "request_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/GoalUpdateProposalRequest",
+      "result_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest",
+      "whole_private_original_sources": {
+        "path": "Plans/goal_own_c_contracts/protocol.md",
+        "paragraphs": [
+          "U1",
+          "U2",
+          "U3"
+        ]
+      },
+      "independent_entry_and_final_source_capture": true,
+      "caller_supplied_authority": false
+    },
+    {
+      "method": "owner.hitl.goal_update.resolve.v1",
+      "actual_owner": "HITL",
+      "request_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest",
+      "result_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalResolution",
+      "whole_private_original_sources": {
+        "path": "Plans/goal_own_c_contracts/protocol.md",
+        "paragraphs": [
+          "U3"
+        ]
+      },
+      "independent_entry_and_final_source_capture": true,
+      "caller_supplied_authority": false
+    },
+    {
+      "method": "owner.hitl.goal_update.read_resolution.v1",
+      "actual_owner": "HITL",
+      "request_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalRequest",
+      "result_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/ApprovalResolution",
+      "whole_private_original_sources": {
+        "path": "Plans/goal_own_c_contracts/protocol.md",
+        "paragraphs": [
+          "U4"
+        ]
+      },
+      "independent_entry_and_final_source_capture": true,
+      "caller_supplied_authority": false
+    },
+    {
+      "method": "owner.storage.goal_binding_migration.capture.v1",
+      "actual_owner": "StorageMigrationCoordinator",
+      "request_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationSelector",
+      "result_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationRequest",
+      "whole_private_original_sources": {
+        "path": "Plans/goal_own_c_contracts/protocol.md",
+        "paragraphs": [
+          "M1",
+          "M2",
+          "M3",
+          "M4",
+          "M5",
+          "M6"
+        ]
+      },
+      "independent_entry_and_final_source_capture": true,
+      "caller_supplied_authority": false
+    },
+    {
+      "method": "owner.storage.goal_binding_migration.commit.v1",
+      "actual_owner": "StorageMigrationCoordinator",
+      "request_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationRequest",
+      "result_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationResult",
+      "whole_private_original_sources": {
+        "path": "Plans/goal_own_c_contracts/protocol.md",
+        "paragraphs": [
+          "M7"
+        ]
+      },
+      "independent_entry_and_final_source_capture": true,
+      "caller_supplied_authority": false
+    },
+    {
+      "method": "owner.storage.goal_binding_migration.recover.v1",
+      "actual_owner": "StorageMigrationCoordinator",
+      "request_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationSelector",
+      "result_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationResult",
+      "whole_private_original_sources": {
+        "path": "Plans/goal_own_c_contracts/protocol.md",
+        "paragraphs": [
+          "M8"
+        ]
+      },
+      "independent_entry_and_final_source_capture": true,
+      "caller_supplied_authority": false
+    },
+    {
+      "method": "owner.storage.goal_binding_migration.read_result.v1",
+      "actual_owner": "StorageMigrationCoordinator",
+      "request_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationSelector",
+      "result_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationResult",
+      "whole_private_original_sources": {
+        "path": "Plans/goal_own_c_contracts/protocol.md",
+        "paragraphs": [
+          "M8"
+        ]
+      },
+      "independent_entry_and_final_source_capture": true,
+      "caller_supplied_authority": false
+    },
+    {
+      "method": "owner.storage.goal_binding_migration.withdraw.v1",
+      "actual_owner": "StorageMigrationCoordinator",
+      "request_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalRequest",
+      "result_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult",
+      "whole_private_original_sources": {
+        "path": "Plans/goal_own_c_contracts/protocol.md",
+        "paragraphs": [
+          "M9"
+        ]
+      },
+      "independent_entry_and_final_source_capture": true,
+      "caller_supplied_authority": false
+    },
+    {
+      "method": "owner.goal.host_stop.read_for_binding_migration.v1",
+      "actual_owner": "original Goal host Stop owner",
+      "request_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationSelector",
+      "result_schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/OwnerMapping",
+      "required_result_role": "host_stop",
+      "independently_acquired_private_projection": {
+        "original_resource_bank": "Plans/goal_cancel_schema_resources.json",
+        "whole_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopControl",
+        "whole_resource_locations": [
+          {
+            "declared_path": "Plans/full_thread_runtime_contracts.schema.json",
+            "exact_original_path": "Plans/workflow_standard_source_contracts/inputs/Plans/full_thread_runtime_contracts.schema.json",
+            "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea"
+          },
+          {
+            "declared_path": "Plans/shared_runtime_contracts.schema.json",
+            "exact_original_path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+            "sha256": "680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59"
+          }
+        ]
+      },
+      "whole_private_original_sources": {
+        "path": "Plans/goal_own_c_contracts/protocol.md",
+        "paragraphs": [
+          "M4"
+        ]
+      },
+      "independent_entry_and_final_source_capture": true,
+      "caller_supplied_authority": false
+    }
+  ]
+}

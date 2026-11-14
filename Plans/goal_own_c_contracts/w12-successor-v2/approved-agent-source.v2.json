@@ -1,0 +1,35 @@
+{
+  "schema_id": "pm.goal.update.original_composition_selection.v2",
+  "status": "NEWLY_AUTHORED_TEST_ONLY_PREPARED_WITHOUT_ADMISSION",
+  "event_type": "goal.updated",
+  "predecessor": {
+    "path": "/home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2",
+    "manifest_sha256": "afa83115a8d39ad8dc6cb911ae8c9cc6985ac705eb792d8ed962dce31159e839",
+    "births": "HISTORY_ONLY_NEVER_RELABELLED"
+  },
+  "authoring_script": "scripts/pm_goal_own_c3_w12_successor.py",
+  "source_participant": "scripts/pm_goal_own_c3_w12_approval.py",
+  "candidate_path": "/home/sittingmongoose/PM-Experiments/c3-w12-p2-20261105/approved-agent-source.v2.3",
+  "selected_original_source": "goal_source.py:GoalSource",
+  "selected_original_command": "goal_command.py:GoalCommand",
+  "sole_original_body_issuer": "runtime/physical/source/model.py:ModelStore",
+  "selected_approval_participant": "approval_bridge_v2.py:ApprovalBridgeV2",
+  "native_execution": "NOT_RUN",
+  "selection_rule": "Before every owner import verify complete whole manifest and every member. Each runner passes this exact selection; no ambient or predecessor fallback. Fresh successor births only. No original private map mutation or class substitution.",
+  "manifest_sha256": "e22c3bee94c37a6853c61d1b18a0a2eb631174160ddbe38644ad2ada6dc53273",
+  "repository_support": [
+    {
+      "path": "scripts/pm_goal_own_c_oracles.py",
+      "sha256": "ec8daf13cf3814e3264be408c5861fdd7d51aff2ebe62c36d9042990c61136c4"
+    },
+    {
+      "path": "scripts/pm_goal_oracle_common.py",
+      "sha256": "eb809ea10fb260b980813272a7e4d73934927f878ce84e9d7ed361ea696a3cec"
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/contracts.schema.json",
+      "sha256": "6cfc3868f485286d9fadbbab293b0407583b30e88a02f6f5e1334f77fa0ad84a"
+    }
+  ],
+  "source_package_edition": "2.3"
+}

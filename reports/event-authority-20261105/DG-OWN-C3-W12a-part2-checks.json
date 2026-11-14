@@ -1,0 +1,204 @@
+{
+  "schema_id": "pm.goal.updated.w12a.part2.checks.v1",
+  "checks": [
+    {
+      "name": "v3-corpus-final",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm_goal_own_c3_w12a_p2_oracles.py",
+        "--captures",
+        "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/corpus-final",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/v3-corpus-final.json"
+      ],
+      "exit_code": 2,
+      "seconds": 367.16,
+      "minimum_available_gb": 13,
+      "resource_pauses": 0
+    },
+    {
+      "name": "harness-qa",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/harness-qa.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.0,
+      "minimum_available_gb": 13,
+      "resource_pauses": 0
+    },
+    {
+      "name": "historical-json-control",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm_goal_own_c3_w12a_oracles.py",
+        "--scenario",
+        "ordinary",
+        "--captures",
+        "/mnt/Cursor/PuppetMaster-Evidence/tests/c3-w12a-p2-20261105/historical-json-control"
+      ],
+      "exit_code": 0,
+      "seconds": 42.04,
+      "minimum_available_gb": 12,
+      "resource_pauses": 0
+    },
+    {
+      "name": "w12-components",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm_goal_own_c3_w12_successor_oracles.py",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/w12-components.json"
+      ],
+      "exit_code": 0,
+      "seconds": 5.0,
+      "minimum_available_gb": 15,
+      "resource_pauses": 0
+    },
+    {
+      "name": "own-c",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm_goal_own_c_oracles.py",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/own-c.json"
+      ],
+      "exit_code": 0,
+      "seconds": 1.0,
+      "minimum_available_gb": 15,
+      "resource_pauses": 0
+    },
+    {
+      "name": "source-oracles",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm_goal_own_c_source_oracles.py",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/source-oracles.json"
+      ],
+      "exit_code": 0,
+      "seconds": 3.0,
+      "minimum_available_gb": 15,
+      "resource_pauses": 0
+    },
+    {
+      "name": "dg-current",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm_goal_current_writer_oracles.py",
+        "--guard-table",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/dg-current-guards.json"
+      ],
+      "exit_code": 0,
+      "seconds": 13.0,
+      "minimum_available_gb": 15,
+      "resource_pauses": 0
+    },
+    {
+      "name": "dg-stop-block",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm_goal_run_stop_block_oracles.py",
+        "--guard-table",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/dg-stop-block-guards.json"
+      ],
+      "exit_code": 0,
+      "seconds": 10.0,
+      "minimum_available_gb": 15,
+      "resource_pauses": 0
+    },
+    {
+      "name": "dg-lifecycle",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm_goal_lifecycle_successor_oracles.py",
+        "--guard-table",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/dg-lifecycle-guards.json"
+      ],
+      "exit_code": 0,
+      "seconds": 5.0,
+      "minimum_available_gb": 15,
+      "resource_pauses": 0
+    },
+    {
+      "name": "lineage",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm-goal-runtime-lineage.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "seconds": 1.0,
+      "minimum_available_gb": 15,
+      "resource_pauses": 0
+    },
+    {
+      "name": "dg-history",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm_goal_history_reader_fixtures.py",
+        "--guard-table",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/dg-history-guards.json"
+      ],
+      "exit_code": 0,
+      "seconds": 1142.9,
+      "minimum_available_gb": 10,
+      "resource_pauses": 0
+    },
+    {
+      "name": "shard-generate",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "seconds": 2.02,
+      "minimum_available_gb": 14,
+      "resource_pauses": 0
+    },
+    {
+      "name": "index-generate",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit_code": 0,
+      "seconds": 22.01,
+      "minimum_available_gb": 15,
+      "resource_pauses": 0
+    },
+    {
+      "name": "shard-check",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "seconds": 9.0,
+      "minimum_available_gb": 15,
+      "resource_pauses": 0
+    },
+    {
+      "name": "index-validate",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/venv/bin/python",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 1,
+      "seconds": 25.01,
+      "minimum_available_gb": 14,
+      "resource_pauses": 0
+    }
+  ],
+  "minimum_sampled_available_gb": 10,
+  "resource_pauses": 0,
+  "inherited_guard_proof_limits": "Original machinery reproduces; shared guard-isolation sweep remains required."
+}

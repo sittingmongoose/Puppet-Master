@@ -1,0 +1,69 @@
+{
+  "qualification": "TEST_ONLY",
+  "native": "NOT_RUN",
+  "kind": "explicit_additive_native_v7_aggregate_companions",
+  "predecessor": {
+    "path": "Plans/goal_workflow_cancel_contracts/schemas/native-arguments.schema.json",
+    "sha256": "5b45113634ce99441ded593c6d0647bcf57d4d6752925573b0bb513c572a2a25"
+  },
+  "roots": {
+    "BeforeStopNativeEntry": {
+      "uri": "https://puppetmaster.local/proposals/dg_int_c3_native_v7.v1#/$defs/BeforeStopNativeEntry",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_start",
+        "original_domain_birth",
+        "reservation_lineage",
+        "registered_goal_terminal_writer",
+        "registered_workflow_terminal_writer",
+        "actual_original_goal_boundary"
+      ],
+      "properties": {
+        "current_start": {
+          "realm": "native_v7_current_start",
+          "schema_ref": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json#/$defs/CurrentStartArgument"
+        },
+        "original_domain_birth": {
+          "realm": "c3_native",
+          "schema_ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainBirth"
+        },
+        "reservation_lineage": {
+          "realm": "c3_native",
+          "schema_ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReservationLineage"
+        },
+        "registered_goal_terminal_writer": {
+          "realm": "c3_native",
+          "schema_ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WriterRegistration"
+        },
+        "registered_workflow_terminal_writer": {
+          "realm": "c3_native",
+          "schema_ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WriterRegistration"
+        },
+        "actual_original_goal_boundary": {
+          "realm": "c3_native",
+          "schema_ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary"
+        }
+      }
+    },
+    "OriginalOwnersNativeEntry": {
+      "uri": "https://puppetmaster.local/proposals/dg_int_c3_native_v7.v1#/$defs/OriginalOwnersNativeEntry",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "complete_current_workflow_disposition",
+        "goal_control_plane"
+      ],
+      "properties": {
+        "complete_current_workflow_disposition": {
+          "realm": "native_v7",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json#/$defs/CurrentSuccessfulReadback"
+        },
+        "goal_control_plane": {
+          "realm": "c3_native",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/GoalControlPlaneAdmission"
+        }
+      }
+    }
+  }
+}

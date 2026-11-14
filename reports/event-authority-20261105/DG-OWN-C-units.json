@@ -1,0 +1,134 @@
+{
+  "units": [
+    {
+      "path": "Plans/human-in-the-loop.md",
+      "unit": "HITL-1130",
+      "title": "Goal update original approval provider"
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "unit": "PS-1130",
+      "title": "Goal update approval target and current authority"
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "unit": "SIR-1130",
+      "title": "Goal update approval source and result joins"
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "unit": "SIR-1131",
+      "title": "Goal cancellation migration of original pending command custody"
+    },
+    {
+      "path": "Plans/Assistant_Plan_Runtime.md",
+      "unit": "APR-1130",
+      "title": "Goal cancellation migration of existing Plan association"
+    },
+    {
+      "path": "Plans/Scheduling_and_Quota_Resume.md",
+      "unit": "SQR-1130",
+      "title": "Goal cancellation migration of schedules consent and callbacks"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1130",
+      "title": "Goal update approval original custody"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1131",
+      "title": "Goal cancellation unenrolled binding and old Stop migration"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-1130",
+      "title": "Goal update approval closed request and resolution roots"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-1131",
+      "title": "Goal cancellation source migration roots and original realms"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-1130",
+      "title": "goal.updated original complete boundary suite"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1132",
+      "title": "goal.updated original custody and oracle boundary adoption"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-1131",
+      "title": "goal.cancelled original complete boundary suite"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1133",
+      "title": "goal.cancelled original custody and oracle boundary adoption"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-1132",
+      "title": "goal_run.started original complete boundary suite"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1134",
+      "title": "goal_run.started original custody and oracle boundary adoption"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-1133",
+      "title": "goal_run.cancelled original complete boundary suite"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1135",
+      "title": "goal_run.cancelled original custody and oracle boundary adoption"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-1134",
+      "title": "goal_run.certified original complete boundary suite"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1136",
+      "title": "goal_run.certified original custody and oracle boundary adoption"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "unit": "EP-1130",
+      "title": "goal_run.started original producer suite adoption"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "unit": "EP-1131",
+      "title": "goal_run.cancelled original producer suite adoption"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "unit": "EP-1132",
+      "title": "goal_run.certified original producer suite adoption"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-1116",
+      "title": "Goal update approval and complete original route oracles"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-1117",
+      "title": "Goal cancellation migration and three original route oracles"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-1118",
+      "title": "Three exact GoalRun producer and projector oracle suites"
+    }
+  ]
+}

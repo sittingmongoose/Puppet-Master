@@ -12281,3 +12281,245 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-225, ContractName:Plans/Contracts_V0.md#CV-515, ContractName:Plans/storage-plan.md#SP-515
+
+### EP-200 - Workflow run stop and block writers
+
+```yaml
+plan_unit_id: EP-200
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It is the Workflow writer listing DL-080 requires for goal_run.stopped and goal_run.blocked, Project edition only. Two writers are named: owner.executor.workflow_run.stop.v1, entered from handlers::orchestrator::pause (cmd.orchestrator.pause) and handlers::runtime::abort_run (cmd.runtime.abort_run); and owner.executor.workflow_run.block.v1, entered from the Executor scheduler when a run-level block is admitted. Each moves the native Workflow body status once, under the D01 update_workflow observation, and its own event follows in the order below. Installation: EP-118 keeps refusing every unlisted writer (RequiredOtherWorkflowWriterSource=false), and the all_writers.v7 descriptor (EP-124) lists neither writer, so neither can run on any existing birth. They become available only on a fresh Workflow source edition whose all-writers descriptor lists them; that edition is a separate dependency this unit does not author, and no existing birth is enrolled or cast.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-119
+- EP-124
+- SP-286
+- SP-309
+- SP-426
+- SP-427
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The stop writer is reached only from cmd.orchestrator.pause and cmd.runtime.abort_run; the block writer only from the Executor scheduler; no other route appends either family.
+- Each writer orders admission, settlement or block receipt, native status update, append with SP-286 first receipt, then terminal command publication; no step is reordered or skipped.
+- On every existing birth both writers stay refused by RequiredOtherWorkflowWriterSource=false; only a fresh source edition that lists them may install them.
+- A lost acknowledgement resolves through SP-286 retained receipt resolution; the writer never re-dispatches, rolls back or mints a new event value.
+validation_surfaces:
+- Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json
+- Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json
+- Plans/goal_run_stop_block_oracle_fixtures.json
+- python3 scripts/pm_goal_run_stop_block_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: unlisted_workflow_writer_admission
+reasoning_tier: high
+context_scope: workflow_run_stop_block_writers
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 3)
+preserved_exact_tokens:
+- "owner.executor.workflow_run.stop.v1"
+- "owner.executor.workflow_run.block.v1"
+- "RequiredOtherWorkflowWriterSource=false"
+negative_constraints:
+- No completion, certification, replan, resume or ownership-transfer writer.
+- No enrollment of an existing birth and no application-scope writer.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+**Why a listing and not an installation.** DL-080 says "Each contract names the family's writer, which the Workflow writer list lacks today". EP-118 lists the original materialized, stage-entrypoint, prepare-start, prestart-abort, original-start and D06 writers and refuses every other one; EP-124 binds the entire `all_writers.v7` descriptor before birth. Naming the two writers here closes the listing gap; installing them needs a fresh Workflow source edition with these writers in its descriptor, and that edition is not written here.
+
+**Stop writer order** (`owner.executor.workflow_run.stop.v1`).
+1. Admission at the writer's final predicate: current Project permission for the command, writer-capable Storage, no recovery hold, the native status is one D-R21 source (`ready`, `running`, `provisional_success`, `verifying`, `failed_verification`, `repairing`, `blocked`, or `stopped` with new settlement or recovery evidence), and the expected GoalRun revision is current.
+2. Settlement: the bounded safe-stop owner (EP-119, SP-309) settles the run's in-flight effects and returns durable settlement dispositions. `resumable=true` additionally needs a validated safe point and no unresolved mutation fence; otherwise the writer sets `resumable=false`.
+3. Native update: the native body status becomes `stopped` and the GoalRun revision advances exactly once; D01 `update_workflow.v3` observes the update and never issues it. The Goal body, revision and four-state lifecycle are unchanged.
+4. Append: the frozen goal_run.stopped v3 EventRecord (SP-426 identity) is appended through Storage; the first AppendReceipt is retained under SP-286 by name.
+5. Terminal publication: the command result is published only after the first receipt (CV-333 central response). A refusal after step 3 keeps every genuine earlier effect and reports recovery, never rollback.
+
+**Block writer order** (`owner.executor.workflow_run.block.v1`).
+1. Admission: the scheduler has a run-level block cause from the v2 `blocked_reason_code` list, the native status is one D-R16 source (`ready`, `running`, `provisional_success`, `verifying`, `failed_verification`, `repairing`, or `blocked` with new evidence, action or recovery revision), and the expected GoalRun revision is current.
+2. Block receipt: the owner of the cause (Permissions for denial, Storage for storage blocks, the approval owner for approval) has issued the receipt the payload names; D-R16 requires it to exist before append.
+3. Native update: status `blocked`, GoalRun revision advances once, D01 observes; Goal state unchanged.
+4. Append with SP-286 first receipt (SP-427 identity).
+5. No command result: the scheduler records its pass outcome after the first receipt.
+
+**Search (DL-045).** Scope: EP-116..124, EP-132, GRS-026, GRS-027, GRS-071, GRS-075, GRS-079..085, SP-309..317, CV-340, `Plans/Wiring_Matrix.production.json` rows `catalog.orchestrator_pause` and `catalog.runtime_abort_run`, `Plans/workflow_standard_source_contracts/` and the Known-37 matrix rows EA-UND-0016 and EA-UND-0021. Found: both wiring rows expect `goal_run.stopped`; EP-118 refuses unlisted writers; no unit names a stop or block writer, method or entrypoint. These two writer identities are newly authored.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Decision_Log.md#DL-080
+
+## DG-OWN-C original source and boundary contracts (2026-11-05)
+
+### EP-1130 - goal_run.started original producer suite adoption
+
+```yaml
+plan_unit_id: EP-1130
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal_run.started, W3 adopts the complete
+  original EP-120 Start/native D01 publication and native-v7 source dispatch. Test original full arguments
+  and every own entry/final boundary, first receipt/result and retained versus fresh current source. Do not
+  change a closed roster, enroll an old birth, cast a schema realm or use caller admission/source flags. Amended
+  2026-11-11 (DG-S, DL-045) the original Start contract of commit_start.v2 and its Storage participant runs on
+  TEST_ONLY owners in `scripts/pm_goal_dg_s_oracles.py`, with native-v7 dispatch, held-invocation-only
+  PublicationResult, classification-only recover_start and fenced pending prefixes. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- GRS-079
+- SP-1134
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.started original producer suite adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### EP-1131 - goal_run.cancelled original producer suite adoption
+
+```yaml
+plan_unit_id: EP-1131
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal_run.cancelled, W4 adopts the complete
+  original EP-121 positive D06, full D05 success, distinct Goal/Stop/effect origins and native D01 publication.
+  Test original full arguments and every own entry/final boundary, first receipt/result and retained versus
+  fresh current source. Do not change a closed roster, enroll an old birth, cast a schema realm or use caller
+  admission/source flags. Complete inherited-root witnesses remain required and no native execution is claimed.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- GRS-080
+- SP-1135
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.cancelled original producer suite adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### EP-1132 - goal_run.certified original producer suite adoption
+
+```yaml
+plan_unit_id: EP-1132
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal_run.certified, W5 adopts the complete
+  original EP-124 all_writers.v7 and prepare.v2, whole coordinator identity/F5 append/joint native D01 commit/release
+  and Q1-Q4. Test original full arguments and every own entry/final boundary, first receipt/result and retained
+  versus fresh current source. Do not change a closed roster, enroll an old birth, cast a schema realm or use
+  caller admission/source flags. Complete inherited-root witnesses remain required and no native execution
+  is claimed.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- GRS-084
+- SP-1136
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.certified original producer suite adoption). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json

@@ -1,0 +1,745 @@
+{
+  "base": "cfb7e550746c08a989bb41583286d72acc47e68d",
+  "added_units": [
+    {
+      "path": "Plans/human-in-the-loop.md",
+      "unit": "HITL-1130",
+      "title": "Goal update original approval provider",
+      "line_start": 2811,
+      "line_end": 2859
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "unit": "PS-1130",
+      "title": "Goal update approval target and current authority",
+      "line_start": 11109,
+      "line_end": 11159
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "unit": "SIR-1130",
+      "title": "Goal update approval source and result joins",
+      "line_start": 3316,
+      "line_end": 3367
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "unit": "SIR-1131",
+      "title": "Goal cancellation migration of original pending command custody",
+      "line_start": 3371,
+      "line_end": 3422
+    },
+    {
+      "path": "Plans/Assistant_Plan_Runtime.md",
+      "unit": "APR-1130",
+      "title": "Goal cancellation migration of existing Plan association",
+      "line_start": 2239,
+      "line_end": 2288
+    },
+    {
+      "path": "Plans/Scheduling_and_Quota_Resume.md",
+      "unit": "SQR-1130",
+      "title": "Goal cancellation migration of schedules consent and callbacks",
+      "line_start": 2108,
+      "line_end": 2156
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1130",
+      "title": "Goal update approval original custody",
+      "line_start": 30445,
+      "line_end": 30496
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1131",
+      "title": "Goal cancellation unenrolled binding and old Stop migration",
+      "line_start": 30500,
+      "line_end": 30555
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-1130",
+      "title": "Goal update approval closed request and resolution roots",
+      "line_start": 24833,
+      "line_end": 24884
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-1131",
+      "title": "Goal cancellation source migration roots and original realms",
+      "line_start": 24888,
+      "line_end": 24937
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-1130",
+      "title": "goal.updated original complete boundary suite",
+      "line_start": 8925,
+      "line_end": 8976
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1132",
+      "title": "goal.updated original custody and oracle boundary adoption",
+      "line_start": 30559,
+      "line_end": 30610
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-1131",
+      "title": "goal.cancelled original complete boundary suite",
+      "line_start": 8980,
+      "line_end": 9031
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1133",
+      "title": "goal.cancelled original custody and oracle boundary adoption",
+      "line_start": 30614,
+      "line_end": 30665
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-1132",
+      "title": "goal_run.started original complete boundary suite",
+      "line_start": 9035,
+      "line_end": 9086
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1134",
+      "title": "goal_run.started original custody and oracle boundary adoption",
+      "line_start": 30669,
+      "line_end": 30721
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-1133",
+      "title": "goal_run.cancelled original complete boundary suite",
+      "line_start": 9090,
+      "line_end": 9141
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1135",
+      "title": "goal_run.cancelled original custody and oracle boundary adoption",
+      "line_start": 30725,
+      "line_end": 30777
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-1134",
+      "title": "goal_run.certified original complete boundary suite",
+      "line_start": 9145,
+      "line_end": 9195
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-1136",
+      "title": "goal_run.certified original custody and oracle boundary adoption",
+      "line_start": 30781,
+      "line_end": 30832
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "unit": "EP-1130",
+      "title": "goal_run.started original producer suite adoption",
+      "line_start": 9188,
+      "line_end": 9237
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "unit": "EP-1131",
+      "title": "goal_run.cancelled original producer suite adoption",
+      "line_start": 9241,
+      "line_end": 9290
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "unit": "EP-1132",
+      "title": "goal_run.certified original producer suite adoption",
+      "line_start": 9294,
+      "line_end": 9343
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-1116",
+      "title": "Goal update approval and complete original route oracles",
+      "line_start": 7484,
+      "line_end": 7536
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-1117",
+      "title": "Goal cancellation migration and three original route oracles",
+      "line_start": 7540,
+      "line_end": 7592
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-1118",
+      "title": "Three exact GoalRun producer and projector oracle suites",
+      "line_start": 7596,
+      "line_end": 7649
+    }
+  ],
+  "amended_units": [
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-068",
+      "definition_line": 6534,
+      "amendment_line": 6615
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-073",
+      "definition_line": 7012,
+      "amendment_line": 7076
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-074",
+      "definition_line": 7118,
+      "amendment_line": 7177
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-078",
+      "definition_line": 7647,
+      "amendment_line": 7714
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-079",
+      "definition_line": 7739,
+      "amendment_line": 7793
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-080",
+      "definition_line": 7820,
+      "amendment_line": 7878
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-081",
+      "definition_line": 7895,
+      "amendment_line": 7960
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-084",
+      "definition_line": 8126,
+      "amendment_line": 8204
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "unit": "GRS-085",
+      "definition_line": 8213,
+      "amendment_line": 8279
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-299",
+      "definition_line": 24647,
+      "amendment_line": 24717
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-304",
+      "definition_line": 25286,
+      "amendment_line": 25342
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-305",
+      "definition_line": 25599,
+      "amendment_line": 25654
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-310",
+      "definition_line": 26402,
+      "amendment_line": 26471
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-311",
+      "definition_line": 26540,
+      "amendment_line": 26587
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-312",
+      "definition_line": 26776,
+      "amendment_line": 26827
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-313",
+      "definition_line": 27178,
+      "amendment_line": 27243
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-316",
+      "definition_line": 27410,
+      "amendment_line": 27477
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-317",
+      "definition_line": 27486,
+      "amendment_line": 27554
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-421",
+      "definition_line": 24727,
+      "amendment_line": 24775
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-422",
+      "definition_line": 25468,
+      "amendment_line": 25517
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-423",
+      "definition_line": 25531,
+      "amendment_line": 25583
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-424",
+      "definition_line": 26596,
+      "amendment_line": 26648
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "unit": "SP-425",
+      "definition_line": 26836,
+      "amendment_line": 26886
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-342",
+      "definition_line": 22573,
+      "amendment_line": 22639
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-347",
+      "definition_line": 22961,
+      "amendment_line": 23014
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "unit": "CV-352",
+      "definition_line": 23442,
+      "amendment_line": 23517
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "unit": "SIR-049",
+      "definition_line": 2736,
+      "amendment_line": 2810
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "unit": "SIR-050",
+      "definition_line": 2818,
+      "amendment_line": 2872
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "unit": "SIR-051",
+      "definition_line": 2908,
+      "amendment_line": 2957
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "unit": "SIR-052",
+      "definition_line": 2984,
+      "amendment_line": 3050
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "unit": "SIR-053",
+      "definition_line": 3067,
+      "amendment_line": 3134
+    },
+    {
+      "path": "Plans/Assistant_Plan_Runtime.md",
+      "unit": "APR-017",
+      "definition_line": 1881,
+      "amendment_line": 1938
+    },
+    {
+      "path": "Plans/Scheduling_and_Quota_Resume.md",
+      "unit": "SQR-011",
+      "definition_line": 1130,
+      "amendment_line": 1183
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-057",
+      "definition_line": 5286,
+      "amendment_line": 5412
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "unit": "ATS-210",
+      "definition_line": 7238,
+      "amendment_line": 7295
+    }
+  ],
+  "shared_owner_file_hunks": {
+    "Plans/Assistant_Plan_Runtime.md": [
+      [
+        1938,
+        1940
+      ],
+      [
+        2233,
+        2288
+      ]
+    ],
+    "Plans/Automated_Testing_System.md": [
+      [
+        5412,
+        5414
+      ],
+      [
+        7295,
+        7297
+      ],
+      [
+        7478,
+        7649
+      ]
+    ],
+    "Plans/Contracts_V0.md": [
+      [
+        22639,
+        22641
+      ],
+      [
+        23014,
+        23016
+      ],
+      [
+        23517,
+        23519
+      ],
+      [
+        24827,
+        24937
+      ]
+    ],
+    "Plans/Executor_Protocol.md": [
+      [
+        9182,
+        9343
+      ]
+    ],
+    "Plans/Goal_Runtime_System.md": [
+      [
+        6521,
+        6521
+      ],
+      [
+        6528,
+        6528
+      ],
+      [
+        6615,
+        6617
+      ],
+      [
+        7076,
+        7078
+      ],
+      [
+        7177,
+        7179
+      ],
+      [
+        7714,
+        7716
+      ],
+      [
+        7793,
+        7795
+      ],
+      [
+        7878,
+        7880
+      ],
+      [
+        7960,
+        7962
+      ],
+      [
+        8204,
+        8206
+      ],
+      [
+        8279,
+        8281
+      ],
+      [
+        8919,
+        9195
+      ]
+    ],
+    "Plans/Permissions_System.md": [
+      [
+        11103,
+        11159
+      ]
+    ],
+    "Plans/Scheduling_and_Quota_Resume.md": [
+      [
+        1183,
+        1185
+      ],
+      [
+        2102,
+        2156
+      ]
+    ],
+    "Plans/Shared_Integration_Runtime.md": [
+      [
+        2810,
+        2812
+      ],
+      [
+        2872,
+        2874
+      ],
+      [
+        2957,
+        2959
+      ],
+      [
+        3050,
+        3052
+      ],
+      [
+        3134,
+        3136
+      ],
+      [
+        3310,
+        3422
+      ]
+    ],
+    "Plans/human-in-the-loop.md": [
+      [
+        2805,
+        2859
+      ]
+    ],
+    "Plans/storage-plan.md": [
+      [
+        24717,
+        24719
+      ],
+      [
+        24775,
+        24777
+      ],
+      [
+        25342,
+        25344
+      ],
+      [
+        25517,
+        25519
+      ],
+      [
+        25583,
+        25585
+      ],
+      [
+        25654,
+        25656
+      ],
+      [
+        26471,
+        26473
+      ],
+      [
+        26587,
+        26589
+      ],
+      [
+        26648,
+        26650
+      ],
+      [
+        26827,
+        26829
+      ],
+      [
+        26886,
+        26888
+      ],
+      [
+        27243,
+        27245
+      ],
+      [
+        27477,
+        27479
+      ],
+      [
+        27554,
+        27556
+      ],
+      [
+        30439,
+        30832
+      ]
+    ]
+  },
+  "implementation_commit": "5cb639818520eb55acf83860c5791a4b7555b376",
+  "part2_shared_owner_file_hunks": {
+    "Plans/Automated_Testing_System.md": [
+      [
+        7509,
+        7510
+      ],
+      [
+        7565,
+        7566
+      ]
+    ]
+  },
+  "part2_contract_file_hunks": {
+    "Plans/goal_own_c_contracts/protocol.md": [
+      [
+        86,
+        94
+      ]
+    ],
+    "Plans/goal_own_c_contracts/suites.json": [
+      [
+        25,
+        29
+      ],
+      [
+        54,
+        58
+      ],
+      [
+        80,
+        82
+      ],
+      [
+        104,
+        106
+      ],
+      [
+        131,
+        133
+      ]
+    ]
+  },
+  "part1_implementation_commit": "f0679a8885ccfddef902a16615ed5ed7a81f64df",
+  "continuation_base": "25b20381c59971761074475bcdafbd02f90a9ebd",
+  "part2_status": "NOT_COMPLETE",
+  "new_ids_minted": [],
+  "free_ids": {
+    "GRS": [
+      "GRS-1135",
+      "GRS-1136",
+      "GRS-1137",
+      "GRS-1138",
+      "GRS-1139"
+    ],
+    "SP": [
+      "SP-1137",
+      "SP-1138",
+      "SP-1139"
+    ],
+    "CV": [
+      "CV-1132",
+      "CV-1133",
+      "CV-1134",
+      "CV-1135",
+      "CV-1136",
+      "CV-1137",
+      "CV-1138",
+      "CV-1139"
+    ],
+    "SIR": [
+      "SIR-1132",
+      "SIR-1133",
+      "SIR-1134",
+      "SIR-1135",
+      "SIR-1136",
+      "SIR-1137",
+      "SIR-1138",
+      "SIR-1139"
+    ],
+    "HITL": [
+      "HITL-1131",
+      "HITL-1132",
+      "HITL-1133",
+      "HITL-1134",
+      "HITL-1135",
+      "HITL-1136",
+      "HITL-1137",
+      "HITL-1138",
+      "HITL-1139"
+    ],
+    "PS": [
+      "PS-1131",
+      "PS-1132",
+      "PS-1133",
+      "PS-1134",
+      "PS-1135",
+      "PS-1136",
+      "PS-1137",
+      "PS-1138",
+      "PS-1139"
+    ],
+    "APR": [
+      "APR-1131",
+      "APR-1132",
+      "APR-1133",
+      "APR-1134",
+      "APR-1135",
+      "APR-1136",
+      "APR-1137",
+      "APR-1138",
+      "APR-1139"
+    ],
+    "SQR": [
+      "SQR-1131",
+      "SQR-1132",
+      "SQR-1133",
+      "SQR-1134",
+      "SQR-1135",
+      "SQR-1136",
+      "SQR-1137",
+      "SQR-1138",
+      "SQR-1139"
+    ],
+    "EP": [
+      "EP-1133",
+      "EP-1134",
+      "EP-1135",
+      "EP-1136",
+      "EP-1137",
+      "EP-1138",
+      "EP-1139"
+    ],
+    "ATS": []
+  },
+  "part2_initial_component_commit": "1dd1b03ba436376498b6eed4d6ef3ba49b5b48de"
+}

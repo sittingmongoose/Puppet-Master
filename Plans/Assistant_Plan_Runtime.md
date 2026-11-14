@@ -1935,6 +1935,9 @@ negative_constraints:
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and APR-1130 complete original Plan association/pending/effect/result mapping. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 ## Wand Modules Redesign Addendum (2026-09-27)
 
 The 2026-09-27 redesign of the Puppet Master 5.6 Pro wand modules (design spec §8.1, §8.8 and §8.15, frozen at `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md`, SHA-256 `dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de`) redraws the Plan card's schedule line and the Crew sheet opened from a Plan. This addendum records what those surfaces must keep of this runtime's contract. It changes no Build label, no admission rule and no command. The Crew sheet itself, its fields and its copy are owned by `Plans/Collaborative_Workflows.md`; windows, timers and the frozen topology snapshot by `Plans/Scheduling_and_Quota_Resume.md` (PSCHED-001..003).
@@ -2227,3 +2230,59 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md#APR-074, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-367, ContractName:Plans/Contracts_V0.md#CV-368, ContractName:Plans/storage-plan.md#SP-350, ContractName:Plans/storage-plan.md#SP-352
+
+## DG-OWN-C original source and boundary contracts (2026-11-05)
+
+### APR-1130 - Goal cancellation migration of existing Plan association
+
+```yaml
+plan_unit_id: APR-1130
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.cancelled, M2-M9 adopts APR-017
+  complete actual AssistantPlanRecord, PlanRun, seven-field GoalPlanBinding, approved version/hash, original
+  origin/effect/result and every pending joint issue before SP-305 enrollment. A completed/failed/cancelled
+  Run remains its actual original state and never implies no association. Preserve unknown effects; only the
+  actual Plan owner can reconcile or settle them. Existing joint Plan/Goal/Scheduler exclusion and Stop priority
+  stay mandatory.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- APR-017
+- SP-1131
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation migration of existing Plan association). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json

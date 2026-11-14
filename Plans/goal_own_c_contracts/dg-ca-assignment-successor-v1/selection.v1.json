@@ -1,0 +1,46 @@
+{
+  "schema_id": "pm.goal.cancelled.dg_ca_assignment_audit_successor_selection.v1",
+  "status": "NEWLY_AUTHORED_TEST_ONLY_SELECTION_PREPARED_WITHOUT_ADMISSION",
+  "native": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+  "rule": "lanes/DG-OWN-C3.md general successor rule: a frozen original package that cannot express behavior today's owner text already requires gets an explicitly versioned successor; the predecessor stays byte-exact and readable as history",
+  "defect": {
+    "family": "goal_cancel_assignment_audit",
+    "predecessor_root": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageAssignmentAudit",
+    "predecessor_schema_sha256": "b866b72ac1831891cd605360e84e4e97a281b5f352f8b8176d7862e90def746a",
+    "predecessor_family_map": "Plans/goal_cancel_contracts/execution-physical-families.json",
+    "predecessor_family_map_sha256": "889f3258dcfab257badbdeeac136f620de897527b1b7debbcd152f20245cc84f",
+    "requirement": "SP-305 requires the complete AssignmentAudit (every source selector, the complete recursive EventRecord encoding tree, the complete numeric path-domain inventory of Plans/goal_cancel_contracts/numeric-paths.json, four codec resources, the reservation and the original issuer) in one immutable value; the DL-270 amendment gives each execution-binding family a 16 KiB maximum value size (SP-340) and selects no reference route for this family",
+    "measured_counterexample": "scripts/pm_goal_dg_ca_oracles.py C4A/positive/predecessor_inline_audit_over_cap records the measured complete StorageAssignmentAudit MessagePack size of a genuine assignment; the numeric path-domain member alone exceeds 12 KiB"
+  },
+  "successor": {
+    "family": "goal_cancel_assignment_audit_reference",
+    "physical_key": "goal_cancel_assignment_audit_reference.v1:O:attempt:N",
+    "key_recipe": "SP-305 O = k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id) lowercase UTF-8 hex; N canonical decimal",
+    "root": "https://puppetmaster.local/schemas/goal_cancel_assignment_audit_reference/1.0.0/schema.json#/$defs/StorageAssignmentAuditReference",
+    "schema": "Plans/goal_own_c_contracts/dg-ca-assignment-successor-v1/assignment-audit-reference.v1.schema.json",
+    "schema_sha256": "27cc108f8106360fbc6178d2c828bcc15644de80d7f502f451c41563754c12c9",
+    "pack": {
+      "content": "the complete unchanged StorageAssignmentAudit wrapper (predecessor root) in Storage canonical MessagePack",
+      "media_type": "application/vnd.pm.goal-cancel-assignment-audit+msgpack",
+      "durability": "SP-337: the pack is durable before the reference record is written; the reference is never acknowledged first",
+      "verification": "every reader resolves the pack, verifies BLAKE3, byte size and media type, verifies audit_value_sha256 over the exact bytes, decodes and validates the whole predecessor root, and compares scope, operation, attempt, commitment and issuer with the reference",
+      "lifetime": "existing SP-337 source-coupled payload lifetime under the referencing record's existing RP-AUTHORITY-INDEFINITE@1.0.0; no new retention, TTL, hold or deletion choice"
+    },
+    "selected_by": [
+      "issue_assignment_audit",
+      "admit_codec_domain",
+      "append_reserved",
+      "terminal (succeeded and unsettled readers)"
+    ],
+    "assignment_selection": "AssignmentAdmission.assignment and DomainCommitmentInput.assignment are the PhysicalSelection of the complete successor reference wrapper; its SHA-256 commits to the pack through audit_value_sha256 and the BLAKE3 reference",
+    "unchanged": [
+      "AssignmentInput",
+      "AssignmentAudit",
+      "DomainCommitmentInput",
+      "AssignmentAdmission",
+      "SP-305 commitment recipes",
+      "every predecessor bank, URI, hash and stored byte"
+    ]
+  },
+  "integration": "storage_value_registry rows for the successor family are a merge item; no registry row is added on this branch"
+}
