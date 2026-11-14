@@ -3133,6 +3133,27 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     return String(value).replace(/(["\\.#:[\]()=])/g, '\\$1');
   }
 
+  /* A navigation changes only the place (the chapter, the page, the section). Saving it ran inside the task that builds
+     the new chapter: two deep copies of the state, the tome's write and its applyPaint (the wallpaper's refresh), 11 to
+     36 ms of that task on a P1000 (traces) and 6 to 9 ms on an RTX 3080 (timed per press; lane U, 2026-11-14, FO-196).
+     The place is saved once the new chapter is on screen and the page is idle, and at once if the page is hidden or
+     left first; a save for any other reason in the meantime carries the place too. */
+  let navigationSaveJob = 0;
+  function saveNavigationSoon() {
+    if (navigationSaveJob) return;
+    const run = () => { navigationSaveJob = 0; saveState(); };
+    navigationSaveJob = typeof requestIdleCallback === 'function' ? requestIdleCallback(run, { timeout: 1500 }) : setTimeout(run, 300);
+  }
+  function saveNavigationNow() {
+    if (!navigationSaveJob) return;
+    if (typeof cancelIdleCallback === 'function') cancelIdleCallback(navigationSaveJob);
+    clearTimeout(navigationSaveJob);
+    navigationSaveJob = 0;
+    saveState();
+  }
+  window.addEventListener('pagehide', saveNavigationNow);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveNavigationNow(); });
+
   function navigate(domainId, workspaceId, options = {}) {
     settingsSoundPreview.stop('settings-navigation');
     const domain = getDomain(domainId);
@@ -3147,7 +3168,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     state.railOpen = false;
     state.resourceRosterOpen = false;
     if (options.section) state.activeSection[workspace.id] = options.section;
-    saveState();
+    saveNavigationSoon();
 
     const needsRemount = !sameDomainView || hadDetail || !!state.detailSetting;
     if (!needsRemount) {
