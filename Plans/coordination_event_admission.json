@@ -320,7 +320,7 @@
       "family_id": "event-family-coordination-agent-operation-updated",
       "family_revision": "1.0.0",
       "batch": "step09_batch2",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "semantic_owner_ref": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
       "payload_owner_ref": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
       "storage_owner_ref": "Plans/storage-plan.md#coordination-event-persistence-binding-dl-045-2026-09-25",
@@ -389,6 +389,7 @@
         "interim_window_update_and_abort_families_not_admitted"
       ],
       "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding",
       "registry_row": {
         "family_id": "event-family-coordination-agent-operation-updated",
         "family_revision": "1.0.0",
