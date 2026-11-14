@@ -98,6 +98,10 @@
   {
    "event_type": "docker.compose.scenario.saved",
    "outcome": "registered"
+  },
+  {
+   "event_type": "execution_window.created",
+   "outcome": "registered"
   }
  ]
 }
