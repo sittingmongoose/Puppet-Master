@@ -390,6 +390,10 @@
   {
    "event_type": "source_control.writer_lease.lost",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.bookmarked",
+   "outcome": "registered"
   }
  ]
 }
