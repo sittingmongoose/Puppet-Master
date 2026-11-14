@@ -156,7 +156,7 @@ class Store:
 
     @staticmethod
     def edition(event):
-        return [event['event_type'], event['payload_schema_id'], event['schema_version'],
+        return [event['event_type'], event['payload_schema_id'], event['payload']['schema_version'],
                 event['scope_kind'], event['project_id']]
 
     def require(self, table, value):

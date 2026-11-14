@@ -181,6 +181,10 @@ def run_family(adapter, family, trace=None, cut=None):
         store = fresh()
         store.data['registry'][0][slot] = replacement
         refuse(store, 'admission', lambda: store.append(copy.deepcopy(base)))
+    unsupported = copy.deepcopy(base)
+    adapter.event(unsupported)['payload']['schema_version'] = '9.0.0'
+    store = fresh()
+    refuse(store, 'admission', lambda: store.append(unsupported))
     store = fresh()
     store.data['writer_generation'] = 2
     refuse(store, 'cutoff', lambda: store.append(copy.deepcopy(base), generation=1))
