@@ -54,6 +54,10 @@
   {
    "event_type": "discovery.candidates_returned",
    "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.disabled",
+   "outcome": "registered"
   }
  ]
 }
