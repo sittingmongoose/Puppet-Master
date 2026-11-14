@@ -2,27 +2,39 @@
  "schema_id": "pm.event_authority.pnc019_s6r_residue_adjudication.v1",
  "lane": "s6r",
  "base_commit": "9c984b1da86a54e5e80680570e597ec70a23acf5",
- "adjudicated_at_head": "9c984b1da86a54e5e80680570e597ec70a23acf5",
+ "adjudicated_at_head": "525b097a0ecd67aa818b896bdcd7115011d8fce9",
  "input": {
   "residue": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s6c/classification/RESIDUE.jsonl",
   "residue_sha256": "e53bd560e0a3ee8afa0fb927686674b46efa647303589a33b278c826690edbdb",
   "edition_receipt_sha256": "0080c0c8b54471c5f4e3c70549e51df4c73c159641461d0c718dc80ef84c06e9",
-  "classifier_commit": "9c984b1da86a54e5e80680570e597ec70a23acf5"
+  "classifier_commit": "9c984b1da86a54e5e80680570e597ec70a23acf5",
+  "routing_ruling": {
+   "path": "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-3.md",
+   "sha256": "a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f",
+   "lines": "405-426",
+   "applies_to": [
+    "executor.intake_report.recorded",
+    "plan_compile.stage_receipt.recorded",
+    "provider.stream.event_recorded",
+    "testing.receipt.recorded",
+    "goal.receipt.recorded"
+   ]
+  }
  },
  "supplement": {
   "path": "Plans/.audits/event-authority-2026-08-12/census-adjudication/S6R-NEW-NAMES-LEDGER.jsonl",
-  "rows": 171,
-  "sha256": "2c8d40a84a4ec07737223a4996e3aceb5f6f7e2d432b169d9fb20f52a2215ca9"
+  "rows": 175,
+  "sha256": "282511dee2e776b1018cf8c6b2981070fbdf3a08fcf4b195727c2e070dba623c"
  },
  "counts_by_disposition": {
-  "CONTINGENCY_QUESTION": 5,
-  "RECLASSIFY_TO_EXCLUDED": 12,
+  "CONTINGENCY_QUESTION": 1,
+  "RECLASSIFY_TO_EXCLUDED": 16,
   "REJECTED_LEXICAL_CANDIDATE": 168
  },
  "counts_by_resolution": {
-  "contingency_question": 5,
+  "contingency_question": 1,
   "parent_merge_of_s4x_deepen_rows": 9,
-  "s6r_supplement_row": 171
+  "s6r_supplement_row": 175
  },
  "supplement_counts_by_kind": {
   "A2A SDK method call": 1,
@@ -56,6 +68,10 @@
   "projector binding identifier": 19,
   "publish operation identifier": 35,
   "reader / operating-consumer binding identifier": 24,
+  "readiness label of the existing normalized provider stream event, which Contracts_V0 makes transport-facing and non-persisted": 1,
+  "readiness label of the existing saved TestRunReceipt": 1,
+  "readiness label of the existing saved executor_intake_report record": 1,
+  "readiness label of the existing saved stage receipt plan_compile_receipt, carried by the durable PlanCompileRun record": 1,
   "readiness-row spelling of a Goal-level certification-receipt event; DL-079 keeps no separate Goal-level stream of receipts": 1,
   "restore-point state value": 1,
   "retired request spelling replaced by chat.response_stop_requested": 1,
@@ -1019,9 +1035,9 @@
    "residue_reason": "uncovered_event_like_token",
    "discovery_class": "schema_or_fixture_event_example",
    "occurrence_count": 1,
-   "disposition": null,
-   "resolution": "contingency_question",
-   "question": "Q2",
+   "disposition": "RECLASSIFY_TO_EXCLUDED",
+   "resolution": "s6r_supplement_row",
+   "identifier_kind": "readiness label of the existing saved executor_intake_report record (materialized redb family, EP-099)",
    "owner_citations": [
     {
      "path": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
@@ -1029,9 +1045,57 @@
      "line_start": 230,
      "line_end": 239,
      "quote": "        \"event_type\": \"executor.intake_report.recorded\",\n        \"payload_schema_id\": \"pm.event_payload.executor.intake_report_recorded.v1\",\n        \"payload_contract_ref\": \"Plans/plans_to_code_handoff.schema.json#/$defs/executor_intake_report\",\n        \"producer\": \"Executor intake\",\n        \"consumers\": [\n          \"a ..."
+    },
+    {
+     "path": "Plans/plans_to_code_handoff.schema.json",
+     "sha256": "ecacbeb4849a99eb10ba6d9fbade99e7ea4b9d12df2abbf94df9f76355a90482",
+     "line_start": 3177,
+     "line_end": 3188,
+     "quote": "    \"executor_intake_report\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"intake_id\",\n        \"workgraph_ref\",\n        \"worknode_request_refs\",\n        \"accepted_refs\",\n        \"rejected_refs\",\n        \"blockers\",\n        \"status\",\n        \"source_control_receipt_refs\","
+    },
+    {
+     "path": "Plans/storage_value_registry.json",
+     "sha256": "68271aa87c1ec0e19fe4701795564ed9bc776b963a4a554b24f724e672c4a8ed",
+     "line_start": 6052,
+     "line_end": 6067,
+     "quote": "      \"family_id\": \"executor_intake_report\",\n      \"storage_kind\": \"redb\",\n      \"status\": \"materialized\",\n      \"tier\": \"tier_0_launch_critical\",\n      \"key_shape\": \"executor_intake_report.v1:{project_id}:{request_id}:{intake_id}\",\n      \"value_schema_id\": \"pm.storage_value.executor_intake_report.v1\",\n      \"value_sch ..."
+    },
+    {
+     "path": "Plans/Executor_Protocol.md",
+     "sha256": "abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3",
+     "line_start": 640,
+     "line_end": 640,
+     "quote": "The materialized `executor_intake_report` and `attempt_receipt` families consume their exact machine-registry recovery dispositions: `authority_class = canonical_non_rebuildable` and `strategy = restore_from_mandatory_backup`. Executor MUST NOT reconstruct either canonical family from EventRecords, runtime or audit pro ..."
     }
    ],
-   "reason": "A Plans source declares it saved history; no landed decision or owner text decides it. Stays in residue until Jared answers."
+   "authority_citations": [
+    {
+     "path": "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-3.md",
+     "sha256": "a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f",
+     "line_start": 405,
+     "line_end": 408,
+     "quote": "## Still open, not on these cards\n\nFive outside-list spellings remain owner investigations. The owners must first prove whether each means an existing saved result/notification, an alias with an exact mapping, or an additional saved-history type. Only a demonstrated new product choice returns to Jared.\n",
+     "outside_repository": true
+    },
+    {
+     "path": "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-3.md",
+     "sha256": "a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f",
+     "line_start": 410,
+     "line_end": 426,
+     "quote": "- **Testing + Storage:** Does this mean the existing saved test-result receipt/notification, an alias of an admitted family with an exact mapping, or a separate saved-history entry? Identify the current owner rule proving it.\n**Sources:** `S1340` (b836cba089bb:reports/event-authority-20261105/W3C.md:54-54). Exact spell ...",
+     "outside_repository": true
+    }
+   ],
+   "labels_existing_record": {
+    "readiness_row": "Plans/.implementation_readiness/non_executable_closure_evidence.json:230-239",
+    "record_evidence": [
+     "Plans/plans_to_code_handoff.schema.json:3177-3188",
+     "Plans/storage_value_registry.json:6052-6067",
+     "Plans/Executor_Protocol.md:640-640"
+    ],
+    "not_alias_of_event_family": true,
+    "new_saved_history_type": false
+   }
   },
   {
    "event_type": "experimental.chat.system.transform",
@@ -3245,9 +3309,9 @@
    "residue_reason": "uncovered_event_like_token",
    "discovery_class": "schema_or_fixture_event_example",
    "occurrence_count": 1,
-   "disposition": null,
-   "resolution": "contingency_question",
-   "question": "Q2",
+   "disposition": "RECLASSIFY_TO_EXCLUDED",
+   "resolution": "s6r_supplement_row",
+   "identifier_kind": "readiness label of the existing saved stage receipt plan_compile_receipt, carried by the durable PlanCompileRun record",
    "owner_citations": [
     {
      "path": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
@@ -3255,9 +3319,73 @@
      "line_start": 219,
      "line_end": 228,
      "quote": "        \"event_type\": \"plan_compile.stage_receipt.recorded\",\n        \"payload_schema_id\": \"pm.event_payload.plan_compile.stage_receipt_recorded.v1\",\n        \"payload_contract_ref\": \"Plans/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt\",\n        \"producer\": \"PlanCompile stage controller\",\n        \"consume ..."
+    },
+    {
+     "path": "Plans/plans_to_code_handoff.schema.json",
+     "sha256": "ecacbeb4849a99eb10ba6d9fbade99e7ea4b9d12df2abbf94df9f76355a90482",
+     "line_start": 2301,
+     "line_end": 2312,
+     "quote": "    \"plan_compile_receipt\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"receipt_id\",\n        \"compile_id\",\n        \"stage\",\n        \"status\",\n        \"summary\",\n        \"evidence_refs\",\n        \"handoff\"\n      ],"
+    },
+    {
+     "path": "Plans/Plan_To_Node_Compilation.md",
+     "sha256": "8653f4ad3a16bad2a4463952a45387f6d3d2af85eeebfcc8cd71a72df95e25d1",
+     "line_start": 1036,
+     "line_end": 1036,
+     "quote": "| H-002 | Compile state to bounded stage work | PlanCompileRun state | stage_card and compile_worklist | Plan_To_Node_Compilation | low-context compile adapter | Plan_To_Node_Compilation | stage entry/exit gate validation | plan_compile_receipt | stage_card, compile_worklist | regenerate bounded worklist from same sour ..."
+    },
+    {
+     "path": "Plans/Plan_To_Node_Compilation.md",
+     "sha256": "8653f4ad3a16bad2a4463952a45387f6d3d2af85eeebfcc8cd71a72df95e25d1",
+     "line_start": 644,
+     "line_end": 645,
+     "quote": "  The current bootstrap/v1 PlanCompileRun is a durable, idempotent, resumable design-only state machine for converting approved Plans and PlanUnits into non-executable NodeSeed candidates, WorkGraph drafts, and WorkNode requests. The state record must carry compile_id, source_plan_set_id, source_plan_index_hash, launch ..."
+    },
+    {
+     "path": "Plans/plans_to_code_handoff.schema.json",
+     "sha256": "ecacbeb4849a99eb10ba6d9fbade99e7ea4b9d12df2abbf94df9f76355a90482",
+     "line_start": 737,
+     "line_end": 739,
+     "quote": "        \"receipts\": {\n          \"$ref\": \"#/$defs/ref_list\"\n        },"
+    },
+    {
+     "path": "Plans/storage_value_registry.json",
+     "sha256": "68271aa87c1ec0e19fe4701795564ed9bc776b963a4a554b24f724e672c4a8ed",
+     "line_start": 5159,
+     "line_end": 5174,
+     "quote": "      \"family_id\": \"plan_compile_run\",\n      \"storage_kind\": \"redb\",\n      \"status\": \"materialized\",\n      \"tier\": \"tier_0_launch_critical\",\n      \"key_shape\": \"plan_compile_run.v1:{project_id}:{plan_compile_run_id}\",\n      \"value_schema_id\": \"pm.storage_value.plan_compile_run.v1\",\n      \"value_schema_ref\": \"Plans/stor ..."
     }
    ],
-   "reason": "A Plans source declares it saved history; no landed decision or owner text decides it. Stays in residue until Jared answers."
+   "authority_citations": [
+    {
+     "path": "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-3.md",
+     "sha256": "a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f",
+     "line_start": 405,
+     "line_end": 408,
+     "quote": "## Still open, not on these cards\n\nFive outside-list spellings remain owner investigations. The owners must first prove whether each means an existing saved result/notification, an alias with an exact mapping, or an additional saved-history type. Only a demonstrated new product choice returns to Jared.\n",
+     "outside_repository": true
+    },
+    {
+     "path": "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-3.md",
+     "sha256": "a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f",
+     "line_start": 410,
+     "line_end": 426,
+     "quote": "- **Testing + Storage:** Does this mean the existing saved test-result receipt/notification, an alias of an admitted family with an exact mapping, or a separate saved-history entry? Identify the current owner rule proving it.\n**Sources:** `S1340` (b836cba089bb:reports/event-authority-20261105/W3C.md:54-54). Exact spell ...",
+     "outside_repository": true
+    }
+   ],
+   "labels_existing_record": {
+    "readiness_row": "Plans/.implementation_readiness/non_executable_closure_evidence.json:219-228",
+    "record_evidence": [
+     "Plans/plans_to_code_handoff.schema.json:2301-2312",
+     "Plans/Plan_To_Node_Compilation.md:1036-1036",
+     "Plans/Plan_To_Node_Compilation.md:644-645",
+     "Plans/plans_to_code_handoff.schema.json:737-739",
+     "Plans/storage_value_registry.json:5159-5174"
+    ],
+    "not_alias_of_event_family": true,
+    "new_saved_history_type": false
+   }
   },
   {
    "event_type": "platform.fixture_prospective_only",
@@ -4560,9 +4688,9 @@
    "residue_reason": "uncovered_event_like_token",
    "discovery_class": "schema_or_fixture_event_example",
    "occurrence_count": 1,
-   "disposition": null,
-   "resolution": "contingency_question",
-   "question": "Q2",
+   "disposition": "RECLASSIFY_TO_EXCLUDED",
+   "resolution": "s6r_supplement_row",
+   "identifier_kind": "readiness label of the existing normalized provider stream event, which Contracts_V0 makes transport-facing and non-persisted",
    "owner_citations": [
     {
      "path": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
@@ -4570,9 +4698,57 @@
      "line_start": 241,
      "line_end": 251,
      "quote": "        \"event_type\": \"provider.stream.event_recorded\",\n        \"payload_schema_id\": \"pm.event_payload.provider.stream_event_recorded.v1\",\n        \"payload_contract_ref\": \"Plans/.implementation_readiness/non_executable_closure_evidence.json#/provider_stream_contract\",\n        \"producer\": \"provider facade adapter\",\n     ..."
+    },
+    {
+     "path": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
+     "sha256": "75f093349681f59267347deef7ed0c9c8048ee0476406376ddc20965356a85ee",
+     "line_start": 376,
+     "line_end": 388,
+     "quote": "  \"provider_stream_contract\": {\n    \"owner_split\": {\n      \"facade_contract_owner\": \"Plans/CLI_Bridged_Providers.md\",\n      \"server_bridge_owner\": \"Plans/Provider_OpenCode.md\",\n      \"external_mapping_reference\": \"Plans/Provider_Stream_Mapping_External_Reference_A2A.md\",\n      \"account_and_auth_owner\": \"Plans/Multi-Acc ..."
+    },
+    {
+     "path": "Plans/Contracts_V0.md",
+     "sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+     "line_start": 4879,
+     "line_end": 4884,
+     "quote": "## 2. Provider normalized stream (non-persisted contract)\n\n\nProviders emit a normalized stream for live UI consumption. Persistent storage remains governed by `EventRecord` in §1.\n\n**Normative:** See `Plans/CLI_Bridged_Providers.md` for the full schema (event envelope + event types). This contracts file only asserts th ..."
+    },
+    {
+     "path": "Plans/CLI_Bridged_Providers.md",
+     "sha256": "6e1ee908148cdf8fd6065f6e3121064753df6d5c65f7f56ab901f82d2ab71157",
+     "line_start": 796,
+     "line_end": 799,
+     "quote": "  Every bridge preserves provider output, tool-call fragments, errors,\n  truncation markers, ordering/repair evidence, usage/cost observations, and\n  correlation IDs in the normalized stream before UI, storage, or retry logic\n  consumes them."
     }
    ],
-   "reason": "A Plans source declares it saved history; no landed decision or owner text decides it. Stays in residue until Jared answers."
+   "authority_citations": [
+    {
+     "path": "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-3.md",
+     "sha256": "a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f",
+     "line_start": 405,
+     "line_end": 408,
+     "quote": "## Still open, not on these cards\n\nFive outside-list spellings remain owner investigations. The owners must first prove whether each means an existing saved result/notification, an alias with an exact mapping, or an additional saved-history type. Only a demonstrated new product choice returns to Jared.\n",
+     "outside_repository": true
+    },
+    {
+     "path": "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-3.md",
+     "sha256": "a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f",
+     "line_start": 410,
+     "line_end": 426,
+     "quote": "- **Testing + Storage:** Does this mean the existing saved test-result receipt/notification, an alias of an admitted family with an exact mapping, or a separate saved-history entry? Identify the current owner rule proving it.\n**Sources:** `S1340` (b836cba089bb:reports/event-authority-20261105/W3C.md:54-54). Exact spell ...",
+     "outside_repository": true
+    }
+   ],
+   "labels_existing_record": {
+    "readiness_row": "Plans/.implementation_readiness/non_executable_closure_evidence.json:241-251",
+    "record_evidence": [
+     "Plans/.implementation_readiness/non_executable_closure_evidence.json:376-388",
+     "Plans/Contracts_V0.md:4879-4884",
+     "Plans/CLI_Bridged_Providers.md:796-799"
+    ],
+    "not_alias_of_event_family": true,
+    "new_saved_history_type": false
+   }
   },
   {
    "event_type": "reader.bsd.assignment_stopped",
@@ -5396,9 +5572,9 @@
    "residue_reason": "uncovered_event_like_token",
    "discovery_class": "schema_or_fixture_event_example",
    "occurrence_count": 2,
-   "disposition": null,
-   "resolution": "contingency_question",
-   "question": "Q2",
+   "disposition": "RECLASSIFY_TO_EXCLUDED",
+   "resolution": "s6r_supplement_row",
+   "identifier_kind": "readiness label of the existing saved TestRunReceipt (ATS-026)",
    "owner_citations": [
     {
      "path": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
@@ -5408,14 +5584,71 @@
      "quote": "        \"event_type\": \"testing.receipt.recorded\",\n        \"payload_schema_id\": \"pm.event_payload.testing.receipt_recorded.v1\",\n        \"payload_contract_ref\": \"Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt\",\n        \"producer\": \"Automated Testing session\",\n        \"consumers\": [\n          \"Goal Runtim ..."
     },
     {
+     "path": "Plans/plans_to_code_handoff.schema.json",
+     "sha256": "ecacbeb4849a99eb10ba6d9fbade99e7ea4b9d12df2abbf94df9f76355a90482",
+     "line_start": 1581,
+     "line_end": 1592,
+     "quote": "    \"test_run_receipt\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"test_level\",\n        \"automation_surface\",\n        \"verification_command\",\n        \"expected_artifacts\",\n        \"result\",\n        \"evidence_refs\",\n        \"visual_evidence_refs\",\n        \"flake_policy\","
+    },
+    {
      "path": "Plans/Automated_Testing_System.md",
      "sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
-     "line_start": 13269,
-     "line_end": 13277,
-     "quote": "canonical_text: 'The W3C owner investigation finds testing.receipt.recorded only in Plans/.implementation_readiness/non_executable_closure_evidence.json#/event_payload_contract_registry,\n  with source scope spec_schema_validator_fixture_only_no_runtime_artifact_emission. Its payload points to the existing\n  test_run_re ..."
+     "line_start": 3001,
+     "line_end": 3012,
+     "quote": "  The merged TestRunReceipt field table in this addendum is the one canonical TestRunReceipt schema: the union of\n  the ATS-004 inventory (receipt_id, test_strategy_ref, test_case_refs, generated_test_ids, reused_test_ids,\n  verification_command, expected_artifacts, evidence_refs, visual_evidence_refs, flake_policy, te ..."
+    },
+    {
+     "path": "Plans/Automated_Testing_System.md",
+     "sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+     "line_start": 2946,
+     "line_end": 2946,
+     "quote": "  policy of ATS-028, never deletes or edits any TestRunReceipt, and releases only through its paired command."
+    },
+    {
+     "path": "Plans/Automated_Testing_System.md",
+     "sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+     "line_start": 13275,
+     "line_end": 13276,
+     "quote": "  authored for it here. Keep existing TestRunReceipt persistence, commands and projections intact. Owner classification\n  remains OPEN pending exact authority: Does testing.receipt.recorded name only the existing saved TestRunReceipt"
+    },
+    {
+     "path": "Plans/Executor_Protocol.md",
+     "sha256": "abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3",
+     "line_start": 6394,
+     "line_end": 6394,
+     "quote": "  Executor contributes the execution side of the Plans-to-Code Handoff Matrix. A complete WorkNode execution flow emits worknode_dispatch_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_verification_receipt, repair_attempt_receipt when needed, merge_or_p ..."
     }
    ],
-   "reason": "A Plans source declares it saved history; no landed decision or owner text decides it. Stays in residue until Jared answers."
+   "authority_citations": [
+    {
+     "path": "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-3.md",
+     "sha256": "a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f",
+     "line_start": 405,
+     "line_end": 408,
+     "quote": "## Still open, not on these cards\n\nFive outside-list spellings remain owner investigations. The owners must first prove whether each means an existing saved result/notification, an alias with an exact mapping, or an additional saved-history type. Only a demonstrated new product choice returns to Jared.\n",
+     "outside_repository": true
+    },
+    {
+     "path": "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-3.md",
+     "sha256": "a7d00c733539daa94b8a85bd9725d3658a4bbfcd7c1927507db0a4ace626db1f",
+     "line_start": 410,
+     "line_end": 426,
+     "quote": "- **Testing + Storage:** Does this mean the existing saved test-result receipt/notification, an alias of an admitted family with an exact mapping, or a separate saved-history entry? Identify the current owner rule proving it.\n**Sources:** `S1340` (b836cba089bb:reports/event-authority-20261105/W3C.md:54-54). Exact spell ...",
+     "outside_repository": true
+    }
+   ],
+   "labels_existing_record": {
+    "readiness_row": "Plans/.implementation_readiness/non_executable_closure_evidence.json:253-262",
+    "record_evidence": [
+     "Plans/plans_to_code_handoff.schema.json:1581-1592",
+     "Plans/Automated_Testing_System.md:3001-3012",
+     "Plans/Automated_Testing_System.md:2946-2946",
+     "Plans/Automated_Testing_System.md:13275-13276",
+     "Plans/Executor_Protocol.md:6394-6394"
+    ],
+    "not_alias_of_event_family": true,
+    "new_saved_history_type": false
+   }
   },
   {
    "event_type": "tests.test_pm_coordination_events",

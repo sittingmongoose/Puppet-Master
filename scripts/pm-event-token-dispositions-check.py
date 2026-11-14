@@ -89,14 +89,15 @@ def main():
         'browser.session.navigated': 'judgement_residue',
         'memory.gist.updated': 'judgement_residue',
         # Lane s6r supplement (census-adjudication/S6R-NEW-NAMES-LEDGER.jsonl):
-        # binding identifiers and retired spellings leave the residue; the
-        # contingency names and the nine pending parent-merge rows stay in it.
+        # binding identifiers, retired spellings and readiness labels of existing
+        # records leave the residue; the one contingency name and the nine
+        # pending parent-merge rows stay in it.
         'owner.debug.investigation.started': 'landed_exclusion',
         'emitter.wizard_opened': 'landed_exclusion',
         'forge.review.merged.publish': 'landed_exclusion',
         'chat_run.cancelled': 'landed_exclusion',
         'config.validation.passed': 'judgement_residue',
-        'testing.receipt.recorded': 'judgement_residue',
+        'testing.receipt.recorded': 'landed_exclusion',
         'cmd.browser.workspace.create': 'command_namespace',
     }.items():
         actual = by_token.get(token, {}).get('class')
