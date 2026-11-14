@@ -166,6 +166,10 @@
   {
    "event_type": "forge.mirror.sync_completed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.sync_started",
+   "outcome": "registered"
   }
  ]
 }
