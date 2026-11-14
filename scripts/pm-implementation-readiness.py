@@ -803,7 +803,7 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # All 41 retention policies are unchanged. No event admission follows from this census re-pin.
 # Re-pinned once for the batch-3 merged registry (plans/ea-batch3-int-20261114; storage-plan.md:533):
 # batch 2's 496 + 182 added rows (DG-INT 6, W3A 70, W3E 66 including the six *_application editions the
-# integration split from backup/restore under DL-455, W3F 2, W3H 32, W3I 6; W3B, W3C and W3G add none) = 678
+# integration split from backup/restore under DL-455, W3F 2, W3H 32, W3I 6; W3B, W3C, W3D and W3G add none) = 678
 # unique families, every added row materialized later_gui_or_feature_projection: 465 + 182 = 647 materialized,
 # 30 deferred, 1 alias; 79 tier-0, 407 + 182 = 589 later, 10 migration-only. All 41 retention policies are
 # unchanged. No event admission follows from this census re-pin.

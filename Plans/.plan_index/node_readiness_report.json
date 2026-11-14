@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 23255,
+    "depends_on_edge_count": 23489,
     "downstream_blocked_node_count": 0,
-    "edge_count": 26473,
-    "node_count": 8745,
+    "edge_count": 26707,
+    "node_count": 8792,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-14T03:58:55Z",
+  "generated_at_utc": "2026-11-14T04:23:56Z",
   "gui_related_units": {
-    "count": 3930,
+    "count": 3931,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -6173,6 +6173,17 @@
           "heading_level": 3,
           "heading_line": 2561,
           "line": 2563,
+          "path": "Plans/Back_Seat_Driver.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Back_Seat_Driver.md",
+        "plan_unit_id": "BSD-1350",
+        "source_location": {
+          "heading": "BSD-1350 - bsd.advice_emitted prepared event owner",
+          "heading_level": 3,
+          "heading_line": 2641,
+          "line": 2643,
           "path": "Plans/Back_Seat_Driver.md"
         }
       },
@@ -43254,10 +43265,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 8745,
+  "plan_unit_count": 8792,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4062,
+      "high": 4109,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -43335,6 +43346,7 @@
       "advisor_tool_authority_widening": 1,
       "advisory_authority_and_goal_command_drift": 1,
       "advisory_authority_widening": 2,
+      "advisory_history_identity_custody_or_replay_drift": 46,
       "after_build_push_blocked_outcome_semantics": 1,
       "after_tier_end_persistence_feedback_failure_handling": 1,
       "aftertier_handoff_validation_retry_policy": 1,
@@ -47185,6 +47197,7 @@
       "unnecessary_user_escalation": 1,
       "unowned_preference_or_scope_drift": 1,
       "unproved_or_incompatible_reader_installation": 1,
+      "unproved_original_advisor_source_custody": 1,
       "unraid_template_result_payload_enums": 1,
       "unreceipted_or_bulk_completion": 1,
       "unrecoverable_mutation": 1,
@@ -47479,6 +47492,7 @@
     "source_preserving_units": [],
     "status_counts": {
       "accepted": 8512,
+      "draft": 47,
       "retired": 205,
       "superseded": 28
     },
@@ -47517,7 +47531,7 @@
       "delta_contract": 1,
       "derived_control_policy": 1,
       "display_contract": 1,
-      "event_contract": 29,
+      "event_contract": 74,
       "future_scope_decision": 1,
       "generated_artifact_residual": 6,
       "gui_command_catalog": 9,
@@ -47569,7 +47583,7 @@
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
       "ssot_rule": 3,
-      "storage_contract": 54,
+      "storage_contract": 55,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
@@ -47577,7 +47591,7 @@
       "surface_default_policy": 1,
       "ui_wiring_rule": 1,
       "validation": 13,
-      "validation_contract": 2,
+      "validation_contract": 3,
       "validation_criterion": 37,
       "validation_gate": 9,
       "validation_requirement": 3,
@@ -47679,7 +47693,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "f8ea41765327d5d0508d27999695154fbd7dbbff24b2317b2fc5cc971f3b737f",
+        "expected": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
