@@ -35,6 +35,15 @@
 // The Node model (tests/stop-chip-beat-verify.mjs) and lane S's films (share 2026-11-13-pm7-stop-chip-pace) judge it
 // on a model of the compositor and on pixels.
 // After the run ends nothing of the chip's is armed (PM56_SENDSTOP.debug(): no quiet timer, no speed listener, no pending frame callback).
+// ONE PULSE (R40 F1, K2, K3): in every sampled frame in which both loops have a place, the backlight is at the glyph's
+// place in the loop (to 0.002 of a loop): through the onboarding window (which must hold both), and through a light/dark
+// change mid-run (first look, in a run of its own, as the demo's run ends about 33 s after it starts: Settings' Mode to
+// the other brightness, a word and the quiet after it, and back; the backlight's loop must not be made anew).
+// Failed on lane S's 5b74a3016a: the window held only the glyph and a light/dark change restarted the backlight.
+// HIDDEN (first look, not the chat alone): words keep coming while the chat is hidden by display:none the way the
+// Guided Tour hides it (00-host.js syncTour takes data-pm56 off #chatPanel; the check does that one step, not the tour):
+// nothing of the chip's is armed while hidden (R41 F1: the quiet timer kept arming itself); shown again with words it
+// is flowing at the flowing length, listening, and turns to waiting 900 ms after the last word.
 // Each look is SAVED through Settings before its run: a Settings save (the speed change) repaints the saved look, and
 // with the kit's unsaved look() the page went back to Basic Dark mid-run (first runs: a look change, read as a jump).
 // REDUCED (first look only): with Reduce motion on, the app's (Settings) and then the system's (prefers-reduced-motion),
@@ -44,14 +53,14 @@
 // Failed on lane S's 4bbe9d0551 (loops re-placed by the frame's time): the speed change jumped 0.15 of a loop.
 //
 // --set looks=<a,b>   default basic-dark,glass-dark,retro-dark,nier-dark,friendly-dark,basic-light
-// --set parts=<a,b>   rest,pace,reduced (default all)   --set settle=<ms> (default 30000)   --set late=<ms> (default 150)
+// --set parts=<a,b>   rest,pace,hidden,reduced (default all)   --set settle=<ms> (default 30000)   --set late=<ms> (default 150)
 // --set chat=<url>    the chat alone (its standalone build): no Settings, no onboarding window; looks by PM56_DEMO.setTheme
 // Both surfaces (--set sandbox=0 and 1). No Stop chip, or a change that did not happen, fails as "could not judge".
 import { traceWindow } from '../helpers/frame-trace.mjs';
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
 
 // One Working run, driven and sampled inside the page; returns every frame's sample, the marks and the flips.
-const PACE = async ({ speed, windowPart }) => {
+const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 	const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 	const frame = () => new Promise((r) => requestAnimationFrame(r));
 	const SS = window.PM56_SENDSTOP, D = window.PM56_DEMO;
@@ -68,7 +77,7 @@ const PACE = async ({ speed, windowPart }) => {
 		const g = all.find((a) => /^ss-breathe/.test(a.animationName)), l = all.find((a) => /^ss-glow/.test(a.animationName));
 		if (g) { const cs = getComputedStyle(b.querySelector('.ss-g')), m = cs.transform; r.ease = cs.animationTimingFunction; r.g = { id: idOf(g), name: g.animationName, dur: +g.effect.getTiming().duration, delay: +g.effect.getTiming().delay, s: g.startTime, c: g.currentTime, rate: g.playbackRate, place: placeOf(g), state: g.playState, v: m && m.startsWith('matrix(') ? parseFloat(m.slice(7)) : 1 }; }
 		if (others.length) r.os = others.map((o) => ({ id: idOf(o), dur: +o.effect.getTiming().duration, delay: +o.effect.getTiming().delay, s: o.startTime, c: o.currentTime, rate: o.playbackRate, place: placeOf(o), state: o.playState, v: 0 }));
-		if (l) r.b = { id: idOf(l), name: l.animationName, dur: +l.effect.getTiming().duration, delay: +l.effect.getTiming().delay, s: l.startTime, c: l.currentTime, rate: l.playbackRate, place: placeOf(l), state: l.playState, v: parseFloat(getComputedStyle(b.querySelector('.ss-bl'), '::before').opacity) };
+		if (l) r.b = { id: idOf(l), name: l.animationName, dur: +l.effect.getTiming().duration, delay: +l.effect.getTiming().delay, s: l.startTime, c: l.currentTime, rate: l.playbackRate, place: placeOf(l), state: l.playState, v: parseFloat((b.querySelector('.ss-blg') ? getComputedStyle(b.querySelector('.ss-blg')) : getComputedStyle(b.querySelector('.ss-bl'), '::before')).opacity) };
 		return r;
 	};
 	let sampling = true, others = [], otherDesc = 'none';
@@ -85,8 +94,13 @@ const PACE = async ({ speed, windowPart }) => {
 	const last = () => rows[rows.length - 1] || {};
 	const frac = () => { const g = last().g; return g && g.place != null ? g.place % 1 : null; };
 	const until = async (pred, ms = 9000) => { const end = performance.now() + ms; while (!pred()) { if (performance.now() > end) return false; await frame(); } return true; };
-	let feeding = false, nextWord = 0, lastWord = 0;
-	const word = () => { SS.token(); lastWord = performance.now(); };
+	let feeding = false, nextWord = 0, lastWord = 0, ownWord = false;
+	// the page's own words (turn-stream.js and thought-stream.js call PM56_SENDSTOP.token at release), counted apart
+	// from the check's
+	const pageWords = [], tok = SS.token;
+	SS.token = function () { if (!ownWord) pageWords.push({ at: performance.now(), tid: arguments[0] }); return tok.apply(this, arguments); };
+	const word = () => { ownWord = true; try { SS.token(); } finally { ownWord = false; } lastWord = performance.now(); };
+	let themeNote = null;
 	const mark = (name, extra) => marks.push({ name, i: rows.length, now: performance.now(), ft: document.timeline.currentTime, frac: frac(), ...extra });
 	// words are released inside a frame callback every 100 ms, as turn-stream.js:352 and thought-stream.js:229 release
 	// them (R32 F4: a timer released them between frames, a path the app does not use)
@@ -122,6 +136,9 @@ const PACE = async ({ speed, windowPart }) => {
 		D.startWorking();
 		if (!(await until(() => last().ss === 'stop' && last().g && last().g.place >= 1.0, 12000))) throw new Error(`no breathing Stop chip: ${JSON.stringify(last())}`);
 		if (last().flow !== 'waiting') { await until(() => last().flow === 'waiting', 3000); }
+		// (a run of its own for the light/dark change: the demo's run ends about 33 s after it starts, before the first
+		// look's other parts are through)
+		if (!themeOnly) {
 		// a word while waiting, early in the loop; then quiet landing near the loop's end
 		if (!(await inLoop(0.2, 0.3))) throw new Error('early: the loop never reached .2-.3');
 		await wordAt('word while waiting, early in the loop');
@@ -134,6 +151,7 @@ const PACE = async ({ speed, windowPart }) => {
 		if (!(await inLoop(0.3, 0.4))) throw new Error('long task: the loop never reached .3-.4');
 		await wordThenTask('word while waiting, then a 200 ms long task', 200);
 		if (!(await quietAt('quiet after the long task', 0.6))) throw new Error('quiet after the long task: no change');
+		}
 		if (speed) {
 			if (!(await inLoop(0.3, 0.4))) throw new Error('speed: the loop never reached .3-.4');
 			await sleep(2); mark('Animation speed Fast, waiting, mid-loop', { kind: 'speed' });
@@ -177,8 +195,39 @@ const PACE = async ({ speed, windowPart }) => {
 			await wordAt('word after the window');
 			await sleep(400); feedOff();
 		}
+		if (themePart) {
+			// a light/dark change mid-run, through Settings (the look's cover runs over it), and back: the backlight keeps
+			// its loop and its place with the glyph (K3: its keyframes were swapped, a new loop out of phase)
+			await until(() => last().flow === 'waiting', 3000);
+			if (!(await inLoop(0.3, 0.4))) throw new Error('light/dark: the loop never reached .3-.4');
+			const light = String(last().th || '').endsWith('-light'), to = light ? 'Dark' : 'Light', back = light ? 'Light' : 'Dark';
+			const pw0 = pageWords.length, t0 = performance.now();
+			await sleep(2); mark(`light/dark change mid-run (to ${to})`, { kind: 'theme' });
+			window.PM12_KIMI.setSettingFromHost('general.visual.theme-mode', to);
+			await sleep(1500);
+			// a light/dark change can set the page's own words going (first runs: no quiet change 3 s after the check's
+			// last word): wait for them to stop before the check's own word and quiet
+			await until(() => last().flow === 'waiting', 6000);
+			const pw = pageWords.slice(pw0);
+			themeNote = { pageWords: pw.length, first: pw.length ? Math.round(pw[0].at - t0) : null, last: pw.length ? Math.round(pw[pw.length - 1].at - t0) : null, tids: [...new Set(pw.map((x) => String(x.tid)))], flow: last().flow, debug: SS.debug() };
+			if (last().flow === 'waiting') {
+				await wordAt('word after the light/dark change');
+				if (!(await quietAt('quiet after the light/dark change', 0.5))) {
+					// what the chip's module finds (its own selector) against the chip the check samples
+					const path = (el) => { const out = []; for (let e = el; e && e !== document.body && out.length < 8; e = e.parentElement) out.push(e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (e.classList && e.classList.length ? '.' + [...e.classList].slice(0, 2).join('.') : '')); return out.join(' < '); };
+					const odd = rows.filter((r) => r.w >= t0 && r.ss !== 'stop').slice(0, 6).map((r) => ({ at: Math.round(r.w - t0), ss: r.ss }));
+					themeNote.quiet = { odd, flow: last().flow, debug: SS.debug(), pageWords: pageWords.length - pw0, chips: [...document.querySelectorAll('.composer-infield .sendstop')].map((x) => ({ ss: x.getAttribute('data-ss'), same: x === chip(), box: x.getClientRects().length, path: path(x) })), sampled: chip() ? path(chip()) : null };
+					throw new Error(`quiet after light/dark: no change (${JSON.stringify(themeNote)})`);
+				}
+			}
+			if (!(await inLoop(0.6, 0.7))) throw new Error('light/dark back: the loop never reached .6-.7');
+			await sleep(2); mark(`light/dark change back (to ${back})`, { kind: 'theme' });
+			window.PM12_KIMI.setSettingFromHost('general.visual.theme-mode', back);
+			await sleep(1500);
+		}
 		await sleep(300);
 	} catch (e) { errors.push(String(e && e.message || e)); }
+	SS.token = tok;
 	feedOff();
 	sampling = false; mo.disconnect(); if (lto) lto.disconnect();
 	await frame();
@@ -194,8 +243,62 @@ const PACE = async ({ speed, windowPart }) => {
 		const from = m.wordAt + 900, to = fl.now;
 		m.blockedMs = Math.round(longs.reduce((sum, x) => sum + Math.max(0, Math.min(x.e, to) - Math.max(x.s, from)), 0));
 	}
-	return { rows, marks, flips, errors, after, otherDesc };
+	return { rows, marks, flips, errors, after, otherDesc, themeNote, pageWords: pageWords.length };
 };
+
+// The chat hidden by display:none with the chip still in the document, words still arriving (R41 F1): returns what the
+// chip's module has armed while hidden and how it picks up when shown again.
+const HIDDEN = async () => {
+	const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+	const frame = () => new Promise((r) => requestAnimationFrame(r));
+	const SS = window.PM56_SENDSTOP, D = window.PM56_DEMO;
+	const chip = () => document.querySelector('.pm56-host .sendstop, #pmRoot .sendstop');
+	const cp = document.getElementById('chatPanel');
+	if (!cp || cp.getAttribute('data-pm56') !== 'on') return { error: 'no hosted chat panel (#chatPanel[data-pm56="on"])' };
+	const glyph = () => { const b = chip(); const a = b && b.getAnimations({ subtree: true }).find((x) => x.animationName === 'ss-breathe'); return a ? { dur: +a.effect.getTiming().duration, running: a.playState === 'running' } : null; };
+	const now = () => { const b = chip(); return { ss: b && b.getAttribute('data-ss'), flow: b && b.getAttribute('data-flow'), box: b ? b.getClientRects().length : null, glyph: glyph(), debug: SS.debug() }; };
+	let feeding = false, next = 0, lastWord = 0;
+	const feed = () => { if (!feeding) return; if (performance.now() >= next) { SS.token(); lastWord = performance.now(); next = lastWord + 100; } requestAnimationFrame(feed); };
+	const out = {};
+	try {
+		D.pauseWorking(); await sleep(300); D.startWorking();
+		const end = performance.now() + 12000;
+		while (!(now().ss === 'stop' && glyph() && glyph().running)) { if (performance.now() > end) return { error: `no breathing Stop chip: ${JSON.stringify(now())}` }; await frame(); }
+		await sleep(1200);
+		feeding = true; requestAnimationFrame(feed);
+		await sleep(1500);
+		out.before = now();
+		cp.removeAttribute('data-pm56');                               // what the host does for the Guided Tour
+		await sleep(1500); out.hidden1 = now();
+		await sleep(1500); out.hidden2 = now();
+		cp.setAttribute('data-pm56', 'on');                            // the tour has ended: shown again, words still arriving
+		await sleep(400); out.shown = now();
+		feeding = false;
+		const t0 = performance.now();
+		while (now().flow !== 'waiting' && performance.now() - t0 < 3000) await frame();
+		out.quietMs = Math.round(performance.now() - lastWord); out.quiet = now();
+	} finally {
+		feeding = false;
+		if (cp.getAttribute('data-pm56') !== 'on') cp.setAttribute('data-pm56', 'on');
+		D.pauseWorking(); await sleep(400);
+	}
+	out.after = now();
+	return out;
+};
+
+// One pulse (R40 F1): in every sample in which both loops have a place and the same timing, how far the backlight's
+// place in the loop is from the glyph's (both read in the same task, by the same frame's time).
+function inPhase(R) {
+	let n = 0, worst = 0, where = null;
+	for (const r of R.rows) {
+		const g = r.g, b = r.b;
+		if (!g || !b || g.place == null || b.place == null || g.dur !== b.dur || g.delay !== b.delay) continue;
+		n++;
+		const x = (((b.place - g.place) % 1) + 1) % 1, d = Math.min(x, 1 - x);
+		if (d > worst) { worst = d; where = `+${Math.round(r.w - R.rows[0].w)} ms: glyph ${g.place.toFixed(4)}, backlight ${b.place.toFixed(4)}${r.win ? ', under the window' : ''}, ${r.th}`; }
+	}
+	return { n, worst, where };
+}
 
 // What a person sees is the compositor's: a retimed loop reaches it only with the next frame, and until then it keeps
 // moving the square on the OLD timing by the wall clock, also through a long task. So at each sample the loop's place
@@ -342,7 +445,7 @@ function judge(R, look) {
 
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark,glass-dark,retro-dark,nier-dark,friendly-dark,basic-light').split(',').filter(Boolean);
-	const parts = new Set(String(t.args.parts || 'rest,pace,reduced').split(','));
+	const parts = new Set(String(t.args.parts || 'rest,pace,hidden,reduced').split(','));
 	const late = Number(t.args.late || 150);
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
@@ -402,6 +505,7 @@ export default async function (t) {
 			const R = await f.evaluate(PACE, { speed: !alone, windowPart: !alone && (n === 0 || look.startsWith('nier')) });
 			const rows = judge(R, look);
 			for (const e of R.errors) t.log(`${look}: ${e}`);
+			t.log(`${look}: NOTE the page's own words during the run: ${R.pageWords}${R.themeNote ? `; after the light/dark change: ${JSON.stringify(R.themeNote)}` : ''}`);
 			await t.check(`${look}: the run went through every change`, R.errors.length === 0 && R.rows.length > 60, R.errors.join('; ') || `${R.rows.length} frames sampled`);
 			for (const r of rows) t.log(`${look} ${r.layer}: ${r.name}${r.frac != null ? ` at ${r.frac} of the loop` : ''}: ${r.restart ? 'NEW LOOP' : `hand-over ${r.hand ?? '-'} (bound ${r.handBound ?? '-'}${r.gap != null ? `, of which ${r.lateAllow} for a late hand-over: ${r.gap} ms between samples` : ''}), ${r.stale ? 'main thread: a frame after a long task, not judged' : `main-thread place +${r.place} (bound ${r.placeBound}), value ${r.value} (bound ${r.valueBound})`}`}, length ${r.from} -> ${r.to}, ${r.dt} ms between samples, theme ${r.themes}${r.flipMs != null ? `, ${r.flipMs} ms after the last word` : ''}`);
 			const bad = rows.filter((r) => r.restart || (r.ok === false));
@@ -413,6 +517,10 @@ export default async function (t) {
 			if (ev.spans.length) t.log(`${look}: NOTE the chip's jumps named as the window's: ${ev.known.join('; ') || 'none'}`);
 			await t.check(`${look}: in every frame from the first change on, the loop is never made anew and never jumps (hand-over and main-thread place)`, ev.restarts.length === 0 && ev.worst <= 1,
 				`${ev.restarts.length ? 'new loops ' + ev.restarts.join(', ') + '; ' : ''}worst ${(ev.worst * 100).toFixed(0)}%${ev.where ? ': ' + ev.where : ''}`);
+			const ph = inPhase(R), nier = look.startsWith('nier');
+			await t.check(`${look}: one pulse: in every frame the backlight is at the glyph's place in the loop (to 0.002 of a loop)${R.marks.some((m) => m.kind === 'window') ? ', through the onboarding window' : ''}${R.marks.some((m) => m.kind === 'theme') ? ', through a light/dark change' : ''}`,
+				nier ? ph.n === 0 || ph.worst <= 0.002 : ph.n > 60 && ph.worst <= 0.002,
+				ph.n ? `${ph.n} frames, worst ${ph.worst.toFixed(4)} of a loop${ph.where ? ` (${ph.where})` : ''}` : (nier ? 'no backlight (NieR Mode)' : 'no frame with both loops: could not judge'));
 			// at once: a word -> flowing with the flowing length in the next frame; the quiet change on time
 			const words = R.marks.filter((m) => m.kind === 'word' && m.i > 0 && m.i < R.rows.length);
 			// a word released inside frame N's callbacks shows by frame N + 1: the first sample taken after a frame later than
@@ -428,6 +536,43 @@ export default async function (t) {
 			await t.check(`${look}: 900 ms without a word turns it to waiting (within ${late} ms after, plus any long task after it fell due)`, quiet.length >= 2 && off.length === 0, quiet.map((m) => `${m.name}: ${m.flipMs == null ? 'no change' : m.flipMs + ' ms'}${m.blockedMs ? ` (${m.blockedMs} ms of long tasks after it fell due)` : ''}`).join('; '));
 			const d = R.after.debug || {};
 			await t.check(`${look}: once the run has ended nothing of the chip's is armed`, R.after.ss !== 'stop' && d.quiet === false && d.watching === false && d.pending !== true, JSON.stringify(R.after));
+			if (!alone && n === 0 && !look.startsWith('nier')) {
+				// a light/dark change mid-run (K3), in a run of its own
+				await home(); await parkPointer(t.page, W, H); await t.page.waitForTimeout(3000);
+				const T = await f.evaluate(PACE, { speed: false, windowPart: false, themePart: true, themeOnly: true });
+				for (const e of T.errors) t.log(`${look} light/dark: ${e}`);
+				t.log(`${look} light/dark: NOTE the page's own words: ${T.pageWords}; ${JSON.stringify(T.themeNote)}`);
+				await t.check(`${look} light/dark: the run went through the light/dark change, a word, the quiet and the change back`, T.errors.length === 0 && T.marks.filter((m) => m.kind === 'theme').length === 2 && T.rows.length > 60, T.errors.join('; ') || `${T.rows.length} frames sampled`);
+				const tr = judge(T, look);
+				for (const r of tr) t.log(`${look} light/dark ${r.layer}: ${r.name}${r.frac != null ? ` at ${r.frac} of the loop` : ''}: ${r.restart ? 'NEW LOOP' : `hand-over ${r.hand ?? '-'} (bound ${r.handBound ?? '-'}), main-thread place ${r.place ?? 'stale'} (bound ${r.placeBound ?? '-'})`}, length ${r.from} -> ${r.to}, theme ${r.themes}`);
+				const tb = tr.filter((r) => r.restart || r.ok === false);
+				await t.check(`${look} light/dark: no change makes either loop jump or start anew (the light/dark change, the word and the quiet after it, the change back)`, tr.length > 0 && tb.length === 0,
+					tb.length ? tb.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}`}`).join('; ') : `${tr.length} changes judged`);
+				const te = everyFrame(T);
+				await t.check(`${look} light/dark: in every frame from the light/dark change on, neither loop is made anew or jumps`, te.restarts.length === 0 && te.worst <= 1, `${te.restarts.length ? 'new loops ' + te.restarts.join(', ') + '; ' : ''}worst ${(te.worst * 100).toFixed(0)}%${te.where ? ': ' + te.where : ''}`);
+				const tp = inPhase(T);
+				await t.check(`${look} light/dark: one pulse: in every frame the backlight is at the glyph's place in the loop (to 0.002 of a loop), through the light/dark change and back`, tp.n > 60 && tp.worst <= 0.002, `${tp.n} frames, worst ${tp.worst.toFixed(4)} of a loop${tp.where ? ` (${tp.where})` : ''}`);
+			}
+		}
+	}
+
+	if (parts.has('hidden') && !alone) {
+		const look = looks[0];
+		await savedLook(look);
+		await home();
+		await parkPointer(t.page, W, H);
+		await t.page.waitForTimeout(2000);
+		const x = await f.evaluate(HIDDEN);
+		t.log(`hidden ${look}: ${JSON.stringify(x)}`);
+		if (x.error) { await t.check(`hidden ${look}: the chat hidden with words arriving`, false, `${x.error}: could not judge`); }
+		else {
+			const off = (s) => s && s.box === 0 && s.debug.quiet === false && s.debug.watching === false && s.debug.pending === false;
+			await t.check(`hidden ${look}: while the chat is hidden (display:none, the Guided Tour's route) and words keep arriving, nothing of the chip's is armed (R41 F1)`,
+				x.before.debug.watching === true && off(x.hidden1) && off(x.hidden2), JSON.stringify({ before: x.before.debug, hidden1: x.hidden1, hidden2: x.hidden2 }));
+			const k = x.shown.debug.speed || 1;
+			await t.check(`hidden ${look}: shown again with words arriving, it is flowing at the flowing length, listening, its quiet timer armed`,
+				x.shown.flow === 'flowing' && x.shown.glyph && Math.abs(x.shown.glyph.dur - 2200 * k) < 1 && x.shown.debug.watching === true && x.shown.debug.quiet === true, JSON.stringify(x.shown));
+			await t.check(`hidden ${look}: then 900 ms without a word turns it to waiting (within ${late} ms after)`, x.quiet.flow === 'waiting' && x.quietMs >= 880 && x.quietMs <= 900 + late + 100, `${x.quietMs} ms: ${JSON.stringify(x.quiet)}`);
 		}
 	}
 
