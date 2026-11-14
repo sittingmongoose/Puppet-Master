@@ -1,0 +1,95 @@
+{
+  "status": "NEWLY_AUTHORED_UNINSTALLED",
+  "methods": [
+    {
+      "method": "owner.goal_run.started.project_prefix.reference.v1",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ScopeRequest"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/ProjectorResult"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Unavailable"
+      },
+      "effects": "own projection dataset and checkpoint only",
+      "protocol": "Plans/goal_run_projection_reference_contracts/started.md",
+      "caller_supplied_afterimages": false,
+      "authority": "actual owner-private invocation and Storage snapshot; serialized requests/results confer no capability",
+      "private_arguments": [
+        {
+          "realm": "current_workflow_native_activation",
+          "schema": {
+            "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/ProjectPrivate"
+          }
+        }
+      ],
+      "original_method": "owner.goal_run.started.project_prefix.v1",
+      "representation_adapter": "Validate the entire new private/return root; decode wrappers into complete logical records and this edition's LogicalCheckpoint. Apply all original semantic/source predicates parameterized ONLY by the new derived key/table/checkpoint/profile selection. Never cast a new checkpoint to an old header, or adapt original native sources, producer custody, schema IDs or birth descriptors."
+    },
+    {
+      "method": "owner.goal_run.started.read_historical.reference.v1",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ScopeRequest"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/HistoricalRead"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Unavailable"
+      },
+      "effects": "none",
+      "protocol": "Plans/goal_run_projection_reference_contracts/started.md",
+      "caller_supplied_afterimages": false,
+      "authority": "actual owner-private invocation and Storage snapshot; serialized requests/results confer no capability",
+      "private_arguments": [
+        {
+          "realm": "current_workflow_native_activation",
+          "schema": {
+            "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/ProjectPrivate"
+          }
+        }
+      ],
+      "original_method": "owner.goal_run.started.read_historical.v1",
+      "representation_adapter": "Validate the entire new private/return root; decode wrappers into complete logical records and this edition's LogicalCheckpoint. Apply all original semantic/source predicates parameterized ONLY by the new derived key/table/checkpoint/profile selection. Never cast a new checkpoint to an old header, or adapt original native sources, producer custody, schema IDs or birth descriptors."
+    },
+    {
+      "method": "owner.goal_run.started.read_current.reference.v1",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/ScopeRequest"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/CurrentRead"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Unavailable"
+      },
+      "effects": "none",
+      "protocol": "Plans/goal_run_projection_reference_contracts/started.md",
+      "caller_supplied_afterimages": false,
+      "authority": "actual owner-private invocation and Storage snapshot; serialized requests/results confer no capability",
+      "private_arguments": [
+        {
+          "realm": "current_workflow_native_activation",
+          "schema": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentStartSource"
+          }
+        },
+        {
+          "realm": "current_goal_controls",
+          "schema": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+          }
+        },
+        {
+          "realm": "current_workflow_native_activation",
+          "schema": {
+            "$ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/ProjectPrivate"
+          }
+        }
+      ],
+      "original_method": "owner.goal_run.started.read_current.v1",
+      "representation_adapter": "Validate the entire new private/return root; decode wrappers into complete logical records and this edition's LogicalCheckpoint. Apply all original semantic/source predicates parameterized ONLY by the new derived key/table/checkpoint/profile selection. Never cast a new checkpoint to an old header, or adapt original native sources, producer custody, schema IDs or birth descriptors."
+    }
+  ]
+}

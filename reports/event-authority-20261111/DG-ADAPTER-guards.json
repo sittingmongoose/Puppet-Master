@@ -1,0 +1,552 @@
+{
+ "inventory": {
+  "pm_goal_test_demo_cf01.py": {
+   "identity/assignment_run": [
+    "cf01:assignment_other_run"
+   ],
+   "identity/decision": [
+    "cf01:decision_with_exception"
+   ],
+   "identity/descriptor_unavailable": [
+    "cf01:descriptor_absent"
+   ],
+   "identity/goal": [
+    "cf01:native_goal_differs"
+   ],
+   "identity/independent_event_id": [
+    "cf01:start_identity_formula"
+   ],
+   "identity/independent_key": [
+    "cf01:unprefixed_identity_key"
+   ],
+   "identity/invocation_assignment": [
+    "cf01:invocation_foreign_assignment"
+   ],
+   "identity/partition_recomputed": [
+    "cf01:partition_lower_hex_recipe"
+   ],
+   "identity/partition_storage": [
+    "cf01:partition_other_storage"
+   ],
+   "identity/project": [
+    "cf01:goal_project_differs"
+   ],
+   "identity/revision_step": [
+    "cf01:revision_step_not_plus_one"
+   ],
+   "identity/standard_decision": [
+    "cf01:standard_exception_decision"
+   ],
+   "identity/standard_durable": [
+    "cf01:standard_receipt_not_durable"
+   ],
+   "identity/standard_run": [
+    "cf01:standard_other_run"
+   ],
+   "producer/cause_appended": [],
+   "producer/envelope_members": [
+    "cf01:envelope_extra_member"
+   ],
+   "producer/field/": [
+    "cf01:changed_actor",
+    "cf01:changed_time",
+    "cf01:changed_cause",
+    "cf01:changed_event_id",
+    "cf01:changed_effective_runtime",
+    "cf01:normalized_goal_run_id",
+    "cf01:inner_key_alternate",
+    "cf01:replay_only_policy"
+   ],
+   "producer/identity_handle": [
+    "cf01:identity_candidate_not_issued"
+   ],
+   "producer/inner_outer_key_bytes": [],
+   "producer/payload_type": [],
+   "producer/required_present/": [
+    "cf01:missing_nullable_payload_ref",
+    "cf01:missing_nullable_node_id"
+   ]
+  },
+  "pm_goal_test_demo_r1.py": {
+   "method/bank": [
+    "r1:method_predecessor_bank"
+   ],
+   "method/import": [
+    "r1:method_wrong_import"
+   ],
+   "method/name": [
+    "r1:method_cross_cast"
+   ],
+   "method/profile": [
+    "r1:method_wrong_profile"
+   ],
+   "method/qualified": [],
+   "method/selection": [],
+   "method/selection_handle": [
+    "r1:method_implicit_selection"
+   ],
+   "pin/": [
+    "r1:predecessor_pin_restamped"
+   ],
+   "qualify/route_site_unused": [],
+   "qualify/unresolved": [
+    "r1:dropped_site",
+    "r1:dropped_alias"
+   ],
+   "qualify/unsupported_dynamic_reference": [],
+   "realm/no_merge": [],
+   "realm/no_network": [
+    "r1:bank_network_fallback"
+   ],
+   "realm/no_rebinding/": [
+    "r1:bank_uri_rebound"
+   ],
+   "realm/resource_bytes/": [
+    "r1:bank_resource_hash_restamped"
+   ],
+   "realm/resource_hash": [],
+   "route/nested_resolution": [
+    "r1:nested_resolution_escapes"
+   ],
+   "route/no_merge": [
+    "r1:whole_bank_merge"
+   ],
+   "route/no_network": [
+    "r1:network_fallback"
+   ],
+   "route/one_source_resource": [],
+   "route/same_literal_per_alias": [],
+   "route/site_literal": [
+    "r1:wrong_location",
+    "r1:wrong_literal",
+    "r1:swapped_location_literal"
+   ],
+   "route/source_aliases": [
+    "r1:wrong_alias"
+   ],
+   "route/source_hash": [
+    "r1:wrong_source_hash"
+   ],
+   "route/source_realm": [
+    "r1:wrong_source_realm"
+   ],
+   "route/target_binding": [
+    "r1:wrong_target_uri"
+   ],
+   "route/target_hash": [
+    "r1:wrong_target_hash"
+   ],
+   "route/target_realm": [
+    "r1:wrong_target_realm_merge"
+   ],
+   "route/target_unique": [],
+   "selection/predecessor": [
+    "r1:selection_predecessor_rebound"
+   ],
+   "selection/profile": [
+    "r1:selection_wrong_profile"
+   ],
+   "selection/realms": [
+    "r1:selection_missing_realm"
+   ],
+   "selection/route_ref": [
+    "r1:selection_route_ref_substituted"
+   ],
+   "selection/route_sha256": [
+    "r1:selection_route_restamped"
+   ],
+   "selection/target_manifest": [
+    "r1:selection_target_manifest_rebound"
+   ]
+  },
+  "pm_goal_test_owner_adapters.py": {
+   "activation/cas_revision": [
+    "selftest/owners:activation_stale_revision"
+   ],
+   "activation/cas_state": [
+    "selftest/owners:activation_stale_state"
+   ],
+   "activation/cause_type": [],
+   "activation/subject_type": [],
+   "activation/unborn": [
+    "selftest/owners:activation_double_birth"
+   ],
+   "activation/unborn_subject": [],
+   "append_owner/storage": [],
+   "bank/no_rebinding/": [],
+   "bank/uri/": [],
+   "bank/whole_hash/": [],
+   "custody/": [
+    "selftest/storage:substituted_receipt_event_id",
+    "selftest/storage:substituted_receipt_sequence_id",
+    "selftest/storage:substituted_receipt_segment_generation",
+    "selftest/storage:substituted_receipt_segment_name",
+    "selftest/storage:substituted_receipt_byte_offset",
+    "selftest/storage:substituted_receipt_commit_group_id",
+    "selftest/storage:substituted_receipt_durability_class",
+    "selftest/storage:substituted_receipt_durable_end_offset",
+    "selftest/storage:substituted_receipt_durability_state",
+    "selftest/storage:substituted_receipt_manifest_generation",
+    "selftest/storage:substituted_receipt_acknowledged_at_utc",
+    "selftest/storage:custody_unavailable",
+    "selftest/owners:custody_restamped_hash",
+    "selftest/owners:custody_owner_substituted"
+   ],
+   "custody/type": [],
+   "custody/unissued": [],
+   "event/handle_type": [],
+   "event/issuer": [
+    "selftest/owners:event_handle_foreign"
+   ],
+   "issue/immutable_ref": [
+    "selftest/owners:duplicate_ref"
+   ],
+   "original/bytes": [
+    "selftest/owners:substituted_value_bytes"
+   ],
+   "original/handle_type": [
+    "selftest/owners:dict_in_place_of_handle",
+    "selftest/owners:ref_string_in_place_of_handle",
+    "cf01:partition_caller_supplied",
+    "r1:route_transport_dict"
+   ],
+   "original/issuer": [
+    "selftest/owners:handle_from_other_owner",
+    "cf01:identity_from_other_owner"
+   ],
+   "original/ref_type": [],
+   "original/root": [
+    "selftest/owners:wrong_root"
+   ],
+   "original/unissued": [
+    "selftest/owners:copied_value_other_owner_ref"
+   ],
+   "original/withdrawn": [
+    "selftest/owners:withdrawn_original"
+   ],
+   "publish/replay_tx": [],
+   "recorder/order": [
+    "selftest/owners:recorder_order_mismatch"
+   ],
+   "registry/duplicate_id": [],
+   "registry/owner_identity": [
+    "selftest/owners:unregistered_owner_same_id"
+   ],
+   "registry/owner_type": [],
+   "registry/role": [
+    "selftest/owners:wrong_role"
+   ],
+   "registry/role_type": [],
+   "registry/unregistered_owner": [
+    "selftest/owners:unregistered_id",
+    "cf01:assignment_unregistered_owner",
+    "r1:route_unregistered_owner"
+   ]
+  },
+  "pm_goal_test_source.py": {
+   "project/snapshot_type": [],
+   "project/storage": [
+    "selftest/source:project_foreign_snapshot"
+   ],
+   "source/current_hash": [
+    "selftest/source:token_current_hash"
+   ],
+   "source/current_manifest_join": [
+    "selftest/source:manifest_without_current_join"
+   ],
+   "source/gap_inventory": [
+    "selftest/source:unproven_gap"
+   ],
+   "source/gap_order": [],
+   "source/gap_owner": [
+    "selftest/source:gap_owner_substituted_resigned"
+   ],
+   "source/gap_proof": [
+    "selftest/source:gap_proof_substituted"
+   ],
+   "source/manifest_generation": [
+    "selftest/source:current_generation_mismatch"
+   ],
+   "source/manifest_hash": [],
+   "source/manifest_instance": [
+    "selftest/source:manifest_instance_substituted"
+   ],
+   "source/qualification": [
+    "selftest/source:snapshot_qualification_missing"
+   ],
+   "source/recovery_epoch": [
+    "selftest/source:token_recovery_epoch"
+   ],
+   "source/retained_inventory": [
+    "selftest/source:substituted_segment_bytes"
+   ],
+   "source/retired_inputs": [],
+   "source/retired_segments_proved": [
+    "selftest/source:retired_segment_without_gap"
+   ],
+   "source/segment_inventory": [
+    "selftest/source:false_empty_inventory"
+   ],
+   "source/storage_instance": [
+    "selftest/source:wrong_storage_snapshot"
+   ],
+   "source/storage_type": [],
+   "source/token/": [
+    "selftest/source:token_frontier_revision"
+   ],
+   "source/watermarks": [
+    "selftest/source:token_watermarks"
+   ]
+  },
+  "pm_goal_test_storage.py": {
+   "append/append_once_exists": [
+    "selftest/storage:append_once_duplicate"
+   ],
+   "append/conflict/event_id": [
+    "selftest/storage:same_key_other_event_id"
+   ],
+   "append/conflict/producer25": [
+    "selftest/storage:altered_producer_conflict",
+    "cf01:retry_altered_producer"
+   ],
+   "append/conflict/scoped_identity": [
+    "selftest/storage:same_event_id_other_key"
+   ],
+   "append/duplicate_in_group": [
+    "selftest/storage:duplicate_in_group"
+   ],
+   "append/durability_class": [
+    "selftest/storage:durability_class_unknown"
+   ],
+   "append/nonempty": [
+    "selftest/storage:append_empty_group"
+   ],
+   "append/partial_dedupe": [
+    "selftest/storage:partial_dedupe"
+   ],
+   "append/readback": [],
+   "append/released": [
+    "selftest/storage:append_after_release",
+    "fault_matrix:after_reservation+release"
+   ],
+   "append/stored_part_cap": [
+    "selftest/storage:inline_over_16kib"
+   ],
+   "custody/full_value_schema": [],
+   "custody/receipt_mismatch": [
+    "selftest/storage:substituted_receipt_event_id",
+    "selftest/storage:substituted_receipt_sequence_id",
+    "selftest/storage:substituted_receipt_segment_generation",
+    "selftest/storage:substituted_receipt_segment_name",
+    "selftest/storage:substituted_receipt_byte_offset",
+    "selftest/storage:substituted_receipt_commit_group_id",
+    "selftest/storage:substituted_receipt_durability_class",
+    "selftest/storage:substituted_receipt_durable_end_offset",
+    "selftest/storage:substituted_receipt_durability_state",
+    "selftest/storage:substituted_receipt_manifest_generation",
+    "selftest/storage:substituted_receipt_acknowledged_at_utc"
+   ],
+   "custody/schema": [],
+   "custody/unavailable": [
+    "selftest/storage:custody_unavailable"
+   ],
+   "fault/cut": [],
+   "fault/mode": [],
+   "frame/header_cap": [],
+   "frame/payload_cap": [],
+   "group/schema": [],
+   "handle/issuer": [
+    "selftest/storage:reservation_handle_other_storage"
+   ],
+   "handle/kind": [],
+   "handle/not_copyable": [
+    "selftest/storage:handle_not_copyable"
+   ],
+   "handle/not_serializable": [
+    "selftest/storage:handle_not_serializable"
+   ],
+   "handle/type": [],
+   "index/duplicate_event_id": [],
+   "index/duplicate_scoped_identity": [],
+   "index/durable_prefix": [],
+   "key/component_alphabet": [
+    "selftest/codec:k_padded",
+    "selftest/codec:k_standard_alphabet"
+   ],
+   "key/component_decode": [
+    "selftest/codec:k_hex_spelling"
+   ],
+   "key/component_padding": [
+    "selftest/storage:k_padding_length"
+   ],
+   "key/component_reversible": [
+    "selftest/codec:k_non_reversible"
+   ],
+   "key/component_type": [
+    "selftest/codec:k_bytes_type"
+   ],
+   "key/component_utf8": [
+    "selftest/codec:k_lone_surrogate"
+   ],
+   "open/instance": [],
+   "open/manifest_generation": [],
+   "open/manifest_hash": [
+    "selftest/storage:reopen_tampered_manifest"
+   ],
+   "open/qualification": [],
+   "pack/bytes": [],
+   "pack/media_type": [],
+   "pack/present": [],
+   "pack/reference": [
+    "selftest/storage:pack_reference_extra_key"
+   ],
+   "pack/unavailable": [
+    "selftest/storage:pack_unknown_digest",
+    "selftest/storage:pack_withdrawn"
+   ],
+   "read/event_unavailable": [
+    "cf01:cause_not_appended"
+   ],
+   "read/frame_hash": [
+    "selftest/storage:read_frame_tampered_at_rest"
+   ],
+   "receipt/state": [],
+   "receipt_handle/issuer": [
+    "selftest/storage:receipt_handle_other_storage"
+   ],
+   "receipt_handle/type": [
+    "selftest/storage:receipt_dict_not_handle"
+   ],
+   "recover/durable_prefix_valid": [
+    "selftest/storage:reopen_corrupt_durable_frame"
+   ],
+   "release/state": [],
+   "reserve/conflict": [
+    "selftest/storage:reserve_altered_request"
+   ],
+   "reserve/operation_type": [],
+   "resume/absent": [
+    "selftest/storage:resume_absent"
+   ],
+   "resume/conflict": [
+    "selftest/storage:resume_altered",
+    "fault_matrix:after_append+altered_request"
+   ],
+   "retire/nonempty": [],
+   "retire/owner": [
+    "selftest/storage:retire_foreign_owner"
+   ],
+   "retire/sealed": [
+    "selftest/storage:retire_unsealed"
+   ],
+   "retire/segment": [
+    "selftest/storage:retire_unknown_segment"
+   ],
+   "scope/application_project_null": [
+    "selftest/codec:scope_partition_app_project"
+   ],
+   "scope/project_id": [
+    "selftest/storage:scope_project_empty"
+   ],
+   "storage/create_empty": [],
+   "terminal/replay_conflict": [
+    "selftest/owners:publication_conflict"
+   ],
+   "terminal/replay_target": [],
+   "terminal/state": [
+    "selftest/storage:terminal_before_receipt"
+   ],
+   "tx/cas_absent": [
+    "selftest/storage:cas_absent_exists"
+   ],
+   "tx/cas_version": [
+    "selftest/storage:cas_stale_version",
+    "selftest/storage:all_or_none"
+   ],
+   "tx/delete_present": [],
+   "tx/key": [],
+   "tx/stored_part_cap": [
+    "selftest/storage:tx_value_over_16kib"
+   ],
+   "tx/table": [],
+   "tx/write_shape": [],
+   "tx/writes": []
+  }
+ },
+ "note": "Guard code -> negatives that refused with exactly that code (prefix for parameterized codes). Positive-path assertions (positive/*, retry/*) excluded. Per-predicate isolation is for the shared guard-isolation tool.",
+ "qualification": "TEST_ONLY",
+ "without_negative": {
+  "pm_goal_test_demo_cf01.py": [
+   "producer/cause_appended",
+   "producer/inner_outer_key_bytes",
+   "producer/payload_type"
+  ],
+  "pm_goal_test_demo_r1.py": [
+   "method/qualified",
+   "method/selection",
+   "qualify/route_site_unused",
+   "qualify/unsupported_dynamic_reference",
+   "realm/no_merge",
+   "realm/resource_hash",
+   "route/one_source_resource",
+   "route/same_literal_per_alias",
+   "route/target_unique"
+  ],
+  "pm_goal_test_owner_adapters.py": [
+   "activation/cause_type",
+   "activation/subject_type",
+   "activation/unborn_subject",
+   "append_owner/storage",
+   "bank/no_rebinding/",
+   "bank/uri/",
+   "bank/whole_hash/",
+   "custody/type",
+   "custody/unissued",
+   "event/handle_type",
+   "original/ref_type",
+   "publish/replay_tx",
+   "registry/duplicate_id",
+   "registry/owner_type",
+   "registry/role_type"
+  ],
+  "pm_goal_test_source.py": [
+   "project/snapshot_type",
+   "source/gap_order",
+   "source/manifest_hash",
+   "source/retired_inputs",
+   "source/storage_type"
+  ],
+  "pm_goal_test_storage.py": [
+   "append/readback",
+   "custody/full_value_schema",
+   "custody/schema",
+   "fault/cut",
+   "fault/mode",
+   "frame/header_cap",
+   "frame/payload_cap",
+   "group/schema",
+   "handle/kind",
+   "handle/type",
+   "index/duplicate_event_id",
+   "index/duplicate_scoped_identity",
+   "index/durable_prefix",
+   "open/instance",
+   "open/manifest_generation",
+   "open/qualification",
+   "pack/bytes",
+   "pack/media_type",
+   "pack/present",
+   "receipt/state",
+   "release/state",
+   "reserve/operation_type",
+   "retire/nonempty",
+   "storage/create_empty",
+   "terminal/replay_target",
+   "tx/delete_present",
+   "tx/key",
+   "tx/table",
+   "tx/write_shape",
+   "tx/writes"
+  ]
+ }
+}

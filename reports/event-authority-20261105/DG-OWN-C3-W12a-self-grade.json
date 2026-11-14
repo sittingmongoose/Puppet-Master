@@ -1,0 +1,713 @@
+{
+  "schema_version": "1.0.0",
+  "assessment_scope": "C3-W12a: W1 original-owner cases; whole corpus remains incomplete",
+  "base_commit": "109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+  "branch": "plans/ea-goal-own-c3-w12a-20261105",
+  "native_execution": "NOT_RUN",
+  "new_admission": false,
+  "rubric": {
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ]
+  },
+  "rows": [
+    {
+      "event_type": "goal.updated",
+      "family_id": "event-family-goal-updated",
+      "family_revision": "3.0.0",
+      "disposition": "CURRENT_WRITER",
+      "drafted_by_lane_dg": true,
+      "pass_count": 10,
+      "prior_pass_count_d1a": 9,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Row event-family-goal-updated at 3.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_updated.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+              "unit": "root",
+              "line_start": 185,
+              "line_end": 185,
+              "quote": "\"$id\": \"pm.goal_runtime_event.goal_updated.schema.v3\",",
+              "excerpt_sha256": "0c45c81f0f220c5f7afb9e73611c51170aaff4f0d41cb09452d796512893f8bd",
+              "file_sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "Original Goal update command and event shapes (CV-342)",
+              "line_start": 22558,
+              "line_end": 22558,
+              "quote": "Existing `event-family-goal-updated` alone advances to revision 3.0.0 / `pm.goal_runtime_event.goal_updated.schema.v3`.",
+              "excerpt_sha256": "2c49a45cc15567e0b7a2305e08cd17d5a957ef48ac58baddb8ad06d03367fde0",
+              "file_sha256": "721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "Goal V2 events",
+              "line_start": 272,
+              "line_end": 272,
+              "quote": "`goal.updated` only through CV-342/SP-299",
+              "excerpt_sha256": "a29ca75d2a340046b9788f8066c3b308f3103c10c0c44e5833f5fed30f709422",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\"",
+              "excerpt_sha256": "3f5768a30d176acdbe9417fd49da767de0e94a663200f7c5ad89d2975600f3f0",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "semantic_owner_doc resolves to the explicit anchor for 'Original Goal objective update acceptance and settlement' (GRS-068 prose); payload_owner_doc resolves to the explicit storage anchor for 'Original Goal update source, physical custody and publication' (SP-299). Both govern active v3.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/19",
+              "line_start": 1246,
+              "line_end": 1246,
+              "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#original-goal-objective-update-acceptance-and-settlement\",",
+              "excerpt_sha256": "d6e6a1a9f9b84f581584d3932b3a21c77684e288ca1fd4fd0359a216bfc665dc",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/19",
+              "line_start": 1247,
+              "line_end": 1247,
+              "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#goal-update-original-command-custody-and-publication\",",
+              "excerpt_sha256": "4ec040ce19c550d81688896bc8f0fd3da7b2c9b4092601da1ee766f7dde66666",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "anchor original-goal-objective-update-acceptance-and-settlement",
+              "line_start": 6513,
+              "line_end": 6513,
+              "quote": "GRS-068 adopts active `goal.updated` v3 for the existing complete objective replacement command.",
+              "excerpt_sha256": "f3af3b3931e51f42dd1fe4bdc908ee4415d91de5edb813105621bc76b7eb2c9d",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "anchor goal-update-original-command-custody-and-publication (SP-299)",
+              "line_start": 24516,
+              "line_end": 24516,
+              "quote": "SP-299 adopts the existing `cmd.chat.goal.update` through GRS-068, SIR-049 and CV-342.",
+              "excerpt_sha256": "29b394754c4516f0d6ce88004d81eee691613d001eedeea1476b90cb231a1e95",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "The new explicit approved-agent source/command edition joins genuine TEST_ONLY message, dispatch and protected-person issuer custody through the same actual body/physical/append/SIR composition. Full current-source/physical/final-boundary coverage remains incomplete, so no producer upgrade is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-299 section",
+              "line_start": 24516,
+              "line_end": 24516,
+              "quote": "The sole body writer remains SP-287's `owner.goal.body.mutation@1.0.0`",
+              "excerpt_sha256": "746a9d227354b400e9be59c04aa8de2b2a368025f94f0ed9682caf5a83fe68d8",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-068 section",
+              "line_start": 6524,
+              "line_end": 6524,
+              "quote": "SP-299 defines the complete original source \u2192 reservation \u2192 body commit \u2192 frozen event input \u2192 shared first publication \u2192 SIR terminal sequence.",
+              "excerpt_sha256": "f46ecdfd7d9686f255fe6d0b585d78738eba347479123116891ef00852dce313",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-299 section, step 5",
+              "line_start": 24551,
+              "line_end": 24551,
+              "quote": "Retain the genuine first AppendReceipt, original append result and independently captured full original EventRecord value commitment.",
+              "excerpt_sha256": "7dd9aac2ae4be5f8c4e7b042e734e4fc88308d71a370356878d6f1fff7af45f5",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-299",
+              "line_start": 20374,
+              "line_end": 20374,
+              "quote": "- SP-286",
+              "excerpt_sha256": "fd859fe6e7cadad25c492eba41867a188535b4dab3081293b68f8505617554fe",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "U4",
+              "line_start": 13,
+              "line_end": 13,
+              "quote": "U4. `owner.hitl.goal_update.read_resolution.v1` resolves the actual request AND resolution from original owner custody",
+              "excerpt_sha256": "a8a3779eca7985f73e4e805305ced6fe4f447b4bfe570515a5726c90fe94bc02",
+              "file_sha256": "4fcaf95debd73f2b32613205edc6d1d1a10d3581d1047b0a5ad20f43975f8425",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/w12a-corpus.v1.json",
+              "unit": "C3-W12a explicit W1 completion accounting",
+              "line_start": 10,
+              "line_end": 10,
+              "quote": "\"closure\": \"NOT_COMPLETE\"",
+              "excerpt_sha256": "1796e0f7e12c9545e5fb9a89e87d5c6ab634d086b4f28201697cadc7745ed92e",
+              "file_sha256": "a59660c7e17c5fbd50f026e213e419bf621e7c86a7036837c0a35b2dbb310398",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Active v3 root is closed with eighteen content-free fields, two-value change_source and direct-save null rules; whole v2 lives only under legacy_v2_reader. GRS-068 supersedes D-R14 and the delta/child/budget minima for current writes, so the old retired-structure conflict is resolved.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+              "unit": "root",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "\"additionalProperties\": false,",
+              "excerpt_sha256": "caf6261bd51214e3f0e1f79bb4be170af948f47d47080f04b366668a8b5af3bd",
+              "file_sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+              "unit": "root/$defs",
+              "line_start": 187,
+              "line_end": 187,
+              "quote": "\"legacy_v2_reader\": {",
+              "excerpt_sha256": "ff29d02154268cf61e4307b8ba52ecd791c0cd319001d5933b4cd9bf34fc2874",
+              "file_sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-068 section",
+              "line_start": 6513,
+              "line_end": 6513,
+              "quote": "It supersedes current-write interpretation of D-R14, the old delta/child/budget minima and their common-v2 envelope assumptions only for this exact family.",
+              "excerpt_sha256": "420204b1dcfab94501f5cd5ae21f65efc7183fab87aa747e9b3928f905e3f9c2",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "EA-UND-0014-GOAL (D-R14)",
+              "line_start": 3838,
+              "line_end": 3838,
+              "quote": "The following D-R14 bullets retain whole-v2 historical validation only.",
+              "excerpt_sha256": "eded2f562c553ef9156f6e06a4c4c67a6f4c1fc5405c93a93d6340e6db642540",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-421 derives D over the admitted SourceAudit; event ID goal.updated.v1:{D}, event idempotency key goal.updated.command.v1:{D}; ProducerMetadata and ProducerInput carry them; CV-342 routes.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-421",
+              "line_start": 24732,
+              "line_end": 24732,
+              "quote": "Event ID is goal.updated.v1:{D}; event idempotency key is goal.updated.command.v1:{D}.",
+              "excerpt_sha256": "93da02f292bde3a777eb5412e2f6b97ecf2fb25945c9c200f08cf05c01b6cdd1",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-342 amendment",
+              "line_start": 22642,
+              "line_end": 22642,
+              "quote": "ProducerMetadata.event_id and idempotency_key take the values SP-421 derives.",
+              "excerpt_sha256": "2922d510544c2431bf90afe46ad483b6c5794dd800e6c13279cf5d5b04a494f9",
+              "file_sha256": "721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Operation identity dedupes source custody; event identity is frozen at U0 with dedupe_by_idempotency_key; lost acknowledgement becomes event_unknown resolved only from original append custody, never fresh IDs; terminal replay returns the original result with CV-333 decoration and no body/event/result write; recovery never creates a second revision or event.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Immutable unknown, retries and command/result joins (SP-299)",
+              "line_start": 24560,
+              "line_end": 24560,
+              "quote": "Duplicate original request/operation identity resolves original source custody.",
+              "excerpt_sha256": "45e6e4107e38c23a2d0b48f9a7eae956662130830142b81a50946dae07c2d490",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Immutable unknown, retries and command/result joins (SP-299)",
+              "line_start": 24560,
+              "line_end": 24560,
+              "quote": "Once terminal audit exists, replay returns the exact original result/outcome/response with central replay decoration only; no body, event, result or original terminal write is allowed.",
+              "excerpt_sha256": "439e70118cf6c4ff1a0b0f2151d663e06e97e3723daddba1441e3b0753002707",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-299 section, step 5",
+              "line_start": 24551,
+              "line_end": 24551,
+              "quote": "A lost acknowledgement yields event_unknown.",
+              "excerpt_sha256": "2fc2df56dad5230bf11159c2c9750e4a76cc41a97e9c8345eac24e7b35fb33ea",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_update_command_custody.schema.json",
+              "unit": "$defs/ProducerInput",
+              "line_start": 867,
+              "line_end": 867,
+              "quote": "\"const\": \"dedupe_by_idempotency_key\"",
+              "excerpt_sha256": "8c056a1d031be1dbe451ad05a1f74bcfa87bb628a28b6a3d0313c4b8ee3f30e1",
+              "file_sha256": "eaa2358de37467ec51ad039f52342900b80b6a7c70f98ad9b0b87a6e9eac2988",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Registered RP-AUTHORITY-INDEFINITE@1.0.0 matches CV-342's unchanged indefinite audit retention; SP-299 assigns indefinite policy to the three content-free audit families and RP-GOAL-THREAD-LIFETIME (DL-047) to input content. No derived checkpoint/projection is owned (none_required per consumer).",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/19",
+              "line_start": 47,
+              "line_end": 47,
+              "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+              "excerpt_sha256": "fe0cb5dfc30383cc74c52093250d8f4d225ea27919f5d113322bd9c010552237",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-342 prose",
+              "line_start": 22558,
+              "line_end": 22558,
+              "quote": "Its outer EventRecord remains pm.event.v0 version 2.0.0, Project scope and unchanged indefinite audit retention.",
+              "excerpt_sha256": "5f2da2fc91059253d0c9a2fcf9bc955ab6a554893190056a5d7de4827465be00",
+              "file_sha256": "721cb42951bfe6e616ae9a8be4ca68fcdb9eabbeafffdee2d71b21ba97a6d3b1",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Closed source, content and progress carriers (SP-299)",
+              "line_start": 24543,
+              "line_end": 24543,
+              "quote": "The three audit carriers use existing RP-AUTHORITY-INDEFINITE.",
+              "excerpt_sha256": "da4e2ec99c4ad0c96fae583659d36849a4ee0fa6917d51580d802d61da47b383",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Closed source, content and progress carriers (SP-299)",
+              "line_start": 24543,
+              "line_end": 24543,
+              "quote": "The input carrier uses RP-GOAL-THREAD-LIFETIME with the exact bound thread",
+              "excerpt_sha256": "0d2d02a99ddf70fb813c349a78647688bee0d8626f940736a956d97ecbfc7a8f",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Registry rejects unhandled secrets; audit carriers forbid text and previews; input content follows the bound thread and hides on deletion; reader.goal.update_input requires current content/access/deletion authority while audit uses current app/Project/audit authority; backup atomically captures source, progress, terminal, input and SP-287 scope and restore replays tombstones.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/19",
+              "line_start": 35,
+              "line_end": 35,
+              "quote": "\"mode\": \"reject_unhandled_secrets\",",
+              "excerpt_sha256": "69b326f5100c3747e56823aea733477b3b41747a52c403f57851d9d32534e475",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Closed source, content and progress carriers (SP-299)",
+              "line_start": 24543,
+              "line_end": 24543,
+              "quote": "No text, complete request, request preview, context body, pending afterimage or text-bearing error is permitted there.",
+              "excerpt_sha256": "96d321b82f072e7572bcaa1b9e4626f7c5a400160306de5d26f85dc07c7565e8",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Event version, readers and backup (SP-299)",
+              "line_start": 24572,
+              "line_end": 24572,
+              "quote": "Input read is a separate new `reader.goal.update_input@1.0.0` requiring current thread content/access/deletion authority",
+              "excerpt_sha256": "9955694d79cbb17e59b0c496f08e673513164902df585dd1763670edc90caeef",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Event version, readers and backup (SP-299)",
+              "line_start": 24574,
+              "line_end": 24574,
+              "quote": "Backup must atomically capture every original source, retained progress epoch/head, terminal member, complete still-retained input",
+              "excerpt_sha256": "01f058c3d3484a4a730e57cfc4f5f7b0a2612ef08c48a4c39b1f507bd9b0ce82",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current rules: active/paused/blocked permit edit, completed rejects; body revision n to n+1 with one accepted revision against the latest accepted predecessor; update affects only the next continuation boundary and never resumes or defeats Stop; progress edges and no-effect limits are explicit. D-R14's old state rules are retained-v2 only.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-068 section",
+              "line_start": 6517,
+              "line_end": 6517,
+              "quote": "Active/paused/blocked permit edit; completed rejects.",
+              "excerpt_sha256": "a21d0bb0ff7ceb0a91deb2bb8192ee44a844cadbc7005640b1f4ba32d1e96c1b",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-068 section",
+              "line_start": 6517,
+              "line_end": 6517,
+              "quote": "it neither changes a running turn nor resumes a paused/blocked Goal or defeats host Stop",
+              "excerpt_sha256": "417a9f44d4faa0132701b72cba90cc2dce3cf0eb4856dd16fe72bbb8e24d3afd",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Acyclic operation and original effect resolution (SP-299)",
+              "line_start": 24554,
+              "line_end": 24554,
+              "quote": "Permitted progress edges are source_admitted\u2192body_reserved\u2192body_committed\u2192event_ready\u2192event_issued",
+              "excerpt_sha256": "491ab6c99ba91a50192629a37d6b805a7252670c086338e8ea1b53056c8a0771",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Acyclic operation and original effect resolution (SP-299)",
+              "line_start": 24554,
+              "line_end": 24554,
+              "quote": "There is no edge from committed/issued to no_effect or backward to a new reservation.",
+              "excerpt_sha256": "1768ea6499eb2607082c87e6fb2f8d9bf79561c1c89ec9dbd5802aa65fc7a5e6",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-299 names seven consumers with exact versions (reader.goal.body@1.0.0, objective_history, storage.goal_updated.inspect_current.v1@1.0.0, update audit/input readers, body receipt reader, SIR-049 replay) and assigns none_required per actual effect. The inspector imports the SP-278 read_token into a transient, non-stored witness; nothing persists a token, so DL-076 is not engaged.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "Current update consumers and accepted Goal state",
+              "line_start": 6167,
+              "line_end": 6167,
+              "quote": "For exactly active `goal.updated` v3, GRS-064/GRS-068 explicitly adopt SP-299's update-only consumer composition.",
+              "excerpt_sha256": "47198f82745d24c267d9628c45ad57244a7b1a2527725d6daca80aa95b52b6e0",
+              "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Active updated-v3 consumers (SP-299)",
+              "line_start": 24593,
+              "line_end": 24593,
+              "quote": "NEW `storage.goal_updated.inspect_current.v1@1.0.0`",
+              "excerpt_sha256": "f4b30239bea6780398786f184456a539edb461a63c4b83b0a9c1299214122f44",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Active updated-v3 consumers (SP-299)",
+              "line_start": 24599,
+              "line_end": 24599,
+              "quote": "The `none_required` disposition here follows each actual listed effect, not another family's passive status.",
+              "excerpt_sha256": "6b18b0919f6557c1b56cb713f0402d5fd66514490c281d9489a432fea0be3a13",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Selected current updated-v3 event inspection (SP-299)",
+              "line_start": 24611,
+              "line_end": 24611,
+              "quote": "Import the complete ten-field `read_token`, including its exact thirteen-field `source_selection`",
+              "excerpt_sha256": "e255f3fa59ea87d2339b14ff3e5bfe9a6a09a46a71e60071ada1f19667e0a660",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Whole v2 stays under legacy_v2_reader and the active-only inspector returns unsupported_payload for v2. Writers become available only after coordinator enrollment of all four families and roles; pre-existing backup paths refuse; package migration/withdrawal invalidates in-flight readers and needs re-enrollment; SP-287 withdrawal fences dependent use.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Event version, readers and backup (SP-299)",
+              "line_start": 24570,
+              "line_end": 24570,
+              "quote": "selects active v3 and embeds the **whole** old v2 resource under legacy_v2_reader",
+              "excerpt_sha256": "100bab4d7fa868056bc9d14687b4512b072bb42c6bc263e06a4544ee6175015e",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Selected current updated-v3 event inspection (SP-299)",
+              "line_start": 24615,
+              "line_end": 24615,
+              "quote": "this active-only inspection returns unsupported_payload for v2",
+              "excerpt_sha256": "b65e44ffbc1b053e1e6d0cda776d15f105605b6d41093032c67189f4ee13bd7e",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Original owner participation and installation (SP-299)",
+              "line_start": 24583,
+              "line_end": 24583,
+              "quote": "coherent mandatory backup/restore ownership before a writer becomes available",
+              "excerpt_sha256": "58eb1bb5e160d2005d5cd6bb8a644bc739dbd6b24bd7bb002cae151b972d334a",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Exact encodings, retention, backup and adoption (SP-299)",
+              "line_start": 24641,
+              "line_end": 24641,
+              "quote": "Package migration/withdrawal and root changes invalidate in-flight readers",
+              "excerpt_sha256": "b9fda50f05dc77e27c37af6cda949e9ef1469b9289bb23e6a54afb06bd65a6c2",
+              "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PARTIAL: original empty/unchanged/direct/approved-agent and confirmed-no-effect routes plus bounded independent reader/last-helper/lost-ack cases; exact remaining obligations are selected by Plans/goal_own_c_contracts/w12a-corpus.v1.json. No full oracle PASS or native execution follows.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-210",
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "Newly authored owner contract under DL-045 (2026-11-04). It names the static oracles of five current Goal writers, each with its own cases in Plans/goal_current_writer_oracle_fixtures.json, ",
+              "excerpt_sha256": "a7b045a7e6cf05c129c0a729f8516d57501a7834e7116844478e5e5a394fca39",
+              "file_sha256": "da5505f2141a29b8c507df10d0f656e547d428f38d435315a86d53ba4f17364d",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Common complete-path fixture and guard rules",
+              "line_start": 93,
+              "line_end": 93,
+              "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
+              "excerpt_sha256": "042e904a2eed162b3149e716a37d561bf23fc95f6038f2e96643ca5c84b302d8",
+              "file_sha256": "4fcaf95debd73f2b32613205edc6d1d1a10d3581d1047b0a5ad20f43975f8425",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Part 2 source witness qualification",
+              "line_start": 108,
+              "line_end": 108,
+              "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
+              "excerpt_sha256": "d56e8b9f02a667d5799ea15de2a04c87b14adbc31e5255f1bd3365375efe9295",
+              "file_sha256": "4fcaf95debd73f2b32613205edc6d1d1a10d3581d1047b0a5ad20f43975f8425",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/w12a-corpus.v1.json",
+              "unit": "C3-W12a explicit W1 completion accounting",
+              "line_start": 10,
+              "line_end": 10,
+              "quote": "\"closure\": \"NOT_COMPLETE\"",
+              "excerpt_sha256": "1796e0f7e12c9545e5fb9a89e87d5c6ab634d086b4f28201697cadc7745ed92e",
+              "file_sha256": "a59660c7e17c5fbd50f026e213e419bf621e7c86a7036837c0a35b2dbb310398",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W12 part 2 at 109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "New complete finite routes and bounded boundary cases do not close all W1 source, physical and inspection obligations."
+        }
+      },
+      "remaining_gaps": [
+        "Full W1/W2 original-source/method-root corpus and every independent effect/disclosure boundary remain incomplete.",
+        "S1/S2/O12/C3-F1/C3-F3 shared sweep integration remains separate.",
+        "W1: complete no-effect/fault/recovery and passive audit/input/current-inspection tuple corpus plus current physical representation."
+      ],
+      "normative_depth_complete": false,
+      "disposition_evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-299 section",
+          "line_start": 24516,
+          "line_end": 24516,
+          "quote": "The sole body writer remains SP-287's `owner.goal.body.mutation@1.0.0`",
+          "excerpt_sha256": "746a9d227354b400e9be59c04aa8de2b2a368025f94f0ed9682caf5a83fe68d8",
+          "file_sha256": "c915fc0547035d9ad55382f86c68e904bec9f882574727df41a2a8c66ca52b16",
+          "quote_check": "exact"
+        }
+      ],
+      "static_checks_seen": [
+        "scripts/pm_goal_current_writer_oracles.py",
+        "scripts/pm_goal_own_c_oracles.py",
+        "python3 scripts/pm_goal_own_c_source_oracles.py (component coverage only)",
+        "scripts/pm_goal_own_c3_w12_successor_oracles.py (successor qualification/approval components only)"
+      ],
+      "whole_root_closure": "NOT_COMPLETE",
+      "prior_pass_count_c3": 10,
+      "prior_pass_count": 10
+    }
+  ],
+  "cell_citations_verified": 48,
+  "continuation_base_commit": "109e3c26c4a19b466c73e0860da2bb27698fe2b7",
+  "execution_scope": {
+    "full_W1_closed": false,
+    "native": "NOT_RUN",
+    "source_selection": "Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json",
+    "remaining": "Plans/goal_own_c_contracts/w12a-corpus.v1.json",
+    "finite_whole_route_scenarios": 5,
+    "branch_positives": 18,
+    "branch_and_input_negatives": 54
+  }
+}

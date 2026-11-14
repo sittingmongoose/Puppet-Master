@@ -1,0 +1,95 @@
+{
+  "status": "UNFINISHED_REQUIRED_W1_W2_CLOSURE_NOT_MET",
+  "continuation_base": "7335692a3c0629a681e5f5e0de351dfe581dc7af",
+  "whole_root_closure": {
+    "goal.updated": "NOT_COMPLETE",
+    "goal.cancelled": "NOT_COMPLETE"
+  },
+  "qualifying_unfixable_blocker": null,
+  "oracle_counts": {
+    "component_success": 32,
+    "component_expected_refusal": 74,
+    "finite_source_positive_scenarios": 3,
+    "finite_source_negative_scenarios": 2,
+    "complete_W2_operations": 0
+  },
+  "raw_checks": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12/part2/checks.json",
+  "raw_checks_sha256": "1c3cdf810cabf805af8192cc98cf5e78758c500930babf298070d60da2dfb903",
+  "checks": [
+    {
+      "name": "successor-oracles",
+      "exit_code": 1
+    },
+    {
+      "name": "final-agent",
+      "exit_code": 0
+    },
+    {
+      "name": "final-direct",
+      "exit_code": 0
+    },
+    {
+      "name": "agent-revoked-before-body",
+      "exit_code": 0
+    },
+    {
+      "name": "agent-expired-before-body",
+      "exit_code": 0
+    },
+    {
+      "name": "agent-expired-after-body",
+      "exit_code": 0
+    },
+    {
+      "name": "original-preflight",
+      "exit_code": 2
+    },
+    {
+      "name": "dg-current",
+      "exit_code": 0
+    },
+    {
+      "name": "dg-stop-block",
+      "exit_code": 0
+    },
+    {
+      "name": "dg-lifecycle",
+      "exit_code": 0
+    },
+    {
+      "name": "own-c",
+      "exit_code": 0
+    },
+    {
+      "name": "source",
+      "exit_code": 0
+    },
+    {
+      "name": "lineage",
+      "exit_code": 0
+    },
+    {
+      "name": "shard-generate",
+      "exit_code": 0
+    },
+    {
+      "name": "index-generate",
+      "exit_code": 0
+    },
+    {
+      "name": "shard-check",
+      "exit_code": 0
+    },
+    {
+      "name": "index-validate",
+      "exit_code": 1
+    },
+    {
+      "name": "successor-oracles-final-recheck",
+      "exit_code": 0
+    }
+  ],
+  "native_execution": "NOT_RUN",
+  "ids_minted": [],
+  "stopped_question": null
+}

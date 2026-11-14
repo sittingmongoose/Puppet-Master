@@ -32520,3 +32520,43 @@ negative_constraints:
 - Do not treat a nickname as proof that its model is available.
 owner_hints: *id001
 ```
+
+### DL-510: Source Control source records (retention deck 6, E6-1)
+
+```yaml
+plan_unit_id: DL-510
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered card E6-1 of retention deck 6 in chat on 2026-11-13 at 10:43 PM EST (03:43Z on 2026-11-14); pm7-build relayed it. His answer, verbatim: "Same as the history". That is option A.
+
+  The question, as the card asked it: "How long should Source Control's saved source records be kept?" Each of the 19 Source Control event types saves a history entry, which already has a keep-rule (DL-453, DL-454 and DL-455), and a separate source record of what actually happened, which the history entry points back to. Option A, "Same lifetime as each history entry", keeps every history entry able to show its source and repeats the rule DL-507 chose for the developer-tool source records.
+
+  That answer keeps each Source Control original source fact exactly as long as the history entry that points to it. The following 19 exact prepared stored values (Plans/source_control_event_storage_rows.json) receive their family's history policy:
+  - DL-453 history (kept permanently, no age or count expiry): RP-AUTHORITY-INDEFINITE@1.0.0: source_control_backend_selected_fact (SP-1251), source_control_checkpoint_created_fact (SP-1252), source_control_checkpoint_restored_fact (SP-1253), source_control_repository_bound_fact (SP-1260), source_control_repository_unbound_fact (SP-1261), source_control_workspace_created_fact (SP-1263), source_control_workspace_removed_fact (SP-1265), source_control_writer_lease_granted_fact (SP-1267), source_control_writer_lease_lost_fact (SP-1268).
+  - DL-454 history (90 days from the first successful save that survives a restart): RP-TELEMETRY-90D@1.0.0: source_control_backend_detected_fact (SP-1250), source_control_status_refreshed_fact (SP-1262), source_control_workspace_opened_fact (SP-1264), source_control_workspace_switched_fact (SP-1266).
+  - DL-455 history (seven years from the original saved change): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter: source_control_remote_fetch_completed_fact (SP-1254), source_control_remote_fetch_started_fact (SP-1255), source_control_remote_publish_completed_fact (SP-1256), source_control_remote_publish_started_fact (SP-1257), source_control_remote_sync_completed_fact (SP-1258), source_control_remote_sync_started_fact (SP-1259).
+  All 19 families are Project-only, so no application edition and no application allowance applies.
+
+  For these exact stored values this decision supersedes the earlier PENDING_RETENTION_DECISION statements in SCS-1250 through SCS-1268 (C7), SP-1250 through SP-1268, Plans/source_control_event_preparation.json and Plans/source_control_event_storage_rows.json. Existing policy definitions keep their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: [DL-453, DL-454, DL-455]
+unblocks: []
+acceptance_criteria:
+- Every named source-fact row uses exactly its family's history policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm_w3b_event_oracles.py, Plans/source_control_event_storage_rows.json]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck6
+implementation_surfaces: [Plans/source_control_event_storage_rows.json, Plans/source_control_event_preparation.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-6_20261114.md; SHA-256 980b44d2a58373758e20eb0cd376748a4146bffac774b265781521e0d9d3a2da; Jared answer relayed by pm7-build mail 1114034303-dce3"
+- "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-6.md"
+preserved_exact_tokens: ["Same as the history", "RP-AUTHORITY-INDEFINITE@1.0.0", "RP-TELEMETRY-90D@1.0.0", "RP-OPERATIONAL-2555D@1.0.0", "source_control_backend_selected_fact", "source_control_checkpoint_created_fact", "source_control_checkpoint_restored_fact", "source_control_repository_bound_fact", "source_control_repository_unbound_fact", "source_control_workspace_created_fact", "source_control_workspace_removed_fact", "source_control_writer_lease_granted_fact", "source_control_writer_lease_lost_fact", "source_control_backend_detected_fact", "source_control_status_refreshed_fact", "source_control_workspace_opened_fact", "source_control_workspace_switched_fact", "source_control_remote_fetch_completed_fact", "source_control_remote_fetch_started_fact", "source_control_remote_publish_completed_fact", "source_control_remote_publish_started_fact", "source_control_remote_sync_completed_fact", "source_control_remote_sync_started_fact"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```

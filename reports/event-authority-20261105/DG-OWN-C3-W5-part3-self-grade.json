@@ -1,0 +1,774 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "rubric": {
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ]
+  },
+  "assessment_id": "EA-DG-OWN-C3-W5-PART3-20261105",
+  "assessment_kind": "self_grade_one_existing_family_successor_authored_original_corpus_unfinished",
+  "assessed_tree": {
+    "base_commit": "73c81fa47036793a3e25d0a3e72abc6156052598",
+    "branch": "plans/ea-goal-own-c3-w5-20261105",
+    "canonical_Plans_changed": true,
+    "selected_source_package": "pm.goal_run_certified.consumer_source.v2",
+    "selected_projection_edition": "pm.goal_run_certified.projection.reference.v1"
+  },
+  "native_execution": "NOT_RUN",
+  "closure": "NOT_COMPLETE",
+  "rows": [
+    {
+      "event_type": "goal_run.certified",
+      "family_id": "event-family-goal-run-certified",
+      "family_revision": "3.0.0",
+      "disposition": "CURRENT_WRITER",
+      "drafted_by_lane_dg": true,
+      "pass_count": 11,
+      "prior_pass_count_d1a": 11,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Row event-family-goal-run-certified at 3.0.0 in registry revision 2026-11-04.1, scope_policy project_only; payload_schema_ref resolves with matching $id and closed root; no payload_versions (CV-366 keeps it Project-only). No sibling admission.",
+          "evidence": [
+            {
+              "path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+              "unit": "root",
+              "line_start": 824,
+              "line_end": 824,
+              "quote": "\"$id\": \"pm.goal_runtime_event.goal_run_certified.schema.v3\",",
+              "excerpt_sha256": "f2d7d3710e077ecbe9d4151d4825a899ffe08064fae887b3329c81e610520294",
+              "file_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_family_composition.json",
+              "unit": "registry_selection",
+              "line_start": 691,
+              "line_end": 691,
+              "quote": "\"added_event_families\": 0,",
+              "excerpt_sha256": "d6665fbfe1f7061fd5f3b2a845c4a4fc0ab9905027d91a13c556c94bec286dac",
+              "file_sha256": "752143a20cc7742ed8a51d341068ab601601fe80faf87b0f80f741141a7a5a76",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\"",
+              "excerpt_sha256": "3f5768a30d176acdbe9417fd49da767de0e94a663200f7c5ad89d2975600f3f0",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/2",
+              "line_start": 184,
+              "line_end": 184,
+              "quote": "\"family_id\": \"event-family-goal-run-certified\"",
+              "excerpt_sha256": "919fd9807d081b7bb23244d7ca5747f49ea15face564b091b012bbf736b340b6",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Both registry anchors still point at the payload-minima section and SP-214, but each now routes to the governing v3 owners: the minima row names GRS-084, CV-352, GRS-085, SP-316 and SP-317, with a routing note, and SP-214 has a goal_run.certified paragraph and acceptance bullet naming GRS-084/085 and SP-316/317. Under clarification 1 the governing text is reachable from the anchors.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/2",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\"",
+              "excerpt_sha256": "cb6d149ab72678e05ec3f1366e1e7e1efc0299f586c96203d26d3fd9aa146778",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/2",
+              "line_start": 15,
+              "line_end": 15,
+              "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer\"",
+              "excerpt_sha256": "34df7ff9311c894337adb75511e9de91273de2b9b2b223581a002499f9c5ea97",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "Goal and GoalRun payload minima",
+              "line_start": 2772,
+              "line_end": 2772,
+              "quote": "| `goal_run.certified` | Active v3: the complete `pm.goal_runtime_event.goal_run_certified.schema.v3` payload and coordinator identity EventRecord root that GRS-084 selects",
+              "excerpt_sha256": "4f20685136d273d22bb10c95af629a23ee01dd41dc71429076cad7fedfbb3689",
+              "file_sha256": "624acad5edf26c546cbb7bbfc863ad0406e88a88e44acc35aec15ac12e562464",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "Goal and GoalRun payload minima",
+              "line_start": 2776,
+              "line_end": 2776,
+              "quote": "Routing note, 2026-09-24: the `goal_run.certified` row of `Plans/event_family_registry.json` keeps this section as its `semantic_owner_doc`",
+              "excerpt_sha256": "e4d486a372bfb04e548c984a367893d1af97fd547a7e373482ca610d5873ca90",
+              "file_sha256": "624acad5edf26c546cbb7bbfc863ad0406e88a88e44acc35aec15ac12e562464",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Coordinator (GRS-084, EP-124, coordinator protocol) over GRS-082/083 Standard source: phase 0 durable Standard capture, prepare, armed Intent/Control, one Storage append with both barriers and all-member first custody (custody_v2, full_value_result), EventPhase, atomic native/D01 plus Commit/Origin, readback, Release. SP-314 keeps SP-286 original custody mandatory; only fresh all_writers.v7 births are covered.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-084",
+              "line_start": 8131,
+              "line_end": 8131,
+              "quote": "Certified admission selects the entire goal-run-certified.v3 payload schema and the complete coordinator",
+              "excerpt_sha256": "281466853983876915489f312665d5e3598cba0a4555dfcb4d1e225a3a349d89",
+              "file_sha256": "624acad5edf26c546cbb7bbfc863ad0406e88a88e44acc35aec15ac12e562464",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Actual transaction domains and visibility",
+              "line_start": 27,
+              "line_end": 27,
+              "quote": "Phase 0 is the original already durable Standard capture; the coordinator never repeats it.",
+              "excerpt_sha256": "1c1e95d9cd39ac0c1126b4087281e78f2e4a9ffa9d525c884e016d503f5c57cd",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Actual transaction domains and visibility",
+              "line_start": 31,
+              "line_end": 31,
+              "quote": "It then executes the unchanged actual original all-member first-custody protocol.",
+              "excerpt_sha256": "295c5c5c8fc5eba35af41158ee838d6764c30e5be66f543b66e41f67755f90b1",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Actual transaction domains and visibility",
+              "line_start": 33,
+              "line_end": 33,
+              "quote": "Phase 4's atomic domain is the existing native Workflow/D01 redb database instance and one actual write transaction",
+              "excerpt_sha256": "aba88261474ecd392625551e4c448fa64c82281e33c10049ffc601b99ccdc5a9",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "v3 root is closed (additionalProperties and unevaluatedProperties false); allOf pins final_certifier_decision to certified, unresolved risks to empty and validators to passed, matching GRS-082's no-exception writer. GRS-084 selects the whole resource; its $comment ('no Event producer/consumer/adoption/runtime claim') is stale byte-pinned text.",
+          "evidence": [
+            {
+              "path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+              "unit": "root",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false,",
+              "excerpt_sha256": "caf6261bd51214e3f0e1f79bb4be170af948f47d47080f04b366668a8b5af3bd",
+              "file_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+              "unit": "root",
+              "line_start": 982,
+              "line_end": 982,
+              "quote": "\"unevaluatedProperties\": false",
+              "excerpt_sha256": "3012344da2fc54fec7bbe525b328ec127fa0c0e07816bc5fbd740361688ea0ec",
+              "file_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+              "unit": "root/allOf/1",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "\"const\": \"certified\"",
+              "excerpt_sha256": "586353512dcfa7778639547f3af7370556c4a49173459dae29eaf25b671fac3a",
+              "file_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+              "unit": "root/allOf/1",
+              "line_start": 293,
+              "line_end": 293,
+              "quote": "\"maxItems\": 0",
+              "excerpt_sha256": "cabc87764e9ea25437e4d294eba4b14020d477b861a2f1728ef61e7bf9c2231b",
+              "file_sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "project_only scope; identity tuple (goal_run_id, certification_receipt_ref, final_certifier_decision, expected_goal_run_revision, goal_run_revision) gives idempotency_key K ('goal_run.certified.v3:' + length-prefixed values) and event_id goal_run.certified.v3:SHA-256(E) over the storage-owned scope_partition and K; inner and outer keys byte-identical; Project/GoalRun copies match native/Goal sources.",
+          "evidence": [
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Identity and original inputs",
+              "line_start": 11,
+              "line_end": 11,
+              "quote": "The exact five-member identity tuple is ordered `(goal_run_id, certification_receipt_ref, final_certifier_decision, expected_goal_run_revision, goal_run_revision)`.",
+              "excerpt_sha256": "23c40efd1703cbca99705ebb6c3a86154e3258d0cc9db6486a9fb99175a47c3d",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Identity and original inputs",
+              "line_start": 13,
+              "line_end": 13,
+              "quote": "`idempotency_key` is the UTF-8 string K.",
+              "excerpt_sha256": "1408aeb6b2c8f3c9db08121ac1e564f715637df8dc003632f3658322411c461e",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Identity and original inputs",
+              "line_start": 13,
+              "line_end": 13,
+              "quote": "`event_id` is `goal_run.certified.v3:` plus lowercase SHA-256(E).",
+              "excerpt_sha256": "cea3b03d47c79ccaa6a3af0e32b240e5b98d025745654007524a8ef1c52a3ee0",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Identity and original inputs",
+              "line_start": 13,
+              "line_end": 13,
+              "quote": "Inner common idempotency_key and outer idempotency_key are byte-identical K.",
+              "excerpt_sha256": "7d6b26bead2d58c8507aef16b837526e62c49872e313871fd4996ffddd15c72f",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "dedupe_by_idempotency_key on K; an exact original retry reads original results only, with no new append, key, time, native CAS or Standard issuance; unequal identity/frame/group/custody conflicts; a durable append is never repeated after an uncertain acknowledgement; recovery never re-executes the certifier or re-appends and only classifies the original outcome.",
+          "evidence": [
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Identity and original inputs",
+              "line_start": 13,
+              "line_end": 13,
+              "quote": "Replay policy is `dedupe_by_idempotency_key`.",
+              "excerpt_sha256": "99fdefbbb7f2b129ab1810a1b4c2055af2e75c0996b2787d1f7accad2cf49cab",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Actual transaction domains and visibility",
+              "line_start": 29,
+              "line_end": 29,
+              "quote": "An exact original retry may read original results only; no new append, key, time, native CAS or Standard issuance occurs.",
+              "excerpt_sha256": "c0f1dc1ea9c03588027282503bae03d8b4895f6da2e47ce426ca961311395753",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Executor_Protocol.md",
+              "unit": "EP-124",
+              "line_start": 8693,
+              "line_end": 8693,
+              "quote": "Exact original retries dedupe; unequal identity/frame/group/custody conflicts fail.",
+              "excerpt_sha256": "c420234b57b0c08b45e420171e71f3f0b4eebf744eb8504e120e88b1f8480192",
+              "file_sha256": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Crash cuts and later retry",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "an acknowledged or unacknowledged durable append is never repeated",
+              "excerpt_sha256": "b746dbd4a833e802de7c37c73b0abb1e5e1ab818b6b95103662d1a62b7c984f0",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Registered RP-AUTHORITY-INDEFINITE@1.0.0; SP-316 puts the seven compact authority families under the same policy; SP-317 and consumer P8 put the v5 projection and checkpoint under exact RP-PROJECTION-3GEN and keep certified authority indefinite, source-coupled to Start's RP-RUNTIME-365D. No open choice.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/2",
+              "line_start": 47,
+              "line_end": 47,
+              "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+              "excerpt_sha256": "fe0cb5dfc30383cc74c52093250d8f4d225ea27919f5d113322bd9c010552237",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-316",
+              "line_start": 27423,
+              "line_end": 27423,
+              "quote": "compact authority uses RP-AUTHORITY-INDEFINITE",
+              "excerpt_sha256": "90293929fe475d9a6cf8df89cb509b5982293354d830b3daba38ee89e9d3a2b4",
+              "file_sha256": "f5fe3d2265042faa65dba540e9993cd06a336467978c6479650d04e9ff8b9e81",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-317",
+              "line_start": 27497,
+              "line_end": 27497,
+              "quote": "Exact RP-PROJECTION-3GEN@1.0.0",
+              "excerpt_sha256": "93ee260512e3355c10fac986f3af7f0b3ed09488448b4af47672d619042a87f8",
+              "file_sha256": "f5fe3d2265042faa65dba540e9993cd06a336467978c6479650d04e9ff8b9e81",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-317",
+              "line_start": 27501,
+              "line_end": 27501,
+              "quote": "cancelled/certified authority retains RP-AUTHORITY-INDEFINITE",
+              "excerpt_sha256": "bac892615a1e69c15377caa2f938f82767f208819cd0c8bc471857448426ba23",
+              "file_sha256": "f5fe3d2265042faa65dba540e9993cd06a336467978c6479650d04e9ff8b9e81",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Registry rejects unhandled secrets; SP-316's seven families hold only content-free issuance metadata while payloads and raw frames stay with their owners; BRS-029 and consumer P8 require mandatory coherent backup of original certified authority, optional coherent derived backup, and restore after tombstones/deletion/access/holds; each consumer boundary rechecks current permissions and holds.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/2",
+              "line_start": 35,
+              "line_end": 35,
+              "quote": "\"mode\": \"reject_unhandled_secrets\",",
+              "excerpt_sha256": "69b326f5100c3747e56823aea733477b3b41747a52c403f57851d9d32534e475",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-316",
+              "line_start": 27424,
+              "line_end": 27424,
+              "quote": "The seven families retain only their complete content-free issuance",
+              "excerpt_sha256": "e2f8b2a9052d79d3efed77849b038f470b12bbe7123ce2dbe587be86afcf38da",
+              "file_sha256": "f5fe3d2265042faa65dba540e9993cd06a336467978c6479650d04e9ff8b9e81",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Backup_Restore_System.md",
+              "unit": "BRS-029",
+              "line_start": 1856,
+              "line_end": 1856,
+              "quote": "Mandatory backup preserves complete original native and compact certified authority/custody at the",
+              "excerpt_sha256": "e61a1088462761ca4b5165d0ef36cbce137fff396258f3ceeb851e08e3b3f989",
+              "file_sha256": "e5a9d31d5d95fee9b0e3f9e5d7baaddc97d1fcfc8388cf94ccad063a7a4952db",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_certified_consumer_contracts/protocol.md",
+              "unit": "P8",
+              "line_start": 105,
+              "line_end": 105,
+              "quote": "Restore first enforces actual current tombstones, deletion, access and holds",
+              "excerpt_sha256": "a925cd5f1b613c74370bae1cf7b684655ba2617fb118581fb376f1d1e271b5b4",
+              "file_sha256": "a9d2717ada5b5c131d3613f44035b145fc8b2f69a9e79e44b1a0d9e23f3da8c4",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Native provisional_success or verifying becomes certified with body/control revisions +1 and the Goal unchanged; the Standard receipt is durable before append, the append precedes native commit, and certification is visible only after Release. The verifying source needs an independently admitted writer (GRS-082). Certification and cancellation exclude each other in the reducer.",
+          "evidence": [
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Actual transaction domains and visibility",
+              "line_start": 35,
+              "line_end": 35,
+              "quote": "Before this commit, native status is genuine provisional_success or verifying, exactly as its existing qualified source permits.",
+              "excerpt_sha256": "d84ba0ed23232eb5ba8265898ad1c0d144192d6121390004a14081e478a1b0ea",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Actual transaction domains and visibility",
+              "line_start": 35,
+              "line_end": 35,
+              "quote": "The Goal's whole body/control/context and revision are unchanged.",
+              "excerpt_sha256": "b6bed8b2efd4699f52957faa8499799fe5a5a6895f3931f5c4bd39bcd75b36d1",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+              "unit": "Actual transaction domains and visibility",
+              "line_start": 37,
+              "line_end": 37,
+              "quote": "Only then may enrolled observers report current certification",
+              "excerpt_sha256": "46d2274e7b3faf340c052070b6be6bf479ac896f7ea0f6220ab4053759905888",
+              "file_sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-082",
+              "line_start": 7981,
+              "line_end": 7981,
+              "quote": "Both D-R18 source states provisional_success and verifying remain valid when an",
+              "excerpt_sha256": "033d6e312e9fe8dcab1b702ec20d588b2c3881982b1a6ce449636db8daea7474",
+              "file_sha256": "624acad5edf26c546cbb7bbfc863ad0406e88a88e44acc35aec15ac12e562464",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "GRS-1138/SP-1139/CV-1137 explicitly adopt certified reference.v1 with exact methods, physical keys, full row/checkpoint schemas, nine-field SP-278 token, original profile/frontier CAS, replay/rebuild, pack/source lifetime and cutover. This closes the part-2 representation gap as a normative contract. Unexecuted original CF/P cases remain PARTIAL solely in the oracle criterion.",
+          "evidence": [
+            {
+              "path": "Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json",
+              "unit": "selected_successor",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "\"edition\": \"pm.goal_run_certified.consumer_source.v2\"",
+              "excerpt_sha256": "92b1f858b62312504eb808d01eafd48a6a07f59b899eab39694500ec22911105",
+              "file_sha256": "da84ffb39a990021c49bbcd11ae9cbc700bdcf679ea285a4a65eaba40e4265d7",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_certified_consumer_contracts/source-package.v2/contract.md",
+              "unit": "scoped_import_contract",
+              "line_start": 7,
+              "line_end": 7,
+              "quote": "Nested references resolve entirely within that retained realm.",
+              "excerpt_sha256": "c059ff595d38805af84dc38757e9f271f7ab833def47a188544c03a25bbf4e3d",
+              "file_sha256": "a59d99eb11f390a2c5bac286550ed7b5fd1d4481b8bea75854cee2c556d6e2eb",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_certified_consumer_contracts/schemas/consumer.v1.schema.json",
+              "unit": "frozen_closed_projection",
+              "line_start": 348,
+              "line_end": 348,
+              "quote": "\"CertifiedProjection\": {",
+              "excerpt_sha256": "896960d6c38bfc8fbf3e1f4ea92c8d8ada96aaa7e1aa85bb5895adde59a986f0",
+              "file_sha256": "7231019585f5b0ad2d1453fc1df3b8525baaa1b979eb616757d6f7307a75936a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-340",
+              "line_start": 29100,
+              "line_end": 29100,
+              "quote": "Every redb family declares a maximum value size, at most 16 KiB; larger values go to the payload store (SP-337).",
+              "excerpt_sha256": "1b489a1cf1ee7cff44470f852d1ce5338ab48bc6a136d0647a59cf799002ad1b",
+              "file_sha256": "f5fe3d2265042faa65dba540e9993cd06a336467978c6479650d04e9ff8b9e81",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage_value_registry.json",
+              "unit": "storage_profile.family_profiles.goal_run_started_cancelled_certified_projection",
+              "line_start": 125642,
+              "line_end": 125648,
+              "quote": "\"goal_run_started_cancelled_certified_projection\": {\n        \"redb_file\": \"derived\",\n        \"storage_group\": \"runs_and_goals\",\n        \"encoding_target\": \"messagepack_canonical\",\n        \"encoding_no",
+              "excerpt_sha256": "5daf51ce714aa3fbb4ab8d179b7a53af10bf4a8266a79c1424695cdff3ff00de",
+              "file_sha256": "ff3dad2bbd99f95cdf5373d7b6d9d7358ca8fe9929b0a721676910b09f879972",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_projection_reference_contracts/certified.md",
+              "unit": "GRS-1138/SP-1139/CV-1137",
+              "line_start": 33,
+              "line_end": 33,
+              "quote": "All nine durable SP-278 token fields are retained; redb_snapshot_id is a live actual fence and never persisted as a token field.",
+              "excerpt_sha256": "c26396226f6ce6f50832308b388c49e7f1a6396e6b30637e4b34a1c343f039ca",
+              "file_sha256": "4a2f95b6b0a8608cd577bdaf7512e6a306e82093de5a21421651dfa2b5ee37a5",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_projection_reference_contracts/certified.md",
+              "unit": "GRS-1138/SP-1139/CV-1137",
+              "line_start": 53,
+              "line_end": 53,
+              "quote": "Before each atomic row/checkpoint publication, the real Storage transaction rereads and fences complete generic CURRENT/manifest/source/gaps/full frontier,",
+              "excerpt_sha256": "df3cde30921613f1063f5404621600ec42f9c48ac2b90dc7d1ba41d8c495273b",
+              "file_sha256": "4a2f95b6b0a8608cd577bdaf7512e6a306e82093de5a21421651dfa2b5ee37a5",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_projection_reference_contracts/certified.md",
+              "unit": "GRS-1138/SP-1139/CV-1137",
+              "line_start": 7,
+              "line_end": 7,
+              "quote": "Every method in `certified.methods.json` selects `pm.goal_run_certified.projection.reference.v1`,",
+              "excerpt_sha256": "aea8eb4405f31a12405bd59b81e3b3e6f0c7e0038dbcb0405c6abad39cade133",
+              "file_sha256": "4a2f95b6b0a8608cd577bdaf7512e6a306e82093de5a21421651dfa2b5ee37a5",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "GRS-1138/SP-1139/CV-1137 close the normative representation gap; missing full source cases remain criterion 12."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Compatibility: native-v6/producer-v1 editions and old started/cancelled branches keep their closed scope with no existing birth enrolled or cast, and the original started/cancelled consumer resources stay unchanged. Withdrawal: withdrawn route authority makes the Standard path unavailable, withdrawal fails before certified visibility, revoked consumer participants refuse, and derived state is rebuilt only by staged cutover.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-084",
+              "line_start": 8148,
+              "line_end": 8148,
+              "quote": "Earlier native-v6 and producer-v1 source editions and old started/cancelled branches retain",
+              "excerpt_sha256": "673e6daa997dafca91e8d4b424028f5e08c1388bd3d20a14c5fd2c4124e690e0",
+              "file_sha256": "624acad5edf26c546cbb7bbfc863ad0406e88a88e44acc35aec15ac12e562464",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-084",
+              "line_start": 8149,
+              "line_end": 8149,
+              "quote": "their original closed scope; no existing birth is enrolled or cast.",
+              "excerpt_sha256": "63e9bda4fe976ba9a2c54ed70012309d8cdb4a3efd1243a6daa6d6e2adb72173",
+              "file_sha256": "624acad5edf26c546cbb7bbfc863ad0406e88a88e44acc35aec15ac12e562464",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_certified_consumer_contracts/protocol.md",
+              "unit": "Complete original resources",
+              "line_start": 9,
+              "line_end": 9,
+              "quote": "The whole original started and cancelled consumer schemas, methods, physical families, generation roots, source maps and owner protocols remain unchanged under original/.",
+              "excerpt_sha256": "e8ce9ecc04251a8b57da42acf8bc576d277346b8c652b38786508fad68675451",
+              "file_sha256": "a9d2717ada5b5c131d3613f44035b145fc8b2f69a9e79e44b1a0d9e23f3da8c4",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/workflow_standard_source_contracts/protocol.md",
+              "unit": "Standard source protocol",
+              "line_start": 107,
+              "line_end": 107,
+              "quote": "Unknown versions, missing original members or withdrawn route authority make the affected path unavailable.",
+              "excerpt_sha256": "bf09d363251d9c62becfcf27c9a212a71deed5fccc6c6cd23043f322f2b9f20b",
+              "file_sha256": "df228389fe435056ea84b9038c525aa5a9661460b68bc4cf445cf42a2937b51c",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "ATS-1121 adds representation prerequisites: 13 positive/31 negative runtime controls and seven positive schema roots/85 negative seams. Zero complete CF-01..12/P4..P8 original semantic positives or negatives are executed. DG-OWN-C3-W5-part3-remaining.json records every remaining facet and full consumer tuple. W5 is NOT_COMPLETE; native execution and shared guard isolation are not passed.",
+          "evidence": [
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "W5",
+              "line_start": 71,
+              "line_end": 71,
+              "quote": "**Explicit successor selection (C3-W5 part 3, newly authored):**",
+              "excerpt_sha256": "89fd2c17e50e4fffc86c9fa946bf17baa80e5fb46ceb6c9cba92dd89dae2da3e",
+              "file_sha256": "61cc8757bc33db019770efc6a3a46ba1d66d4554ba1ec68d271f428b6a7a998d",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+              "unit": "representation_precondition",
+              "line_start": 269,
+              "line_end": 269,
+              "quote": "\"blocker\": \"W5-STORAGE-PROJECTION-NO-REFERENCE-EDITION\"",
+              "excerpt_sha256": "6d645424092f37830d1feae0c778ec199b02e97e3f53cba39a91f86b74bb696d",
+              "file_sha256": "11f61e46cf1a3b8051f91197953c054b810c18f1ac24c7787659c7740ee887c0",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_certified_consumer_contracts/source-package.v2/size-precondition.fixture.json",
+              "unit": "fixture_qualification",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "NEWLY_AUTHORED_TEST_ONLY_WHOLE_SCHEMA_AND_SIZE_PRECONDITION_NO_NATIVE_ISSUANCE_OR_FULL_TUPLE",
+              "excerpt_sha256": "445d41d7a177a3d0cd642afdd2826d42228d7bb12723374a254af03c5ef4c66f",
+              "file_sha256": "b14f31913afebbf53cacd69d7134783efe356479ad085dd4a0e2d532885f72be",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_projection_reference_contracts/certified.md",
+              "unit": "ATS-1121",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "Original CF-01..12 and P4..P8 semantic tuples remain an independent acceptance obligation.",
+              "excerpt_sha256": "4631d9f85beb41fc6e814fa377dec01c7c6d10076cf9aaf90258d14d33f582eb",
+              "file_sha256": "4a2f95b6b0a8608cd577bdaf7512e6a306e82093de5a21421651dfa2b5ee37a5",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "DG-OWN-C3-W5-part2-self-grade.json",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Current owner evidence rechecked; native NOT_RUN is separate and the original oracle corpus remains unfinished."
+        }
+      },
+      "remaining_gaps": [
+        "CF-01: Complete I0/IdentityInput and all actual original identity sources; full producer25-to-Event equality, original recipe/input/result carriers, nullable/wire/Unicode and identity negatives.",
+        "CF-02: Full AssignmentSource, InvocationSource, ResolverGraphSource, ReferenceSource, CausalSource and WholeProducerSource at original prepare.v2 and each source helper, complete field mapping and after-helper drift refusals.",
+        "CF-03: Complete OriginalCertificationSource, required-node/WorkNode/Attempt, final decision, durable Standard/capture, original successful native result/origin and D01 chain; missing/failed/cancelled/waived/exception negatives.",
+        "CF-04: Full B1 native birth/Goal/binding argument/candidate union, all participant registration and method-root occurrences, original v7/prepare.v2 profile selection. Eager reference/profile-member DAG controls are done, but not a complete original birth tuple or full final owner-to-composition graph.",
+        "CF-05: Complete B1 joint native+compact Birth+Control candidate/preimage tuple; I0 sources before issued identity/P9; original identity issuance then producer preparation. Whole chronology, cyclic/future/partial visibility negatives.",
+        "CF-06: Complete F5a preappend source and prospective Event, F5b frame+manifest candidates and original barriers, F5c full multi-member group custody/readback, F5d EventPhase/control/outer return. Equal retry versus unequal conflict, replay-only current refusal, lost acknowledgements and partial group negatives.",
+        "CF-07: Complete native candidates, original Event prerequisite, all-member AppendEvidence, joint native/D01/Commit/Origin/control before/after images, genuine readback then Release; crash, premature release, pending visibility, partial commit and passive-repair negatives.",
+        "CF-08: Complete Q1-Q4 actual GuardStoreSource/GuardReadResult and separate Goal/native/permissions/Stop sources at every enumerated participant-method occurrence, every lower own boundary and outer final disclosure. Missing/borrowed/stale/foreign/drifting source negatives.",
+        "CF-09: All original retained metadata and custody roots with separately callable retained-native, inspect-original, read-historical and read-current tuples; lawful later state change/history, expired source, payload-only inspection and passive effects negatives.",
+        "CF-10: Complete generic CURRENT/manifest/segment/index/raw frames/gaps and all actual original supported legacy/native-v7/certified source tuples. Off-run validation before filtering, original Start expiry/gap rebuilding, deterministic reducer and every unsupported/conflicting/reordered/foreign source case.",
+        "CF-11: Complete actual and candidate ProjectState, full root+generic source preimages, all exact afterimages, source/owner epochs, row/checkpoint operations and actual transaction adapter. Atomic crash/lost ack, stale frontier/root, partial staging/current cutover and fourth-generation negatives. Representation round-trips alone are not these tuples.",
+        "CF-12: Complete original authority backup/restore and source/deletion/hold/tombstone controls, lawful Start expiry/survivor gap and BRS-031 derived rebuild. Missing authority, resurrection, extended source hold, partial authority backup and archive negatives.",
+        "P4: Same complete original global-prefix and lifecycle-source corpus as CF-10, including all unrelated physical frames before filtering and every exact old/current branch adapter.",
+        "P5: Complete generation roots with original nine-field durable token, real actual root revision/transaction, original profile digest, immutable anchor and complete coverage/gap/frontier chain from the full prefix. Key/row/operation representation components are done; no full original generation tuple is executed.",
+        "P6: Complete independently callable lower read_sources and publish argument/result unions, original sources, candidate state, actual root/full frontier CAS and bounded joint publication/stage/cutover/fault corpus.",
+        "P7: Complete original coordinator read_current union (all twenty-seven consumer current arguments), original native/Standard/D01/Goal/Stop/guard and exhaustive current frontier at each helper and final held fence. Separate retained history, current drift and withdrawn reader negatives.",
+        "P8: Complete source-coupled content/pack/disclosure controls across staged/current/retired/held generations and authentic source policies; full original backup and current BRS-031 post-restore rebuild with deletion/hold/access controls."
+      ],
+      "normative_depth_complete": false,
+      "disposition_evidence": [
+        {
+          "path": "Plans/Goal_Runtime_System.md",
+          "unit": "GRS-084",
+          "line_start": 8131,
+          "line_end": 8131,
+          "quote": "Certified admission selects the entire goal-run-certified.v3 payload schema and the complete coordinator",
+          "excerpt_sha256": "281466853983876915489f312665d5e3598cba0a4555dfcb4d1e225a3a349d89",
+          "file_sha256": "3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218",
+          "quote_check": "exact"
+        }
+      ],
+      "static_checks_seen": [
+        "certified reference.v1 isolated eager closure: zero unresolved",
+        "selected 83 member bytes and profile-member DAG",
+        "13 positive / 31 negative representation controls",
+        "seven positive schema roots / 85 negative field seams",
+        "complete original CF/P semantic tuple corpus NOT_RUN"
+      ],
+      "prior_pass_count": 10,
+      "closure": "NOT_COMPLETE"
+    }
+  ],
+  "new_complete_path_positives": 0,
+  "new_complete_path_negatives": 0,
+  "new_product_guards": 24,
+  "membership_note": "Existing Event registration unchanged; the source successor grants no admission or native installation.",
+  "new_component_guard_labels": 24,
+  "new_product_guard_scope": "Runtime representation component labels only; full original-path coverage and static predicate isolation remain unproved.",
+  "inherited_part2_source_control_counts": {
+    "positive_routes": 22,
+    "negative_routes": 9,
+    "whole_semantic_tuples": 0
+  },
+  "part3_remainder_report": "reports/event-authority-20261105/DG-OWN-C3-W5-part3-remaining.json"
+}

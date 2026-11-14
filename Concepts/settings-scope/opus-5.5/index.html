@@ -154,7 +154,7 @@
   const STEPS = [
     ['css', 'layer/core.css'], ['js', 'layer/world.js'], ['js', 'layer/resolve.js'], ['js', 'layer/guard.js'], ['js', 'layer/feed.js'],
     ['css', 'layer/rows.css'], ['js', 'layer/rows.js'],
-    ['css', 'layer/panel.css'], ['js', 'layer/panel.js'],
+    ['css', 'layer/panel.css'], ['js', 'layer/panel.js'], ['js', 'layer/places.js'],
     ['js', 'layer/managers.js'], ['js', 'layer/copy.js'], ['js', 'layer/moments.js'], ['js', 'layer/board.js'],
     ['js', 'layer/boot.js']
   ].map(([k, p]) => [k, new URL(p, base).href]);
@@ -260,7 +260,8 @@
         const text = await res.text(), inv = JSON.parse(text);
         let sha = null;
         try { const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)); sha = [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, '0')).join(''); } catch (e) { /* not a secure context */ }
-        const settings = (inv.settings || []).filter((r) => r && r.id && r.layering).map((r) => ({ id: r.id, type: r.type, layering: r.layering }));
+        /* Jared 2026-11-13: each row's options, option_labels, model_picker and default too (limits and words) */
+        const settings = (inv.settings || []).filter((r) => r && r.id && r.layering).map((r) => ({ id: r.id, type: r.type, layering: r.layering, options: r.options, option_labels: r.option_labels, model_picker: r.model_picker, default: r.default }));
         const groups = {}; (inv.categories || []).forEach((c) => (c.subgroups || []).forEach((g) => { groups[c.id + '.' + g.id] = g.title; }));
         W.PSX_LAYERING = { source: { path: 'Plans/settings_inventory.json', sha256: sha, schema_version: inv.schema_version, rows: settings.length }, groups, settings };
       } catch (e) { console.warn('Settings concept: could not read Plans’ inventory', INVENTORY, e); }

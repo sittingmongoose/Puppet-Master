@@ -1,0 +1,330 @@
+{
+  "schema_id": "pm.goal_own_c.suites.v1",
+  "status": "AUTHORED_ORACLE_CONTRACT_NOT_COMPLETE_NATIVE_ROOT_FIXTURES",
+  "suites": [
+    {
+      "event_type": "goal.updated",
+      "protocol_section": "W1",
+      "own_whole_root_documents": [
+        "Plans/goal_update_command_custody.schema.json",
+        "Plans/goal_updated_consumer_contracts.schema.json"
+      ],
+      "original_isolated_resource_banks": [
+        "Plans/goal_update_schema_resources.json",
+        "Plans/goal_updated_consumer_resources.json"
+      ],
+      "whole_method_maps": [],
+      "independent_boundaries": [
+        "original_entry",
+        "each_returning_helper",
+        "lower_own_effect_or_disclosure",
+        "outer_final_disclosure"
+      ],
+      "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
+      "inherited_full_tuple_coverage": "PARTIAL",
+      "native_execution": "NOT_RUN",
+      "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
+      "part2_component_witnesses": [
+        "scripts/pm_goal_own_c_source_oracles.py: complete retained Direct Save capture schema/custody; proposal/resolution storage and provider joins; original Goal snapshot semantics"
+      ],
+      "c3_w12_part2_successor_selection": "Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json",
+      "c3_w12_part2_qualification": "python3 scripts/pm_goal_own_c3_w12_successor_oracles.py",
+      "c3_w12_part2_whole_root_closure": "NOT_COMPLETE",
+      "c3_w12a_corpus_selection": "Plans/goal_own_c_contracts/w12a-corpus.v2.json",
+      "c3_w12a_oracles": "scripts/pm_goal_own_c3_w12a_p2_oracles.py",
+      "c3_w12a_whole_root_closure": "NOT_COMPLETE",
+      "c3_w12a_predecessor_corpus_selection": "Plans/goal_own_c_contracts/w12a-corpus.v1.json",
+      "c3_w12a_predecessor_oracles": "scripts/pm_goal_own_c3_w12a_oracles.py",
+      "c3_w12a_physical_successor": "Plans/goal_own_c_contracts/w12a-successor-v3/selection.json",
+      "dg_u_corpus_selection": "Plans/goal_own_c_contracts/dg-u-corpus.v1.json",
+      "dg_u_successor_selection": "Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json",
+      "dg_u_oracles": "python3 scripts/pm_goal_dg_u_oracles.py --output <result.json> --guards <guards.json>",
+      "dg_u_closure": "see Plans/goal_own_c_contracts/dg-u-corpus.v1.json per-group closure; native NOT_RUN"
+    },
+    {
+      "event_type": "goal.cancelled",
+      "protocol_section": "W2",
+      "own_whole_root_documents": [
+        "Plans/goal_cancel_command_custody.schema.json"
+      ],
+      "original_isolated_resource_banks": [
+        "Plans/goal_cancel_schema_resources.json",
+        "Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json"
+      ],
+      "whole_method_maps": [
+        "Plans/goal_cancel_contracts/methods.json",
+        "Plans/goal_cancel_contracts/execution-methods.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json"
+      ],
+      "independent_boundaries": [
+        "original_entry",
+        "each_returning_helper",
+        "lower_own_effect_or_disclosure",
+        "outer_final_disclosure"
+      ],
+      "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
+      "inherited_full_tuple_coverage": "PARTIAL",
+      "native_execution": "NOT_RUN",
+      "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
+      "part2_component_witnesses": [
+        "scripts/pm_goal_own_c_source_oracles.py: original Goal outer image/receipt; ordered manifest and compact output transaction; no native binding/Stop installation"
+      ],
+      "c3_w12_part2_successor_selection": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json",
+      "c3_w12_part2_qualification": "python3 scripts/pm_goal_own_c3_w12_successor_oracles.py",
+      "c3_w12_part2_whole_root_closure": "NOT_COMPLETE",
+      "c3_w12b_corpus": "Plans/goal_own_c_contracts/w12b-corpus-v1/coverage.json",
+      "c3_w12b_oracle": "python3 scripts/pm_goal_own_c3_w12b_oracles.py",
+      "c3_w12b_whole_root_closure": "NOT_COMPLETE",
+      "dg_ca_corpus": "Plans/goal_own_c_contracts/dg-ca-corpus-v1/coverage.json",
+      "dg_ca_oracle": "python3 scripts/pm_goal_dg_ca_oracles.py",
+      "dg_ca_group_closure": {
+        "C1": "COMPLETE",
+        "C2": "COMPLETE",
+        "C3": "COMPLETE_BY_DG_CA3",
+        "C4": "COMPLETE_BY_DG_CA3"
+      },
+      "dg_ca_assignment_successor": "Plans/goal_own_c_contracts/dg-ca-assignment-successor-v1/selection.v1.json",
+      "dg_cb_corpus": "Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json",
+      "dg_cb_oracle": "python3 scripts/pm_goal_dg_cb_oracles.py",
+      "dg_cb_crash_matrix": "python3 scripts/pm_goal_dg_cb_crash.py matrix",
+      "dg_cb_group_closure": {
+        "C5": "COMPLETE",
+        "C6": "COMPLETE"
+      },
+      "dg_cb_test_only_sources": "Plans/goal_own_c_contracts/dg-cb-migration-v1/test-only-sources.v1.schema.json",
+      "dg_ca3_oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py",
+      "dg_ca3_group_closure": {
+        "C3": "COMPLETE",
+        "C4": "COMPLETE"
+      },
+      "dg_ca3_native_owners": "scripts/pm_goal_dg_ca3_native.py",
+      "dg_ca3_index_read_source": "scripts/pm_goal_dg_ca3_index.py (lane-local TEST_ONLY SP-278 read source; adapter batch)"
+    },
+    {
+      "event_type": "goal_run.started",
+      "protocol_section": "W3",
+      "own_whole_root_documents": [
+        "Plans/goal_run_started_consumer_contracts/consumer.schema.json"
+      ],
+      "original_isolated_resource_banks": [
+        "Plans/goal_run_started_consumer_schema_resources.json"
+      ],
+      "whole_method_maps": [
+        "Plans/goal_run_started_consumer_contracts/methods.json"
+      ],
+      "independent_boundaries": [
+        "original_entry",
+        "each_returning_helper",
+        "lower_own_effect_or_disclosure",
+        "outer_final_disclosure"
+      ],
+      "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
+      "inherited_full_tuple_coverage": "PARTIAL",
+      "native_execution": "NOT_RUN",
+      "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
+      "part2_component_witnesses": [],
+      "projection_reference_successor": {
+        "selection": "Plans/goal_run_projection_reference_contracts/started.physical.json",
+        "protocol": "Plans/goal_run_projection_reference_contracts/started.md",
+        "oracles": "scripts/pm_goal_own_c3_w34_reference_oracles.py",
+        "qualification": "NEWLY_AUTHORED_UNINSTALLED_FULL_ORIGINAL_PATH_REQUIRED",
+        "whole_root_closure": "NOT_COMPLETE_ORIGINAL_CORPUS_NOT_EXECUTED",
+        "native_v7_source_note": "Existing whole native-v7 companions/source-method composition are available; edition separation is not a blocker."
+      },
+      "part3_w34a_component_corpus": {
+        "script": "scripts/pm_goal_own_c3_w34a_oracles.py",
+        "scope": "TEST_ONLY complete retained-eight-object relation witnesses, scope-derived successor rows and pinned actual wire codec; no original Start issuance or full W3 claim",
+        "coverage": "PARTIAL",
+        "whole_root_closure": "NOT_COMPLETE",
+        "qualification_exit": 2,
+        "component_only_flag": "--component-only",
+        "native_execution": "NOT_RUN",
+        "shared_guard_proof": "guard and raw schema observations exported; shared-tool isolation remains required",
+        "remaining": [
+          "Original before-birth Start/Goal arguments and complete native/D01 production/publication/first-group custody/recovery",
+          "Separate native-v7 full method/source dispatch",
+          "Actual whole generic source/current frontier/retention gaps and reducer",
+          "Separate full fresh native and Goal/Stop/control sources at all lower/passive/final boundaries",
+          "Full source/root/frontier CAS, row/checkpoint crash/retry, staging/cutover and SP-424 withdrawal",
+          "Original-path reference and checkpoint-spill tuples"
+        ]
+      },
+      "dg_s_complete_original_path": {
+        "scripts": [
+          "scripts/pm_goal_dg_s_world.py",
+          "scripts/pm_goal_dg_s_start.py",
+          "scripts/pm_goal_dg_s_readers.py",
+          "scripts/pm_goal_dg_s_oracles.py"
+        ],
+        "adapters": "scripts/pm_goal_test_*.py (plans/ea-goal-adapter-20261111 at 62e61fe59a)",
+        "groups": ["S1", "S2", "S3", "S4", "S5", "S6"],
+        "editions": ["workflow_start_original.v2", "native-v7 composition (workflow_start_standard_source.v5)"],
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN",
+        "native_line": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+        "command": "python3 scripts/pm_goal_dg_s_oracles.py --output <path>",
+        "exit": "0 only when every case passes",
+        "guard_export": "every negative's expected code and the static require() inventory for scripts/pm_guard_isolation.py; no local removal engine",
+        "report": "reports/event-authority-20261111/DG-S.md"
+      }
+    },
+    {
+      "event_type": "goal_run.cancelled",
+      "protocol_section": "W4",
+      "own_whole_root_documents": [
+        "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json"
+      ],
+      "original_isolated_resource_banks": [
+        "Plans/goal_run_cancelled_consumer_schema_resources.json"
+      ],
+      "whole_method_maps": [
+        "Plans/goal_run_cancelled_consumer_contracts/methods.json"
+      ],
+      "independent_boundaries": [
+        "original_entry",
+        "each_returning_helper",
+        "lower_own_effect_or_disclosure",
+        "outer_final_disclosure"
+      ],
+      "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
+      "inherited_full_tuple_coverage": "PARTIAL",
+      "native_execution": "NOT_RUN",
+      "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
+      "part2_component_witnesses": [],
+      "projection_reference_successor": {
+        "selection": "Plans/goal_run_projection_reference_contracts/cancelled.physical.json",
+        "protocol": "Plans/goal_run_projection_reference_contracts/cancelled.md",
+        "oracles": "scripts/pm_goal_own_c3_w34_reference_oracles.py",
+        "qualification": "NEWLY_AUTHORED_UNINSTALLED_FULL_ORIGINAL_PATH_REQUIRED",
+        "whole_root_closure": "NOT_COMPLETE_ORIGINAL_CORPUS_NOT_EXECUTED",
+        "native_v7_source_note": "Existing whole native-v7 companions/source-method composition are available; edition separation is not a blocker."
+      },
+      "scoped_routing_successor": {
+        "selection": "Plans/goal_run_cancelled_w4_contracts/selection.v1.json",
+        "protocol": "Plans/goal_run_cancelled_w4_contracts/protocol.md",
+        "qualification_oracles": "scripts/pm_goal_own_c3_w34b_oracles.py",
+        "qualification": "NEWLY_AUTHORED_UNINSTALLED_WHOLE_BANK_QUALIFICATION_REQUIRED",
+        "whole_root_closure": "NOT_COMPLETE_ORIGINAL_CORPUS_NOT_EXECUTED"
+      },
+      "dg_r_executable_composition": {
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN",
+        "native_line": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+        "world": "scripts/pm_goal_dg_r_world.py",
+        "consumer": "scripts/pm_goal_dg_r_readers.py",
+        "projector": "scripts/pm_goal_dg_r_projector.py",
+        "oracles": "scripts/pm_goal_dg_r_oracles.py",
+        "shared_adapters": "Plans/goal_own_c_contracts/protocol.md#shared-test_only-owner-adapters-2026-11-11",
+        "group_status_report": "reports/event-authority-20261111/DG-R.md",
+        "native_v7_merge_dependency": {
+          "branch": "plans/ea-goal-own-c3-w5-20261105",
+          "commit": "73c81fa47036793a3e25d0a3e72abc6156052598",
+          "package": "Plans/goal_run_certified_consumer_contracts/source-package.v2/",
+          "read": "read-only from git by verified blob id; not copied onto this branch"
+        }
+      }
+    },
+    {
+      "event_type": "goal_run.certified",
+      "protocol_section": "W5",
+      "own_whole_root_documents": [
+        "Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json",
+        "Plans/goal_run_certified_consumer_contracts/schemas/consumer.v1.schema.json",
+        "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json"
+      ],
+      "original_isolated_resource_banks": [
+        "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+        "Plans/goal_run_certified_consumer_contracts/source-package.v2/resource-realms.json"
+      ],
+      "whole_method_maps": [
+        "Plans/goal_certified_event_coordinator_contracts/methods.json",
+        "Plans/goal_run_projection_reference_contracts/certified.methods.json"
+      ],
+      "independent_boundaries": [
+        "original_entry",
+        "each_returning_helper",
+        "lower_own_effect_or_disclosure",
+        "outer_final_disclosure"
+      ],
+      "fixture_scope": "new TEST_ONLY dispatch/custody slice; full inherited method-root tuples still required",
+      "inherited_full_tuple_coverage": "PARTIAL",
+      "native_execution": "NOT_RUN",
+      "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
+      "part2_component_witnesses": [],
+      "c3_w5_part2": {
+        "selected_source_package": "Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json",
+        "source_package_edition": "pm.goal_run_certified.consumer_source.v2",
+        "predecessor_history": [
+          "Plans/goal_run_certified_consumer_contracts/imports.json",
+          "Plans/goal_run_certified_consumer_contracts/resource-realms.json",
+          "Plans/goal_run_certified_consumer_contracts/methods.json",
+          "Plans/goal_run_certified_consumer_contracts/installed-profile.json"
+        ],
+        "reference_closure": "COMPLETE_LITERAL_SCHEMA_REFERENCES_ONLY",
+        "whole_tuple_closure": "BLOCKED",
+        "technical_blocker": "W5-STORAGE-PROJECTION-NO-REFERENCE-EDITION",
+        "precondition_oracle": "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+        "native_execution": "NOT_RUN"
+      },
+      "c3_w5_part3": {
+        "projection_selection": "Plans/goal_run_projection_reference_contracts/certified.selection.json",
+        "source_package_selection": "Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json",
+        "projection_edition": "pm.goal_run_certified.projection.reference.v1",
+        "supersedes_part2_representation_blocker": true,
+        "whole_tuple_closure": "NOT_COMPLETE",
+        "component_oracle": "scripts/pm_goal_own_c3_w5_projection_oracles.py",
+        "native_execution": "NOT_RUN"
+      },
+      "dg_cf1": {
+        "groups": [
+          "CF-01",
+          "CF-02",
+          "CF-03",
+          "CF-04",
+          "CF-05"
+        ],
+        "selection": "Plans/goal_own_c_contracts/protocol.md#dg-cf1-complete-original-path-oracles-goal_runcertified-cf-01-cf-02-cf-03-cf-04-cf-05-2026-11-11",
+        "oracle": "scripts/pm_goal_dg_cf1_oracles.py",
+        "world": [
+          "scripts/pm_goal_dg_cf1_world.py",
+          "scripts/pm_goal_dg_cf1_compose.py"
+        ],
+        "adopted_demonstration": "scripts/pm_goal_test_demo_cf01.py",
+        "adapters": "Plans/goal_own_c_contracts/protocol.md#shared-test_only-owner-adapters-2026-11-11",
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN"
+      },
+      "dg_cf2": {
+        "groups": [
+          "CF-06",
+          "CF-07",
+          "CF-08",
+          "CF-09",
+          "P7"
+        ],
+        "selection": "Plans/goal_own_c_contracts/protocol.md#dg-cf2-complete-original-path-oracles-goal_runcertified-cf-06-cf-07-cf-08-cf-09-p7-2026-11-11",
+        "oracle": "scripts/pm_goal_dg_cf2_oracles.py",
+        "world": [
+          "scripts/pm_goal_dg_cf2_world.py",
+          "scripts/pm_goal_dg_cf2_native.py",
+          "scripts/pm_goal_dg_cf2_consumer.py"
+        ],
+        "adapters": "Plans/goal_own_c_contracts/protocol.md#shared-test_only-owner-adapters-2026-11-11",
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN"
+      },
+      "dg_cf3": {
+        "lane": "DG-CF3",
+        "groups": ["F0", "CF-10", "CF-11", "CF-12", "P4", "P5", "P6", "P8"],
+        "adapters": "plans/ea-goal-adapter-20261111@62e61fe59a",
+        "projection_selection": "Plans/goal_run_projection_reference_contracts/certified.selection.json",
+        "oracle": "scripts/pm_goal_dg_cf3_oracles.py",
+        "owner_world": "scripts/pm_goal_dg_cf3_world.py",
+        "consumer_and_lower_publisher": "scripts/pm_goal_dg_cf3_projector.py",
+        "backup_restore_driver": "scripts/pm_goal_dg_cf3_restore.py",
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN"
+      }
+    }
+  ]
+}

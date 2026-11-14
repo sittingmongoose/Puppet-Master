@@ -1,0 +1,117 @@
+{
+ "code_commit": "64127c49b1f4b50a17b23f75660c19a49f682942",
+ "criterion_12": "PARTIAL",
+ "checker": {
+  "families": 15,
+  "mismatches": [],
+  "multi_row": 15,
+  "negatives": 4738,
+  "positives": 235,
+  "single_row": 4723,
+  "status": "pass",
+  "unresolved_refs": []
+ },
+ "guard_tables": {
+  "tables": 233,
+  "rows": 1706,
+  "proved": 1706,
+  "unproved": 0,
+  "negatives": 1706,
+  "controls": 233,
+  "evaluations": 46435,
+  "factories": 93103,
+  "failures": 0,
+  "masked_negatives": 0,
+  "duplicates": 0
+ },
+ "entailed_tables": 24,
+ "total_generated_tables": 257,
+ "total_rows": 1730,
+ "mutations": {
+  "table-site": {
+   "killed": 12,
+   "total": 12
+  },
+  "duplicate": {
+   "killed": 2,
+   "total": 2
+  },
+  "recheck": {
+   "killed": 15,
+   "total": 15
+  },
+  "own": {
+   "killed": 10,
+   "total": 10
+  }
+ },
+ "frozen_components": {
+  "cases": 191,
+  "status": "pass"
+ },
+ "number_corpus_api": {
+  "cases": 165,
+  "accepted": 96,
+  "refused": 69,
+  "mismatches": 0
+ },
+ "parser_api_only": 35,
+ "number_routes": {
+  "producer_append": {
+   "boundary": "append",
+   "runs": 130,
+   "accepted": 37,
+   "refused": 93,
+   "mismatches": 0,
+   "untracked": 0
+  },
+  "sequence_append": {
+   "boundary": "append",
+   "runs": 130,
+   "accepted": 86,
+   "refused": 44,
+   "mismatches": 0,
+   "untracked": 0
+  },
+  "payload_integer": {
+   "boundary": "append",
+   "runs": 130,
+   "accepted": 35,
+   "refused": 95,
+   "mismatches": 0,
+   "untracked": 0
+  },
+  "producer_original": {
+   "boundary": "read",
+   "runs": 130,
+   "accepted": 37,
+   "refused": 93,
+   "mismatches": 0,
+   "untracked": 0
+  },
+  "producer_retry": {
+   "boundary": "retry",
+   "runs": 130,
+   "accepted": 37,
+   "refused": 93,
+   "mismatches": 0,
+   "untracked": 0
+  }
+ },
+ "extra_large_integer_smoke_runs": 10,
+ "shard_check": "pass: 3095 shards / 99 sources",
+ "index_validate": "pass",
+ "index_base": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+ "timestamp_inventory": "fail closed: 85 rows; recorded, not credited",
+ "self_grade_before_actual": {
+  "PASS": 60,
+  "PARTIAL": 105,
+  "ABSENT": 15
+ },
+ "self_grade_after": {
+  "PASS": 45,
+  "PARTIAL": 120,
+  "ABSENT": 15
+ },
+ "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/phase2-fix1"
+}
