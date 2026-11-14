@@ -112,8 +112,10 @@ function install() {
 			for (let n = 0; n < 30; n++) { await frame(); const e = label(); if (e && e.textContent.trim() === l) { await frame(); return 'run'; } }
 		}
 		window.PM56_DEMO.pauseWorking(); await frame();
-		const e = label(); if (e) e.textContent = l;
-		await frame(); return 'written';
+		// the chat may patch the core again (a paused card still renders); write until a frame keeps it. The measure runs
+		// in the same task as the last look at the text, so nothing patches it in between
+		for (let n = 0; n < 8; n++) { const e = label(); if (e) e.textContent = l; await frame(); const e2 = label(); if (e2 && e2.textContent.trim() === l) return 'written'; }
+		return 'written';
 	};
 	// one dial width (null: the page's own), every label at it
 	const sweep = async (w, labels, steps) => {
