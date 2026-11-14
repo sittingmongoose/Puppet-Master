@@ -487,7 +487,8 @@
         stampSoon(300);
         if (hover || springs.size || lit.size) { moved = true; start(); }
       };
-      if (typeof window.PM_AFTER_LAYOUT === 'function') { tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
+      /* (the window shows the hover: a look's reveal over it never holds this read, PM_AFTER_LAYOUT.own) */
+      if (typeof window.PM_AFTER_LAYOUT === 'function') { if (window.PM_AFTER_LAYOUT.own) window.PM_AFTER_LAYOUT.own(retokenFrame); tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
       else tokenFrame = raf(retokenFrame);
     }
 
