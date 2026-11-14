@@ -9,9 +9,9 @@
 // its Close button closes it, under a light DevTools trace. Every frame (requestAnimationFrame) samples each loop's
 // currentTime and play state at the frame's own time; the trace gives the end of that frame's main-thread work (its
 // ProxyMain::BeginMainFrame, matched by the sample's own clock through a sync mark). Judged, per loop:
-//   open    the hold was taken at timeline time X (the loop's start + its held currentTime); the frame that applied it
-//           (the last frame at or before X) ended its work at d. d - X is how far the compositor kept moving the loop
-//           past the place it was put back to: at most one frame.
+//   open    the hold was taken at time X (the loop's start + its held currentTime); the traced main frame that
+//           carries it (the one X falls in, or the first after X) ended its work at d. d - X is how far the compositor
+//           kept moving the loop past the place it was put back to: at most one frame.
 //   close   the resume was taken at X (the loop's new start + its held currentTime); d - X of that frame is the jump
 //           forward when it is shown: at most one frame.
 //   held    no held loop advances while the window is open (currentTime the same in every held frame), and none still
@@ -53,7 +53,8 @@ function install(max) {
 		for (const a of all) if (pick.length < max && !seen.has(a.animationName)) { seen.add(a.animationName); pick.push(a); }
 		for (const a of all) if (pick.length < max && !pick.includes(a)) pick.push(a);
 		S.loops = pick;
-		return { total: all.length, picked: pick.map(desc) };
+		const box = (a) => { const r = a.effect.target.getBoundingClientRect(); return [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)]; };
+		return { total: all.length, picked: pick.map(desc), boxes: pick.map((a) => desc(a) + ' ' + box(a).join(',')) };
 	};
 	const tick = (ts) => {
 		if (!S.on) return;
@@ -73,7 +74,7 @@ const median = (xs) => { const s = xs.filter(Number.isFinite).sort((a, b) => a -
 const r1 = (x) => (Number.isFinite(x) ? Math.round(x * 10) / 10 : x);
 
 // Judge one loop's rows: its held span (paused while the window holds it) and the two changes around it.
-function judgeLoop(R, k, frame) {
+function judgeLoop(R, k, frames) {
 	const rows = R.rows, v = (r) => r.v[k], out = { loop: R.loops[k] };
 	const iP = rows.findIndex((r, i) => i > 0 && v(r)[1] === 'paused' && v(rows[i - 1])[1] === 'running');
 	if (iP < 0) { out.error = 'never paused'; return out; }
@@ -85,11 +86,14 @@ function judgeLoop(R, k, frame) {
 	// the start before and after (timeline time at currentTime 0), from the running rows next to the changes
 	const before = rows[iP - 1], after = rows[iR];
 	const xOpen = before.tl - v(before)[0] + hold, xClose = after.tl - v(after)[0] + hold;
-	const frameAt = (x) => { let f = null; for (const r of rows) if (r.tl <= x + 0.5) f = r; return f; };
+	// the traced main frame that carries the change: the one X falls in, or the first after it (X is a frame's own time,
+	// which comes before its work starts, when the change was taken by a stale frame time). Not the last sample at or
+	// before X: at 120 Hz the next frame's time can fall inside a long frame, before a placement made in it.
+	const frameAt = (x) => frames.find((fr) => fr.e >= x - 0.05);
 	const fo = frameAt(xOpen), fc = frameAt(xClose);
-	if (!fo || fo.d == null || !fc || fc.d == null) { out.error = `no traced frame for the ${!fo || fo.d == null ? 'open' : 'close'}`; return out; }
-	out.openLate = r1(Math.max(0, fo.d - xOpen)); out.closeLate = r1(Math.max(0, fc.d - xClose));
-	out.openFrameMs = r1(fo.d - fo.w); out.closeFrameMs = r1(fc.d - fc.w);
+	if (!fo || !fc) { out.error = `no traced frame for the ${!fo ? 'open' : 'close'}`; return out; }
+	out.openLate = r1(Math.max(0, fo.e - xOpen)); out.closeLate = r1(Math.max(0, fc.e - xClose));
+	out.openFrameMs = r1(fo.e - fo.b); out.closeFrameMs = r1(fc.e - fc.b);
 	// lane S's measure: the gap between the samples around each change less the loop's own advance there
 	out.gapOpen = r1((rows[iP].tl - before.tl) - (hold - v(before)[0]));
 	out.gapClose = r1((after.tl - rows[iR - 1].tl) - (v(after)[0] - hold));
@@ -128,17 +132,20 @@ async function episode(t, f, tag, { work }) {
 	}
 	const picked = await f.evaluate((m) => window.__fo181.pick(m), MAX_LOOPS);
 	t.log(`${tag}: ${picked.total} running CSS loops in the app; sampled ${picked.picked.length}: ${picked.picked.join(', ')}`);
+	t.log(`${tag}: where (x,y,w,h): ${picked.boxes.join('; ')}`);
 	await t.check(`${tag}: loops to sample in the app`, picked.picked.length >= 3, `${picked.picked.length} of ${picked.total}`, { hard: true });
 	const item = await homeOptions(t, f);
 	return traceDuring(t, async () => {
 		await f.evaluate(() => { window.__fo181.start(); window.__fo181.mark('sync'); });
 		await f.waitForTimeout(600);
 		await f.evaluate(() => window.__fo181.mark('open'));
+		t.mark(`${tag}: press Run Onboarding Again`);
 		await item.click({ timeout: 5000 });
 		await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open') && !!document.querySelector('#pm-o55-onboarding[data-open="true"] .o55-pane > .o55-layer[data-screen]:not(.o55-hold)'), null, { timeout: 20000 });
 		await f.waitForTimeout(1800);
 		const close = f.locator('#pm-o55-onboarding .o55-close').filter({ visible: true }).first();
 		await f.evaluate(() => window.__fo181.mark('close'));
+		t.mark(`${tag}: press Close`);
 		await close.click({ timeout: 10000 });
 		await f.waitForFunction(() => !document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 20000 });
 		await f.waitForTimeout(1500);
@@ -167,7 +174,7 @@ function readTrace(t, tag, R, raw) {
 	};
 	const cost = { open: span('open', 'close'), close: span('close', 'end') };
 	t.log(`${tag}: COST open ${JSON.stringify(cost.open)}; close ${JSON.stringify(cost.close)}`);
-	return { matched, frames: frames.length, cost };
+	return { matched, frames: frames.sort((a, b) => a.b - b.b), cost };
 }
 
 const only = (v, all) => (v === 'all' ? all : v ? String(v).split(',').map((s) => s.trim()).filter((x) => all.includes(x)) : DEFAULT_LOOKS);
@@ -184,16 +191,19 @@ export const tests = Object.fromEntries(LOOKS.map((look) => [look, async (t) => 
 		const { result: R, raw } = await episode(t, f, tag, { work });
 		if (t.args.keepTrace === '1' && t.run && t.run.dir) writeFileSync(join(t.run.dir, `trace-${tag.replace(/[^a-z0-9]+/gi, '-')}.json.gz`), gzipSync(raw));
 		const T = readTrace(t, tag, R, raw);
-		await t.check(`${tag}: the trace has the page's frames`, !T.error && T.matched >= R.rows.length * 0.9, T.error || `${T.matched} of ${R.rows.length} samples in a traced main frame`, { hard: true });
+		await t.check(`${tag}: the trace has the page's frames`, !T.error && T.matched >= R.rows.length * 0.9, T.error || `${T.matched} of ${R.rows.length} samples in a traced main frame (${T.frames.length} frames)`, { hard: true });
 		const theme = await f.evaluate(() => document.documentElement.getAttribute('data-theme'));
 		const rows = R.rows, display = median(rows.slice(1).map((r, i) => r.tl - rows[i].tl)), bound = Math.max(display, FILM_FRAME);
 		t.log(`${tag}: ${rows.length} frames, display frame ${r1(display)} ms (bound ${r1(bound)} ms), theme after ${theme}`);
 		// none still running once the window is on screen
 		const shownRows = rows.filter((r) => r.open && r.shown);
 		const running = R.loops.filter((_, k) => shownRows.slice(3).some((r) => r.v[k][1] === 'running'));
-		const verdicts = R.loops.map((_, k) => judgeLoop(R, k, display)), judged = verdicts.filter((x) => !x.error);
+		const verdicts = R.loops.map((_, k) => judgeLoop(R, k, T.frames)), judged = verdicts.filter((x) => !x.error);
 		for (const x of verdicts) t.log(`${tag}: ${x.loop}: ${x.error ? 'not judged: ' + x.error : JSON.stringify(x)}`);
 		await t.check(`${tag}: no loop of the app still runs once the window is on screen`, running.length === 0, running.length ? running.join('; ') : `${shownRows.length} frames shown`);
+		// every loop runs again after the close (a hold that never lets go, or a placement that took the loop out of CSS's hands)
+		const last = rows[rows.length - 1], still = R.loops.filter((_, k) => last.v[k][1] === 'paused');
+		await t.check(`${tag}: every sampled loop runs again after the close`, still.length === 0, still.length ? still.join('; ') : `${R.loops.length} running`);
 		await t.check(`${tag}: loops judged`, judged.length >= 3, `${judged.length} of ${verdicts.length} (${verdicts.filter((x) => x.error).map((x) => x.loop + ': ' + x.error).join('; ') || 'all'})`);
 		const max = (key) => judged.reduce((p, x) => Math.max(p, x[key] ?? 0), 0);
 		const worstOf = (key) => { const x = judged.reduce((p, y) => ((y[key] ?? 0) > (p[key] ?? -1) ? y : p), {}); return x.loop ? `${x.loop}: ${x[key]} ms (its frame's work ${x[key === 'openLate' ? 'openFrameMs' : 'closeFrameMs']} ms)` : '-'; };
