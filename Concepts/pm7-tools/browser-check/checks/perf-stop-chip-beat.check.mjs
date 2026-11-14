@@ -338,8 +338,15 @@ function pair(R, i, layer, maxRate, frame) {
 		// a loop the chip has just re-placed is put by the wall clock, which runs up to a frame ahead of the frame's own
 		// time: the main thread's view may then move up to two frames (the hand-over above stays at one)
 		const dt = r1.t - r0.t, k = a.dur !== b.dur || a.delay !== b.delay || (a.s != null && b.s != null && Math.abs(a.s - b.s) > 0.5) ? 2 : 1;
-		out.place = +(b.place - a.place).toFixed(5); out.placeBound = +(k * Math.max(dt, frame) / Math.min(a.dur, b.dur) * 1.1 + 0.002).toFixed(5);
-		out.value = +Math.abs(b.v - a.v).toFixed(5); out.valueBound = +(maxRate * k * Math.max(dt, frame) * 1.15 + 0.002).toFixed(5);
+		// ONLY in the frame in which a hold takes effect (running -> paused): the hold may be placed by the wall clock, as
+		// the onboarding window's hold by marks (FO-181, 14-window-hold.js) puts a compositor loop where the compositor
+		// shows it (performance.now() in the hold's own frame). Its place may then run ahead of the frame's own time by
+		// the wall clock's lead over that time at the sample, no more (the frame's time is the hold's start; the sample
+		// comes after the hold). The allowance is written in the row.
+		const holdNow = a.state === 'running' && b.state === 'paused', lead = holdNow ? Math.max(0, r1.w - r1.t) : 0;
+		if (holdNow) out.holdMs = +lead.toFixed(1);
+		out.place = +(b.place - a.place).toFixed(5); out.placeBound = +((k * Math.max(dt, frame) + lead) / Math.min(a.dur, b.dur) * 1.1 + 0.002).toFixed(5);
+		out.value = +Math.abs(b.v - a.v).toFixed(5); out.valueBound = +(maxRate * (k * Math.max(dt, frame) + lead) * 1.15 + 0.002).toFixed(5);
 		// re-placed by the wall clock, the main thread's view may also sit a hair behind (its frame's time began before
 		// the task that re-placed it): within the bound either way then, never backwards otherwise
 		out.floor = k === 2 ? -out.placeBound : -1e-6;
@@ -417,7 +424,7 @@ function everyFrame(R) {
 				if (ms <= wc.limitMs && ms <= R.rows[i].w - R.rows[i - 1].w + frame) { out.known.push(`${layer === 'g' ? 'glyph' : 'backlight'} ${Math.round(ms)} ms (${x.hand} of a loop) at +${Math.round(R.rows[i].w - R.rows[wc.from].w)} ms after the ${wc.what}`); continue; }
 			}
 			const over = Math.max(x.hand != null ? x.hand / x.handBound : 0, x.place != null ? (x.place < x.floor ? 99 : Math.abs(x.place) / x.placeBound) : 0);
-			if (over > out.worst) { const a = R.rows[i - 1][layer], b = R.rows[i][layer]; out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: hand-over ${x.hand ?? '-'} (bound ${x.handBound ?? '-'}${x.gap != null ? `, of which ${x.lateAllow} for a late hand-over: ${x.gap} ms between samples` : ''}), main-thread place ${x.place ?? 'stale frame'} (bound ${x.placeBound ?? '-'}), length ${a.dur} -> ${b.dur}, delay ${a.delay} -> ${b.delay}, start ${a.s == null ? '-' : Math.round(a.s)} -> ${b.s == null ? '-' : Math.round(b.s)}, ${a.state} -> ${b.state}, window ${R.rows[i - 1].win ? 'open' : 'closed'} -> ${R.rows[i].win ? 'open' : 'closed'}, ${Math.round(R.rows[i].w - R.rows[i - 1].w)} ms between samples, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
+			if (over > out.worst) { const a = R.rows[i - 1][layer], b = R.rows[i][layer]; out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: hand-over ${x.hand ?? '-'} (bound ${x.handBound ?? '-'}${x.gap != null ? `, of which ${x.lateAllow} for a late hand-over: ${x.gap} ms between samples` : ''}), main-thread place ${x.place ?? 'stale frame'} (bound ${x.placeBound ?? '-'}${x.holdMs != null ? `, of which ${x.holdMs} ms for a hold placed by the wall clock` : ''}), length ${a.dur} -> ${b.dur}, delay ${a.delay} -> ${b.delay}, start ${a.s == null ? '-' : Math.round(a.s)} -> ${b.s == null ? '-' : Math.round(b.s)}, ${a.state} -> ${b.state}, window ${R.rows[i - 1].win ? 'open' : 'closed'} -> ${R.rows[i].win ? 'open' : 'closed'}, ${Math.round(R.rows[i].w - R.rows[i - 1].w)} ms between samples, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
 		}
 	}
 	return out;
@@ -509,7 +516,7 @@ export default async function (t) {
 			for (const e of R.errors) t.log(`${look}: ${e}`);
 			t.log(`${look}: NOTE the page's own words during the run: ${R.pageWords}${R.themeNote ? `; after the light/dark change: ${JSON.stringify(R.themeNote)}` : ''}`);
 			await t.check(`${look}: the run went through every change`, R.errors.length === 0 && R.rows.length > 60, R.errors.join('; ') || `${R.rows.length} frames sampled`);
-			for (const r of rows) t.log(`${look} ${r.layer}: ${r.name}${r.frac != null ? ` at ${r.frac} of the loop` : ''}: ${r.restart ? 'NEW LOOP' : `hand-over ${r.hand ?? '-'} (bound ${r.handBound ?? '-'}${r.gap != null ? `, of which ${r.lateAllow} for a late hand-over: ${r.gap} ms between samples` : ''}), ${r.stale ? 'main thread: a frame after a long task, not judged' : `main-thread place +${r.place} (bound ${r.placeBound}), value ${r.value} (bound ${r.valueBound})`}`}, length ${r.from} -> ${r.to}, ${r.dt} ms between samples, theme ${r.themes}${r.flipMs != null ? `, ${r.flipMs} ms after the last word` : ''}`);
+			for (const r of rows) t.log(`${look} ${r.layer}: ${r.name}${r.frac != null ? ` at ${r.frac} of the loop` : ''}: ${r.restart ? 'NEW LOOP' : `hand-over ${r.hand ?? '-'} (bound ${r.handBound ?? '-'}${r.gap != null ? `, of which ${r.lateAllow} for a late hand-over: ${r.gap} ms between samples` : ''}), ${r.stale ? 'main thread: a frame after a long task, not judged' : `main-thread place +${r.place} (bound ${r.placeBound}${r.holdMs != null ? `, of which ${r.holdMs} ms for a hold placed by the wall clock` : ''}), value ${r.value} (bound ${r.valueBound})`}`}, length ${r.from} -> ${r.to}, ${r.dt} ms between samples, theme ${r.themes}${r.flipMs != null ? `, ${r.flipMs} ms after the last word` : ''}`);
 			const bad = rows.filter((r) => r.restart || (r.ok === false));
 			await t.check(`${look}: no change makes the loop jump (at the hand-over within a frame at the faster pace; on the main thread place within a frame, scale and opacity within the fastest ordinary frame)`, rows.length > 0 && bad.length === 0,
 				bad.length ? bad.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}, value ${r.value ?? '-'}/${r.valueBound ?? '-'}`}`).join('; ') : `${rows.length} changes judged`);
@@ -547,7 +554,7 @@ export default async function (t) {
 				t.log(`${look} light/dark: NOTE the page's own words: ${T.pageWords}; ${JSON.stringify(T.themeNote)}`);
 				await t.check(`${look} light/dark: the run went through the light/dark change, a word, the quiet and the change back`, T.errors.length === 0 && T.marks.filter((m) => m.kind === 'theme').length === 2 && T.rows.length > 60, T.errors.join('; ') || `${T.rows.length} frames sampled`);
 				const tr = judge(T, look);
-				for (const r of tr) t.log(`${look} light/dark ${r.layer}: ${r.name}${r.frac != null ? ` at ${r.frac} of the loop` : ''}: ${r.restart ? 'NEW LOOP' : `hand-over ${r.hand ?? '-'} (bound ${r.handBound ?? '-'}), main-thread place ${r.place ?? 'stale'} (bound ${r.placeBound ?? '-'})`}, length ${r.from} -> ${r.to}, theme ${r.themes}`);
+				for (const r of tr) t.log(`${look} light/dark ${r.layer}: ${r.name}${r.frac != null ? ` at ${r.frac} of the loop` : ''}: ${r.restart ? 'NEW LOOP' : `hand-over ${r.hand ?? '-'} (bound ${r.handBound ?? '-'}), main-thread place ${r.place ?? 'stale'} (bound ${r.placeBound ?? '-'}${r.holdMs != null ? `, of which ${r.holdMs} ms for a hold placed by the wall clock` : ''})`}, length ${r.from} -> ${r.to}, theme ${r.themes}`);
 				const tb = tr.filter((r) => r.restart || r.ok === false);
 				await t.check(`${look} light/dark: no change makes either loop jump or start anew (the light/dark change, the word and the quiet after it, the change back)`, tr.length > 0 && tb.length === 0,
 					tb.length ? tb.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}`}`).join('; ') : `${tr.length} changes judged`);
