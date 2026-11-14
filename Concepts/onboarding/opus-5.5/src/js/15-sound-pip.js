@@ -335,7 +335,8 @@
     if (V.vib) { const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = V.vib[0]; lg.gain.value = V.vib[1]; l.connect(lg); pitched.forEach((o) => lg.connect(o.detune)); l.start(t0); l.stop(stopAt); oscs.push(l); }
     if (V.kind === 'formant' || V.kind === 'chirp') {
       const ns = c.createBufferSource(); ns.buffer = noiseBuf(c); ns.loop = true; nbp = c.createBiquadFilter(); nbp.type = 'bandpass'; nbp.Q.value = 1.2; nbp.frequency.value = 2500;
-      ng = c.createGain(); ng.gain.setValueAtTime(0, t0); ns.connect(nbp); nbp.connect(ng); ng.connect(out); ns.start(t0, R()); ns.stop(stopAt); oscs.push(ns);
+      // Consonant targets include pre-roll before t0; a future initial zero would override that first attack.
+      ng = c.createGain(); ng.gain.value = 0; ns.connect(nbp); nbp.connect(ng); ng.connect(out); ns.start(t0, R()); ns.stop(stopAt); oscs.push(ns);
     }
     const peak = V.gain;
     if (V.kind === 'pulse') {
@@ -991,7 +992,13 @@
     const parts = D.make ? D.make(c, o, t, k) : null;
     const inst = {
       name, kit: kitName, o, level: 0, next: t + 0.05, n: 0, k, segs: [],
-      set(level, tt) { inst.level = level; inst.segs.push([tt, level]); const v = name === 'swing' ? Math.pow(level, 1.6) : level; o.gain.setTargetAtTime(v, tt, name === 'swing' ? 0.06 : 0.15); if (parts) parts.set(level, tt); },
+      set(level, tt) {
+        // A tune can ask before its future start. Its level must follow the initial zero, never precede it: a later
+        // zero otherwise silences every loop permanently, even while the player reports that music is running.
+        tt = Math.max(t, tt, c.currentTime);
+        inst.level = level; inst.segs.push([tt, level]); const v = name === 'swing' ? Math.pow(level, 1.6) : level;
+        o.gain.setTargetAtTime(v, tt, name === 'swing' ? 0.06 : 0.15); if (parts) parts.set(level, tt);
+      },
       levelAt(tt) { let l = 0; for (const [a, v] of inst.segs) { if (a <= tt) l = v; else break; } return l; },
       pump(until, gate) {
         if (!D.step) return;
