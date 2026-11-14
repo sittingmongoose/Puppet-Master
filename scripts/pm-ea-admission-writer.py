@@ -1198,23 +1198,32 @@ def verify(args) -> int:
     known37 = load(AUDIT + "/known37_event_types.json")
     known = known37.get("event_types") if isinstance(known37, dict) else known37
     admitted, issues, _ = frozen.validate_post_august_admissions(registry, known)
+    global_issues = [i for i in issues if ": " not in i or i.split(": ", 1)[0] not in live]
     manifest = json.loads(Path(args.manifest).read_text(encoding="utf-8"))
     rows = []
     for fam in manifest["families"]:
         et = fam["event_type"]
         own = [i.split(": ", 1)[1] for i in issues if i.startswith(et + ": ")]
+        record_path = REPO / RECORD_DIR / (et + ".json")
+        record_problems = None
+        if et in live and record_path.is_file():
+            # The record's own completeness, judged by the frozen check's own function; independent of
+            # the receipt chain the whole-set check also needs (S1).
+            record_problems = frozen.admission_record_problems(json.loads(record_path.read_text(encoding="utf-8")), live[et])
         rows.append({"event_type": et, "lane": fam["lane"], "kind": fam.get("kind"), "prepared": fam["status"],
-                     "gaps": fam["gaps"], "registered": et in live, "frozen_check_admitted": et in admitted,
-                     "frozen_check_problems": own})
+                     "gaps": fam["gaps"], "registered": et in live, "record_problems": record_problems,
+                     "frozen_check_admitted": et in admitted, "frozen_check_problems": own})
     failures = readiness.event_family_registry_data_failures(registry, load(REGISTRY_SCHEMA), path_label=REGISTRY,
                                                              include_residuals=False)
     out = {"head": git("rev-parse", "HEAD").strip(), "registry": {"revision": registry["registry_revision"],
            "family_count": len(registry["families"]), "sha256": sha256_file(REPO / REGISTRY)},
            "readiness_registry_failures": failures,
+           "frozen_check_global_issues": global_issues,
            "frozen_check_post_august_issues_outside_manifest": [i for i in issues if i.split(": ", 1)[0] not in
                                                                {f["event_type"] for f in manifest["families"]}],
            "families": rows,
            "counts": {"registered": sum(r["registered"] for r in rows),
+                      "record_complete": sum(r["record_problems"] == [] for r in rows),
                       "admitted_by_frozen_check": sum(r["frozen_check_admitted"] for r in rows),
                       "blocked_at_prepare": sum(r["prepared"] == "blocked" for r in rows)}}
     text = json.dumps(out, indent=1, ensure_ascii=False) + "\n"
