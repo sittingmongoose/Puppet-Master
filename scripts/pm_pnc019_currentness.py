@@ -64,14 +64,14 @@ EVENT_FAMILY_REGISTRY_SCHEMA_VERSION = "2.0.0"
 # 4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe). The audit status file's pinned revision and hash move with
 # the next reseal, not here.
 # Moved under DL-078's standing rule by admission merge 1 (Jared, EA-P2 B, 2026-11-14), one family per commit, each with its own
-# Decision Log entry and DL-077 admission record; latest goal.resumed (Plans/Decision_Log.md#DL-621):
-# registry 2026-11-14.102, 148 families, SHA-256
-# 6dbab7fbb1f4788ee71d1b40aa5066aa97844bf52e50b1dbecbc51fec12c3de9 (predecessor
-# b0eb92bdbbecdc8ece53e35ba4efaa4ebcdb3c7b4d46112220643555d4404532). The audit status file's pinned revision and hash
+# Decision Log entry and DL-077 admission record; latest named_plan.archived (Plans/Decision_Log.md#DL-622):
+# registry 2026-11-14.103, 149 families, SHA-256
+# b181a681fe4947b33253a3e20876f6d8c82985598365277ac5dd2188bf21521a (predecessor
+# 6dbab7fbb1f4788ee71d1b40aa5066aa97844bf52e50b1dbecbc51fec12c3de9). The audit status file's pinned revision and hash
 # move with the next reseal, not here.
 # Checkpoint data only: denominator and contract-depth clearance remain false.
-EVENT_FAMILY_REGISTRY_REVISION = "2026-11-14.102"
-EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 148
+EVENT_FAMILY_REGISTRY_REVISION = "2026-11-14.103"
+EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 149
 EVENT_FAMILY_QUARANTINED_ROW_COUNT = 252
 EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
 EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = False
