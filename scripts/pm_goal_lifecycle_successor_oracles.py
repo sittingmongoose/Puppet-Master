@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""ATS-213 static successor predicates. No native source or admission is asserted."""
+"""ATS-213 bounded predicates; ATS-1113..1115 supply whole protocol oracles. No native installation/admission."""
 import copy
 import hashlib
 import json
+import re
 import sys
 from pm_goal_oracle_common import ROOT, Audit, Gates, load, validator, schema_registry, canonical, revision_text, integer_number, append_result, append_guards, print_result
 
@@ -48,7 +49,9 @@ def predicates(family,c,v,disabled=()):
   g.require('completed/ordinary_route',source['completion_route']=='ordinary')
   g.require('completed/evidence',p['completion_evidence_refs']==source['caller_completion_evidence_refs'])
   g.require('completed/todo_identity',source['todo_snapshot']['list_id']==source['current_todo_list_id'] and integer_number(source['todo_snapshot']['revision']) and integer_number(source['current_todo_revision']) and source['todo_snapshot']['revision']==source['current_todo_revision'])
-  g.require('completed/todo_barrier',all(type(t['required']) is bool and (not t['required'] or t['status']=='done' or (t['status']=='skipped' and t['accepted_skip_ref'])) for t in source['todo_snapshot']['items']))
+  g.require('completed/todo_status_type',all(type(t['status']) is str and t['status'] in ('pending','in_progress','completed','blocked','skipped') for t in source['todo_snapshot']['items']))
+  g.require('completed/accepted_skip_type',all(t['accepted_skip_ref'] is None or (type(t['accepted_skip_ref']) is str and len(t['accepted_skip_ref']) >= 1 and re.fullmatch(r'[^\r\n]+',t['accepted_skip_ref']) is not None) for t in source['todo_snapshot']['items']))
+  g.require('completed/todo_barrier',all(type(t['required']) is bool and (not t['required'] or t['status']=='completed' or (t['status']=='skipped' and t['accepted_skip_ref'] is not None)) for t in source['todo_snapshot']['items']))
   g.require('completed/admitted_work',all(w['status']=='settled' for w in source['admitted_work']))
   g.require('completed/bound_plan',source['bound_plan_status'] in ('none','settled'))
   if source['origin_kind']=='internal_workflow':
@@ -69,6 +72,6 @@ def main():
   for case in f['replay_cases']:
    if append_result(case)!=case['expected']:audit.failures.append(family+'/replay/'+case['id'])
    audit.case(family+'/replay/'+case['id'],append_guards,case,case['expected'] in ('append_new','return_original_receipt'))
- result=audit.run();result['activation']='REFUSED_UNBOUND_ORIGINAL_HOST_SOURCE'
+ result=audit.run();result['activation']='REFUSED_UNINSTALLED_ORIGINAL_HOST_SOURCE_AND_V3_SELECTOR'
  return print_result(result,sys.argv)
 if __name__=='__main__':sys.exit(main())

@@ -1,0 +1,122 @@
+{
+  "schema_id": "pm.goal.lifecycle_host.resources.v1",
+  "status": "PREPARED_WITHOUT_ADMISSION",
+  "resources": [
+    {
+      "id": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+      "aliases": [
+        "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0"
+      ],
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3"
+    },
+    {
+      "id": "pm.goal_runtime_event.goal_blocked.schema.v3",
+      "aliases": [],
+      "path": "Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json",
+      "sha256": "cd9473567fd84fe7dd338e226d0cc52030d45d6d1298a120a6d1351652e7aba9"
+    },
+    {
+      "id": "pm.goal_runtime_event.goal_cancelled.schema.v3",
+      "aliases": [
+        "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v3"
+      ],
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb"
+    },
+    {
+      "id": "pm.goal_runtime_event.goal_completed.schema.v3",
+      "aliases": [],
+      "path": "Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json",
+      "sha256": "391de62b865a70c5a6b799d45fd8947b4d1167c7f9ce576324b8d48346e47603"
+    },
+    {
+      "id": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+      "aliases": [
+        "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+      ],
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "id": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json",
+      "aliases": [
+        "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json"
+      ],
+      "path": "Plans/event_record_index_checkpoint.schema.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af"
+    },
+    {
+      "id": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json",
+      "aliases": [
+        "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json"
+      ],
+      "path": "Plans/full_thread_runtime_contracts.schema.json",
+      "sha256": "926b12163ebf9bd40c5b6ceeab5cc5bb1f7c7ea7e7c51e967c95d3af627f4e27"
+    },
+    {
+      "id": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json",
+      "aliases": [
+        "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json"
+      ],
+      "path": "Plans/goal_body_custody.schema.json",
+      "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8"
+    },
+    {
+      "id": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json",
+      "aliases": [
+        "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json"
+      ],
+      "path": "Plans/goal_cancel_command_custody.schema.json",
+      "sha256": "3a9477a8a41b273f589e6fc12a492a04a20ac2af5c0382d0ba0445c9a35799e8"
+    },
+    {
+      "id": "https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json",
+      "aliases": [],
+      "path": "Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json",
+      "sha256": "52db9733be0e433809a5c7ea8913742f4f9eaa2ea7fcf021e0b17034c61d6b5c"
+    },
+    {
+      "id": "pm.shared_integration_runtime.command_contracts.schema.v1",
+      "aliases": [
+        "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json"
+      ],
+      "path": "Plans/shared_integration_runtime.schema.json",
+      "sha256": "5293dd1e8d403a6e8da103bcd93e2811ddaec67aaa277541c26ede13064d3008"
+    },
+    {
+      "id": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+      "aliases": [
+        "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json"
+      ],
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60"
+    },
+    {
+      "id": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json",
+      "aliases": [
+        "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json"
+      ],
+      "path": "Plans/shared_runtime_command_contracts.schema.json",
+      "sha256": "b1c83ae5b645cbe501baf9cfd8924eb99777f8d5f7cb245b087f2e127874a73e"
+    },
+    {
+      "id": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json",
+      "aliases": [
+        "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+      ],
+      "path": "Plans/ui_command_response.schema.json",
+      "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37"
+    },
+    {
+      "id": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0",
+      "aliases": [],
+      "path": "Plans/goal_certification_custody.schema.json",
+      "sha256": "50687ee0c5d335898ce9ce98fe6e258ac69f344ab3ba7086dba787623201c00b"
+    }
+  ],
+  "method_bank": {
+    "path": "Plans/goal_lifecycle_host_contracts/methods.json",
+    "sha256": "87b1ee8c6aefc7e41ddb38a7889e3086cce19b83758d9e191cdfac7393d14fc9"
+  }
+}

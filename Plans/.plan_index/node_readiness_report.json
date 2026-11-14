@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 23549,
+    "depends_on_edge_count": 23590,
     "downstream_blocked_node_count": 0,
-    "edge_count": 26767,
-    "node_count": 8803,
+    "edge_count": 26808,
+    "node_count": 8819,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-14T19:31:15Z",
+  "generated_at_utc": "2026-11-14T19:34:25Z",
   "gui_related_units": {
-    "count": 3931,
+    "count": 3933,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -8690,8 +8690,8 @@
         "source_location": {
           "heading": "CV-1461 - session_prompt.admitted Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 46743,
-          "line": 46745,
+          "heading_line": 47017,
+          "line": 47019,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8701,8 +8701,8 @@
         "source_location": {
           "heading": "CV-1462 - session_prompt.cancelled Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 46831,
-          "line": 46833,
+          "heading_line": 47105,
+          "line": 47107,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8712,8 +8712,8 @@
         "source_location": {
           "heading": "CV-1463 - session_prompt.expired Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 46919,
-          "line": 46921,
+          "heading_line": 47193,
+          "line": 47195,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8723,8 +8723,8 @@
         "source_location": {
           "heading": "CV-1464 - session_prompt.rejected Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 47007,
-          "line": 47009,
+          "heading_line": 47281,
+          "line": 47283,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -24277,8 +24277,8 @@
         "source_location": {
           "heading": "GRS-069 - Exact historical goal.progressed contract",
           "heading_level": 3,
-          "heading_line": 6746,
-          "line": 6748,
+          "heading_line": 6780,
+          "line": 6782,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -24288,8 +24288,8 @@
         "source_location": {
           "heading": "GRS-070 - Exact historical goal.replanned contract",
           "heading_level": 3,
-          "heading_line": 6843,
-          "line": 6845,
+          "heading_line": 6877,
+          "line": 6879,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -24299,8 +24299,8 @@
         "source_location": {
           "heading": "GRS-071 - Exact historical goal.stopped contract",
           "heading_level": 3,
-          "heading_line": 6940,
-          "line": 6942,
+          "heading_line": 6974,
+          "line": 6976,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -24310,8 +24310,8 @@
         "source_location": {
           "heading": "GRS-072 - Exact historical goal.verification_decided contract",
           "heading_level": 3,
-          "heading_line": 7036,
-          "line": 7038,
+          "heading_line": 7070,
+          "line": 7072,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -24321,8 +24321,8 @@
         "source_location": {
           "heading": "GRS-073 - Current explicit Goal cancellation",
           "heading_level": 3,
-          "heading_line": 7133,
-          "line": 7135,
+          "heading_line": 7167,
+          "line": 7169,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -24332,8 +24332,8 @@
         "source_location": {
           "heading": "GRS-086 - Application Goal Birth Continuation And Versioned Custody",
           "heading_level": 3,
-          "heading_line": 8607,
-          "line": 8609,
+          "heading_line": 8641,
+          "line": 8643,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -24343,8 +24343,19 @@
         "source_location": {
           "heading": "GRS-087 - Immutable Goal Conversion And Linked Destination Birth",
           "heading_level": 3,
-          "heading_line": 8690,
-          "line": 8692,
+          "heading_line": 8724,
+          "line": 8726,
+          "path": "Plans/Goal_Runtime_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Goal_Runtime_System.md",
+        "plan_unit_id": "GRS-1122",
+        "source_location": {
+          "heading": "GRS-1122 - Approved verification exception original completion route",
+          "heading_level": 3,
+          "heading_line": 9615,
+          "line": 9617,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -24354,8 +24365,8 @@
         "source_location": {
           "heading": "GRS-218 - Goal Mode Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 8762,
-          "line": 8764,
+          "heading_line": 8796,
+          "line": 8798,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -24636,12 +24647,23 @@
       },
       {
         "owner_doc": "Plans/human-in-the-loop.md",
+        "plan_unit_id": "HITL-1120",
+        "source_location": {
+          "heading": "HITL-1120 - Exact Project owner verification exception approval",
+          "heading_level": 3,
+          "heading_line": 2805,
+          "line": 2807,
+          "path": "Plans/human-in-the-loop.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/human-in-the-loop.md",
         "plan_unit_id": "HITL-1130",
         "source_location": {
           "heading": "HITL-1130 - Goal update original approval provider",
           "heading_level": 3,
-          "heading_line": 2807,
-          "line": 2809,
+          "heading_line": 2877,
+          "line": 2879,
           "path": "Plans/human-in-the-loop.md"
         }
       },
@@ -31922,8 +31944,8 @@
         "source_location": {
           "heading": "PS-1450 - Autonomy Ceiling Receipt Event Adoption",
           "heading_level": 3,
-          "heading_line": 11071,
-          "line": 11073,
+          "heading_line": 11115,
+          "line": 11117,
           "path": "Plans/Permissions_System.md"
         }
       },
@@ -34133,8 +34155,8 @@
         "source_location": {
           "heading": "SIR-056 - Where Work Runs: Auto, Pins And Safe Reassignment",
           "heading_level": 3,
-          "heading_line": 3308,
-          "line": 3310,
+          "heading_line": 3353,
+          "line": 3355,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -36487,8 +36509,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 23981,
-          "line": 23983,
+          "heading_line": 24018,
+          "line": 24020,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36498,8 +36520,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 28987,
-          "line": 28989,
+          "heading_line": 29024,
+          "line": 29026,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36509,8 +36531,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 29152,
-          "line": 29154,
+          "heading_line": 29189,
+          "line": 29191,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36520,8 +36542,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 29274,
-          "line": 29276,
+          "heading_line": 29311,
+          "line": 29313,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36531,8 +36553,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 29373,
-          "line": 29375,
+          "heading_line": 29410,
+          "line": 29412,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36542,8 +36564,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 29746,
-          "line": 29748,
+          "heading_line": 29783,
+          "line": 29785,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36553,8 +36575,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 29812,
-          "line": 29814,
+          "heading_line": 29849,
+          "line": 29851,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36564,8 +36586,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 29886,
-          "line": 29888,
+          "heading_line": 29923,
+          "line": 29925,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36575,8 +36597,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 29939,
-          "line": 29941,
+          "heading_line": 29976,
+          "line": 29978,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36586,8 +36608,8 @@
         "source_location": {
           "heading": "SP-656 — Preview subject UI and runtime identity mapping",
           "heading_level": 3,
-          "heading_line": 40577,
-          "line": 40579,
+          "heading_line": 40614,
+          "line": 40616,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -43265,10 +43287,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 8803,
+  "plan_unit_count": 8819,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4120,
+      "high": 4136,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -44829,6 +44851,7 @@
       "goal_event_schema_contract": 1,
       "goal_handoff_false_migration_or_duplicate_continuation": 1,
       "goal_leftover_retirement_and_provider_drift": 1,
+      "goal_lifecycle_original_authority": 16,
       "goal_lineage_and_continuation_drift": 1,
       "goal_or_todo_transcript_card_or_done_section": 1,
       "goal_progressed_historical_authority_confusion": 3,
@@ -47492,7 +47515,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 8523,
+      "accepted": 8539,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47552,7 +47575,7 @@
       "operational_policy": 1,
       "optional_requirement": 1,
       "owner_boundary": 75,
-      "owner_contract": 27,
+      "owner_contract": 43,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,
@@ -47676,13 +47699,13 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3",
+        "expected": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347",
+        "expected": "8b27c512bd8c367755e4f81d9c365fe01b00cf262568f459d09df60725399337",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -47694,7 +47717,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "1fff6d48ab9cf15bd45c46c79f5ced8aaf26a16f1844aabf7646e7d912fdc40e",
+        "expected": "c356d79ac957ee9941c736e475f42f5d96c924af37bef0879a54b4aeb5fae09f",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

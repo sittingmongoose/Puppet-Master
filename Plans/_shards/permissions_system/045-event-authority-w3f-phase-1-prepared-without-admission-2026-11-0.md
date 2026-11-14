@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L11067-L11156
+Source lines: L11111-L11200
 
-Source SHA256: `2cdd733d8301618bfe11517ee6fbe463e4ffc3481fda81aa4ba27f1bf120d357`
+Source SHA256: `3f985d7828fa5cae6e3bf3d5f98f4ed6921a19050c0524944694dec4f4f3cc1a`
 
 ---
 
