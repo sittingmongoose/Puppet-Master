@@ -50,6 +50,10 @@
   {
    "event_type": "autonomy.ceiling_checked",
    "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.backpressure",
+   "outcome": "registered"
   }
  ]
 }
