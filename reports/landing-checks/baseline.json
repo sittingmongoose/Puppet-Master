@@ -111,16 +111,6 @@
   },
   {
    "check": "audit-governance",
-   "count": 1,
-   "error": "stale_audit_status_index",
-   "fingerprints": [
-    "-"
-   ],
-   "path": "Plans/.audits/_audit_status_index.json",
-   "subcheck": "audit_status_index"
-  },
-  {
-   "check": "audit-governance",
    "count": 100,
    "error": "artifact_hash_stale",
    "fingerprints": [
@@ -927,16 +917,6 @@
   {
    "check": "audit-governance",
    "count": 1,
-   "error": "missing_ref",
-   "fingerprints": [
-    "976753f2c3a3"
-   ],
-   "path": "Plans/00-plans-index.md",
-   "subcheck": "support_refs"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
    "error": "validator_no_output",
    "fingerprints": [
     "ca2d9bc8e006"
@@ -953,16 +933,6 @@
    ],
    "path": "Plans/card2_event_p2a_cases.json",
    "subcheck": "json_syntax"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "missing_ref",
-   "fingerprints": [
-    "976753f2c3a3"
-   ],
-   "path": "Plans/00-plans-index.md",
-   "subcheck": "lint_contractrefs"
   },
   {
    "check": "run-gates",
@@ -1022,16 +992,6 @@
    ],
    "path": "Plans/.audits/_semantic_closure_registry.jsonl",
    "subcheck": "validate_audit_closure"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_audit_status_index",
-   "fingerprints": [
-    "-"
-   ],
-   "path": "Plans/.audits/_audit_status_index.json",
-   "subcheck": "validate_audit_status_index"
   },
   {
    "check": "run-gates",
@@ -1701,16 +1661,12 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 6324,
+   "failure_total": 6322,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
      "reported": 201,
      "sampled": 100
-    },
-    "audit_status_index": {
-     "reported": 1,
-     "sampled": 1
     },
     "evidence": {
      "exported": 2977,
@@ -1731,10 +1687,6 @@
      "reported": 46,
      "sampled": 46
     },
-    "support_refs": {
-     "reported": 1,
-     "sampled": 1
-    },
     "usage_contract_drift": {
      "reported": 1,
      "sampled": 1
@@ -1752,24 +1704,16 @@
    }
   },
   "run-gates": {
-   "failure_total": 6325,
+   "failure_total": 6323,
    "status": "fail",
    "subchecks": {
     "json_syntax": {
      "reported": 1,
      "sampled": 1
     },
-    "lint_contractrefs": {
-     "reported": 1,
-     "sampled": 1
-    },
     "validate_audit_closure": {
      "reported": 201,
      "sampled": 50
-    },
-    "validate_audit_status_index": {
-     "reported": 1,
-     "sampled": 1
     },
     "validate_evidence": {
      "exported": 2977,
@@ -1797,7 +1741,7 @@
    }
   }
  },
- "commit": "4c8099d756dab2eaece69a2e9e2d82130016b05c",
+ "commit": "65f5bba1f5a428340813ec1c22d311ddfbbd6c02",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -2285,8 +2229,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-14T01:19:06Z",
- "run_dir": "Plans/.plan_migration/pds-20261114-001-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-14T06:15:02Z",
+ "run_dir": "Plans/.plan_migration/pds-20261114-002-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
