@@ -346,11 +346,32 @@
       const retro = family === 'retro';
       /* (variant B: the window is a picture of its own, revealed by the same circle as the ground) */
       const timing = { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)' };
-      ['root'].concat(still ? ['o55-win'] : []).forEach((name) => document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+      const anims = ['root'].concat(still ? ['o55-win'] : []).map((name) => document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
         Object.assign({ pseudoElement: `::view-transition-new(${name})` }, timing)));
       /* (variant B: the window's old picture gives way where the circle has passed, 20-motion.css --o55-vt-r) */
-      if (still) document.documentElement.animate({ '--o55-vt-r': ['0px', end + 'px'], '--o55-vt-x': [x + 'px', x + 'px'], '--o55-vt-y': [y + 'px', y + 'px'] },
-        Object.assign({ pseudoElement: '::view-transition-old(o55-win)', fill: 'forwards' }, timing));
+      if (still) anims.push(document.documentElement.animate({ '--o55-vt-r': ['0px', end + 'px'], '--o55-vt-x': [x + 'px', x + 'px'], '--o55-vt-y': [y + 'px', y + 'px'] },
+        Object.assign({ pseudoElement: '::view-transition-old(o55-win)', fill: 'forwards' }, timing)));
+      /* FO-188 (c): the circle starts once the new look's frames flow. The first frame in a new look is a one-off cost: a
+         task at the first frame, and on a look's first use a GPU pause of 165-592 ms while the new look is rastered
+         (Alexis, t-b14); started at ready, the circle's fast first part was spent inside them, the part Jared misses. So the
+         animations wait at their first keyframe (the circle at 0: the old picture stays on screen) and start together on
+         the second of two frames less than 34 ms apart, or 900 ms after ready at the latest; at once on a low-resource
+         computer or a hidden page. 'o55:reveal' is sent on window as they start (the kit check times the circle from it). */
+      anims.forEach((a) => { try { a.pause(); } catch (_) { /* gone */ } });
+      let go = false, last = null, cap = 0;
+      const play = () => {
+        if (go) return;
+        go = true; clearTimeout(cap);
+        anims.forEach((a) => { try { a.play(); } catch (_) { /* gone */ } });
+        try { window.dispatchEvent(new Event('o55:reveal')); } catch (_) { /* none */ }
+      };
+      const flowing = (now) => {
+        if (go || S.vt !== vt) return;
+        if (last != null && now - last < 34) { play(); return; }
+        last = now; O55.motion.real.raf(flowing);
+      };
+      if (O55.motion.lowResource || document.hidden) play();
+      else { cap = setTimeout(play, 900); O55.motion.real.raf(flowing); }
       /* the window's own colour transitions end here too, as NieR's path ends them (syncTheme): about 500 of its elements
          eased from the old colours inside the circle and were restyled in every frame of the reveal (the rig's frames,
          25 ms each on the VM). At ready the new look's style is computed, so asking forces nothing. */
