@@ -13,7 +13,8 @@ Shared foundations (never re-implemented here):
   FrozenRecipe and RetainedDispatcher;
 - timestamps: pm_event_datetime.date_time with the explicit owner profile per field (CV-1101:
   EventRecord occurred_at_utc broad `event_record`; CV-253 Storage observed_at_utc,
-  persisted_at_utc and the SP-347 receipt acknowledged_at_utc strict `storage_utc_z`).
+  persisted_at_utc strict `storage_utc_z`; the AppendReceipt acknowledged_at_utc broad `event_record`,
+  Jared's E5-2 = A).
   datetime_validator and the inventory gate run at batch-3 integration (SWEEP-P2B addendum 2).
 """
 import base64
@@ -177,7 +178,7 @@ def timestamp_inventory():
         (('prepared_event', 'occurred_at_utc'), 'date-time'): (EVENT_RECORD, 'LG05_occurred_clock'),
         (('prepared_event', 'observed_at_utc'), 'date-time'): (STORAGE_UTC_Z, 'LG06_observed_clock'),
         (('prepared_event', 'persisted_at_utc'), 'date-time'): (STORAGE_UTC_Z, 'LG07_persisted_clock'),
-        (('first_append_receipt', 'acknowledged_at_utc'), 'date-time'): (STORAGE_UTC_Z, 'JR08_ack_clock'),
+        (('first_append_receipt', 'acknowledged_at_utc'), 'date-time'): (EVENT_RECORD, 'JR08_ack_clock'),
     }
     assert found == set(expected), sorted(found ^ set(expected))
     return expected
@@ -353,7 +354,7 @@ ROWS = {
         ('JR05_receipt_shape', 'receipt_shape', 'a non-null first receipt validates AppendReceipt'),
         ('JR06_commitment_shape', 'commitment_shape', 'a non-null commitment validates original_event_value_commitment'),
         ('JR07_receipt_numbers', 'receipt_numbers', 'every receipt integer the schema admits is an exact SP-1100 storage_uint64'),
-        ('JR08_ack_clock', 'ack_clock', 'acknowledged_at_utc passes date_time with storage_utc_z (CV-253/SP-347)'),
+        ('JR08_ack_clock', 'ack_clock', 'acknowledged_at_utc passes date_time with the EventRecord profile (CV-339 format date-time; E5-2)'),
     ]),
     'ev': ('payload_route_refused', 'Inline body or SP-337 descriptor resolution before decode', [
         ('EV01_representation', 'representation', 'exactly one of inline object body with null ref, or null body with a descriptor'),
@@ -1076,7 +1077,8 @@ def observe_publication(w, mode):
     obs['receipt_numbers'] = type(receipt) is not dict or _ok(lambda: all(
         storage_uint64(receipt[k]) is not None for k in RECEIPT_UINT64
         if k in receipt and number(receipt[k]) and _RCPT_V[k].is_valid(receipt[k])))
-    obs['ack_clock'] = type(receipt) is not dict or clock(receipt.get('acknowledged_at_utc'), STORAGE_UTC_Z)
+    # E5-2 = A (Jared, 2026-11-13): AppendReceipt acknowledged_at_utc takes the EventRecord profile (format date-time).
+    obs['ack_clock'] = type(receipt) is not dict or clock(receipt.get('acknowledged_at_utc'), EVENT_RECORD)
     journal_ok = all(obs[k] for k in ('closed_keys', 'scalar_fields', 'receipt_presence', 'commitment_presence',
                                       'receipt_shape', 'commitment_shape', 'receipt_numbers', 'ack_clock'))
     # ev ------------------------------------------------------------------------------------------------

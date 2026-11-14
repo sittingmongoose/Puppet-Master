@@ -203,11 +203,12 @@ def run_all(dm):
     witness('RS22-storage-clocks', 'resolve', 'RS22_storage_clocks',
             lambda: dm.resolve_original(r0, copy.deepcopy(authority_s['stored_event']), authority_s))
 
-    # RS23: acknowledged_at_utc offset; both receipt copies move together.
+    # RS23 (E5-2 = A, 2026-11-13): acknowledged_at_utc takes the EventRecord profile, which RS01 already enforces
+    # through custody_v2 with format_checker(EVENT_RECORD); RS23 has no single-row witness (entailed by RS01).
+    # The same invalid value (hour 24; both receipt copies move together) is refused first at RS01.
     authority_a = copy.deepcopy(r0['receipt_authority'])
-    authority_a['datetime_profile'] = 'event_record'
-    authority_a['stored_custody']['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T12:00:00-00:00'
-    authority_a['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T12:00:00-00:00'
-    witness('RS23-ack-clock', 'resolve', 'RS23_ack_clock',
+    authority_a['stored_custody']['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T24:00:00Z'
+    authority_a['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T24:00:00Z'
+    witness('RS01-ack-clock-event-record', 'resolve', 'RS01_custody_schema',
             lambda: dm.resolve_original(r0, copy.deepcopy(r0['positive_event_record']), authority_a))
     return done

@@ -17,7 +17,7 @@ Shared foundations (never re-implemented here):
   OriginalCustody, FrozenRecipe and RetainedDispatcher;
 - timestamps: pm_event_datetime.date_time with the explicit owner profile per field (CV-1101:
   EventRecord occurred_at_utc broad `event_record`; CV-253 Storage observed_at_utc, persisted_at_utc
-  and the SP-347 receipt acknowledged_at_utc strict `storage_utc_z`). datetime_validator and the
+  strict `storage_utc_z`; the AppendReceipt acknowledged_at_utc broad `event_record`, Jared's E5-2 = A). datetime_validator and the
   inventory gate run at batch-3 integration (SWEEP-P2B addendum 2).
 - schema resources: Plans/event_authority_w3g/schema_resources.json (closed offline map, SHA-256 pinned).
 """
@@ -672,7 +672,7 @@ ROWS = {
         ('TM01_occurred_clock', 'occurred_clock', 'occurred_at_utc passes date_time with event_record', 'invalid_timestamp', ALLB),
         ('TM02_observed_clock', 'observed_clock', 'observed_at_utc passes date_time with storage_utc_z', 'invalid_timestamp', ALLB),
         ('TM03_persisted_clock', 'persisted_clock', 'persisted_at_utc passes date_time with storage_utc_z', 'invalid_timestamp', ALLB),
-        ('TM04_ack_clock', 'ack_clock', 'the first receipt acknowledged_at_utc passes date_time with storage_utc_z', 'invalid_timestamp', ALLB),
+        ('TM04_ack_clock', 'ack_clock', 'the first receipt acknowledged_at_utc passes date_time with the EventRecord profile (E5-2)', 'invalid_timestamp', ALLB),
     ]),
     'src': ('Native source custody (owner issuance, never caller data)', [
         ('SR01_source_custody', 'source_custody', 'the complete native source has authenticated original owner issuance of its exact bytes', 'source_unavailable', ALLB),
@@ -1254,7 +1254,8 @@ def observe(w):
     obs['occurred_clock'] = not env_ok or clock(lev['occurred_at_utc'], EVENT_RECORD)
     obs['observed_clock'] = not env_ok or clock(lev['observed_at_utc'], STORAGE_UTC_Z)
     obs['persisted_clock'] = not env_ok or clock(lev['persisted_at_utc'], STORAGE_UTC_Z)
-    obs['ack_clock'] = type(receipt) is not dict or clock(receipt.get('acknowledged_at_utc'), STORAGE_UTC_Z)
+    # E5-2 = A (Jared, 2026-11-13): AppendReceipt acknowledged_at_utc takes the EventRecord profile (format date-time).
+    obs['ack_clock'] = type(receipt) is not dict or clock(receipt.get('acknowledged_at_utc'), EVENT_RECORD)
     full = nm_ok and all(obs[k] for k in ('occurred_clock', 'observed_clock', 'persisted_clock', 'ack_clock')) \
         and obs['reference_closure']
     # src -------------------------------------------------------------------------------------------------
@@ -1465,7 +1466,7 @@ TIMESTAMP_FIELDS = {
     ('EventRecord', 'occurred_at_utc'): (EVENT_RECORD, 'TM01_occurred_clock', 'CV-1101 broad EventRecord profile'),
     ('EventRecord', 'observed_at_utc'): (STORAGE_UTC_Z, 'TM02_observed_clock', 'CV-253 Storage strict profile'),
     ('EventRecord', 'persisted_at_utc'): (STORAGE_UTC_Z, 'TM03_persisted_clock', 'CV-253 Storage strict profile'),
-    ('AppendReceipt', 'acknowledged_at_utc'): (STORAGE_UTC_Z, 'TM04_ack_clock', 'SP-347 / CV-253 Storage strict profile'),
+    ('AppendReceipt', 'acknowledged_at_utc'): (EVENT_RECORD, 'TM04_ack_clock', 'CV-339 AppendReceipt format date-time; Jared E5-2 = A (EventRecord profile)'),
 }
 
 

@@ -27,7 +27,7 @@ def case(value):
         g.Guard('TM01_occurred_clock', g.Invariant('/occurred_clock', 'occurred_at_utc passes date_time with event_record'), 'invalid_timestamp', TM01_occurred_clock),
         g.Guard('TM02_observed_clock', g.Invariant('/observed_clock', 'observed_at_utc passes date_time with storage_utc_z'), 'invalid_timestamp', TM02_observed_clock),
         g.Guard('TM03_persisted_clock', g.Invariant('/persisted_clock', 'persisted_at_utc passes date_time with storage_utc_z'), 'invalid_timestamp', TM03_persisted_clock),
-        g.Guard('TM04_ack_clock', g.Invariant('/ack_clock', 'the first receipt acknowledged_at_utc passes date_time with storage_utc_z'), 'invalid_timestamp', TM04_ack_clock),
+        g.Guard('TM04_ack_clock', g.Invariant('/ack_clock', 'the first receipt acknowledged_at_utc passes date_time with the EventRecord profile (E5-2)'), 'invalid_timestamp', TM04_ack_clock),
     ])
 
     def check(value):

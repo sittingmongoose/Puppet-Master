@@ -43,7 +43,7 @@ def case(value):
         g.Guard('JR05_receipt_shape', g.Invariant('/receipt_shape', 'a non-null first receipt validates AppendReceipt'), 'journal_refused', JR05_receipt_shape),
         g.Guard('JR06_commitment_shape', g.Invariant('/commitment_shape', 'a non-null commitment validates original_event_value_commitment'), 'journal_refused', JR06_commitment_shape),
         g.Guard('JR07_receipt_numbers', g.Invariant('/receipt_numbers', 'every receipt integer the schema admits is an exact SP-1100 storage_uint64'), 'journal_refused', JR07_receipt_numbers),
-        g.Guard('JR08_ack_clock', g.Invariant('/ack_clock', 'acknowledged_at_utc passes date_time with storage_utc_z (CV-253/SP-347)'), 'journal_refused', JR08_ack_clock),
+        g.Guard('JR08_ack_clock', g.Invariant('/ack_clock', 'acknowledged_at_utc passes date_time with the EventRecord profile (CV-339 format date-time; E5-2)'), 'journal_refused', JR08_ack_clock),
     ])
 
     def check(value):

@@ -52,16 +52,18 @@ CURRENT_RECIPE_ID = 'dm-cv1100-producer-v1'
 def bound_profile(recipe_id, kind):
     """SP-1101 profile bound to the selected DM recipe, or None.
 
-    source is the broad EventRecord profile. storage and ack are CV-253 /
-    SP-347 UTC: terminal uppercase Z, any fraction, no new digit cap. Both DM
-    recipes bind the same profiles. A recipe id taken from request data is not
-    a sealed selection and returns None.
+    source is the broad EventRecord profile. storage is CV-253 / SP-347 UTC:
+    terminal uppercase Z, any fraction, no new digit cap. ack (the CV-339
+    AppendReceipt acknowledged_at_utc, format date-time) is the broad
+    EventRecord profile: Jared's E5-2 = A (2026-11-13). Both DM recipes bind the
+    same profiles. A recipe id taken from request data is not a sealed
+    selection and returns None.
     """
     if recipe_id not in (RETAINED_RECIPE_ID, CURRENT_RECIPE_ID):
         return None
-    if kind == 'source':
+    if kind in ('source', 'ack'):
         return EVENT_RECORD
-    if kind in ('storage', 'ack'):
+    if kind == 'storage':
         return STORAGE_UTC_Z
     return None
 
@@ -1419,12 +1421,20 @@ def main(guard_first=None):
         assert bound_profile(forged.get('datetime_profile'), 'storage') is None, event
         assert resolve_original(row, forged['stored_event'], forged) is None, (event, 'forged profile cannot admit storage lowercase z')
         count += 2
-        ack = copy.deepcopy(row['receipt_authority'])
-        ack['datetime_profile'] = 'event_record'
-        ack['stored_custody']['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T12:00:00-00:00'
-        ack['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T12:00:00-00:00'
-        assert resolve_original(row, ack['stored_event'], ack) is None, (event, 'ack offset')
-        count += 1
+        # E5-2 = A: an owner-valid receipt acknowledgement time with an offset or a lowercase z is accepted
+        # (EventRecord profile); an invalid one is refused (RS01 custody_v2 format_checker(EVENT_RECORD) first).
+        for good in ('2026-11-04T12:00:00-00:00', '2026-11-04T07:00:00-05:00', '2026-11-04T12:00:00z'):
+            ack = copy.deepcopy(row['receipt_authority'])
+            ack['stored_custody']['first_append_receipt']['acknowledged_at_utc'] = good
+            ack['first_append_receipt']['acknowledged_at_utc'] = good
+            assert resolve_original(row, ack['stored_event'], ack) is not None, (event, 'ack accepted', good)
+            count += 1
+        for bad in ('2026-11-04T24:00:00Z', '2026-11-04T12:00:00'):
+            ack = copy.deepcopy(row['receipt_authority'])
+            ack['stored_custody']['first_append_receipt']['acknowledged_at_utc'] = bad
+            ack['first_append_receipt']['acknowledged_at_utc'] = bad
+            assert resolve_original(row, ack['stored_event'], ack) is None, (event, 'ack refused', bad)
+            count += 1
         count += run_numeric_family(row)
         print(event + ': payload/full-envelope/original-joins/admission/receipt/withdrawal/rebuild vectors PASS; native NOT_RUN')
     print(json.dumps({'status': 'PASS', 'assertions': count, 'native_execution': 'NOT_RUN'}))

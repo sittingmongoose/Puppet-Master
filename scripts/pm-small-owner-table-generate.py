@@ -119,7 +119,7 @@ SPEC = {
         ('RS20_receipt_sequence', 'receipt_sequence', 'receipt sequence is the stored sequence'),
         ('RS21_receipt_exact', 'receipt_exact', 'the first receipt copy is exactly the custody receipt'),
         ('RS22_storage_clocks', 'storage_clocks', 'the retained stored event passes date_time with the recipe storage_utc_z profile'),
-        ('RS23_ack_clock', 'ack_clock', 'acknowledged_at_utc passes date_time with the recipe storage_utc_z profile'),
+        ('RS23_ack_clock', 'ack_clock', 'acknowledged_at_utc passes date_time with the recipe EventRecord profile (E5-2; entailed by RS01 custody_v2 format_checker(EVENT_RECORD))'),
     ]),
     'fullvalue': ('fullvalue_refused', 'Full-value original commitment', [
         ('FV01_requested_integer', 'requested_integer', 'the requested event carries integer leaves only'),

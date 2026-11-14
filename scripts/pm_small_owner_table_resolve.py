@@ -115,7 +115,7 @@ def case(value):
         g.Guard('RS20_receipt_sequence', g.Invariant('/receipt_sequence', 'receipt sequence is the stored sequence'), 'resolve_refused', RS20_receipt_sequence),
         g.Guard('RS21_receipt_exact', g.Invariant('/receipt_exact', 'the first receipt copy is exactly the custody receipt'), 'resolve_refused', RS21_receipt_exact),
         g.Guard('RS22_storage_clocks', g.Invariant('/storage_clocks', 'the retained stored event passes date_time with the recipe storage_utc_z profile'), 'resolve_refused', RS22_storage_clocks),
-        g.Guard('RS23_ack_clock', g.Invariant('/ack_clock', 'acknowledged_at_utc passes date_time with the recipe storage_utc_z profile'), 'resolve_refused', RS23_ack_clock),
+        g.Guard('RS23_ack_clock', g.Invariant('/ack_clock', 'acknowledged_at_utc passes date_time with the recipe EventRecord profile (E5-2; entailed by RS01 custody_v2 format_checker(EVENT_RECORD))'), 'resolve_refused', RS23_ack_clock),
     ])
 
     def check(value):

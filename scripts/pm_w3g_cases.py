@@ -533,6 +533,10 @@ def extra_cases():
                             native_patch=dict(accepted_at_utc='2016-12-31T23:59:60Z')))
             out.append(case(f'extra/{f}/{s}/append/occurred-24h', f, s, A, _row('tm', 'occurred_clock'),
                             native_patch=dict(accepted_at_utc='2026-11-05T24:00:00Z')))
+            # E5-2 = A: owner-valid receipt acknowledged_at_utc under the EventRecord profile (offset; lowercase z)
+            for label, value in (('ack-offset', '2026-11-05T05:00:02-05:00'), ('ack-lowercase-z', '2026-11-05T10:00:02z')):
+                out.append(case(f'extra/{f}/{s}/append/{label}', f, s, A, None,
+                                mut=lambda w, v=value: next(iter(w['storage']['receipts'].values())).__setitem__('acknowledged_at_utc', v)))
     return out
 
 

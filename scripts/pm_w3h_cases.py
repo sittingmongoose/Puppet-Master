@@ -92,10 +92,12 @@ wit('JR06_commitment_shape', 'commitment-uppercase-hash', lambda w: w['publicati
 wit('JR07_receipt_numbers', 'receipt-offset-float', lambda w: w['publication']['first_append_receipt'].__setitem__('byte_offset', 4096.0))
 wit('JR07_receipt_numbers', 'receipt-sequence-above-uint64', lambda w: w['publication']['first_append_receipt'].__setitem__('sequence_id', 2 ** 64))
 wit('JR07_receipt_numbers', 'receipt-generation-float', lambda w: w['publication']['first_append_receipt'].__setitem__('manifest_generation', 9.0))
-for _label, _value in (('plus-zero-offset', '2026-11-05T10:00:02+00:00'), ('minus-zero-offset', '2026-11-05T10:00:02-00:00'),
-                       ('lowercase-z', '2026-11-05T10:00:02z'), ('trailing-lf', '2026-11-05T10:00:02Z\n'),
-                       ('hour-24', '2026-11-05T24:00:00Z'), ('no-zone', '2026-11-05T10:00:02'),
-                       ('nonzero-offset', '2026-11-05T05:00:02-05:00'), ('feb-30', '2026-02-30T10:00:02Z')):
+# E5-2 = A (Jared, 2026-11-13): acknowledged_at_utc takes the EventRecord profile. Offsets (+00:00, -00:00, a nonzero
+# offset) and lowercase z are owner-valid and are accepted witnesses in verify_positives (ACK_ACCEPTED below).
+ACK_ACCEPTED = (('plus-zero-offset', '2026-11-05T10:00:02+00:00'), ('minus-zero-offset', '2026-11-05T10:00:02-00:00'),
+                ('lowercase-z', '2026-11-05T10:00:02z'), ('nonzero-offset', '2026-11-05T05:00:02-05:00'))
+for _label, _value in (('trailing-lf', '2026-11-05T10:00:02Z\n'), ('hour-24', '2026-11-05T24:00:00Z'),
+                       ('no-zone', '2026-11-05T10:00:02'), ('feb-30', '2026-02-30T10:00:02Z')):
     wit('JR08_ack_clock', 'ack-' + _label, lambda w, v=_value: w['publication']['first_append_receipt'].__setitem__('acknowledged_at_utc', v))
 
 # ev ------------------------------------------------------------------------------------------------------
@@ -462,6 +464,13 @@ def verify_positives():
                     for external in (False, True):
                         w = m.build_world(f, scope, variant, state, external)
                         out.append((f'verify/{f}/{scope}/{variant}/{state}/{"external" if external else "inline"}', f, w, ('accept',)))
+            # E5-2 = A: an owner-valid receipt acknowledgement time with an offset or a lowercase z is accepted
+            for label, value in ACK_ACCEPTED:
+                w = m.build_world(f, scope, None, 'settled', False)
+                w['publication']['first_append_receipt']['acknowledged_at_utc'] = value
+                for issued in w['storage']['receipts'].values():  # Storage issued that receipt (ST06 join)
+                    issued['acknowledged_at_utc'] = value
+                out.append((f'verify/{f}/{scope}/settled/receipt-ack-{label}', f, w, ('accept',)))
         # Size boundaries: an external 16,385-byte body; an inline journal of exactly 16,384 bytes.
         base = len(next(iter(m.build_world(f, 'project', None, 'settled', True)['storage']['packs'].values()))['bytes'])
         sizes = {}

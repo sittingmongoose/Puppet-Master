@@ -1809,13 +1809,13 @@ entailed('retained_resolved', [r for r, _x, _f, _w in DISPATCH_ROWS] + [r[0] for
          'caught (:728); the date-time checks go through reason_of; producer_semantic_digest refusals are caught '
          '(:758). full_value_commitment (scripts/pm_event_numbers.py:405-412) runs only on a record that decoded '
          'canonically (so its re-encoding cannot refuse) and passed the frozen EventRecord schema (whose schema_id and '
-         'schema_version consts exclude full_value_edition). identity (:212) runs qualified_jcs on schema-valid '
+         'schema_version consts exclude full_value_edition). identity (scripts/pm_w3i_continuity_oracles.py:212) runs qualified_jcs on schema-valid '
          'payload strings decoded from UTF-8. So the verifier returns True or False, and the dispatcher reports '
          'False as original_verification. frozen_dispatch_failures (:2657), run on every retained control and '
          'negative, requires that, once verify_original is reached, the dispatcher refuses original_verification '
          'exactly when a frozen_* row refuses. The negative-only frozen map current_gated (_current_gated_verify) '
          'may raise the current writer gate\'s own reason. It calls the instrumented gate whenever the verifier '
-         'runs, so retained_no_current_gate (table retained_effects, ahead of this table) refuses first. Every '
+         'decodes a record that carries replay_policy, so retained_no_current_gate (table retained_effects, ahead of this table) refuses first. Every '
          'reason that remains has its own dispatch row (retained_dispatch). So this catch-all never refuses first.')
 
 
