@@ -427,6 +427,7 @@
         s.variant = cs.getPropertyValue('--pmh-variant').trim() || null;   /* the marker's data-pmh-variant on this target */
         s.inset = null;
         if (ins) { var q = ins.split(/\s+/).map(parseFloat); if (q.length === 4 && q.every(isFinite) && (q[0] || q[1] || q[2] || q[3])) s.inset = q; }
+        s.contain = cs.getPropertyValue('--pmh-contain').trim() === '1';   /* the marker's travel stops at this target's edges */
         s.gen = lookGen;
       }
       if (!s.clippers) s.clippers = clippersOf(s.el);
@@ -897,6 +898,14 @@
         FR.vx += (ks * (gx - FR.x) - kd * FR.vx) * dt; FR.vy += (ks * (gy - FR.y) - kd * FR.vy) * dt;
         FR.vw += (ks * (gw - FR.w) - kd * FR.vw) * dt; FR.vh += (ks * (gh - FR.h) - kd * FR.vh) * dt;
         FR.x += FR.vx * dt; FR.y += FR.vy * dt; FR.w += FR.vw * dt; FR.h += FR.vh * dt;
+        /* --pmh-contain (FO-194): each edge comes in on the spring and stops at the target's edge instead of overshooting
+           it, so the marker never passes the box it travels to (Friendly's page tabs, 2 px apart: the overshoot lay over
+           the next tab) */
+        if (s.contain) {
+          var e0 = [FR.x, FR.y, FR.x + FR.w, FR.y + FR.h], v0 = [FR.vx, FR.vy, FR.vx + FR.vw, FR.vy + FR.vh], g0 = [gx, gy, gx + gw, gy + gh];
+          for (var ei = 0; ei < 4; ei++) if (v0[ei] && (v0[ei] > 0 ? e0[ei] > g0[ei] : e0[ei] < g0[ei])) { e0[ei] = g0[ei]; v0[ei] = 0; }
+          FR.x = e0[0]; FR.y = e0[1]; FR.w = e0[2] - e0[0]; FR.h = e0[3] - e0[1]; FR.vx = v0[0]; FR.vy = v0[1]; FR.vw = v0[2] - v0[0]; FR.vh = v0[3] - v0[1];
+        }
         if (Math.abs(gx - FR.x) < 0.3 && Math.abs(gy - FR.y) < 0.3 && Math.abs(gw - FR.w) < 0.3 && Math.abs(gh - FR.h) < 0.3 &&
             Math.abs(FR.vx) + Math.abs(FR.vy) + Math.abs(FR.vw) + Math.abs(FR.vh) < 2) {
           FR.x = gx; FR.y = gy; FR.w = gw; FR.h = gh; FR.vx = FR.vy = FR.vw = FR.vh = 0;

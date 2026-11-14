@@ -8,7 +8,15 @@
 //   the next than the chip's own motion moves it in that frame (+3 px), in single presses and quick back-and-forth runs,
 //   with a person's press (down, 90 ms, up).
 //
+// - FO-194, Friendly's page tabs (Home ... Settings): "in the friendly theme the page selector at top overlaps when you hover.
+//   I like the new design a lot, it just needs to be tweaked." The hover marker (the F1 sticker's dashed echo, #pmh-frame)
+//   sat 2 px round each tab, 2 px apart, sprang to 1.017 on arrival and overshot the tab it slid to by 4-8 px. In Friendly
+//   Light and Dark at 1920, 1440 and 1280, with the pointer arriving on each tab from outside and sliding along the
+//   strip both ways, every frame: an arriving marker stays inside its tab's box, a sliding one never passes the far edge
+//   of the tab it slides to, and every marker at rest is inside its tab (0.5 px).
+//
 //   --set looks=friendly-light,...   --set film=1 (marks for a recording)   --set sandbox=0|1 (both surfaces: run twice)
+//   --set widths=1920,1440,1280 (FO-194)
 import { RECORD, TAKE, RESET, frames, steps, modelError } from '../helpers/carry-frames.mjs';
 
 const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : all);
@@ -33,7 +41,77 @@ async function hold(t, f, sel, label) {
 const RAIL = { sel: '#sidePanelSlot .pm-segtab', active: '.pm-segtab-item.active' };
 const tab = (name) => `#sidePanelSlot .pm-segtab .pm-segtab-item[data-tab="${name}"]`;
 
+const PAGE_TAB = '.title-bar nav.page-tabs .page-tab';
+// in the page: sample the hover marker and every page tab each frame until stop()
+const HOVER_REC = () => {
+	const W = window.__hovRec = { rows: [], on: true };
+	const rr = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
+	const tick = (ts) => {
+		if (!W.on) return;
+		const f = document.getElementById('pmh-frame');
+		const vis = f && f.classList.contains('pmh-frame-on') && getComputedStyle(f).opacity > 0.05;
+		W.rows.push({ t: ts, frame: vis ? rr(f) : null, tabs: [...document.querySelectorAll('.title-bar nav.page-tabs .page-tab')].filter((e) => e.getClientRects().length && e.getBoundingClientRect().width > 4).map((e) => ({ name: e.textContent.trim(), box: rr(e) })) });
+		requestAnimationFrame(tick);
+	};
+	requestAnimationFrame(tick);
+	return true;
+};
+
 export const tests = {
+	async 'FO-194 Friendly page tab hover marker stays inside its tab'(t) {
+		const looks = list(t.args.looks194 || (t.args.looks && /friendly/.test(t.args.looks) ? t.args.looks : ''), ['friendly-light', 'friendly-dark']).filter((l) => /friendly/.test(l));
+		const widths = list(t.args.widths, ['1920', '1440', '1280']).map(Number);
+		await t.emulate({ reducedMotion: 'no-preference' });
+		const TOL = 0.5, keep = [];
+		for (const w of widths) {
+			await t.viewport(w, 1080);
+			for (const look of looks) {
+				const f = await t.app.open();
+				await t.app.look(look);
+				const off = await offset(t, f);
+				const tabs = await f.evaluate((sel) => [...document.querySelectorAll(sel)].filter((e) => e.getClientRects().length && e.getBoundingClientRect().width > 4).map((e) => { const r = e.getBoundingClientRect(); return { name: e.textContent.trim(), c: [r.left + r.width / 2, r.top + r.height / 2], box: [r.left, r.top, r.right, r.bottom] }; }), PAGE_TAB);
+				if (!(await t.check(`${look} ${w}: page tabs shown (${tabs.length})`, tabs.length >= 2, tabs.map((x) => x.name).join(','))) || tabs.length < 2) continue;
+				const away = [tabs[0].c[0], tabs[0].c[1] + 120];
+				await t.page.mouse.move(off.x + away[0], off.y + away[1]); await t.page.waitForTimeout(500);
+				await f.evaluate(HOVER_REC);
+				const moves = [];   // { name, from (tab index or -1), t0 (page clock) }
+				const go = async (i, from, dwell) => { const t0 = await f.evaluate(() => performance.now()); await t.page.mouse.move(off.x + tabs[i].c[0], off.y + tabs[i].c[1], { steps: 6 }); moves.push({ i, from, t0 }); await t.page.waitForTimeout(dwell); };
+				// arrivals from outside, each tab
+				for (let i = 0; i < tabs.length; i++) { await go(i, -1, 650); const t1 = await f.evaluate(() => performance.now()); await t.page.mouse.move(off.x + away[0], off.y + away[1], { steps: 4 }); moves.push({ i: -1, from: i, t0: t1 }); await t.page.waitForTimeout(450); }
+				// a slide along the strip and back
+				await go(0, -1, 500);
+				for (let i = 1; i < tabs.length; i++) await go(i, i - 1, 380);
+				for (let i = tabs.length - 2; i >= 0; i--) await go(i, i + 1, 380);
+				await t.page.waitForTimeout(400);
+				const rows = await f.evaluate(() => { window.__hovRec.on = false; return window.__hovRec.rows; });
+				const bad = []; let worst = 0;
+				// per hover: the marker comes in from where it was (its first sample after the pointer landed). While it
+				// moves, an edge that began outside the tab is still coming in; an edge that began inside must never go out
+				// (an overshoot past the tab). At rest it is inside on all four sides
+				for (let k = 0; k < moves.length; k++) {
+					const m = moves[k]; if (m.i < 0) continue;
+					const end = k + 1 < moves.length ? moves[k + 1].t0 : Infinity;
+					const seg = rows.filter((r) => r.t >= m.t0 + 34 && r.t < end && r.frame);   // two frames for the pointer to land
+					if (!seg.length) continue;
+					const T = tabs[m.i].box, F0 = seg[0].frame, cx = (b) => (b[0] + b[2]) / 2;
+					const dx = cx(T) - cx(F0), o0 = { l: T[0] - F0[0], t: T[1] - F0[1], r: F0[2] - T[2], b: F0[3] - T[3] };
+					const far = ['l', 't', 'r', 'b'].filter((x) => o0[x] <= TOL);
+					seg.forEach((r, j) => {
+						const F = r.frame, last = j === seg.length - 1;
+						const out = { l: T[0] - F[0], t: T[1] - F[1], r: F[2] - T[2], b: F[3] - T[3] };
+						const sides = last ? ['l', 't', 'r', 'b'] : far;
+						const ex = sides.length ? Math.max(...sides.map((x) => out[x])) : 0;
+						if (ex > worst) worst = ex;
+						if (ex > TOL) bad.push(`${tabs[m.i].name}${m.from >= 0 ? ' (slid ' + (dx > 0 ? 'right' : 'left') + ')' : ' (arrived)'}${last ? ' at rest' : ''}: ${ex.toFixed(2)} px past its ${sides.find((x) => out[x] === ex)} edge at t${r.t.toFixed(0)}`);
+					});
+				}
+				await t.check(`${look} ${w}: the hover marker stays inside the tab it marks (worst ${worst.toFixed(2)} px past an edge, ${moves.filter((m) => m.i >= 0).length} hovers)`, bad.length === 0, bad.slice(0, 6).join('; '));
+				keep.push({ look, w, tabs, moves, worst, bad: bad.length });
+			}
+		}
+		if (t.args.dump194) { const fs = await import('node:fs'); fs.writeFileSync(String(t.args.dump194), JSON.stringify(keep)); }
+	},
+
 	async 'FO-195 the rail switcher carries on from where it is drawn'(t) {
 		await t.viewport(1920, 1080);
 		await t.emulate({ reducedMotion: 'no-preference' });
