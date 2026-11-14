@@ -78,6 +78,10 @@
   {
    "event_type": "discovery.verified",
    "outcome": "registered"
+  },
+  {
+   "event_type": "docker.compose.scenario.deleted",
+   "outcome": "registered"
   }
  ]
 }
