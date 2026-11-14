@@ -424,13 +424,19 @@
       const g = el('g', { class: 'pst-prop', 'data-kind': spec.kind, opacity: '0' }, this.gProps);
       const pr = { spec, el: g, strs: [], state: 'in', a: 0, av: 0, len: 0, lenv: 0, ax: 0, axv: 0, scale: spec.scale || 1, sv: 0, op: 0, born: this.t, key: '', settled: !!instant };
       this.props.set(spec.id, pr);
-      this.drawProp(pr);
+      /* FO-206: on a screen change the stage is held (renderScene) and the new screen is in the page but not laid out yet:
+         reading the new prop's box here (getBBox) laid out that whole screen inside the click's task (14 ms of Start's
+         77 ms on Alexis, 54 ms on the VM). A prop that comes in is invisible until render() gives it its opacity, and the
+         first render after the hold places every prop before that frame paints, so it is measured and placed there. */
+      const later = this.held && !instant;
+      this.drawProp(pr, later);
       const tgt = this.propTarget(pr);
       pr.ax = tgt.ax; pr.len = instant ? tgt.len : 0; pr.op = instant ? tgt.op : 0;
       if (!instant) {
         pr.av = (Math.random() - .5) * this.fam.kick * 2;
         this.sfx(spec.preview ? 'ghost' : 'lower', { x: tgt.ax, len: clamp(tgt.len, 0, 400) });
       }
+      if (later) { pr.enterTgt = tgt; return pr; }
       this.placeProp(pr);
       if (!instant) this.enterUnder(pr, tgt);
       return pr;
@@ -737,13 +743,14 @@
       const a = u(c.left, c.top), z = u(c.right, c.bottom), g = (gap || 0) / m.k;
       return [a[0] - g, a[1] - g, z[0] + g, z[1] + g];
     }
-    drawProp(pr) {
+    drawProp(pr, later) {
       const key = JSON.stringify(pr.spec.params || {}) + '|' + pr.spec.kind;
       if (key === pr.key) return;
       pr.key = key;
       const d = PW.PROPS[pr.spec.kind](this.pen, pr.spec.params || {});
       pr.el.innerHTML = d.svg;
-      pr.ties = d.ties; pr.foot = d.foot; pr.bb = this.boxOf(pr.el);
+      /* (later: measured where it is first placed, fit()) */
+      pr.ties = d.ties; pr.foot = d.foot; pr.bb = later ? null : this.boxOf(pr.el);
       const n = d.ties.length;
       while (pr.strs.length < n) pr.strs.push(el('path', { class: 'pst-pstrl', fill: 'none', opacity: '0' }, this.gPropStr));
       while (pr.strs.length > n) pr.strs.pop().remove();
@@ -1226,6 +1233,8 @@
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
       this.pipKeep = this.pipHead(null, { H, ang, sx, sy });
       this.renderN = (this.renderN || 0) + 1;
+      /* (a prop added while the stage was held comes in under NieR's box now, as addProp would have had it: enterUnder) */
+      this.props.forEach((pr) => { if (pr.enterTgt) { const tg = pr.enterTgt; pr.enterTgt = null; this.enterUnder(pr, tg); } });
       this.props.forEach((pr) => this.placeProp(pr));
       // particles
       this.fx.forEach((p) => {
