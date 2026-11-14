@@ -4,7 +4,7 @@
 //   python3 Concepts/settings-scope/opus-5.5/tools/build_standalone.py $OUT
 //   browser-check run Concepts/settings-scope/opus-5.5/tools/checks/feedback.check.mjs \
 //     --config Concepts/pm7-tools/browser-check/browser-check.config.mjs --set page=$OUT/settings-scope-app.html
-// --set only=strip|rows|shake|acct|head|where|detail|copy|always|jared1113 runs one part (jared1113: --set j1113=models,paths,limits); --set looks=basic-dark,... narrows the looks
+// --set only=strip|rows|shake|acct|head|where|detail|copy|always|jared1113 runs one part (jared1113: --set j1113=fills,models,paths,limits); --set looks=basic-dark,... narrows the looks
 // (default Basic Dark, Retro Light and NieR Dark); --set lookShots=1 lists the review images under LOOK.
 // `strip` opens the page with the review strip (settings-scope.html beside the app page, or --set strip=<path>); the
 // account switch in `shake` is compared with bare PMConcept7 (Concepts/PMConcept7.html, or --set bare=<path>).
@@ -781,7 +781,9 @@ const J_MAIN = (id) => {
 	const tpl = document.createElement('template'); tpl.innerHTML = window.PM51.settingRows([id]) || '';
 	const ctl = tpl.content.querySelector('.setting-control') || tpl.content;
 	const opts = [...ctl.querySelectorAll('select option')].map((o) => o.value);
-	const vals = opts.length ? opts : [...ctl.querySelectorAll('[data-value]')].map((b) => b.getAttribute('data-value'));
+	let vals = opts.length ? opts : [...ctl.querySelectorAll('[data-value]')].map((b) => b.getAttribute('data-value'));
+	// a row drawn as its own editor's button (NieR parts, Pip's parts) lists no choices on the row: the setting's own list
+	if (!vals.length && Array.isArray(s.options)) vals = s.options.map((o) => String(o && typeof o === 'object' ? (o.value != null ? o.value : o.id) : o));
 	const num = ctl.querySelector('input[type="number"]');
 	const n = (v) => (v === '' || v == null ? NaN : Number(v));
 	return { control: s.control || null, choices: [...new Set(vals)], lo: num && num.min !== '' ? n(num.min) : n(m.min != null ? m.min : s.min), hi: num && num.max !== '' ? n(num.max) : n(m.max != null ? m.max : s.max), step: n(m.step != null ? m.step : s.step), scale: Number(m.scale) || 1, minFrom: !!m.minFrom || !!m.maxFrom, def: s.value };
@@ -1894,6 +1896,63 @@ export default async function (t) {
 	/* ------------------------------------------------------------------ the page Jared opens: the review strip
 	   (review A-r1 finding 1 and tool note A: a script error in the strip passed every check that loaded only the app) */
 	/* ------------------------------------------------------------------ Jared's review, 2026-11-13: items 1, 3 and 5 */
+	/* Found while testing Jared's 2026-11-13 fixes (not on his list): revealing Safety › Rules wrote Rules, in order,
+	   everywhere and said "Saved for everywhere". Every Settings page is opened with real presses (each chapter, each of
+	   its pages' tabs and each manager tab); no History entry and no note may appear. Then one real change on the Rules
+	   tab still routes and says where it went */
+	if (want(t, 'jared1113') && jWant(t, 'fills')) await t.step('Jared 1113, found in testing: opening a Settings page writes nothing; a real change on Rules still routes', async () => {
+		await reset(t); await run(t, HELPERS);
+		await run(t, () => {
+			const P = window.PSX; window.__psxNotes = [];
+			if (!P.note.__psxCount) { const n0 = P.note; P.note = function (o) { window.__psxNotes.push(String((o && o.title) || '')); return n0.apply(this, arguments); }; P.note.__psxCount = true; }
+			window.__psxH0 = (P.W.history || []).length;
+		});
+		const R = '#pm-settings-root';
+		const domains = await run(t, () => [...document.querySelectorAll('#pm-settings-root .domain-link[data-domain]')].map((b) => b.getAttribute('data-domain')));
+		let pages = 0, tabs = 0;
+		for (const dm of domains) {
+			await jPress(t, t.root.locator(`${R} .domain-link[data-domain="${dm}"]`).first()); await settle(t, 500); pages++;
+			const wss = await run(t, () => [...document.querySelectorAll('#pm-settings-root .workspace-tab[data-workspace]')].map((b) => b.getAttribute('data-workspace')));
+			for (const ws of wss) {
+				const wb = t.root.locator(`${R} .workspace-tab[data-workspace="${ws}"]`).first();
+				if (await wb.count()) { await jPress(t, wb); await settle(t, 450); pages++; }
+				const mtabs = await run(t, () => [...document.querySelectorAll('#pm-settings-root .manager-tab[data-action="pm51-tab"]')].filter((b) => b.getClientRects().length).map((b) => [b.getAttribute('data-manager'), b.getAttribute('data-tab')]));
+				for (const [mg, tb] of mtabs) {
+					const mb = t.root.locator(`${R} .manager-tab[data-manager="${mg}"][data-tab="${tb}"]`).first();
+					if (await mb.count()) { await jPress(t, mb); await settle(t, 450); tabs++; }
+				}
+			}
+		}
+		await settle(t, 600);
+		const got = await run(t, () => { const P = window.PSX, h = (P.W.history || []); return { added: h.length - window.__psxH0, first: h.slice(0, Math.max(0, h.length - window.__psxH0)).map((x) => `${x.level} ${x.sid}`), notes: window.__psxNotes.slice() }; });
+		await t.check(`${domains.length} chapters, ${pages} pages and ${tabs} manager tabs opened with real presses: no History entry and no note (the engine's first fill of a row is not a change)`, domains.length >= 8 && tabs > 10 && got.added === 0 && got.notes.length === 0, JSON.stringify(got).slice(0, 400));
+		// one real change on Safety › Rules: the first switch on the tab, or its first list's next choice
+		await run(t, async () => { window.PM51.revealSetting('safety.rules.per-tool-permissions'); await new Promise((r) => setTimeout(r, 1200)); const c = document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"] .pm51-panel-close'); if (c) c.click(); await new Promise((r) => setTimeout(r, 400)); });
+		const before = await run(t, () => ({ h: (window.PSX.W.history || []).length, n: window.__psxNotes.length }));
+		// the first switch, or else the first list, that is on screen on the Rules tab
+		await run(t, async () => { const r = [...document.querySelectorAll('#pm-settings-root [id^="setting-safety"]')].find((x) => x.getClientRects().length && x.querySelector('.toggle[role="switch"], .pm51-dd-trigger')); if (r && window.__psxScrollTo) window.__psxScrollTo(r, 'center'); await new Promise((res) => setTimeout(res, 600)); });
+		const pickWhat = await run(t, () => {
+			const vis = (el) => { if (!el.getClientRects().length || el.offsetParent === null) return false; const b = el.getBoundingClientRect(); return b.top >= 60 && b.bottom <= innerHeight - 20; };
+			const rows = [...document.querySelectorAll('#pm-settings-root [id^="setting-safety"]')].filter(vis);
+			for (const kind of ['.toggle[role="switch"]', '.pm51-dd-trigger']) for (const r of rows) { const c = r.querySelector(kind); if (c && vis(c)) { document.querySelectorAll('[data-j1113-target]').forEach((x) => x.removeAttribute('data-j1113-target')); c.setAttribute('data-j1113-target', kind.startsWith('.toggle') ? 'switch' : 'list'); return { id: r.id.slice(8), kind: kind.startsWith('.toggle') ? 'switch' : 'list' }; } }
+			return null;
+		});
+		let what = pickWhat ? pickWhat.id : '';
+		const ctlSel = pickWhat ? `${R} [id="setting-${pickWhat.id}"] ${pickWhat.kind === 'switch' ? '.toggle[role="switch"]' : '.pm51-dd-trigger'}` : '';
+		// pressed where it is (it was picked on screen): scrolling the page first can remount that part of it
+		if (pickWhat && pickWhat.kind === 'switch') await t.quickClick(t.root.locator(ctlSel).first());
+		else if (pickWhat) {
+			await t.quickClick(t.root.locator(ctlSel).first());
+			await t.root.waitForFunction(() => !!document.querySelector('.pm51-popout.is-open [role="option"]:not([aria-selected="true"]):not([aria-disabled="true"])'), null, { timeout: 3000 }).catch(() => {});
+			await t.root.locator('.pm51-popout.is-open [role="option"]:not([aria-selected="true"]):not([aria-disabled="true"])').first().click();
+		}
+		await settle(t, 700);
+		const sheet = t.root.locator('.psx-back:not([data-leaving]) .psx-sheet .psx-sheet-foot .btn.primary').first();
+		if (await sheet.count()) { await sheet.click(); await settle(t, 500); }
+		const after = await run(t, (b) => ({ h: (window.PSX.W.history || []).length - b.h, notes: window.__psxNotes.slice(b.n), top: (window.PSX.W.history || [])[0] }), before);
+		await t.check(`a real change on Safety › Rules (${what}) still routes: one History entry and its note`, after.h === 1 && after.notes.some((x) => /^Saved for /.test(x)) && !!after.top && after.top.sid === what, JSON.stringify({ h: after.h, notes: after.notes, top: after.top && after.top.sid }));
+	});
+
 	if (want(t, 'jared1113') && jWant(t, 'models')) await t.step('Jared 1113 #1: every model row’s Change and Set for… open the shared model picker over the page, with its inherit words, and set a model there', async () => {
 		const inv = jInventory(t);
 		await t.check('Plans’ inventory is read', !!inv, String(t.args.inventory || 'Plans/settings_inventory.json'));
@@ -2007,7 +2066,9 @@ export default async function (t) {
 		const rows = await run(t, () => {
 			const P = window.PSX, order = Object.keys(window.PM51.placement.byId);
 			const ids = Object.keys(P.DEF).filter((id) => P.DEF[id].adopted || P.DEF[id].inventory).sort((a, b) => order.indexOf(a) - order.indexOf(b));
-			return ids.map((id) => { const off = P.offered(P.DEF[id]); return { id, levels: ['computer', 'device', 'project'].filter((l) => off[l]), home: P.DEF[id].home || null }; }).filter((r) => r.levels.length);
+			// a row Plans' inventory doesn't list that the page keeps per thing (each Goal template's own) has no place to set
+			const perThing = (id) => !P.DEF[id].inventory && /^(each |your )/.test((P.panel.ownerOf && P.panel.ownerOf(id)) || '');
+			return ids.map((id) => { const off = P.offered(P.DEF[id]); return { id, levels: ['computer', 'device', 'project'].filter((l) => off[l]), home: P.DEF[id].home || null }; }).filter((r) => r.levels.length && !perThing(r.id));
 		});
 		const max = Number(t.args.j1113max) || rows.length;
 		const walk = rows.slice(0, max);
