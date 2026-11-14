@@ -78,7 +78,7 @@
      'ResizeObserver loop' error and fn runs a frame late (the panels' bodyObserver asking for its resize flush, F4
      settle bisect). Asked from inside this helper's own delivery, fn is moved to the next frame on purpose.
      While a look is revealed over the window (PM_LOOK_HOLD above) only the window's own callers run here (marked with
-     PM_AFTER_LAYOUT.own: the moves held for a frame on time, the warm queue's lookup, the hover tokens); every other one
+     PM_AFTER_LAYOUT.own: the moves held for a frame on time, the hover tokens); every other one
      is the app beneath applying the look (Home's render and tab bodies, the terminal's and editor's look, the rail's fit,
      the wallpaper's reads), and is kept until the reveal has ended, then asked again, one per idle slice. */
   const afterQ = [], afterOwn = new WeakSet(), afterHeld = new Set();
@@ -400,6 +400,9 @@
   const animOn = (k) => (e) => {
     const el = e.target;
     if (!el || el.nodeType !== 1) return;
+    /* a View Transition's own pseudo-elements (a look's reveal) end with it and are no motion of the page's: counted, the
+       lookup asked <html> for every animation under it, 196 ms inside a Light reveal on the VM (FO-188, variant B) */
+    if (e.pseudoElement && e.pseudoElement.indexOf('::view-transition') === 0) return;
     let m = warmAnims.get(el);
     if (!m) warmAnims.set(el, (m = new Map()));
     const now = performance.now();
@@ -433,7 +436,10 @@
     return st;
   };
   /* in PM_AFTER_LAYOUT: style is computed, so reading an element's animations forces nothing. Only an element counted for
-     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review) */
+     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review). While a
+     look is revealed over the window this lookup waits for the reveal's end like the app's callers (PM_LOOK_HOLD): one
+     getAnimations per counted element, it was 112-115 ms inside a Light reveal on the VM (FO-188, variant B), and the
+     warm queue does nothing while the window is open anyway (PM_BUSY: 'onboarding'). */
   const classify = () => {
     warmClassing = false;
     const now = performance.now();
@@ -568,7 +574,7 @@
      queue on its result, as idle() asks it to (the lead's nit on 7da0909059: the growing retry cost up to 2 s) */
   const lookUp = () => {
     if (warmWhy !== 'animation?' || document.hidden) return false;
-    if (!warmClassing) { warmClassing = true; window.PM_AFTER_LAYOUT(window.PM_AFTER_LAYOUT.own(classify)); }
+    if (!warmClassing) { warmClassing = true; window.PM_AFTER_LAYOUT(classify); }
     return true;
   };
   const idle = (d) => {
@@ -577,7 +583,7 @@
     if (!softKnown()) { warmWhy = 'profile'; retry(); return; }
     if (warmSoft) { dropAll('skipped'); return; }
     const a = animState();
-    if (a === 'ask' && !document.hidden) { warmWhy = 'animation?'; if (!warmClassing) { warmClassing = true; window.PM_AFTER_LAYOUT(window.PM_AFTER_LAYOUT.own(classify)); } return; }
+    if (a === 'ask' && !document.hidden) { warmWhy = 'animation?'; if (!warmClassing) { warmClassing = true; window.PM_AFTER_LAYOUT(classify); } return; }
     if (!quiet()) { retry(); return; }
     if (!slot(d)) { warmWhy = 'idle'; retry(Math.max(16, 1000 - (performance.now() - Math.max(warmQuietSince, warmInput + 600)))); return; }
     /* admitted: two frames on time, then the step in the third */
