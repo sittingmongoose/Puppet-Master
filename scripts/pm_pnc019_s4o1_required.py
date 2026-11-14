@@ -12,33 +12,10 @@ import gzip
 import hashlib
 import json
 from pathlib import Path
+import subprocess
+import sys
 
-import pm_guard_isolation as g
-import pm_pnc019_required_table as phase
 import pm_pnc019_s4o1 as cells
-
-
-SOURCE = 'scripts/pm_pnc019_required_table.py'
-ALLOWANCES = [
-    ('selected', 'return', 'return value', 'Select the unchanged complete payload at this required-member phase.'),
-    ('case', 'return', 'return g.Case(table, check, context)', 'Return the fresh engine case without deciding acceptance.'),
-    ('case', 'call_review', 'g.SchemaCatalog(DOCUMENTS, roots=(URI,))', 'Build a fresh catalogue for the exact source-bound required-member group.'),
-    ('case', 'call_review', 'g.schema_table(catalog, {URI: selected})', 'Build the engine table; one row per required member, with no grouped bypass.'),
-    ('case', 'data_operation', '{URI: selected}', 'Bind the one declared root to the unchanged-payload selector.'),
-    ('case.check', 'call_review', 'table.validate(URI, value, context)', 'Invoke the original complete schema phase through engine attribution.'),
-]
-
-
-def suite(required, control, negatives, label):
-    phase.DOCUMENTS = {phase.URI: {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'required': required}}
-    preview = phase.case()
-    labels = {r.member: r.id for r in preview.table._schema.catalog.guards.values() if r.classification == 'guard'}
-    result = g.Suite(label, phase.case, [g.Control('valid', control, 'synthetic')],
-                     [g.Negative('missing/' + member, value, labels[member], preview.table.guards[labels[member]].refusal_code,
-                                 'valid', 'Remove only required member ' + member) for member, value in negatives],
-                     (SOURCE,), cells.ROOT)
-    result.non_guards = [g.NonGuard(SOURCE, function, kind, text, reason) for function, kind, text, reason in ALLOWANCES]
-    return result
 
 
 def run(row, out, width=1):
@@ -52,7 +29,6 @@ def run(row, out, width=1):
         resolver = reg.resolver(schema['$id'])
     validator = cells.CurrentValidator(schema, registry=reg, _resolver=resolver, format_checker=format_checker(profile=EVENT_RECORD))
     results, seen = [], set()
-    gate = g.MemoryGate(1536, 12, 12, 15, 2700)
     for ci, payload in enumerate(row['controls']):
         if cells.errors(validator, payload):
             continue
@@ -65,7 +41,6 @@ def run(row, out, width=1):
             for start in range(0, len(required), width):
                 group = required[start:start+width]
                 negatives = []
-                full_path = tuple(p for p in sp if p != '$ref') + ('required',)
                 for member in group:
                     candidate = copy.deepcopy(payload)
                     del cells.at(candidate, ip)[member]
@@ -74,10 +49,18 @@ def run(row, out, width=1):
                     if matched:
                         negatives.append((member, copy.deepcopy(cells.at(candidate, ip))))
                 label = row['event_type'] + '/' + cells.pointer(sp) + '/' + str(start)
-                report = g.run(suite(group, original, negatives, label), memory=gate)
-                data = json.dumps(report, sort_keys=True, indent=1, default=str).encode() + b'\n'
                 name = row['event_type'] + '.' + str(len(results)) + '.json.gz'
-                (out/name).write_bytes(gzip.compress(data, mtime=0))
+                job_path=out/(name+'.input.json')
+                job_path.write_text(json.dumps(dict(required=group,control=original,negatives=negatives,label=label)))
+                process=subprocess.run([sys.executable,'-B',str(cells.ROOT/'scripts/pm_pnc019_schema_worker.py'),
+                                        '--input',str(job_path.resolve()),'--output',str((out/name).resolve())],cwd=out.resolve())
+                if not (out/name).exists():
+                    raise RuntimeError('guard worker produced no report; exit '+str(process.returncode))
+                data=gzip.decompress((out/name).read_bytes())
+                report=json.loads(data)
+                if (process.returncode==0)!=(report['status']=='PASS'):
+                    raise RuntimeError('guard worker exit/report disagreement')
+                job_path.unlink()
                 results.append(dict(schema_path=cells.pointer(sp), instance_path=cells.pointer(ip), control=ci,
                                     required=group, exact_full_owner_refusals=len(negatives), tool_status=report['status'],
                                     proved=sum(r.get('proved', False) for r in report.get('rows', [])),

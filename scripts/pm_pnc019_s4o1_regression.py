@@ -52,6 +52,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--only')
+    parser.add_argument('--retained-snapshots',action='store_true')
     args=parser.parse_args()
     args.out.mkdir(parents=True,exist_ok=True)
     commands=list(COMMANDS)
@@ -67,6 +68,11 @@ def main():
         memory_floor()
         before=snapshot()
         command=[sys.executable,'-B','scripts/'+script,*options]
+        if args.retained_snapshots:
+            if label=='DC':
+                options=[]
+            command=[sys.executable,'-B','scripts/pm_pnc019_retained_snapshot.py',
+                     '--output',str((args.out/(label+'.retained.json')).resolve()),'scripts/'+script,*options]
         start=time.monotonic()
         with (args.out/(label+'.log')).open('wb') as stream:
             process=subprocess.run(command,cwd=cells.ROOT,stdout=stream,stderr=subprocess.STDOUT)

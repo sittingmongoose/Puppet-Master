@@ -9,6 +9,7 @@ from jsonschema import Draft202012Validator
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_pnc019_s4o1 as cells
+import pm_pnc019_retained_snapshot as retained
 from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time, format_checker
 from pm_event_numbers import Refusal
 
@@ -70,6 +71,29 @@ class OracleAttribution(unittest.TestCase):
         self.assertEqual(names, sorted(set(names)))
         self.assertEqual(names[0], 'alert.acknowledged')
         self.assertEqual(names[-1], 'gate.evaluation_started')
+
+    def test_store_snapshot_detects_read_time_mutation(self):
+        class Owner:
+            def __init__(self):
+                self.records={'original':b'sealed'}
+            def authenticated_original(self, reference):
+                return self.records[reference]
+        owner=Owner()
+        before=retained.snapshot(owner)[0]
+        owner.authenticated_original('original')
+        self.assertEqual(retained.snapshot(owner)[0],before)
+        owner.records['created_while_reading']=b'forbidden'
+        self.assertNotEqual(retained.snapshot(owner)[0],before)
+
+    def test_snapshot_preserves_float_bits_and_large_integers(self):
+        self.assertNotEqual(retained.freeze(-0.0),retained.freeze(0.0))
+        self.assertEqual(retained.freeze(10**4399)[0],'int')
+
+    def test_unsupported_snapshot_is_never_an_unchanged_store(self):
+        cyclic={}
+        cyclic['cycle']=cyclic
+        with self.assertRaisesRegex(TypeError,'cyclic'):
+            retained.freeze(cyclic)
 
 
 if __name__ == '__main__':
