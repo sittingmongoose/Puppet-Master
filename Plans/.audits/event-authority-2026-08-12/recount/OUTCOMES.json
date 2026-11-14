@@ -354,6 +354,10 @@
   {
    "event_type": "source_control.remote.sync_started",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.repository.bound",
+   "outcome": "registered"
   }
  ]
 }
