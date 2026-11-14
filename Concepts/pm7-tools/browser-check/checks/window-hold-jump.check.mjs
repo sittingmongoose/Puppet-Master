@@ -9,11 +9,12 @@
 // its Close button closes it, under a light DevTools trace. Every frame (requestAnimationFrame) samples each loop's
 // currentTime and play state at the frame's own time; the trace gives the end of that frame's main-thread work (its
 // ProxyMain::BeginMainFrame, matched by the sample's own clock through a sync mark). Judged, per loop:
-//   open    the hold was taken at time X (the loop's start + its held currentTime); the traced main frame that
-//           carries it (the one X falls in, or the first after X) ended its work at d. d - X is how far the compositor
-//           kept moving the loop past the place it was put back to: at most one frame.
-//   close   the resume was taken at X (the loop's new start + its held currentTime); d - X of that frame is the jump
-//           forward when it is shown: at most one frame.
+//   open    the hold was taken at time X (the loop's start + its held currentTime); the frame that shows it (the first
+//           whose late sample, a ResizeObserver callback after its style and layout, is paused) ended its traced main
+//           frame at d. d - X is how far the compositor kept moving the loop past the place it was put back to: at
+//           most one frame.
+//   close   the resume was taken at X (the loop's new start + its held currentTime); d - X of the frame that shows it
+//           (the first whose late sample runs) is the jump forward when it is shown: at most one frame.
 //   held    no held loop advances while the window is open (currentTime the same in every held frame), and none still
 //           runs once the window is on screen.
 // One frame is the display's own frame time, at least 16.7 ms (one frame of a 60 fps film: the films' unit).
@@ -56,10 +57,22 @@ function install(max) {
 		const box = (a) => { const r = a.effect.target.getBoundingClientRect(); return [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)]; };
 		return { total: all.length, picked: pick.map(desc), boxes: pick.map((a) => desc(a) + ' ' + box(a).join(',')) };
 	};
+	// a second sample late in each frame, after its style and layout: a ResizeObserver on a 1 px probe (outside <body>,
+	// so the window never holds it) that each frame's first sample resizes. It sees a change made in that frame's own
+	// callbacks, so the frame that shows the change is known even where a frame's time falls inside another frame
+	const probe = document.createElement('div');
+	probe.id = 'fo181-probe'; probe.setAttribute('aria-hidden', 'true');
+	probe.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none;contain:strict;';
+	document.documentElement.appendChild(probe);
+	new ResizeObserver(() => {
+		const row = S.on && S.rows[S.rows.length - 1];
+		if (row && row.v2 == null) { row.w2 = performance.now(); row.v2 = S.loops.map((a) => [a.currentTime, a.playState]); }
+	}).observe(probe);
 	const tick = (ts) => {
 		if (!S.on) return;
 		S.rows.push({ tl: document.timeline.currentTime, w: performance.now(), open: document.documentElement.hasAttribute('data-o55-open'),
 			shown: !!document.querySelector('#pm-o55-onboarding[data-open="true"]:not(.o55-hold)'), v: S.loops.map((a) => [a.currentTime, a.playState]) });
+		probe.style.width = (S.rows.length % 2 ? 2 : 1) + 'px';
 		requestAnimationFrame(tick);
 	};
 	S.start = () => { S.rows = []; S.marks = []; S.on = true; requestAnimationFrame(tick); };
@@ -86,12 +99,13 @@ function judgeLoop(R, k, frames) {
 	// the start before and after (timeline time at currentTime 0), from the running rows next to the changes
 	const before = rows[iP - 1], after = rows[iR];
 	const xOpen = before.tl - v(before)[0] + hold, xClose = after.tl - v(after)[0] + hold;
-	// the traced main frame that carries the change: the one X falls in, or the first after it (X is a frame's own time,
-	// which comes before its work starts, when the change was taken by a stale frame time). Not the last sample at or
-	// before X: at 120 Hz the next frame's time can fall inside a long frame, before a placement made in it.
-	const frameAt = (x) => frames.find((fr) => fr.e >= x - 0.05);
-	const fo = frameAt(xOpen), fc = frameAt(xClose);
-	if (!fo || !fc) { out.error = `no traced frame for the ${!fo ? 'open' : 'close'}`; return out; }
+	// the frame that shows each change: the first whose late sample (after its style and layout) has the new state; its
+	// traced main frame ends at d. (Not the frame X falls in: a frame's time can fall inside the long frame before it.)
+	const late = (from, state) => { for (let i = from; i < rows.length; i++) { const r = rows[i]; if (r.v2 && r.v2[k][1] === state) return r; } return null; };
+	const shown = (r) => (r ? frames.find((fr) => fr.b <= r.w2 + 0.05 && r.w2 <= fr.e + 0.05) : null);
+	const lo = late(Math.max(0, iP - 2), 'paused'), lc = late(Math.max(iP, iR - 2), 'running');
+	const fo = shown(lo), fc = shown(lc);
+	if (!fo || !fc) { out.error = `no traced frame shows the ${!fo ? 'open' : 'close'}${!(fo ? lc : lo) ? ' (no late sample)' : ''}`; return out; }
 	out.openLate = r1(Math.max(0, fo.e - xOpen)); out.closeLate = r1(Math.max(0, fc.e - xClose));
 	out.openFrameMs = r1(fo.e - fo.b); out.closeFrameMs = r1(fc.e - fc.b);
 	// lane S's measure: the gap between the samples around each change less the loop's own advance there
