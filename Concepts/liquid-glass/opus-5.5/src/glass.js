@@ -1810,7 +1810,7 @@
      and Light (Home 85 / 81, Usage 124 / 73, Settings 84 / 72), 99 to 115 less under a pointer sweep, 95 to 108 less
      scrolling; Basic Dark unchanged. */
   function lensLive(L) {
-    L.lens.__lgLive = !!((L.anim && !L.reducedAnim && L.anim !== L.hopHide) || L.dragging || L.held || rideMoves(L));
+    L.lens.__lgLive = !!((L.anim && !L.reducedAnim && L.anim !== L.hopHide) || L.dragging || (L.held && L.held.size) || rideMoves(L));
     lensBend(L.lens);
   }
   /* At rest every lens kind keeps the plain saturate() its live filter carries (KINDS restSat: 1.1, the icon lens 1.12), a
@@ -1841,6 +1841,7 @@
   }
   function disposeLens(L, keepMark) {
     var carried = false;
+    L.held = null;
     if (L.under && L.rect && L.strip.isConnected && !L.lens.isConnected) {
       carried = true;
       var carry = L.strip.__lgLast = { rect: visualRect(L) || L.rect, pending: L.pending, t: performance.now() }, cs = L.strip, mark = !!(L.cfg && L.cfg.mark);
@@ -1875,6 +1876,8 @@
      shown again when its mode comes back, so a NieR or Retro toggle inserts and removes nothing once both modes have run. */
   var parkedLenses = { over: new Map(), under: new Map() };
   function parkLens(L) {
+    /* a parked lens abandons its hold (R43 F2): a release while it is parked never reaches it, and it would come back bent */
+    L.held = null;
     if (L.pending) pressMark(L.pending, false);
     L.pending = null;
     forgetAncestors(L.strip, scrollStrips, stripAncestors);
@@ -1891,7 +1894,7 @@
     var home = P.lens.isConnected && P.layer.isConnected && (P.under ? P.layer.parentElement === strip : P.layer === lensLayer(strip));
     if (!home) { disposeLens(P, true); return null; }
     if (P.under && strip.__lgPos) strip.style.position = 'relative';
-    P.lens.style.removeProperty('visibility'); P.warm = '';
+    P.lens.style.removeProperty('visibility'); P.warm = ''; P.held = null;
     return P;
   }
   function relayerLenses() {
@@ -1920,7 +1923,7 @@
     pruneLensFilters();
   }
   function suspendLensMotion() {
-    lenses.forEach(function (L) { if (L.pending) pressMark(L.pending, false); L.pending = null; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
+    lenses.forEach(function (L) { L.held = null; if (L.pending) pressMark(L.pending, false); L.pending = null; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
     if (isGlass() && beadOn && beadOn.isConnected) { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); } else resetBead();
     menuMotions.forEach(function (M, menu) { resetMenuMorph(menu); });
   }
@@ -2501,8 +2504,9 @@
     var hit = stripAt(e.target); if (!hit) return;
     var L = lenses.get(hit.strip); if (!L || !L.rect) return;
     /* PERF-4 round 2 (R31 F1): PRESSED is a pointer down on any item of the strip, the chosen one included: the lens
-       bends from here until the press ends (pressOver) or is abandoned (pressAbandon), whatever the app chooses, and when */
-    L.held = true; lensLive(L);
+       bends from here until the press ends (pressOver) or is abandoned (pressAbandon), whatever the app chooses, and when.
+       Holds are kept by pointer (R43 F1): with two pointers down, the lens bends until the last one holding it ends */
+    (L.held || (L.held = new Set())).add(e.pointerId); lensLive(L);
     if (!choosable(hit.item, hit.cfg) || L.dragging) return;
     var cur = hit.cfg.pick ? hit.cfg.pick(hit.strip) : hit.strip.querySelector(hit.cfg.items + (hit.cfg.active || '.active'));
     if (hit.item === cur) return;
@@ -2522,7 +2526,14 @@
      lens resting where it was sent stops bending. One released off its item (away) stays live into the sync queued
      above, which sends it back (dropping the bend here would leave it unbent for the frame or two between the two
      moves); that sync re-reads it (syncStrip) */
-  function pressOver() { lenses.forEach(function (L) { L.held = false; if (L.lens.__lgLive && !(L.pending && L.pending.away)) lensLive(L); }); }
+  function pressOver(e) {
+    /* only this pointer's hold ends (R43 F1): another pointer's release, or its lost capture, leaves a lens it holds bent */
+    var id = e && e.pointerId;
+    lenses.forEach(function (L) {
+      if (L.held) { L.held.delete(id); if (!L.held.size) L.held = null; }
+      if (L.lens.__lgLive && !(L.pending && L.pending.away)) lensLive(L);
+    });
+  }
   document.addEventListener('pointerup', pressOver, true);
   document.addEventListener('pointercancel', pressOver, true);
   document.addEventListener('lostpointercapture', pressOver, true);
@@ -2531,8 +2542,8 @@
      stands, and a sync brings each lens back to it, where it rests. No lens stays bent after a release the page missed */
   function pressAbandon() {
     lenses.forEach(function (L) {
-      var P = L.pending, was = L.held || L.dragging || (P && !P.up);
-      L.held = false;
+      var P = L.pending, was = !!L.held || L.dragging || (P && !P.up);
+      L.held = null;
       if (L.scrubCleanup) L.scrubCleanup();
       if (P && !P.up) { pressMark(P, false); L.pending = null; }
       if (was) { queueSync(L.strip); lensLive(L); }
