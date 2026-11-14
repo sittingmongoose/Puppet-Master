@@ -224,7 +224,7 @@
   };
 
   /* ---------- the sheet over the chat (mock 10): the same page, the chat column's height under its header ---------- */
-  let sheet = null, lookReady = false, portalWas = null, opener = null;
+  let sheet = null, lookReady = false, portalWas = null, opener = null, closeTimer = 0;
   const chatPanel = () => document.getElementById('chatPanel');
   const narrow = () => window.innerWidth <= 600;
   function ensureSheet() {
@@ -269,6 +269,14 @@
     const head = panel.querySelector('.chat-header');
     const hb = head && head.getBoundingClientRect();
     sheet.el.style.top = (narrow() ? 28 : hb && hb.height ? Math.round(hb.bottom - r.top) : 46) + 'px';
+  }
+  /* FO-199: a held chat resize moves the column without a window resize or a body change, so the sheet follows the
+     panel's own size too. The observer's callback runs before that frame paints, so no frame spills over the edge. */
+  let panelRO = null, roPanel = null;
+  function watchChatPanel() {
+    const panel = chatPanel(); if (!panel) return;
+    if (!panelRO) panelRO = new ResizeObserver(() => { if (sheet && !sheet.layer.hidden) placeSheet(); });
+    if (roPanel !== panel) { if (roPanel) panelRO.unobserve(roPanel); panelRO.observe(panel); roPanel = panel; }
   }
   /* Settings' look per theme, borrowed: every #panel-settings rule that styles a part the page draws (tokens, card,
      row, switch, field, dropdown trigger, buttons, tag, dialog) is copied once with .pm7-mem-sheet in its place, in
@@ -329,6 +337,7 @@
     const panel = chatPanel(); if (!panel) return { ok: false, error: 'no_chat' };
     sheetLook();
     const s = ensureSheet();
+    watchChatPanel();
     opener = from || document.activeElement;
     store();
     UI.sheet = { q: '', level: 'all', arch: false };
@@ -337,6 +346,8 @@
     redraw('sheet', true);
     if (!portalWas) { portalWas = window.PM7_SETTINGS_TOME.portal; window.PM7_SETTINGS_TOME.portal = () => (sheet && !sheet.layer.hidden ? sheet.portal : portalWas()); }
     syncInline();
+    /* FO-200: a reopen always wins over a close still animating out */
+    clearTimeout(closeTimer); closeTimer = 0;
     s.layer.hidden = false;
     s.layer.classList.toggle('is-narrow', narrow());
     placeSheet();
@@ -351,8 +362,9 @@
     sheet.portal.querySelectorAll('.overlay, .drawer-wrap').forEach(n => n.remove());
     const layer = sheet.layer;
     layer.classList.remove('is-open');
-    const done = () => { layer.hidden = true; };
-    if (motionReduced() || document.documentElement.getAttribute('data-motion') === 'reduced') done(); else setTimeout(done, 220);
+    const done = () => { closeTimer = 0; layer.hidden = true; };
+    clearTimeout(closeTimer);
+    if (motionReduced() || document.documentElement.getAttribute('data-motion') === 'reduced') done(); else closeTimer = setTimeout(done, 220);
     if (restore && opener && opener.isConnected) try { opener.focus({ preventScroll: true }); } catch (e) { /* gone */ }
     opener = null;
   }

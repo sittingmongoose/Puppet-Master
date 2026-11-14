@@ -20,9 +20,14 @@
 //   normal reply carries nothing about memory (no Noted or Verified mark, no hover naming a note, no rule-change
 //   line, no next-message ribbon, cards, counts or previews), and the chat's threads draw none of those either.
 // - The sheet follows the look: in every look its switch, card and Add button paint like the Settings page's.
+// - FO-199/200/202 (sol-max-12b F12B-SOL-M1/M2/L1): a held real chat resize keeps the sheet on the chat column at
+//   every sampled frame; a quick Escape then Enter on the restored header button reopens the sheet and it stays open
+//   (the close timer never hides a reopen); under Reduce Motion set before load, Demo Studio's memory-saved then a
+//   real View paints a static highlight on the note (computed paint plus a pixel difference), without any animation.
 // --set looks=basic-dark,nier-dark limits the look test (none skips it).
 import { LOOKS } from '../browser-check.config.mjs';
-import { setLookBySetting } from '../helpers/settings-look.mjs';
+import { setLookBySetting, setMotionMedia } from '../helpers/settings-look.mjs';
+import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 
 const WS = 'context-memory';
 const BODY = `[data-continuous-workspace-body="${WS}"]`;
@@ -421,5 +426,137 @@ for (const surface of ['normal', 'sandbox']) {
 		}
 		const s = await g.evaluate(SHEET);
 		await t.check('390x844: the chat’s Memory button opens the sheet, inside the chat', s.open && s.inChat && s.onTop, JSON.stringify(s));
+	});
+
+	T('FO-199 the sheet follows a held chat resize, no spill at any frame', async (t) => {
+		const f = await home(t, surface, [1920, 1080]);
+		// the review's starting state: a 600 px chat column with Memory open over it
+		await f.evaluate(() => PMW.chatCol.setWidth(600));
+		await t.settle();
+		await t.page.waitForTimeout(400);
+		await f.locator('#pmRoot .chat-header .pm7-mem-btn').first().click();
+		await f.waitForFunction(() => { const l = document.querySelector('.pm7-mem-layer'); return l && !l.hidden && l.classList.contains('is-open'); }, null, { timeout: 8000 });
+		await t.page.waitForTimeout(400);
+		// sample the sheet's right edge against the chat's on every frame a drag move paints, and while the drag is held
+		await f.evaluate(() => {
+			window.__fo199 = { samples: [], moves: 0 };
+			const read = (why) => {
+				const l = document.querySelector('.pm7-mem-layer'), c = document.getElementById('chatPanel');
+				if (!l || l.hidden || !c) return;
+				const s = l.querySelector('.pm7-mem-sheet').getBoundingClientRect(), r = c.getBoundingClientRect();
+				window.__fo199.samples.push({ why, sheetRight: s.right, chatRight: r.right, chatW: r.width, resizing: document.body.classList.contains('pm-resizing') });
+			};
+			window.__fo199.read = read;
+			document.addEventListener('pointermove', () => {
+				if (!document.body.classList.contains('pm-resizing')) return;
+				window.__fo199.moves++;
+				requestAnimationFrame(() => read('move'));
+			}, true);
+		});
+		const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+		const box = await f.evaluate(() => { const r = document.getElementById('chatResizer'); if (!r) return null; const b = r.getBoundingClientRect(); return { x: b.x, y: b.y, w: b.width, h: b.height, hidden: r.classList.contains('hidden') }; });
+		await t.check('the chat resizer is exposed beside the open sheet', !!box && !box.hidden && box.w >= 3 && box.h > 100, JSON.stringify(box));
+		if (!box || box.hidden) return;
+		const x0 = off.x + box.x + box.w / 2, y0 = off.y + box.y + box.h / 2;
+		await t.page.mouse.move(x0, y0);
+		await t.page.mouse.down();
+		await t.page.waitForTimeout(120);
+		// 600 -> 421 px: a real 179 px drag right in steps, then a ~600 ms hold (a 1 px breath keeps frames painting)
+		for (let i = 1; i <= 12; i++) { await t.page.mouse.move(x0 + 179 * i / 12, y0); await t.page.waitForTimeout(16); }
+		for (let k = 0; k < 6; k++) { await t.page.mouse.move(x0 + 179 + (k % 2 ? 1 : -1), y0); await t.page.waitForTimeout(100); }
+		const held = await f.evaluate(() => { window.__fo199.read('hold'); return { resizing: document.body.classList.contains('pm-resizing'), chatW: document.getElementById('chatPanel').getBoundingClientRect().width }; });
+		await t.page.mouse.up();
+		await t.page.waitForTimeout(500);
+		const after = await f.evaluate(() => {
+			const l = document.querySelector('.pm7-mem-layer'), c = document.getElementById('chatPanel');
+			const sr = l.querySelector('.pm7-mem-sheet').getBoundingClientRect(), cr = c.getBoundingClientRect();
+			return { samples: window.__fo199.samples, moves: window.__fo199.moves, open: !l.hidden, final: { sheetRight: sr.right, chatRight: cr.right, chatW: cr.width, sheetW: sr.width } };
+		});
+		const spill = after.samples.filter((s) => Math.abs(s.sheetRight - s.chatRight) > 1);
+		const worst = after.samples.reduce((m, s) => Math.max(m, Math.abs(s.sheetRight - s.chatRight)), 0);
+		await t.check('the drag was admitted and held the chat at about 421 px', held.resizing && held.chatW >= 415 && held.chatW <= 427 && after.moves >= 8, JSON.stringify({ held, moves: after.moves }));
+		await t.check('every sampled frame keeps the sheet’s right edge within 1 px of the chat’s', after.samples.length >= 8 && spill.length === 0, `${after.samples.length} samples, worst ${worst.toFixed(1)} px${spill.length ? `, e.g. ${JSON.stringify(spill[0])}` : ''}`);
+		await t.check('after release the sheet still fits the resized chat', after.open && Math.abs(after.final.sheetRight - after.final.chatRight) <= 1 && Math.abs(after.final.sheetW - after.final.chatW) <= 2, JSON.stringify(after.final));
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(450);
+	});
+
+	T('FO-200 a quick Escape then Enter reopen stays open', async (t) => {
+		const f = await home(t, surface);
+		const btn = f.locator('#pmRoot .chat-header .pm7-mem-btn').first();
+		await btn.click();
+		await f.waitForFunction(() => { const l = document.querySelector('.pm7-mem-layer'); return l && !l.hidden && l.classList.contains('is-open'); }, null, { timeout: 8000 });
+		await t.page.waitForTimeout(400);
+		// watch the race: when Escape landed, when Enter reached the restored button, when the sheet came back,
+		// and whether anything hid it again
+		await f.evaluate(() => {
+			window.__fo200 = { esc: 0, enter: 0, enterOnBtn: false, back: 0, hidden: 0 };
+			const l = document.querySelector('.pm7-mem-layer'), w = window.__fo200;
+			new MutationObserver(() => {
+				const now = performance.now();
+				if (!l.hidden && l.classList.contains('is-open') && w.esc && !w.back) w.back = now;
+				if (l.hidden && w.back) w.hidden = now;
+			}).observe(l, { attributes: true, attributeFilter: ['hidden', 'class'] });
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && !w.esc) w.esc = performance.now();
+				if (e.key === 'Enter' && w.esc && !w.enter) { w.enter = performance.now(); w.enterOnBtn = !!(document.activeElement && document.activeElement.closest && document.activeElement.closest('.pm7-mem-btn')); }
+			}, true);
+		});
+		const reps = [];
+		for (let i = 0; i < 3; i++) {
+			await f.evaluate(() => { const w = window.__fo200; w.esc = 0; w.enter = 0; w.enterOnBtn = false; w.back = 0; w.hidden = 0; });
+			await t.page.keyboard.press('Escape');
+			await t.page.waitForTimeout(160);
+			await t.page.keyboard.press('Enter');
+			await t.page.waitForTimeout(1000);
+			reps.push(await f.evaluate(() => {
+				const l = document.querySelector('.pm7-mem-layer'), w = window.__fo200;
+				return { open: !!l && !l.hidden && l.classList.contains('is-open'), escToBack: w.back && w.esc ? Math.round(w.back - w.esc) : null, enterOnBtn: w.enterOnBtn, hiddenAgain: !!w.hidden };
+			}));
+		}
+		await t.check('each reopen landed on the restored header button inside the 220 ms close window', reps.every((r) => r.enterOnBtn && r.escToBack !== null && r.escToBack > 0 && r.escToBack < 220), JSON.stringify(reps));
+		await t.check('the sheet is still open 1 s after each quick reopen (no stale close timer hides it)', reps.every((r) => r.open && !r.hiddenAgain), JSON.stringify(reps));
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(450);
+	});
+
+	T('FO-202 under Reduce Motion, View paints a static highlight on the note', async (t) => {
+		await setMotionMedia(t, 'reduce');
+		try {
+			const f = await home(t, surface);
+			const reduced = await f.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
+			await t.check('Reduce Motion is on before load', reduced, String(reduced));
+			const ran = await runDemo(t, f, 'memory-saved');
+			await t.check('Demo Studio runs the memory-saved reply', ran && ran.ok !== false && !ran.err, JSON.stringify(ran));
+			await f.locator('#pmRoot .message-assistant .pm7-mem-saved .pm7-mem-view').first().click();
+			await f.waitForFunction(() => { const l = document.querySelector('.pm7-mem-layer'); return l && !l.hidden; }, null, { timeout: 8000 });
+			await t.page.mouse.move(2, 300);
+			await t.page.waitForTimeout(500);
+			const FLASH = () => {
+				const row = document.querySelector('.pm7-mem-layer:not([hidden]) .mm-row.is-flash');
+				if (!row) return null;
+				const c = getComputedStyle(row);
+				return { id: row.getAttribute('data-mm-note'), bg: c.backgroundColor, shadow: c.boxShadow, anim: c.animationName, reduced: matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.getAttribute('data-motion') === 'reduced' };
+			};
+			const lit = await f.evaluate(FLASH);
+			await t.check('View opens the sheet with the note marked is-flash under reduced motion', !!lit && lit.reduced, JSON.stringify(lit));
+			if (!lit) return;
+			await t.check('the highlight is a visible static paint (background not transparent) with no animation', lit.bg !== 'rgba(0, 0, 0, 0)' && lit.bg !== 'transparent' && lit.anim === 'none', JSON.stringify({ bg: lit.bg, anim: lit.anim, shadow: lit.shadow }));
+			const row = f.locator(`.pm7-mem-layer:not([hidden]) .mm-row[data-mm-note="${lit.id}"]`).first();
+			const hot = decodePng(await row.screenshot());
+			// the flash's own lifetime ends the highlight; the same note un-highlighted must paint differently
+			await t.page.waitForTimeout(2600);
+			const gone = await f.evaluate((id) => !document.querySelector(`.pm7-mem-layer:not([hidden]) .mm-row.is-flash[data-mm-note="${id}"]`), lit.id);
+			await t.check('the highlight ends with the flash’s lifetime', gone, String(gone));
+			const cold = decodePng(await row.screenshot());
+			let diff = 0;
+			if (hot.width === cold.width && hot.height === cold.height) for (let i = 0; i < hot.data.length; i += 4) { if (Math.max(Math.abs(hot.data[i] - cold.data[i]), Math.abs(hot.data[i + 1] - cold.data[i + 1]), Math.abs(hot.data[i + 2] - cold.data[i + 2])) > 8) diff++; }
+			const px = hot.width * hot.height;
+			await t.check('the highlighted note’s pixels differ from the same note un-highlighted', hot.width === cold.width && hot.height === cold.height && px > 0 && diff / px >= 0.2, `${diff}/${px} pixels changed`);
+			await t.page.keyboard.press('Escape');
+			await t.page.waitForTimeout(450);
+		} finally {
+			await setMotionMedia(t, 'no-preference');
+		}
 	});
 }
