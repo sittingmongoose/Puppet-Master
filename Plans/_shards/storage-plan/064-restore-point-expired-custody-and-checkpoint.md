@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23152-L23350
+Source lines: L23305-L23503
 
-Source SHA256: `955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a`
+Source SHA256: `8301d134a0072e19380c04c2ef4152c334292ee2e8d39e84b4bc75e5a0e5be73`
 
 ---
 
@@ -86,7 +86,7 @@ Creation's original publication is separate from later current generic source an
 
 ### Expiry SP-278 complete index adoption
 
-This first-native expiry checkpoint is its own v1 binding, with exact required generic_read_token from canonical Plans/event_record_index_checkpoint.schema.json#/$defs/read_token. No existing checkpoint version or source-hash meaning is silently changed.
+This first-native expiry checkpoint is its own v1 binding, with exact required generic_read_token, the nine-field durable read token of SP-278 (DL-076) defined inline at Plans/restore_point_expired_contracts.schema.json#/$defs/checkpoint/properties/generic_read_token; the live read token of Plans/event_record_index_checkpoint.schema.json#/$defs/read_token adds only the read transaction's redb_snapshot_id. No existing checkpoint version or source-hash meaning is silently changed.
 
 Within one actual redb snapshot, resolve event_record_index_checkpoint.v1:{storage_instance_id}, its selected current_generation_id and actual event_record_index.v2@{generation_id} dataset. Every row's key/source identity/digests and checkpoint_ref resolve the actual generation node. publication_locator joins its immutable generation birth anchor; an old row is not required to carry the latest append manifest. Separately validate actual CURRENT/manifest/source-control bytes, recovery epoch, inventory, synced watermarks, survivor/exclusion/gap facts and the complete advancing frontier across all scopes and families. Full row cardinality/row-set hash and exact retained source coverage precede any filtering.
 

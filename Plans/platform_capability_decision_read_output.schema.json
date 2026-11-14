@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/platform_capability_decision_read_output/1.0.0/schema.json",
+  "title": "storage.platform_capability_decision.read.v1 output (SP-2209)",
+  "description": "Closed output of the passive platform decision read. The marker is a read result and is never persisted. Newly authored under DL-045 for PNC-019 S3.",
+  "$defs": {
+    "read_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "status",
+            "decision",
+            "read_through_marker",
+            "action_authority"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage.platform_capability_decision.read_output.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "read_through"
+            },
+            "decision": {
+              "$ref": "https://puppetmaster.local/schemas/platform_capability_decision_contracts/1.0.0#/$defs/decision"
+            },
+            "read_through_marker": {
+              "$ref": "#/$defs/read_through_marker"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "status",
+            "reason",
+            "action_authority"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage.platform_capability_decision.read_output.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "unavailable"
+            },
+            "reason": {
+              "enum": [
+                "decision_missing",
+                "decision_unverified",
+                "source_incomplete",
+                "event_unverified",
+                "receipt_unverified",
+                "permission_denied",
+                "stale_source"
+              ]
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        }
+      ]
+    },
+    "read_through_marker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "event_id",
+        "sequence_id",
+        "source_cursor_sequence_id",
+        "coverage_complete",
+        "read_token"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "source_cursor_sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "coverage_complete": {
+          "const": true
+        },
+        "read_token": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+        }
+      }
+    }
+  }
+}
