@@ -22,6 +22,7 @@ render.schedule = function (opts) {
   paintQueued = true;
   var run = function () {
     if (!paintQueued) return;   // a synchronous paint already consumed this request
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(run)) return;   // FO-188: a look's reveal over the onboarding window holds it to the reveal's end (paintQueued stays set, so later schedules fold into it)
     paintQueued = false;
     var anim = paintAnimate; paintAnimate = false;
     try { render.paint({ animate: anim }); } catch (err) { try { console.error('[pm-home] paint failed', err); } catch (_) {} }
