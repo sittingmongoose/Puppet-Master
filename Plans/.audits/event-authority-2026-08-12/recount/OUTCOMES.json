@@ -158,6 +158,10 @@
   {
    "event_type": "forge.pipeline.cancelled",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.pipeline.completed",
+   "outcome": "registered"
   }
  ]
 }
