@@ -361,7 +361,8 @@ html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
    stepped, NieR draws the following state on a dashed ink edge and its own level on a solid one, and inverts on hover */
 html[data-theme^="friendly"] #panel-usage .pmu-accsw { border-radius: 8px; }
 html[data-theme^="friendly"] #panel-usage .pmu-accswi > i { transition: transform calc(240ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
-html[data-theme^="friendly"] #panel-usage .pmu-accsw:is(:hover, .is-open):not([disabled]) .pmu-accswi > i { transform: scale(1.18); }
+html[data-theme^="friendly"] #panel-usage .pmu-accsw:is(:hover, .is-open):not([disabled]) .pmu-accswi > :where(.is-link):is(i),
+html[data-theme^="friendly"] #panel-usage .pmu-accsw:is(:hover, .is-open):not([disabled]) .pmu-accswi > :where(.is-own):is(i) { transform: scale(1.18); }
 html[data-theme^="glass"] #panel-usage .pmu-accsw:is(:hover, .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent), 0 1px 6px -2px color-mix(in srgb, #000 30%, transparent); }
 html[data-theme="glass-light"] #panel-usage .pmu-accsw:is(:hover, .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 70%, transparent), 0 1px 5px -2px color-mix(in srgb, #000 18%, transparent); }
 html[data-theme^="retro"] #panel-usage .pmu-accsw { border-radius: 0; transition-timing-function: steps(2, jump-start); }

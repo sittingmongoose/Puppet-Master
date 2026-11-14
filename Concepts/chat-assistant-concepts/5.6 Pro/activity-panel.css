@@ -172,9 +172,11 @@ body[data-theme^="retro"] .activity-panel-head > strong { font-size: 13.5px; let
 }
 .activity-filter.tabs-icon { overflow-x: auto; scrollbar-width: none; }
 .activity-filter.tabs-icon button:not(.active) { width: 28px; padding: 0; justify-content: center; }
-.activity-filter.tabs-icon button:not(.active) span { display: none; }
+/* the label named class-first (span.act-flbl; same specificity as span): a bare span after .active put the tag into
+   Chrome's page-wide .active set (lane J, 2026-11-11) */
+.activity-filter.tabs-icon button:not(.active) :where(.act-flbl):is(span) { display: none; }
 .activity-filter.tabs-icon button.active { flex: 0 0 auto; width: auto; padding: 0 4px; }
-.activity-filter.tabs-icon button.active span { display: inline; overflow: visible; text-overflow: clip; }
+.activity-filter.tabs-icon button.active :where(.act-flbl):is(span) { display: inline; overflow: visible; text-overflow: clip; }
 .activity-scroll {
   padding: 10px 8px;
   overscroll-behavior: contain;

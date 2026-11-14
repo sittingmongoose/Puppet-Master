@@ -504,7 +504,9 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
   transition: color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
 }
 .pm-segtab-item svg { width: 15px; height: 15px; flex: none; transition: transform var(--motion-med) var(--ease-default); }
-.pm-segtab-item.active svg { transform: translateY(-1px) scale(1.1); }
+/* the tab's icon named class-first (raw icons .pm-isvg, glyphs .nx; same specificity as svg): a bare svg after .active
+   or :hover put the tag into Chrome's page-wide sets (lane J, 2026-11-11) */
+.pm-segtab-item.active :where(.pm-isvg):is(svg), .pm-segtab-item.active :where(.nx):is(svg) { transform: translateY(-1px) scale(1.1); }
 .pm-segtab-item > span { max-width: 100%; padding: 0 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pm-segtab-item:hover { color: var(--text-secondary); background: color-mix(in srgb, var(--cat, var(--accent-primary)) 6%, transparent); }
 .pm-segtab-item.active { color: var(--cat, var(--accent-primary)); }
@@ -1477,7 +1479,7 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
 .fm-ctx-item { display: flex; align-items: center; gap: var(--rail-gap); width: 100%; padding: var(--sm) var(--md); border: 0; background: none; border-radius: var(--radius-xs); color: var(--text-secondary); font-size: var(--rail-fs-body); line-height: var(--rail-lh); cursor: pointer; text-align: left; }
 .fm-ctx-item:hover { background: var(--accent-soft); color: var(--text-primary); }
 .fm-ctx-item svg { width: 13px; height: 13px; flex: none; color: var(--text-muted); }
-.fm-ctx-item:hover svg { color: var(--text-primary); }
+.fm-ctx-item:hover :where(.pm-isvg):is(svg), .fm-ctx-item:hover :where(.nx):is(svg) { color: var(--text-primary); }
 .fm-ctx-item .fm-ctx-label { flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .fm-ctx-item .fm-ctx-key { flex: none; font-family: var(--mono-font); font-size: var(--rail-fs-meta); line-height: var(--rail-lh); color: var(--text-muted); }
 .fm-ctx-item.destructive { color: var(--accent-error); }

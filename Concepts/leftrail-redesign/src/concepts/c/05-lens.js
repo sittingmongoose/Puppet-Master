@@ -175,7 +175,7 @@ function cLensShow(P, entry, opts) {
   if (!node) return;
   const sameOwner = LENS.open && LENS.owner === P;
   if (LENS.open && LENS.key === entry.key && sameOwner && !opts.refresh) { LENS.rowEl = entry.el; cLensPlace(); return; }
-  const kicker = h('span.pmr-c-lens-kick', PMR.icon(entry.icon || 'info', 'pmr-c-lens-kick-ico'), h('span', { text: entry.kind || 'Detail' }));
+  const kicker = h('span.pmr-c-lens-kick', PMR.icon(entry.icon || 'info', 'pmr-c-lens-kick-ico'), h('span', { class: 'pmr-part-text', text: entry.kind || 'Detail' }));
   if (LENS.rowEl && LENS.rowEl !== entry.el) LENS.rowEl.removeAttribute('aria-expanded');
   LENS.rowEl = entry.el;
   if (entry.el) entry.el.setAttribute('aria-expanded', 'true');
@@ -280,7 +280,7 @@ function cTech(facts, navKey) {
   if (!list.length) return null;
   const body = h('div.pmr-c-tech-body', { hidden: true }, list.map(f => cFactRow(f, true)));
   const btn = h('button', { type: 'button', class: 'pmr-c-tech-btn pmr-cur', 'aria-expanded': 'false', 'data-pmr-nav': 'expand', 'data-pmr-nav-id': 'lenstech:' + (navKey || '') },
-    PMR.icon('chevR', 'pmr-c-chev'), h('span', { text: 'Technical details' }), h('span.pmr-c-tech-n', { text: String(list.length) }));
+    PMR.icon('chevR', 'pmr-c-chev'), h('span', { class: 'pmr-part-text', text: 'Technical details' }), h('span.pmr-c-tech-n', { text: String(list.length) }));
   btn.addEventListener('click', () => {
     const open = btn.getAttribute('aria-expanded') !== 'true';
     btn.setAttribute('aria-expanded', String(open));
@@ -310,7 +310,7 @@ function cLensDoc(parts) {
   const dangerAt = acts.findIndex(a => a.danger);
   if (dangerAt > 0) actEls.splice(dangerAt, 0, h('div.pmr-c-act-sep', { role: 'separator' }));
   const blocked = parts.blocked ? h('div.pmr-c-lens-blocked', { 'data-state': parts.blocked.state || 'blocked' },
-    h('div.pmr-c-lens-blocked-h', cGlyph({ state: parts.blocked.state || 'blocked' }, { loud: true }), h('span', { text: parts.blocked.title || 'Blocked' })),
+    h('div.pmr-c-lens-blocked-h', cGlyph({ state: parts.blocked.state || 'blocked' }, { loud: true }), h('span', { class: 'pmr-part-text', text: parts.blocked.title || 'Blocked' })),
     h('p', { text: parts.blocked.reason }),
     (parts.blocked.allowed || []).length ? h('div.pmr-c-acts.is-inline', parts.blocked.allowed.map(a => cActRow(a, { P, navKey: parts.navKey + ':blocked' }))) : null) : null;
   return h('div.pmr-c-lens-doc',

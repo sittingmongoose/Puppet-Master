@@ -1,0 +1,13 @@
+/* The quiet memory in the hosted chat (FO-167, 2026-11-12; mock screens 08 and 09). A reply that saved something
+   ends with one small line, "Saved to memory · View", in the reply's own muted words; a one-line reply to "Remember
+   that …" carries the View at the end of its sentence. The header's Memory button is a plain icon button like its
+   neighbours. pm7-port/js/80-quiet-memory.js draws both. */
+.pm56-host .message-body .pm7-mem-saved { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin: 8px 0 0; color: var(--text-muted); font-size: 12px; line-height: 1.4; }
+.pm56-host .message-body .pm7-mem-saved .pm7-mem-check { flex: 0 0 auto; width: 13px; height: 13px; color: var(--text-muted); }
+.pm56-host .message-body .pm7-mem-sep { opacity: .7; }
+.pm56-host .message-body .pm7-mem-view { padding: 0; border: 0; background: none; color: var(--text-secondary); font: inherit; font-size: inherit; line-height: inherit; cursor: pointer;
+  text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 2px; }
+.pm56-host .message-body .pm7-mem-view:hover { color: var(--text-primary); }
+.pm56-host .message-body .pm7-mem-view.is-inline { margin-left: 6px; font-size: 12px; color: var(--text-muted); vertical-align: baseline; }
+.pm56-host .message-body > p:has(+ .pm7-mem-view.is-inline) { display: inline; }
+.pm56-host .chat-header .pm7-mem-btn .pm7-mem-glyph { display: block; }

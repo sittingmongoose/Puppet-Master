@@ -332,11 +332,13 @@
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-radius: var(--d-r) !important;
 }
-[data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) :is(svg, .pm-ico, span, .eq-full) { color: inherit !important; }
+/* the parts by class (raw icons .pm-isvg, glyphs .nx, labels .pm-segtab-lbl / .eq-*; same specificity, the :is() already
+   held a class): a bare svg or span here put the tags into Chrome's page-wide .active set (lane J, 2026-11-11) */
+[data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) :is(.pm-isvg, .nx, .pm-ico, .pm-segtab-lbl, .eq-full, .eq-abbr) { color: inherit !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active { color: var(--d-tab-fg, var(--d-text)) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item svg, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; transition-property: none !important; }
 /* the chosen tab's icon: the switcher's mark in a look that adopts it (Q16), its chip's ink when the chip is opaque */
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-primary)))); }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active :where(.pm-isvg):is(svg), [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active :where(.nx):is(svg) { color: var(--d-tab-fg, var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-primary)))); }
 /* labels: shown for every tab when they all fit, for the chosen tab only when only that fits, never abbreviated; a
    change shows or hides them in one step. The label clips its width (it hides by max-width), and its line box is the
    item's 1.0 line height, so it keeps 3 px above and below inside the clip (taken back by the margins) for the
@@ -346,8 +348,8 @@
   max-width: 120px; padding: 3px 0 !important; margin-top: -3px; margin-bottom: -3px; margin-left: 5px; opacity: 1; transition-property: none !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > .eq-abbr { display: none !important; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(span, .eq-full),
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="icons"] .pm-segtab-item > :is(span, .eq-full) { max-width: 0; margin-left: 0; opacity: 0; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(.pm-segtab-lbl, .eq-full, .eq-abbr),
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="icons"] .pm-segtab-item > :is(.pm-segtab-lbl, .eq-full, .eq-abbr) { max-width: 0; margin-left: 0; opacity: 0; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="active"] .pm-segtab-item.active { flex: 0 0 auto !important; padding: 0 8px !important; }
 
 /* a view that comes in after a tab change deals or prints in by script (30-motion.js); the shell's own pane rise
@@ -753,7 +755,9 @@
 [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-size: 100% 100%; border-color: var(--accent-primary); }
 [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck svg { width: 10px; height: 10px; overflow: visible; }
 [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path { stroke-width: 3; stroke-dasharray: 20; stroke-dashoffset: 20; transition: stroke-dashoffset var(--d-t1) var(--d-ease); }
-[data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { stroke-dashoffset: 0; transition-duration: var(--d-t2); transition-delay: calc(var(--d-t1) * .6); }
+/* the tick named class-first (`:where(.pmr-check-p):is(path)`, 20-menu.js CHECK_SVG; same specificity as `path`): a bare
+   path after .active put the tag into Chrome's page-wide .active set (lane J, 2026-11-11) */
+[data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck :where(.pmr-check-p):is(path) { stroke-dashoffset: 0; transition-duration: var(--d-t2); transition-delay: calc(var(--d-t1) * .6); }
 [data-rail-skin="d"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { animation: d-bump var(--d-t3) var(--d-spring); }
 [data-rail-skin="d"][data-o55-nier="on"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck {
   color: inherit; border-color: color-mix(in srgb, currentColor 62%, transparent);
@@ -770,13 +774,13 @@
 [data-rail-skin="d"][data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path, [data-rail-skin="d"][data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path {
   stroke-dashoffset: 0; opacity: 0; transition: opacity 140ms linear;
 }
-[data-rail-skin="d"][data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path, [data-rail-skin="d"][data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { opacity: 1; }
+[data-rail-skin="d"][data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck :where(.pmr-check-p):is(path), [data-rail-skin="d"][data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck :where(.pmr-check-p):is(path) { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck { background-image: none; animation: none; transition: background-color 140ms linear, border-color 140ms linear; }
   [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: var(--accent-primary); }
   [data-rail-skin="d"][data-o55-nier="on"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: currentColor; }
   [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path { stroke-dashoffset: 0; opacity: 0; transition: opacity 140ms linear; }
-  [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { opacity: 1; }
+  [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck :where(.pmr-check-p):is(path) { opacity: 1; }
 }
 
 /* button rows: equal columns that fold to one column instead of shortening words */
@@ -2785,12 +2789,12 @@
 /* NieR: hairline boxes, the ink band as the active tab, capitals on headers when that part is on */
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-shelf { border-color: var(--d-line-2) !important; }
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-ink { background: var(--o55-nier-ink) !important; box-shadow: none !important; }
-[data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active, [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active svg { color: var(--o55-nier-on-ink) !important; }
+[data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active, [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active :where(.pm-isvg):is(svg), [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active :where(.nx):is(svg) { color: var(--o55-nier-on-ink) !important; }
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab::before { box-shadow: inset 0 0 0 1px var(--d-line-2); background: transparent; }
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-banner > .sh-bico { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-btn { border-color: var(--d-line-2) !important; background: transparent !important; }
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-btn:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
-[data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-btn:hover svg { color: inherit !important; }
+[data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-btn:hover :where(.pm-isvg):is(svg), [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-btn:hover :where(.nx):is(svg) { color: inherit !important; }
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-btn-primary { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 /* NieR parts, each followed exactly as the rest of the app follows it (opus-5.5 styles.d/14-nier-parts.css). The
    attribute data-o55-nier-parts exists only while NieR Mode is painted. D's own fills carry a panel id, so these rules
@@ -2810,8 +2814,8 @@
 [data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected:not(.active):not([aria-disabled="true"]) :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
-[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row).o55np-cur-over:not(.active) :is([class*="badge"], [class*="count"], kbd),
-[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected :is([class*="badge"], [class*="count"], kbd) {
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row).o55np-cur-over:not(.active) :is([class*="badge"], [class*="count"], .pmr-key),
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected :is([class*="badge"], [class*="count"], .pmr-key) {
   background: transparent !important; border-color: transparent !important;
 }
 /* YoRHa headers [headers]: the panel title takes the app's .sh-title capitals (.16em); a shelf's label, a summary's head

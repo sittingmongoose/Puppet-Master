@@ -113,7 +113,7 @@ frames.seg = function (options, value, onChange, o) {
   }
   options.forEach(function (op) {
     var b = h('button', { type: 'button', class: 'pmw-seg-opt pmw-ink-opt', role: 'tab' }, [h('span', { text: op.label })]);
-    if (op.count != null) b.appendChild(h('small', { text: String(op.count) }));
+    if (op.count != null) b.appendChild(h('small', { class: 'pmw-ink-sub', text: String(op.count) }));
     b._v = op.value;
     b.addEventListener('click', function () {
       var prev = chosen();

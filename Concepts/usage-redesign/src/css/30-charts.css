@@ -437,7 +437,8 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 #panel-usage .pmu-sbbar { position: relative; display: block; height: 14px; border-radius: 4px; background: var(--pmu-card-3); min-width: 0; }
 #panel-usage .pmu-sbfill { display: flex; gap: 1px; height: 100%; width: var(--f, 0%); border-radius: 4px; overflow: hidden; transform-origin: 0 50%; }
 #panel-usage .pmu-sbfill > i { transition: opacity 140ms; }
-#panel-usage .pmu-sbrow:hover .pmu-sbfill > i { opacity: .9; }
+/* (the segment named class-first, i.pmu-mark; same specificity as `> i`: a bare i after :hover went into Chrome's page-wide set) */
+#panel-usage .pmu-sbrow:hover .pmu-sbfill > :where(.pmu-mark):is(i) { opacity: .9; }
 #panel-usage .pmu-sbrow .pmu-sbfill > i:hover { opacity: 1; }
 #panel-usage .pmu-sbnum { text-align: right; white-space: nowrap; }
 #panel-usage .pmu-sbnum.is-2 { color: var(--pmu-ink-2); }

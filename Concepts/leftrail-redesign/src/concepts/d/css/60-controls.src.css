@@ -95,7 +95,9 @@
 §R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-size: 100% 100%; border-color: var(--accent-primary); }
 §R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck svg { width: 10px; height: 10px; overflow: visible; }
 §R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path { stroke-width: 3; stroke-dasharray: 20; stroke-dashoffset: 20; transition: stroke-dashoffset var(--d-t1) var(--d-ease); }
-§R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { stroke-dashoffset: 0; transition-duration: var(--d-t2); transition-delay: calc(var(--d-t1) * .6); }
+/* the tick named class-first (`:where(.pmr-check-p):is(path)`, 20-menu.js CHECK_SVG; same specificity as `path`): a bare
+   path after .active put the tag into Chrome's page-wide .active set (lane J, 2026-11-11) */
+§R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck :where(.pmr-check-p):is(path) { stroke-dashoffset: 0; transition-duration: var(--d-t2); transition-delay: calc(var(--d-t1) * .6); }
 §{friendly,notnier}R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { animation: d-bump var(--d-t3) var(--d-spring); }
 §{nier}R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck {
   color: inherit; border-color: color-mix(in srgb, currentColor 62%, transparent);
@@ -112,13 +114,13 @@
 §R[data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path, §R[data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path {
   stroke-dashoffset: 0; opacity: 0; transition: opacity 140ms linear;
 }
-§R[data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path, §R[data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { opacity: 1; }
+§R[data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck :where(.pmr-check-p):is(path), §R[data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck :where(.pmr-check-p):is(path) { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   §R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck { background-image: none; animation: none; transition: background-color 140ms linear, border-color 140ms linear; }
   §R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: var(--accent-primary); }
   §{nier}R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: currentColor; }
   §R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path { stroke-dashoffset: 0; opacity: 0; transition: opacity 140ms linear; }
-  §R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { opacity: 1; }
+  §R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck :where(.pmr-check-p):is(path) { opacity: 1; }
 }
 
 /* button rows: equal columns that fold to one column instead of shortening words */

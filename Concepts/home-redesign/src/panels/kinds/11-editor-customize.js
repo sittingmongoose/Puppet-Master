@@ -345,8 +345,8 @@ function faceTiles() {
   }).join('');
 }
 function caretArt(shape) { return '<span class="pmed-cur pmed-cur-' + shape + '"><span>let s</span><i></i><span>= 1</span></span>'; }
-function blinkArt(kind) { return '<span class="pmed-cur pmed-cur-line pmed-blink-' + kind + '"><span>s.len()</span><i></i></span>'; }
-function moveArt(kind) { return '<span class="pmed-move pmed-move-' + kind + '"><b></b><b></b><i></i></span>'; }
+function blinkArt(kind) { return '<span class="pmed-cur pmed-cur-line pmed-blink-' + kind + '"><span>s.len()</span><i class="pmed-cur-i"></i></span>'; }
+function moveArt(kind) { return '<span class="pmed-move pmed-move-' + kind + '"><b></b><b></b><i class="pmed-move-i"></i></span>'; }
 function trailArt(kind) { return '<span class="pmt-cz-trail pmt-cz-trail-' + kind + '"><i></i><b></b></span>'; }
 function guideArt(kind) { return '<span class="pmed-guides pmed-guides-' + kind + '"><span></span><span></span><span></span><span></span></span>'; }
 
@@ -368,7 +368,7 @@ function skeleton(name) {
     '<aside class="pmt-cz-side"><div class="pmt-cz-meter"><div class="pmt-cz-meterhead"><span data-meter-scope>This editor</span><b data-meter-n></b></div>' +
     '<div class="pmt-cz-cells" aria-hidden="true" style="grid-template-columns: repeat(' + COUNTED.length + ', 1fr)">' + COUNTED.map(function () { return '<i></i>'; }).join('') + '</div></div>' +
     '<div class="pmt-cz-sets" role="group" aria-label="Quick sets">' + SETS.map(function (s) {
-      return '<button type="button" class="pmt-cz-set" aria-pressed="false" data-set="' + s.id + '" data-pmh="tile"' + NOTAG + '><span>' + esc(s.label) + '</span><small>' + esc(s.help) + '</small></button>';
+      return '<button type="button" class="pmt-cz-set" aria-pressed="false" data-set="' + s.id + '" data-pmh="tile"' + NOTAG + '><span>' + esc(s.label) + '</span><small class="pmt-cz-small">' + esc(s.help) + '</small></button>';
     }).join('') + '</div>' +
     '<div class="pmt-cz-try" role="group" aria-label="Try it in the preview"><span class="pmt-cz-trylabel">Try it</span>' +
     '<button type="button" class="pmt-textbtn" data-act="try-move"' + NOTAG + '>Move the caret</button>' +

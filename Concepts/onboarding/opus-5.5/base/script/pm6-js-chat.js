@@ -643,9 +643,9 @@
     lensMuteBtn: '<svg class="cl-icon cl-icon-mute" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path><line x1="1" y1="1" x2="23" y2="23"></line><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path></svg>',
     lensFocusBtn: '<svg class="cl-icon cl-icon-focus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="8"></circle><line x1="12" y1="1" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="23"></line><line x1="1" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="23" y2="12"></line></svg>',
     lensSubBtn: '<svg class="cl-icon cl-icon-subcompact" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>',
-    lensMute: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path><line x1="1" y1="1" x2="23" y2="23"></line><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path></svg>',
-    lensFocus: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="8"></circle><line x1="12" y1="1" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="23"></line><line x1="1" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="23" y2="12"></line></svg>',
-    lensSub: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>'
+    lensMute: '<svg class="pm6-chat-lens-glyph" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path><line x1="1" y1="1" x2="23" y2="23"></line><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path></svg>',
+    lensFocus: '<svg class="pm6-chat-lens-glyph" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="8"></circle><line x1="12" y1="1" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="23"></line><line x1="1" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="23" y2="12"></line></svg>',
+    lensSub: '<svg class="pm6-chat-lens-glyph" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>'
   };
 
   /* ---------- chrome markup: builders ---------- */
@@ -683,7 +683,7 @@
        glows accent-blue (same family as context lens). Token label lives
        inside the module, not beside the ring. */
     return '<span class="context-usage pm6-chat-ctx" data-od-id="chat-context-ring" title="Context usage — click for breakdown" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false">' +
-      '<svg width="15" height="15" viewBox="0 0 24 24" style="transform: rotate(-90deg);" aria-hidden="true">' +
+      '<svg class="pm6-chat-ctx-ring" width="15" height="15" viewBox="0 0 24 24" style="transform: rotate(-90deg);" aria-hidden="true">' +
       '<circle cx="12" cy="12" r="10" fill="transparent" stroke="var(--border-light)" stroke-width="4"></circle>' +
       '<circle class="pm6-chat-ctx-arc" cx="12" cy="12" r="10" fill="transparent" stroke="var(--accent-primary)" stroke-width="4" stroke-dasharray="62.8" stroke-dashoffset="42"></circle></svg>' +
       '<div class="context-hover-module" data-od-id="chat-context-hover-module">' +
@@ -719,17 +719,17 @@
       return '<div class="panel-actions pm6-chat-more-wrap" data-od-id="chat-more-wrap-float">' +
         '<button type="button" class="pm6-chat-iconbtn pm6-chat-more-btn" title="More options" aria-label="More options" aria-haspopup="menu" aria-expanded="false" data-od-id="chat-more-btn-float">' + SVG.more + '</button>' +
         '<div class="pm6-chat-more-menu" role="menu" data-od-id="chat-more-menu-float">' +
-        '<button type="button" class="pm6-chat-more-item pm6-chat-layout-cycle" role="menuitem" title="Cycle layout: overlay / detached / docked">' + SVG.layout + '<span>Cycle layout</span></button>' +
-        '<button type="button" class="pm6-chat-more-item closeChatBtn destructive" role="menuitem" title="Close chat">' + SVG.close + '<span>Close chat</span></button>' +
+        '<button type="button" class="pm6-chat-more-item pm6-chat-layout-cycle" role="menuitem" title="Cycle layout: overlay / detached / docked">' + SVG.layout + '<span class="pm6-chat-more-label">Cycle layout</span></button>' +
+        '<button type="button" class="pm6-chat-more-item closeChatBtn destructive" role="menuitem" title="Close chat">' + SVG.close + '<span class="pm6-chat-more-label">Close chat</span></button>' +
         '</div></div>';
     }
     return '<div class="panel-actions pm6-chat-more-wrap" data-od-id="chat-more-wrap-dock">' +
       '<button type="button" class="pm6-chat-iconbtn pm6-chat-more-btn" title="More options" aria-label="More options" aria-haspopup="menu" aria-expanded="false" data-od-id="chat-more-btn-dock">' + SVG.more + '</button>' +
       '<div class="pm6-chat-more-menu" role="menu" data-od-id="chat-more-menu-dock">' +
-      '<button type="button" class="pm6-chat-more-item" role="menuitem" data-demo-action="demo.toast" data-demo-arg="Thread duplicated — the copy starts suspended so it never double-runs work.">' + SVG.duplicate + '<span>Duplicate thread</span></button>' +
-      '<button type="button" class="pm6-chat-more-item" role="menuitem" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History.">' + SVG.archive + '<span>Archive thread</span></button>' +
-      '<button type="button" class="pm6-chat-more-item popOutBtn" role="menuitem" title="Pop out to floating window">' + SVG.popout + '<span>Pop out window</span></button>' +
-      '<button type="button" class="pm6-chat-more-item closeChatBtn destructive" role="menuitem" title="Close chat panel">' + SVG.close + '<span>Close chat</span></button>' +
+      '<button type="button" class="pm6-chat-more-item" role="menuitem" data-demo-action="demo.toast" data-demo-arg="Thread duplicated — the copy starts suspended so it never double-runs work.">' + SVG.duplicate + '<span class="pm6-chat-more-label">Duplicate thread</span></button>' +
+      '<button type="button" class="pm6-chat-more-item" role="menuitem" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History.">' + SVG.archive + '<span class="pm6-chat-more-label">Archive thread</span></button>' +
+      '<button type="button" class="pm6-chat-more-item popOutBtn" role="menuitem" title="Pop out to floating window">' + SVG.popout + '<span class="pm6-chat-more-label">Pop out window</span></button>' +
+      '<button type="button" class="pm6-chat-more-item closeChatBtn destructive" role="menuitem" title="Close chat panel">' + SVG.close + '<span class="pm6-chat-more-label">Close chat</span></button>' +
       '</div></div>';
   }
   function headerHtml(m) {

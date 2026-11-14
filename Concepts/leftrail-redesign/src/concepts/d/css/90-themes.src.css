@@ -19,12 +19,12 @@
 /* NieR: hairline boxes, the ink band as the active tab, capitals on headers when that part is on */
 §{nier} .sh-shelf { border-color: var(--d-line-2) !important; }
 §{nier} .pm-segtab-ink { background: var(--o55-nier-ink) !important; box-shadow: none !important; }
-§{nier} .pm-segtab-item.active, §{nier} .pm-segtab-item.active svg { color: var(--o55-nier-on-ink) !important; }
+§{nier} .pm-segtab-item.active, §{nier} .pm-segtab-item.active :where(.pm-isvg):is(svg), §{nier} .pm-segtab-item.active :where(.nx):is(svg) { color: var(--o55-nier-on-ink) !important; }
 §{nier} .pm-segtab::before { box-shadow: inset 0 0 0 1px var(--d-line-2); background: transparent; }
 §{nier} .sh-banner > .sh-bico { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 §{nier} .pm-btn { border-color: var(--d-line-2) !important; background: transparent !important; }
 §{nier} .pm-btn:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
-§{nier} .pm-btn:hover svg { color: inherit !important; }
+§{nier} .pm-btn:hover :where(.pm-isvg):is(svg), §{nier} .pm-btn:hover :where(.nx):is(svg) { color: inherit !important; }
 §{nier} .pm-btn-primary { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 /* NieR parts, each followed exactly as the rest of the app follows it (opus-5.5 styles.d/14-nier-parts.css). The
    attribute data-o55-nier-parts exists only while NieR Mode is painted. D's own fills carry a panel id, so these rules
@@ -44,8 +44,8 @@
 §R[data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected:not(.active):not([aria-disabled="true"]) :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
-§R[data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row).o55np-cur-over:not(.active) :is([class*="badge"], [class*="count"], kbd),
-§R[data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected :is([class*="badge"], [class*="count"], kbd) {
+§R[data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row).o55np-cur-over:not(.active) :is([class*="badge"], [class*="count"], .pmr-key),
+§R[data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected :is([class*="badge"], [class*="count"], .pmr-key) {
   background: transparent !important; border-color: transparent !important;
 }
 /* YoRHa headers [headers]: the panel title takes the app's .sh-title capitals (.16em); a shelf's label, a summary's head

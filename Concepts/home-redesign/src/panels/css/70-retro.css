@@ -40,7 +40,7 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-divider[data-dir="col"]
 /* box-drawn menus: a hard 1 px frame, reverse-video rows */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-pop { border: 1px solid var(--accent-lime); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mitem:is(:hover, :focus-visible, .is-current) { background: var(--accent-lime); color: var(--surface); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mitem:is(:hover, :focus-visible, .is-current) :is(.pmw-mcopy span, .pmw-mright, .pmw-mlead, .pmw-mchev) { color: var(--surface); background: transparent; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mitem:is(:hover, :focus-visible, .is-current) :is(.pmw-mcopy :where(.pmw-msub):is(span), .pmw-mright, .pmw-mlead, .pmw-mchev) { color: var(--surface); background: transparent; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mlead { background: transparent; }
 /* the empty panel's launcher rows take the same reverse video as the menu rows */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-empty-btn, .pmw-empty-cell):is(:hover, :focus-visible) { background: var(--accent-lime); color: var(--surface); }

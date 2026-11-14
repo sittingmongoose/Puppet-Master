@@ -66,7 +66,7 @@ function pm51IndexGroupInner(w, activeWsId, activeSection) {
   const cur = pm51IndexCurTab(w.id), main = `${w.id}:main`;
   for (const t of pm51TabOrder[w.id]) {
     const open = t === cur;
-    html += `<button type="button" class="index-link pm51-index-tab${open ? ' is-open' : ''}${open && active === main ? ' is-active' : ''}" data-action="pm51-index-tab" data-workspace="${escAttr(w.id)}" data-tab="${escAttr(t)}" data-section="${open ? escAttr(main) : ''}" aria-expanded="${open}"><span>${escapeHtml(pm51TabLabel(w.id, t))}</span>${icon('chevron')}</button>`;
+    html += `<button type="button" class="index-link pm51-index-tab${open ? ' is-open' : ''}${open && active === main ? ' is-active' : ''}" data-action="pm51-index-tab" data-workspace="${escAttr(w.id)}" data-tab="${escAttr(t)}" data-section="${open ? escAttr(main) : ''}" aria-expanded="${open}"><span class="pm51-index-tab-label">${escapeHtml(pm51TabLabel(w.id, t))}</span>${icon('chevron')}</button>`;
     if (open && entries.length) html += `<div class="pm51-index-sub" role="group" aria-label="${escAttr(pm51TabLabel(w.id, t))}">${entries.map(s => pm51IndexLink(w, s, active)).join('')}</div>`;
   }
   return html;

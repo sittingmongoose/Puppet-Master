@@ -20,6 +20,16 @@
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-confirm-once.check.mjs --set page=<build>
 // --set buttons=3 --set menus=2 --set items=4 bound the walk per workspace tab.
 const DIALOG = '.overlay section.dialog[role="dialog"]';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+/* settings-dialog-entries.json (beside this check): dialogs a later approved design retired or draws with its own body.
+   --set dialogEntries=<json>|none names another file or turns it off (the bite: without it FO-167's page fails here). */
+function dialogEntries(t) {
+	if (t.args.dialogEntries === 'none') return { path: 'none', retired: [], custom: [] };
+	const path = t.args.dialogEntries ? String(t.args.dialogEntries) : fileURLToPath(new URL('./settings-dialog-entries.json', import.meta.url));
+	const d = JSON.parse(fs.readFileSync(path, 'utf8'));
+	return { path, retired: d.retired || [], custom: d.custom || [] };
+}
 
 const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
 
@@ -93,8 +103,8 @@ async function closeOpened(t, f, where) {
 		'setup: the press opened this inline editor and its own footer close, Close X and Escape left it open — the walk cannot pass it; name this editor to the kit owner');
 }
 
-async function readDialog(f) {
-	return f.evaluate((sel) => {
+async function readDialog(f, customs = []) {
+	return f.evaluate(([sel, customs]) => {
 		const els = [...document.querySelectorAll(sel)];
 		const shown = els.filter((e) => {
 			const cs = getComputedStyle(e);
@@ -130,8 +140,36 @@ async function readDialog(f) {
 				ink: cs.color,
 			};
 		};
+		/* a design-pinned custom confirm (settings-dialog-entries.json): its own message line, how often its words appear
+		   in the whole dialog, and its contrast against the colour painted under it (its backgrounds composited upward) */
+		const title = text(dialog.querySelector('.dialog-title'));
+		const entry = customs.find((c) => c.title === title);
+		let custom = null;
+		if (entry) {
+			const el = dialog.querySelector(entry.message);
+			const words = text(el);
+			const all = text(dialog);
+			let count = 0;
+			for (let i = words ? all.indexOf(words) : -1; i >= 0; i = all.indexOf(words, i + words.length)) count += 1;
+			const rgba = (c) => { const m = (c || '').match(/[\d.]+/g) || []; const k = /^color\(srgb/.test(c || '') ? 255 : 1; return [(+m[0] || 0) * k, (+m[1] || 0) * k, (+m[2] || 0) * k, m[3] === undefined ? 1 : +m[3]]; };
+			const lum = ([r, g, b]) => { const ch = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * ch(r) + 0.7152 * ch(g) + 0.0722 * ch(b); };
+			let contrast = null;
+			if (el) {
+				const layers = [];
+				for (let n = el; n && n.nodeType === 1; n = n.parentElement) { const c = rgba(getComputedStyle(n).backgroundColor); if (c[3] > 0) layers.push(c); if (c[3] >= 0.999) break; }
+				let under = [0, 0, 0];
+				if (!layers.length || layers[layers.length - 1][3] < 0.999) under = rgba(getComputedStyle(document.body).backgroundColor).slice(0, 3);
+				for (const c of layers.reverse()) under = under.map((v, i) => v * (1 - c[3]) + c[i] * c[3]);
+				const ink = rgba(getComputedStyle(el).color);
+				const fg = under.map((v, i) => v * (1 - ink[3]) + ink[i] * ink[3]);
+				const [hi, lo] = [lum(fg), lum(under)].sort((x, y) => y - x);
+				contrast = Math.round(((hi + 0.05) / (lo + 0.05)) * 100) / 100;
+			}
+			custom = { selector: entry.message, words, count, box: box(el), contrast };
+		}
 		return {
-			title: text(dialog.querySelector('.dialog-title')),
+			title,
+			custom,
 			sub,
 			alert,
 			subBox: box(subEl),
@@ -141,11 +179,19 @@ async function readDialog(f) {
 			body: text(dialog.querySelector('.dialog-body')),
 			bodyGap,
 		};
-	}, DIALOG);
+	}, [DIALOG, customs]);
 }
 
 /* One reading of a shown dialog: what the caller asserts. */
 function assess(info) {
+	if (info.custom) {
+		/* a design-pinned custom confirm: its one message line holds the message, exactly once in the whole dialog, readable
+		   at 11 px or more and 4.5:1 or more, and neither the subtitle nor an alert strip repeats it */
+		const c = info.custom;
+		const once = !!c.words && c.count === 1 && !info.sub && !info.alert;
+		const readable = !!c.box && c.box.visible && !c.box.clip && c.box.inside && c.box.font >= 11 && c.contrast !== null && c.contrast >= 4.5;
+		return { msg: c.words, other: info.sub || info.alert, count: c.count, once, readable, noBand: true, label: info.title || norm(c.words).slice(0, 60), info };
+	}
 	const msg = info.sub.length >= info.alert.length ? info.sub : info.alert;
 	const other = msg === info.sub ? info.alert : info.sub;
 	const count = (msg && info.sub === msg ? 1 : 0) + (msg && info.alert === msg ? 1 : 0);
@@ -159,7 +205,7 @@ function assess(info) {
 }
 
 async function judge(t, f, bag, where) {
-	let info = await readDialog(f);
+	let info = await readDialog(f, bag.entries.custom);
 	if (!info) return false;
 	/* an editor/creation dialog reached from a "More" menu is not a confirm: its subtitle is a description, not a message */
 	if (info.form) {
@@ -170,17 +216,19 @@ async function judge(t, f, bag, where) {
 	/* a dialog pressed in the page can be read a frame before its text has a box: one re-read settles that */
 	if (!v.readable) {
 		await f.waitForTimeout(200);
-		const again = await readDialog(f);
+		const again = await readDialog(f, bag.entries.custom);
 		if (again && !again.form) { info = again; v = assess(again); }
 	}
 	const { msg, other, count, once, readable, noBand, label } = v;
 	bag.dialogs += 1;
 	if (/^delete all memories\?$/i.test(norm(info.title))) bag.example += 1;
-	if (once && info.warning) bag.warning += 1;
-	if (once && !info.warning) bag.plain += 1;
+	if (bag.entries.retired.some((r) => r.title === norm(info.title))) bag.retiredSeen.push(`${where}: ${info.title}`);
+	if (info.custom) bag.customSeen[info.title] = (bag.customSeen[info.title] || 0) + 1;
+	else if (once && info.warning) bag.warning += 1;
+	else if (once && !info.warning) bag.plain += 1;
 	const clip = (s) => JSON.stringify(s).slice(0, 160);
 	await t.check(`message once: ${where}: ${label}`, once, `occurrences ${count}, warning ${info.warning}, subtitle ${clip(info.sub)}, alert ${clip(info.alert)}, other ${clip(other)}`);
-	await t.check(`message readable: ${where}: ${label}`, readable, `subtitle box ${JSON.stringify(info.subBox)}, alert box ${JSON.stringify(info.alertBox)}`);
+	await t.check(`message readable: ${where}: ${label}`, readable, info.custom ? `custom ${info.custom.selector} box ${JSON.stringify(info.custom.box)}, contrast ${info.custom.contrast}` : `subtitle box ${JSON.stringify(info.subBox)}, alert box ${JSON.stringify(info.alertBox)}`);
 	await t.check(`no empty body band: ${where}: ${label}`, noBand, `body ${v.info.bodyGap ? JSON.stringify(v.info.bodyGap) : 'absent'}`);
 	await dismiss(f);
 	return true;
@@ -345,7 +393,9 @@ export default async function (t) {
 	const f = await t.app.open({ settleMs: 800 });
 	await f.locator('#tab-settings').click();
 	await f.locator('#pm-settings-root .domain-link').first().waitFor({ state: 'visible', timeout: 20000 });
-	const bag = { warning: 0, plain: 0, dialogs: 0, skipped: 0, example: 0 };
+	const entries = dialogEntries(t);
+	t.log(`dialog entries: ${entries.path} (${entries.retired.length} retired, ${entries.custom.length} custom)`);
+	const bag = { warning: 0, plain: 0, dialogs: 0, skipped: 0, example: 0, entries, retiredSeen: [], customSeen: {} };
 	const seen = new Set();
 	const domains = await f.locator('#pm-settings-root .domain-link').evaluateAll((els) => els.map((e) => e.getAttribute('data-domain')).filter(Boolean));
 	for (const domain of domains) {
@@ -379,6 +429,11 @@ export default async function (t) {
 	await t.check('opened at least one Settings confirm', bag.dialogs > 0, `dialogs ${bag.dialogs}, skipped ${bag.skipped}`);
 	await t.check('a warning-tone confirm keeps only its alert', bag.warning > 0, `warning ${bag.warning}, dialogs ${bag.dialogs}`);
 	await t.check('a plain confirm keeps only its subtitle', bag.plain > 0, `plain ${bag.plain}, dialogs ${bag.dialogs}`);
-	await t.check("the item's own confirm is visited", bag.example > 0, `"Delete all memories?" seen ${bag.example} time(s), dialogs ${bag.dialogs}`);
+	/* FO-154's own example: visited, unless an explicit entry retires it; then it must be unreachable */
+	const exampleRetired = entries.retired.some((r) => /^delete all memories\?$/i.test(r.title));
+	if (exampleRetired) await t.check("the item's own example is retired and no click reaches it", bag.example === 0, `"Delete all memories?" seen ${bag.example} time(s), dialogs ${bag.dialogs}; ${entries.retired.find((r) => /^delete all memories\?$/i.test(r.title)).why}`);
+	else await t.check("the item's own confirm is visited", bag.example > 0, `"Delete all memories?" seen ${bag.example} time(s), dialogs ${bag.dialogs}`);
+	await t.check('no retired dialog is reachable', bag.retiredSeen.length === 0, bag.retiredSeen.slice(0, 4).join(' | ') || `${entries.retired.length} retired`);
+	for (const c of entries.custom) await t.check(`the design-pinned confirm "${c.title}" was visited and judged by its own line`, (bag.customSeen[c.title] || 0) > 0, `seen ${bag.customSeen[c.title] || 0} time(s)`);
 	await t.check('no confirm was left unvisited', bag.dialogs > 0 && bag.skipped === 0, `skipped ${bag.skipped}, dialogs ${bag.dialogs}`);
 }

@@ -16,7 +16,7 @@
    any item's checked (an "All" item that clears the others), redraws every check and leaves the menu open, so several
    can be chosen in one visit; an item with closes: true closes it after its pick. Escape or a click outside closes. */
 
-const CHECK_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>';
+const CHECK_SVG = '<svg class="pmr-check" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="pmr-check-p" d="M5 13l4 4L19 7"/></svg>';
 const MENU_STACK = [];
 let lastInputWasKey = false;
 document.addEventListener('keydown', () => { lastInputWasKey = true; }, true);
