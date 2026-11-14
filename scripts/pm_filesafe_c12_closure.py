@@ -224,9 +224,10 @@ def proposals(keyword, node, value):
         yield 'short', 'a' * (constraint - 1)
     elif keyword == 'maxLength':
         yield 'long', 'a' * (constraint + 1)
-    elif keyword == 'pattern' and isinstance(value, str):
-        for tag, result in (('invalid_ascii', '!' * max(len(value), node.get('minLength', 1))),
-                            ('empty', ''), ('trailing_lf', value + '\n'), ('newline', '\n')):
+    elif keyword == 'pattern':
+        original = value if isinstance(value, str) else '00'
+        for tag, result in (('invalid_ascii', '!' * max(len(original), node.get('minLength', 1))),
+                            ('empty', ''), ('trailing_lf', original + '\n'), ('newline', '\n')):
             if not re.search(constraint, result):
                 yield tag, result
     elif keyword == 'format' and constraint == 'date-time':
@@ -286,8 +287,49 @@ def definition_inventory(phase, validator, trace):
     return result
 
 
+def df_branch_control(value):
+    """Exercise DF's empty SCM index, optional Project fields and hex branch.
+
+    These are complete-schema boundary controls. They make no claim that an
+    unhashed edited value passes a later source/body/receipt join. The original
+    complete lifecycle controls and coherent witnesses remain separate.
+    """
+    result = copy.deepcopy(value)
+    for path, node in list(walk(result)):
+        if not isinstance(node, dict):
+            continue
+        if node.get('index_entries') == []:
+            node['index_entries'] = [{'path': 'c12-file', 'stage': 0, 'oid': 'a' * 40, 'mode': '100644'}]
+        if 'native_project_record' in node:
+            for field in ('repo_id', 'index_state_sha256', 'last_hold_released_at_utc'):
+                node['native_project_record'].setdefault(field, None)
+        if 'symlink_target_hex' in node and node['symlink_target_hex'] is None:
+            node['symlink_target_hex'] = '61'
+    return result
+
+
+def add_schema_branch_controls(trace):
+    originals = list(trace.calls)
+    unique, added = set(), 0
+    with trace.installed():
+        for phase, validator, value, events, facts in originals:
+            enriched = df_branch_control(value)
+            key = phase, digest(validator.schema), digest(enriched)
+            if enriched == value or key in unique:
+                continue
+            unique.add(key)
+            if errors(validator, enriched):
+                continue
+            observed = C.schema_facts(fresh(validator), enriched)
+            if T.codes(phase, observed):
+                raise AssertionError(('schema branch control refused', phase))
+            added += 1
+    return added
+
+
 def schema_coverage(family, out):
     trace, controls = observations(family)
+    branch_controls = add_schema_branch_controls(trace)
     matrix, ledger, seen, calls, definitions = [], [], set(), [], []
     roots = set()
     for call_index, (phase, validator, value, events, facts) in enumerate(trace.calls):
@@ -400,7 +442,8 @@ def schema_coverage(family, out):
         item['covering_witnesses'] = covered.get(key, [])
         item['covered'] = item['observed'] or bool(item['covering_witnesses'])
     uncovered = [x for x in definitions if not x['covered']]
-    summary = dict(family=family, controls=controls, calls=len(calls), occurrences=len(matrix),
+    summary = dict(family=family, controls=controls, branch_schema_controls=branch_controls,
+                   calls=len(calls), occurrences=len(matrix),
                    killed=sum(x['status'] == 'KILLED_EXPECTED' for x in ledger),
                    invalid=sum(x['status'] == 'INVALID' for x in ledger),
                    covering=sum(x['coverage'] == 'complete_definition_covering' for x in matrix),

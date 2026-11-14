@@ -412,6 +412,11 @@ class Cuts:
             if cut[0] == 'row':
                 _, phase, row = cut
                 entries = tables.rows(phase)
+                if row not in [n for n, _, _ in entries]:
+                    # C12 moved only entailed rows to singleton followers;
+                    # retain the authored site identity and cut its current table.
+                    phase = next(p for p in tables.PHASES if row in [n for n, _, _ in tables.rows(p)])
+                    entries = tables.rows(phase)
                 assert row in [n for n, _, _ in entries], (phase, row)
                 self.rows.setdefault(phase, entries)
                 current = tables._ROWS[phase]

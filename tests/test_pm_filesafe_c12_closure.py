@@ -1,7 +1,9 @@
 """Adversarial checks for DF closure evidence attribution and observer purity."""
 import copy
+import importlib.util
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
@@ -9,6 +11,54 @@ import pm_filesafe_c12_closure as X
 
 
 class ClosureEvidenceTests(unittest.TestCase):
+    def test_nullable_pattern_still_gets_a_string_refusal_witness(self):
+        branch = {'type': 'string', 'pattern': '^(?:[0-9a-f]{2})*$(?![\\s\\S])'}
+        validator = X.SG.SlotValidator({'anyOf': [branch, {'type': 'null'}]})
+        self.assertEqual(X.errors(validator, None), [])
+        candidates = list(X.proposals('pattern', branch, None))
+        self.assertTrue(any(X.expected_error(X.errors(validator, value), branch, 'pattern', ())
+                            for tag, value in candidates))
+
+    def test_proof_rebinding_refuses_changed_case_bytes_and_codes(self):
+        path = Path(__file__).resolve().parents[1] / 'scripts/pm-filesafe-c12-proof-reuse.py'
+        spec = importlib.util.spec_from_file_location('df_c12_reuse_test', path)
+        reuse = importlib.util.module_from_spec(spec); spec.loader.exec_module(reuse)
+        g = reuse.S.g
+        suite = SimpleNamespace(controls=[g.Control('control', {}, 'synthetic')],
+                                negatives=[g.Negative('negative', {'a': 1}, 'ROW', 'refusal', 'control', 'a changes')])
+        report = {'controls': [{'id': 'control', 'sha256': g.digest({})}],
+                  'negatives': [{'id': 'negative', 'target': 'ROW', 'code': 'refusal',
+                                 'control': 'control', 'sha256': g.digest({'a': 1})}]}
+        self.assertTrue(reuse.matching_cases(suite, report))
+        report['negatives'][0]['sha256'] = g.digest({'a': 2})
+        self.assertFalse(reuse.matching_cases(suite, report))
+        report['negatives'][0]['sha256'] = g.digest({'a': 1})
+        report['negatives'][0]['code'] = 'unrelated refusal'
+        self.assertFalse(reuse.matching_cases(suite, report))
+
+    def test_entailed_rows_are_singletons_without_dropping_order_or_fields(self):
+        path = Path(__file__).resolve().parents[1] / 'scripts/pm-filesafe-table-generate.py'
+        spec = importlib.util.spec_from_file_location('df_c12_generator_test', path)
+        generator = importlib.util.module_from_spec(spec); spec.loader.exec_module(generator)
+        for phase in X.T.PHASES:
+            rows = X.T.rows(phase)
+            for name, _, _ in rows:
+                if name in generator.ENTAILED_ROWS:
+                    self.assertEqual(len(rows), 1, (phase, name))
+
+        def flattened(phase):
+            result = [n for n, _, _ in X.T.rows(phase)]
+            for follower in X.T.FOLLOWERS.get(phase, ()):
+                result.extend(flattened(follower))
+            return result
+
+        for phase in generator.ORIGINAL_SPEC:
+            if phase['phase'] in generator.GENERATED_FOLLOWERS:
+                self.assertEqual(flattened(phase['phase']), [r['name'] for r in phase['rows']])
+                phases = (phase['phase'], *generator.GENERATED_FOLLOWERS[phase['phase']])
+                actual = {name for p in phases for name in X.T.fields(p)}
+                self.assertEqual(actual, set(generator.fields_of(phase['rows'])))
+
     def test_unrelated_error_does_not_earn_target_credit(self):
         node = {'type': 'string', 'minLength': 2}
         validator = X.SG.SlotValidator(node)
