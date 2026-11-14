@@ -90,6 +90,10 @@
   {
    "event_type": "docker.compose.scenario.run",
    "outcome": "registered"
+  },
+  {
+   "event_type": "docker.compose.scenario.saved",
+   "outcome": "registered"
   }
  ]
 }
