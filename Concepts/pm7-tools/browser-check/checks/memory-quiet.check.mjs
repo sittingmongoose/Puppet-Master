@@ -437,14 +437,16 @@ for (const surface of ['normal', 'sandbox']) {
 		await f.locator('#pmRoot .chat-header .pm7-mem-btn').first().click();
 		await f.waitForFunction(() => { const l = document.querySelector('.pm7-mem-layer'); return l && !l.hidden && l.classList.contains('is-open'); }, null, { timeout: 8000 });
 		await t.page.waitForTimeout(400);
-		// sample the sheet's right edge against the chat's on every frame a drag move paints, and while the drag is held
+		// sample the sheet's edges against the chat's on every frame a drag move paints, and while the drag is held.
+		// The chat column is right-anchored, so its right edge never moves; the spill is its left edge walking right
+		// while the sheet stays put. Both edges are judged, so a sheet left behind cannot pass on the still right edge.
 		await f.evaluate(() => {
 			window.__fo199 = { samples: [], moves: 0 };
 			const read = (why) => {
 				const l = document.querySelector('.pm7-mem-layer'), c = document.getElementById('chatPanel');
 				if (!l || l.hidden || !c) return;
 				const s = l.querySelector('.pm7-mem-sheet').getBoundingClientRect(), r = c.getBoundingClientRect();
-				window.__fo199.samples.push({ why, sheetRight: s.right, chatRight: r.right, chatW: r.width, resizing: document.body.classList.contains('pm-resizing') });
+				window.__fo199.samples.push({ why, sheetLeft: s.left, chatLeft: r.left, sheetRight: s.right, chatRight: r.right, chatW: r.width, resizing: document.body.classList.contains('pm-resizing') });
 			};
 			window.__fo199.read = read;
 			document.addEventListener('pointermove', () => {
@@ -472,13 +474,14 @@ for (const surface of ['normal', 'sandbox']) {
 		const after = await f.evaluate(() => {
 			const l = document.querySelector('.pm7-mem-layer'), c = document.getElementById('chatPanel');
 			const sr = l.querySelector('.pm7-mem-sheet').getBoundingClientRect(), cr = c.getBoundingClientRect();
-			return { samples: window.__fo199.samples, moves: window.__fo199.moves, open: !l.hidden, final: { sheetRight: sr.right, chatRight: cr.right, chatW: cr.width, sheetW: sr.width } };
+			return { samples: window.__fo199.samples, moves: window.__fo199.moves, open: !l.hidden, final: { sheetLeft: sr.left, chatLeft: cr.left, sheetRight: sr.right, chatRight: cr.right, chatW: cr.width, sheetW: sr.width } };
 		});
-		const spill = after.samples.filter((s) => Math.abs(s.sheetRight - s.chatRight) > 1);
-		const worst = after.samples.reduce((m, s) => Math.max(m, Math.abs(s.sheetRight - s.chatRight)), 0);
+		const edgeGap = (s) => Math.max(Math.abs(s.sheetLeft - s.chatLeft), Math.abs(s.sheetRight - s.chatRight));
+		const spill = after.samples.filter((s) => edgeGap(s) > 1);
+		const worst = after.samples.reduce((m, s) => Math.max(m, edgeGap(s)), 0);
 		await t.check('the drag was admitted and held the chat at about 421 px', held.resizing && held.chatW >= 415 && held.chatW <= 427 && after.moves >= 8, JSON.stringify({ held, moves: after.moves }));
-		await t.check('every sampled frame keeps the sheet’s right edge within 1 px of the chat’s', after.samples.length >= 8 && spill.length === 0, `${after.samples.length} samples, worst ${worst.toFixed(1)} px${spill.length ? `, e.g. ${JSON.stringify(spill[0])}` : ''}`);
-		await t.check('after release the sheet still fits the resized chat', after.open && Math.abs(after.final.sheetRight - after.final.chatRight) <= 1 && Math.abs(after.final.sheetW - after.final.chatW) <= 2, JSON.stringify(after.final));
+		await t.check('every sampled frame keeps both the sheet’s edges within 1 px of the chat’s', after.samples.length >= 8 && spill.length === 0, `${after.samples.length} samples, worst ${worst.toFixed(1)} px${spill.length ? `, e.g. ${JSON.stringify(spill[0])}` : ''}`);
+		await t.check('after release the sheet still fits the resized chat', after.open && Math.abs(after.final.sheetLeft - after.final.chatLeft) <= 1 && Math.abs(after.final.sheetRight - after.final.chatRight) <= 1 && Math.abs(after.final.sheetW - after.final.chatW) <= 2, JSON.stringify(after.final));
 		await t.page.keyboard.press('Escape');
 		await t.page.waitForTimeout(450);
 	});
