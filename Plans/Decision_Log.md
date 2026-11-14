@@ -32869,3 +32869,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-527: Event Authority registers coordination.agent_aborted (admission merge 1)
+
+```yaml
+plan_unit_id: DL-527
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `coordination.agent_aborted` as family `event-family-coordination-agent-aborted` revision 1.0.0 in admission merge 1 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the families ready then are admitted in a first merge. `coordination.agent_aborted` is one of the rows DL-039 confirmed as persisted but unregistered and kept quarantined until its contract was complete; DL-414 requires every such row to reach its one outcome, and DL-039 authorized registering these rows family by family. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `coordination.agent_aborted`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-14.7 (53 families, SHA-256 615ab0b32b810de14023e87b49a9388483978638299e4bd81c3b586dc61a1462) to 2026-11-14.8 (54 families, SHA-256 cc982fdf39627d3393f4bd50526ae2d5b1295bb3cc1379cf43e28ed8431b278b). The appended row, canonical SHA-256 8f0850134164ee80796c4210c1b3a270b6399d294a790e3286b3adcee86448b2, has scope policy project_only, payload `pm.coordination_event.agent_aborted.schema.v1` at Plans/coordination_event_payloads.schema.json#/$defs/agent_aborted, semantic owner Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25, payload owner Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25 and retention RP-COORDINATION-180D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-14.8 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 54 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261114/admission-merge-1/depth/coordination.agent_aborted.json (SHA-256 963c9767bc364e5ff978db11ca6263894ca4f51820868ac8d86e76286ba3a31c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261104/DCO-self-grade.json (SHA-256 746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/coordination.agent_aborted.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `coordination.agent_aborted`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for coordination.agent_aborted, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/coordination.agent_aborted.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-14.8 and 54 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_1
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "Plans/Decision_Log.md#DL-039 (confirmed_persisted_unregistered row, registered family by family)"
+- "reports/event-authority-20261104/DCO-self-grade.json; SHA-256 746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/INT2/admission-readiness-final.json; SHA-256 58566991d8f8a012b87e49afb36f0578576ed24f73122362d84ff365901507be"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["coordination.agent_aborted", "event-family-coordination-agent-aborted", "2026-11-14.8", "cc982fdf39627d3393f4bd50526ae2d5b1295bb3cc1379cf43e28ed8431b278b", "8f0850134164ee80796c4210c1b3a270b6399d294a790e3286b3adcee86448b2", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+

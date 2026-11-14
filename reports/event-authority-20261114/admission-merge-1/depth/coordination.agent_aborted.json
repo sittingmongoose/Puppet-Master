@@ -1,0 +1,315 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-14.8",
+  "sha256": "cc982fdf39627d3393f4bd50526ae2d5b1295bb3cc1379cf43e28ed8431b278b",
+  "family_count": 54,
+  "row_pointer": "#/families/53"
+ },
+ "base_commit": "ed47f75e094e92a277a88d107d29901add1c8819",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "coordination.agent_aborted",
+   "family_id": "event-family-coordination-agent-aborted",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-14.8 as #/families/53 (canonical row SHA-256 8f0850134164ee80796c4210c1b3a270b6399d294a790e3286b3adcee86448b2); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/53",
+       "line_start": 3845,
+       "line_end": 3900,
+       "quote": "\"event_type\": \"coordination.agent_aborted\"",
+       "quote_line": 3848,
+       "file_sha256": "cc982fdf39627d3393f4bd50526ae2d5b1295bb3cc1379cf43e28ed8431b278b",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-540 governs this exact family, reusing current OSI-438/CV-353/SP-320 and explicitly keeping application scope separate.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28242,
+       "line_end": 28242,
+       "quote": "This family's own prepared contract reuses OSI-438, CV-353 and SP-320 at payload 1.0.0, after the per-family current search in `reports/event-authority-20261104/DCO-search.json`. It is a new",
+       "excerpt_sha256": "237f3f82d01c6c9da54a8afe00058da0fc50f627a20615c52637414dea73698d",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "AgentCoordinator.record_abort(AgentAbortResolution) uses the sole coordinator admission, no separate owner body, first receipt before continuation and explicit SP-286/CV-339 lost-ack custody.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28244,
+       "line_end": 28244,
+       "quote": "**Producer and ordering.** `AgentCoordinator.record_abort(AgentAbortResolution)`: Only the component that resolves the abort: the parent run's orchestration path, the user command path or th",
+       "excerpt_sha256": "740c5dedaf3254c22088c849d95960cd6e89c066c738d2d2672829f30955fe8a",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This family has its own closed CV-353 definition, 1.0.0, with bounded fields and exact EventRecord joins.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28246,
+       "line_end": 28246,
+       "quote": "**Payload and scope.** The closed definition `Plans/coordination_event_payloads.schema.json#/$defs/agent_aborted` (schema ID `pm.coordination_event.agent_aborted.schema.v1`, version 1.0.0) i",
+       "excerpt_sha256": "160a8d5269b89ac5a04d134de854ef5b4ca14e764b82702d00ff97ba33e7ce80",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_payloads.schema.json",
+       "unit": "#/$defs/agent_aborted",
+       "line_start": 584,
+       "line_end": 584,
+       "quote": "\"agent_aborted\": {",
+       "excerpt_sha256": "b6817cc5534556562876889df294ff55551849183fb9ba708c9355461523bc25",
+       "file_sha256": "eb60c0f2266c67741a5bf92f4bdcd45b7f9faec4d8930434066c1fc8178e2942",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Project scope only, actual captured epoch and instance, exact family in the identity recipe and registration lineage checks.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28248,
+       "line_end": 28248,
+       "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+       "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact scoped retry returns the original result; changed digest refuses. Inclusive replay rebuilds rows without effects.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28248,
+       "line_end": 28248,
+       "quote": "**Identity and retries.** This family explicitly adopts SP-320's `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}` idempotency key with event_type `coordi",
+       "excerpt_sha256": "0caaff1a749c36c0364e00835bbb6ca1983b1af3506d75ed02614357c054b3ad",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Case L-3 explicitly names Coordination; SP-320 assigns RP-COORDINATION-180D and RP-PROJECTION-3GEN with anchors, holds and bounds. No pending retention cell.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28254,
+       "line_end": 28254,
+       "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+       "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Case L-3",
+       "line_start": 17558,
+       "line_end": 17558,
+       "quote": "| Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |",
+       "excerpt_sha256": "a3aad92a255adc65f89ce8a593f825d85911e9d886f4ad84527cb149cbbc12f6",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Canonical seglog and coherent mandatory backup custody, bounded no-secret/ref-only payloads and current access/tombstone checks before disclosure.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28254,
+       "line_end": 28254,
+       "quote": "**Custody and retention.** This family explicitly adopts SP-320's canonical seglog and coherent mandatory backup/restore custody, source holds, no-secret/ref-only bounded payloads and curren",
+       "excerpt_sha256": "833a8bc89788aa85dad4fba60bb2296294d2d47988e58fdc50fa9d2fd974a8b0",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Terminal, as coordination.agent_unregistered, with agent status cancelled. aborted_by_ref kind follows abort_reason: run and parent_run_id for parent, actor for user, component for runtime. The first terminal event to append wins.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28250,
+       "line_end": 28250,
+       "quote": "**Transition.** Terminal, as coordination.agent_unregistered, with agent status cancelled. aborted_by_ref kind follows abort_reason: run and parent_run_id for parent, actor for user, compone",
+       "excerpt_sha256": "e280d23e2b96caefd89e600c7b664ecf6e2321a4ddfc260af9721e0603fb43d2",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact versioned projector and readers, SP-278 adoption, closed checkpoint, atomic CAS and nine-field stored token; mirror_export is on-request only under SP-339.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28252,
+       "line_end": 28252,
+       "quote": "**Consumer and checkpoint.** This family explicitly adopts `storage.coordination_projector.v1@1.0.0` and SP-278, with `projector.checkpoint.coordination:{project_id}`, closed `pm.storage_val",
+       "excerpt_sha256": "2750758dfddf81a3a46cfcb14997aa3dc14b5623027e0b057ce453f79538c253",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Closed version dispatch and explicit writer cutoff, checkpoint withdrawal, fenced readers and verified successor rebuild.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28256,
+       "line_end": 28256,
+       "quote": "**Compatibility and withdrawal.** Only this family's closed 1.0.0 definition dispatches; unsupported versions and legacy sketch extensions refuse. Withdrawal first cuts off this family's wri",
+       "excerpt_sha256": "e4a80b291a39eab2d884851259e0770498e34cb27e289e46e752761f836fe077",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Own ATS-058 payload/EventRecord/identity/transition cases remain; both static checkers pass with unknown projection, Project-to-app reference and missing/empty heartbeat negative probes. Native NOT_RUN; only the two known helper-pin subtests fail.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-540",
+       "line_start": 28258,
+       "line_end": 28258,
+       "quote": "**Oracles.** ATS-058 and this family's own `validation_case_ids` in `Plans/coordination_event_admission.json` bind its positive/negative payloads, EventRecord joins, identity vector, transit",
+       "excerpt_sha256": "6e0c9415b6b77e005f69c054c2f6ef0633462effc79ef7c82ce66556b845c3ca",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+       "quote_check": "exact"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DCO-self-grade.json",
+      "sha256": "746ca7314a2737b1855c7506ad83f17729656e1920a387c442f80dd4ed066ff8",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
