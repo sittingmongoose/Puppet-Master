@@ -438,10 +438,11 @@ const CASES = {
 		assert.equal(pace(W), 2200, 'off again: the loop at the flowing length');
 		return 'ok';
 	},
-	'a light/dark change and NieR Mode on and off keep the backlight on its own loop, in phase with the glyph (K3)': () => {
+	'a light/dark change keeps the backlight on its own loop, in phase with the glyph (K3); after NieR Mode off the next change puts it back with the glyph': () => {
 		// K3: a light/dark change swapped the backlight's keyframes (ss-glow, ss-glow-l): a new loop that started again
-		// from its delay out of phase with the glyph, and NieR Mode off brought back a new one the same way; every change
-		// after that kept the difference (R40 F1)
+		// from its delay out of phase with the glyph, and every change after that kept the difference (R40 F1). NieR Mode
+		// takes the backlight's box away (its loop goes, no cost under NieR), so NieR Mode off brings a new loop back, out
+		// of phase; the next change puts it at the glyph's point
 		const W = start({}, false);
 		W.until(() => { const g = W.glyph(); return g && g.place() != null && g.place() >= 1.3; });
 		const i0 = W.frames.length, bl = W.glow(), out = [];
@@ -455,9 +456,18 @@ const CASES = {
 		assert.equal(W.glow().t.duration, 3200, 'the light theme: the waiting length');
 		W.api.token('one'); W.run(300); check('light, then a word');
 		W.set('light', false); W.run(100); check('dark again');
-		W.set('nier', true); W.run(100); W.set('nier', false); W.run(100); check('NieR Mode on and off');
-		W.until(() => W.attrs.get('data-flow') === 'waiting', 3000); W.run(100); check('the waiting change after');
 		smooth(W, i0); smooth(W, i0, 'b');
+		W.until(() => W.attrs.get('data-flow') === 'waiting', 3000);
+		W.set('nier', true); W.run(100);
+		assert.equal(W.glow(), null, 'NieR Mode: no backlight');
+		W.set('nier', false); W.run(1200);                           // the new loop has waited out its delay
+		const back = apart(W), i1 = W.frames.length;
+		W.api.token('one'); W.run(100);
+		assert.ok(apart(W) < 1e-6, `NieR Mode off, then the flowing change: the backlight is ${apart(W).toFixed(4)} of a loop from the glyph`);
+		// the step a person sees, in a loop (opacity follows the place in the loop, not the count of loops run)
+		const step = Math.max(0, ...W.jumps.filter((j) => j.i >= i1 && j.layer === 'bl').map((j) => { const x = (((j.after - j.before) % 1) + 1) % 1; return Math.min(x, 1 - x); }));
+		smooth(W, i1);
+		out.push(`NieR Mode off: a new backlight loop ${back.toFixed(4)} of a loop from the glyph; the next change put it with the glyph, a step of ${step.toFixed(4)} of a loop`);
 		return out.join('; ');
 	},
 	'a Stop chip missing for a moment (the quiet timer and the observer stop) is watched again from the next render': () => {
