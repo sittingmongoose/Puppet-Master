@@ -52,13 +52,14 @@
     }
   };
   /* FO-162 (Jared, card Q5 B): the checkup is grouped in the five areas "What is checked" lists
-     (system.health.check-scope: AI providers, Storage, Sign-ins, Performance, Dependencies), named by that row's own
-     labels. A check keeps its permanent id (`check`, N2-151: check IDs are permanent identities) wherever its area is;
-     the row key, the fix route, the owner read and the return after a fix all use it. */
-  const SCOPE = 'system.health.check-scope';
+     (system.health.check-scope: AI providers, Storage, Sign-ins, Performance, Dependencies). The areas keep those
+     canonical stored names; the row's own chips read the inventory's option_labels (FO-211: AI services, Storage and
+     backups, Accounts and sign-ins, Speed, Tools and code) while the stored values stay as they are. A check keeps its
+     permanent id (`check`, N2-151: check IDs are permanent identities) wherever its area is; the row key, the fix
+     route, the owner read and the return after a fix all use it. */
   const AREA_IDS = ['ai', 'storage', 'signins', 'performance', 'dependencies'];
   const checkOf = (g, f) => f.check || `${g.id}:${f.id}`;
-  const areaTitle = g => (g.area && PM51.valueLabel ? PM51.valueLabel(SCOPE, g.area) : g.area) || g.title || g.id;
+  const areaTitle = g => g.area || g.title || g.id;
 
   /* Performance holds only what this computer really measures. The GPU is read from this window's own graphics
      driver: the desktop app draws with Skia on the GPU, or on the processor without one (DL-139), and local media

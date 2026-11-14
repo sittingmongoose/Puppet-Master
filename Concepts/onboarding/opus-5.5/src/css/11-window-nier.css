@@ -255,6 +255,10 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem::after { c
    current chapter's ink box stood 17 x 21 px under Pip with no word in it, and a finished chapter's rule 30 px under its
    box with none above it; Pip and the boxes either side of him mark the chapter. 66-nier-window.js walks no block there) */
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding[data-o55-layout="narrow"] .o55-railitem::after { content: none; }
+/* FO-209: the narrow bead rail fits between the brand and the controls (10-window.css); NieR's own item padding and
+   the brand block's right room shrink with it, so Change the look stays uncovered at 360 and 390 px */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding[data-o55-layout="narrow"] .o55-railitem { padding-inline: 2px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding[data-o55-layout="narrow"] .o55-brand { padding-right: 12px; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railstring { top: 13px; height: 9px; background: rgba(var(--o55-nier-ink-rgb), .4); }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railnode { position: relative; width: 8px; height: 8px; border: 1px solid currentColor; border-radius: 0; background: transparent; box-shadow: none; transition: none; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railitem[data-state="done"] { color: var(--text-secondary); }

@@ -489,6 +489,12 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-stage { border-right: 0; border-bottom: 1px solid var(--o55-line); }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-raillabel:not(.o55-railjump) { display: none; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-brand span, #pm-o55-onboarding[data-o55-layout="narrow"] .o55-close span { display: none; }
+/* FO-209: at phone width the bead rail must fit between the brand and the controls: NieR's letter-spaced items ran
+   onto the look button and covered it, so a real click on Change the look timed out (390x844, light and dark). Only
+   the room around the beads shrinks, and only in the narrow layout; each string keeps hanging from its bead's centre. */
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-head { gap: 8px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-railitem { padding-inline: 2px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-railstring { left: calc(2px + var(--o55-node-w, 10px) / 2); }
 /* how the app talks to me (21-talk.js): the mode's mark and name, the name folding away with Close's where the bar is
    narrow; its hover and focus are the header's other buttons' */
 .o55-talk .o55-talkglyph { display: inline-grid; place-items: center; }
