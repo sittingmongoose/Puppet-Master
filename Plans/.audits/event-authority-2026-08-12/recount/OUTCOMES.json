@@ -26,6 +26,10 @@
   {
    "event_type": "assistant_plan.completed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.created",
+   "outcome": "registered"
   }
  ]
 }
