@@ -314,29 +314,14 @@
     /* (a reveal skipped by this pick left the app hidden: it is shown again for the new one's picture of it) */
     document.documentElement.removeAttribute('data-o55-vt-still');
     if (still) document.documentElement.setAttribute('data-o55-vt-b', '');
-    /* (variant B) The hidden app is brought up to date here, on purpose, once: the theme's write leaves its style and
-       layout to do, and the first script to read any box inside it paid all of it at the reveal's first frame (the
-       content-visibility forced update: 150-325 ms on Alexis, 250-450 ms on the VM), each reader held only handing the
-       bill to the next (the rail's search fit, the editor's fonts, Home's paint, Liquid Glass, Usage's card heads). One
-       read inside each held part, after the theme's write, the window's own look work and the font wait, pays it in the
-       update instead, where the screen still shows the old picture: the click waits that much longer for the reveal,
-       which then starts on a clean page and draws every frame (the lead's ruling, FO-188, 2026-11-14). */
-    const settleHeld = () => {
-      if (!still) return;
-      held.forEach((n) => { const c = n.isConnected && n.firstElementChild; if (c) void c.getBoundingClientRect(); });
-    };
-    /* (the app's own first layout in the new look can ask for faces of its own, its editors' and terminals' mono: those
-       are waited for once more, at most 300 ms, and the app is settled again, or they arrived in the reveal and laid it
-       out again, 3,380 objects on a first Friendly pick on the VM) */
-    const fontsIn = () => { const F = document.fonts; return F.status !== 'loading' ? null : Promise.race([F.ready, new Promise((res) => setTimeout(res, 300))]); };
     const update = () => {
       apply();
       if (still) document.documentElement.setAttribute('data-o55-vt-still', '');
-      if (!document.fonts) { settleHeld(); return undefined; }
-      return Promise.resolve().then(() => fontsIn()).then(() => {
-        settleHeld();
-        const again = still ? fontsIn() : null;
-        return again ? again.then(settleHeld) : undefined;
+      if (!document.fonts) return undefined;
+      return Promise.resolve().then(() => {
+        const F = document.fonts;
+        if (F.status !== 'loading') return undefined;
+        return Promise.race([F.ready, new Promise((res) => setTimeout(res, 300))]);
       });
     };
     let vt;
