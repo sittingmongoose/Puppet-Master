@@ -310,6 +310,10 @@
   {
    "event_type": "notebook.checkpoint_committed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "notebook.checkpoint_failed",
+   "outcome": "registered"
   }
  ]
 }
