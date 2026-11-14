@@ -110,6 +110,10 @@
   {
    "event_type": "external_research.packet_delivered",
    "outcome": "registered"
+  },
+  {
+   "event_type": "external_research.topic_started",
+   "outcome": "registered"
   }
  ]
 }
