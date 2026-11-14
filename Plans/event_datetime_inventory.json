@@ -28342,7 +28342,7 @@
       ],
       "resource_pointer": "",
       "resource_id": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json",
-      "resource_sha256": "0b7a0052069abb8fb73c9d44d86f119dc7164ad988642f6ddce3f9c62a1670b2",
+      "resource_sha256": "6997e9c8d532f1915726608b81567fee6cce03e7c6219a6a5e30e2457a3dcba6",
       "node_sha256": "30d05d6aa824d4e1d0e7cc572661ee408bf0a068e86c58d21457cd9b085151c8",
       "profile": "owner_schema",
       "classification": "other_owner_observation",
@@ -28967,7 +28967,7 @@
       ],
       "resource_pointer": "",
       "resource_id": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json",
-      "resource_sha256": "0b7a0052069abb8fb73c9d44d86f119dc7164ad988642f6ddce3f9c62a1670b2",
+      "resource_sha256": "6997e9c8d532f1915726608b81567fee6cce03e7c6219a6a5e30e2457a3dcba6",
       "node_sha256": "57e8eed19a75b977159e3d634813245def3fabf405d77f56c4fe2376790cad78",
       "profile": "owner_schema",
       "classification": "other_owner_observation",
@@ -29632,7 +29632,7 @@
       ],
       "resource_pointer": "",
       "resource_id": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json",
-      "resource_sha256": "0b7a0052069abb8fb73c9d44d86f119dc7164ad988642f6ddce3f9c62a1670b2",
+      "resource_sha256": "6997e9c8d532f1915726608b81567fee6cce03e7c6219a6a5e30e2457a3dcba6",
       "node_sha256": "0eba6fa1e696e241e714cb33ddd98cfb825a1e960b2c66d8411efe0917e2190b",
       "profile": "owner_schema",
       "classification": "wildcard_non_timestamp",
@@ -34032,6 +34032,2500 @@
           "pricing_source",
           "pricing_effective_at",
           "pricing_version"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/assistant_plan_schedule_invalidated/1.0.0/schema.json",
+      "resource_sha256": "c9bd3d14030d27992e7a7b6a8989bbdd3444dd6dc5ee71c1992e85a39bcdc1bb",
+      "node_sha256": "7f2c6c99d3772ba18c034eefc607b86892894280175e268b47bb4c423df6361a",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "assistant_plan.schedule_invalidated \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/docker_compose_scenario_deleted.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/docker_compose_scenario_deleted/1.0.0/schema.json",
+      "resource_sha256": "dd0390a2e21293d78b68e748640b2d9b30f3714a5c0207b1ef1c4f0e9d5e9206",
+      "node_sha256": "aff4638c1304cd3c50b51c3c014e2ab7eccdbfa8d1374832df3a527ef10e0186",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/docker_compose_scenario_deleted.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/docker_compose_scenario_deleted.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "docker.compose.scenario.deleted \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/docker_compose_scenario_edited/1.0.0/schema.json",
+      "resource_sha256": "fdd9b31d9adb66570e43da7d42de89c4cf3ca76fb741abfe4243b604ccb192b5",
+      "node_sha256": "a2b96ffc0642ca59a93d1cb61dd456114daedbc9f5bb7db10a9a8caa69ffce42",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "docker.compose.scenario.edited \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/docker_compose_scenario_run.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/docker_compose_scenario_run/1.0.0/schema.json",
+      "resource_sha256": "afa995bdf04558ee34026b7571fad4a356bf7ce3ad193e783903b7379758a330",
+      "node_sha256": "f257a820ffee3535a22e854de265ff8aaf2ca14494a307819b4300d2777ce028",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/docker_compose_scenario_run.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/docker_compose_scenario_run.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "docker.compose.scenario.run \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/docker_compose_scenario_saved.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/docker_compose_scenario_saved/1.0.0/schema.json",
+      "resource_sha256": "014818aed72a794063776f0fd0298ca20d34a4e81bd92cd3b62ffa89e1f289d1",
+      "node_sha256": "382950953e3949288bbdb3fbc5fde196b2168281dc52124f38725b1ed06dac1c",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/docker_compose_scenario_saved.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/docker_compose_scenario_saved.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "docker.compose.scenario.saved \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/execution_window_created.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/execution_window_created/1.0.0/schema.json",
+      "resource_sha256": "3a3d5807deabfb3a62f361087d3aceff2ee11f8214d500fb25475e2df2001c2d",
+      "node_sha256": "591f43fca20f62619b7b422530487000ad6dca41936cf2b7e34e91adc8cff881",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/execution_window_created.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/execution_window_created.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "execution_window.created \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/execution_window_invalidated.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/execution_window_invalidated/1.0.0/schema.json",
+      "resource_sha256": "e83e54d9bd124b64aab0b879e3d302138679afa5aa349c970be60e48279fae4d",
+      "node_sha256": "16448d97c699bd54d78a2f83f07682129ffbe66aef446238e811fd133be1472f",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/execution_window_invalidated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/execution_window_invalidated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "execution_window.invalidated \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/execution_window_updated.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/execution_window_updated/1.0.0/schema.json",
+      "resource_sha256": "f0f36054bbfe5b43557e76f6401221c4a781a2d79abe27d395f2c84c1a395957",
+      "node_sha256": "13ab06bb0a4a0c95fecbdc3e6c873d31c056e36f37528f307d0cb5fe22f0c5df",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/execution_window_updated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/execution_window_updated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "execution_window.updated \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/goal_continuation_evaluated.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/goal_continuation_evaluated/1.0.0/schema.json",
+      "resource_sha256": "f5b7cc9e4e4addba08f7bd2f5ef003e5fabe17a2ea82cd1bf99a7c07072ab5c3",
+      "node_sha256": "1e1add574237067514c6db4c79ed7f11aef56febf8bed5fe597f69b90372405d",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/goal_continuation_evaluated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/goal_continuation_evaluated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "goal.continuation_evaluated \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/named_plan_archived.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/named_plan_archived/1.0.0/schema.json",
+      "resource_sha256": "e195327036e3ab9cfa40992bd4e1198bf5abe4d0a20400748a220a75ca542f73",
+      "node_sha256": "b449614252524a402c4ef10e3cc84372a6c466ddf5558857fb17447d99136128",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_archived.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_archived.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "named_plan.archived \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/named_plan_child_refs_changed.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/named_plan_child_refs_changed/1.0.0/schema.json",
+      "resource_sha256": "cf13ccfbf21fd6695809669cb8b25cd390964ddc133a3bbd0fba92d9f053232e",
+      "node_sha256": "b2cbb0ea303cdbb7431ae032a78e99b95ddeaa540d888f609d11aa35ebcc4254",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_child_refs_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_child_refs_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "named_plan.child_refs_changed \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/named_plan_created.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/named_plan_created/1.0.0/schema.json",
+      "resource_sha256": "5fe46d6c59f7cf40118d80a406b67f8b10b0c7e0fff7b2253375ebd92f91e100",
+      "node_sha256": "4734ea5645b075e6328b8dc7e9843c3e34e1593c0efe4809bb69086540439323",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_created.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_created.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "named_plan.created \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/named_plan_priority_changed.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/named_plan_priority_changed/1.0.0/schema.json",
+      "resource_sha256": "d1ea5b40d396eca8e19ac46ca71338661737c447189e7e190a8aa6c5e545e44f",
+      "node_sha256": "bb199644e24cd7f33715aad6d4b86a6b91e28b5b665f2ed11bbc0ae4718b340f",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_priority_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_priority_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "named_plan.priority_changed \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/named_plan_renamed.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/named_plan_renamed/1.0.0/schema.json",
+      "resource_sha256": "1ff6b36ea7aecbbcf13282fd681d0f7502cef25e3aa54103a9f9d60188ea9b44",
+      "node_sha256": "16ef55bde2c545f150472ed7a5085913aae2ab9a16feaabedf4c3dddc73bc27c",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_renamed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_renamed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "named_plan.renamed \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/named_plan_restored.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/named_plan_restored/1.0.0/schema.json",
+      "resource_sha256": "c1cb8d7c04af144d6ef79801ebf792cfc13da9f96434347140b6eec502f478ae",
+      "node_sha256": "9b37d68f0f54c547bdee0905c4ca2de6ffa8801ff3a8fccd4f1cacb8c8932f05",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_restored.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/named_plan_restored.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "named_plan.restored \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/runtime_automation_pause_changed.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/runtime_automation_pause_changed/1.0.0/schema.json",
+      "resource_sha256": "f0c9411d16e452fb974f5e1a297ed165b39ec1ac64d396583cc8d95feab6e057",
+      "node_sha256": "d1ffa23c09aeb56f0f50f893f6498cc1f45864e3bfeb82cce097aa0adae23f4a",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/runtime_automation_pause_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/runtime_automation_pause_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "runtime.automation_pause_changed \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/runtime_quota_resume_attempted.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/runtime_quota_resume_attempted/1.0.0/schema.json",
+      "resource_sha256": "36f1cdc9b0fa1a7a281e0081f3c9a3716755c098562c02c416fe1bcda73a95ea",
+      "node_sha256": "bfb498b4f218ac4f638feb9040a3db92528d0d83ac5e1135b3b84f04305ca906",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/runtime_quota_resume_attempted.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/runtime_quota_resume_attempted.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "runtime.quota_resume_attempted \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/runtime_quota_resume_consent_changed.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/runtime_quota_resume_consent_changed/1.0.0/schema.json",
+      "resource_sha256": "52d463605145608f1d2d88cdbe9abaccff7fe04f9d3bfd6f8bc3b3d22ef046de",
+      "node_sha256": "ad46793f170424ef7be795c48fde68aeb4018973a8754ddbc8bc322727f29f44",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/runtime_quota_resume_consent_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/runtime_quota_resume_consent_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "runtime.quota_resume_consent_changed \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/runtime_quota_wait_started.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/runtime_quota_wait_started/1.0.0/schema.json",
+      "resource_sha256": "6f7a1fbb36bcf93f2339e6e8d7c7674d3d9d2b1e6a6ed317ddd293fd76d1b661",
+      "node_sha256": "803bdd6139b68cb61a1cfadf0d4528d3f5a2d4fdc023a334bf28075339c5e31f",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/runtime_quota_wait_started.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/runtime_quota_wait_started.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "runtime.quota_wait_started \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_cancelled.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/scheduled_dispatch_cancelled/1.0.0/schema.json",
+      "resource_sha256": "ae4d70cc2466695ae0994e7cdb2c2bde081e9717f2e2f5732859858671fb4b51",
+      "node_sha256": "0d0d2edb0709f7145c22a36fbc34c9de249349dfb30ef5d4334d43376f0b6c5e",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_cancelled.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_cancelled.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "scheduled_dispatch.cancelled \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_created.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/scheduled_dispatch_created/1.0.0/schema.json",
+      "resource_sha256": "2a5c474a0e29f72f6876092dad4f8d56188c4643f858a8cf47b3b1b65d7c2205",
+      "node_sha256": "e13281d5bacb3e273cce2e3d7bf15f123bd03e049df63ad8a1686384feec4cdb",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_created.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_created.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "scheduled_dispatch.created \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_dispatched.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/scheduled_dispatch_dispatched/1.0.0/schema.json",
+      "resource_sha256": "fe0476190134320d8ebe8cc020122fd42e759cbd99478154b71dfa34b94d1c6b",
+      "node_sha256": "3178c4c4a38b538bf8cea0f147f20f06c62f36f114bed03a137c2981529a6ce5",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_dispatched.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_dispatched.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "scheduled_dispatch.dispatched \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_failed.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/scheduled_dispatch_failed/1.0.0/schema.json",
+      "resource_sha256": "eeacc11651abfb857f44217f2ea5e7076f9704e06b488f0915212870044ba1ca",
+      "node_sha256": "284eb8cd667df5ad240e2bb98ad7e40d4df1442741acff2cc7cc8071e96685f7",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_failed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_failed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "scheduled_dispatch.failed \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_held.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/scheduled_dispatch_held/1.0.0/schema.json",
+      "resource_sha256": "45ab967eda13dbfef4a3b8cf10be687eb9858f3f1f4d8dd516339e94126b34b9",
+      "node_sha256": "d4d04d8eb170952d728d30f4f6e218591b4ced056148fa3b9f37f10d42e82c1c",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_held.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_held.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "scheduled_dispatch.held \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/scheduled_dispatch_updated.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/scheduled_dispatch_updated/1.0.0/schema.json",
+      "resource_sha256": "1b870f3d26d77a320b811bcb0bfe60688a409f1a74298011849ae7116f47dcf1",
+      "node_sha256": "7b22ebaca3896d30500c79cae5620b66e31426d6130e4127dc40a33c46f8c18d",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_updated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/scheduled_dispatch_updated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "scheduled_dispatch.updated \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/todo_created.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/todo_created/1.0.0/schema.json",
+      "resource_sha256": "7230077ebaf0088e8596e602de49493d21a46bb1a559028ae2ae4438d1299730",
+      "node_sha256": "7086d84b25a705fcd506a599d81aeac8ff9ac309ec90708b6efa86e7f94ba1bf",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/todo_created.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/todo_created.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "todo.created \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/todo_dependency_changed.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/todo_dependency_changed/1.0.0/schema.json",
+      "resource_sha256": "69062ce9f6a76fef5a6505b23155f43cb9a8b9d479f65b9495c73b13a9e9e662",
+      "node_sha256": "1c60ce2bf262c2c9658d912cfce0b55869a6ba8c37cafa338dfd4a27c37d55de",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/todo_dependency_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/todo_dependency_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "todo.dependency_changed \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/todo_removed_from_current_list.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/todo_removed_from_current_list/1.0.0/schema.json",
+      "resource_sha256": "e26073e42404076efd3ba0824af8413f4ee17deb9cb5cea5ab2cc60edea2fad6",
+      "node_sha256": "e503c8a49bb75a811a9834fea4ce61cc1f0c8dfc5f856e07234686fa633b2dfc",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/todo_removed_from_current_list.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/todo_removed_from_current_list.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "todo.removed_from_current_list \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/todo_reordered.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/todo_reordered/1.0.0/schema.json",
+      "resource_sha256": "4d2a6a8e965171c86c5737c78afae79a4b1eb4d0f05765e8ba89ec44cfc00390",
+      "node_sha256": "42c3c5224c582ed4438672a1f2ef3b9e17e81aa12ad0f855f12a673aa79c3c42",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/todo_reordered.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/todo_reordered.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "todo.reordered \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/todo_status_changed.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/todo_status_changed/1.0.0/schema.json",
+      "resource_sha256": "8149b9d2e9624f52d58b20bc7cfb7cf58bd031de7c23bd7640d7ed62156b51dc",
+      "node_sha256": "2963e60367437acd6b16e7c21994667890ca2e00b08bc21ccf29f77ae81e5e53",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/todo_status_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/todo_status_changed.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "todo.status_changed \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/todo_updated.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/todo_updated/1.0.0/schema.json",
+      "resource_sha256": "047307a93ab693f43919cfbf39118979079e4a38945c3f14067a901e45ffffcb",
+      "node_sha256": "cb26e38814f30dea105f54474ec57bcc42af9b0a9fb7529283d751ba330a46b0",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/todo_updated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/todo_updated.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "todo.updated \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/event_payloads/w3h/todo_work_bound.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/external_prepared_event",
+      "fields": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/schemas/event_payloads/w3h/todo_work_bound/1.0.0/schema.json",
+      "resource_sha256": "6986e7a98a7e233a22c62461b966c922b5f0022c0504440358ef545c16a15b3e",
+      "node_sha256": "7191467a20dbd1788cbbbe8c6252c570477db63972d9c42d3b120eb8e3803fd0",
+      "profile": "storage_utc_z",
+      "classification": "EventRecord",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/event_payloads/w3h/todo_work_bound.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/observed_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/observed_at_utc"
+          }
+        },
+        {
+          "path": "Plans/event_payloads/w3h/todo_work_bound.schema.json",
+          "pointer": "/$defs/external_prepared_event/properties/persisted_at_utc",
+          "value": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/persisted_at_utc"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": "todo.work_bound \u2014 prepared W3H payload and publication custody, 1.0.0",
+        "schema_identity": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "event_id",
+          "event_type",
+          "project_id",
+          "thread_id",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "actor_ref",
+          "requested_account_ref",
+          "effective_account_ref",
+          "occurred_at_utc",
+          "observed_at_utc",
+          "persisted_at_utc",
+          "sequence_id",
+          "producer_sequence_id",
+          "correlation_id",
+          "causation_event_id",
+          "parent_event_id",
+          "idempotency_key",
+          "payload_schema_id",
+          "payload",
+          "payload_ref",
+          "redaction_profile",
+          "replay_policy",
+          "migration"
+        ]
+      }
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/dg-int-native-v7-v1/dg_int_cancelled_consumer.v1.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/GenericIndexRow",
+      "fields": [
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/proposals/dg_int_cancelled_consumer.v1.schema.json",
+      "resource_sha256": "daef26d8d81d5395b6ca563b1cac735a779f033454ebe372d74733ca7c9a6cc2",
+      "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8",
+      "profile": "storage_utc_z",
+      "classification": "event_record_index",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/goal_own_c_contracts/dg-int-native-v7-v1/dg_int_cancelled_consumer.v1.schema.json",
+          "pointer": "/$defs/GenericIndexRow/properties/persisted_at_utc",
+          "value": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": null,
+        "schema_identity": {
+          "const": "pm.storage_value.event_record_index.v2"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "project_id",
+          "scope_partition",
+          "sequence_id",
+          "event_id",
+          "event_type",
+          "source_locator",
+          "publication_locator",
+          "payload_sha256",
+          "producer_semantic_digest",
+          "idempotency_key",
+          "correlation_id",
+          "causation_event_id",
+          "persisted_at_utc",
+          "redaction_profile",
+          "source_schema_id",
+          "source_schema_version",
+          "projector_replay_only"
+        ]
+      }
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/dg-int-native-v7-v1/dg_int_safestop_source.v1.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/OriginalBoundary",
+      "fields": [
+        "observed_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json",
+      "resource_sha256": "4872a3e4e7dd2bc205d274d1972f6e66b30916bba23cce5fa974676a3876fa9d",
+      "node_sha256": "2c9771b4325ac3cebaae9557725ccbb648b588d02be72df2cff75bba30aa1cd0",
+      "profile": "owner_schema",
+      "classification": "other_owner_observation",
+      "owner": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json",
+      "citation": [
+        {
+          "path": "Plans/goal_own_c_contracts/dg-int-native-v7-v1/dg_int_safestop_source.v1.schema.json",
+          "pointer": "/$defs/OriginalBoundary/properties/observed_at_utc",
+          "value": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      ],
+      "role_evidence": {
+        "resource_title": null,
+        "schema_identity": null,
+        "required": [
+          "principal",
+          "operation_id",
+          "transaction_id",
+          "native_operation_handle_ref",
+          "native_writer_lease_ref",
+          "native_capability_fence_ref",
+          "observed_at_utc"
+        ]
+      }
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/dg-int-original-c3-v1/dg_int_old_cancelled_consumer.v1.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/GenericIndexRow",
+      "fields": [
+        "persisted_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/proposals/dg_int_old_cancelled_consumer.v1.schema.json",
+      "resource_sha256": "e670a62bb083fea5d18521218569b4ae49336ddda9666e3e313313d76eb95e55",
+      "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8",
+      "profile": "storage_utc_z",
+      "classification": "event_record_index",
+      "owner": "Plans/Contracts_V0.md#CV-253; CV-1101; Plans/storage-plan.md#SP-1101",
+      "citation": [
+        {
+          "path": "Plans/goal_own_c_contracts/dg-int-original-c3-v1/dg_int_old_cancelled_consumer.v1.schema.json",
+          "pointer": "/$defs/GenericIndexRow/properties/persisted_at_utc",
+          "value": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "quote": "CV-253 binds Storage-assigned observed_at_utc and persisted_at_utc to the storage_utc_z profile: UTC with a terminal uppercase Z only; nonzero offsets, +00:00, -00:00 and lowercase z refuse."
+        }
+      ],
+      "role_evidence": {
+        "resource_title": null,
+        "schema_identity": {
+          "const": "pm.storage_value.event_record_index.v2"
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "scope_kind",
+          "project_id",
+          "scope_partition",
+          "sequence_id",
+          "event_id",
+          "event_type",
+          "source_locator",
+          "publication_locator",
+          "payload_sha256",
+          "producer_semantic_digest",
+          "idempotency_key",
+          "correlation_id",
+          "causation_event_id",
+          "persisted_at_utc",
+          "redaction_profile",
+          "source_schema_id",
+          "source_schema_version",
+          "projector_replay_only"
+        ]
+      }
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/dg-int-original-c3-v1/dg_int_old_safestop_source.v1.schema.json",
+      "origin": "json",
+      "pointer": "/$defs/OriginalBoundary",
+      "fields": [
+        "observed_at_utc"
+      ],
+      "resource_pointer": "",
+      "resource_id": "https://puppetmaster.local/proposals/dg_int_old_safestop_source.v1.schema.json",
+      "resource_sha256": "3ff0e464ec521ed3b95590241dbb294b147ced98116b8bd6d053391b62278d26",
+      "node_sha256": "ff1cf1ab746b6b7855c8b6b17b9e2287d05760044b5069fe97c1167dc719db9f",
+      "profile": "owner_schema",
+      "classification": "other_owner_observation",
+      "owner": "https://puppetmaster.local/proposals/dg_int_old_safestop_source.v1.schema.json",
+      "citation": [
+        {
+          "path": "Plans/goal_own_c_contracts/dg-int-original-c3-v1/dg_int_old_safestop_source.v1.schema.json",
+          "pointer": "/$defs/OriginalBoundary/properties/observed_at_utc",
+          "value": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      ],
+      "role_evidence": {
+        "resource_title": null,
+        "schema_identity": null,
+        "required": [
+          "principal",
+          "operation_id",
+          "transaction_id",
+          "native_operation_handle_ref",
+          "native_writer_lease_ref",
+          "native_capability_fence_ref",
+          "observed_at_utc"
         ]
       }
     }

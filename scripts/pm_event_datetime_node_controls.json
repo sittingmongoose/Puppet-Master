@@ -750,6 +750,1510 @@
      "compatibility_event_type": null
     }
    }
+  },
+  "cd117567d83f6f14f1f2685dcf85163ec6749394585e66b2b22007c42470d3f6": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "assistant_plan.schedule_invalidated/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a617373697374616e745f706c616e2e7363686564756c655f696e76616c6964617465642f706c616e2d372f30303031:617373697374616e745f706c616e2e7363686564756c655f696e76616c696461746564",
+    "event_type": "assistant_plan.schedule_invalidated",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a617373697374616e745f706c616e2e7363686564756c655f696e76616c6964617465642f706c616e2d372f30303031",
+    "payload_schema_id": "pm.event_payload.assistant_plan_schedule_invalidated.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:6185f9571e0b02754afca6a54d32480980232536f34b938535d10652d233a780",
+     "blake3_id": "6185f9571e0b02754afca6a54d32480980232536f34b938535d10652d233a780",
+     "byte_size": 638,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "1567a07e2a190c683671f8cc80a8a5db65dc6de9d506604c4b113f576c8e7cf7": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "docker.compose.scenario.deleted/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a646f636b65722e636f6d706f73652e7363656e6172696f2e64656c657465642f73636e2d312f30303031:646f636b65722e636f6d706f73652e7363656e6172696f2e64656c65746564",
+    "event_type": "docker.compose.scenario.deleted",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a646f636b65722e636f6d706f73652e7363656e6172696f2e64656c657465642f73636e2d312f30303031",
+    "payload_schema_id": "pm.event_payload.docker_compose_scenario_deleted.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:12e3b7a9f491d26979bfb930499c8925c55b46448e024ebc33f364551fb80162",
+     "blake3_id": "12e3b7a9f491d26979bfb930499c8925c55b46448e024ebc33f364551fb80162",
+     "byte_size": 481,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "3f1af2ca733b998f30f29200449c7dda42525dd70423b4faa40aadc90228393d": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "docker.compose.scenario.edited/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a646f636b65722e636f6d706f73652e7363656e6172696f2e6564697465642f73636e2d312f30303031:646f636b65722e636f6d706f73652e7363656e6172696f2e656469746564",
+    "event_type": "docker.compose.scenario.edited",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a646f636b65722e636f6d706f73652e7363656e6172696f2e6564697465642f73636e2d312f30303031",
+    "payload_schema_id": "pm.event_payload.docker_compose_scenario_edited.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:081ee5adf52219e613090ee9730fcb9e1c9276768b27a12227a1a340a9cb0bd2",
+     "blake3_id": "081ee5adf52219e613090ee9730fcb9e1c9276768b27a12227a1a340a9cb0bd2",
+     "byte_size": 517,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "e8c738eadf8e526e1d0c7210c4205659493b1f1b876e38135559fe9fbd068f20": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "docker.compose.scenario.run/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a646f636b65722e636f6d706f73652e7363656e6172696f2e72756e2f73636e2d312f30303031:646f636b65722e636f6d706f73652e7363656e6172696f2e72756e",
+    "event_type": "docker.compose.scenario.run",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a646f636b65722e636f6d706f73652e7363656e6172696f2e72756e2f73636e2d312f30303031",
+    "payload_schema_id": "pm.event_payload.docker_compose_scenario_run.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:df6af687c473086fb897ff98217fca6abf54e3e42e303f9204d911e3b152b367",
+     "blake3_id": "df6af687c473086fb897ff98217fca6abf54e3e42e303f9204d911e3b152b367",
+     "byte_size": 491,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "24677c8be56cd7c550668aa5c74748e820d9d33b4ced5d476d155f94bc18e8cc": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "docker.compose.scenario.saved/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a646f636b65722e636f6d706f73652e7363656e6172696f2e73617665642f73636e2d312f30303031:646f636b65722e636f6d706f73652e7363656e6172696f2e7361766564",
+    "event_type": "docker.compose.scenario.saved",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a646f636b65722e636f6d706f73652e7363656e6172696f2e73617665642f73636e2d312f30303031",
+    "payload_schema_id": "pm.event_payload.docker_compose_scenario_saved.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:40f07018c4ab66cc5239836c6692409fb0d9ec44c097a1c01901fc6e1fc8ac64",
+     "blake3_id": "40f07018c4ab66cc5239836c6692409fb0d9ec44c097a1c01901fc6e1fc8ac64",
+     "byte_size": 473,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "5e403b436f0a19268258448ad1b7e3a9c8ec9b0685d733c64918b966f17cc77d": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "execution_window.created/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a657865637574696f6e5f77696e646f772e637265617465642f73636865642d312f30303031:657865637574696f6e5f77696e646f772e63726561746564",
+    "event_type": "execution_window.created",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a657865637574696f6e5f77696e646f772e637265617465642f73636865642d312f30303031",
+    "payload_schema_id": "pm.event_payload.execution_window_created.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:56a5e20c611d4986d8e2dcd8a768e5e71047af14d333a4e56615b35611fc78f9",
+     "blake3_id": "56a5e20c611d4986d8e2dcd8a768e5e71047af14d333a4e56615b35611fc78f9",
+     "byte_size": 511,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "08b27f300bce1f52462b9a2efe959d380fdf1bc73252fe1583bf69fa0eb34ea0": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "execution_window.invalidated/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a657865637574696f6e5f77696e646f772e696e76616c6964617465642f73636865642d312f30303031:657865637574696f6e5f77696e646f772e696e76616c696461746564",
+    "event_type": "execution_window.invalidated",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a657865637574696f6e5f77696e646f772e696e76616c6964617465642f73636865642d312f30303031",
+    "payload_schema_id": "pm.event_payload.execution_window_invalidated.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:3a241a10eecb72b9e75830058498d98624af0378a276961e2c96149dafc98184",
+     "blake3_id": "3a241a10eecb72b9e75830058498d98624af0378a276961e2c96149dafc98184",
+     "byte_size": 565,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "29101e2a93860822a1574149ac63b6d489eed00fae32baafbe54505744c70cc1": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "execution_window.updated/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a657865637574696f6e5f77696e646f772e757064617465642f73636865642d312f30303031:657865637574696f6e5f77696e646f772e75706461746564",
+    "event_type": "execution_window.updated",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a657865637574696f6e5f77696e646f772e757064617465642f73636865642d312f30303031",
+    "payload_schema_id": "pm.event_payload.execution_window_updated.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:8a509579f6c80e6871b03365b2d79f9aa2aae5caf7a485a4a3f5d3eeb8c861f6",
+     "blake3_id": "8a509579f6c80e6871b03365b2d79f9aa2aae5caf7a485a4a3f5d3eeb8c861f6",
+     "byte_size": 511,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "a2336c50373cd532a76015fe5816f776274522c9c52670b56f526f241f831084": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "goal.continuation_evaluated/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a676f616c2e636f6e74696e756174696f6e5f6576616c75617465642f636f6e742d312f30303031:676f616c2e636f6e74696e756174696f6e5f6576616c7561746564",
+    "event_type": "goal.continuation_evaluated",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": "run-9",
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a676f616c2e636f6e74696e756174696f6e5f6576616c75617465642f636f6e742d312f30303031",
+    "payload_schema_id": "pm.event_payload.goal_continuation_evaluated.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:8782e71ed97334ecf543a5a577e1108451a68e45722455bfbc458a43faf3b11a",
+     "blake3_id": "8782e71ed97334ecf543a5a577e1108451a68e45722455bfbc458a43faf3b11a",
+     "byte_size": 512,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "6fd7b8f575262e316d1084b810c1e0aeb755e5de7b462e00a73c1b5ce90ba67b": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "named_plan.archived/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a6e616d65645f706c616e2e61726368697665642f6e702d312f30303031:6e616d65645f706c616e2e6172636869766564",
+    "event_type": "named_plan.archived",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a6e616d65645f706c616e2e61726368697665642f6e702d312f30303031",
+    "payload_schema_id": "pm.event_payload.named_plan_archived.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:a1e744f28c469ba4ed26667132027b50ad01c4e414f6fc2ff02927f144f3305c",
+     "blake3_id": "a1e744f28c469ba4ed26667132027b50ad01c4e414f6fc2ff02927f144f3305c",
+     "byte_size": 481,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "d410fe3d02bf9ef96d03f86db2aca356a6562c2a0a8bdc46cb23d1c6e5d392de": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "named_plan.child_refs_changed/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a6e616d65645f706c616e2e6368696c645f726566735f6368616e6765642f6e702d312f30303031:6e616d65645f706c616e2e6368696c645f726566735f6368616e676564",
+    "event_type": "named_plan.child_refs_changed",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a6e616d65645f706c616e2e6368696c645f726566735f6368616e6765642f6e702d312f30303031",
+    "payload_schema_id": "pm.event_payload.named_plan_child_refs_changed.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:44ff8e92dbc0da9c1dd822c216655b1a4ae454f989911889ca0d6c745a347775",
+     "blake3_id": "44ff8e92dbc0da9c1dd822c216655b1a4ae454f989911889ca0d6c745a347775",
+     "byte_size": 569,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "2ac4ed6c4a759da144dbf85c0484c9a4535c1f87804ac088eb673a9a882b2eba": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "named_plan.created/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a6e616d65645f706c616e2e637265617465642f6e702d312f30303031:6e616d65645f706c616e2e63726561746564",
+    "event_type": "named_plan.created",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a6e616d65645f706c616e2e637265617465642f6e702d312f30303031",
+    "payload_schema_id": "pm.event_payload.named_plan_created.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:62fbd099f7ef01c13e19743ad5b3d6d902b85690540159884e06fbba00d0364d",
+     "blake3_id": "62fbd099f7ef01c13e19743ad5b3d6d902b85690540159884e06fbba00d0364d",
+     "byte_size": 481,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "dae6a9e0c4a1efcf0b28edf1b3f00f9557cd8935d5eedc7dc844f2e08d28c782": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "named_plan.priority_changed/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a6e616d65645f706c616e2e7072696f726974795f6368616e6765642f6e702d312f30303031:6e616d65645f706c616e2e7072696f726974795f6368616e676564",
+    "event_type": "named_plan.priority_changed",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a6e616d65645f706c616e2e7072696f726974795f6368616e6765642f6e702d312f30303031",
+    "payload_schema_id": "pm.event_payload.named_plan_priority_changed.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:6ab018f9789f283bc8ed390819a8aa459c22a59b82a20e87c44b80b83fee5304",
+     "blake3_id": "6ab018f9789f283bc8ed390819a8aa459c22a59b82a20e87c44b80b83fee5304",
+     "byte_size": 509,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "7c871f4e02868c2c15d4a71abaf73df45dee066c37bfca7723f4022e93356c10": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "named_plan.renamed/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a6e616d65645f706c616e2e72656e616d65642f6e702d312f30303031:6e616d65645f706c616e2e72656e616d6564",
+    "event_type": "named_plan.renamed",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a6e616d65645f706c616e2e72656e616d65642f6e702d312f30303031",
+    "payload_schema_id": "pm.event_payload.named_plan_renamed.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:dcd46c9cce484aaf4b089fb899ffd29591dc7436409af7cc28b8cc7d04a5aa6e",
+     "blake3_id": "dcd46c9cce484aaf4b089fb899ffd29591dc7436409af7cc28b8cc7d04a5aa6e",
+     "byte_size": 473,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "9e5c92d6b9a029c56f3d23b21f52f993a6b111d6efeb9e6a2f1070719f0c0d0b": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "named_plan.restored/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a6e616d65645f706c616e2e726573746f7265642f6e702d312f30303031:6e616d65645f706c616e2e726573746f726564",
+    "event_type": "named_plan.restored",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a6e616d65645f706c616e2e726573746f7265642f6e702d312f30303031",
+    "payload_schema_id": "pm.event_payload.named_plan_restored.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:332789ad1ff32aa2405304eefee3253ef1e205779e453d4e95300b83df3f273b",
+     "blake3_id": "332789ad1ff32aa2405304eefee3253ef1e205779e453d4e95300b83df3f273b",
+     "byte_size": 481,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "5b61c03b6fdf468ae15308533ddb202fd02ba34d05debd6d3e49bdca015ce353": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "runtime.automation_pause_changed/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a72756e74696d652e6175746f6d6174696f6e5f70617573655f6368616e6765642f70617573652d312f30303031:72756e74696d652e6175746f6d6174696f6e5f70617573655f6368616e676564",
+    "event_type": "runtime.automation_pause_changed",
+    "project_id": "proj-alpha",
+    "thread_id": null,
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a72756e74696d652e6175746f6d6174696f6e5f70617573655f6368616e6765642f70617573652d312f30303031",
+    "payload_schema_id": "pm.event_payload.runtime_automation_pause_changed.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:ecdc2d0e7f2d355b591fa446b80c58d0a5f409f1746cdae1f0c204963aaef569",
+     "blake3_id": "ecdc2d0e7f2d355b591fa446b80c58d0a5f409f1746cdae1f0c204963aaef569",
+     "byte_size": 410,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "1b66794aba73324543edcc5b007cf0c0405358f2d55b2d4545950e2e0f104ceb": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "runtime.quota_resume_attempted/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a72756e74696d652e71756f74615f726573756d655f617474656d707465642f72756e2d392f30303031:72756e74696d652e71756f74615f726573756d655f617474656d70746564",
+    "event_type": "runtime.quota_resume_attempted",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": "run-9",
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a72756e74696d652e71756f74615f726573756d655f617474656d707465642f72756e2d392f30303031",
+    "payload_schema_id": "pm.event_payload.runtime_quota_resume_attempted.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:61905a6b2910ba6fc6a9242f692430b61ea018d860a6f7acef87b3f9938094be",
+     "blake3_id": "61905a6b2910ba6fc6a9242f692430b61ea018d860a6f7acef87b3f9938094be",
+     "byte_size": 515,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "a77b2308621c634c44e5e6e2bf43ef076c9f6d25f950993386c8122965c4233e": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "runtime.quota_resume_consent_changed/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a72756e74696d652e71756f74615f726573756d655f636f6e73656e745f6368616e6765642f72756e2d392f30303031:72756e74696d652e71756f74615f726573756d655f636f6e73656e745f6368616e676564",
+    "event_type": "runtime.quota_resume_consent_changed",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": "run-9",
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a72756e74696d652e71756f74615f726573756d655f636f6e73656e745f6368616e6765642f72756e2d392f30303031",
+    "payload_schema_id": "pm.event_payload.runtime_quota_resume_consent_changed.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:974bb26e0e113e7828d98e2a0fa29fa4181b7f2fd550e2b4cd7cc8c9cf9736d1",
+     "blake3_id": "974bb26e0e113e7828d98e2a0fa29fa4181b7f2fd550e2b4cd7cc8c9cf9736d1",
+     "byte_size": 523,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "bef393b8956b9223c2732aca730a94d0889864a724153c9dabca32b19d679882": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "runtime.quota_wait_started/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a72756e74696d652e71756f74615f776169745f737461727465642f72756e2d392f30303031:72756e74696d652e71756f74615f776169745f73746172746564",
+    "event_type": "runtime.quota_wait_started",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": "run-9",
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a72756e74696d652e71756f74615f776169745f737461727465642f72756e2d392f30303031",
+    "payload_schema_id": "pm.event_payload.runtime_quota_wait_started.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:7332785ec8216cfb26eb91509b62de2a929b0e86b9e26cc2cdcaa3f0541b3133",
+     "blake3_id": "7332785ec8216cfb26eb91509b62de2a929b0e86b9e26cc2cdcaa3f0541b3133",
+     "byte_size": 473,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "55e6edb7e44d4ac81f2f375170d62e6a88b5787966730944def539667db51afc": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "scheduled_dispatch.cancelled/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a7363686564756c65645f64697370617463682e63616e63656c6c65642f73642d312f30303031:7363686564756c65645f64697370617463682e63616e63656c6c6564",
+    "event_type": "scheduled_dispatch.cancelled",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a7363686564756c65645f64697370617463682e63616e63656c6c65642f73642d312f30303031",
+    "payload_schema_id": "pm.event_payload.scheduled_dispatch_cancelled.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:7af70736bfc08a4424e6b9a2f37c323b7afc5eefd41c225334e1b86cbc53e69f",
+     "blake3_id": "7af70736bfc08a4424e6b9a2f37c323b7afc5eefd41c225334e1b86cbc53e69f",
+     "byte_size": 399,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "764397bb483a7c200c594dd9d68ce2b3ddb4c4b4748ccdf564cd0dc19ec1002f": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "scheduled_dispatch.created/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a7363686564756c65645f64697370617463682e637265617465642f73642d312f30303031:7363686564756c65645f64697370617463682e63726561746564",
+    "event_type": "scheduled_dispatch.created",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a7363686564756c65645f64697370617463682e637265617465642f73642d312f30303031",
+    "payload_schema_id": "pm.event_payload.scheduled_dispatch_created.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:d75913b44e261afc40d028b75ea582be6a3c13585d33c360b7521beb2af96443",
+     "blake3_id": "d75913b44e261afc40d028b75ea582be6a3c13585d33c360b7521beb2af96443",
+     "byte_size": 391,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "ea098423e9772c31d0dc78348e250ca8f4d635a90008e9f4443c919e27e6258c": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "scheduled_dispatch.dispatched/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a7363686564756c65645f64697370617463682e646973706174636865642f73642d312f30303031:7363686564756c65645f64697370617463682e64697370617463686564",
+    "event_type": "scheduled_dispatch.dispatched",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a7363686564756c65645f64697370617463682e646973706174636865642f73642d312f30303031",
+    "payload_schema_id": "pm.event_payload.scheduled_dispatch_dispatched.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:546dc8217e54481e0737ff0ede0d9756f596260b6ff9c3c0c6e655ef0e46b0c7",
+     "blake3_id": "546dc8217e54481e0737ff0ede0d9756f596260b6ff9c3c0c6e655ef0e46b0c7",
+     "byte_size": 516,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "8b913d884ea35c3f77b8c67176bafc6aa50b671d7b46ad23656bfa5871c8e0ad": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "scheduled_dispatch.failed/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a7363686564756c65645f64697370617463682e6661696c65642f73642d312f30303031:7363686564756c65645f64697370617463682e6661696c6564",
+    "event_type": "scheduled_dispatch.failed",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a7363686564756c65645f64697370617463682e6661696c65642f73642d312f30303031",
+    "payload_schema_id": "pm.event_payload.scheduled_dispatch_failed.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:711c7ce63224fa34a47d2f7ee1bbc7af8d023ed5d3709dcacd8ac97f951dc41c",
+     "blake3_id": "711c7ce63224fa34a47d2f7ee1bbc7af8d023ed5d3709dcacd8ac97f951dc41c",
+     "byte_size": 440,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "baf03374e435981935085cc53403e72af15b3b239a2959a8dfcfc6ce263ea5af": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "scheduled_dispatch.held/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a7363686564756c65645f64697370617463682e68656c642f73642d312f30303031:7363686564756c65645f64697370617463682e68656c64",
+    "event_type": "scheduled_dispatch.held",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a7363686564756c65645f64697370617463682e68656c642f73642d312f30303031",
+    "payload_schema_id": "pm.event_payload.scheduled_dispatch_held.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:23ade2e6978d624ee08e87f20a806ec758489b4479610ed721cf8c96b47f65d9",
+     "blake3_id": "23ade2e6978d624ee08e87f20a806ec758489b4479610ed721cf8c96b47f65d9",
+     "byte_size": 428,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "e02c859d3a6d3caee297384bde3038aad572e424363831fbe2770127cf368a19": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "scheduled_dispatch.updated/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a7363686564756c65645f64697370617463682e757064617465642f73642d312f30303031:7363686564756c65645f64697370617463682e75706461746564",
+    "event_type": "scheduled_dispatch.updated",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a7363686564756c65645f64697370617463682e757064617465642f73642d312f30303031",
+    "payload_schema_id": "pm.event_payload.scheduled_dispatch_updated.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:2339a5102bcaff8c2e82c9e8bd3ac2532db77ccf8db8ac26b1f0fd0e07e97d41",
+     "blake3_id": "2339a5102bcaff8c2e82c9e8bd3ac2532db77ccf8db8ac26b1f0fd0e07e97d41",
+     "byte_size": 391,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "e1a1577cd30557ddff27b1be147cc0d021e8c459efac75b7c8688df9ed697b6b": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "todo.created/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a746f646f2e637265617465642f746f646f2d332f30303031:746f646f2e63726561746564",
+    "event_type": "todo.created",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a746f646f2e637265617465642f746f646f2d332f30303031",
+    "payload_schema_id": "pm.event_payload.todo_created.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:20c3bce03249c0a7c54afbda462c756c5c4c6e06e295c23398261290f26d68c9",
+     "blake3_id": "20c3bce03249c0a7c54afbda462c756c5c4c6e06e295c23398261290f26d68c9",
+     "byte_size": 337,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "0c004665ffefd53f527d00f66ad5c6a96212b924a3491ab9f82f7f897531d1f4": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "todo.dependency_changed/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a746f646f2e646570656e64656e63795f6368616e6765642f746f646f2d332f30303031:746f646f2e646570656e64656e63795f6368616e676564",
+    "event_type": "todo.dependency_changed",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a746f646f2e646570656e64656e63795f6368616e6765642f746f646f2d332f30303031",
+    "payload_schema_id": "pm.event_payload.todo_dependency_changed.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:fb1c2ebcf923c2307ef3816cb4eb7cbd711290d3978230f737c4b5c2504e2790",
+     "blake3_id": "fb1c2ebcf923c2307ef3816cb4eb7cbd711290d3978230f737c4b5c2504e2790",
+     "byte_size": 408,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "cb1d9ec536cd817def7c6e390cee08ac82a7d89575b7341fccf0d69e9538e317": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "todo.removed_from_current_list/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a746f646f2e72656d6f7665645f66726f6d5f63757272656e745f6c6973742f746f646f2d332f30303031:746f646f2e72656d6f7665645f66726f6d5f63757272656e745f6c697374",
+    "event_type": "todo.removed_from_current_list",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a746f646f2e72656d6f7665645f66726f6d5f63757272656e745f6c6973742f746f646f2d332f30303031",
+    "payload_schema_id": "pm.event_payload.todo_removed_from_current_list.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:eaa45a828aa8a0a71b768396bbe47d0db787f58ff3cadd931edd1575677e0217",
+     "blake3_id": "eaa45a828aa8a0a71b768396bbe47d0db787f58ff3cadd931edd1575677e0217",
+     "byte_size": 447,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "ea37c056cfc85f30ba876d4c43f786e33035ff1b9550940be89cc58c7d212195": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "todo.reordered/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a746f646f2e72656f7264657265642f746f646f2d332f30303031:746f646f2e72656f726465726564",
+    "event_type": "todo.reordered",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a746f646f2e72656f7264657265642f746f646f2d332f30303031",
+    "payload_schema_id": "pm.event_payload.todo_reordered.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:808fd55ba1d1a7ac868e1cf3c79d42b3556f88e08f285c4dce5b4f98aeeee96f",
+     "blake3_id": "808fd55ba1d1a7ac868e1cf3c79d42b3556f88e08f285c4dce5b4f98aeeee96f",
+     "byte_size": 360,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "af8b84c18f483c2614de1b48dacc87314562c4d6b6d1d404c3b2c28b89162615": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "todo.status_changed/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a746f646f2e7374617475735f6368616e6765642f746f646f2d332f30303031:746f646f2e7374617475735f6368616e676564",
+    "event_type": "todo.status_changed",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a746f646f2e7374617475735f6368616e6765642f746f646f2d332f30303031",
+    "payload_schema_id": "pm.event_payload.todo_status_changed.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:75ae4e3c9887cfe62d0a0907978871fb205f34331d4cfc0df55a9e36cfae26bd",
+     "blake3_id": "75ae4e3c9887cfe62d0a0907978871fb205f34331d4cfc0df55a9e36cfae26bd",
+     "byte_size": 470,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "1644df9d09932643831bfb73ea12d553377c01f5c7705bc3c0499b5242ff56df": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "todo.updated/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a746f646f2e757064617465642f746f646f2d332f30303031:746f646f2e75706461746564",
+    "event_type": "todo.updated",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a746f646f2e757064617465642f746f646f2d332f30303031",
+    "payload_schema_id": "pm.event_payload.todo_updated.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:8a4799bf81e60b19d1315e7a39a1097f3ec0b0d57ade315699f31c6e0b6a5c0c",
+     "blake3_id": "8a4799bf81e60b19d1315e7a39a1097f3ec0b0d57ade315699f31c6e0b6a5c0c",
+     "byte_size": 362,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "2f9290b0d191b9b1782a45eec51a1406dbc1df0983c1742fc13b6fe16c3bdd66": {
+   "source": {
+    "path": "scripts/pm_w3h_events.py",
+    "origin": "build_world",
+    "pointer": "todo.work_bound/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "w3h@1:73746f72652d7733682d61:6f703a746f646f2e776f726b5f626f756e642f746f646f2d332f30303031:746f646f2e776f726b5f626f756e64",
+    "event_type": "todo.work_bound",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-05T10:00:00.250Z",
+    "observed_at_utc": "2026-11-05T10:00:01Z",
+    "persisted_at_utc": "2026-11-05T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "w3h@1:6f703a746f646f2e776f726b5f626f756e642f746f646f2d332f30303031",
+    "payload_schema_id": "pm.event_payload.todo_work_bound.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:b3f832d5a48b5b0f4840f8e402f3cceafc7cd407e178d3536da0eb34c79ef7b3",
+     "blake3_id": "b3f832d5a48b5b0f4840f8e402f3cceafc7cd407e178d3536da0eb34c79ef7b3",
+     "byte_size": 435,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
   }
  },
  "nodes": [
@@ -1598,6 +3102,210 @@
    "origin": "json",
    "pointer": "/$defs/event_record_1_0_0_compatibility_reader",
    "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "cd117567d83f6f14f1f2685dcf85163ec6749394585e66b2b22007c42470d3f6"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/docker_compose_scenario_deleted.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "1567a07e2a190c683671f8cc80a8a5db65dc6de9d506604c4b113f576c8e7cf7"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "3f1af2ca733b998f30f29200449c7dda42525dd70423b4faa40aadc90228393d"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/docker_compose_scenario_run.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "e8c738eadf8e526e1d0c7210c4205659493b1f1b876e38135559fe9fbd068f20"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/docker_compose_scenario_saved.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "24677c8be56cd7c550668aa5c74748e820d9d33b4ced5d476d155f94bc18e8cc"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/execution_window_created.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "5e403b436f0a19268258448ad1b7e3a9c8ec9b0685d733c64918b966f17cc77d"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/execution_window_invalidated.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "08b27f300bce1f52462b9a2efe959d380fdf1bc73252fe1583bf69fa0eb34ea0"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/execution_window_updated.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "29101e2a93860822a1574149ac63b6d489eed00fae32baafbe54505744c70cc1"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/goal_continuation_evaluated.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "a2336c50373cd532a76015fe5816f776274522c9c52670b56f526f241f831084"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/named_plan_archived.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "6fd7b8f575262e316d1084b810c1e0aeb755e5de7b462e00a73c1b5ce90ba67b"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/named_plan_child_refs_changed.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "d410fe3d02bf9ef96d03f86db2aca356a6562c2a0a8bdc46cb23d1c6e5d392de"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/named_plan_created.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "2ac4ed6c4a759da144dbf85c0484c9a4535c1f87804ac088eb673a9a882b2eba"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/named_plan_priority_changed.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "dae6a9e0c4a1efcf0b28edf1b3f00f9557cd8935d5eedc7dc844f2e08d28c782"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/named_plan_renamed.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "7c871f4e02868c2c15d4a71abaf73df45dee066c37bfca7723f4022e93356c10"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/named_plan_restored.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "9e5c92d6b9a029c56f3d23b21f52f993a6b111d6efeb9e6a2f1070719f0c0d0b"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/runtime_automation_pause_changed.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "5b61c03b6fdf468ae15308533ddb202fd02ba34d05debd6d3e49bdca015ce353"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/runtime_quota_resume_attempted.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "1b66794aba73324543edcc5b007cf0c0405358f2d55b2d4545950e2e0f104ceb"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/runtime_quota_resume_consent_changed.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "a77b2308621c634c44e5e6e2bf43ef076c9f6d25f950993386c8122965c4233e"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/runtime_quota_wait_started.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "bef393b8956b9223c2732aca730a94d0889864a724153c9dabca32b19d679882"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/scheduled_dispatch_cancelled.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "55e6edb7e44d4ac81f2f375170d62e6a88b5787966730944def539667db51afc"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/scheduled_dispatch_created.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "764397bb483a7c200c594dd9d68ce2b3ddb4c4b4748ccdf564cd0dc19ec1002f"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/scheduled_dispatch_dispatched.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "ea098423e9772c31d0dc78348e250ca8f4d635a90008e9f4443c919e27e6258c"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/scheduled_dispatch_failed.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "8b913d884ea35c3f77b8c67176bafc6aa50b671d7b46ad23656bfa5871c8e0ad"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/scheduled_dispatch_held.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "baf03374e435981935085cc53403e72af15b3b239a2959a8dfcfc6ce263ea5af"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/scheduled_dispatch_updated.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "e02c859d3a6d3caee297384bde3038aad572e424363831fbe2770127cf368a19"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/todo_created.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "e1a1577cd30557ddff27b1be147cc0d021e8c459efac75b7c8688df9ed697b6b"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/todo_dependency_changed.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "0c004665ffefd53f527d00f66ad5c6a96212b924a3491ab9f82f7f897531d1f4"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/todo_removed_from_current_list.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "cb1d9ec536cd817def7c6e390cee08ac82a7d89575b7341fccf0d69e9538e317"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/todo_reordered.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "ea37c056cfc85f30ba876d4c43f786e33035ff1b9550940be89cc58c7d212195"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/todo_status_changed.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "af8b84c18f483c2614de1b48dacc87314562c4d6b6d1d404c3b2c28b89162615"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/todo_updated.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "1644df9d09932643831bfb73ea12d553377c01f5c7705bc3c0499b5242ff56df"
+  },
+  {
+   "path": "Plans/event_payloads/w3h/todo_work_bound.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "2f9290b0d191b9b1782a45eec51a1406dbc1df0983c1742fc13b6fe16c3bdd66"
+  },
+  {
+   "path": "Plans/goal_own_c_contracts/dg-int-native-v7-v1/dg_int_cancelled_consumer.v1.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/goal_own_c_contracts/dg-int-original-c3-v1/dg_int_old_cancelled_consumer.v1.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
   }
  ]
 }
