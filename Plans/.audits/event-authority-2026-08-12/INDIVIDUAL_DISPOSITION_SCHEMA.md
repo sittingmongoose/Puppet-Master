@@ -45,6 +45,8 @@ DL-077 adds no bucket and no row field. A family registered after August that ha
 
 DL-412 adds no bucket and no row field. A family accepted through a record that describes a multi-family registry step (`registry_step_event_types`, defined in the independent validator spec) is treated exactly like a family accepted through a one-family record: its row here stays as written, it leaves the same blocking checks, and every other row check still applies to it.
 
+PNC-019 S2 (2026-11-14) adds no bucket and no row field either. "Stays as written" means DL-077 and DL-412 require no row change; it does not forbid one. A registered family's row may later be brought into agreement with its registration by a receipted row update that sets `disposition` to `KEEP_REGISTERED`, `provisional` to false and all twelve evidence cells to PASS with Plans citations projected from a named depth assessment, keeping its bucket, cohort pins and July classification. `context.compaction.completed` and `coordination.agent_registered` were updated this way (`reports/event-authority-20261114/s2-ledger-application.json`). Such an update changes no DL-077 or DL-412 judgment: a family with a complete record still takes its depth from the record.
+
 This schema addition does **not** claim contract-depth complete, seal, validator `pass`, or PNC-019.
 
 ## Row object
