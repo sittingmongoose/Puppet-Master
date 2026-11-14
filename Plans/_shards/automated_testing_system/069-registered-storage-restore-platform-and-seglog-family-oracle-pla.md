@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L14152-L14381
 
-Source SHA256: `f0068b6ec440fe4649cbb2d5f86596dfa178daa55d07a7e5d97dfa16bf718f74`
+Source SHA256: `0d7636438fddb1a705f38c84af0e13b87a06711ce28e4a299f9a64b035da676f`
 
 ---
 
@@ -54,7 +54,7 @@ negative_constraints:
 
 - **Producer and order:** raw custody synchronized before the record CAS, the append and the live-key effect. Negatives: live-key mutation before the receipt; an event with no raw custody; a reader appending the event.
 - **Identity:** `quarantine_id` with occurrence; re-detection of a non-terminal record mints nothing; re-occurrence after `purged` takes occurrence 2. Negatives: a second identity for the same open record; a state repeated for one `quarantine_id`; a forged occurrence.
-- **Custody:** a viewer without source permission sees only the quarantined fact; raw bytes only through protected export. Deletion interplay is not planned until S3B-Q1 is answered.
+- **Custody:** a viewer without source permission sees only the quarantined fact; raw bytes only through protected export. SP-2211 applies E8-5 B: keep raw bytes until resolution, then delete subject to holds; ATS-2206 executes the thread and Project examples.
 - **Consumer and withdrawal:** as ATS-2200, for `reader.storage.value_quarantine_history@1.0.0`; withdrawal never releases a value.
 
 ```yaml
@@ -69,7 +69,7 @@ depends_on:
 - SP-2201
 unblocks: []
 acceptance_criteria:
-- Every SP-2201 guard has a positive and single-defect negatives in the plan; the deletion interplay waits for S3B-Q1.
+- Every SP-2201 guard has a positive and single-defect negatives in the plan; the deletion interplay follows SP-2211 (E8-5 B).
 validation_surfaces:
 - reports/event-authority-20261114/depth-s3b-registered-families.json
 risk_class: event_authority

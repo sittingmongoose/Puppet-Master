@@ -17910,7 +17910,7 @@ The closed states that Invalid-value quarantine lists by its transition edges ar
 
 **Replay.** `replay_policy=dedupe_by_idempotency_key`; `projector_replay_only` is refused as `replay_only_not_appendable` before any effect. The semantic comparison excludes Storage-assigned `sequence_id`, `observed_at_utc` and `persisted_at_utc`. Same identity and digest returns the original receipt and result with zero effects; a different digest is `idempotency_conflict`; unavailable dedupe proof is `dedupe_unavailable`.
 
-**Custody and redaction.** Payload and record carry hashes, redacted locators, bounded error metadata and refs only; raw bytes stay in quarantine custody, inherit their source's permissions, stay out of routine export and leave only through the protected explicit export. Every disclosure of the event or record rechecks viewer access, scope and the source's permission at read time; a viewer who cannot read the source value sees only that a value was quarantined. Backup and restore keep `storage_quarantine_record` under its mandatory-backup recovery anchor and restore the raw custody with it or report it unavailable; a restored record never re-runs a live-key effect. What thread or Project deletion does to quarantined raw bytes and quarantine records is not decided here: Thread/project deletion purges a deleted thread's content within 24 hours unless held, while unresolved Q-CRITICAL quarantine is indefinite and never cap-evicted. That owner conflict is a contingency question for Jared (PNC-019 S3 report, question S3B-Q1). This contract adds no rule for that case, and this family's custody stays incomplete until the answer is written into Case L-3.
+**Custody and redaction.** Payload and record carry hashes, redacted locators, bounded error metadata and refs only; raw bytes stay in quarantine custody, inherit their source's permissions, stay out of routine export and leave only through the protected explicit export. Every disclosure of the event or record rechecks viewer access, scope and the source's permission at read time; a viewer who cannot read the source value sees only that a value was quarantined. Backup and restore keep `storage_quarantine_record` under its mandatory-backup recovery anchor and restore the raw custody with it or report it unavailable; a restored record never re-runs a live-key effect. SP-2211 applies Jared's E8-5 B answer to S3B-Q1: thread or Project deletion keeps quarantined raw bytes until resolution, then deletes them through existing disposal authority; active holds continue protecting the bytes after resolution.
 
 **Consumer and checkpoint.** The only consumer of these EventRecords is `reader.storage.value_quarantine_history@1.0.0`, the passive history behind the read-only quarantine state that Settings shows. It adopts SP-278 and DL-076's nine-field durable token exactly as SP-2200's reader does and stores no checkpoint. Startup recovery, protected diagnostics and export and the janitor read the canonical `storage_quarantine_record`, not the event, and need no event checkpoint.
 
@@ -17928,7 +17928,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: storage.value_quarantine_changed@2.0.0 has an exact emitter (storage.value_quarantine.coordinator.v1),
   custody-then-record-then-append-then-effect order under SP-286, a quarantine_id and per-state identity recipe,
   replay rules, read-time access checks, one passive SP-278 history reader and a writer-cutoff withdrawal protocol;
-  the interaction of thread or Project deletion with quarantined raw bytes stays an open question for Jared (S3B-Q1).
+  thread or Project deletion follows the resolved-quarantine and hold rule in SP-2211 (E8-5 B).
 gui_related: false
 split_recommended: false
 depends_on:
@@ -17947,7 +17947,7 @@ acceptance_criteria:
 - quarantine_id converges on re-detection and a re-occurrence after purge takes the next occurrence; each state has one identity.
 - projector_replay_only is refused; same identity and digest returns the original receipt; a different digest is idempotency_conflict.
 - Every read of the event or record rechecks viewer access and source permission; raw bytes leave only by protected export.
-- How thread or Project deletion treats quarantined raw bytes and records stays open (S3B-Q1); no interim rule is added.
+- Thread or Project deletion follows SP-2211: keep raw bytes until quarantine resolution, then delete subject to holds.
 validation_surfaces:
 - Plans/Automated_Testing_System.md#ATS-2201
 risk_class: quarantine_event_identity_or_custody_drift
@@ -17969,13 +17969,76 @@ preserved_exact_tokens:
 - reader.storage.value_quarantine_history@1.0.0
 - storage-quarantine@1
 negative_constraints:
-- No new state, edge, risk class, Q policy, disposal rule, admission or native proof.
-- Does not decide how deletion treats quarantined raw bytes (S3B-Q1).
+- No new state, edge, risk class, Q policy, admission or native proof; SP-2211 owns the signed deletion-custody rule.
+- Do not infer premature purge or hold bypass; deleted-scope raw custody follows SP-2211.
 owner_hints:
 - Plans/storage-plan.md
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-237, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-366
+
+#### SP-2211 - Deleted-scope quarantine custody after resolution (E8-5 B)
+
+Jared answered S3B-Q1 with **B** in card E8-5, signed 2026-11-14 at 20:25 UTC: keep quarantined values until their quarantine is resolved, then delete; holds still apply. The signed-answer record and its SHA-256 are preserved by `reports/event-authority-20261114/decision-E8-5-application.json`. This rule supersedes SP-2201's previously unanswered deletion/custody question.
+
+When a thread or Project is deleted, its quarantined raw bytes stay in their existing quarantine custody until the quarantine resolves. Scope deletion, its ordinary 24-hour content window, count/byte eviction, withdrawal and a restart cannot purge an unresolved quarantine. `detected`, `secured` and `recovery_blocked` are unresolved. Resolution follows the existing owner graph and its durable successful `migrated`, `rebuilt`, `reset_to_default` or `restored` outcome, including the original SP-286 first receipt and the required dependent effect; a request, a planned outcome, a caller flag or a `purged` label alone is not resolution proof.
+
+Once resolution is established, the pending scope-deletion obligation deletes the quarantined raw bytes through the existing DL-068 disposal and `purged` settlement protocol, subject to the complete current hold union and the existing writer, custody, receipt and deletion gates. An active hold keeps those bytes even after resolution. Clearing a hold does not itself purge: the original owner revalidates the complete deletion and resolution custody before the admitted disposal step. There is no new retention clock or fresh grace period, and resolution does not restore the deleted thread's or Project's live content. A missing or ambiguous resolution receipt preserves the raw bytes and reports disposal unavailable.
+
+The existing `storage_quarantine_record`, content-free tombstone and original receipts retain their own custody and policies; this rule neither deletes required audit authority with the raw bytes nor keeps resolved raw bytes indefinitely as an authority record. Backup and supported restore preserve unresolved or held raw custody and the pending deleted-scope obligation. Existing deletion/tombstone replay prevents an older restored image from disclosing a deleted resolved value or treating it as fresh live content. Read-time source permissions, scope and deletion checks remain SP-2201's; retaining raw custody grants no new disclosure or export permission.
+
+Executable examples in ATS-2206 cover both thread and Project deletion: resolved and unheld raw bytes are deleted; unresolved raw bytes are kept; resolved held raw bytes are kept. Single-defect proposed-afterimage negatives refuse premature purge, purge despite a hold, and keeping unheld resolved raw bytes instead of completing the deletion. Missing original resolution-receipt custody has a separate negative while held bytes remain unchanged. These are deterministic contract examples, not native file-deletion or hold-exclusion proof.
+
+```yaml
+plan_unit_id: SP-2211
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  E8-5 B resolves S3B-Q1: deleting a thread or Project keeps its quarantined raw
+  bytes until the quarantine resolves, then deletes them through the existing
+  disposal protocol; active holds continue to keep the bytes after resolution.
+gui_related: false
+gui_classification_reason: Quarantine custody and deletion semantics without presentation changes.
+depends_on:
+- SP-2201
+- SP-237
+- SP-286
+- DL-068
+unblocks: []
+acceptance_criteria:
+- A deleted thread's or Project's unresolved quarantined bytes are preserved until durable owner resolution.
+- Resolved unheld quarantined bytes are deleted under the existing scope-deletion and DL-068 disposal gates.
+- Active holds preserve raw bytes after resolution; clearing a hold requires original-owner revalidation before disposal.
+- Missing resolution custody preserves bytes and cannot authorize purge or disclosure.
+- The executable examples have resolution, premature-purge and held-after-resolution witnesses for both scope kinds.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2206
+- scripts/pm_s3bo_cases.py
+- scripts/pm_s3bo_oracles.py
+- reports/event-authority-20261114/decision-E8-5-application.json
+risk_class: premature_quarantine_purge_or_hold_bypass
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3bo_quarantine_deletion
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/event-authority-20261114/decision-E8-5-application.json
+- Plans/storage-plan.md#SP-2201
+preserved_exact_tokens:
+- storage.value_quarantine_changed
+- S3B-Q1
+- E8-5
+- recovery_blocked
+negative_constraints:
+- Do not purge unresolved or held quarantined raw bytes because their thread or Project was deleted.
+- Do not change the existing lifecycle graph, add a retention clock or erase required audit authority.
+- Do not infer a new disclosure permission, event admission or native execution result.
+```
 
 ### Case L-4. Storage I/O, aggregate lock/viewer, root continuity, and fallback
 
