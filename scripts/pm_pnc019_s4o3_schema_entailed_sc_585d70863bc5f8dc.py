@@ -1,0 +1,25 @@
+"""W3I schema guard table entailed_sc_585d70863bc5f8dc (generated).
+sc_585d70863bc5f8dc: Plans/continuity_event_contracts.schema.json#/$defs/replay_checkpointed/properties/replay_checkpoint_ref/type
+Entailed after sc_68047b97e8970e2d: JSON Schema pattern applies only to strings. Every non-string satisfies the inner pattern-only schema and therefore fails this same-field not:{pattern:...}. Thus type:string cannot refuse first.
+"""
+import pm_guard_isolation as g
+
+
+def sc_585d70863bc5f8dc(value, context):
+    if value['sc_68047b97e8970e2d'] != []:
+        return None
+    if value['sc_585d70863bc5f8dc'] != []:
+        return 'schema_invalid'
+    return None
+
+
+def case(value):
+    context = None
+    table = g.GuardTable([
+        g.Guard('sc_585d70863bc5f8dc', g.Invariant('/payload_replay_checkpointed/replay_checkpoint_ref', 'type at owner schema /properties/replay_checkpoint_ref/type'), 'schema_invalid', sc_585d70863bc5f8dc),
+    ])
+
+    def check(value):
+        table.require('sc_585d70863bc5f8dc', value, context)
+        return True
+    return g.Case(table, check, context)
