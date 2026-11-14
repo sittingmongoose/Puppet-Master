@@ -54,10 +54,11 @@
      the old ASCII-only key emptied every non-ASCII note, so two distinct notes shared one key and the second was dropped.
      FO-204: the combining marks (\p{M}) stay too — vowel and tone marks are what tell Hindi 'सिर' from 'सुर' and Thai
      'ก่า' from 'ก้า', and stripping them collapsed those pairs into one note.
-     FO-205: symbols (\p{S}: currency, math, emoji) stay as well, so '$500' and '€500', '+5' and '-5', 🚀 and 🐢 are
-     different notes; a dash (\p{Pd}) directly before a digit is read as a minus sign (U+2212) and kept, so '-5' and '−5'
-     are one note. Other punctuation still drops out, so ASCII duplicates that differ only in case or punctuation still
-     dedupe. An empty key (punctuation-only words) is a duplicate only of the very same trimmed NFKC text. */
+     FO-205: symbols (\p{S}: currency, math, emoji) stay as well, so '$500' and '€500', '+5' and '-5', and two notes
+     that differ only in their emoji are different notes; a dash (\p{Pd}) directly before a digit is read as a minus
+     sign (U+2212) and kept, so '-5' and '−5' are one note. Other punctuation still drops out, so ASCII duplicates
+     that differ only in case or punctuation still dedupe. An empty key (punctuation-only words) is a duplicate only
+     of the very same trimmed NFKC text. */
   const norm = t => String(t || '').normalize('NFKC').toLowerCase()
     .replace(/\p{Pd}(?=\p{Nd})/gu, '\u2212')
     .replace(/[^\p{L}\p{M}\p{N}\p{S}]+/gu, ' ').trim();
