@@ -46,7 +46,7 @@ export const RECORD = (stripSel) => {
 					Object.defineProperty(a, 'startTime', { configurable: true, get() { return stDesc.get.call(a); }, set(v) { rec.explicit = true; stDesc.set.call(a, v); } });
 					// a waiting animation is drawn at its hold (its current time) until it starts
 					const ctDesc = Object.getOwnPropertyDescriptor(Animation.prototype, 'currentTime');
-					Object.defineProperty(a, 'currentTime', { configurable: true, get() { return ctDesc.get.call(a); }, set(v) { if (a.startTime == null) rec.hold = v; ctDesc.set.call(a, v); } });
+					Object.defineProperty(a, 'currentTime', { configurable: true, get() { return ctDesc.get.call(a); }, set(v) { if (a.startTime == null) { rec.hold = v; rec.held = performance.now(); } ctDesc.set.call(a, v); } });
 					W.live = W.live || new Map(); W.live.set(rec.id, a);
 					const cancel = a.cancel;
 					a.cancel = function () { if (a.startTime != null) rec.start = a.startTime; if (rec.cancelled == null) rec.cancelled = performance.now(); return cancel.call(a); };
@@ -141,8 +141,12 @@ export function frames(data, sel) {
 		}
 		// the block as measured, unless the frame is drawn later than it was measured (a late callback): then its keyframes
 		// at the time it is drawn
-		const r = r0, m = r && Td !== row.t ? poseAt(r, Td) : null;
-		const f = s.block ? { t: Td, box: m || s.block, src: r ? 'rec:' + r.id : 'block', rec: r, real: s.block, modelBox: r ? poseAt(r, row.t) : null, late: Td !== row.t }
+		// (a block whose hold or frames the page changed after this callback measured it, in the same frame, was measured in a
+		// state no frame drew: glass.js sets a waiting block's hold, and a block's change, in a frame callback of its own;
+		// it is not compared with the model)
+		const r = r0, m = r && Td !== row.t ? poseAt(r, Td) : null, after = (x) => x != null && x > row.now && x - row.now < FRAME * 2;
+		const stale = r && (after(r.held) || after(r.rebased));
+		const f = s.block ? { t: Td, box: m || s.block, src: r ? 'rec:' + r.id : 'block', rec: r, real: s.block, modelBox: r && !stale ? poseAt(r, row.t) : null, late: Td !== row.t }
 			: s.lens && s.lensOp > 0.5 ? { t: Td, box: s.lens, src: 'lens', rec: null } : null;
 		// a frame drawn later than its callback's own time: if at that time the block was in its before phase with
 		// nothing filled backwards (a start the page set past the frame's time), the compositor may draw it at its own

@@ -76,7 +76,12 @@ const READ = () => {
 				if (!chip) { chip = [...document.querySelectorAll('.lg-lens')].find((l) => { const a = l.getBoundingClientRect(), b = item.getBoundingClientRect(); return +getComputedStyle(l).opacity > 0.5 && a.left <= b.left + b.width / 2 && a.right >= b.left + b.width / 2 && a.top <= b.top + b.height / 2 && a.bottom >= b.top + b.height / 2; }); }
 				under = !!(chip && chip.parentElement && chip.parentElement.tagName === 'LG-UNDER');
 			} else if (p.kind === 'tile') chip = document.querySelector(p.chip);
-			else if (p.kind === 'plate') { chip = item.closest('.pmw-strip')?.querySelector('.pmw-plate'); pseudo = '::before'; }
+			else if (p.kind === 'plate') {
+				/* FO-197: a panel strip that carries the switcher (data-lg-lensed) marks its chosen tab with the switcher's chip
+				   under its labels, and its plate's chip steps aside; before it, the plate's ::before */
+				const st = item.closest('.pmw-strip'), lens = st && st.hasAttribute('data-lg-lensed') && [...st.querySelectorAll(':scope > lg-under > .lg-lens')].find((l) => +getComputedStyle(l).opacity > 0.5);
+				if (lens) { chip = lens; under = true; } else { chip = st?.querySelector('.pmw-plate'); pseudo = '::before'; }
+			}
 			else if (p.kind === 'self') chip = item;
 			if (!chip) return { found: true, chip: false };
 			cs = getComputedStyle(chip, pseudo);
