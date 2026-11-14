@@ -48329,3 +48329,1859 @@ Payload selectors:
 Each selected payload must join the exact original source wrapper, scope partition, Server, actor/permission, thread, subject, run/node/attempt and causality. Null joins remain null; no synthetic run, Project or source is supplied. For research, a job/topic ID is not an Executor run ID. For notebook worker lineage, real run/node/attempt joins come from its scope owner; thread-private forms leave unrelated joins null. Plan events use the actual PlanRun only when present; Goal active_run_ref is separately resolved to the native execution owner. SP-337 externalizes any body above 16384 encoded UTF-8 bytes: inline payload is null and payload_ref selects exact original decoded payload/schema/hash/size; inline form has null payload_ref. Both forms have identical semantic dispatch and restriction checks. Every redb stored part is independently bounded under SP-340. No base64 copy or stringified JSON body is admitted.
 
 ContractRef: ContractName:Plans/Working_Notebook.md#WN-1518, ContractName:Plans/storage-plan.md#SP-1518
+
+## CV-1550 — `assistant_plan.schedule_invalidated` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1550
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly assistant_plan.schedule_invalidated@1.0.0 uses Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json#/$defs/payload
+  under APR-1550; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- APR-1550
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- assistant_plan.schedule_invalidated
+- pm.event_payload.assistant_plan_schedule_invalidated.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`assistant_plan.schedule_invalidated` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, plan_id, plan_version, plan_hash, previous_plan_version, previous_plan_hash, schedule_id, invalidated_reason`. Its semantic owner is `Plans/Assistant_Plan_Runtime.md#APR-1550`. Project payload identity is `pm.event_payload.assistant_plan_schedule_invalidated.v1@1.0.0`; application payload identity is `pm.event_payload.assistant_plan_schedule_invalidated.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `assistant_plan.schedule_invalidated` and exact `plan_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are version_change — new version must differ from the bound original version; binding_join — schedule belongs to this exact Plan/version/hash; no_rebind — binding is invalidated and old target remains unchanged. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md#APR-1550, ContractName:Plans/storage-plan.md#SP-1550, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1551 — `docker.compose.scenario.deleted` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1551
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly docker.compose.scenario.deleted@1.0.0 uses Plans/event_payloads/w3h/docker_compose_scenario_deleted.schema.json#/$defs/payload
+  under CRAU-1551; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- CRAU-1551
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- docker.compose.scenario.deleted
+- pm.event_payload.docker_compose_scenario_deleted.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`docker.compose.scenario.deleted` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, scenario_id, compose_config_hash, scenario_revision_ref`. Its semantic owner is `Plans/Containers_Registry_and_Unraid.md#CRAU-1551`. Project payload identity is `pm.event_payload.docker_compose_scenario_deleted.v1@1.0.0`; application payloads are refused. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `docker.compose.scenario.deleted` and exact `scenario_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application input is refused for this Project-only family. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are scenario_project — scenario and original result belong to the exact Project; config_fingerprint — fingerprint equals the owner-computed resolved config hash, never env-file contents; validation — existing scenario validation succeeds before enabled action; scenario_effect — original result proves the deleted fact, not UI acceptance. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md#CRAU-1551, ContractName:Plans/storage-plan.md#SP-1551, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1552 — `docker.compose.scenario.edited` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1552
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly docker.compose.scenario.edited@1.0.0 uses Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json#/$defs/payload
+  under CRAU-1552; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- CRAU-1552
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- docker.compose.scenario.edited
+- pm.event_payload.docker_compose_scenario_edited.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`docker.compose.scenario.edited` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, scenario_id, compose_config_hash, scenario_revision_ref, previous_scenario_revision_ref`. Its semantic owner is `Plans/Containers_Registry_and_Unraid.md#CRAU-1552`. Project payload identity is `pm.event_payload.docker_compose_scenario_edited.v1@1.0.0`; application payloads are refused. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `docker.compose.scenario.edited` and exact `scenario_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application input is refused for this Project-only family. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are scenario_project — scenario and original result belong to the exact Project; config_fingerprint — fingerprint equals the owner-computed resolved config hash, never env-file contents; validation — existing scenario validation succeeds before enabled action; scenario_effect — original result proves the edited fact, not UI acceptance. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md#CRAU-1552, ContractName:Plans/storage-plan.md#SP-1552, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1553 — `docker.compose.scenario.run` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1553
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly docker.compose.scenario.run@1.0.0 uses Plans/event_payloads/w3h/docker_compose_scenario_run.schema.json#/$defs/payload
+  under CRAU-1553; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- CRAU-1553
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- docker.compose.scenario.run
+- pm.event_payload.docker_compose_scenario_run.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`docker.compose.scenario.run` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, scenario_id, compose_config_hash, scenario_revision_ref, run_receipt_ref`. Its semantic owner is `Plans/Containers_Registry_and_Unraid.md#CRAU-1553`. Project payload identity is `pm.event_payload.docker_compose_scenario_run.v1@1.0.0`; application payloads are refused. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `docker.compose.scenario.run` and exact `scenario_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application input is refused for this Project-only family. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are scenario_project — scenario and original result belong to the exact Project; config_fingerprint — fingerprint equals the owner-computed resolved config hash, never env-file contents; validation — existing scenario validation succeeds before enabled action; scenario_effect — original result proves the run fact, not UI acceptance. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md#CRAU-1553, ContractName:Plans/storage-plan.md#SP-1553, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1554 — `docker.compose.scenario.saved` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1554
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly docker.compose.scenario.saved@1.0.0 uses Plans/event_payloads/w3h/docker_compose_scenario_saved.schema.json#/$defs/payload
+  under CRAU-1554; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- CRAU-1554
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- docker.compose.scenario.saved
+- pm.event_payload.docker_compose_scenario_saved.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`docker.compose.scenario.saved` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, scenario_id, compose_config_hash, scenario_revision_ref`. Its semantic owner is `Plans/Containers_Registry_and_Unraid.md#CRAU-1554`. Project payload identity is `pm.event_payload.docker_compose_scenario_saved.v1@1.0.0`; application payloads are refused. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `docker.compose.scenario.saved` and exact `scenario_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application input is refused for this Project-only family. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are scenario_project — scenario and original result belong to the exact Project; config_fingerprint — fingerprint equals the owner-computed resolved config hash, never env-file contents; validation — existing scenario validation succeeds before enabled action; scenario_effect — original result proves the saved fact, not UI acceptance. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md#CRAU-1554, ContractName:Plans/storage-plan.md#SP-1554, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1555 — `execution_window.created` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1555
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly execution_window.created@1.0.0 uses Plans/event_payloads/w3h/execution_window_created.schema.json#/$defs/payload
+  under SQR-1555; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1555
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- execution_window.created
+- pm.event_payload.execution_window_created.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`execution_window.created` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, schedule_id, target_id, target_kind, exact_target_version, exact_target_hash, schedule_revision`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1555`. Project payload identity is `pm.event_payload.execution_window_created.v1@1.0.0`; application payload identity is `pm.event_payload.execution_window_created.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `execution_window.created` and exact `schedule_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are schedule_target — exact target identity/version/hash agrees with genuine schedule; schedule_revision — original expected revision agrees and actual change is committed; window_policy — IANA zone, DST first occurrence, saved missed policy/grace and safe wind-down remain original; window_effect — original result proves created; creating/updating never dispatches work. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1555, ContractName:Plans/storage-plan.md#SP-1555, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1556 — `execution_window.invalidated` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1556
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly execution_window.invalidated@1.0.0 uses Plans/event_payloads/w3h/execution_window_invalidated.schema.json#/$defs/payload
+  under SQR-1556; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1556
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- execution_window.invalidated
+- pm.event_payload.execution_window_invalidated.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`execution_window.invalidated` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, schedule_id, target_id, target_kind, exact_target_version, exact_target_hash, schedule_revision, invalidated_reason`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1556`. Project payload identity is `pm.event_payload.execution_window_invalidated.v1@1.0.0`; application payload identity is `pm.event_payload.execution_window_invalidated.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `execution_window.invalidated` and exact `schedule_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are schedule_target — exact target identity/version/hash agrees with genuine schedule; schedule_revision — original expected revision agrees and actual change is committed; window_policy — IANA zone, DST first occurrence, saved missed policy/grace and safe wind-down remain original; window_effect — original result proves invalidated; creating/updating never dispatches work. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1556, ContractName:Plans/storage-plan.md#SP-1556, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1557 — `execution_window.updated` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1557
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly execution_window.updated@1.0.0 uses Plans/event_payloads/w3h/execution_window_updated.schema.json#/$defs/payload
+  under SQR-1557; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1557
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- execution_window.updated
+- pm.event_payload.execution_window_updated.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`execution_window.updated` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, schedule_id, target_id, target_kind, exact_target_version, exact_target_hash, schedule_revision`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1557`. Project payload identity is `pm.event_payload.execution_window_updated.v1@1.0.0`; application payload identity is `pm.event_payload.execution_window_updated.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `execution_window.updated` and exact `schedule_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are schedule_target — exact target identity/version/hash agrees with genuine schedule; schedule_revision — original expected revision agrees and actual change is committed; window_policy — IANA zone, DST first occurrence, saved missed policy/grace and safe wind-down remain original; window_effect — original result proves updated; creating/updating never dispatches work. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1557, ContractName:Plans/storage-plan.md#SP-1557, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1558 — `goal.continuation_evaluated` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1558
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly goal.continuation_evaluated@1.0.0 uses Plans/event_payloads/w3h/goal_continuation_evaluated.schema.json#/$defs/payload
+  under GRS-1558; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- GRS-1558
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- goal.continuation_evaluated
+- pm.event_payload.goal_continuation_evaluated.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`goal.continuation_evaluated` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, continuation_id, goal_id, goal_revision, owning_run_id, result, next_attempt_ref, completion_evidence_refs, blocked_reason_ref, user_stop_epoch`. Its semantic owner is `Plans/Goal_Runtime_System.md#GRS-1558`. Project payload identity is `pm.event_payload.goal_continuation_evaluated.v1@1.0.0`; application payload identity is `pm.event_payload.goal_continuation_evaluated.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `goal.continuation_evaluated` and exact `continuation_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are continuation_tuple — one original decision for the existing tuple; no retry turn; continue_evidence — continue requires unfinished objective, eligible thread and genuine runnable next attempt; complete_evidence — complete requires genuine nonempty caller completion evidence; dispatch_stop — decision and dispatch Stop epochs agree; goal_preserved — no objective/phase/child/budget mutation. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-1558, ContractName:Plans/storage-plan.md#SP-1558, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1559 — `named_plan.archived` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1559
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly named_plan.archived@1.0.0 uses Plans/event_payloads/w3h/named_plan_archived.schema.json#/$defs/payload
+  under NPLAN-1559; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- NPLAN-1559
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.archived
+- pm.event_payload.named_plan_archived.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`named_plan.archived` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, named_plan_id, aggregate_revision, currentness_hash, child_work_mutated, from_lifecycle, to_lifecycle`. Its semantic owner is `Plans/Named_Plan_System.md#NPLAN-1559`. Project payload identity is `pm.event_payload.named_plan_archived.v1@1.0.0`; application payloads are refused. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `named_plan.archived` and exact `named_plan_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application input is refused for this Project-only family. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are named_identity — immutable Project and named_plan_id, never focus or name matching; named_cas — expected aggregate revision/currentness agrees with original before/after; named_effect — archived result is genuine actual change; child_authority — child state remains with child owners; archive confirmation or child-edge proof applies when required. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1559, ContractName:Plans/storage-plan.md#SP-1559, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1560 — `named_plan.child_refs_changed` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1560
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly named_plan.child_refs_changed@1.0.0 uses Plans/event_payloads/w3h/named_plan_child_refs_changed.schema.json#/$defs/payload
+  under NPLAN-1560; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- NPLAN-1560
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.child_refs_changed
+- pm.event_payload.named_plan_child_refs_changed.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`named_plan.child_refs_changed` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, named_plan_id, aggregate_revision, currentness_hash, child_work_mutated, current_child_refs, historical_child_refs, owner_join_verdict_ref`. Its semantic owner is `Plans/Named_Plan_System.md#NPLAN-1560`. Project payload identity is `pm.event_payload.named_plan_child_refs_changed.v1@1.0.0`; application payloads are refused. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `named_plan.child_refs_changed` and exact `named_plan_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application input is refused for this Project-only family. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are named_identity — immutable Project and named_plan_id, never focus or name matching; named_cas — expected aggregate revision/currentness agrees with original before/after; named_effect — child_refs_changed result is genuine actual change; child_authority — child state remains with child owners; archive confirmation or child-edge proof applies when required. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1560, ContractName:Plans/storage-plan.md#SP-1560, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1561 — `named_plan.created` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1561
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly named_plan.created@1.0.0 uses Plans/event_payloads/w3h/named_plan_created.schema.json#/$defs/payload
+  under NPLAN-1561; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- NPLAN-1561
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.created
+- pm.event_payload.named_plan_created.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`named_plan.created` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, named_plan_id, aggregate_revision, currentness_hash, child_work_mutated, thread_group_ref, creation_receipt_ref`. Its semantic owner is `Plans/Named_Plan_System.md#NPLAN-1561`. Project payload identity is `pm.event_payload.named_plan_created.v1@1.0.0`; application payloads are refused. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `named_plan.created` and exact `named_plan_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application input is refused for this Project-only family. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are named_identity — immutable Project and named_plan_id, never focus or name matching; named_cas — expected aggregate revision/currentness agrees with original before/after; named_effect — created result is genuine actual change; child_authority — child state remains with child owners; archive confirmation or child-edge proof applies when required. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1561, ContractName:Plans/storage-plan.md#SP-1561, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1562 — `named_plan.priority_changed` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1562
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly named_plan.priority_changed@1.0.0 uses Plans/event_payloads/w3h/named_plan_priority_changed.schema.json#/$defs/payload
+  under NPLAN-1562; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- NPLAN-1562
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.priority_changed
+- pm.event_payload.named_plan_priority_changed.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`named_plan.priority_changed` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, named_plan_id, aggregate_revision, currentness_hash, child_work_mutated, from_priority, to_priority`. Its semantic owner is `Plans/Named_Plan_System.md#NPLAN-1562`. Project payload identity is `pm.event_payload.named_plan_priority_changed.v1@1.0.0`; application payloads are refused. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `named_plan.priority_changed` and exact `named_plan_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application input is refused for this Project-only family. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are named_identity — immutable Project and named_plan_id, never focus or name matching; named_cas — expected aggregate revision/currentness agrees with original before/after; named_effect — priority_changed result is genuine actual change; child_authority — child state remains with child owners; archive confirmation or child-edge proof applies when required. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1562, ContractName:Plans/storage-plan.md#SP-1562, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1563 — `named_plan.renamed` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1563
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly named_plan.renamed@1.0.0 uses Plans/event_payloads/w3h/named_plan_renamed.schema.json#/$defs/payload
+  under NPLAN-1563; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- NPLAN-1563
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.renamed
+- pm.event_payload.named_plan_renamed.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`named_plan.renamed` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, named_plan_id, aggregate_revision, currentness_hash, child_work_mutated, name_ref, previous_name_ref`. Its semantic owner is `Plans/Named_Plan_System.md#NPLAN-1563`. Project payload identity is `pm.event_payload.named_plan_renamed.v1@1.0.0`; application payloads are refused. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `named_plan.renamed` and exact `named_plan_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application input is refused for this Project-only family. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are named_identity — immutable Project and named_plan_id, never focus or name matching; named_cas — expected aggregate revision/currentness agrees with original before/after; named_effect — renamed result is genuine actual change; child_authority — child state remains with child owners; archive confirmation or child-edge proof applies when required. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1563, ContractName:Plans/storage-plan.md#SP-1563, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1564 — `named_plan.restored` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1564
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly named_plan.restored@1.0.0 uses Plans/event_payloads/w3h/named_plan_restored.schema.json#/$defs/payload
+  under NPLAN-1564; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- NPLAN-1564
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- named_plan.restored
+- pm.event_payload.named_plan_restored.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`named_plan.restored` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, named_plan_id, aggregate_revision, currentness_hash, child_work_mutated, from_lifecycle, to_lifecycle`. Its semantic owner is `Plans/Named_Plan_System.md#NPLAN-1564`. Project payload identity is `pm.event_payload.named_plan_restored.v1@1.0.0`; application payloads are refused. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `named_plan.restored` and exact `named_plan_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application input is refused for this Project-only family. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are named_identity — immutable Project and named_plan_id, never focus or name matching; named_cas — expected aggregate revision/currentness agrees with original before/after; named_effect — restored result is genuine actual change; child_authority — child state remains with child owners; archive confirmation or child-edge proof applies when required. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Named_Plan_System.md#NPLAN-1564, ContractName:Plans/storage-plan.md#SP-1564, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1565 — `runtime.automation_pause_changed` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1565
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly runtime.automation_pause_changed@1.0.0 uses Plans/event_payloads/w3h/runtime_automation_pause_changed.schema.json#/$defs/payload
+  under SQR-1565; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1565
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- runtime.automation_pause_changed
+- pm.event_payload.runtime_automation_pause_changed.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`runtime.automation_pause_changed` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, pause_record_ref, paused, user_stop_epoch, pause_revision`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1565`. Project payload identity is `pm.event_payload.runtime_automation_pause_changed.v1@1.0.0`; application payload identity is `pm.event_payload.runtime_automation_pause_changed.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `runtime.automation_pause_changed` and exact `pause_record_ref` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are pause_user — actual original actor is the authorized user; pause_changed — actual previous paused differs; no-op emits nothing; pause_epoch — epoch and revision equal actual selected scope record; pause_scope — Project versus application Server latch is exact and independent; pause_no_dispatch — clearing dispatches nothing and clears no per-run Stop. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1565, ContractName:Plans/storage-plan.md#SP-1565, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1566 — `runtime.quota_resume_attempted` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1566
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly runtime.quota_resume_attempted@1.0.0 uses Plans/event_payloads/w3h/runtime_quota_resume_attempted.schema.json#/$defs/payload
+  under SQR-1566; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1566
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- runtime.quota_resume_attempted
+- pm.event_payload.runtime_quota_resume_attempted.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`runtime.quota_resume_attempted` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, run_id, provider_id, account_id, reset_truth, user_stop_epoch, consent_id, eligibility_result_ref, eligible, failed_clauses`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1566`. Project payload identity is `pm.event_payload.runtime_quota_resume_attempted.v1@1.0.0`; application payload identity is `pm.event_payload.runtime_quota_resume_attempted.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `runtime.quota_resume_attempted` and exact `run_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are quota_route — run/provider/account and actual selected route agree; quota_truth — reset truth matches the actual provider/inference/user/unknown source; quota_effect — original source proves quota_resume_attempted; quota_precedence — manual Stop and selected app/Project pause are never cleared by quota; quota_state — Goal/Plan/To-Do semantics stay unchanged by the wait itself. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1566, ContractName:Plans/storage-plan.md#SP-1566, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1567 — `runtime.quota_resume_consent_changed` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1567
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly runtime.quota_resume_consent_changed@1.0.0 uses Plans/event_payloads/w3h/runtime_quota_resume_consent_changed.schema.json#/$defs/payload
+  under SQR-1567; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1567
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- runtime.quota_resume_consent_changed
+- pm.event_payload.runtime_quota_resume_consent_changed.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`runtime.quota_resume_consent_changed` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, run_id, provider_id, account_id, reset_truth, user_stop_epoch, consent_id, enabled, consent_revision_ref`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1567`. Project payload identity is `pm.event_payload.runtime_quota_resume_consent_changed.v1@1.0.0`; application payload identity is `pm.event_payload.runtime_quota_resume_consent_changed.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `runtime.quota_resume_consent_changed` and exact `run_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are quota_route — run/provider/account and actual selected route agree; quota_truth — reset truth matches the actual provider/inference/user/unknown source; quota_effect — original source proves quota_resume_consent_changed; quota_precedence — manual Stop and selected app/Project pause are never cleared by quota; quota_state — Goal/Plan/To-Do semantics stay unchanged by the wait itself. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1567, ContractName:Plans/storage-plan.md#SP-1567, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1568 — `runtime.quota_wait_started` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1568
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly runtime.quota_wait_started@1.0.0 uses Plans/event_payloads/w3h/runtime_quota_wait_started.schema.json#/$defs/payload
+  under SQR-1568; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1568
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- runtime.quota_wait_started
+- pm.event_payload.runtime_quota_wait_started.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`runtime.quota_wait_started` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, run_id, provider_id, account_id, reset_truth, user_stop_epoch, wait_record_ref, reset_record_ref`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1568`. Project payload identity is `pm.event_payload.runtime_quota_wait_started.v1@1.0.0`; application payload identity is `pm.event_payload.runtime_quota_wait_started.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `runtime.quota_wait_started` and exact `run_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are quota_route — run/provider/account and actual selected route agree; quota_truth — reset truth matches the actual provider/inference/user/unknown source; quota_effect — original source proves quota_wait_started; quota_precedence — manual Stop and selected app/Project pause are never cleared by quota; quota_state — Goal/Plan/To-Do semantics stay unchanged by the wait itself. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1568, ContractName:Plans/storage-plan.md#SP-1568, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1569 — `scheduled_dispatch.cancelled` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1569
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly scheduled_dispatch.cancelled@1.0.0 uses Plans/event_payloads/w3h/scheduled_dispatch_cancelled.schema.json#/$defs/payload
+  under SQR-1569; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1569
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.cancelled
+- pm.event_payload.scheduled_dispatch_cancelled.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`scheduled_dispatch.cancelled` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, scheduled_dispatch_id, snapshot_ref, dispatch_revision`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1569`. Project payload identity is `pm.event_payload.scheduled_dispatch_cancelled.v1@1.0.0`; application payload identity is `pm.event_payload.scheduled_dispatch_cancelled.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `scheduled_dispatch.cancelled` and exact `scheduled_dispatch_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are snapshot_exact — text/attachment/destination/runtime/model/account snapshot is exact, no re-derivation; dispatch_state — original state and expected revision permit cancelled; dispatch_effect — source receipt proves cancelled rather than request acceptance; dispatch_precedence — Stop/pause and both eligibility checks govern any send; no bypass from replay; dispatch_missed — server occurrence, IANA/DST and recorded hold/next_available/cancel_after_grace apply with no backlog burst. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1569, ContractName:Plans/storage-plan.md#SP-1569, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1570 — `scheduled_dispatch.created` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1570
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly scheduled_dispatch.created@1.0.0 uses Plans/event_payloads/w3h/scheduled_dispatch_created.schema.json#/$defs/payload
+  under SQR-1570; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1570
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.created
+- pm.event_payload.scheduled_dispatch_created.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`scheduled_dispatch.created` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, scheduled_dispatch_id, snapshot_ref, dispatch_revision`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1570`. Project payload identity is `pm.event_payload.scheduled_dispatch_created.v1@1.0.0`; application payload identity is `pm.event_payload.scheduled_dispatch_created.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `scheduled_dispatch.created` and exact `scheduled_dispatch_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are snapshot_exact — text/attachment/destination/runtime/model/account snapshot is exact, no re-derivation; dispatch_state — original state and expected revision permit created; dispatch_effect — source receipt proves created rather than request acceptance; dispatch_precedence — Stop/pause and both eligibility checks govern any send; no bypass from replay; dispatch_missed — server occurrence, IANA/DST and recorded hold/next_available/cancel_after_grace apply with no backlog burst. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1570, ContractName:Plans/storage-plan.md#SP-1570, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1571 — `scheduled_dispatch.dispatched` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1571
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly scheduled_dispatch.dispatched@1.0.0 uses Plans/event_payloads/w3h/scheduled_dispatch_dispatched.schema.json#/$defs/payload
+  under SQR-1571; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1571
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.dispatched
+- pm.event_payload.scheduled_dispatch_dispatched.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`scheduled_dispatch.dispatched` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, scheduled_dispatch_id, snapshot_ref, dispatch_revision, dispatch_idempotency_key, revalidation_result_ref, dispatch_receipt_ref, occurrence_ref`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1571`. Project payload identity is `pm.event_payload.scheduled_dispatch_dispatched.v1@1.0.0`; application payload identity is `pm.event_payload.scheduled_dispatch_dispatched.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `scheduled_dispatch.dispatched` and exact `scheduled_dispatch_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are snapshot_exact — text/attachment/destination/runtime/model/account snapshot is exact, no re-derivation; dispatch_state — original state and expected revision permit dispatched; dispatch_effect — source receipt proves dispatched rather than request acceptance; dispatch_precedence — Stop/pause and both eligibility checks govern any send; no bypass from replay; dispatch_missed — server occurrence, IANA/DST and recorded hold/next_available/cancel_after_grace apply with no backlog burst. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1571, ContractName:Plans/storage-plan.md#SP-1571, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1572 — `scheduled_dispatch.failed` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1572
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly scheduled_dispatch.failed@1.0.0 uses Plans/event_payloads/w3h/scheduled_dispatch_failed.schema.json#/$defs/payload
+  under SQR-1572; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1572
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.failed
+- pm.event_payload.scheduled_dispatch_failed.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`scheduled_dispatch.failed` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, scheduled_dispatch_id, snapshot_ref, dispatch_revision, reason_ref, failed_clauses`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1572`. Project payload identity is `pm.event_payload.scheduled_dispatch_failed.v1@1.0.0`; application payload identity is `pm.event_payload.scheduled_dispatch_failed.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `scheduled_dispatch.failed` and exact `scheduled_dispatch_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are snapshot_exact — text/attachment/destination/runtime/model/account snapshot is exact, no re-derivation; dispatch_state — original state and expected revision permit failed; dispatch_effect — source receipt proves failed rather than request acceptance; dispatch_precedence — Stop/pause and both eligibility checks govern any send; no bypass from replay; dispatch_missed — server occurrence, IANA/DST and recorded hold/next_available/cancel_after_grace apply with no backlog burst. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1572, ContractName:Plans/storage-plan.md#SP-1572, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1573 — `scheduled_dispatch.held` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1573
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly scheduled_dispatch.held@1.0.0 uses Plans/event_payloads/w3h/scheduled_dispatch_held.schema.json#/$defs/payload
+  under SQR-1573; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1573
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.held
+- pm.event_payload.scheduled_dispatch_held.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`scheduled_dispatch.held` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, scheduled_dispatch_id, snapshot_ref, dispatch_revision, reason_ref, failed_clauses`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1573`. Project payload identity is `pm.event_payload.scheduled_dispatch_held.v1@1.0.0`; application payload identity is `pm.event_payload.scheduled_dispatch_held.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `scheduled_dispatch.held` and exact `scheduled_dispatch_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are snapshot_exact — text/attachment/destination/runtime/model/account snapshot is exact, no re-derivation; dispatch_state — original state and expected revision permit held; dispatch_effect — source receipt proves held rather than request acceptance; dispatch_precedence — Stop/pause and both eligibility checks govern any send; no bypass from replay; dispatch_missed — server occurrence, IANA/DST and recorded hold/next_available/cancel_after_grace apply with no backlog burst. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1573, ContractName:Plans/storage-plan.md#SP-1573, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1574 — `scheduled_dispatch.updated` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1574
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly scheduled_dispatch.updated@1.0.0 uses Plans/event_payloads/w3h/scheduled_dispatch_updated.schema.json#/$defs/payload
+  under SQR-1574; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- SQR-1574
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- scheduled_dispatch.updated
+- pm.event_payload.scheduled_dispatch_updated.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`scheduled_dispatch.updated` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, scheduled_dispatch_id, snapshot_ref, dispatch_revision`. Its semantic owner is `Plans/Scheduling_and_Quota_Resume.md#SQR-1574`. Project payload identity is `pm.event_payload.scheduled_dispatch_updated.v1@1.0.0`; application payload identity is `pm.event_payload.scheduled_dispatch_updated.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `scheduled_dispatch.updated` and exact `scheduled_dispatch_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are snapshot_exact — text/attachment/destination/runtime/model/account snapshot is exact, no re-derivation; dispatch_state — original state and expected revision permit updated; dispatch_effect — source receipt proves updated rather than request acceptance; dispatch_precedence — Stop/pause and both eligibility checks govern any send; no bypass from replay; dispatch_missed — server occurrence, IANA/DST and recorded hold/next_available/cancel_after_grace apply with no backlog burst. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-1574, ContractName:Plans/storage-plan.md#SP-1574, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1575 — `todo.created` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1575
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly todo.created@1.0.0 uses Plans/event_payloads/w3h/todo_created.schema.json#/$defs/payload
+  under TDR-1575; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- TDR-1575
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.created
+- pm.event_payload.todo_created.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`todo.created` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, todo_id, list_revision, expected_revision, committed_revision`. Its semantic owner is `Plans/ToDo_Runtime.md#TDR-1575`. Project payload identity is `pm.event_payload.todo_created.v1@1.0.0`; application payload identity is `pm.event_payload.todo_created.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `todo.created` and exact `todo_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are todo_thread — exact current thread/list/item identity, no focus or title join; todo_currentness — current list/item revision and applicable binding/Plan version/run epoch agree before commit; todo_graph — candidate graph has no self/cycle/unknown/cross-thread refs; todo_effect — genuine individually validated created source result; todo_evidence — status/work/outcome/replacement claims have their own exact owner evidence; todo_atomic — compound mutation publishes all affected facts together or none. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1575, ContractName:Plans/storage-plan.md#SP-1575, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1576 — `todo.dependency_changed` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1576
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly todo.dependency_changed@1.0.0 uses Plans/event_payloads/w3h/todo_dependency_changed.schema.json#/$defs/payload
+  under TDR-1576; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- TDR-1576
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.dependency_changed
+- pm.event_payload.todo_dependency_changed.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`todo.dependency_changed` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, todo_id, list_revision, expected_revision, committed_revision, depends_on`. Its semantic owner is `Plans/ToDo_Runtime.md#TDR-1576`. Project payload identity is `pm.event_payload.todo_dependency_changed.v1@1.0.0`; application payload identity is `pm.event_payload.todo_dependency_changed.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `todo.dependency_changed` and exact `todo_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are todo_thread — exact current thread/list/item identity, no focus or title join; todo_currentness — current list/item revision and applicable binding/Plan version/run epoch agree before commit; todo_graph — candidate graph has no self/cycle/unknown/cross-thread refs; todo_effect — genuine individually validated dependency_changed source result; todo_evidence — status/work/outcome/replacement claims have their own exact owner evidence; todo_atomic — compound mutation publishes all affected facts together or none. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1576, ContractName:Plans/storage-plan.md#SP-1576, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1577 — `todo.removed_from_current_list` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1577
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly todo.removed_from_current_list@1.0.0 uses Plans/event_payloads/w3h/todo_removed_from_current_list.schema.json#/$defs/payload
+  under TDR-1577; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- TDR-1577
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.removed_from_current_list
+- pm.event_payload.todo_removed_from_current_list.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`todo.removed_from_current_list` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, todo_id, list_revision, expected_revision, committed_revision, replacement_disposition_ref`. Its semantic owner is `Plans/ToDo_Runtime.md#TDR-1577`. Project payload identity is `pm.event_payload.todo_removed_from_current_list.v1@1.0.0`; application payload identity is `pm.event_payload.todo_removed_from_current_list.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `todo.removed_from_current_list` and exact `todo_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are todo_thread — exact current thread/list/item identity, no focus or title join; todo_currentness — current list/item revision and applicable binding/Plan version/run epoch agree before commit; todo_graph — candidate graph has no self/cycle/unknown/cross-thread refs; todo_effect — genuine individually validated removed_from_current_list source result; todo_evidence — status/work/outcome/replacement claims have their own exact owner evidence; todo_atomic — compound mutation publishes all affected facts together or none. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1577, ContractName:Plans/storage-plan.md#SP-1577, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1578 — `todo.reordered` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1578
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly todo.reordered@1.0.0 uses Plans/event_payloads/w3h/todo_reordered.schema.json#/$defs/payload
+  under TDR-1578; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- TDR-1578
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.reordered
+- pm.event_payload.todo_reordered.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`todo.reordered` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, todo_id, list_revision, expected_revision, committed_revision, display_order`. Its semantic owner is `Plans/ToDo_Runtime.md#TDR-1578`. Project payload identity is `pm.event_payload.todo_reordered.v1@1.0.0`; application payload identity is `pm.event_payload.todo_reordered.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `todo.reordered` and exact `todo_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are todo_thread — exact current thread/list/item identity, no focus or title join; todo_currentness — current list/item revision and applicable binding/Plan version/run epoch agree before commit; todo_graph — candidate graph has no self/cycle/unknown/cross-thread refs; todo_effect — genuine individually validated reordered source result; todo_evidence — status/work/outcome/replacement claims have their own exact owner evidence; todo_atomic — compound mutation publishes all affected facts together or none. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1578, ContractName:Plans/storage-plan.md#SP-1578, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1579 — `todo.status_changed` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1579
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly todo.status_changed@1.0.0 uses Plans/event_payloads/w3h/todo_status_changed.schema.json#/$defs/payload
+  under TDR-1579; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- TDR-1579
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.status_changed
+- pm.event_payload.todo_status_changed.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`todo.status_changed` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, todo_id, list_revision, expected_revision, committed_revision, transition_id, from_status, to_status, cause_kind, cause_ref`. Its semantic owner is `Plans/ToDo_Runtime.md#TDR-1579`. Project payload identity is `pm.event_payload.todo_status_changed.v1@1.0.0`; application payload identity is `pm.event_payload.todo_status_changed.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `todo.status_changed` and exact `todo_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are todo_thread — exact current thread/list/item identity, no focus or title join; todo_currentness — current list/item revision and applicable binding/Plan version/run epoch agree before commit; todo_graph — candidate graph has no self/cycle/unknown/cross-thread refs; todo_effect — genuine individually validated status_changed source result; todo_evidence — status/work/outcome/replacement claims have their own exact owner evidence; todo_atomic — compound mutation publishes all affected facts together or none. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1579, ContractName:Plans/storage-plan.md#SP-1579, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1580 — `todo.updated` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1580
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly todo.updated@1.0.0 uses Plans/event_payloads/w3h/todo_updated.schema.json#/$defs/payload
+  under TDR-1580; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- TDR-1580
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.updated
+- pm.event_payload.todo_updated.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`todo.updated` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, todo_id, list_revision, expected_revision, committed_revision, item_revision_ref`. Its semantic owner is `Plans/ToDo_Runtime.md#TDR-1580`. Project payload identity is `pm.event_payload.todo_updated.v1@1.0.0`; application payload identity is `pm.event_payload.todo_updated.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `todo.updated` and exact `todo_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are todo_thread — exact current thread/list/item identity, no focus or title join; todo_currentness — current list/item revision and applicable binding/Plan version/run epoch agree before commit; todo_graph — candidate graph has no self/cycle/unknown/cross-thread refs; todo_effect — genuine individually validated updated source result; todo_evidence — status/work/outcome/replacement claims have their own exact owner evidence; todo_atomic — compound mutation publishes all affected facts together or none. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1580, ContractName:Plans/storage-plan.md#SP-1580, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339
+
+## CV-1581 — `todo.work_bound` closed payload and identity (newly authored, no admission)
+
+```yaml
+plan_unit_id: CV-1581
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly todo.work_bound@1.0.0 uses Plans/event_payloads/w3h/todo_work_bound.schema.json#/$defs/payload
+  under TDR-1581; this is prepared payload materialization only. Original EventRecord/CV-317 envelope and CV-339
+  full-value receipt recipes remain authoritative. The exact selected app edition, if any, has its own application.v1
+  payload identity; no Project codec is relaxed. Registry membership remains absent.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- CV-339
+- TDR-1581
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- todo.work_bound
+- pm.event_payload.todo_work_bound.v1
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+`todo.work_bound` has closed required fields `schema_id, schema_version, scope_kind, project_id, server_id, thread_id, owner_operation_id, source_record_ref, source_receipt_ref, todo_id, list_revision, expected_revision, committed_revision, binding_id, work_id, attempt_id, work_admission_receipt_ref`. Its semantic owner is `Plans/ToDo_Runtime.md#TDR-1581`. Project payload identity is `pm.event_payload.todo_work_bound.v1@1.0.0`; application payload identity is `pm.event_payload.todo_work_bound.application.v1@1.0.0` selected only with explicit null Project and genuine application source. The EventRecord’s payload_schema_id must equal the resolved payload’s schema_id; type, partition, Project/thread/Server, actor, source operation/result, applicable run/attempt and redaction all join the actual original accepted source. For external SP-337 payloads, `#/$defs/external_prepared_event` validates only the physical journal representation: null `payload` and the closed `payload_ref` descriptor (`ref`, `blake3_id`, `byte_size`, `media_type`). Reuse Storage’s `payload:v1:{blake3_hex}` address; independently verify descriptor-to-index/pack joins, BLAKE3 over the exact uncompressed encoded body, exact size and actual media before decoding. Materialize `#/$defs/logical_event` with the authenticated resolved object and the original descriptor’s `ref` string, preserving every other original envelope value. Validate that map against the unchanged EventRecord envelope and this family’s closed payload, then perform original source/identity/admission and CV-339 full-value validation. A physical descriptor or null is never substituted for the complete original payload in a receipt request or commitment. Inline `#/$defs/prepared_event` requires an object body and null reference. Physical encoding is SP-236; no alternative logical envelope, number/time codec or historical reencoding is introduced.
+
+The original owner allocates one lifetime-unique immutable effect ID from its genuine accepted operation, with the declared component `todo.work_bound` and exact `todo_id` included before issuance. That frozen ID is `owner_operation_id`; batch/list operations allocate a separate component for each item. It survives retry and is never reminted from a timer or callback. Project key is `w3h@1:{hex(UTF8(owner_operation_id))}`. Application key, only for the explicitly selected app source, is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; no suffix is appended. Event ID is `w3h@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`. Hex is lowercase byte-preserving encoding, not hashing or normalization. Storage’s partition is `app` or `project~{base64url_no_pad(UTF8(project_id))}`; the scoped dedupe tuple remains (scope_partition,event_type,idempotency_key). The original source’s accepted time and producer sequence are frozen once; retry does not obtain a new clock/sequence/actor. Existing Project source hashes, CV-366 application semantic hashes, producer-semantic RFC 8785, SP-236 physical bytes, SP-337 payload IDs and CV-339 full-value commitments remain separate original-owner domains. Do not implement a new number/time codec. Phase 2 must bind the reviewed shared helper with authentic original-recipe dispatch; an unknown recipe cannot select a weaker reader.
+
+Family-specific source predicates are todo_thread — exact current thread/list/item identity, no focus or title join; todo_currentness — current list/item revision and applicable binding/Plan version/run epoch agree before commit; todo_graph — candidate graph has no self/cycle/unknown/cross-thread refs; todo_effect — genuine individually validated work_bound source result; todo_evidence — status/work/outcome/replacement claims have their own exact owner evidence; todo_atomic — compound mutation publishes all affected facts together or none. Wrong primitive types, unknown keys, unresolvable refs, mismatched actual source, trailing controls or LF in IDs, contradictory before/after facts, wrong schema/edition and any new legacy alias fail closed. Source refs never grant access or authority by themselves. These predicates apply after all dependent helpers at final release; no source/body ref, receipt or matching self-attestation can replace actual owner custody. Exact original retries resolve retained facts before current-state transition checks, but current append cannot select replay-only history. The field-level negatives and isolation plan for this exact family are ATS-1270 and W3H-oracle-plan.json.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md#TDR-1581, ContractName:Plans/storage-plan.md#SP-1581, ContractName:Plans/Contracts_V0.md#CV-317, ContractName:Plans/Contracts_V0.md#CV-339

@@ -1,0 +1,1660 @@
+[
+  {
+    "event_type": "assistant_plan.schedule_invalidated",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Assistant_Plan_Runtime.md",
+        "line": 936,
+        "text": "`Build At\u2026` creates an exact-version scheduled build. The schedule binds `assistant_plan_id`, `plan_version`, and `plan_hash`. A later revision invalidates the pending schedule, emits `assistant_plan.schedule_invalidated`, places a `Schedule needs update` notice on the Plan card, and disables automatic dispatch until the user explicitly updates or reschedules. There is no silent retarget to the newer version, and no schedule may dispatch a version it did not bind.",
+        "file_sha256": "10c3eaf881604c06a1a25b60feab59c9873270d0179c5bf8fb5657aa54e2af8f"
+      },
+      {
+        "path": "Plans/Assistant_Plan_Runtime.md",
+        "line": 1010,
+        "text": "assistant_plan.schedule_invalidated",
+        "file_sha256": "10c3eaf881604c06a1a25b60feab59c9873270d0179c5bf8fb5657aa54e2af8f"
+      },
+      {
+        "path": "Plans/Assistant_Plan_Runtime.md",
+        "line": 1017,
+        "text": "To-Do lifecycle events (`todo.created`, `todo.status_changed`, and the rest of that family) belong to `Plans/ToDo_Runtime.md` and are never emitted by this owner. Schedule and window events belong to `Plans/Scheduling_and_Quota_Resume.md`; this owner emits only `assistant_plan.schedule_invalidated` to record that its own version change invalidated a binding.",
+        "file_sha256": "10c3eaf881604c06a1a25b60feab59c9873270d0179c5bf8fb5657aa54e2af8f"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6499,
+        "text": "| `Plans/Assistant_Plan_Runtime.md` | `assistant_plan.created`, `assistant_plan.version_created`, `assistant_plan.build_started`, `assistant_plan.completed`, `assistant_plan.cancelled`, `assistant_plan.exported`, `assistant_plan.wizard_handoff_created`, `assistant_plan.schedule_invalidated` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "docker.compose.scenario.deleted",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "line": 6311,
+        "text": "  docker.compose.scenario.edited, and docker.compose.scenario.deleted, registered through",
+        "file_sha256": "83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948"
+      },
+      {
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "line": 6341,
+        "text": "preserved_exact_tokens: [\"scenario_id\", \"service_subset\", \"env_file_refs\", \"port_maps\", \"compose config-hash\", \"docker.compose.scenario.saved\", \"docker.compose.scenario.run\", \"docker.compose.scenario.edited\", \"docker.compose.scenario.deleted\", \"container_manager.project_state.{project_id}\"]",
+        "file_sha256": "83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948"
+      },
+      {
+        "path": "Plans/event_payloads/containers/docker_compose_scenario_deleted.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"docker.compose.scenario.deleted payload\",",
+        "file_sha256": "537352ca632b25ba9eeaccd5292ab3391f7fb7db16920134db5c75f78194f862"
+      },
+      {
+        "path": "Plans/event_payloads/containers/docker_compose_scenario_deleted.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"docker.compose.scenario.deleted\",",
+        "file_sha256": "537352ca632b25ba9eeaccd5292ab3391f7fb7db16920134db5c75f78194f862"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "docker.compose.scenario.edited",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "line": 6311,
+        "text": "  docker.compose.scenario.edited, and docker.compose.scenario.deleted, registered through",
+        "file_sha256": "83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948"
+      },
+      {
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "line": 6341,
+        "text": "preserved_exact_tokens: [\"scenario_id\", \"service_subset\", \"env_file_refs\", \"port_maps\", \"compose config-hash\", \"docker.compose.scenario.saved\", \"docker.compose.scenario.run\", \"docker.compose.scenario.edited\", \"docker.compose.scenario.deleted\", \"container_manager.project_state.{project_id}\"]",
+        "file_sha256": "83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948"
+      },
+      {
+        "path": "Plans/event_payloads/containers/docker_compose_scenario_edited.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"docker.compose.scenario.edited payload\",",
+        "file_sha256": "8c37dfe3f897c7f17edc6a8d5351b1a58ae621e84ffe4d890c076ed0e27fe29a"
+      },
+      {
+        "path": "Plans/event_payloads/containers/docker_compose_scenario_edited.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"docker.compose.scenario.edited\",",
+        "file_sha256": "8c37dfe3f897c7f17edc6a8d5351b1a58ae621e84ffe4d890c076ed0e27fe29a"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "docker.compose.scenario.run",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 647,
+        "text": "| `cmd.docker.compose.scenario.run` | Run Compose Scenario | Runs a saved scenario and records the scenario id on the preview or development run | `docker_available && compose_scenario_valid` |",
+        "file_sha256": "65ff10c2d213bd0be25d930c588f591a5d324a2ef6bd2f47c37e717d20e44e99"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 4130,
+        "text": "- cmd.docker.compose.scenario.run",
+        "file_sha256": "65ff10c2d213bd0be25d930c588f591a5d324a2ef6bd2f47c37e717d20e44e99"
+      },
+      {
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "line": 6310,
+        "text": "  run activity emit the event family docker.compose.scenario.saved, docker.compose.scenario.run,",
+        "file_sha256": "83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948"
+      },
+      {
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "line": 6341,
+        "text": "preserved_exact_tokens: [\"scenario_id\", \"service_subset\", \"env_file_refs\", \"port_maps\", \"compose config-hash\", \"docker.compose.scenario.saved\", \"docker.compose.scenario.run\", \"docker.compose.scenario.edited\", \"docker.compose.scenario.deleted\", \"container_manager.project_state.{project_id}\"]",
+        "file_sha256": "83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27746,
+        "text": "      \"ui_command_id\": \"cmd.docker.compose.scenario.run\",",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27750,
+        "text": "        \"cmd.docker.compose.scenario.run must be registered in the UICommand dispatcher with typed args and result contract\",",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27751,
+        "text": "        \"cmd.docker.compose.scenario.run must expose projected state selector and disabled reason before dispatch\",",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27752,
+        "text": "        \"cmd.docker.compose.scenario.run dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect\",",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27753,
+        "text": "        \"cmd.docker.compose.scenario.run must have a typed payload/result contract or explicit route/open no-persist disposition\",",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27754,
+        "text": "        \"cmd.docker.compose.scenario.run must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification\"",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27756,
+        "text": "      \"evidence_required\": \"Production wiring contract for cmd.docker.compose.scenario.run; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.\",",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27761,
+        "text": "        \"description\": \"cmd.docker.compose.scenario.run has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\",",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27763,
+        "text": "          \"cmd.docker.compose.scenario.run.dispatch_receipt\"",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27767,
+        "text": "        \"role_or_semantics\": \"catalog.docker_compose_scenario_run exposes a stable role/name/description matching cmd.docker.compose.scenario.run.\",",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27776,
+        "text": "          \"requirement\": \"Dispatching cmd.docker.compose.scenario.run reaches handlers::docker::compose_scenario_run with typed args/result contract.\"",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27786,
+        "text": "          \"requirement\": \"cmd.docker.compose.scenario.run has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.\"",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 27795,
+        "text": "        \"Assert cmd.docker.compose.scenario.run records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.\"",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/event_payloads/containers/docker_compose_scenario_run.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"docker.compose.scenario.run payload\",",
+        "file_sha256": "01f01b5f542faa496da2eab65cff04be8e6bfdf9bca53b535316400591f13863"
+      },
+      {
+        "path": "Plans/event_payloads/containers/docker_compose_scenario_run.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"docker.compose.scenario.run\",",
+        "file_sha256": "01f01b5f542faa496da2eab65cff04be8e6bfdf9bca53b535316400591f13863"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "docker.compose.scenario.saved",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "line": 6310,
+        "text": "  run activity emit the event family docker.compose.scenario.saved, docker.compose.scenario.run,",
+        "file_sha256": "83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948"
+      },
+      {
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "line": 6320,
+        "text": "  - docker.compose.scenario.saved/run/edited/deleted are registered through Contracts_V0.md before GUI or runtime consumers depend on them.",
+        "file_sha256": "83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948"
+      },
+      {
+        "path": "Plans/Containers_Registry_and_Unraid.md",
+        "line": 6341,
+        "text": "preserved_exact_tokens: [\"scenario_id\", \"service_subset\", \"env_file_refs\", \"port_maps\", \"compose config-hash\", \"docker.compose.scenario.saved\", \"docker.compose.scenario.run\", \"docker.compose.scenario.edited\", \"docker.compose.scenario.deleted\", \"container_manager.project_state.{project_id}\"]",
+        "file_sha256": "83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948"
+      },
+      {
+        "path": "Plans/event_payloads/containers/docker_compose_scenario_saved.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"docker.compose.scenario.saved payload\",",
+        "file_sha256": "a39f8d44f33632361716e919d3c2b5f256ea4bba39d89fbeb73707ca74547893"
+      },
+      {
+        "path": "Plans/event_payloads/containers/docker_compose_scenario_saved.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"docker.compose.scenario.saved\",",
+        "file_sha256": "a39f8d44f33632361716e919d3c2b5f256ea4bba39d89fbeb73707ca74547893"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "execution_window.created",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "execution_window.invalidated",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 646,
+        "text": "`scheduled_dispatch.dispatched` carries the idempotency key and the revalidation result so a duplicate is provably a duplicate. `runtime.quota_resume_attempted` carries the eligibility outcome including the exact failed clause when the attempt was refused, because a refused resume is the case an operator most needs to see. `execution_window.invalidated` carries `invalidated_reason`.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "execution_window.updated",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "goal.continuation_evaluated",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6498,
+        "text": "| `Plans/Goal_Runtime_System.md` | `goal.created`, `goal.updated`, `goal.paused`, `goal.resumed`, `goal.blocked`, `goal.completed`, `goal.cancelled`, `goal.continuation_evaluated` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line": 272,
+        "text": "The required semantic event names are `goal.created`, `goal.updated`, `goal.paused`, `goal.resumed`, `goal.blocked`, `goal.completed`, `goal.cancelled`, and `goal.continuation_evaluated`. Each exact name requires its own central EventRecord registration and payload schema before emission. `goal.created` is admitted only through CV-341/SP-294 and `goal.updated` only through CV-342/SP-299; their current source/receipt/result obligations and native availability still apply. Other names retain their own individual admission state; no sibling registration grants emission.",
+        "file_sha256": "ef69bf4a820e1cdd66016beb7644613a6b10e8b651346b7981df3434ab735d0e"
+      },
+      {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line": 274,
+        "text": "Envelopes carry explicit app/Project scope, null or actual Project as appropriate, real thread/Computer and Goal identity, revision, `currentness_hash`, actor, correlation and causation, idempotency key, and redacted source refs. `goal.updated` carries `change_source` and, for the agent path, `approval_id`. `goal.continuation_evaluated` carries `result`, `user_stop_epoch`, and completion-evidence refs by reference rather than by value. Each app payload/source/append/read/backup version is admitted explicitly under GRS-086; no historical-only family is revived.",
+        "file_sha256": "ef69bf4a820e1cdd66016beb7644613a6b10e8b651346b7981df3434ab735d0e"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "named_plan.archived",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 814,
+        "text": "        \"named_plan.archived\",",
+        "file_sha256": "2c6a2d7108814d513a0830eb79a2dae2b663ca673637817af236eeb2f16905e9"
+      },
+      {
+        "path": "Plans/Named_Plan_System.md",
+        "line": 81,
+        "text": "The required semantic events are `named_plan.created`, `named_plan.renamed`, `named_plan.archived`, `named_plan.restored`, `named_plan.priority_changed`, and `named_plan.child_refs_changed`. These names require central EventRecord registration and payload schemas before emission. Navigation-only open/switch records an explicit no-persist route receipt unless the shell owner persists selected Plan convenience state. Event envelopes carry Project and Named Plan identity, aggregate revision, actor, correlation/causation, idempotency, currentness, owner child refs when changed, and redacted source refs.",
+        "file_sha256": "c9a27bc15edd5344c283cf74c50423f44dc0b51940d4b663fa6dd4c69f78ccbd"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "named_plan.child_refs_changed",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 817,
+        "text": "        \"named_plan.child_refs_changed\"",
+        "file_sha256": "2c6a2d7108814d513a0830eb79a2dae2b663ca673637817af236eeb2f16905e9"
+      },
+      {
+        "path": "Plans/Named_Plan_System.md",
+        "line": 81,
+        "text": "The required semantic events are `named_plan.created`, `named_plan.renamed`, `named_plan.archived`, `named_plan.restored`, `named_plan.priority_changed`, and `named_plan.child_refs_changed`. These names require central EventRecord registration and payload schemas before emission. Navigation-only open/switch records an explicit no-persist route receipt unless the shell owner persists selected Plan convenience state. Event envelopes carry Project and Named Plan identity, aggregate revision, actor, correlation/causation, idempotency, currentness, owner child refs when changed, and redacted source refs.",
+        "file_sha256": "c9a27bc15edd5344c283cf74c50423f44dc0b51940d4b663fa6dd4c69f78ccbd"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "named_plan.created",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 812,
+        "text": "        \"named_plan.created\",",
+        "file_sha256": "2c6a2d7108814d513a0830eb79a2dae2b663ca673637817af236eeb2f16905e9"
+      },
+      {
+        "path": "Plans/Named_Plan_System.md",
+        "line": 81,
+        "text": "The required semantic events are `named_plan.created`, `named_plan.renamed`, `named_plan.archived`, `named_plan.restored`, `named_plan.priority_changed`, and `named_plan.child_refs_changed`. These names require central EventRecord registration and payload schemas before emission. Navigation-only open/switch records an explicit no-persist route receipt unless the shell owner persists selected Plan convenience state. Event envelopes carry Project and Named Plan identity, aggregate revision, actor, correlation/causation, idempotency, currentness, owner child refs when changed, and redacted source refs.",
+        "file_sha256": "c9a27bc15edd5344c283cf74c50423f44dc0b51940d4b663fa6dd4c69f78ccbd"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "named_plan.priority_changed",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 816,
+        "text": "        \"named_plan.priority_changed\",",
+        "file_sha256": "2c6a2d7108814d513a0830eb79a2dae2b663ca673637817af236eeb2f16905e9"
+      },
+      {
+        "path": "Plans/Named_Plan_System.md",
+        "line": 81,
+        "text": "The required semantic events are `named_plan.created`, `named_plan.renamed`, `named_plan.archived`, `named_plan.restored`, `named_plan.priority_changed`, and `named_plan.child_refs_changed`. These names require central EventRecord registration and payload schemas before emission. Navigation-only open/switch records an explicit no-persist route receipt unless the shell owner persists selected Plan convenience state. Event envelopes carry Project and Named Plan identity, aggregate revision, actor, correlation/causation, idempotency, currentness, owner child refs when changed, and redacted source refs.",
+        "file_sha256": "c9a27bc15edd5344c283cf74c50423f44dc0b51940d4b663fa6dd4c69f78ccbd"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "named_plan.renamed",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 813,
+        "text": "        \"named_plan.renamed\",",
+        "file_sha256": "2c6a2d7108814d513a0830eb79a2dae2b663ca673637817af236eeb2f16905e9"
+      },
+      {
+        "path": "Plans/Named_Plan_System.md",
+        "line": 81,
+        "text": "The required semantic events are `named_plan.created`, `named_plan.renamed`, `named_plan.archived`, `named_plan.restored`, `named_plan.priority_changed`, and `named_plan.child_refs_changed`. These names require central EventRecord registration and payload schemas before emission. Navigation-only open/switch records an explicit no-persist route receipt unless the shell owner persists selected Plan convenience state. Event envelopes carry Project and Named Plan identity, aggregate revision, actor, correlation/causation, idempotency, currentness, owner child refs when changed, and redacted source refs.",
+        "file_sha256": "c9a27bc15edd5344c283cf74c50423f44dc0b51940d4b663fa6dd4c69f78ccbd"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "named_plan.restored",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 815,
+        "text": "        \"named_plan.restored\",",
+        "file_sha256": "2c6a2d7108814d513a0830eb79a2dae2b663ca673637817af236eeb2f16905e9"
+      },
+      {
+        "path": "Plans/Named_Plan_System.md",
+        "line": 81,
+        "text": "The required semantic events are `named_plan.created`, `named_plan.renamed`, `named_plan.archived`, `named_plan.restored`, `named_plan.priority_changed`, and `named_plan.child_refs_changed`. These names require central EventRecord registration and payload schemas before emission. Navigation-only open/switch records an explicit no-persist route receipt unless the shell owner persists selected Plan convenience state. Event envelopes carry Project and Named Plan identity, aggregate revision, actor, correlation/causation, idempotency, currentness, owner child refs when changed, and redacted source refs.",
+        "file_sha256": "c9a27bc15edd5344c283cf74c50423f44dc0b51940d4b663fa6dd4c69f78ccbd"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "runtime.automation_pause_changed",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/scheduling_and_quota_resume_contracts.schema.json",
+        "line": 5,
+        "text": "  \"$comment\": \"Owner contract schema named by Plans/Commands_System.md (Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03: \\\"Naming them here does not create them\\\") for Plans/Scheduling_and_Quota_Resume.md. Written 2026-09-27 as the companion of ledger pldg-20260927-003-wand-scheduling (register line B-SQR-09; SQR-013, SQR-015, SQR-017): the request/result pairs of the six commands the wand-module scheduling surfaces dispatch, cmd.chat.schedule_message, cmd.chat.schedule_message.update, cmd.chat.schedule_message.cancel, cmd.chat.plan.schedule_build, cmd.execution_window.update and cmd.execution_window.cancel. Closure wave 2026-09-27 (register line B-SQR-05, card p12, DL-136; SQR-018, CS-087, UCC-174): AutomationPauseSetRequest/Result for cmd.runtime.automation_pause.set, with ProjectAutomationPauseRecord, the shape of the project-scoped pause record SQR-018 owns (its storage key and storage-registry entry are not made here). cmd.runtime.automation_stop.set is not an identity and has no definition. ExecutionWindowCreateRequest/Result (cmd.execution_window.create) and QuotaResumeConsentRequest/Result (cmd.runtime.quota_resume.set) are intentionally absent and remain future owner-authored additions to this file, so those rows keep handler_unavailable truthfully. The payload of runtime.automation_pause_changed and the failed clause project_automation_paused on scheduled_dispatch.held and runtime.quota_resume_attempted wait on central EventRecord registration with the other twelve scheduling events and are not defined here. The stored records pm.chat.scheduled_message_snapshot.v1 and pm.execution.schedule.v1 are not redefined: the latter lives in Plans/assistant_plan_cancel_custody.schema.json, which does not yet carry grace_seconds (ledger question q-004). A definition here is a contract shape, not a handler, a catalogue registration or an admission: every command stays handler_unavailable. Requests and results are not records and add no storage key, EventRecord, writer or physical family.\",",
+        "file_sha256": "5eb82016100c04974de8e0bc94c3a5f1ac8f71995f92d0a92eca4a2ce3b58ab7"
+      },
+      {
+        "path": "Plans/scheduling_and_quota_resume_contracts.schema.json",
+        "line": 2036,
+        "text": "      \"description\": \"AutomationPauseSetResult. Every path returns the project's pause record (paused, the project's user_stop_epoch, who changed it, when, and its revision). Accepted: the record holds the requested value; changed is true only when the value moved, and the owner owes one runtime.automation_pause_changed event only after family-specific Event Authority admission. Until then no EventRecord is appended; the outcome reports missing_event_registration through owner diagnostics (DL-138, DL-093). Only a change to paused true advances the epoch; an idempotent re-set (changed false) and turning the switch off never do. Rejected (for example permission_denied for a non-user actor, which is how an automatic clear is refused) changes nothing and echoes the unchanged record. The side_effects members are false on every path.\",",
+        "file_sha256": "5eb82016100c04974de8e0bc94c3a5f1ac8f71995f92d0a92eca4a2ce3b58ab7"
+      },
+      {
+        "path": "Plans/scheduling_and_quota_resume_contracts.schema.json",
+        "line": 5014,
+        "text": "      \"description\": \"AutomationPauseSetResult. Every path returns the project's pause record (paused, the project's user_stop_epoch, who changed it, when, and its revision). Accepted: the record holds the requested value; changed is true only when the value moved, and the owner owes one runtime.automation_pause_changed event only after family-specific Event Authority admission. Until then no EventRecord is appended; the outcome reports missing_event_registration through owner diagnostics (DL-138, DL-093). Only a change to paused true advances the epoch; an idempotent re-set (changed false) and turning the switch off never do. Rejected (for example permission_denied for a non-user actor, which is how an automatic clear is refused) changes nothing and echoes the unchanged record. The side_effects members are false on every path.\",",
+        "file_sha256": "5eb82016100c04974de8e0bc94c3a5f1ac8f71995f92d0a92eca4a2ce3b58ab7"
+      },
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 35525,
+        "text": "        \"Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted.\"",
+        "file_sha256": "2c6a2d7108814d513a0830eb79a2dae2b663ca673637817af236eeb2f16905e9"
+      },
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 47654,
+        "text": "      \"Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted.\"",
+        "file_sha256": "2c6a2d7108814d513a0830eb79a2dae2b663ca673637817af236eeb2f16905e9"
+      },
+      {
+        "path": "Plans/Automated_Testing_System.md",
+        "line": 5842,
+        "text": "  unchanged and emits no runtime.automation_pause_changed. A scheduled build running when the switch is turned on",
+        "file_sha256": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647"
+      },
+      {
+        "path": "Plans/Automated_Testing_System.md",
+        "line": 5855,
+        "text": "  DL-138 adds explicit durability and admission assertions: restart reads the saved project pause record and its user_stop_epoch unchanged; repeated absolute-value requests neither advance the epoch nor emit again; a non-user clear returns permission_denied; and while runtime.automation_pause_changed lacks its separate Event Authority admission, an attempted event publication reports missing_event_registration and appends zero EventRecord objects. Turning the switch off re-evaluates each held occurrence under its recorded missed policy at most once, without replaying completed work. The static companion pair may validate these request/result shapes, but these runtime assertions remain NOT_RUN until a runtime executes them.",
+        "file_sha256": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647"
+      },
+      {
+        "path": "Plans/Automated_Testing_System.md",
+        "line": 5893,
+        "text": "  - \"runtime.automation_pause_changed\"",
+        "file_sha256": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "line": 103281,
+        "text": "      \"replay_behavior\": \"SP-323/SQR-018: one current project manual-stop authority record. A repeated set returns the unchanged revision/epoch; only an authorized changed value uses whole-value CAS. Every automatic dispatch reads the whole current record and rechecks user_stop_epoch. Missing later custody blocks dispatch. No runtime.automation_pause_changed EventRecord is registered; missing_event_registration is reported.\",",
+        "file_sha256": "8b6ea945950d76f83a5aa741148e3a238e782cb74d36cc575a1817ce566ca944"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 10720,
+        "text": "| `cmd.runtime.automation_pause.set` | Plans/Scheduling_and_Quota_Resume.md#SQR-020 | handlers::scheduling::automation_pause_set | Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AutomationPauseSetRequestScopeV2 | Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/AutomationPauseSetResultScopeV2 | Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted. |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/projects_refresh_command_bindings.json",
+        "line": 24771,
+        "text": "      \"effect\": \"Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted.\",",
+        "file_sha256": "4c8d3fd627280614499af26f808093759c67a656856a4ef9e089dca62473ea23"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 89452,
+        "text": "        \"Projects refresh exact effect: Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted.\",",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 89460,
+        "text": "        \"description\": \"Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted. Projects refresh: Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted.\",",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 89485,
+        "text": "          \"requirement\": \"Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.\"",
+        "file_sha256": "e5feaf53fb25f18eb2b893999c0d292edc0dc0147f2a3ccae634c2922c670132"
+      },
+      {
+        "path": "Plans/projects_refresh_command_bindings.fixtures.json",
+        "line": 25047,
+        "text": "            \"effect\": \"Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted.\",",
+        "file_sha256": "e79c50f067dfd93bb2bda06343705d0c567e3af27a473f13f307da2ed5907325"
+      },
+      {
+        "path": "Plans/projects_refresh_command_bindings.fixtures.json",
+        "line": 52688,
+        "text": "            \"effect\": \"Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted.\",",
+        "file_sha256": "e79c50f067dfd93bb2bda06343705d0c567e3af27a473f13f307da2ed5907325"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 27441,
+        "text": "`runtime.automation_pause_changed` remains an unregistered EventRecord candidate under DL-093. Until a",
+        "file_sha256": "52804c7f1ff7d43a63636a254cb2fd8c66b921f208f3604faf2c6cf1d2d708b5"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 27453,
+        "text": "  Storage binds SQR-018's pm.runtime.project_automation_pause.v1 to the project_automation_pause family, exact key project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}, and closed pm.storage_value.project_automation_pause.v1 wrapper (DL-138). It is original project manual-stop authority under existing RP-AUTHORITY-INDEFINITE@1.0.0, not Settings. Genuine project birth creates the off record under proven never-born custody; missing later custody is unavailable. Only an authorized user change uses whole-value compare-and-swap; setting paused true advances user_stop_epoch exactly once, an idempotent reset does not advance it, and setting false never clears per-run stops. The scheduler checks current project state and epoch before automatic dispatch; missing state blocks dispatch. Backup and restore preserve the newer latch and epoch. The static schema/registry row proves no native writer. The candidate runtime.automation_pause_changed emits no EventRecord and reports missing_event_registration until its own Event Authority admission under DL-093. This exact Project record, key, schema, birth evidence, no-op behavior and epoch remain unchanged. SQR-020/CV-368/SP-352 add the independent Server-owned application pause, never a Settings value. Both latches/epochs participate in conversion and later dispatch; source or target missing custody refuses, and no conversion/automatic task clears either.",
+        "file_sha256": "52804c7f1ff7d43a63636a254cb2fd8c66b921f208f3604faf2c6cf1d2d708b5"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 27464,
+        "text": "  - Before family-specific admission, zero runtime.automation_pause_changed EventRecords append and missing_event_registration is reported.",
+        "file_sha256": "52804c7f1ff7d43a63636a254cb2fd8c66b921f208f3604faf2c6cf1d2d708b5"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 27478,
+        "text": "preserved_exact_tokens: [pm.runtime.project_automation_pause.v1, \"project_automation_pause.v1:{hex(storage_instance_id)}:{hex(project_id)}\", pm.storage_value.project_automation_pause.v1, RP-AUTHORITY-INDEFINITE, user_stop_epoch, runtime.automation_pause_changed, missing_event_registration]",
+        "file_sha256": "52804c7f1ff7d43a63636a254cb2fd8c66b921f208f3604faf2c6cf1d2d708b5"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 29331,
+        "text": "  Fresh application authority birth may create revision0/epoch0/off only with genuine never-born proof bound to the actual storage instance/Server birth operation and current writer lease. Already initialized, missing/corrupt/unsupported custody is app_automation_pause_unavailable; restore from coherent mandatory backup preserves any newer latch/epoch rather than resetting it. User desired-value changes use internal whole-value CAS and original operation/result custody. Only transition false\u2192true advances user_stop_epoch once with the value and actor/time/revision; idempotent same-value and true\u2192false do not advance, and false clears no task latch. No automatic actor or YOLO clears it. Every eligibility check captures the target\u2019s own and this app scope epoch and rechecks them under the final owner fence. Conversion checks source app and destination Project pause/Stop, never resumes/clears either. runtime.automation_pause_changed remains non-emitting with missing_event_registration until complete family-specific adoption. The pause write/result and event are separate obligations; no source-built off state or fake EventRecord is admitted.",
+        "file_sha256": "52804c7f1ff7d43a63636a254cb2fd8c66b921f208f3604faf2c6cf1d2d708b5"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 2891,
+        "text": "Question 9 does not waive event admission: runtime.automation_pause_changed is not one of the seven coordination families covered by DL-093. No event family is registered by this entry. Its approved registration remains outstanding as Scheduling ledger q-006: Event Authority owns the family-specific decision and admission, followed by the prescribed schema, registry, fixture, depth and checkpoint requirements before emission is enabled. Static schemas, fixtures and acceptance contracts do not prove implemented runtime behavior.",
+        "file_sha256": "31bd8137c7ae377b7271f6d563b812be84eae55c1fed0e0a4db9c4e89afb4f31"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 11814,
+        "text": "  Question 9 does not waive event admission: runtime.automation_pause_changed is not one of the seven coordination",
+        "file_sha256": "31bd8137c7ae377b7271f6d563b812be84eae55c1fed0e0a4db9c4e89afb4f31"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 11888,
+        "text": "- Do not register runtime.automation_pause_changed under the seven-family approval of DL-093.",
+        "file_sha256": "31bd8137c7ae377b7271f6d563b812be84eae55c1fed0e0a4db9c4e89afb4f31"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 644,
+        "text": "`runtime.automation_pause_changed` is emitted once for each change of the project-wide \"Pause all automations\" switch made by `cmd.runtime.automation_pause.set` (SQR-018, DL-136), never for a request that sets the value the switch already has, and carries `project_id`, `paused`, the project's `user_stop_epoch`, the actor and the time. A scheduled message whose send time arrives while the switch is on emits `scheduled_dispatch.held` with the failed clause `project_automation_paused`, and a refused quota resume emits `runtime.quota_resume_attempted` with that clause; the switch adds no other event.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 1834,
+        "text": "`runtime.automation_pause_changed` (section 3, Events), but its EventRecord is not emitted while Event Authority",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 1868,
+        "text": "  things start on time. A changed value reserves runtime.automation_pause_changed, but EventRecord",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 1886,
+        "text": "  - \"Before Event Authority admission, no runtime.automation_pause_changed EventRecord is emitted and the result reports missing_event_registration.\"",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 1915,
+        "text": "  - \"runtime.automation_pause_changed\"",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 2041,
+        "text": "  owners. runtime.automation_pause_changed stays non-emitting with missing_event_registration until its exact app",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 2090,
+        "text": "- runtime.automation_pause_changed",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "runtime.quota_resume_attempted",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/scheduling_and_quota_resume_contracts.schema.json",
+        "line": 5,
+        "text": "  \"$comment\": \"Owner contract schema named by Plans/Commands_System.md (Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03: \\\"Naming them here does not create them\\\") for Plans/Scheduling_and_Quota_Resume.md. Written 2026-09-27 as the companion of ledger pldg-20260927-003-wand-scheduling (register line B-SQR-09; SQR-013, SQR-015, SQR-017): the request/result pairs of the six commands the wand-module scheduling surfaces dispatch, cmd.chat.schedule_message, cmd.chat.schedule_message.update, cmd.chat.schedule_message.cancel, cmd.chat.plan.schedule_build, cmd.execution_window.update and cmd.execution_window.cancel. Closure wave 2026-09-27 (register line B-SQR-05, card p12, DL-136; SQR-018, CS-087, UCC-174): AutomationPauseSetRequest/Result for cmd.runtime.automation_pause.set, with ProjectAutomationPauseRecord, the shape of the project-scoped pause record SQR-018 owns (its storage key and storage-registry entry are not made here). cmd.runtime.automation_stop.set is not an identity and has no definition. ExecutionWindowCreateRequest/Result (cmd.execution_window.create) and QuotaResumeConsentRequest/Result (cmd.runtime.quota_resume.set) are intentionally absent and remain future owner-authored additions to this file, so those rows keep handler_unavailable truthfully. The payload of runtime.automation_pause_changed and the failed clause project_automation_paused on scheduled_dispatch.held and runtime.quota_resume_attempted wait on central EventRecord registration with the other twelve scheduling events and are not defined here. The stored records pm.chat.scheduled_message_snapshot.v1 and pm.execution.schedule.v1 are not redefined: the latter lives in Plans/assistant_plan_cancel_custody.schema.json, which does not yet carry grace_seconds (ledger question q-004). A definition here is a contract shape, not a handler, a catalogue registration or an admission: every command stays handler_unavailable. Requests and results are not records and add no storage key, EventRecord, writer or physical family.\",",
+        "file_sha256": "5eb82016100c04974de8e0bc94c3a5f1ac8f71995f92d0a92eca4a2ce3b58ab7"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 644,
+        "text": "`runtime.automation_pause_changed` is emitted once for each change of the project-wide \"Pause all automations\" switch made by `cmd.runtime.automation_pause.set` (SQR-018, DL-136), never for a request that sets the value the switch already has, and carries `project_id`, `paused`, the project's `user_stop_epoch`, the actor and the time. A scheduled message whose send time arrives while the switch is on emits `scheduled_dispatch.held` with the failed clause `project_automation_paused`, and a refused quota resume emits `runtime.quota_resume_attempted` with that clause; the switch adds no other event.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 646,
+        "text": "`scheduled_dispatch.dispatched` carries the idempotency key and the revalidation result so a duplicate is provably a duplicate. `runtime.quota_resume_attempted` carries the eligibility outcome including the exact failed clause when the attempt was refused, because a refused resume is the case an operator most needs to see. `execution_window.invalidated` carries `invalidated_reason`.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "runtime.quota_resume_consent_changed",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "runtime.quota_wait_started",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "scheduled_dispatch.cancelled",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "scheduled_dispatch.created",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/goal_scheduled_history_contract_fixtures.json",
+        "line": 958,
+        "text": "        \"event_name\": \"scheduled_dispatch.created\",",
+        "file_sha256": "a7c81f67618b09dff73baf79bd994e84d11b147505f1b9bfdb05fd3e42b986df"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "scheduled_dispatch.dispatched",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 646,
+        "text": "`scheduled_dispatch.dispatched` carries the idempotency key and the revalidation result so a duplicate is provably a duplicate. `runtime.quota_resume_attempted` carries the eligibility outcome including the exact failed clause when the attempt was refused, because a refused resume is the case an operator most needs to see. `execution_window.invalidated` carries `invalidated_reason`.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "scheduled_dispatch.failed",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "scheduled_dispatch.held",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/scheduling_and_quota_resume_contracts.schema.json",
+        "line": 5,
+        "text": "  \"$comment\": \"Owner contract schema named by Plans/Commands_System.md (Puppet Master Assistant Redesign Central Registration Addendum - 2026-09-03: \\\"Naming them here does not create them\\\") for Plans/Scheduling_and_Quota_Resume.md. Written 2026-09-27 as the companion of ledger pldg-20260927-003-wand-scheduling (register line B-SQR-09; SQR-013, SQR-015, SQR-017): the request/result pairs of the six commands the wand-module scheduling surfaces dispatch, cmd.chat.schedule_message, cmd.chat.schedule_message.update, cmd.chat.schedule_message.cancel, cmd.chat.plan.schedule_build, cmd.execution_window.update and cmd.execution_window.cancel. Closure wave 2026-09-27 (register line B-SQR-05, card p12, DL-136; SQR-018, CS-087, UCC-174): AutomationPauseSetRequest/Result for cmd.runtime.automation_pause.set, with ProjectAutomationPauseRecord, the shape of the project-scoped pause record SQR-018 owns (its storage key and storage-registry entry are not made here). cmd.runtime.automation_stop.set is not an identity and has no definition. ExecutionWindowCreateRequest/Result (cmd.execution_window.create) and QuotaResumeConsentRequest/Result (cmd.runtime.quota_resume.set) are intentionally absent and remain future owner-authored additions to this file, so those rows keep handler_unavailable truthfully. The payload of runtime.automation_pause_changed and the failed clause project_automation_paused on scheduled_dispatch.held and runtime.quota_resume_attempted wait on central EventRecord registration with the other twelve scheduling events and are not defined here. The stored records pm.chat.scheduled_message_snapshot.v1 and pm.execution.schedule.v1 are not redefined: the latter lives in Plans/assistant_plan_cancel_custody.schema.json, which does not yet carry grace_seconds (ledger question q-004). A definition here is a contract shape, not a handler, a catalogue registration or an admission: every command stays handler_unavailable. Requests and results are not records and add no storage key, EventRecord, writer or physical family.\",",
+        "file_sha256": "5eb82016100c04974de8e0bc94c3a5f1ac8f71995f92d0a92eca4a2ce3b58ab7"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 644,
+        "text": "`runtime.automation_pause_changed` is emitted once for each change of the project-wide \"Pause all automations\" switch made by `cmd.runtime.automation_pause.set` (SQR-018, DL-136), never for a request that sets the value the switch already has, and carries `project_id`, `paused`, the project's `user_stop_epoch`, the actor and the time. A scheduled message whose send time arrives while the switch is on emits `scheduled_dispatch.held` with the failed clause `project_automation_paused`, and a refused quota resume emits `runtime.quota_resume_attempted` with that clause; the switch adds no other event.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "scheduled_dispatch.updated",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6503,
+        "text": "| `Plans/Scheduling_and_Quota_Resume.md` | `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Scheduling_and_Quota_Resume.md",
+        "line": 642,
+        "text": "The required semantic event names are `scheduled_dispatch.created`, `scheduled_dispatch.updated`, `scheduled_dispatch.cancelled`, `scheduled_dispatch.dispatched`, `scheduled_dispatch.held`, `scheduled_dispatch.failed`, `execution_window.created`, `execution_window.updated`, `execution_window.invalidated`, `runtime.quota_wait_started`, `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`, and `runtime.automation_pause_changed`. All thirteen require central EventRecord registration and payload schemas before emission.",
+        "file_sha256": "88a5e4b83fad0cee3fd95aee5e2348ffde089e100dcbb902b70f1f8bc1ccaaa8"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "todo.created",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Assistant_Plan_Runtime.md",
+        "line": 1017,
+        "text": "To-Do lifecycle events (`todo.created`, `todo.status_changed`, and the rest of that family) belong to `Plans/ToDo_Runtime.md` and are never emitted by this owner. Schedule and window events belong to `Plans/Scheduling_and_Quota_Resume.md`; this owner emits only `assistant_plan.schedule_invalidated` to record that its own version change invalidated a binding.",
+        "file_sha256": "10c3eaf881604c06a1a25b60feab59c9873270d0179c5bf8fb5657aa54e2af8f"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 643,
+        "text": "The required semantic event names are `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list`. All seven require central EventRecord registration and payload schemas before emission; until then the controller records only its typed result, receipt, and projection.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 661,
+        "text": "| `item_created` | Validated creation of one `TodoItemV2` \u2192 `todo.created` | Stable owning thread and item identity; a new proposal entry starts `pending`. A legacy embedded item is not copied wholesale into V2. |",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 691,
+        "text": "  DL-042 preserves chat.plan_todo_updated as historical readable identity without automatic aliasing or new legacy append authority. The adjacent per-operation mapping is normative: item_created maps to todo.created, item_removed to todo.removed_from_current_list, title to todo.updated, independently justified status to todo.status_changed, dependencies to current depends_on and todo.dependency_changed, and order_index to current display_order and todo.reordered. Historical summary, owner_hint, verification_hint, and notes have no established TodoItemV2 destination and remain explicit technical gaps. Current work admission uses todo.work_bound with an exact TodoWorkBinding; it is never inferred from historical hints. Each future event requires separate central admission and complete schema, append, replay, retention, projection and checkpoint bindings before emission. Historical reads preserve original identity and never manufacture current revisions, bindings or outcome proof. Controller proposal-only, graph/currentness, per-item evidence, atomic mutation and no-bulk-status rules remain unchanged. The existing import cause representation remains a technical gap because import is absent from the current TodoTransition cause enum.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/Tools.md",
+        "line": 2429,
+        "text": "The tool layer emits its existing tool lifecycle and denial events unchanged. The semantic events that this section depends on \u2014 `todo.created`, `todo.updated`, `todo.status_changed`, `todo.work_bound`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list` \u2014 belong to the To-Do Runtime owner, and `collaboration.participant_started` and `collaboration.participant_completed` belong to the Collaborative Workflows owner. All of these names require central EventRecord registration and payload schemas before emission; Tools must not emit a To-Do or collaboration semantic event on the owner's behalf and must not treat a tool receipt as one.",
+        "file_sha256": "62ede04d56ef24109a9f2fb6e7c69f581a0da383eea3430a4239faac691622fd"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6500,
+        "text": "| `Plans/ToDo_Runtime.md` | `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, `todo.removed_from_current_list` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "todo.dependency_changed",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 643,
+        "text": "The required semantic event names are `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list`. All seven require central EventRecord registration and payload schemas before emission; until then the controller records only its typed result, receipt, and projection.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 666,
+        "text": "| `dependencies` | Validated change to current `depends_on` \u2192 `todo.dependency_changed` | Validate candidate graph and exact thread edges before atomic commit. Preserve historical spelling in historical records; no blind field rename during replay. |",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 691,
+        "text": "  DL-042 preserves chat.plan_todo_updated as historical readable identity without automatic aliasing or new legacy append authority. The adjacent per-operation mapping is normative: item_created maps to todo.created, item_removed to todo.removed_from_current_list, title to todo.updated, independently justified status to todo.status_changed, dependencies to current depends_on and todo.dependency_changed, and order_index to current display_order and todo.reordered. Historical summary, owner_hint, verification_hint, and notes have no established TodoItemV2 destination and remain explicit technical gaps. Current work admission uses todo.work_bound with an exact TodoWorkBinding; it is never inferred from historical hints. Each future event requires separate central admission and complete schema, append, replay, retention, projection and checkpoint bindings before emission. Historical reads preserve original identity and never manufacture current revisions, bindings or outcome proof. Controller proposal-only, graph/currentness, per-item evidence, atomic mutation and no-bulk-status rules remain unchanged. The existing import cause representation remains a technical gap because import is absent from the current TodoTransition cause enum.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/Tools.md",
+        "line": 2429,
+        "text": "The tool layer emits its existing tool lifecycle and denial events unchanged. The semantic events that this section depends on \u2014 `todo.created`, `todo.updated`, `todo.status_changed`, `todo.work_bound`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list` \u2014 belong to the To-Do Runtime owner, and `collaboration.participant_started` and `collaboration.participant_completed` belong to the Collaborative Workflows owner. All of these names require central EventRecord registration and payload schemas before emission; Tools must not emit a To-Do or collaboration semantic event on the owner's behalf and must not treat a tool receipt as one.",
+        "file_sha256": "62ede04d56ef24109a9f2fb6e7c69f581a0da383eea3430a4239faac691622fd"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6500,
+        "text": "| `Plans/ToDo_Runtime.md` | `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, `todo.removed_from_current_list` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "todo.removed_from_current_list",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 643,
+        "text": "The required semantic event names are `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list`. All seven require central EventRecord registration and payload schemas before emission; until then the controller records only its typed result, receipt, and projection.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 647,
+        "text": "`todo.removed_from_current_list` records that an item left the current list without being completed or skipped \u2014 for example when a restructure supersedes it. It is not a deletion of history.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 662,
+        "text": "| `item_removed` | Validated removal from the current list \u2192 `todo.removed_from_current_list` | Preserve historical identity; do not equate removal with completion, skip, physical deletion or cancellation of active work. Apply replacement disposition checks where relevant. |",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 691,
+        "text": "  DL-042 preserves chat.plan_todo_updated as historical readable identity without automatic aliasing or new legacy append authority. The adjacent per-operation mapping is normative: item_created maps to todo.created, item_removed to todo.removed_from_current_list, title to todo.updated, independently justified status to todo.status_changed, dependencies to current depends_on and todo.dependency_changed, and order_index to current display_order and todo.reordered. Historical summary, owner_hint, verification_hint, and notes have no established TodoItemV2 destination and remain explicit technical gaps. Current work admission uses todo.work_bound with an exact TodoWorkBinding; it is never inferred from historical hints. Each future event requires separate central admission and complete schema, append, replay, retention, projection and checkpoint bindings before emission. Historical reads preserve original identity and never manufacture current revisions, bindings or outcome proof. Controller proposal-only, graph/currentness, per-item evidence, atomic mutation and no-bulk-status rules remain unchanged. The existing import cause representation remains a technical gap because import is absent from the current TodoTransition cause enum.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/Tools.md",
+        "line": 2429,
+        "text": "The tool layer emits its existing tool lifecycle and denial events unchanged. The semantic events that this section depends on \u2014 `todo.created`, `todo.updated`, `todo.status_changed`, `todo.work_bound`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list` \u2014 belong to the To-Do Runtime owner, and `collaboration.participant_started` and `collaboration.participant_completed` belong to the Collaborative Workflows owner. All of these names require central EventRecord registration and payload schemas before emission; Tools must not emit a To-Do or collaboration semantic event on the owner's behalf and must not treat a tool receipt as one.",
+        "file_sha256": "62ede04d56ef24109a9f2fb6e7c69f581a0da383eea3430a4239faac691622fd"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6500,
+        "text": "| `Plans/ToDo_Runtime.md` | `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, `todo.removed_from_current_list` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "todo.reordered",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 643,
+        "text": "The required semantic event names are `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list`. All seven require central EventRecord registration and payload schemas before emission; until then the controller records only its typed result, receipt, and projection.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 667,
+        "text": "| `order_index` | Validated change to current `display_order` \u2192 `todo.reordered` | Display order only; do not infer or modify dependency, parent, parallel group or status. Preserve original field spelling in historical records. |",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 691,
+        "text": "  DL-042 preserves chat.plan_todo_updated as historical readable identity without automatic aliasing or new legacy append authority. The adjacent per-operation mapping is normative: item_created maps to todo.created, item_removed to todo.removed_from_current_list, title to todo.updated, independently justified status to todo.status_changed, dependencies to current depends_on and todo.dependency_changed, and order_index to current display_order and todo.reordered. Historical summary, owner_hint, verification_hint, and notes have no established TodoItemV2 destination and remain explicit technical gaps. Current work admission uses todo.work_bound with an exact TodoWorkBinding; it is never inferred from historical hints. Each future event requires separate central admission and complete schema, append, replay, retention, projection and checkpoint bindings before emission. Historical reads preserve original identity and never manufacture current revisions, bindings or outcome proof. Controller proposal-only, graph/currentness, per-item evidence, atomic mutation and no-bulk-status rules remain unchanged. The existing import cause representation remains a technical gap because import is absent from the current TodoTransition cause enum.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/Tools.md",
+        "line": 2429,
+        "text": "The tool layer emits its existing tool lifecycle and denial events unchanged. The semantic events that this section depends on \u2014 `todo.created`, `todo.updated`, `todo.status_changed`, `todo.work_bound`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list` \u2014 belong to the To-Do Runtime owner, and `collaboration.participant_started` and `collaboration.participant_completed` belong to the Collaborative Workflows owner. All of these names require central EventRecord registration and payload schemas before emission; Tools must not emit a To-Do or collaboration semantic event on the owner's behalf and must not treat a tool receipt as one.",
+        "file_sha256": "62ede04d56ef24109a9f2fb6e7c69f581a0da383eea3430a4239faac691622fd"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6500,
+        "text": "| `Plans/ToDo_Runtime.md` | `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, `todo.removed_from_current_list` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "todo.status_changed",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/Assistant_Plan_Runtime.md",
+        "line": 1017,
+        "text": "To-Do lifecycle events (`todo.created`, `todo.status_changed`, and the rest of that family) belong to `Plans/ToDo_Runtime.md` and are never emitted by this owner. Schedule and window events belong to `Plans/Scheduling_and_Quota_Resume.md`; this owner emits only `assistant_plan.schedule_invalidated` to record that its own version change invalidated a binding.",
+        "file_sha256": "10c3eaf881604c06a1a25b60feab59c9873270d0179c5bf8fb5657aa54e2af8f"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 304,
+        "text": "  Every status change writes one TodoTransition record carrying from_status, to_status, cause_kind, cause_ref, expected_revision, and committed_revision, and a transition whose expected_revision does not match the item's current revision is rejected. Admission of a durable assignment or tool batch moves an item to in_progress; only an accepted outcome receipt satisfying the item's expected_outcome or output contract moves it to completed. A tool call returning successfully is evidence about the tool and not about the outcome. There is no bulk status event: changing five items emits five todo.status_changed records so an audit can see which receipt justified each one.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 643,
+        "text": "The required semantic event names are `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list`. All seven require central EventRecord registration and payload schemas before emission; until then the controller records only its typed result, receipt, and projection.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 645,
+        "text": "`todo.status_changed` carries `from_status`, `to_status`, `cause_kind`, `cause_ref`, `expected_revision`, and `committed_revision`. There is deliberately no bulk status event: a change to five items emits five `todo.status_changed` records, so an audit can see which receipt justified each one.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 665,
+        "text": "| `status` | Independently justified per-item transition \u2192 `todo.status_changed` | Exactly one `TodoTransition` per actual status change, with current cause, evidence and expected/committed revisions. No bulk status event; no bare historical or provider status assertion. |",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 672,
+        "text": "Current work admission has no direct historical `field` operation: a validated `TodoWorkBinding` uses `todo.work_bound` after admission; any resulting status change also has its own `TodoTransition` and `todo.status_changed`. Do not infer binding from `owner_hint`, title or position. The controller's existing add, split, reorder, dependency, skip and reopen proposals are decomposed into their actual validated per-item creations, updates, removals, binding changes and transitions. There is no new split, replacement or bulk status event. A split/restructure preserves or explicitly resolves active work through the existing list replacement disposition; it never silently drops an omitted item.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 691,
+        "text": "  DL-042 preserves chat.plan_todo_updated as historical readable identity without automatic aliasing or new legacy append authority. The adjacent per-operation mapping is normative: item_created maps to todo.created, item_removed to todo.removed_from_current_list, title to todo.updated, independently justified status to todo.status_changed, dependencies to current depends_on and todo.dependency_changed, and order_index to current display_order and todo.reordered. Historical summary, owner_hint, verification_hint, and notes have no established TodoItemV2 destination and remain explicit technical gaps. Current work admission uses todo.work_bound with an exact TodoWorkBinding; it is never inferred from historical hints. Each future event requires separate central admission and complete schema, append, replay, retention, projection and checkpoint bindings before emission. Historical reads preserve original identity and never manufacture current revisions, bindings or outcome proof. Controller proposal-only, graph/currentness, per-item evidence, atomic mutation and no-bulk-status rules remain unchanged. The existing import cause representation remains a technical gap because import is absent from the current TodoTransition cause enum.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/Tools.md",
+        "line": 2429,
+        "text": "The tool layer emits its existing tool lifecycle and denial events unchanged. The semantic events that this section depends on \u2014 `todo.created`, `todo.updated`, `todo.status_changed`, `todo.work_bound`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list` \u2014 belong to the To-Do Runtime owner, and `collaboration.participant_started` and `collaboration.participant_completed` belong to the Collaborative Workflows owner. All of these names require central EventRecord registration and payload schemas before emission; Tools must not emit a To-Do or collaboration semantic event on the owner's behalf and must not treat a tool receipt as one.",
+        "file_sha256": "62ede04d56ef24109a9f2fb6e7c69f581a0da383eea3430a4239faac691622fd"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6500,
+        "text": "| `Plans/ToDo_Runtime.md` | `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, `todo.removed_from_current_list` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line": 6679,
+        "text": "Current work status remains with ToDoController and ordinary transcript; loop/no-progress taxonomy remains Run_Modes. No payload or alias is translated to todo.updated, todo.status_changed or any workflow event by this exact owner contract.",
+        "file_sha256": "ef69bf4a820e1cdd66016beb7644613a6b10e8b651346b7981df3434ab735d0e"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "todo.updated",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 643,
+        "text": "The required semantic event names are `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list`. All seven require central EventRecord registration and payload schemas before emission; until then the controller records only its typed result, receipt, and projection.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 663,
+        "text": "| `title` | Validated current item title update \u2192 `todo.updated` | Change the current title against the expected revision; title matching is not scope or work identity. |",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 691,
+        "text": "  DL-042 preserves chat.plan_todo_updated as historical readable identity without automatic aliasing or new legacy append authority. The adjacent per-operation mapping is normative: item_created maps to todo.created, item_removed to todo.removed_from_current_list, title to todo.updated, independently justified status to todo.status_changed, dependencies to current depends_on and todo.dependency_changed, and order_index to current display_order and todo.reordered. Historical summary, owner_hint, verification_hint, and notes have no established TodoItemV2 destination and remain explicit technical gaps. Current work admission uses todo.work_bound with an exact TodoWorkBinding; it is never inferred from historical hints. Each future event requires separate central admission and complete schema, append, replay, retention, projection and checkpoint bindings before emission. Historical reads preserve original identity and never manufacture current revisions, bindings or outcome proof. Controller proposal-only, graph/currentness, per-item evidence, atomic mutation and no-bulk-status rules remain unchanged. The existing import cause representation remains a technical gap because import is absent from the current TodoTransition cause enum.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/Tools.md",
+        "line": 2429,
+        "text": "The tool layer emits its existing tool lifecycle and denial events unchanged. The semantic events that this section depends on \u2014 `todo.created`, `todo.updated`, `todo.status_changed`, `todo.work_bound`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list` \u2014 belong to the To-Do Runtime owner, and `collaboration.participant_started` and `collaboration.participant_completed` belong to the Collaborative Workflows owner. All of these names require central EventRecord registration and payload schemas before emission; Tools must not emit a To-Do or collaboration semantic event on the owner's behalf and must not treat a tool receipt as one.",
+        "file_sha256": "62ede04d56ef24109a9f2fb6e7c69f581a0da383eea3430a4239faac691622fd"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6500,
+        "text": "| `Plans/ToDo_Runtime.md` | `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, `todo.removed_from_current_list` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 453,
+        "text": "Preserve existing `chat.plan_todo_updated` records as readable history under their original identity and existing access, retention and deletion rules. ToDo Runtime owns an operation-by-operation mapping for future mutations to the individually appropriate `todo.*` events, each subject to central admission and its full contract. No automatic alias to `todo.updated`, historical deletion or relabelling, bulk status event, revival of retired fields, or relaxation of proposal-only behavior is authorized. Status changes retain per-item causal receipts and expected/committed revisions. Historical fields without an established current destination remain readable historical fields, not permission to add current schema fields.",
+        "file_sha256": "31bd8137c7ae377b7271f6d563b812be84eae55c1fed0e0a4db9c4e89afb4f31"
+      },
+      {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line": 6679,
+        "text": "Current work status remains with ToDoController and ordinary transcript; loop/no-progress taxonomy remains Run_Modes. No payload or alias is translated to todo.updated, todo.status_changed or any workflow event by this exact owner contract.",
+        "file_sha256": "ef69bf4a820e1cdd66016beb7644613a6b10e8b651346b7981df3434ab735d0e"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  },
+  {
+    "event_type": "todo.work_bound",
+    "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+    "scope": "live Plans/**/*.md and **/*.json, excluding generated/governance, source ledgers and frozen resource copies; exact event-name search; registry exact membership and schema constants checked separately",
+    "hits": [
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 643,
+        "text": "The required semantic event names are `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list`. All seven require central EventRecord registration and payload schemas before emission; until then the controller records only its typed result, receipt, and projection.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 672,
+        "text": "Current work admission has no direct historical `field` operation: a validated `TodoWorkBinding` uses `todo.work_bound` after admission; any resulting status change also has its own `TodoTransition` and `todo.status_changed`. Do not infer binding from `owner_hint`, title or position. The controller's existing add, split, reorder, dependency, skip and reopen proposals are decomposed into their actual validated per-item creations, updates, removals, binding changes and transitions. There is no new split, replacement or bulk status event. A split/restructure preserves or explicitly resolves active work through the existing list replacement disposition; it never silently drops an omitted item.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/ToDo_Runtime.md",
+        "line": 691,
+        "text": "  DL-042 preserves chat.plan_todo_updated as historical readable identity without automatic aliasing or new legacy append authority. The adjacent per-operation mapping is normative: item_created maps to todo.created, item_removed to todo.removed_from_current_list, title to todo.updated, independently justified status to todo.status_changed, dependencies to current depends_on and todo.dependency_changed, and order_index to current display_order and todo.reordered. Historical summary, owner_hint, verification_hint, and notes have no established TodoItemV2 destination and remain explicit technical gaps. Current work admission uses todo.work_bound with an exact TodoWorkBinding; it is never inferred from historical hints. Each future event requires separate central admission and complete schema, append, replay, retention, projection and checkpoint bindings before emission. Historical reads preserve original identity and never manufacture current revisions, bindings or outcome proof. Controller proposal-only, graph/currentness, per-item evidence, atomic mutation and no-bulk-status rules remain unchanged. The existing import cause representation remains a technical gap because import is absent from the current TodoTransition cause enum.",
+        "file_sha256": "b929a5065f4bce5c4200f0287c6d6a6b1d03c8ecdc0ddde704a19ed89cef308d"
+      },
+      {
+        "path": "Plans/Tools.md",
+        "line": 2429,
+        "text": "The tool layer emits its existing tool lifecycle and denial events unchanged. The semantic events that this section depends on \u2014 `todo.created`, `todo.updated`, `todo.status_changed`, `todo.work_bound`, `todo.dependency_changed`, `todo.reordered`, and `todo.removed_from_current_list` \u2014 belong to the To-Do Runtime owner, and `collaboration.participant_started` and `collaboration.participant_completed` belong to the Collaborative Workflows owner. All of these names require central EventRecord registration and payload schemas before emission; Tools must not emit a To-Do or collaboration semantic event on the owner's behalf and must not treat a tool receipt as one.",
+        "file_sha256": "62ede04d56ef24109a9f2fb6e7c69f581a0da383eea3430a4239faac691622fd"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6500,
+        "text": "| `Plans/ToDo_Runtime.md` | `todo.created`, `todo.updated`, `todo.work_bound`, `todo.status_changed`, `todo.dependency_changed`, `todo.reordered`, `todo.removed_from_current_list` | `requires_central_adjudication` |",
+        "file_sha256": "1ebba8041d1bc249c11e05ec4464a7571e6151d82e9a8745f28b802b1ca94f82"
+      }
+    ],
+    "negative_evidence": {
+      "registry_exact_membership": false,
+      "dedicated_payload_schema_files": [],
+      "complete_per_family_binding_found": false
+    },
+    "reuse": "Original semantic owner listed below; CV-317/EventRecord, CV-339/SP-286 v2 full-value receipt and SP-278. Current existing source editions and keys are preserved. No complete exact-family producer+schema+consumer+checkpoint+withdrawal contract located; new bindings below are newly authored under deck-1 4b A (DL-411).",
+    "new_bindings": [
+      "closed payload schema",
+      "exact append and read-only recovery reader interfaces",
+      "per-effect original identity binding",
+      "canonical publication journal (not domain state)",
+      "no independent family checkpoint disposition",
+      "retry/custody/withdrawal predicates",
+      "criterion-12 oracle plan"
+    ]
+  }
+]
