@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L13172-L16668
+Source lines: L13172-L16879
 
-Source SHA256: `c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e`
+Source SHA256: `6f9ee10367dfacde3a7a55741993878f0d54ae02dc741c9d234132c25168321b`
 
 ---
 
@@ -2579,20 +2579,124 @@ plan_unit_id: SMPFS-320
 unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: |-
-  browser.context_shared 1.0.0 — newly authored owner contract, prepared without admission. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-433 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.c, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
-  Approved option A: Keep a separate sharing grant for each recipient chat. Sharing with another chat keeps earlier grants. Stop sharing with a named chat removes only that grant; Stop sharing without a chat removes every grant for the selected browser session. Sharing itself never copies page contents into chat.
-  Card **Sources:** `MAIN:Plans/UI_Command_Catalog.md:830-831`; `MAIN:Plans/UI_Command_Catalog.md:843-846`; `DS15:reports/event-authority-20261104/DS15.md:91-94`; `evidence:reviews/DS15-sol/REVIEW.md:55-61`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:99-104`; `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`.
-  Search: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/browser_context_shared-search.json; scope current top-level Plans Markdown/JSON and scripts Python at 30dc9245bc753dbe80693977a1b03e3278d73b85, excluding source ledgers/generated artifacts. Required behavior exists; no complete exact-family technical binding was found. DL-045 permits newly authored technical bindings; DL-433 resolves only the stated behavior choice. Reuse SP-278/SP-286/CV-339/CV-366/SP-337 and actual existing command/Doctor owner outcomes.
-  Producer: Browser session sharing controller for cmd.browser.share_with_agent commits one recipient-chat grant. The resolved recipient must have the same actual subject scope. Preserve every prior grant, including grants to other chats. There is one grant per recipient chat; an already-held grant retains its existing grant identity. This records sharing authority only; no page body, screenshot, DOM, selection, capture chip, message send or browser.context_captured effect follows.
-  Scope and identity: actual Project or application namespace selected by the owning component, never current focus, time or a fabricated Project. This family has scope_policy=application_or_project. Original event_id is allocated once and retained. Idempotency recipe: application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array ["browser.context_shared", "1.0.0", actual scope map with UTF-8 sorted keys, operation_id]). Application server_id and original_operation_id resolve from the immutable owner operation source; Project partition is encoded project~base64url, app partition is app. scope_key is SHA-256 of the canonical MessagePack scope map in UTF-8 key order. Retried caller-supplied CV-317 semantic body must equal the original; Storage-assigned sequence and timestamps are excluded from retry comparison and independently authenticated by full-value original custody.
-  Closed payload: Plans/ds15_browser_context_shared.schema.json; closed original transition/source schemas: Plans/ds15_deck2_context.schema.json and Plans/ds15_deck2_sources.schema.json, own definitions by exact event name. No raw content, credentials, file paths, executable/configuration bodies, cookies, captures or provider data. All string identifiers/ref fields fully match their schema at the real boundary, including LF refusal. Numbers (sweep 2026-11-08): current inputs follow CV-1100 and SP-1100: raw JSON through loads_current_json, current_integer at every schema integer slot with that slot's own bounds, storage_uint64 for Storage sequence, generation and offset metadata, storage_value_bytes(EVENT_VALUE) for inline-size and identity-preimage bytes, full_value_commitment for CV-339 and the qualified JCS of the CV-317 projection, owner integer paths type-sensitive, before a new append. Retained originals keep the frozen ds15-v1 profile they were written under, selected only through SP-1101 (sweep 2026-11-11): a retained reader or retry resolver first takes one selection from the one write receipt Storage sealed with that exact original (its Storage instance, original ref and CV-339 commitment), never from the Storage instance or family alone, where no custody or no receipt is the existing unavailable contract and more than one receipt or an uninstalled recipe is unsupported, never a fallback to the current or another recipe, and a new append takes the writer's own recipe without reading a receipt; it then resolves the original once through the shared RetainedDispatcher, whose sealed owner authenticates the fetched bytes by their CV-339 commitment and whose frozen verifier recomputes the original, so a coherently rewritten original refuses. Timestamps follow CV-1101 through the shared predicate: every format: date-time takes the EventRecord profile and the Storage-assigned EventRecord observed and persisted times take CV-253's storage_utc_z, for current inputs and retained originals alike; a skipped past format check authorizes no history. No new cap, number codec or date-time grammar is introduced. SP-337 resolves bodies over the 16384-byte inline boundary by original owner payload references; this bounded metadata schema grants no oversized-inline exception. Measure complete encoded envelope payload and checkpoint.
-  Original source and custody: outcome_ref resolves independently retained owning-component record bytes, never a caller's matching assertion. Reparse and validate the closed exact-family source; join original payload, event_type, scope, Storage instance, original operation identity and original transition observations field by field. The source bank in static fixtures models this owner resolver, not a new production database. Adopt SP-286 / CV-339 full-value original/first-AppendReceipt custody. Commit original transition/source, freeze event, single-writer append/dedupe, retain first receipt and full-value commitment, then publish. Missing original, incoherent closure or unavailable source blocks publication/recovery. Backup/restore preserves original source/log/receipt/consumption closure together. Current authorization, Project/chat permissions, deletion/redaction and sharing withdrawal are rechecked on read; a checkpoint grants no access.
-  Replay and transitions: retry/lost acknowledgement returns original event_id, immutable outcome and first receipt with zero repeated effects. Recover a missing append with original identity only; never regrant, revoke again, update, remove or issue another notice. Current writer/retry refuses projector_replay_only as replay_only_not_appendable; retained supported 1.0.0 replay-only originals remain readable after authenticating their original transition and source, whatever today's live state. Retained history never requires a disposed current transition control; current disclosure/access/deletion and withdrawal still fence it. Ordinary replay dispatches no command.
-  Consumer and checkpoint: reader.ds15.browser_context_shared.v1@1.0.0 is the exact operating browser.context_shared history reader and reads only browser.context_shared@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token; key projector.checkpoint.ds15.browser_context_shared:{scope_key}, closed value Plans/ds15_browser_context_shared_checkpoint.schema.json. Physical proposed value: derived redb, coordination_and_storage budget, messagepack_canonical, full encoded value at most 16384 bytes (SP-339/SP-340). This task appends no storage-value registry row and authorizes no physical write/advance. Capture CURRENT-selected complete global range and live snapshot; persist only the nine-field token, never redb_snapshot_id. Scan every global row, resolve each matching original, join event id/type/scope/partition/Storage sequence. Advance by atomic CAS of complete prior and new checkpoint in one redb transaction. Missing rows, contradictions, mismatched token/Storage/snapshot/source, changed access or reader version preserve prior. through_sequence_id is the global scanned frontier and last_event_id the last verified match; no checkpoint before first match, a zero-match suffix keeps the earlier last event. Rebuild requires complete retained prefix and fresh permissions.
-  Retention: Event retention adopts DL-401 G10 / RP-CHAT-THREAD-LIFETIME@1.0.0 from the landed Plans/Decision_Log.md entry on origin/main: the payload thread_id is the governing recipient chat, including No project. At most 250000 per chat then linked successor; no records dropped, holds and chat deletion deadlines apply. The policy object is on Plans/storage_value_registry.json's retention_policies list. Checkpoint retention_policy_ref=PENDING_RETENTION_DECISION. Exact question: What retention and deletion rule governs the scope-wide browser.context_shared reader checkpoint when its source events belong to different recipient chats? Current chat permissions and deletion fences apply even while this assignment is pending. Retention premise evidence is DL-401 and G10/G11/G14 as named for this exact family in Plans/storage-plan.md, landed on origin/main; those lines are byte-identical at origin/plans/ea-retention-cards2-20261105 commit 9b76338594c6f1ca75de6c757e7a8b98ab68e229; none of items 4.c-4.f changes that grouping. Referenced content follows its own independently approved lifetime, redaction and read access.
-  Compatibility and withdrawal: exact 1.0.0 writer/reader/schema only. Unknown version/field fails closed. Writer withdrawal uses committed admission frontier, refuses new admissions and drains only already-admitted original outcomes/receipts; reader withdrawal fences CAS and marks checkpoints withdrawn. Reinstallation needs current authorization and a complete retained-source rebuild. No fabricated old recipe selector; shared number/format historical-selector defects remain explicit sweep work.
-  Oracles: ATS-329's exact browser.context_shared section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_shared. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. Registry membership remains ABSENT; no admission, new feature, Decision Log entry or readiness claim.
+canonical_text: "browser.context_shared 1.0.0 — newly authored owner contract, prepared without admission. This exact\
+  \ family independently adopts the following bindings, not a sibling's contract. Source: DL-433 landed\
+  \ in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented\
+  \ deck item 4.c, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words\
+  \ alone: \"i approve all of it\". The deck's fast-reply rule selects A; the option below is the card\
+  \ author's wording, not a Jared quotation.\nApproved option A: Keep a separate sharing grant for each\
+  \ recipient chat. Sharing with another chat keeps earlier grants. Stop sharing with a named chat removes\
+  \ only that grant; Stop sharing without a chat removes every grant for the selected browser session.\
+  \ Sharing itself never copies page contents into chat.\nCard **Sources:** `MAIN:Plans/UI_Command_Catalog.md:830-831`;\
+  \ `MAIN:Plans/UI_Command_Catalog.md:843-846`; `DS15:reports/event-authority-20261104/DS15.md:91-94`;\
+  \ `evidence:reviews/DS15-sol/REVIEW.md:55-61`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:99-104`;\
+  \ `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`.\nSearch: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/browser_context_shared-search.json;\
+  \ scope current top-level Plans Markdown/JSON and scripts Python at 30dc9245bc753dbe80693977a1b03e3278d73b85,\
+  \ excluding source ledgers/generated artifacts. Required behavior exists; no complete exact-family technical\
+  \ binding was found. DL-045 permits newly authored technical bindings; DL-433 resolves only the stated\
+  \ behavior choice. Reuse SP-278/SP-286/CV-339/CV-366/SP-337 and actual existing command/Doctor owner\
+  \ outcomes.\nProducer: Browser session sharing controller for cmd.browser.share_with_agent commits one\
+  \ recipient-chat grant. The resolved recipient must have the same actual subject scope. Preserve every\
+  \ prior grant, including grants to other chats. There is one grant per recipient chat; an already-held\
+  \ grant retains its existing grant identity. This records sharing authority only; no page body, screenshot,\
+  \ DOM, selection, capture chip, message send or browser.context_captured effect follows.\nScope and\
+  \ identity: actual Project or application namespace selected by the owning component, never current\
+  \ focus, time or a fabricated Project. This family has scope_policy=application_or_project. Original\
+  \ event_id is allocated once and retained. Idempotency recipe: application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)};\
+  \ Project scope: sha256(canonical MessagePack array [\"browser.context_shared\", \"1.0.0\", actual scope\
+  \ map with UTF-8 sorted keys, operation_id]). Application server_id and original_operation_id resolve\
+  \ from the immutable owner operation source; Project partition is encoded project~base64url, app partition\
+  \ is app. scope_key is SHA-256 of the canonical MessagePack scope map in UTF-8 key order. Retried caller-supplied\
+  \ CV-317 semantic body must equal the original; Storage-assigned sequence and timestamps are excluded\
+  \ from retry comparison and independently authenticated by full-value original custody.\nClosed payload:\
+  \ Plans/ds15_browser_context_shared.schema.json; closed original transition/source schemas: Plans/ds15_deck2_context.schema.json\
+  \ and Plans/ds15_deck2_sources.schema.json, own definitions by exact event name. No raw content, credentials,\
+  \ file paths, executable/configuration bodies, cookies, captures or provider data. All string identifiers/ref\
+  \ fields fully match their schema at the real boundary, including LF refusal. Numbers (sweep 2026-11-08):\
+  \ current inputs follow CV-1100 and SP-1100: raw JSON through loads_current_json, current_integer at\
+  \ every schema integer slot with that slot's own bounds, storage_uint64 for Storage sequence, generation\
+  \ and offset metadata, storage_value_bytes(EVENT_VALUE) for inline-size and identity-preimage bytes,\
+  \ full_value_commitment for CV-339 and the qualified JCS of the CV-317 projection, owner integer paths\
+  \ type-sensitive, before a new append. Retained originals keep the frozen ds15-v1 profile they were\
+  \ written under, selected only through SP-1101 (sweep 2026-11-11): a retained reader or retry resolver\
+  \ first takes one selection from the one write receipt Storage sealed with that exact original (its\
+  \ Storage instance, original ref and CV-339 commitment), never from the Storage instance or family alone,\
+  \ where no custody or no receipt is the existing unavailable contract and more than one receipt or an\
+  \ uninstalled recipe is unsupported, never a fallback to the current or another recipe, and a new append\
+  \ takes the writer's own recipe without reading a receipt; it then resolves the original once through\
+  \ the shared RetainedDispatcher, whose sealed owner authenticates the fetched bytes by their CV-339\
+  \ commitment and whose frozen verifier recomputes the original, so a coherently rewritten original refuses.\
+  \ Timestamps follow CV-1101 through the shared predicate: every format: date-time takes the EventRecord\
+  \ profile and the Storage-assigned EventRecord observed and persisted times take CV-253's storage_utc_z,\
+  \ for current inputs and retained originals alike; a skipped past format check authorizes no history.\
+  \ No new cap, number codec or date-time grammar is introduced. SP-337 resolves bodies over the 16384-byte\
+  \ inline boundary by original owner payload references; this bounded metadata schema grants no oversized-inline\
+  \ exception. Measure complete encoded envelope payload and checkpoint.\nOriginal source and custody:\
+  \ outcome_ref resolves independently retained owning-component record bytes, never a caller's matching\
+  \ assertion. Reparse and validate the closed exact-family source; join original payload, event_type,\
+  \ scope, Storage instance, original operation identity and original transition observations field by\
+  \ field. The source bank in static fixtures models this owner resolver, not a new production database.\
+  \ Adopt SP-286 / CV-339 full-value original/first-AppendReceipt custody. Commit original transition/source,\
+  \ freeze event, single-writer append/dedupe, retain first receipt and full-value commitment, then publish.\
+  \ Missing original, incoherent closure or unavailable source blocks publication/recovery. Backup/restore\
+  \ preserves original source/log/receipt/consumption closure together. Current authorization, Project/chat\
+  \ permissions, deletion/redaction and sharing withdrawal are rechecked on read; a checkpoint grants\
+  \ no access.\nReplay and transitions: retry/lost acknowledgement returns original event_id, immutable\
+  \ outcome and first receipt with zero repeated effects. Recover a missing append with original identity\
+  \ only; never regrant, revoke again, update, remove or issue another notice. Current writer/retry refuses\
+  \ projector_replay_only as replay_only_not_appendable; retained supported 1.0.0 replay-only originals\
+  \ remain readable after authenticating their original transition and source, whatever today's live state.\
+  \ Retained history never requires a disposed current transition control; current disclosure/access/deletion\
+  \ and withdrawal still fence it. Ordinary replay dispatches no command.\nConsumer and checkpoint: reader.ds15.browser_context_shared.v1@1.0.0\
+  \ is the exact operating browser.context_shared history reader and reads only browser.context_shared@1.0.0.\
+  \ Adopt SP-278 and DL-076 nine-field durable read token; key projector.checkpoint.ds15.browser_context_shared:{scope_key},\
+  \ closed value Plans/ds15_browser_context_shared_checkpoint.schema.json. Physical proposed value: derived\
+  \ redb, coordination_and_storage budget, messagepack_canonical, full encoded value at most 16384 bytes\
+  \ (SP-339/SP-340). This task appends no storage-value registry row and authorizes no physical write/advance.\
+  \ Capture CURRENT-selected complete global range and live snapshot; persist only the nine-field token,\
+  \ never redb_snapshot_id. Scan every global row, resolve each matching original, join event id/type/scope/partition/Storage\
+  \ sequence. Advance by atomic CAS of complete prior and new checkpoint in one redb transaction. Missing\
+  \ rows, contradictions, mismatched token/Storage/snapshot/source, changed access or reader version preserve\
+  \ prior. through_sequence_id is the global scanned frontier and last_event_id the last verified match;\
+  \ no checkpoint before first match, a zero-match suffix keeps the earlier last event. Rebuild requires\
+  \ complete retained prefix and fresh permissions.\nRetention: Event retention adopts DL-401 G10 / RP-CHAT-THREAD-LIFETIME@1.0.0\
+  \ from the landed Plans/Decision_Log.md entry on origin/main: the payload thread_id is the governing\
+  \ recipient chat, including No project. At most 250000 per chat then linked successor; no records dropped,\
+  \ holds and chat deletion deadlines apply. The policy object is on Plans/storage_value_registry.json's\
+  \ retention_policies list. Checkpoint retention_policy_ref=PENDING_RETENTION_DECISION. Exact question:\
+  \ What retention and deletion rule governs the scope-wide browser.context_shared reader checkpoint when\
+  \ its source events belong to different recipient chats? Current chat permissions and deletion fences\
+  \ apply even while this assignment is pending. Retention premise evidence is DL-401 and G10/G11/G14\
+  \ as named for this exact family in Plans/storage-plan.md, landed on origin/main; those lines are byte-identical\
+  \ at origin/plans/ea-retention-cards2-20261105 commit 9b76338594c6f1ca75de6c757e7a8b98ab68e229; none\
+  \ of items 4.c-4.f changes that grouping. Referenced content follows its own independently approved\
+  \ lifetime, redaction and read access.\nCompatibility and withdrawal: exact 1.0.0 writer/reader/schema\
+  \ only. Unknown version/field fails closed. Writer withdrawal uses committed admission frontier, refuses\
+  \ new admissions and drains only already-admitted original outcomes/receipts; reader withdrawal fences\
+  \ CAS and marks checkpoints withdrawn. Reinstallation needs current authorization and a complete retained-source\
+  \ rebuild. No fabricated old recipe selector; shared number/format historical-selector defects remain\
+  \ explicit sweep work.\nOracles: ATS-329's exact browser.context_shared section, Plans/ds15_deck2_fixtures.json\
+  \ own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_shared. Each\
+  \ negative has one declared defect and explicit coherent derived observations; fixture source/custody\
+  \ joins are verified against actual retained values. Native execution NOT_RUN. Registry membership remains\
+  \ ABSENT; no admission, new feature, Decision Log entry or readiness claim.\n\nPNC-019 s4r retention\
+  \ binding for `browser.context_shared` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`,\
+  \ under DL-401, DL-459.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\"\
+  , \"cardinality_scope\": \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\"\
+  : 250000, \"overflow_action\": \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is\
+  \ the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries\
+  \ roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours\
+  \ and backup bytes within 30 days; holds delay purge without restoring visibility.\n\nThis paragraph\
+  \ supersedes earlier pending statements only for the exact assigned facets above. All independent source,\
+  \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
+  \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
+  \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n\nDL-459 assigns\
+  \ exact checkpoint `projector.checkpoint.ds15.browser_context_shared:{scope_key}` to `RP-PROJECTION-3GEN@1.0.0`:\
+  \ retain the current plus two replaced generations, each replaced copy for seven days after its replacement,\
+  \ subject to holds and required dependencies. Rebuild only from retained authorized originals. This\
+  \ supersedes the earlier checkpoint-pending statement, grants no source keepalive and creates no application\
+  \ edition.\n"
 gui_related: false
 gui_classification_reason: Typed event/source identity, persistence, custody and reader contract.
 depends_on:
@@ -2633,20 +2737,127 @@ plan_unit_id: SMPFS-321
 unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: |-
-  browser.context_share_revoked 1.0.0 — newly authored owner contract, prepared without admission. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-433 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.c, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
-  Approved option A: Keep a separate sharing grant for each recipient chat. Sharing with another chat keeps earlier grants. Stop sharing with a named chat removes only that grant; Stop sharing without a chat removes every grant for the selected browser session. Sharing itself never copies page contents into chat.
-  Card **Sources:** `MAIN:Plans/UI_Command_Catalog.md:830-831`; `MAIN:Plans/UI_Command_Catalog.md:843-846`; `DS15:reports/event-authority-20261104/DS15.md:91-94`; `evidence:reviews/DS15-sol/REVIEW.md:55-61`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:99-104`; `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`.
-  Search: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/browser_context_share_revoked-search.json; scope current top-level Plans Markdown/JSON and scripts Python at 30dc9245bc753dbe80693977a1b03e3278d73b85, excluding source ledgers/generated artifacts. Required behavior exists; no complete exact-family technical binding was found. DL-045 permits newly authored technical bindings; DL-433 resolves only the stated behavior choice. Reuse SP-278/SP-286/CV-339/CV-366/SP-337 and actual existing command/Doctor owner outcomes.
-  Producer: Browser session sharing controller for cmd.browser.revoke_share_with_agent commits removal. Normalize an omitted recipient to thread_id=null in this event; a named recipient removes only that grant, leaving all other grants intact; null removes every grant for the selected browser_session_id. Other browser sessions remain untouched. This revokes sharing authority only and never creates a capture or page-content record.
-  Scope and identity: actual Project or application namespace selected by the owning component, never current focus, time or a fabricated Project. This family has scope_policy=application_or_project. Original event_id is allocated once and retained. Idempotency recipe: application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array ["browser.context_share_revoked", "1.0.0", actual scope map with UTF-8 sorted keys, operation_id]). Application server_id and original_operation_id resolve from the immutable owner operation source; Project partition is encoded project~base64url, app partition is app. scope_key is SHA-256 of the canonical MessagePack scope map in UTF-8 key order. Retried caller-supplied CV-317 semantic body must equal the original; Storage-assigned sequence and timestamps are excluded from retry comparison and independently authenticated by full-value original custody.
-  Closed payload: Plans/ds15_browser_context_share_revoked.schema.json; closed original transition/source schemas: Plans/ds15_deck2_context.schema.json and Plans/ds15_deck2_sources.schema.json, own definitions by exact event name. No raw content, credentials, file paths, executable/configuration bodies, cookies, captures or provider data. All string identifiers/ref fields fully match their schema at the real boundary, including LF refusal. Numbers (sweep 2026-11-08): current inputs follow CV-1100 and SP-1100: raw JSON through loads_current_json, current_integer at every schema integer slot with that slot's own bounds, storage_uint64 for Storage sequence, generation and offset metadata, storage_value_bytes(EVENT_VALUE) for inline-size and identity-preimage bytes, full_value_commitment for CV-339 and the qualified JCS of the CV-317 projection, owner integer paths type-sensitive, before a new append. Retained originals keep the frozen ds15-v1 profile they were written under, selected only through SP-1101 (sweep 2026-11-11): a retained reader or retry resolver first takes one selection from the one write receipt Storage sealed with that exact original (its Storage instance, original ref and CV-339 commitment), never from the Storage instance or family alone, where no custody or no receipt is the existing unavailable contract and more than one receipt or an uninstalled recipe is unsupported, never a fallback to the current or another recipe, and a new append takes the writer's own recipe without reading a receipt; it then resolves the original once through the shared RetainedDispatcher, whose sealed owner authenticates the fetched bytes by their CV-339 commitment and whose frozen verifier recomputes the original, so a coherently rewritten original refuses. Timestamps follow CV-1101 through the shared predicate: every format: date-time takes the EventRecord profile and the Storage-assigned EventRecord observed and persisted times take CV-253's storage_utc_z, for current inputs and retained originals alike; a skipped past format check authorizes no history. No new cap, number codec or date-time grammar is introduced. SP-337 resolves bodies over the 16384-byte inline boundary by original owner payload references; this bounded metadata schema grants no oversized-inline exception. Measure complete encoded envelope payload and checkpoint.
-  Original source and custody: outcome_ref resolves independently retained owning-component record bytes, never a caller's matching assertion. Reparse and validate the closed exact-family source; join original payload, event_type, scope, Storage instance, original operation identity and original transition observations field by field. The source bank in static fixtures models this owner resolver, not a new production database. Adopt SP-286 / CV-339 full-value original/first-AppendReceipt custody. Commit original transition/source, freeze event, single-writer append/dedupe, retain first receipt and full-value commitment, then publish. Missing original, incoherent closure or unavailable source blocks publication/recovery. Backup/restore preserves original source/log/receipt/consumption closure together. Current authorization, Project/chat permissions, deletion/redaction and sharing withdrawal are rechecked on read; a checkpoint grants no access.
-  Replay and transitions: retry/lost acknowledgement returns original event_id, immutable outcome and first receipt with zero repeated effects. Recover a missing append with original identity only; never regrant, revoke again, update, remove or issue another notice. Current writer/retry refuses projector_replay_only as replay_only_not_appendable; retained supported 1.0.0 replay-only originals remain readable after authenticating their original transition and source, whatever today's live state. Retained history never requires a disposed current transition control; current disclosure/access/deletion and withdrawal still fence it. Ordinary replay dispatches no command.
-  Consumer and checkpoint: reader.ds15.browser_context_share_revoked.v1@1.0.0 is the exact operating browser.context_share_revoked history reader and reads only browser.context_share_revoked@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token; key projector.checkpoint.ds15.browser_context_share_revoked:{scope_key}, closed value Plans/ds15_browser_context_share_revoked_checkpoint.schema.json. Physical proposed value: derived redb, coordination_and_storage budget, messagepack_canonical, full encoded value at most 16384 bytes (SP-339/SP-340). This task appends no storage-value registry row and authorizes no physical write/advance. Capture CURRENT-selected complete global range and live snapshot; persist only the nine-field token, never redb_snapshot_id. Scan every global row, resolve each matching original, join event id/type/scope/partition/Storage sequence. Advance by atomic CAS of complete prior and new checkpoint in one redb transaction. Missing rows, contradictions, mismatched token/Storage/snapshot/source, changed access or reader version preserve prior. through_sequence_id is the global scanned frontier and last_event_id the last verified match; no checkpoint before first match, a zero-match suffix keeps the earlier last event. Rebuild requires complete retained prefix and fresh permissions.
-  Retention: DL-401 G10 assigns this event family to Chat, but an omitted-chat revoke can affect several recipient chats. Event retention_policy_ref=PENDING_RETENTION_DECISION. Exact question: For one browser.context_share_revoked record that removes every session grant across several chats, which chat or combination of chat deletion/hold lifetimes governs that record? Do not silently select a chat, split one command into new event behavior, or keep it indefinitely. Checkpoint retention_policy_ref=PENDING_RETENTION_DECISION. Exact question: What retention and deletion rule governs the scope-wide browser.context_share_revoked reader checkpoint when its source events belong to different recipient chats? Current chat permissions and deletion fences apply even while this assignment is pending. Retention premise evidence is DL-401 and G10/G11/G14 as named for this exact family in Plans/storage-plan.md, landed on origin/main; those lines are byte-identical at origin/plans/ea-retention-cards2-20261105 commit 9b76338594c6f1ca75de6c757e7a8b98ab68e229; none of items 4.c-4.f changes that grouping. Referenced content follows its own independently approved lifetime, redaction and read access.
-  Compatibility and withdrawal: exact 1.0.0 writer/reader/schema only. Unknown version/field fails closed. Writer withdrawal uses committed admission frontier, refuses new admissions and drains only already-admitted original outcomes/receipts; reader withdrawal fences CAS and marks checkpoints withdrawn. Reinstallation needs current authorization and a complete retained-source rebuild. No fabricated old recipe selector; shared number/format historical-selector defects remain explicit sweep work.
-  Oracles: ATS-329's exact browser.context_share_revoked section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. Registry membership remains ABSENT; no admission, new feature, Decision Log entry or readiness claim.
+canonical_text: "browser.context_share_revoked 1.0.0 — newly authored owner contract, prepared without admission. This\
+  \ exact family independently adopts the following bindings, not a sibling's contract. Source: DL-433\
+  \ landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105,\
+  \ presented deck item 4.c, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30.\
+  \ Jared's words alone: \"i approve all of it\". The deck's fast-reply rule selects A; the option below\
+  \ is the card author's wording, not a Jared quotation.\nApproved option A: Keep a separate sharing grant\
+  \ for each recipient chat. Sharing with another chat keeps earlier grants. Stop sharing with a named\
+  \ chat removes only that grant; Stop sharing without a chat removes every grant for the selected browser\
+  \ session. Sharing itself never copies page contents into chat.\nCard **Sources:** `MAIN:Plans/UI_Command_Catalog.md:830-831`;\
+  \ `MAIN:Plans/UI_Command_Catalog.md:843-846`; `DS15:reports/event-authority-20261104/DS15.md:91-94`;\
+  \ `evidence:reviews/DS15-sol/REVIEW.md:55-61`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:99-104`;\
+  \ `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`.\nSearch: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/browser_context_share_revoked-search.json;\
+  \ scope current top-level Plans Markdown/JSON and scripts Python at 30dc9245bc753dbe80693977a1b03e3278d73b85,\
+  \ excluding source ledgers/generated artifacts. Required behavior exists; no complete exact-family technical\
+  \ binding was found. DL-045 permits newly authored technical bindings; DL-433 resolves only the stated\
+  \ behavior choice. Reuse SP-278/SP-286/CV-339/CV-366/SP-337 and actual existing command/Doctor owner\
+  \ outcomes.\nProducer: Browser session sharing controller for cmd.browser.revoke_share_with_agent commits\
+  \ removal. Normalize an omitted recipient to thread_id=null in this event; a named recipient removes\
+  \ only that grant, leaving all other grants intact; null removes every grant for the selected browser_session_id.\
+  \ Other browser sessions remain untouched. This revokes sharing authority only and never creates a capture\
+  \ or page-content record.\nScope and identity: actual Project or application namespace selected by the\
+  \ owning component, never current focus, time or a fabricated Project. This family has scope_policy=application_or_project.\
+  \ Original event_id is allocated once and retained. Idempotency recipe: application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)};\
+  \ Project scope: sha256(canonical MessagePack array [\"browser.context_share_revoked\", \"1.0.0\", actual\
+  \ scope map with UTF-8 sorted keys, operation_id]). Application server_id and original_operation_id\
+  \ resolve from the immutable owner operation source; Project partition is encoded project~base64url,\
+  \ app partition is app. scope_key is SHA-256 of the canonical MessagePack scope map in UTF-8 key order.\
+  \ Retried caller-supplied CV-317 semantic body must equal the original; Storage-assigned sequence and\
+  \ timestamps are excluded from retry comparison and independently authenticated by full-value original\
+  \ custody.\nClosed payload: Plans/ds15_browser_context_share_revoked.schema.json; closed original transition/source\
+  \ schemas: Plans/ds15_deck2_context.schema.json and Plans/ds15_deck2_sources.schema.json, own definitions\
+  \ by exact event name. No raw content, credentials, file paths, executable/configuration bodies, cookies,\
+  \ captures or provider data. All string identifiers/ref fields fully match their schema at the real\
+  \ boundary, including LF refusal. Numbers (sweep 2026-11-08): current inputs follow CV-1100 and SP-1100:\
+  \ raw JSON through loads_current_json, current_integer at every schema integer slot with that slot's\
+  \ own bounds, storage_uint64 for Storage sequence, generation and offset metadata, storage_value_bytes(EVENT_VALUE)\
+  \ for inline-size and identity-preimage bytes, full_value_commitment for CV-339 and the qualified JCS\
+  \ of the CV-317 projection, owner integer paths type-sensitive, before a new append. Retained originals\
+  \ keep the frozen ds15-v1 profile they were written under, selected only through SP-1101 (sweep 2026-11-11):\
+  \ a retained reader or retry resolver first takes one selection from the one write receipt Storage sealed\
+  \ with that exact original (its Storage instance, original ref and CV-339 commitment), never from the\
+  \ Storage instance or family alone, where no custody or no receipt is the existing unavailable contract\
+  \ and more than one receipt or an uninstalled recipe is unsupported, never a fallback to the current\
+  \ or another recipe, and a new append takes the writer's own recipe without reading a receipt; it then\
+  \ resolves the original once through the shared RetainedDispatcher, whose sealed owner authenticates\
+  \ the fetched bytes by their CV-339 commitment and whose frozen verifier recomputes the original, so\
+  \ a coherently rewritten original refuses. Timestamps follow CV-1101 through the shared predicate: every\
+  \ format: date-time takes the EventRecord profile and the Storage-assigned EventRecord observed and\
+  \ persisted times take CV-253's storage_utc_z, for current inputs and retained originals alike; a skipped\
+  \ past format check authorizes no history. No new cap, number codec or date-time grammar is introduced.\
+  \ SP-337 resolves bodies over the 16384-byte inline boundary by original owner payload references; this\
+  \ bounded metadata schema grants no oversized-inline exception. Measure complete encoded envelope payload\
+  \ and checkpoint.\nOriginal source and custody: outcome_ref resolves independently retained owning-component\
+  \ record bytes, never a caller's matching assertion. Reparse and validate the closed exact-family source;\
+  \ join original payload, event_type, scope, Storage instance, original operation identity and original\
+  \ transition observations field by field. The source bank in static fixtures models this owner resolver,\
+  \ not a new production database. Adopt SP-286 / CV-339 full-value original/first-AppendReceipt custody.\
+  \ Commit original transition/source, freeze event, single-writer append/dedupe, retain first receipt\
+  \ and full-value commitment, then publish. Missing original, incoherent closure or unavailable source\
+  \ blocks publication/recovery. Backup/restore preserves original source/log/receipt/consumption closure\
+  \ together. Current authorization, Project/chat permissions, deletion/redaction and sharing withdrawal\
+  \ are rechecked on read; a checkpoint grants no access.\nReplay and transitions: retry/lost acknowledgement\
+  \ returns original event_id, immutable outcome and first receipt with zero repeated effects. Recover\
+  \ a missing append with original identity only; never regrant, revoke again, update, remove or issue\
+  \ another notice. Current writer/retry refuses projector_replay_only as replay_only_not_appendable;\
+  \ retained supported 1.0.0 replay-only originals remain readable after authenticating their original\
+  \ transition and source, whatever today's live state. Retained history never requires a disposed current\
+  \ transition control; current disclosure/access/deletion and withdrawal still fence it. Ordinary replay\
+  \ dispatches no command.\nConsumer and checkpoint: reader.ds15.browser_context_share_revoked.v1@1.0.0\
+  \ is the exact operating browser.context_share_revoked history reader and reads only browser.context_share_revoked@1.0.0.\
+  \ Adopt SP-278 and DL-076 nine-field durable read token; key projector.checkpoint.ds15.browser_context_share_revoked:{scope_key},\
+  \ closed value Plans/ds15_browser_context_share_revoked_checkpoint.schema.json. Physical proposed value:\
+  \ derived redb, coordination_and_storage budget, messagepack_canonical, full encoded value at most 16384\
+  \ bytes (SP-339/SP-340). This task appends no storage-value registry row and authorizes no physical\
+  \ write/advance. Capture CURRENT-selected complete global range and live snapshot; persist only the\
+  \ nine-field token, never redb_snapshot_id. Scan every global row, resolve each matching original, join\
+  \ event id/type/scope/partition/Storage sequence. Advance by atomic CAS of complete prior and new checkpoint\
+  \ in one redb transaction. Missing rows, contradictions, mismatched token/Storage/snapshot/source, changed\
+  \ access or reader version preserve prior. through_sequence_id is the global scanned frontier and last_event_id\
+  \ the last verified match; no checkpoint before first match, a zero-match suffix keeps the earlier last\
+  \ event. Rebuild requires complete retained prefix and fresh permissions.\nRetention: DL-401 G10 assigns\
+  \ this event family to Chat, but an omitted-chat revoke can affect several recipient chats. Event retention_policy_ref=PENDING_RETENTION_DECISION.\
+  \ Exact question: For one browser.context_share_revoked record that removes every session grant across\
+  \ several chats, which chat or combination of chat deletion/hold lifetimes governs that record? Do not\
+  \ silently select a chat, split one command into new event behavior, or keep it indefinitely. Checkpoint\
+  \ retention_policy_ref=PENDING_RETENTION_DECISION. Exact question: What retention and deletion rule\
+  \ governs the scope-wide browser.context_share_revoked reader checkpoint when its source events belong\
+  \ to different recipient chats? Current chat permissions and deletion fences apply even while this assignment\
+  \ is pending. Retention premise evidence is DL-401 and G10/G11/G14 as named for this exact family in\
+  \ Plans/storage-plan.md, landed on origin/main; those lines are byte-identical at origin/plans/ea-retention-cards2-20261105\
+  \ commit 9b76338594c6f1ca75de6c757e7a8b98ab68e229; none of items 4.c-4.f changes that grouping. Referenced\
+  \ content follows its own independently approved lifetime, redaction and read access.\nCompatibility\
+  \ and withdrawal: exact 1.0.0 writer/reader/schema only. Unknown version/field fails closed. Writer\
+  \ withdrawal uses committed admission frontier, refuses new admissions and drains only already-admitted\
+  \ original outcomes/receipts; reader withdrawal fences CAS and marks checkpoints withdrawn. Reinstallation\
+  \ needs current authorization and a complete retained-source rebuild. No fabricated old recipe selector;\
+  \ shared number/format historical-selector defects remain explicit sweep work.\nOracles: ATS-329's exact\
+  \ browser.context_share_revoked section, Plans/ds15_deck2_fixtures.json own family row, and python3\
+  \ scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked. Each negative has one declared\
+  \ defect and explicit coherent derived observations; fixture source/custody joins are verified against\
+  \ actual retained values. Native execution NOT_RUN. Registry membership remains ABSENT; no admission,\
+  \ new feature, Decision Log entry or readiness claim.\n\nPNC-019 s4r retention binding for `browser.context_share_revoked`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401,\
+  \ DL-458, DL-459.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\"\
+  , \"cardinality_scope\": \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\"\
+  : 250000, \"overflow_action\": \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is\
+  \ the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries\
+  \ roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours\
+  \ and backup bytes within 30 days; holds delay purge without restoring visibility.\n\nFor a cross-chat\
+  \ revoke, preserve the frozen affected-chat set and DL-458 last-affected-chat deletion anchor/count\
+  \ attribution; deleting the first affected chat is insufficient. DL-459 governs replaced reader copies,\
+  \ not source content.\n\nThis paragraph supersedes earlier pending statements only for the exact assigned\
+  \ facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their\
+  \ own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected\
+  \ backups and latest-25-run protection override cleanup without granting access. No unexpired/protected\
+  \ eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance\
+  \ clearance is granted.\n\nDL-459 assigns exact checkpoint `projector.checkpoint.ds15.browser_context_share_revoked:{scope_key}`\
+  \ to `RP-PROJECTION-3GEN@1.0.0`: retain the current plus two replaced generations, each replaced copy\
+  \ for seven days after its replacement, subject to holds and required dependencies. Rebuild only from\
+  \ retained authorized originals. This supersedes the earlier checkpoint-pending statement, grants no\
+  \ source keepalive and creates no application edition.\n"
 gui_related: false
 gui_classification_reason: Typed event/source identity, persistence, custody and reader contract.
 depends_on:
