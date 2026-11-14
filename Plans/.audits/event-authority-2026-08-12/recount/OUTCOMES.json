@@ -322,6 +322,10 @@
   {
    "event_type": "notebook.entry_superseded",
    "outcome": "registered"
+  },
+  {
+   "event_type": "notebook.transition_state_changed",
+   "outcome": "registered"
   }
  ]
 }
