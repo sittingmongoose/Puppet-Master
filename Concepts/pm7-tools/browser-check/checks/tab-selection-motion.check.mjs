@@ -239,6 +239,7 @@ export const tests = {
 				for (const [a, b, dwell] of plan) {
 					await t.page.mouse.move(off.x + tabs[a].c[0], off.y + tabs[a].c[1], { steps: 3 }); await t.page.waitForTimeout(500);
 					const t0 = await f.evaluate(() => performance.now());
+					if (t.args.film) await t.mark(`${look} ${w} reversal ${tabs[a].name} -> ${tabs[b].name} (${dwell} ms) -> back`);
 					await t.page.mouse.move(off.x + tabs[b].c[0], off.y + tabs[b].c[1], { steps: 3 }); await t.page.waitForTimeout(dwell);
 					await t.page.mouse.move(off.x + tabs[a].c[0], off.y + tabs[a].c[1], { steps: 3 }); await t.page.waitForTimeout(520);
 					revs.push({ a, b, dwell, t0, t1: await f.evaluate(() => performance.now()) });
