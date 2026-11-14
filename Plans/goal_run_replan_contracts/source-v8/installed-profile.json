@@ -1,0 +1,16 @@
+{
+  "schema": "pm.installed_source_profile_descriptor.v1",
+  "profile_id": "pm.executor.workflow_source.all_writers.v8",
+  "preimage": {
+    "path": "installed-profile-preimage.json",
+    "sha256": "2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155",
+    "bytes": 330641
+  },
+  "installed_contract_digest": "2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155",
+  "digest_rule": "sha256 of exact preimage file UTF-8 bytes, including final LF",
+  "source_status": "AUTHORED_NOT_INSTALLED",
+  "no_existing_workflow_enrollment": true,
+  "native": "NOT_RUN",
+  "Event_registry": "UNCHANGED",
+  "instances": "NOT_RUN"
+}

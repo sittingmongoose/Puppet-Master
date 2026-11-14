@@ -1,0 +1,16 @@
+{
+  "status": "FROZEN_AUTHORED_STOP_V3_PHASE_CORRECTION_PENDING_INDEPENDENT_REVIEW",
+  "profile": "pm.executor.workflow_source.all_writers.v8",
+  "scope": "Only frozen-v2 S-FIRST-STOP-ACQUISITION and S-READBACK-RELEASED-IDLE; first Goal-stopped held source and complete current readback union. No original source repin or durable-role change.",
+  "upstream_selector_correction": "AUTHENTICATED_ACCEPTED_V3_EXACT_SIX_JOINS_PER_PROFILE",
+  "native": "NOT_RUN",
+  "schema_instances": "NOT_RUN",
+  "canon": "UNCHANGED",
+  "Event_registry": "UNCHANGED",
+  "consumer_v7": "NOT_CAST_TO_V8",
+  "source_consistency": "PASS",
+  "independent_review": "PENDING",
+  "repository_validators": "NOT_RUN",
+  "full_original_cancellation": "SEPARATE_DEPENDENCY_NOT_SUPPLIED_BY_LIMITED_REVOCATION",
+  "additional_durable_roles": 0
+}

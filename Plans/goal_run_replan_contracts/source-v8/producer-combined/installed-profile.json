@@ -1,0 +1,13 @@
+{
+  "schema": "pm.installed_source_profile_descriptor.v1",
+  "profile_id": "pm.goal_run_certified.producer_source.v3",
+  "preimage": {
+    "path": "producer-combined/installed-profile-preimage.json",
+    "sha256": "5eed2713286ea610cb57be70e8b86411b6ed303c4ff0af25fe6a26172254c150",
+    "bytes": 3130
+  },
+  "installed_contract_digest": "5eed2713286ea610cb57be70e8b86411b6ed303c4ff0af25fe6a26172254c150",
+  "digest_rule": "sha256 of exact preimage file UTF-8 bytes, including final LF",
+  "source_status": "AUTHORED_NOT_INSTALLED",
+  "native": "NOT_RUN"
+}

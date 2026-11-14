@@ -1,0 +1,63 @@
+{
+ "schema_id": "pm.goal_run_replan.cancellation_dependencies.v1",
+ "status": "canonical_owner_contract_prepared_without_admission",
+ "owner_refs": [
+  "Plans/Executor_Protocol.md#EP-3101",
+  "Plans/Goal_Runtime_System.md#GRS-3100"
+ ],
+ "rule": "Full original cancellation of a v8-born Workflow is a separate genuine dependency. The limited execution revocation of Plans/goal_run_replan_contracts/source-v8/STOP-PROTOCOL.md (StopAcceptedRevocation, StopRevocationReadback, ExecutionRevocationReadback) never issues, substitutes for or counts as any item below, and a replan never performs cancellation (correction C7). Each item keeps its own owner, full source union and refusal; current source loss or an unsupported effect refuses rather than leaving the census.",
+ "dependencies": [
+  {
+   "id": "D-CANCEL-1",
+   "item": "Full original NativeMutationRequest and record_cancellation over the complete D05/D06 source union",
+   "owner": "Plans/Goal_Runtime_System.md#GRS-080 and Plans/Executor_Protocol.md#EP-118 (positive native cancellation)",
+   "v8_methods": [
+    "owner.workflow.executor_cancel.prepare_disposition.v3",
+    "owner.workflow.executor_cancel.publish_disposition.v3",
+    "owner.workflow.executor_cancel.recover_disposition.v3"
+   ]
+  },
+  {
+   "id": "D-CANCEL-2",
+   "item": "SchedulerStop recorded by the D01 source owner",
+   "owner": "Plans/Executor_Protocol.md#EP-118",
+   "v8_methods": [
+    "owner.executor.workflow_source.record_stop.v1",
+    "owner.executor.workflow_source.read_stop.v1"
+   ]
+  },
+  {
+   "id": "D-CANCEL-3",
+   "item": "Native cancel result and origin under the v8 profile-qualified workflow_cancel_result v7 and workflow_cancel_origin v7 headers",
+   "owner": "Plans/storage-plan.md#SP-312",
+   "v8_methods": [
+    "owner.workflow.executor_cancel.read_disposition.v3",
+    "owner.workflow.executor_cancel.read_retained_disposition.v3"
+   ]
+  },
+  {
+   "id": "D-CANCEL-4",
+   "item": "Effect cleanup and settlement of every in-flight effect (FileSafe, Process, bounded safe-stop); an unsupported or unknown effect owner stays unresolved and blocks dependent release",
+   "owner": "Plans/Executor_Protocol.md#EP-119 and Plans/storage-plan.md#SP-309",
+   "v8_methods": [
+    "executor.bounded_safestop.issue_original_safe_stop.v2",
+    "executor.bounded_safestop.read_original_safe_stop.v2",
+    "executor.bounded_safestop.recover_original_safe_stop.v2"
+   ]
+  },
+  {
+   "id": "D-CANCEL-5",
+   "item": "D06 positive cancellation Event goal_run.cancelled v3 from a genuine legal nonterminal Workflow, including blocked or stopped",
+   "owner": "Plans/Goal_Runtime_System.md#GRS-080",
+   "v8_methods": [
+    "owner.workflow.executor_cancel.publish_disposition.v3"
+   ]
+  }
+ ],
+ "scope": "Project Workflow scope only (CV-366 row goal_run.replanned: preserve_project_only; GRS-079 Project-bound source edition). No application Goal is converted and no retired child Goal or role concept is revived through these source shapes.",
+ "never": [
+  "present StopAcceptedRevocation or a limited readback as RunOperationResult(cancel), SchedulerStop or D06",
+  "publish goal_run.replanned with next_action cancel",
+  "erase an unsupported or unknown effect from the census to obtain release"
+ ]
+}
