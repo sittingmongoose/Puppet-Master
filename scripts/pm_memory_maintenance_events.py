@@ -110,6 +110,18 @@ def table_refusal(phase, facts):
 
 
 def require(phase, /, **facts):
+    # C12 isolates every implied row. The original refusal sites keep their
+    # entry points and evaluation order; each child reads only its own facts.
+    if phase in pm_memory_tables.PHASE_SPLITS:
+        fields = set()
+        for child in pm_memory_tables.PHASE_SPLITS[phase]:
+            table_rows(child)
+            fields.update(_TABLE_FIELDS[child])
+        if set(facts) != fields:
+            raise KeyError('observation fields differ from split table FIELDS: ' + phase)
+        for child in pm_memory_tables.PHASE_SPLITS[phase]:
+            require(child, **{key: facts[key] for key in _TABLE_FIELDS[child]})
+        return
     refusal = table_refusal(phase, facts)
     if refusal is not None:
         raise TableRefusal(phase, *refusal)
