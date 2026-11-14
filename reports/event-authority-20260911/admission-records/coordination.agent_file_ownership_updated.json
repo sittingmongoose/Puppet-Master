@@ -1,0 +1,39 @@
+{
+ "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
+ "event_type": "coordination.agent_file_ownership_updated",
+ "family_id": "event-family-coordination-agent-file-ownership-updated",
+ "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
+ "decision_ref": "Plans/Decision_Log.md#DL-529",
+ "decision_section_sha256": "7174bc50e259d65cc23810adcf8fd443686a86400976de2c4f92c29167955f0c",
+ "registry_before": {
+  "revision": "2026-11-14.9",
+  "sha256": "2214a810c3faaad0d92b8b5bb79498f5c55a4f92bb18bcf9c9d0e047952fe4cd",
+  "family_count": 55
+ },
+ "registry_after": {
+  "revision": "2026-11-14.10",
+  "sha256": "7b14b84636b8d61718da0c3c18d882efad6e688e820fd51707c79b178a3449d7",
+  "family_count": 56
+ },
+ "registry_row_sha256": "b757b58976fb312b2979ce5d60363016d8573ffb72d0149917129905f6aab6f4",
+ "depth_assessment": {
+  "path": "reports/event-authority-20261114/admission-merge-1/depth/coordination.agent_file_ownership_updated.json",
+  "sha256": "048f3a656e2bcb7fb29b436030fad15917881c1f006df14c8a9fc5ebe60518a4"
+ },
+ "admission_landing": {
+  "branch": "plans/ea-pnc-s5w-r3-20261114",
+  "commit": null,
+  "record": "reports/event-authority-20261114/admission-merge-1/LANDING.md",
+  "note": "The landing commit is this family's commit on the branch once the merge lands. A record cannot name the commit that contains it, so the landing record names it."
+ },
+ "criteria_not_passing_at_recording": [],
+ "status_at_recording": "complete_depth",
+ "recorded_by": "claude-opus-5.5:ea-pnc-s5w-20261114",
+ "recorded_at_utc": "2026-11-14T20:07:04Z",
+ "notes": [
+  "Admission merge 1 (EA-P2 B), written by pm-ea-admission-writer.v1 from the manifest row for this family; one commit holds the registry append, this record, its Decision Log entry, its depth assessment, its KEEP_REGISTERED ledger row and the DL-078 checkpoint pins.",
+  "The decision entry is DL-529, which DL-096 makes Jared's decision entry for this family.",
+  "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
+  "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
+ ]
+}
