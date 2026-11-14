@@ -305,8 +305,18 @@
        first frame. A look whose fonts are already in pays nothing. document.fonts is read only after that observer:
        its ready and status flush the page's style and layout, and read at once they took the new look's whole restyle
        ahead of the window's own attributes, which then restyled the window a second time (491 + 225 ms on the VM). */
+    /* FO-188 variant B: the app beneath keeps its old picture through the reveal (20-motion.css data-o55-vt-b) and is
+       not rendered while it plays (data-o55-vt-still, set in the update just after the theme's write, before anything
+       reads the page): the new look styles and lays out the window and the ground only. When the reveal ends the app
+       takes the new look in one go, and its held work follows (PM_LOOK_HOLD). Where the browser cannot give each part
+       of the app its own picture (view-transition-name: match-element), the reveal runs as before. */
+    const still = !!(window.CSS && CSS.supports && CSS.supports('view-transition-name', 'match-element') && CSS.supports('view-transition-class', 'o55-held'));
+    /* (a reveal skipped by this pick left the app hidden: it is shown again for the new one's picture of it) */
+    document.documentElement.removeAttribute('data-o55-vt-still');
+    if (still) document.documentElement.setAttribute('data-o55-vt-b', '');
     const update = () => {
       apply();
+      if (still) document.documentElement.setAttribute('data-o55-vt-still', '');
       if (!document.fonts) return undefined;
       return Promise.resolve().then(() => {
         const F = document.fonts;
@@ -316,11 +326,12 @@
     };
     let vt;
     try { vt = S.vt = document.startViewTransition(update); }
-    catch (_) { release(); S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); apply(); return; }
+    catch (_) { release(); S.vt = null; ['data-o55-vt', 'data-o55-vt-b', 'data-o55-vt-still'].forEach((a) => document.documentElement.removeAttribute(a)); apply(); return; }
     vt.ready.then(() => {
       const retro = family === 'retro';
-      document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
-        { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)', pseudoElement: '::view-transition-new(root)' });
+      /* (variant B: the window is a picture of its own, revealed by the same circle as the ground) */
+      ['root'].concat(still ? ['o55-win'] : []).forEach((name) => document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)', pseudoElement: `::view-transition-new(${name})` }));
       /* the window's own colour transitions end here too, as NieR's path ends them (syncTheme): about 500 of its elements
          eased from the old colours inside the circle and were restyled in every frame of the reveal (the rig's frames,
          25 ms each on the VM). At ready the new look's style is computed, so asking forces nothing. */
@@ -328,7 +339,13 @@
     }).catch(() => {});
     /* what waited is still the look's repaint: it never counts toward low-resource mode either (it ran past the click's
        quiet and switched the VM to the instant path after two changes) */
-    vt.finished.finally(() => { O55.motion.quiet(2500); release(); if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); } });
+    vt.finished.finally(() => {
+      O55.motion.quiet(2500);
+      /* (variant B: the app takes the new look now, in the frame of the transition's own end restyle) */
+      if (still && S.vt === vt) { document.documentElement.removeAttribute('data-o55-vt-still'); document.documentElement.removeAttribute('data-o55-vt-b'); }
+      release();
+      if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); }
+    });
   }
   /* The app beneath holds still while the window is open (README Performance rule 6). A theme written under the window
      (a Project's settings loading as it is selected, the look saved into it) has the app's own listeners announce a
