@@ -35729,3 +35729,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-592: Event Authority registers forge.review.marked_ready (admission merge 1)
+
+```yaml
+plan_unit_id: DL-592
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `forge.review.marked_ready` as family `event-family-forge-review-marked-ready` revision 1.0.0 in admission merge 1 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the families ready then are admitted in a first merge. `forge.review.marked_ready` is one of the 249 names of the 2026-11-04 census recount (bucket e). Jared's answer to card EA-P1, option A ("Add each once its definition passes every check"), admits each such name once its full definition, its record and both reviews pass; DL-039's no bulk registration stands. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `forge.review.marked_ready`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-14.72 (118 families, SHA-256 e68b659d29d746d84a59d58b295f0b5f61f85f65149605fd11a982797e446d18) to 2026-11-14.73 (119 families, SHA-256 c288c27d3dd60daf5d32e665e16fa72f59188796668f2c26efb6d89146b51820). The appended row, canonical SHA-256 40c82544b5c5493d7fd5968529e81ac2cc7b6cf39c2f9a82dd7b28e042341785, has scope policy application_or_project, payload `https://puppetmaster.local/Plans/event_payloads/forge/forge_review_marked_ready.schema.json` at Plans/event_payloads/forge/forge_review_marked_ready.schema.json#, semantic owner Plans/Forge_Integrations.md#FGI-1222, payload owner Plans/Contracts_V0.md#CV-1222 and retention RP-AUTHORITY-INDEFINITE@1.0.0. Its payload versions are application `https://puppetmaster.local/Plans/event_payloads/forge/forge_review_marked_ready.schema.json` (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/Plans/event_payloads/forge/forge_review_marked_ready.schema.json` (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-14.73 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 119 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261114/admission-merge-1/depth/forge.review.marked_ready.json (SHA-256 824c339cddf7b01d8bf17f37584a4dfa07bdceb6a6e90fe08d6376987746a423) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261105/W3A-self-grade.json (SHA-256 41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/forge.review.marked_ready.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `forge.review.marked_ready`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for forge.review.marked_ready, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/forge.review.marked_ready.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-14.73 and 119 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_1
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json (recount name)"
+- "reports/event-authority-20261105/W3A-self-grade.json; SHA-256 41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/INT3/admission-readiness.json; SHA-256 815ed8bfdc86b5fe565fac1cc5549fc590fa7b72cd9606fcb589f947bf8eaa8f"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["forge.review.marked_ready", "event-family-forge-review-marked-ready", "2026-11-14.73", "c288c27d3dd60daf5d32e665e16fa72f59188796668f2c26efb6d89146b51820", "40c82544b5c5493d7fd5968529e81ac2cc7b6cf39c2f9a82dd7b28e042341785", "Add each once its definition passes every check", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
