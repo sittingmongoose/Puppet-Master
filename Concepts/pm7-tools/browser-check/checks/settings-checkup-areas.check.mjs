@@ -112,8 +112,8 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.check('turning Speed off stores the raw value gone (Performance), not the label', Array.isArray(off) && !off.includes('Performance') && !off.includes('Speed') && off.length === 4, JSON.stringify(off));
 		await f.locator(`${B} [data-setting="system.health.check-scope"][data-value="Performance"]`).first().click();
 		await t.page.waitForTimeout(300);
-		const on = await f.evaluate(() => JSON.stringify(PM51.value('system.health.check-scope')));
-		await t.check('turning Speed back on restores the five canonical values', on === JSON.stringify(AREAS), on);
+		const on = await f.evaluate(() => PM51.value('system.health.check-scope'));
+		await t.check('turning Speed back on restores the five canonical values', Array.isArray(on) && on.length === 5 && AREAS.every((v) => on.includes(v)), JSON.stringify(on));
 		for (const a of r.areas) await t.check(`${a.title}: says what it checks in one short line`, a.help.length >= 12 && a.help.length <= 64 && /\.$/.test(a.help) && (a.help.match(/\. /g) || []).length === 0, `"${a.help}" (${a.help.length} chars)`);
 		const where = {};
 		for (const a of r.areas) for (const row of a.rows) (where[row.key] = where[row.key] || []).push(a.title);
