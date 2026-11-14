@@ -51,6 +51,10 @@ const ZWJ1 = 'Role is \u{1F469}\u200D\u{1F4BB}';
 const ZWJ2 = 'Role is \u{1F469} \u{1F4BB}';
 const FLAG1 = 'Region is \u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}';
 const FLAG2 = 'Region is \u{1F3F4}\u{E0067}\u{E0062}\u{E0073}\u{E0063}\u{E0074}\u{E007F}';
+const KEY1 = 'Key is #\uFE0F\u20E3';
+const KEY2 = 'Key is *\uFE0F\u20E3';
+const BANG1 = 'Alert \u203C\uFE0F';
+const BANG2 = 'Alert \u2049\uFE0F';
 const PORT1 = 'Port is 5433';
 const PORT2 = 'Port is 5434';
 const PUNCT1 = '!!!';
@@ -244,7 +248,7 @@ async function workSymbols(t, f, place, tag) {
 }
 
 // FO-205 (iv): the digit guard — the key keeps numbers, so two notes that differ only in a digit are both kept.
-// FO-205 round 2 (vii) and round 3 (viii), in the same test: a zero-width joiner and the invisible flag tag characters
+// FO-205 round 2 (vii), round 3 (viii) and round 4 (ix: emoji built from punctuation), in the same test: a zero-width joiner and the invisible flag tag characters
 // are kept in the key, so a joined emoji and each tag-sequence flag are their own notes.
 async function workDigits(t, f, place, tag) {
 	let r = await read(f, place);
@@ -273,6 +277,17 @@ async function workDigits(t, f, place, tag) {
 	await add(t, f, place, FLAG2);
 	r = await read(f, place);
 	await t.check(`${tag}: (viii) the note with the other tag-sequence flag is kept beside it (twelve notes)`, has(r, FLAG1) && has(r, FLAG2) && r.texts.length === 12 && (place === 'sheet' || r.count === '12 notes'), JSON.stringify(r));
+
+	// (ix) FO-205 round 4: emoji built from punctuation. The '#' and '*' keycaps are two notes, and so are the
+	// double exclamation and exclamation-question emoji.
+	await add(t, f, place, KEY1);
+	await add(t, f, place, KEY2);
+	r = await read(f, place);
+	await t.check(`${tag}: (ix) the '#' and '*' keycap notes are both kept (fourteen notes)`, has(r, KEY1) && has(r, KEY2) && r.texts.length === 14, JSON.stringify(r));
+	await add(t, f, place, BANG1);
+	await add(t, f, place, BANG2);
+	r = await read(f, place);
+	await t.check(`${tag}: (ix) the double exclamation and exclamation-question notes are both kept (sixteen notes)`, has(r, BANG1) && has(r, BANG2) && r.texts.length === 16 && (place === 'sheet' || r.count === '16 notes'), JSON.stringify(r));
 }
 
 // FO-205 (v): an empty key is a duplicate only of the very same trimmed NFKC text, so identical punctuation-only

@@ -62,10 +62,14 @@
      FO-205 rounds 2-3: the key now drops ONLY punctuation (\p{P}) and spaces (\p{Z}, \s), and keeps everything else,
      the invisible format characters (\p{Cf}) included. A joined emoji (woman + zero-width joiner + laptop) is one
      picture, the England and Scotland flags differ only in their invisible tag characters, and the same joiners
-     shape Persian and Indic words; turning any of them into a space merged distinct notes and lost the second. */
-  const norm = t => String(t || '').normalize('NFKC').toLowerCase()
+     shape Persian and Indic words; turning any of them into a space merged distinct notes and lost the second.
+     FO-205 round 4: emoji built from punctuation keep it. NFKC is applied around pictographs, never to them (it
+     would turn the double exclamation and exclamation-question emoji into '!!' and '!?'), and a punctuation mark
+     followed by the emoji selector (U+FE0F) or the keycap mark (U+20E3) is part of that emoji, so the '#' and '*'
+     keycaps stay two notes. */
+  const norm = t => String(t || '').replace(/[^\p{Extended_Pictographic}]+/gu, s => s.normalize('NFKC')).toLowerCase()
     .replace(/\p{Pd}(?=\p{Nd})/gu, '\u2212')
-    .replace(/[\p{P}\p{Z}\s]+/gu, ' ').trim();
+    .replace(/(?:[\p{Z}\s]|(?!\p{Extended_Pictographic})\p{P}(?![\uFE0F\u20E3]))+/gu, ' ').trim();
   function addNote(text, level) {
     const words = String(text || '').trim(); if (!words) return null;
     const key = norm(words);
