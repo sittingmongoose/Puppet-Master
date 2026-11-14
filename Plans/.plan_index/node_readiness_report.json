@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 21021,
+    "depends_on_edge_count": 21025,
     "downstream_blocked_node_count": 0,
-    "edge_count": 24239,
-    "node_count": 8165,
+    "edge_count": 24243,
+    "node_count": 8166,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-13T15:36:36Z",
+  "generated_at_utc": "2026-11-13T23:00:17Z",
   "gui_related_units": {
-    "count": 3888,
+    "count": 3889,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -13037,6 +13037,17 @@
           "heading_level": 3,
           "heading_line": 32346,
           "line": 32348,
+          "path": "Plans/Decision_Log.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-479",
+        "source_location": {
+          "heading": "DL-479 - One Model Nicknames List For Chat And Media Models",
+          "heading_level": 3,
+          "heading_line": 32458,
+          "line": 32460,
           "path": "Plans/Decision_Log.md"
         }
       },
@@ -26301,8 +26312,8 @@
         "source_location": {
           "heading": "MS-003 - Owner Section Requirements And Reference Inventory",
           "heading_level": 3,
-          "heading_line": 1450,
-          "line": 1452,
+          "heading_line": 1457,
+          "line": 1459,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26312,8 +26323,8 @@
         "source_location": {
           "heading": "MS-007 - Concern Lifecycle And Consumer Boundaries",
           "heading_level": 3,
-          "heading_line": 1681,
-          "line": 1683,
+          "heading_line": 1688,
+          "line": 1690,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26323,8 +26334,8 @@
         "source_location": {
           "heading": "MS-011 - GUI Help Labels Receipts And Subject Open Presentation",
           "heading_level": 3,
-          "heading_line": 1904,
-          "line": 1906,
+          "heading_line": 1911,
+          "line": 1913,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26334,8 +26345,8 @@
         "source_location": {
           "heading": "MS-013 - Collision Safe GUI Indexing And Display Name Policy",
           "heading_level": 3,
-          "heading_line": 2015,
-          "line": 2017,
+          "heading_line": 2022,
+          "line": 2024,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26345,8 +26356,8 @@
         "source_location": {
           "heading": "MS-018 - Dynamic Catalog Discovery And Selectable Unit Snapshots",
           "heading_level": 3,
-          "heading_line": 2308,
-          "line": 2310,
+          "heading_line": 2315,
+          "line": 2317,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26356,8 +26367,8 @@
         "source_location": {
           "heading": "MS-026 - Free Tier Billing Provenance Display",
           "heading_level": 3,
-          "heading_line": 2747,
-          "line": 2749,
+          "heading_line": 2754,
+          "line": 2756,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26367,8 +26378,8 @@
         "source_location": {
           "heading": "MS-029 - Context Breakdown Usage View",
           "heading_level": 3,
-          "heading_line": 2919,
-          "line": 2921,
+          "heading_line": 2926,
+          "line": 2928,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26378,8 +26389,8 @@
         "source_location": {
           "heading": "MS-036 - Firecrawl Deployment Disclosure Boundary",
           "heading_level": 3,
-          "heading_line": 3323,
-          "line": 3325,
+          "heading_line": 3330,
+          "line": 3332,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26389,8 +26400,8 @@
         "source_location": {
           "heading": "MS-046 - Custom Variant Config Schema",
           "heading_level": 3,
-          "heading_line": 3875,
-          "line": 3877,
+          "heading_line": 3882,
+          "line": 3884,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26400,8 +26411,8 @@
         "source_location": {
           "heading": "MS-047 - Disabled Variants Visibility",
           "heading_level": 3,
-          "heading_line": 3934,
-          "line": 3936,
+          "heading_line": 3941,
+          "line": 3943,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26411,8 +26422,8 @@
         "source_location": {
           "heading": "MS-048 - Variant Cycling Surfaces",
           "heading_level": 3,
-          "heading_line": 3986,
-          "line": 3988,
+          "heading_line": 3993,
+          "line": 3995,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26422,8 +26433,8 @@
         "source_location": {
           "heading": "MS-051 - Persona Variant Preselection",
           "heading_level": 3,
-          "heading_line": 4148,
-          "line": 4150,
+          "heading_line": 4155,
+          "line": 4157,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26433,8 +26444,8 @@
         "source_location": {
           "heading": "MS-053 - Canonical Media Alias Registry",
           "heading_level": 3,
-          "heading_line": 4257,
-          "line": 4259,
+          "heading_line": 4265,
+          "line": 4267,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26444,8 +26455,8 @@
         "source_location": {
           "heading": "MS-054 - GUI Model Label ID Separation",
           "heading_level": 3,
-          "heading_line": 4320,
-          "line": 4322,
+          "heading_line": 4330,
+          "line": 4332,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26455,8 +26466,8 @@
         "source_location": {
           "heading": "MS-055 - Chat Model Picker Display Contract",
           "heading_level": 3,
-          "heading_line": 4372,
-          "line": 4374,
+          "heading_line": 4382,
+          "line": 4384,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26466,8 +26477,8 @@
         "source_location": {
           "heading": "MS-057 - Settings Models Availability Display",
           "heading_level": 3,
-          "heading_line": 4487,
-          "line": 4489,
+          "heading_line": 4497,
+          "line": 4499,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26477,8 +26488,8 @@
         "source_location": {
           "heading": "MS-058 - Model Refresh And Threshold Actions",
           "heading_level": 3,
-          "heading_line": 4575,
-          "line": 4577,
+          "heading_line": 4586,
+          "line": 4588,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26488,8 +26499,8 @@
         "source_location": {
           "heading": "MS-060 - Effort GUI Requested Effective Disclosure",
           "heading_level": 3,
-          "heading_line": 4694,
-          "line": 4696,
+          "heading_line": 4705,
+          "line": 4707,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26499,8 +26510,8 @@
         "source_location": {
           "heading": "MS-062 - Detailed Inspector Runtime Identity",
           "heading_level": 3,
-          "heading_line": 4804,
-          "line": 4806,
+          "heading_line": 4815,
+          "line": 4817,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26510,8 +26521,8 @@
         "source_location": {
           "heading": "MS-066 - Puppet Master GUI Model Deltas",
           "heading_level": 3,
-          "heading_line": 5017,
-          "line": 5019,
+          "heading_line": 5028,
+          "line": 5030,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26521,8 +26532,8 @@
         "source_location": {
           "heading": "MS-070 - Acceptance Model Picker And Settings UI",
           "heading_level": 3,
-          "heading_line": 5249,
-          "line": 5251,
+          "heading_line": 5260,
+          "line": 5262,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26532,8 +26543,8 @@
         "source_location": {
           "heading": "MS-077 - Coding Plan Product Labels In Picker Recommendation Surfaces",
           "heading_level": 3,
-          "heading_line": 5666,
-          "line": 5668,
+          "heading_line": 5677,
+          "line": 5679,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26543,8 +26554,8 @@
         "source_location": {
           "heading": "MS-078 - Interview GUI UX Gemini Stage Default",
           "heading_level": 3,
-          "heading_line": 5721,
-          "line": 5723,
+          "heading_line": 5732,
+          "line": 5734,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26554,8 +26565,8 @@
         "source_location": {
           "heading": "MS-085 - Talkativeness Snapshot Bridge And GUI Gating Rule",
           "heading_level": 3,
-          "heading_line": 6198,
-          "line": 6200,
+          "heading_line": 6209,
+          "line": 6211,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26565,8 +26576,8 @@
         "source_location": {
           "heading": "MS-086 - Unsupported Persona Control Skip Disclosure",
           "heading_level": 3,
-          "heading_line": 6252,
-          "line": 6254,
+          "heading_line": 6263,
+          "line": 6265,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26576,8 +26587,8 @@
         "source_location": {
           "heading": "MS-087 - Persona Control GUI Support States",
           "heading_level": 3,
-          "heading_line": 6311,
-          "line": 6313,
+          "heading_line": 6322,
+          "line": 6324,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26587,8 +26598,8 @@
         "source_location": {
           "heading": "MS-088 - Runtime Surface Effective Choice Display",
           "heading_level": 3,
-          "heading_line": 6371,
-          "line": 6373,
+          "heading_line": 6382,
+          "line": 6384,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26598,8 +26609,8 @@
         "source_location": {
           "heading": "MS-090 - Effective Runtime Acceptance Criteria",
           "heading_level": 3,
-          "heading_line": 6489,
-          "line": 6491,
+          "heading_line": 6500,
+          "line": 6502,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26609,8 +26620,8 @@
         "source_location": {
           "heading": "MS-095 - UI Artifact Snapshot ID Consumption",
           "heading_level": 3,
-          "heading_line": 6774,
-          "line": 6776,
+          "heading_line": 6785,
+          "line": 6787,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26620,8 +26631,8 @@
         "source_location": {
           "heading": "MS-097 - Default Crew Runtime Settings And Copilot Normalization",
           "heading_level": 3,
-          "heading_line": 6883,
-          "line": 6885,
+          "heading_line": 6894,
+          "line": 6896,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26631,8 +26642,8 @@
         "source_location": {
           "heading": "MS-099 - Provider Model Selection Precedence Chain",
           "heading_level": 3,
-          "heading_line": 7015,
-          "line": 7017,
+          "heading_line": 7026,
+          "line": 7028,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26642,8 +26653,8 @@
         "source_location": {
           "heading": "MS-104 - Clamp Substitution Semantics And Partial Evidence Disclosure",
           "heading_level": 3,
-          "heading_line": 7324,
-          "line": 7326,
+          "heading_line": 7335,
+          "line": 7337,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26653,8 +26664,8 @@
         "source_location": {
           "heading": "MS-107 - Provider Model Precedence Owner Pointer Compile Addendum",
           "heading_level": 3,
-          "heading_line": 7591,
-          "line": 7593,
+          "heading_line": 7602,
+          "line": 7604,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26664,8 +26675,8 @@
         "source_location": {
           "heading": "MS-110 - Condensed Plans-To-Code Model Settings",
           "heading_level": 3,
-          "heading_line": 7797,
-          "line": 7799,
+          "heading_line": 7808,
+          "line": 7810,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26675,8 +26686,8 @@
         "source_location": {
           "heading": "MS-116 - Vision Bridge Requested Effective Route Resolution",
           "heading_level": 3,
-          "heading_line": 8016,
-          "line": 8018,
+          "heading_line": 8027,
+          "line": 8029,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26686,8 +26697,8 @@
         "source_location": {
           "heading": "MS-117 - Teach Teacher Low End Model Setting",
           "heading_level": 3,
-          "heading_line": 8107,
-          "line": 8109,
+          "heading_line": 8118,
+          "line": 8120,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26697,8 +26708,8 @@
         "source_location": {
           "heading": "MS-118 - Free Models Wrapper Catalog And Route Readiness Identity",
           "heading_level": 3,
-          "heading_line": 8262,
-          "line": 8264,
+          "heading_line": 8273,
+          "line": 8275,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26708,8 +26719,8 @@
         "source_location": {
           "heading": "MS-119 - Free Models Auto Apply Source Resolver And Runtime Adapter Boundary",
           "heading_level": 3,
-          "heading_line": 8350,
-          "line": 8352,
+          "heading_line": 8361,
+          "line": 8363,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26719,8 +26730,8 @@
         "source_location": {
           "heading": "MS-120 - Free Models Top-10 Precedence And Deterministic Fallback Eligibility",
           "heading_level": 3,
-          "heading_line": 8440,
-          "line": 8442,
+          "heading_line": 8451,
+          "line": 8453,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26730,8 +26741,8 @@
         "source_location": {
           "heading": "MS-121 - Free Models Availability Reason Model And Setup Eligibility",
           "heading_level": 3,
-          "heading_line": 8664,
-          "line": 8666,
+          "heading_line": 8675,
+          "line": 8677,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26741,8 +26752,8 @@
         "source_location": {
           "heading": "MS-122 - First-Run Paid Provider And Free Models Sequencing",
           "heading_level": 3,
-          "heading_line": 8524,
-          "line": 8526,
+          "heading_line": 8535,
+          "line": 8537,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26752,8 +26763,8 @@
         "source_location": {
           "heading": "MS-123 - P0-PROVIDER-METADATA-REPLAY",
           "heading_level": 3,
-          "heading_line": 8758,
-          "line": 8760,
+          "heading_line": 8769,
+          "line": 8771,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26763,8 +26774,8 @@
         "source_location": {
           "heading": "MS-125 - P0-REASONING-REPLAY-MATRIX",
           "heading_level": 3,
-          "heading_line": 8924,
-          "line": 8926,
+          "heading_line": 8935,
+          "line": 8937,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26774,8 +26785,8 @@
         "source_location": {
           "heading": "MS-126 - P0-EFFORT-POLICY-SETTLEMENT",
           "heading_level": 3,
-          "heading_line": 9003,
-          "line": 9005,
+          "heading_line": 9014,
+          "line": 9016,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26785,8 +26796,8 @@
         "source_location": {
           "heading": "MS-127 - P0-PROVIDER-CAPABILITY-EPOCH-2",
           "heading_level": 3,
-          "heading_line": 9090,
-          "line": 9092,
+          "heading_line": 9101,
+          "line": 9103,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26796,8 +26807,8 @@
         "source_location": {
           "heading": "MS-128 - P1-MODEL-SELECTION-ROUTER",
           "heading_level": 3,
-          "heading_line": 9176,
-          "line": 9178,
+          "heading_line": 9187,
+          "line": 9189,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26807,8 +26818,8 @@
         "source_location": {
           "heading": "MS-129 - P2-MODEL-CATALOG-CONFIDENCE-UI",
           "heading_level": 3,
-          "heading_line": 9257,
-          "line": 9259,
+          "heading_line": 9268,
+          "line": 9270,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26818,8 +26829,8 @@
         "source_location": {
           "heading": "MS-130 - P0-ENTITLEMENT-QUOTA-SETTLEMENT",
           "heading_level": 3,
-          "heading_line": 9345,
-          "line": 9347,
+          "heading_line": 9356,
+          "line": 9358,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26829,8 +26840,8 @@
         "source_location": {
           "heading": "MS-132 - provider_metadata_replay",
           "heading_level": 3,
-          "heading_line": 9494,
-          "line": 9496,
+          "heading_line": 9505,
+          "line": 9507,
           "path": "Plans/Models_System.md"
         }
       },
@@ -26840,8 +26851,8 @@
         "source_location": {
           "heading": "MS-136 - Model Capability Usage Signal Display Contract",
           "heading_level": 3,
-          "heading_line": 9773,
-          "line": 9775,
+          "heading_line": 9784,
+          "line": 9786,
           "path": "Plans/Models_System.md"
         }
       },
@@ -42792,10 +42803,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 8165,
+  "plan_unit_count": 8166,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 3482,
+      "high": 3483,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -44865,6 +44876,7 @@
       "model_default_precedence_and_retirement_drift": 2,
       "model_lifecycle_readiness_collapse": 1,
       "model_native_websearch_classification": 1,
+      "model_nickname_list_and_retirement_drift": 1,
       "model_precedence_drift": 1,
       "model_refresh_threshold_actions": 1,
       "model_resolution_opacity": 1,
@@ -46983,7 +46995,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7932,
+      "accepted": 7933,
       "retired": 205,
       "superseded": 28
     },
@@ -47016,7 +47028,7 @@
       "contract": 135,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 272,
+      "decision": 273,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -47223,370 +47235,12 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "actual": null,
-        "error": "pnc019_source_hash_stale",
-        "expected": "aa8aaa943e27ffc9be79cc62049dbc4bc36ccd2b3955891b8ecfa9b1b5f6230d",
+        "error": "pnc019_source_hash_path_missing",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/00-plans-index.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Automated_Testing_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Back_Seat_Driver.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Collaborative_Workflows.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Commands_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Containers_Registry_and_Unraid.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Contracts_V0.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Crosswalk.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/DRY_Rules.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Log.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Policy.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Executor_Protocol.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FileManager.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FileSafe.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FinalGUISpec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Formatters_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/GUI_Rebuild_Requirements_Checklist.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/GitHub_API_Auth_and_Flows.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Glossary.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Goal_Runtime_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/LSPSupport.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Media_Generation_and_Capabilities.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/MiscPlan.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Models_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Multi-Account.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/OpenCode_Coverage_Matrix.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Orchestrator_Page.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/PRD_Builder.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Permissions_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Personas.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Plan_Document_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Plan_To_Node_Compilation.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Ledger_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Wizard.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Plugins_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Progression_Gates.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Project_Output_Artifacts.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Project_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Prompt_Pipeline.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Run_Graph_View.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Run_Modes.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Runtime_Artifacts_Panel.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Server_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Settings_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Shared_Integration_Runtime.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Source_Control_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Tools.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Command_Catalog.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Wiring_Rules.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Widget_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.exclusions.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Working_Notebook.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/WorktreeGitImprovement.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/agent-rules-context.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-chat-design.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-memory-subsystem.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/chain-wizard-flexibility.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/coordination_event_payloads.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_payload_context_compaction_completed.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/feature-list.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/interview-subagent-integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/current.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/newtools.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/orchestrator-subagent-integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/plans_to_code_handoff.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/pm7_canon.fixtures.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/prd_planning_runtime_contracts.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/prd_planning_runtime_contracts.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/product_onboarding_contract_fixtures.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/product_onboarding_contracts.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/projects_refresh_command_bindings.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/requested_effective_runtime.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/rewrite-tie-in-memo.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/runtime_integration_disposition.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/settings_inventory.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/settings_inventory.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/settings_system_contracts.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/sharding_config.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage-plan.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage_value_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage_value_registry.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/touch_closure.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/touch_closure_action_sources.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/usage-feature.md"
+        "detail": "[Errno 2] No such file or directory: 'Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "bulk_registration_allowed": false,
