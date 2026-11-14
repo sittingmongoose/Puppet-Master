@@ -461,6 +461,11 @@ def _t_continuity_pin_mismatch(root: Path, h: ModuleType) -> None:
     reseal(root, h)
 
 
+def _t_continuity_unmapped_row(root: Path, h: ModuleType) -> None:
+    _edit_json(root, _paths(h)["continuity"], lambda doc: doc.__setitem__("unmapped_rows", ["fx.invented_class.recorded"]))
+    reseal(root, h)
+
+
 def _t_frozen_check_failing(root: Path, h: ModuleType) -> None:
     def override(frozen: dict[str, Any]) -> None:
         frozen["pass"] = False
@@ -543,6 +548,7 @@ TAMPERS: dict[str, tuple[Callable[[Path, ModuleType], None], str, str]] = {
     "token_ledger_stale": (_t_token_ledger_stale, "event_authority_closure_token_ledger_stale", "token_ledger"),
     "continuity_cohort_mismatch": (_t_continuity_cohort_mismatch, "event_authority_closure_continuity_cohort_mismatch", "continuity"),
     "continuity_pin_mismatch": (_t_continuity_pin_mismatch, "event_authority_closure_continuity_pin_mismatch", "continuity"),
+    "continuity_unmapped_row": (_t_continuity_unmapped_row, "event_authority_closure_continuity_cohort_mismatch", "continuity"),
     "runtime_basis_removed": (_t_runtime_basis_removed, "event_authority_closure_runtime_boundary_basis_missing", "runtime_boundary"),
     "runtime_boundary_claimed": (_t_runtime_boundary_claimed, "event_authority_currentness_status_closure_inconsistent", "runtime_boundary"),
     "receipt_says_open": (_t_receipt_says_open, "event_authority_currentness_receipt_closure_mismatch", "edition_binding"),

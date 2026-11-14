@@ -1322,25 +1322,48 @@ def compute_closure_evidence(
     """Derive the closing evidence from the live tree; failures mean not CLOSED."""
     root = Path(root)
     failures: list[dict[str, Any]] = []
-    try:
-        token_ledger_path = _safe_relative(token_ledger_path)
-        declared = sorted({_safe_relative(path) for path in depth_assessment_paths})
-        registry_summary, live = _closure_registry(root, failures)
-        known37 = _closure_known37(root)
-        records = _closure_admission_records(root, failures)
-        _closure_frozen_check(root, frozen_receipt, frozen_validator_sha256, live, known37, failures)
-        denominator, ledger_by_type, outcome_rows, _ledger = _closure_denominator(root, live, known37, records, failures)
-        depth = _closure_depth(root, live, records, declared, failures)
-        token_ledger = _closure_token_ledger(root, token_ledger_path, occurrences_raw, live, ledger_by_type, outcome_rows, failures)
-        _closure_continuity(root, continuity_receipt, failures)
-        _closure_runtime_boundary(root, failures)
-        bound_paths = closure_bound_input_paths(
-            root,
-            token_ledger_path=token_ledger_path,
-            depth_assessment_paths=declared + sorted({row["source_path"] for row in depth["families"] if row["source_path"]}),
-        )
-    except (ClosureInputError, OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
-        return {}, failures + [{"error": "event_authority_closure_input_invalid", "detail": str(exc)}]
+    unreadable: list[str] = []
+
+    def section(name: str, compute: Any) -> Any:
+        # A section whose input is missing or malformed is reported and makes the
+        # evidence unclosable; the other sections still run so one refusal lists
+        # every remaining blocker.
+        try:
+            return compute()
+        except Exception as exc:  # noqa: BLE001 - any section error fails closed, never crashes a caller.
+            unreadable.append(name)
+            failures.append({"error": "event_authority_closure_input_invalid", "section": name, "detail": str(exc)})
+            return None
+
+    paths = section("input_paths", lambda: (
+        _safe_relative(token_ledger_path),
+        sorted({_safe_relative(path) for path in depth_assessment_paths}),
+    ))
+    registry = section("registry", lambda: _closure_registry(root, failures))
+    known37 = section("known37", lambda: _closure_known37(root))
+    records = section("admission_records", lambda: _closure_admission_records(root, failures))
+    if paths is None or registry is None or known37 is None or records is None:
+        return {}, failures
+    token_ledger_path, declared = paths
+    registry_summary, live = registry
+    section("frozen_check", lambda: _closure_frozen_check(root, frozen_receipt, frozen_validator_sha256, live, known37, failures))
+    denominator_result = section("denominator", lambda: _closure_denominator(root, live, known37, records, failures))
+    depth = section("depth", lambda: _closure_depth(root, live, records, declared, failures))
+    token_ledger = None
+    if denominator_result is not None:
+        denominator, ledger_by_type, outcome_rows, _ledger = denominator_result
+        token_ledger = section("token_ledger", lambda: _closure_token_ledger(root, token_ledger_path, occurrences_raw, live, ledger_by_type, outcome_rows, failures))
+    section("continuity", lambda: _closure_continuity(root, continuity_receipt, failures))
+    section("runtime_boundary", lambda: _closure_runtime_boundary(root, failures))
+    if unreadable or denominator_result is None or depth is None or token_ledger is None:
+        return {}, failures
+    bound_paths = section("bound_inputs", lambda: closure_bound_input_paths(
+        root,
+        token_ledger_path=token_ledger_path,
+        depth_assessment_paths=declared + sorted({row["source_path"] for row in depth["families"] if row["source_path"]}),
+    ))
+    if bound_paths is None:
+        return {}, failures
     bound_inputs = []
     for relative in bound_paths:
         digest = _sha_rel(root, relative)

@@ -25,9 +25,9 @@ import subprocess
 import sys
 import tempfile
 from collections import Counter, defaultdict
-from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import NamedTuple
 from pm_evidence_paths import EvidencePathError
 from pm_event_evidence_adapter import configure as configure_evidence_paths
 import pm_pnc019_currentness as ea_closure
@@ -330,8 +330,7 @@ def build_quarantined_adjudication() -> tuple[bytes, dict]:
     return blob, manifest
 
 
-@dataclass(frozen=True)
-class ClosingOptions:
+class ClosingOptions(NamedTuple):
     """Inputs of `generate --close`; every path is repository-relative except the external ones."""
 
     token_ledger: str
@@ -910,6 +909,15 @@ def self_test() -> int:
         rows.append({"event_type": "f.new_class", "classification": "invented"})
         ea27.write_bytes(json_bytes({"union_rows": rows, "non_exact_pattern_rows": []}))
         tests["continuity_unknown_classification_rejected"] = compute_continuity_receipt(closed_root, ea27, ea29)["unmapped_rows"] == ["f.new_class"]
+
+    # Other tools load this script by path without registering it in sys.modules.
+    spec = importlib.util.spec_from_file_location("pm_ea_currentness_by_path", Path(__file__))
+    by_path = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(by_path)
+        tests["loads_by_path_without_module_registration"] = by_path.ClosingOptions._fields[0] == "token_ledger"
+    except Exception:  # noqa: BLE001
+        tests["loads_by_path_without_module_registration"] = False
 
     # Report literals: the live sources read the edition, and a literal is caught.
     texts = {path: (ROOT / path).read_text(encoding="utf-8") for path in REPORT_LITERAL_GUARDS}
