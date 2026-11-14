@@ -186,6 +186,10 @@
   {
    "event_type": "forge.pipeline.started",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.repository.authority_changed",
+   "outcome": "registered"
   }
  ]
 }
