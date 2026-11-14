@@ -184,17 +184,181 @@ def workspace_reset_authority():
     return module
 
 
+# DL-046 grants bounded per-family Browser technical bindings for exactly the 53 Section 15 names. The two
+# workspace families bind through their own reviewed authority modules. Lane s4b (PNC-019 S4, 2026-11-14)
+# prepared the other 51 as Browser Program families, each with its own Section 15 anchor, CV and SP units,
+# checkpoint row and schema; each binds only through browser_program_binding_failures, which re-reads every
+# fact of its prepared contract against that canon and the admission row. The names are pinned here, not read
+# from the contracts file, so no prefix, sibling or added contract opens another family.
+BROWSER_PROGRAM_FAMILIES = frozenset((
+    "browser.controller_lease.granted",
+    "browser.controller_lease.lost",
+    "browser.controller_lease.renewed",
+    "browser.controller_lease.takeover_completed",
+    "browser.controller_lease.takeover_requested",
+    "browser.document.generation_changed",
+    "browser.execution_strategy.fallback_selected",
+    "browser.execution_strategy.selected",
+    "browser.navigation.generation_changed",
+    "browser.page.activated",
+    "browser.page.closed",
+    "browser.page.created",
+    "browser.program.cancelled",
+    "browser.program.checkpointed",
+    "browser.program.completed",
+    "browser.program.failed",
+    "browser.program.paused",
+    "browser.program.resumed",
+    "browser.program.segment.checkpointed",
+    "browser.program.segment.completed",
+    "browser.program.segment.failed",
+    "browser.program.segment.started",
+    "browser.program.segment.timed_out",
+    "browser.program.started",
+    "browser.program.timeout.effect_state_unknown",
+    "browser.program.timeout.effects_reconciled",
+    "browser.program.timeout.stopped",
+    "browser.program_workspace.checkpointed",
+    "browser.program_workspace.closed",
+    "browser.program_workspace.created",
+    "browser.program_workspace.spilled",
+    "browser.program_workspace.updated",
+    "browser.representation.captured",
+    "browser.representation.delta_created",
+    "browser.representation.invalidated",
+    "browser.representation.queried",
+    "browser.route.browser_escalated",
+    "browser.route.fetch_selected",
+    "browser.routine.disabled",
+    "browser.routine.generated",
+    "browser.routine.invalidated",
+    "browser.routine.promoted",
+    "browser.routine.validated",
+    "browser.screenshot.model_attachment_selected",
+    "browser.screenshot.skipped",
+    "browser.script.compile_failed",
+    "browser.script.compile_started",
+    "browser.script.compiled",
+    "browser.session.interrupted",
+    "browser.session.reconstructed_on_host",
+    "browser.workspace.closed",
+))
+BROWSER_PROGRAM_CONTRACTS = "reports/event-authority-20261114/S4B-contracts.json"
+
+
+def _unit_text(doc, unit):
+    """One '### <unit> - ' section of an owner document, or None when absent or repeated."""
+    marker = "### " + unit + " - "
+    if doc.count(marker) != 1:
+        return None
+    start = doc.index(marker)
+    end = doc.find("\n### ", start + len(marker))
+    return doc[start:] if end < 0 else doc[start:end]
+
+
+def _anchor_section(doc, anchor):
+    """The Section 15 text from '<a id="anchor"></a>' to the next anchor, or None when absent or repeated."""
+    marker = '<a id="' + anchor + '"></a>'
+    if doc.count(marker) != 1:
+        return None
+    start = doc.index(marker)
+    end = doc.find("\n<a id=", start + len(marker))
+    return doc[start:] if end < 0 else doc[start:end]
+
+
+@_ds_entry
+def browser_program_binding_failures(row, *, root=ROOT):
+    """Refusals of one Browser Program family's admission row against its prepared contract and owner canon."""
+    entry = Facts("gate_program_entry", chain=True)
+    found = {}
+
+    def one_contract():
+        path = root / BROWSER_PROGRAM_CONTRACTS
+        families = json.loads(path.read_text(encoding="utf-8"))["families"] if path.is_file() else []
+        found["specs"] = [spec for spec in families if isinstance(spec, dict) and spec.get("event_type") == row["event_type"]]
+        return len(found["specs"]) == 1
+
+    def row_index():
+        admission = json.loads((root / "Plans/browser_event_admission.json").read_text(encoding="utf-8"))
+        index = found["specs"][0].get("admission_row_index")
+        return (type(index) is int and 0 <= index < len(admission["rows"])
+                and admission["rows"][index].get("event_type") == row["event_type"])
+
+    for name, check in (("GP01_program_family", lambda: row["event_type"] in BROWSER_PROGRAM_FAMILIES),
+                        ("GP02_one_contract", one_contract),
+                        ("GP03_admission_row_index", row_index)):
+        if entry.stop(name, check):
+            return [entry.first_code()]
+    entry.done()
+    spec = found["specs"][0]
+    s15 = (root / "Plans/Section15_MVP_Promoted_Features_Spec.md").read_text(encoding="utf-8")
+    cv = (root / "Plans/Contracts_V0.md").read_text(encoding="utf-8")
+    sp = (root / "Plans/storage-plan.md").read_text(encoding="utf-8")
+    storage = json.loads((root / "Plans/storage_value_registry.json").read_text(encoding="utf-8"))["families"]
+    retention = row.get("retention_policy_ref") or {}
+    section = _anchor_section(s15, str(spec.get("semantic_anchor")))
+    cv_text = _unit_text(cv, str(spec.get("cv_unit")))
+    sp_text = _unit_text(sp, str(spec.get("sp_unit")))
+    checkpoints = [family for family in storage if family.get("family_id") == spec.get("checkpoint_family_id")]
+    # The Storage registry names a policy by its bare id; the contract writes id@version.
+    checkpoint_policy = str(spec.get("checkpoint_retention_policy")).split("@", 1)[0]
+
+    def checkpoint_schema():
+        path, _, pointer = str(spec.get("checkpoint_schema_ref", "")).partition("#")
+        target = root / path
+        if not path.startswith("Plans/") or not target.is_file() or not pointer.startswith("/"):
+            return False
+        node = json.loads(target.read_text(encoding="utf-8"))
+        for part in pointer.split("/")[1:]:
+            if not isinstance(node, dict) or part not in node:
+                return False
+            node = node[part]
+        return isinstance(node, dict)
+
+    f = Facts("gate_program_binding")
+    f["GP04_family_identity"] = (row.get("family_id"), row.get("family_revision")) == (spec.get("family_id"), spec.get("family_revision"))
+    f["GP05_semantic_owner"] = row.get("semantic_owner_ref") == "Plans/Section15_MVP_Promoted_Features_Spec.md#" + str(spec.get("semantic_anchor"))
+    f["GP06_consumer_refs"] = {"Plans/storage-plan.md#" + str(spec.get("sp_unit")), "Plans/Contracts_V0.md#" + str(spec.get("cv_unit"))} <= set(row.get("consumer_contract_refs") or [])
+    f["GP07_producer"] = row.get("producer_component") == spec.get("producer_component")
+    f["GP08_payload_schema"] = (row.get("payload_schema_ref") or {}).get("schema_id") == spec.get("payload_schema_id")
+    f["GP09_retention"] = f"{retention.get('policy_id')}@{retention.get('policy_version')}" == spec.get("retention_policy")
+    f["GP10_owner_record"] = row.get("owner_record_contract_ref") == spec.get("owner_record_contract_ref")
+    f["GP11_authority_contract"] = row.get("authority_contract_ref") == "Plans/storage-plan.md#" + str(spec.get("sp_unit"))
+    f["GP12_section15_text"] = section is not None and all(
+        str(token) in section for token in (spec.get("producer_component"), spec.get("publication_operation"), spec.get("consumer_id"),
+                                            spec.get("checkpoint_family_id"), spec.get("cv_unit"), spec.get("sp_unit"), spec.get("retention_policy")))
+    f["GP13_contract_unit_text"] = cv_text is not None and all(
+        str(token) in cv_text for token in (row["event_type"], spec.get("payload_schema_id"), "evt_browser_", "browser@1:",
+                                            "dedupe_by_idempotency_key", "projector_replay_only", "payload_inline_limit"))
+    f["GP14_storage_unit_text"] = sp_text is not None and all(
+        str(token) in sp_text for token in (row["event_type"], spec.get("checkpoint_family_id"), spec.get("checkpoint_key_shape"),
+                                            spec.get("checkpoint_schema_ref"), spec.get("index_writer_id"), spec.get("consumer_id"),
+                                            checkpoint_policy, spec.get("retention_policy"),
+                                            "original_receipt_missing", "family_withdrawn", "checkpoint_cas_conflict"))
+    f["GP15_checkpoint_row"] = len(checkpoints) == 1 and (
+        checkpoints[0].get("key_shape") == spec.get("checkpoint_key_shape")
+        and checkpoints[0].get("consumers") == [spec.get("consumer_id")]
+        and checkpoints[0].get("producer") == [spec.get("index_writer_id")]
+        and checkpoints[0].get("value_schema_ref") == spec.get("checkpoint_schema_ref")
+        and checkpoints[0].get("retention_policy_ref") == checkpoint_policy)
+    f["GP16_checkpoint_schema"] = checkpoint_schema()
+    return f.codes()
+
+
 @_ds_entry
 def authority_binding_failures(row):
     # Exact individually reviewed bindings only, never prefix/sibling expansion
     # or an arbitrary ref-driven module loader. These are not native proof.
     f = Facts("gate_authority", chain=True)
-    if f.stop("GA01_reviewed_binding", lambda: row["event_type"] in ("browser.workspace.created", "browser.workspace.reset")):
+    if f.stop("GA01_reviewed_binding", lambda: row["event_type"] in ("browser.workspace.created", "browser.workspace.reset")
+              or row["event_type"] in BROWSER_PROGRAM_FAMILIES):
         return [f.first_code()]
     f.done()
     if row["event_type"] == "browser.workspace.created":
         return workspace_created_authority().binding_failures(row, root=ROOT)
-    return workspace_reset_authority().binding_failures(row, root=ROOT)
+    if row["event_type"] == "browser.workspace.reset":
+        return workspace_reset_authority().binding_failures(row, root=ROOT)
+    return browser_program_binding_failures(row, root=ROOT)
 
 def exact_json_text(value):
     """Compact JSON text with exact integers of any length (CV-1100 sets no global cap)."""
