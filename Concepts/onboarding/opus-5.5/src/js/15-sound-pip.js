@@ -907,10 +907,16 @@
     };
     const it = roomSteps(c, kitName);
     if (typeof OfflineAudioContext !== 'undefined' && c instanceof OfflineAudioContext) { let r; while (!(r = it.next()).done); wire(r.value); return input; }
+    /* (FO-188: the room's convolver takes its impulse in one go, 32-39 ms on the VM for a look's first sound, so while a
+       look is revealed over the window it is wired once the reveal has ended, PM_LOOK_HOLD; a sound that starts in
+       the reveal plays without that room's tail, as every sound did until the room's steps were done) */
     const step = () => {
       const t0 = performance.now(); let r;
       while (!(r = it.next()).done) if (performance.now() - t0 > 5) break;
-      if (r.done) wire(r.value); else setTimeout(step, 0);
+      if (!r.done) { setTimeout(step, 0); return; }
+      const L = window.PM_LOOK_HOLD, b = r.value;
+      if (L && L.after && L.after(() => wire(b))) return;
+      wire(b);
     };
     setTimeout(step, 0);
     return input;
