@@ -204,7 +204,7 @@ def run_all(dm):
             lambda: dm.resolve_original(r0, copy.deepcopy(authority_s['stored_event']), authority_s))
 
     # RS23 (E5-2 = A, 2026-11-13): acknowledged_at_utc takes the EventRecord profile, which RS01 already enforces
-    # through custody_v2 with format_checker(EVENT_RECORD); RS23 has no single-row witness (entailed by RS01).
+    # through custody_v2 with format_checker(EVENT_RECORD); RS23 has no single-row witness (entailed by RS01; table resolve_entailed).
     # The same invalid value (hour 24; both receipt copies move together) is refused first at RS01.
     authority_a = copy.deepcopy(r0['receipt_authority'])
     authority_a['stored_custody']['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T24:00:00Z'

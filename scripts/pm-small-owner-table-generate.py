@@ -119,7 +119,12 @@ SPEC = {
         ('RS20_receipt_sequence', 'receipt_sequence', 'receipt sequence is the stored sequence'),
         ('RS21_receipt_exact', 'receipt_exact', 'the first receipt copy is exactly the custody receipt'),
         ('RS22_storage_clocks', 'storage_clocks', 'the retained stored event passes date_time with the recipe storage_utc_z profile'),
-        ('RS23_ack_clock', 'ack_clock', 'acknowledged_at_utc passes date_time with the recipe EventRecord profile (E5-2; entailed by RS01 custody_v2 format_checker(EVENT_RECORD))'),
+    ]),
+    # INT3 (E5-2 = A): RS23 is entailed. resolve_original validates custody_v2 with format_checker(EVENT_RECORD) at
+    # RS01, so every acknowledged_at_utc string the EventRecord profile refuses is refused first at RS01; RS23 stays
+    # as its own single-row table so the resolve table's 25 rows remain provable by the gated tool.
+    'resolve_entailed': ('resolve_refused', 'Retained receipt acknowledgement profile (entailed: RS01 custody_v2 validation with format_checker(EVENT_RECORD) refuses first every value this row would refuse; E5-2 = A)', [
+        ('RS23_ack_clock', 'ack_clock', 'acknowledged_at_utc passes date_time with the recipe EventRecord profile (E5-2)'),
     ]),
     'fullvalue': ('fullvalue_refused', 'Full-value original commitment', [
         ('FV01_requested_integer', 'requested_integer', 'the requested event carries integer leaves only'),

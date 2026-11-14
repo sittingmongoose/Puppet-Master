@@ -725,6 +725,8 @@ def resolve_original(row, incoming, authority):
     }
     if refusal('resolve', facts) is not None:
         return None
+    if refusal('resolve_entailed', facts) is not None:
+        return None
     return copy.deepcopy((result, receipt))
 
 
