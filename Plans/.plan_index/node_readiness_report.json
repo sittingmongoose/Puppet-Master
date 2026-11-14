@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 23489,
+    "depends_on_edge_count": 24004,
     "downstream_blocked_node_count": 0,
-    "edge_count": 26707,
-    "node_count": 8792,
+    "edge_count": 27222,
+    "node_count": 8895,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-14T16:55:47Z",
+  "generated_at_utc": "2026-11-14T19:43:24Z",
   "gui_related_units": {
     "count": 3931,
     "units": [
@@ -8690,8 +8690,8 @@
         "source_location": {
           "heading": "CV-1461 - session_prompt.admitted Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 46743,
-          "line": 46745,
+          "heading_line": 50062,
+          "line": 50064,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8701,8 +8701,8 @@
         "source_location": {
           "heading": "CV-1462 - session_prompt.cancelled Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 46831,
-          "line": 46833,
+          "heading_line": 50150,
+          "line": 50152,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8712,8 +8712,8 @@
         "source_location": {
           "heading": "CV-1463 - session_prompt.expired Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 46919,
-          "line": 46921,
+          "heading_line": 50238,
+          "line": 50240,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8723,8 +8723,8 @@
         "source_location": {
           "heading": "CV-1464 - session_prompt.rejected Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 47007,
-          "line": 47009,
+          "heading_line": 50326,
+          "line": 50328,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -9174,8 +9174,8 @@
         "source_location": {
           "heading": "CV-360 - Placement Fields On Every Open Route",
           "heading_level": 3,
-          "heading_line": 28789,
-          "line": 28791,
+          "heading_line": 32108,
+          "line": 32110,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -9185,8 +9185,8 @@
         "source_location": {
           "heading": "CV-361 - The workspace.layout_changed 2.0.0 Payload",
           "heading_level": 3,
-          "heading_line": 28880,
-          "line": 28882,
+          "heading_line": 32199,
+          "line": 32201,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -9196,8 +9196,8 @@
         "source_location": {
           "heading": "CV-362 - The Terminal's Attribution, Write Grant And Refusal Fields",
           "heading_level": 3,
-          "heading_line": 28981,
-          "line": 28983,
+          "heading_line": 32300,
+          "line": 32302,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -9207,8 +9207,8 @@
         "source_location": {
           "heading": "CV-676 — Preview subject UI versioned value",
           "heading_level": 3,
-          "heading_line": 36612,
-          "line": 36614,
+          "heading_line": 39931,
+          "line": 39933,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -35255,8 +35255,8 @@
         "source_location": {
           "heading": "SMPFS-180 - One Terminal Session Per Tab",
           "heading_level": 3,
-          "heading_line": 12492,
-          "line": 12494,
+          "heading_line": 13363,
+          "line": 13365,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35266,8 +35266,8 @@
         "source_location": {
           "heading": "SMPFS-181 - Terminal Image Protocols And Their Safety Rules",
           "heading_level": 3,
-          "heading_line": 12645,
-          "line": 12647,
+          "heading_line": 13516,
+          "line": 13518,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35277,8 +35277,8 @@
         "source_location": {
           "heading": "SMPFS-182 - People And Agents In One Terminal",
           "heading_level": 3,
-          "heading_line": 12806,
-          "line": 12808,
+          "heading_line": 13677,
+          "line": 13679,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35288,8 +35288,8 @@
         "source_location": {
           "heading": "SMPFS-183 - Command Marks, Links, Find And Accessibility In The Engine",
           "heading_level": 3,
-          "heading_line": 12941,
-          "line": 12943,
+          "heading_line": 13812,
+          "line": 13814,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35299,8 +35299,8 @@
         "source_location": {
           "heading": "SMPFS-310 — browser.context_captured owner contract",
           "heading_level": 3,
-          "heading_line": 15199,
-          "line": 15201,
+          "heading_line": 16070,
+          "line": 16072,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35310,8 +35310,8 @@
         "source_location": {
           "heading": "SMPFS-315 — preview.session.started owner contract",
           "heading_level": 3,
-          "heading_line": 15475,
-          "line": 15477,
+          "heading_line": 16346,
+          "line": 16348,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35321,8 +35321,8 @@
         "source_location": {
           "heading": "SMPFS-316 — preview.session.refreshed owner contract",
           "heading_level": 3,
-          "heading_line": 15530,
-          "line": 15532,
+          "heading_line": 16401,
+          "line": 16403,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35332,8 +35332,8 @@
         "source_location": {
           "heading": "SMPFS-317 — preview.session.stopped owner contract",
           "heading_level": 3,
-          "heading_line": 15585,
-          "line": 15587,
+          "heading_line": 16456,
+          "line": 16458,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35343,8 +35343,8 @@
         "source_location": {
           "heading": "SMPFS-328 - Browser command payload definitions",
           "heading_level": 3,
-          "heading_line": 13174,
-          "line": 13176,
+          "heading_line": 14045,
+          "line": 14047,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -35354,8 +35354,8 @@
         "source_location": {
           "heading": "SMPFS-329 - Terminal, dev-session and catalog command payload definitions",
           "heading_level": 3,
-          "heading_line": 14333,
-          "line": 14335,
+          "heading_line": 15204,
+          "line": 15206,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -36476,8 +36476,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 22385,
-          "line": 22409,
+          "heading_line": 26010,
+          "line": 26034,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36487,8 +36487,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 23971,
-          "line": 23973,
+          "heading_line": 27596,
+          "line": 27598,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36498,8 +36498,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 28965,
-          "line": 28967,
+          "heading_line": 32590,
+          "line": 32592,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36509,8 +36509,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 29130,
-          "line": 29132,
+          "heading_line": 32755,
+          "line": 32757,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36520,8 +36520,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 29252,
-          "line": 29254,
+          "heading_line": 32877,
+          "line": 32879,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36531,8 +36531,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 29351,
-          "line": 29353,
+          "heading_line": 32976,
+          "line": 32978,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36542,8 +36542,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 29724,
-          "line": 29726,
+          "heading_line": 33349,
+          "line": 33351,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36553,8 +36553,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 29790,
-          "line": 29792,
+          "heading_line": 33415,
+          "line": 33417,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36564,8 +36564,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 29864,
-          "line": 29866,
+          "heading_line": 33489,
+          "line": 33491,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36575,8 +36575,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 29917,
-          "line": 29919,
+          "heading_line": 33542,
+          "line": 33544,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36586,8 +36586,8 @@
         "source_location": {
           "heading": "SP-656 — Preview subject UI and runtime identity mapping",
           "heading_level": 3,
-          "heading_line": 40555,
-          "line": 40557,
+          "heading_line": 44180,
+          "line": 44182,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -43265,10 +43265,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 8792,
+  "plan_unit_count": 8895,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4109,
+      "high": 4212,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -43611,6 +43611,9 @@
       "browser_custom_gui_doctor_matrix": 1,
       "browser_effective_disclosure_drift": 1,
       "browser_event_authority_scope_expansion": 1,
+      "browser_event_custody_checkpoint_or_withdrawal_drift": 51,
+      "browser_event_identity_scope_or_replay_drift": 51,
+      "browser_event_oracle_masking_or_overclaim": 1,
       "browser_event_payload_identity_scope_or_replay_escape": 1,
       "browser_event_retention_anchor_or_physical_admission_escape": 1,
       "browser_event_scope_retention_replay_or_consumer_drift": 1,
@@ -47491,7 +47494,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 8512,
+      "accepted": 8615,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47543,7 +47546,7 @@
       "implementation_reference": 1,
       "integration_contract": 130,
       "interaction_contract": 19,
-      "interface_contract": 329,
+      "interface_contract": 431,
       "invariant": 33,
       "migration": 1,
       "migration_contract": 2,
@@ -47564,7 +47567,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6091,
+      "requirement": 6092,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -47657,7 +47660,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "68271aa87c1ec0e19fe4701795564ed9bc776b963a4a554b24f724e672c4a8ed",
+        "expected": "e6d0b9740b4da7f8bff9e63c4910b2e93ca2f17f80fdf0dab581aa1eb795a257",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -47693,7 +47696,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+        "expected": "58e00bd0e83f4f55778a057ad2da2b6a3374506e1170ba5345bb3f3dd5780216",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
