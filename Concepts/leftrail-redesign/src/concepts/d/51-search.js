@@ -271,6 +271,8 @@ function srchReveal(panel, tog) {
 let dsrWired = false, dsrTimer = 0, dsrLate = 0;
 function dsrFitAll() {
   if (!D.on) return;
+  /* FO-188: while a look is revealed over the onboarding window (PM_LOOK_HOLD, the onboarding's 11-motion-start.js) the fit waits for the reveal's end */
+  if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(dsrFitAll)) return;
   srchFit(document.getElementById('panel-search'));
   const run = document.getElementById('panel-run');
   if (run && typeof rdpFit === 'function') rdpFit(run);
