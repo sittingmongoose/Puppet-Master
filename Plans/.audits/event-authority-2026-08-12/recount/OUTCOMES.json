@@ -62,6 +62,10 @@
   {
    "event_type": "discovery.fallback",
    "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.invoked",
+   "outcome": "registered"
   }
  ]
 }
