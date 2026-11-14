@@ -442,6 +442,10 @@
   {
    "event_type": "testing.capture.segment_finalized",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.segment_recovered",
+   "outcome": "registered"
   }
  ]
 }
