@@ -454,10 +454,12 @@ for (const surface of ['normal', 'sandbox']) {
 			}, true);
 		});
 		const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
-		const box = await f.evaluate(() => { const r = document.getElementById('chatResizer'); if (!r) return null; const b = r.getBoundingClientRect(); return { x: b.x, y: b.y, w: b.width, h: b.height, hidden: r.classList.contains('hidden') }; });
-		await t.check('the chat resizer is exposed beside the open sheet', !!box && !box.hidden && box.w >= 3 && box.h > 100, JSON.stringify(box));
-		if (!box || box.hidden) return;
-		const x0 = off.x + box.x + box.w / 2, y0 = off.y + box.y + box.h / 2;
+		// the sheet's scrim covers the resizer's right half (the chat's left edge); only its left edge is exposed,
+		// so grab there (the review's "exposed left edge"), not the centre, which lands on the scrim
+		const box = await f.evaluate(() => { const r = document.getElementById('chatResizer'); if (!r) return null; const b = r.getBoundingClientRect(); const grab = document.elementFromPoint(b.x + 1.5, b.y + b.height / 2); return { x: b.x, y: b.y, w: b.width, h: b.height, hidden: r.classList.contains('hidden'), grabOnResizer: !!(grab && grab.closest && grab.closest('#chatResizer')) }; });
+		await t.check('the chat resizer’s left edge is exposed beside the open sheet', !!box && !box.hidden && box.w >= 3 && box.h > 100 && box.grabOnResizer, JSON.stringify(box));
+		if (!box || box.hidden || !box.grabOnResizer) return;
+		const x0 = off.x + box.x + 1.5, y0 = off.y + box.y + box.h / 2;
 		await t.page.mouse.move(x0, y0);
 		await t.page.mouse.down();
 		await t.page.waitForTimeout(120);
