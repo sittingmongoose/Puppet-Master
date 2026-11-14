@@ -168,6 +168,8 @@ def run(out):
                "scripts/pm_dg6a_tables.py", "scripts/pm-dg6a-domain.py",
                "scripts/pm_event_numbers.py", "scripts/pm_event_datetime.py",
                "scripts/pm-implementation-readiness.py"]
+    sources += [str(p.relative_to(ROOT)) for p in sorted((ROOT / "scripts").glob("pm_dg6a_table_*.py"))]
+    sources += ["scripts/pm_dg6a_phase_groups.py", "scripts/pm-dg6a-table-generate.py"]
     for family in load("Plans/panel_event_contracts/manifest.json")["families"]:
         sources.extend([family["payload_schema"], "Plans/event_payloads/" + family["slug"] + ".schema.json",
                         "Plans/panel_event_contracts/" + family["slug"] + ".fixtures.json",

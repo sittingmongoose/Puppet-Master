@@ -1,6 +1,8 @@
 """Regression witnesses for exact-refusal-only mutation credit on real tables."""
 import copy
 import importlib.util
+import itertools
+import runpy
 import sys
 import unittest
 from pathlib import Path
@@ -78,6 +80,31 @@ class ExactMutationCredit(unittest.TestCase):
 
 
 class Assignment(unittest.TestCase):
+    def test_bounded_panel_phases_preserve_refusals_and_order(self):
+        import pm_dg6a_tables as tables
+        from pm_dg6a_phase_groups import ALIASES
+        spec = runpy.run_path(str(ROOT / "scripts/pm-dg6a-table-generate.py"))
+        self.assertEqual(set(ALIASES), spec["PANEL_PHASES"])
+        for phase, originals in spec["PANEL_ROWS"].items():
+            parts = ALIASES[phase]
+            actual = [row for part in parts for row in spec["MODULES"][part][1]]
+            self.assertEqual(actual, originals)
+            self.assertTrue(all(1 <= len(tables.rows(part)) <= 8 for part in parts))
+            names = tables.fields(phase)
+            for bits in itertools.product((False, True), repeat=len(names)):
+                value = dict(zip(names, bits))
+                expected = [code for _, _, _, code, cond in originals
+                            if eval(cond, {"__builtins__": {}}, {"value": value})]
+                self.assertEqual(tables.every(phase, **value), expected, (phase, value))
+                self.assertEqual(tables.first(phase, **value), next(iter(expected), None))
+            tables.RECORDER = []
+            try:
+                tables.every(phase, **dict.fromkeys(names, True))
+                self.assertEqual([p for p, _, _ in tables.RECORDER], list(parts))
+                self.assertTrue(all(len(tables.rows(p)) <= 8 for p, _, _ in tables.RECORDER))
+            finally:
+                tables.RECORDER = None
+
     def test_exact_split(self):
         document = cells.manifest()
         self.assertEqual(len(document["rows"]), 93)
