@@ -4,7 +4,7 @@
 //   python3 Concepts/settings-scope/opus-5.5/tools/build_standalone.py $OUT
 //   browser-check run Concepts/settings-scope/opus-5.5/tools/checks/feedback.check.mjs \
 //     --config Concepts/pm7-tools/browser-check/browser-check.config.mjs --set page=$OUT/settings-scope-app.html
-// --set only=strip|rows|shake|acct|head|where|detail|copy|always|jared1113 runs one part (jared1113: --set j1113=fills,models,paths,limits); --set looks=basic-dark,... narrows the looks
+// --set only=strip|rows|shake|acct|head|where|detail|copy|always|jared1113 runs one part (jared1113: --set j1113=objects,fills,models,paths,limits); --set looks=basic-dark,... narrows the looks
 // (default Basic Dark, Retro Light and NieR Dark); --set lookShots=1 lists the review images under LOOK.
 // `strip` opens the page with the review strip (settings-scope.html beside the app page, or --set strip=<path>); the
 // account switch in `shake` is compared with bare PMConcept7 (Concepts/PMConcept7.html, or --set bare=<path>).
@@ -1900,6 +1900,55 @@ export default async function (t) {
 	/* ------------------------------------------------------------------ the page Jared opens: the review strip
 	   (review A-r1 finding 1 and tool note A: a script error in the strip passed every check that loaded only the app) */
 	/* ------------------------------------------------------------------ Jared's review, 2026-11-13: items 1, 3 and 5 */
+	/* Lead, after batch 4 landed: a row Plans' inventory gives a type the page's own control can't hold yet (Model nicknames,
+	   a key-value map, drawn as a text box until stream F's FO-186) showed "[object Object]". Every Settings page is opened
+	   with real presses and no control may show it; a row whose control can't hold its value says it in words, and its
+	   Change opens the per-place editor where the value comes from. Read with whatever inventory the page carries (run
+	   with --set inventory=<batch 4 or later> to see the case) */
+	if (want(t, 'jared1113') && jWant(t, 'objects')) await t.step('Jared 1113, lead: no Settings control shows “[object Object]”; a value its control can’t hold is said in words, with Change', async () => {
+		await reset(t); await run(t, HELPERS);
+		// two of everywhere's own lines, so a map isn't only the empty one
+		const mism = await run(t, () => {
+			const P = window.PSX, out = [];
+			for (const id of Object.keys(P.DEF)) { const s = P.engineSetting(id), r = P.resolve(id, P.S.ctx), d = r && (r.asked !== undefined ? r.asked : r.value); if (!s || !d || typeof d !== 'object' || P.layering.types[id] === 'model_picker') continue; const map = !Array.isArray(d); if ((map && s.control !== 'keyvalue') || (!map && !['list', 'multiselect', 'reorder', 'keyvalue'].includes(s.control))) out.push({ id, control: s.control, map }); }
+			return out;
+		});
+		const R = '#pm-settings-root';
+		const SCAN = () => {
+			const bad = [];
+			document.querySelectorAll('#pm-settings-root input, #pm-settings-root textarea, #pm-settings-root select').forEach((el) => { if (/\[object Object\]/.test(el.value || '') || /\[object Object\]/.test(el.getAttribute('value') || '')) { const r = el.closest('[id^="setting-"]'); bad.push((r ? r.id.slice(8) : el.getAttribute('aria-label') || el.className) + ' (a box)'); } });
+			document.querySelectorAll('#pm-settings-root .setting-control, #pm-settings-root .o55-field, #pm-settings-root .pm51-dd-trigger').forEach((el) => { if (el.getClientRects().length && /\[object Object\]/.test(el.textContent || '')) { const r = el.closest('[id^="setting-"]'); bad.push((r ? r.id.slice(8) : el.className) + ' (its words)'); } });
+			return bad;
+		};
+		const domains = await run(t, () => [...document.querySelectorAll('#pm-settings-root .domain-link[data-domain]')].map((b) => b.getAttribute('data-domain')));
+		const seen = new Set(); let pages = 0;
+		const look = async (where) => { pages++; (await run(t, SCAN)).forEach((b) => seen.add(`${b} on ${where}`)); };
+		for (const dm of domains) {
+			await jPress(t, t.root.locator(`${R} .domain-link[data-domain="${dm}"]`).first()); await settle(t, 450); await look(dm);
+			const wss = await run(t, () => [...document.querySelectorAll('#pm-settings-root .workspace-tab[data-workspace]')].map((b) => b.getAttribute('data-workspace')));
+			for (const ws of wss) {
+				const wb = t.root.locator(`${R} .workspace-tab[data-workspace="${ws}"]`).first();
+				if (await wb.count()) { await jPress(t, wb); await settle(t, 400); await look(ws); }
+				const mtabs = await run(t, () => [...document.querySelectorAll('#pm-settings-root .manager-tab[data-action="pm51-tab"]')].filter((b) => b.getClientRects().length).map((b) => [b.getAttribute('data-manager'), b.getAttribute('data-tab')]));
+				for (const [mg, tb] of mtabs) { const mb = t.root.locator(`${R} .manager-tab[data-manager="${mg}"][data-tab="${tb}"]`).first(); if (await mb.count()) { await jPress(t, mb); await settle(t, 400); await look(`${mg} › ${tb}`); } }
+			}
+		}
+		await t.check(`${pages} Settings pages and tabs opened with real presses: no control shows “[object Object]”${mism.length ? ` (rows whose control can’t hold Plans’ type: ${mism.map((m) => `${m.id}, a ${m.map ? 'map' : 'list'} in a ${m.control} control`).join('; ')})` : ''}`, pages > 40 && seen.size === 0, [...seen].slice(0, 8).join(' | '));
+		// each such row says its value in words, and its Change opens the per-place editor where the value comes from
+		for (const m of mism) {
+			await run(t, (i) => { const P = window.PSX; const d = P.resolve(i, P.S.ctx).value; if (!Array.isArray(d)) { const v = i === 'ai.models.model-alias' ? { quick: 'anthropic/claude-sonnet-4', deep: 'anthropic/claude-opus-4' } : null; if (v) P.setOwn(i, { level: 'everywhere', key: null }, v, { quiet: true, confirmed: true }); } window.PM51.revealSetting(i); }, m.id);
+			await settle(t, 1200);
+			const row = await run(t, (i) => { const r = document.getElementById('setting-' + i); if (!r) return null; window.__psxScrollTo(r, 'center'); const w = r.querySelector('.psx-valwords'); return { words: w ? w.textContent.trim() : null, boxShown: [...r.querySelectorAll('.setting-control input, .setting-control textarea')].some((x) => x.getClientRects().length), resolved: window.PSX.vt(i, window.PSX.resolve(i, window.PSX.S.ctx).value) }; }, m.id);
+			await t.check(`${m.id}: the row says its value in words in its control’s place (“${row && row.words}”), with no box holding an object`, !!row && !!row.words && !/object/i.test(row.words) && !row.boxShown && row.words.startsWith(row.resolved), JSON.stringify(row));
+			const ch = t.root.locator(`${R} [id="setting-${m.id}"] [data-psx-wordschange]`).first();
+			if (!(await ch.count())) { await t.check(`${m.id}: a Change beside the words`, false, 'none'); continue; }
+			await t.quickClick(ch);
+			const ed = await t.root.waitForFunction((i) => { const insp = document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"]'); const code = insp && insp.querySelector('.o55-insp-tech code'); const w = insp && insp.querySelector('.psx-wedit'); return code && code.textContent.trim() === i && w ? { line: w.closest('[data-psx-line]') && w.closest('[data-psx-line]').getAttribute('data-psx-line'), nicks: !!w.querySelector('.psx-nicks'), lines: w.querySelectorAll('.psx-nick').length } : (document.querySelector('.drawer-wrap.is-open [data-psx-place-edit]') ? { drawer: true } : null); }, m.id, { timeout: 5000, polling: 100 }).then((h) => h.jsonValue(), () => null);
+			await t.check(`${m.id}: Change opens the per-place editor where the value comes from (${ed && ed.line})`, !!ed && (ed.drawer || (ed.line === 'everywhere:' && (m.id !== 'ai.models.model-alias' || (ed.nicks && ed.lines === 2)))), JSON.stringify(ed));
+			await jClean(t);
+		}
+	});
+
 	/* Found while testing Jared's 2026-11-13 fixes (not on his list): revealing Safety › Rules wrote Rules, in order,
 	   everywhere and said "Saved for everywhere". Every Settings page is opened with real presses (each chapter, each of
 	   its pages' tabs and each manager tab); no History entry and no note may appear. Then one real change on the Rules

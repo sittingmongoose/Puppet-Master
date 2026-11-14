@@ -177,6 +177,10 @@
     const rule = classify(ref, s); if (!rule) return false;
     DEF[id] = Object.assign({ adopted: true }, rule);
     DEFAULTS[id] = clone(s.value);
+    /* the page's old shape for a row Plans' inventory now types otherwise (Model nicknames: the page's text box holds "",
+       the inventory's default is the empty map {}): the inventory's default, so the panel says "No nicknames yet" */
+    const inv = PSX.factsOf && PSX.factsOf(id);
+    if (inv && inv.default && typeof inv.default === 'object' && !(s.value && typeof s.value === 'object') && !PSX.holds(id, inv.default)) DEFAULTS[id] = clone(inv.default);
     if (everywhereValue !== undefined && !same(everywhereValue, s.value)) {
       const seed = rule.home === 'computer' ? { level: 'computer', key: 'here' } : rule.home === 'project' ? { level: 'project', key: 'tastebook' } : { level: 'everywhere', key: null };
       SEED[id] = Object.assign(seed, { value: clone(everywhereValue) });
@@ -215,6 +219,8 @@
       if (id === 'general.visual.theme') { const pair = PSX.themePair(v); Object.assign(out, pair); changed['general.visual.theme'] = r.changed; changed['general.visual.theme-mode'] = r.changed; return; }
       // a model chosen with its own thinking depth is one atomic value in the world; the engine's row keeps the model
       if (PSX.isModel && PSX.isModel(id) && v && typeof v === 'object' && !Array.isArray(v)) v = v.model;
+      // a value the page's own control can't hold (a map for a text box) is never put into it: the row says it in words
+      else if (!PSX.holds(id, v)) return;
       out[id] = clone(v); changed[id] = !!r.changed && !r.notOffered;
     });
     return { settings: out, changed };
