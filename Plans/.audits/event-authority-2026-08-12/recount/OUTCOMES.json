@@ -114,6 +114,10 @@
   {
    "event_type": "external_research.topic_started",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.api.compatibility_changed",
+   "outcome": "registered"
   }
  ]
 }
