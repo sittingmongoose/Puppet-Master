@@ -82,6 +82,10 @@
   {
    "event_type": "docker.compose.scenario.deleted",
    "outcome": "registered"
+  },
+  {
+   "event_type": "docker.compose.scenario.edited",
+   "outcome": "registered"
   }
  ]
 }

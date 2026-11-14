@@ -1,0 +1,353 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-14.43",
+  "sha256": "6c2e73f2a55a34665ff269983bec21c0f2d253597b7289767ec42c1eca3ecd48",
+  "family_count": 89,
+  "row_pointer": "#/families/88"
+ },
+ "base_commit": "3ddaccb0db313761b3a840a95172703d1b7b0c7e",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "docker.compose.scenario.edited",
+   "family_id": "event-family-docker-compose-scenario-edited",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-14.43 as #/families/88 (canonical row SHA-256 2802c93c5653944cc780050796ffd507b6885d266627d93d7128bf228704cfbc); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/88",
+       "line_start": 6091,
+       "line_end": 6134,
+       "quote": "\"event_type\": \"docker.compose.scenario.edited\"",
+       "quote_line": 6094,
+       "file_sha256": "6c2e73f2a55a34665ff269983bec21c0f2d253597b7289767ec42c1eca3ecd48",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact CRAU-1552 clause 2 supplies this normative binding; native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Containers_Registry_and_Unraid.md",
+       "unit": "CRAU-1552",
+       "line_start": 10000,
+       "line_end": 10000,
+       "quote": "2. **Owner.** This unit owns the semantic fact: A validated cmd.docker.compose.scenario.edit commits an actual change of one existing scenario against its original currentness. An unchanged ",
+       "quote_check": "exact",
+       "file_sha256": "8f62da9268c032d934f7e238b1b140250602c1791391670a904a2227e9af600d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Phase-1 normative contract and static inline/external journal materialization are consistent after B1. Authenticate physical SP-337 pack/descriptor then validate unchanged logical EventRecord and full-value original custody. Native execution and phase-2 oracle proof remain NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Containers_Registry_and_Unraid.md",
+       "unit": "CRAU-1552",
+       "line_start": 10001,
+       "line_end": 10001,
+       "quote": "3. **Producer.** Sole producer `ComposeScenarioController::edited` calls `storage.w3h.docker_compose_scenario_edited.append.v1@1.0.0`. Source is CRAU-096 original project-state scenario, res",
+       "quote_check": "exact",
+       "file_sha256": "8f62da9268c032d934f7e238b1b140250602c1791391670a904a2227e9af600d"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1552",
+       "line_start": 48716,
+       "line_end": 48716,
+       "quote": "`docker.compose.scenario.edited` has closed required fields",
+       "quote_check": "exact",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1552",
+       "line_start": 48716,
+       "line_end": 48716,
+       "quote": "`docker.compose.scenario.edited` has closed required fields",
+       "quote_check": "exact",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact CRAU-1552 clause 4 supplies this normative binding; native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Containers_Registry_and_Unraid.md",
+       "unit": "CRAU-1552",
+       "line_start": 10002,
+       "line_end": 10002,
+       "quote": "4. **Payload.** `Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json#/$defs/payload` is this family’s closed 1.0.0 schema. Every source field is compared to the genuine origi",
+       "quote_check": "exact",
+       "file_sha256": "8f62da9268c032d934f7e238b1b140250602c1791391670a904a2227e9af600d"
+      },
+      {
+       "path": "Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json",
+       "unit": "Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json#/$defs/payload",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "\"additionalProperties\": false",
+       "quote_check": "exact",
+       "file_sha256": "52655f1b703e03739295d04f8ca8ae00cfeabdeda57ad1ac40e77f1b85a2a668"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact CRAU-1552 clause 5 supplies this normative binding; native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Containers_Registry_and_Unraid.md",
+       "unit": "CRAU-1552",
+       "line_start": 9936,
+       "line_end": 9936,
+       "quote": "5. **Scope/identity.** Scope is `project_only`. `project_id`, actual Server and thread match the original source and EventRecord; absent Project means explicit application only where an app ",
+       "quote_check": "exact",
+       "file_sha256": "8f62da9268c032d934f7e238b1b140250602c1791391670a904a2227e9af600d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact CRAU-1552 clause 6 supplies this normative binding; native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Containers_Registry_and_Unraid.md",
+       "unit": "CRAU-1552",
+       "line_start": 9937,
+       "line_end": 9937,
+       "quote": "6. **Replay/idempotency.** Freeze `replay_policy=dedupe_by_idempotency_key` and Contracts’ exact producer-semantic digest over only its named caller fields. Current write/retry refuses `proj",
+       "quote_check": "exact",
+       "file_sha256": "8f62da9268c032d934f7e238b1b140250602c1791391670a904a2227e9af600d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "B2: canonical non-rebuildable publication binds RP-AUTHORITY-INDEFINITE@1.0.0 under approved Card 1 G21, with original pending/result/receipt/recovery/live-reference/hold/backup cleanup fences; no disposable-index rebuild or independent clock. Existing canonical policy object is present; phase-1 normative PASS only.",
+     "evidence": [
+      {
+       "path": "Plans/Containers_Registry_and_Unraid.md",
+       "unit": "CRAU-1552",
+       "line_start": 9938,
+       "line_end": 9938,
+       "quote": "7. **Retention.** Bind this exact event to `RP-AUTHORITY-INDEFINITE@1.0.0`, approved deck-1 Card 1 `G21` (DL-401). No TTL or count cap. For Project entries only explicit Delete Puppet Master",
+       "quote_check": "exact",
+       "file_sha256": "8f62da9268c032d934f7e238b1b140250602c1791391670a904a2227e9af600d"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1552",
+       "line_start": 62736,
+       "line_end": 62736,
+       "quote": "| `ea_w3h_docker_compose_scenario_edited_publication` |",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1552",
+       "line_start": 62736,
+       "line_end": 62736,
+       "quote": "| `ea_w3h_docker_compose_scenario_edited_publication` |",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact CRAU-1552 clause 8 supplies this normative binding; native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Containers_Registry_and_Unraid.md",
+       "unit": "CRAU-1552",
+       "line_start": 9939,
+       "line_end": 9939,
+       "quote": "8. **Redaction/custody.** Use `secret_refs_only` for current events; verify all refs with the original owner’s access and no-secret rules. The sole native adapter must prove actual original ",
+       "quote_check": "exact",
+       "file_sha256": "8f62da9268c032d934f7e238b1b140250602c1791391670a904a2227e9af600d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact CRAU-1552 clause 9 supplies this normative binding; native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Containers_Registry_and_Unraid.md",
+       "unit": "CRAU-1552",
+       "line_start": 10007,
+       "line_end": 10007,
+       "quote": "9. **Transitions.** A validated cmd.docker.compose.scenario.edit commits an actual change of one existing scenario against its original currentness. An unchanged edit emits nothing. Stale fi",
+       "quote_check": "exact",
+       "file_sha256": "8f62da9268c032d934f7e238b1b140250602c1791391670a904a2227e9af600d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact CRAU-1552 clause 10 supplies this normative binding; native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Containers_Registry_and_Unraid.md",
+       "unit": "CRAU-1552",
+       "line_start": 10008,
+       "line_end": 10008,
+       "quote": "10. **Consumers/checkpoints.** The exact read-only operating consumer is `storage.w3h.docker_compose_scenario_edited.recovery_read.v1@1.0.0`, called by `ComposeScenarioController` for existi",
+       "quote_check": "exact",
+       "file_sha256": "8f62da9268c032d934f7e238b1b140250602c1791391670a904a2227e9af600d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact CRAU-1552 clause 11 supplies this normative binding; native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Containers_Registry_and_Unraid.md",
+       "unit": "CRAU-1552",
+       "line_start": 9942,
+       "line_end": 9942,
+       "quote": "11. **Compatibility/withdrawal.** No alias, automatic legacy converter or historical emission is asserted for this newly prepared family. Preserve actual old admitted shapes and original rec",
+       "quote_check": "exact",
+       "file_sha256": "8f62da9268c032d934f7e238b1b140250602c1791391670a904a2227e9af600d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Wave 3 phase 2: executable static oracle (pm_w3h_events.py) refuses only through generated Method B tables; every reachable row has a single-defect witness for this family where the row applies, the complete checker passes (pm-w3h-event-contracts.py exit 0), the shared number corpus passes at every integer slot, and the gated tool (004bdedd63) credits the rows listed in W3H.md \"Wave 3 phase 2\". SJ01/SJ16 are entailed with written proofs. Native execution NOT_RUN; schema rows are whole-definition verdicts with field witnesses, not per-keyword cuts.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-1270",
+       "line_start": 13869,
+       "line_end": 13869,
+       "quote": "Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (pub",
+       "quote_check": "exact",
+       "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e"
+      },
+      {
+       "path": "scripts/pm_w3h_events.py",
+       "line_start": 1240,
+       "line_end": 1240,
+       "quote": "def verify_publication(w, mode='current'):",
+       "quote_check": "exact",
+       "file_sha256": "b5bdc2d8d107df163eedd6ae2c70fb02f6417503cf3e3be40ca23454f4b32d76"
+      },
+      {
+       "path": "scripts/pm_w3h_events.py",
+       "line_start": 1485,
+       "line_end": 1485,
+       "quote": "def retained_read(w, read):",
+       "quote_check": "exact",
+       "file_sha256": "b5bdc2d8d107df163eedd6ae2c70fb02f6417503cf3e3be40ca23454f4b32d76"
+      },
+      {
+       "path": "scripts/pm_w3h_events.py",
+       "line_start": 1214,
+       "line_end": 1214,
+       "quote": "ENTAILED = {",
+       "quote_check": "exact",
+       "file_sha256": "b5bdc2d8d107df163eedd6ae2c70fb02f6417503cf3e3be40ca23454f4b32d76"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3H-self-grade.json",
+      "sha256": "9e7eb8cdfe746fd16ddab9369f74efe23fd0dc0f1eb8a0d2fa3e810c49ee8212",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
