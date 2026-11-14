@@ -10,6 +10,19 @@ onboarding wizard without its theatrics; account for every way a project can be 
 control. The review behind these concepts (Opus 5.5, GPT-6 Astra, Muse Wonder Full) is in
 `/mnt/Cursor/share/puppet-master/2026-10-30-projects-refresh/`.
 
+## Jared's review (2026-11-13): Done opens the next section
+
+Jared: "when you are setting up a new project, and you choose your option and click done for each section, it should
+open the next section after you hit done on the previous section. Not just close them all." A fresh Project's
+sections mostly start with a good answer (where, look, versions), so "the next section that isn't done" was none and
+Done closed them all. Now a section is finished once the person presses its Continue or Done with no problem in it
+(a later problem makes it unfinished again, `layer/np.js` `finished`), and Done opens the next unfinished section
+after it, then any unfinished one before it (`nextUnfinished`). That section comes into view (smoothly, or at once
+under Reduced Motion) and its first control takes the focus (`concepts/c.js` `afterContinue`); when none is left
+they all close and the focus is on Create. The button says Continue while another unfinished section is left and Done
+on the last one. Check: `tools/checks/np-next.check.mjs` (real presses through every section of a new Project, in
+order and out of order, a section reopened and closed again, and adding a folder without Reduced Motion).
+
 ## Split v3 (2026-11-10): Split, set for reading. It replaces Split v2
 
 Jared, 2026-11-10: "I like the new split design it made. However, one issue I have with it is its a little hard to
