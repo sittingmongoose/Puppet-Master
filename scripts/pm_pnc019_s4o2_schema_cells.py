@@ -84,11 +84,13 @@ def schema_spec(row):
     if lane == "DF":
         return "Plans/event_payloads/" + slug + "_v2.schema.json", (), ["Plans/filesafe_event_contract_fixtures.json"]
     if lane == "DCW":
-        contract = next(r for r in load("Plans/dcw_event_contract_fixtures.json")["families"] if r["event_type"] == family)
-        return contract["schema"], (), ["Plans/dcw_event_contract_fixtures.json"]
+        fixtures = ["Plans/dcw_event_contract_fixtures.json", "Plans/dcw_blockage_event_fixtures.json"]
+        contract = next(r for fixture in fixtures for r in load(fixture)["families"] if r["event_type"] == family)
+        return contract["schema"], (), fixtures
     if lane == "DS15":
-        contract = next(r for r in load("Plans/ds15_event_contracts.json") if r["event_type"] == family)
-        return contract["payload_schema_ref"], (), ["Plans/ds15_event_contract_fixtures.json"]
+        contracts = load("Plans/ds15_event_contracts.json") + load("Plans/ds15_deck2_contracts.json")
+        contract = next(r for r in contracts if r["event_type"] == family)
+        return contract["payload_schema_ref"], (), ["Plans/ds15_event_contract_fixtures.json", "Plans/ds15_deck2_fixtures.json"]
     if lane == "DS" and family == "terminal.workgroup_moved":
         return "Plans/event_payloads/terminal_workgroup_moved.schema.json", (), ["Plans/terminal_workgroup_compatibility_fixtures.json"]
     if lane == "DS" and family == "workspace.layout_changed":
@@ -369,6 +371,12 @@ def main():
                         or not set(args.family) <= {r["event_type"] for r in assignment}):
         parser.error("--family must name distinct families in the S4o2 assignment")
     rows = [r for r in assignment if not args.family or r["event_type"] in args.family]
+    sources = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
+               for p in (ROOT / "Plans").rglob("*.schema.json")
+               if not any(part.startswith(".") or part == "_shards" for part in p.relative_to(ROOT / "Plans").parts)}
+    sources.update({"scripts/" + name: hashlib.sha256((ROOT / "scripts" / name).read_bytes()).hexdigest()
+                    for name in ("pm_pnc019_s4o2_schema_cells.py", "pm_event_numbers.py", "pm_event_datetime.py")})
+    sources["Plans/pnc019_s4o2_oracle_cells.json"] = hashlib.sha256((ROOT / "Plans/pnc019_s4o2_oracle_cells.json").read_bytes()).hexdigest()
     result = []
     for row in rows:
         try:
@@ -380,7 +388,7 @@ def main():
                           error=type(exc).__name__ + ": " + str(exc))
         result.append(report)
         print(row["event_type"], report["status"], len(report["cases"]), flush=True)
-        args.out.write_text(json.dumps(dict(rows=result, native_execution="NOT_RUN"), indent=2) + "\n")
+        args.out.write_text(json.dumps(dict(rows=result, sources=sources, native_execution="NOT_RUN"), indent=2) + "\n")
     return int(any(r["status"] not in ("PASS", "NOT_APPLICABLE") for r in result))
 
 
