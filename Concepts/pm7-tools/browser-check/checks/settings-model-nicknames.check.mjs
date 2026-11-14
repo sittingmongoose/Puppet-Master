@@ -18,6 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { setLookBySetting } from '../helpers/settings-look.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..', '..', '..', '..');
@@ -106,6 +107,51 @@ export const tests = {
 		await t.page.waitForTimeout(500);
 		const l3 = await f.evaluate(LIST, ID);
 		await t.check('FO-186 removing it brings the built-in back', l3.lines.some((x) => x.builtin && norm(x.nick) === 'nano banana') && !/nano/i.test(l3.value), JSON.stringify({ value: l3.value }));
+	},
+	/* --set crops=1 (--set cropDir=, --set tag=head|main): the list, its picker open on a new line and a refusal, in
+	   Basic Dark, Glass Light and NieR Dark at 1920x1080 (--set looks= picks others) */
+	'FO-186 crops': async (t) => {
+		if (String(t.args.crops || '') !== '1') { await t.check('crops are written only with --set crops=1', true); return; }
+		const dir = String(t.args.cropDir || path.join(t.run.dir, 'crops')), tag = String(t.args.tag || 'page');
+		fs.mkdirSync(dir, { recursive: true });
+		const f = await t.app.open();
+		await t.viewport(1920, 1080);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		const off = async () => { if (f === t.page.mainFrame()) return { x: 0, y: 0 }; const el = await f.frameElement().catch(() => null); const b = el && (await el.boundingBox()); return b ? { x: b.x, y: b.y } : { x: 0, y: 0 }; };
+		const shoot = async (name, sel, pad = 10) => {
+			const r = await f.evaluate((sel) => { const els = [...document.querySelectorAll(sel)].filter((e) => e.getClientRects().length); if (!els.length) return null; const rs = els.map((e) => e.getBoundingClientRect()); return { left: Math.min(...rs.map((r) => r.left)), top: Math.min(...rs.map((r) => r.top)), right: Math.max(...rs.map((r) => r.right)), bottom: Math.max(...rs.map((r) => r.bottom)) }; }, sel);
+			if (!r) return;
+			const o = await off(), vp = t.page.viewportSize(), x = Math.max(0, Math.floor(r.left + o.x - pad)), y = Math.max(0, Math.floor(r.top + o.y - pad));
+			const clip = { x, y, width: Math.min(vp.width - x, Math.ceil(r.right - r.left + pad * 2)), height: Math.min(vp.height - y, Math.ceil(r.bottom - r.top + pad * 2)) };
+			if (clip.width > 4 && clip.height > 4) fs.writeFileSync(path.join(dir, `${tag}-${name}.png`), await t.page.screenshot({ clip }));
+		};
+		const row = `#pm-settings-root [id="setting-${ID}"]`;
+		for (const look of String(t.args.looks || 'basic-dark,glass-light,nier-dark').split(',')) {
+			await setLookBySetting(t, f, look);
+			await toModels(t, f);
+			await f.evaluate((sel) => { const r = document.querySelector(sel); if (r) r.scrollIntoView({ block: 'center' }); }, row);
+			await t.page.waitForTimeout(400);
+			await shoot(`${look}-nicknames`, row, 6);
+			if (!(await f.locator(`${row} .o55-nick-input`).count())) continue;
+			await f.locator(`${row} .o55-nick-input`).fill('fast');
+			await f.locator(`${row} .o55-nick-add [role="combobox"]`).click();
+			await t.page.waitForTimeout(500);
+			await shoot(`${look}-nickname-picker`, `${row}, .o55-pick-pop.is-open`, 10);
+			const opt = f.locator('.o55-pick-pop.is-open [role="option"]').filter({ hasText: 'Claude Haiku' }).first();
+			if (await opt.count()) { await opt.click(); await t.page.waitForTimeout(300); }
+			await f.locator(`${row} [data-action="pm51-nick-add"]`).click(); await t.page.waitForTimeout(500);
+			await f.locator(`${row} .o55-nick-input`).fill('FAST');
+			await f.locator(`${row} .o55-nick-add [role="combobox"]`).click(); await t.page.waitForTimeout(400);
+			const o2 = f.locator('.o55-pick-pop.is-open [role="option"]').filter({ hasText: 'Claude Opus' }).first();
+			if (await o2.count()) { await o2.click(); await t.page.waitForTimeout(300); }
+			await f.locator(`${row} [data-action="pm51-nick-add"]`).click(); await t.page.waitForTimeout(500);
+			await shoot(`${look}-nickname-refused`, row, 6);
+			/* the line added for the crop goes again */
+			await f.locator(`${row} .o55-nick-line[data-nick="fast"] [data-action="pm51-nick-remove"]`).click().catch(() => {});
+			await t.page.waitForTimeout(400);
+		}
+		await t.check(`crops written to ${dir}`, fs.readdirSync(dir).some((n) => n.startsWith(tag + '-') && n.includes('nickname')));
 	},
 	'FO-186 the Media nickname box is retired': async (t) => {
 		const f = await t.app.open();
