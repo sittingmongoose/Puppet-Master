@@ -388,9 +388,13 @@ async function twoPointerCheck(t, f, x, tag) {
 	const what = `${tag} ${x.strip} (the chosen item; touch 2 lifts first)`;
 	const off = await offsetOf(t, f), c = x.cur, p1 = { x: off.x + c.x + c.w / 2, y: off.y + c.y + c.h / 2 };
 	const q = await f.evaluate(() => {
-		for (const [fx, fy] of [[0.62, 0.55], [0.45, 0.62], [0.3, 0.75], [0.7, 0.8], [0.5, 0.9]]) {
-			const x = innerWidth * fx, y = innerHeight * fy, e = document.elementFromPoint(x, y);
-			if (e && !e.closest('button, a, input, textarea, select, label, [role], [tabindex], nav, [contenteditable], [draggable="true"], canvas, i.lg-lens')) return { x, y, el: e.tagName.toLowerCase() + '.' + String(e.className).split(' ')[0] };
+		/* a grid over the page's middle: the first point on plain content (no control, no strip, nothing that takes a tap) */
+		const ctl = 'button, a, input, textarea, select, label, summary, [contenteditable], [draggable="true"], canvas, i.lg-lens, nav, [data-lg-lensed], [role="button"], [role="tab"], [role="tablist"], [role="link"], [role="menuitem"], [role="option"], [role="slider"], [role="checkbox"], [role="switch"], [role="radio"], [role="toolbar"], [role="menu"]';
+		for (let gy = 0; gy < 9; gy++) for (let gx = 0; gx < 9; gx++) {
+			const x = innerWidth * (0.3 + 0.05 * gx), y = innerHeight * (0.4 + 0.06 * gy), e = document.elementFromPoint(x, y);
+			if (!e || e === document.body || e === document.documentElement || e.closest(ctl)) continue;
+			let tap = false; for (let n = e; n && n !== document.body; n = n.parentElement) if (getComputedStyle(n).cursor === 'pointer' || n.onclick) { tap = true; break; }
+			if (!tap) return { x, y, el: e.tagName.toLowerCase() + '.' + String(e.className).split(' ')[0] };
 		}
 		return null;
 	});
