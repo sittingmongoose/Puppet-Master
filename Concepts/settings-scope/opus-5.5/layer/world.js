@@ -503,11 +503,32 @@
     const s = setting(id);
     return s && W.PM51.rowLabel ? W.PM51.rowLabel(s) : id;
   }
+  /* Can the page's own control for a row hold this value? Plans' inventory can give a row a type the page's control
+     doesn't have yet (batch 4 made Model nicknames a key-value map while the page still draws a text box until
+     stream F's FO-186). A control holds what it was made for: a map (keyvalue), a list (list, multiselect, reorder),
+     anything that isn't an object or a list. A value it can't hold is never put into it (feed.js) and is said in
+     words in its place (rows.js), and the base control is used again as soon as it can hold the value. */
+  const HOLDS_MAP = ['keyvalue'], HOLDS_LIST = ['list', 'multiselect', 'reorder', 'keyvalue'];
+  function holds(id, v) {
+    if (v === null || typeof v !== 'object') return true;
+    const s = setting(id), c = s && s.control;
+    if (!c) return true;
+    return Array.isArray(v) ? HOLDS_LIST.includes(c) : HOLDS_MAP.includes(c);
+  }
+  // a map or a list said in words, counted with the row's own noun ("No nicknames yet", "1 nickname", "2 nicknames")
+  function countWords(id, v) {
+    const n = Array.isArray(v) ? v.length : Object.keys(v || {}).length;
+    const words = String(label(id) || '').trim().split(/\s+/);
+    const plural = (words[words.length - 1] || 'items').toLowerCase().replace(/[^a-z-]/g, '') || 'items';
+    const one = /ies$/.test(plural) ? plural.replace(/ies$/, 'y') : /s$/.test(plural) ? plural.slice(0, -1) : plural;
+    return n === 0 ? `No ${plural} yet` : n === 1 ? `1 ${one}` : `${n} ${plural}`;
+  }
   /* the value as the row says it ("Claude Opus 4", "On", "60 seconds", "3 rules") */
   function vt(id, v) {
     if (v === undefined) return 'Not set';
     /* a model row reads the inventory's own words: "inherit" is "Same as Everyday model" (option_labels.inherit), never
        the engine's global "Same as the project"; a model with its own depth names both */
+    if (v && typeof v === 'object' && !isModel(id) && !holds(id, v)) return countWords(id, v);
     if (isModel(id)) {
       const f = factsOf(id) || {};
       if (v === 'inherit' && f.labels && f.labels.inherit) return f.labels.inherit;
@@ -789,7 +810,7 @@
     D, H, esc, icon, mark, st, wait, reduced, uid, clone, same, list, h, portal, root, tip, paths, layering, layerOf, groupOf, factsOf, isModel, modelOf, effortOf,
     store, COMPUTERS, HOSTS, DEVICES, PROJECTS, MENU_PROJECTS, projectById, DEFAULTS, DEF, IDS, REASONS, computerIds, home,
     homeName: () => placeName('computer', home()), bagOf,
-    projectName, placeName, askerName, label, vt, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,
+    projectName, placeName, askerName, label, vt, holds, countWords, ctxFull, engineSetting, optionsFor, getAt, putAt, apply, undo, run, on, emit,
     note, hideNote, sheet, topSheet, closeSheets, sheets, menu
   });
 })(window);

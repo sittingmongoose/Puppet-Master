@@ -434,6 +434,14 @@ happen the same on bare PMConcept7; item 4 waits for Jared; item 8 is the Projec
 - **Per-account rows Plans' inventory ladders.** Sign-in method, Cooldown and Use this service are per-account in the
   page's view, but Plans' inventory gives them Everywhere, a computer and a project; their panel kept "Not per
   computer". It now keeps the page's list of each account's value and adds Where it applies with those places.
+- **A value the page's own control can't hold (the lead, after batch 4 landed).** Plans' inventory can type a row in a
+  way the page's control doesn't have yet: batch 4 made Model nicknames a key-value map while PMConcept7 still draws a
+  text box (until stream F's FO-186), and the box showed "[object Object]". One type check (`world.js` `holds`: a map
+  needs a key-value control, a list a list control) now decides it for every row: the feed never puts such a value
+  into the control, the layer's words count it with the row's own noun ("No nicknames yet", "2 nicknames"), the row
+  shows those words with a Change in the control's place (`rows.js`), and Change opens the per-place editor where the
+  value comes from (`panel.js` `editAt`). The row's default is the inventory's (`{}`), not the old box's `""`. When the
+  page's control can hold the value again, it is used again.
 - **Base hooks the per-place editors use.** `PM51.setting`, `PM51.rowMeta`, `PM51.settingRows`, `PM51.valueText` and
   `valueHint`, `PM51.readyModels`, `PM56_PICKERS.providerMark`, `PM12_KIMI.dispatchAction('open-structured-setting')`
   and the kit's `.pm51-popout` and `o55-pick-*` classes. Which rows are model rows comes from Plans' inventory, never
@@ -441,8 +449,10 @@ happen the same on bare PMConcept7; item 4 waits for Jared; item 8 is the Projec
   FO-182's `PM51.modelSelect` draws a picker that saves through the engine's own write for the context in use; a line
   here holds a draft for another place until Save, so it isn't wired in.
 
-Checks: `feedback.check.mjs --set only=jared1113` (`--set j1113=fills,models,paths,limits` narrows it, `--set j1113max=N`
-walks only the first N rows). `fills` opens every chapter, page tab and manager tab with real presses and finds no
+Checks: `feedback.check.mjs --set only=jared1113` (`--set j1113=objects,fills,models,paths,limits` narrows it, `--set j1113max=N`
+walks only the first N rows). `objects` opens every Settings page and tab with real presses and finds no control
+showing "[object Object]", then checks each row whose control can't hold its value says it in words and its Change opens
+the editor (run it with a batch-4 or later inventory, `--set inventory=`, to meet the case); `fills` opens every chapter, page tab and manager tab with real presses and finds no
 History entry and no note, then makes one real change on Rules, which routes with its note; `models` presses Change and
 + Set for… on every model row, `paths` walks every adopted
 row's + Set for a computer… / device… / project… with real presses and carries the first three of each kind through a

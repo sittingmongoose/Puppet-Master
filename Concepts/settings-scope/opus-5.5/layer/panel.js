@@ -214,6 +214,8 @@
     insertRecent(body, id);
     experts(body, id);
     if (keep) { const f = page.querySelector(`[data-psx-key="${CSS.escape(keep)}"]`); if (f) try { f.focus({ preventScroll: true }); } catch (e) { /* gone */ } }
+    // a row's Change in place of a control that can't hold its value (rows.js): the editor opens where the value comes from
+    if (pendingEdit && pendingEdit.id === id) { const pe = pendingEdit; pendingEdit = null; setTimeout(() => startAt(id, pe.level, pe.key), 0); }
     if (editing && editing.id === id) { const ctl = where.querySelector('[data-psx-edit-control]'); if (ctl && !page.contains(D.activeElement && D.activeElement.closest('[data-psx-edit-control]'))) try { ctl.focus({ preventScroll: true }); } catch (e) { /* gone */ } }
   }
   function closeWord(head) {
@@ -1041,6 +1043,16 @@
     if (level === 'computer' && def.screen) items.push({ label: 'A computer', disabled: PSX.REASONS.about_the_screen[1] });
     PSX.menu(anchor, items, { label: level === 'project' ? 'Set for a project' : level === 'device' ? 'Set for a device' : 'Set for a computer', width: 280, search: items.length > 8 });
   }
+  let pendingEdit = null;
+  function startAt(id, level, key) {
+    const r = PSX.resolve(id, S.ctx), own = PSX.getAt(PSX.W, level, key, id);
+    if (level !== 'everywhere' && own === undefined) { startNew(id, level, key); return; }
+    if (editorKind(id) === 'row') { PSX.places.openRow(id, level, key); return; }
+    editing = { id, level, key, value: own !== undefined ? own : (r.everywhere !== undefined ? r.everywhere : DEFAULTS[id]) };
+    rerender();
+    if (editorKind(id) === 'model') { openPickerSoon(); return; }
+    setTimeout(() => { const root = D.querySelector('#pm-settings-root .detail-inspector'); const f = root && root.querySelector('[data-psx-edit-control]'); if (f) f.focus(); }, 30);
+  }
   function startNew(id, level, key) {
     // Jared 2026-11-13 (item 3): a map or a list of records goes to the row's own editor for that place
     if (editorKind(id) === 'row') { PSX.places.openRow(id, level, key); return; }
@@ -1260,5 +1272,5 @@
   PSX.on('redraw', () => rerender());
   PSX.on('fed', () => rerender());
   PSX.on('ctx', () => { editing = null; rerender(); });
-  PSX.panel = { decorate, strip, install, soon, openOwn, current, whereBlock, sentence, promote, removeAction, ownerFacts, ownerOf, ACTION_OWNERS, own: null, ownId: null, focusAfter: null, rerender, refresh: () => rerender(), editorKind };
+  PSX.panel = { decorate, strip, install, soon, openOwn, current, whereBlock, sentence, promote, removeAction, ownerFacts, ownerOf, ACTION_OWNERS, own: null, ownId: null, focusAfter: null, rerender, refresh: () => rerender(), editorKind, editAt: (id, tg) => { pendingEdit = { id, level: tg.level, key: tg.key }; } };
 })(window);
