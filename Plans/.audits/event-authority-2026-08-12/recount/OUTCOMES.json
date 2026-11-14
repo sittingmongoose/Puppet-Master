@@ -446,6 +446,10 @@
   {
    "event_type": "source_control.workspace.created",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.workspace.opened",
+   "outcome": "registered"
   }
  ]
 }
