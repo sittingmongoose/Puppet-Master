@@ -322,6 +322,10 @@
   {
    "event_type": "source_control.backend.selected",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.checkpoint.created",
+   "outcome": "registered"
   }
  ]
 }
