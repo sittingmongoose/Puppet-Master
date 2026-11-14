@@ -792,14 +792,75 @@
      (visibility: hidden, contained, inert, its ids taken off), its fonts are asked for there, and the host goes once they
      have come: the whole-page layout they cost falls on this screen's quiet time instead of Start's frames. Once per
      page (a face once loaded stays); never while the screen asked for is already up, or once the window has closed. */
+  /* FO-206 (G, the lead's ruling (a) in pieces): the same host then draws that screen once, a piece at a time, so a cold
+     browser's GPU compiles the programs it needs while this screen sits idle. Start had them compiled at the Look
+     screen's first raster: 27-30 programs, 362-535 ms on Alexis (ANGLE, 25-35 ms a rounded-rect program), one GPU task
+     that stopped every frame right at the start of the entrance. The host is composited at opacity 0.001 (a pixel moves by
+     less than half a level, so nothing on screen changes) and every element in it stays hidden until it is given
+     data-pd: elements are shown in document order, one or two at a time (two while the frames that follow stay on time,
+     one after a frame later than 34 ms: a program compiled), so a slice holds about one program. A single SVG shape can
+     need two (a 58-75 ms stall on Alexis, a cold browser only); the lead's ruling C keeps these: three short stalls on
+     Welcome's idle, not one of 240-620 ms at Start's entrance. It waits while the pointer moves or a key is down, never runs before this screen's own entrance has ended,
+     is skipped on a low-resource computer, gives way at once when the person moves on (the rest is paid as before), and
+     once done leaves nothing: the host, its listeners and its frames go. 'o55:predraw' on window says when it starts and
+     how it ended; O55.ui.prewarm.state() is the kit check's view of it. */
   const prewarmed = new Set();
+  const NONPAINT = /^(defs|lineargradient|radialgradient|stop|clippath|mask|filter|pattern|symbol|title|desc|style|script|metadata|marker|fe[a-z]+)$/;
+  const pd = { phase: 'none', listeners: 0, pieces: 0, slices: 0, worst: 0, startedAt: 0, endedAt: 0, why: '', long: [] };
+  function predraw(host, from) {
+    const els = Array.from(host.querySelectorAll('*')).filter((n) => !NONPAINT.test(n.localName.toLowerCase()));
+    const down = new Set(); let moved = 0, stop = false, cap = 0;
+    const onMove = () => { moved = performance.now(); };
+    const onDown = (e) => { down.add(e.code || e.key); }, onUp = (e) => { down.delete(e.code || e.key); }, onBlur = () => down.clear();
+    document.addEventListener('pointermove', onMove, true); document.addEventListener('keydown', onDown, true); document.addEventListener('keyup', onUp, true); window.addEventListener('blur', onBlur);
+    Object.assign(pd, { phase: 'running', listeners: 4, pieces: els.length, slices: 0, worst: 0, startedAt: performance.now(), endedAt: 0, why: '', long: [] });
+    const desc = (e) => e.localName + (e.getAttribute('class') ? '.' + String(e.getAttribute('class')).trim().split(/\s+/)[0] : '') + (e.closest('[data-tile]') ? '@' + e.closest('[data-tile]').getAttribute('data-tile') : '');
+    let batch = [];
+    const tell = (type) => { try { window.dispatchEvent(new CustomEvent('o55:predraw', { detail: Object.assign({ type }, pd) })); } catch (_) { /* none */ } };
+    const end = (why) => {
+      if (stop) return;
+      stop = true; O55.motion.real.clearTimeout(cap);
+      document.removeEventListener('pointermove', onMove, true); document.removeEventListener('keydown', onDown, true); document.removeEventListener('keyup', onUp, true); window.removeEventListener('blur', onBlur);
+      if (host.isConnected) host.remove();
+      Object.assign(pd, { phase: 'done', listeners: 0, endedAt: performance.now(), why });
+      tell('end');
+    };
+    const live = () => S.open && S.sess.screen === from && host.isConnected && !O55.motion.lowResource;
+    const settled = () => { const l = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); return !S.root.classList.contains('o55-opening') && !!l && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold'); };
+    let i = 0, n = 1, last = 0, watch = 0, gap = 0;
+    const frame = (now) => {
+      if (stop) return;
+      if (!live()) { end('left'); return; }
+      const dt = last ? now - last : 0; last = now;
+      if (watch) {
+        /* (a batch is judged on the three frames after it: its raster comes in the frame after its paint) */
+        gap = Math.max(gap, dt);
+        if (--watch === 0) { pd.worst = Math.max(pd.worst, gap); if (gap > 34 && pd.long.length < 40) pd.long.push([Math.round(gap), batch.map(desc).join(' ')]); n = gap > 34 ? 1 : Math.min(2, n * 2); }
+      } else if (i >= els.length) { end('done'); return; }
+      else if (settled() && performance.now() - moved > 300 && !down.size) {
+        const to = Math.min(els.length, i + n);
+        batch = els.slice(i, to);
+        for (; i < to; i++) els[i].setAttribute('data-pd', '');
+        pd.slices++; watch = 3; gap = 0;
+      }
+      O55.motion.real.raf(frame);
+    };
+    host.classList.add('o55-predraw');
+    tell('start');
+    O55.motion.real.raf(frame);
+    /* (never longer than this: a page that never settles gives the rest to the screen itself) */
+    cap = O55.motion.real.setTimeout(() => end('cap'), 20000);
+  }
   function prewarm(id, delay) {
     if (prewarmed.has(id) || !SCREENS.defs[id] || typeof SCREENS.defs[id].body !== 'function') return;
     const run = () => {
       if (prewarmed.has(id) || !S.open || S.sess.screen === id) return;
+      /* (a low-resource computer is spared both: the layout of the fonts and the drawing) */
+      if (O55.motion.lowResource) { prewarmed.add(id); return; }
       const def = SCREENS.defs[id], pane = S.root && S.root.querySelector('.o55-pane');
       if (!pane) return;
       prewarmed.add(id);
+      const from = S.sess.screen;
       const host = document.createElement('div');
       host.className = 'o55-prewarm'; host.setAttribute('aria-hidden', 'true'); host.setAttribute('inert', ''); host.setAttribute('data-screen', id);
       try { host.innerHTML = def.body(S); } catch (_) { return; }
@@ -808,16 +869,17 @@
       try { if (def.mounted) def.mounted(S, host, false); } catch (_) { /* a part it could not draw: its fonts are still asked */ }
       /* (document.fonts is read a frame later, after the frame's own layout has asked for the faces: its status getter
          flushes style and layout, FO-188) */
-      const gone = () => { if (host.isConnected) host.remove(); };
+      const next = () => { if (!host.isConnected) return; if (S.open && S.sess.screen === from && !O55.motion.lowResource) predraw(host, from); else host.remove(); };
       O55.motion.real.raf(() => O55.motion.real.raf(() => {
         const F = document.fonts;
-        if (!F || F.status !== 'loading') { gone(); return; }
-        Promise.race([F.ready, new Promise((res) => O55.motion.real.setTimeout(res, 3000))]).then(() => O55.motion.real.raf(gone));
+        if (!F || F.status !== 'loading') { next(); return; }
+        Promise.race([F.ready, new Promise((res) => O55.motion.real.setTimeout(res, 3000))]).then(() => O55.motion.real.raf(next));
       }));
     };
     const idle = () => (window.requestIdleCallback ? window.requestIdleCallback(run, { timeout: 1500 }) : O55.motion.real.setTimeout(run, 0));
     O55.motion.real.setTimeout(idle, delay == null ? 1500 : delay);
   }
+  prewarm.state = () => Object.assign({}, pd);
   function holdColumn(layer) {
     if (!layer) return;
     layer.removeAttribute('data-col-held');

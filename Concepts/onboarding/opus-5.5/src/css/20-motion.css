@@ -13,6 +13,11 @@
 .o55-hold { visibility: hidden; }
 /* a screen prepared while the one before it is idle (FO-206, 60-ui-core.js prewarm): laid out, never painted or hit */
 #pm-o55-onboarding .o55-prewarm { position: absolute; inset: 0; visibility: hidden; pointer-events: none; overflow: hidden; contain: strict; }
+/* ... and then drawn there once, a piece at a time, all but invisible (FO-206 G: its GPU programs compiled while the
+   screen before it is idle): composited at opacity 0.001, every element hidden until it is given data-pd */
+#pm-o55-onboarding .o55-prewarm.o55-predraw { visibility: visible; opacity: 0.001; will-change: opacity; }
+#pm-o55-onboarding .o55-predraw :not([data-pd]) { visibility: hidden !important; }
+#pm-o55-onboarding .o55-predraw [data-pd] { visibility: visible !important; }
 .o55-hold, .o55-hold *, .o55-wait, .o55-wait * { animation-play-state: paused !important; }
 
 /* layers are transparent so the outgoing layer stays visible under the incoming one */
