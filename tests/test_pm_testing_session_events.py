@@ -16,6 +16,27 @@ gate = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(gate)
 
 
+# DL-078 moves this pin with every registration that passes the full procedure; any other
+# registry change still needs Jared's own checkpoint approval.
+APPROVED_CHECKPOINT_FAMILY_COUNT = 46  # moved under DL-078 by each registration
+
+
+def record_pinned_family_ids(families):
+    """Rows pinned byte for byte by their own DL-077 admission record (PNC-019 admission merges, EA-P2 B).
+
+    The record named after the event type must pin the row's family ID and its DL-077 row hash (sorted
+    keys, compact separators, UTF-8); the seal check, not this census, judges the record's completeness.
+    """
+    pins = {}
+    for path in sorted((ROOT / "reports/event-authority-20260911/admission-records").glob("*.json")):
+        record = json.loads(path.read_text(encoding="utf-8"))
+        if path.name == str(record.get("event_type")) + ".json":
+            pins[(record.get("family_id"), record.get("event_type"))] = record.get("registry_row_sha256")
+    return {row["family_id"] for row in families
+            if pins.get((row["family_id"], row["event_type"])) == hashlib.sha256(
+                json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()}
+
+
 class TestingSessionEventTests(unittest.TestCase):
     def assert_registry_matches_upstream_plus_admitted_browser(self):
         # Generalized 2026-09-25 (Step 9 batch 2 preparation): a row the coordination ledger marks
@@ -45,6 +66,8 @@ class TestingSessionEventTests(unittest.TestCase):
             self.assertEqual(json.dumps(live.get(family_id), sort_keys=True, separators=(",", ":"), ensure_ascii=False),
                              json.dumps(prepared, sort_keys=True, separators=(",", ":"), ensure_ascii=False))
         admitted_ids |= set(coordination_rows)
+        # PNC-019 admission merges (DL-078, DL-096, DL-400): a row its own DL-077 record pins byte for byte.
+        admitted_ids |= record_pinned_family_ids(families) - upstream_ids
         proposed_ids = {"event-family-settings-layer-changed", "event-family-approval-chat-tool-requested",
                         "event-family-approval-chat-tool-resolved"}
         for ident in proposed_ids:
@@ -129,13 +152,14 @@ class TestingSessionEventTests(unittest.TestCase):
         failures = owner.event_family_registry_data_failures(
             registry, gate.load("Plans/event_family_registry.schema.json"),
             path_label="test:session-events", include_residuals=False)
-        # The approved checkpoint is 46 (the 40 upstream rows, the two admitted Browser rows, the
-        # admitted coordination.agent_registered row and the three DL-300 families), moved from 43 by
+        # The approved checkpoint is APPROVED_CHECKPOINT_FAMILY_COUNT: 46 at DL-300 (the 40 upstream rows, the
+        # two admitted Browser rows, the admitted coordination.agent_registered row and the three DL-300
+        # families), then one more per PNC-019 admission under DL-078 with its own DL-077 record; 46 was moved from 43 by
         # Jared's 2026-11-04 approval (DL-300) and before that from his 2026-09-23 Step 8 checkpoint
         # (42) under DL-078; any other registry change still needs Jared's own approval.
         self.assertEqual({failure["error"] for failure in failures},
-                         {"event_family_registry_kernel_row_count_mismatch"} if 40 + admitted_count != 46 else set())
-        self.assertEqual(owner.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 46)
+                         {"event_family_registry_kernel_row_count_mismatch"} if 40 + admitted_count != APPROVED_CHECKPOINT_FAMILY_COUNT else set())
+        self.assertEqual(owner.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, APPROVED_CHECKPOINT_FAMILY_COUNT)
 
     def test_transport_aliases_and_conflicts_are_denied_without_remembering_identity(self):
         for case in gate.fixture_cases():
