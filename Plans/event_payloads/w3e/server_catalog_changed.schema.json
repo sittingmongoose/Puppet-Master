@@ -488,7 +488,8 @@
         "original_result_ref",
         "source_schema_uri",
         "source_recipe_ref",
-        "authority_evidence"
+        "authority_evidence",
+        "catalog_ref"
       ],
       "properties": {
         "schema_id": {
@@ -630,9 +631,17 @@
               ]
             }
           }
+        },
+        "catalog_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "[\\u0000-\\u0020\\u007f]"
+          }
         }
       },
-      "description": "All role names are fixed by this family. A nullable role is null only when the exact original source phase legitimately has no such evidence; current phase predicates still require every applicable authentic role. writer_fence and permission_or_service_authority always resolve actual owner authority at original acceptance. Current historical reads authenticate that original provenance and never require present live grant renewal."
+      "description": "All role names are fixed by this family. A nullable role is null only when the exact original source phase legitimately has no such evidence; current phase predicates still require every applicable authentic role. writer_fence and permission_or_service_authority always resolve actual owner authority at original acceptance. Current historical reads authenticate that original provenance and never require present live grant renewal. Original-result fields are issued by the owner with this immutable manifest, covered by its source commitment and copied exactly into the payload; the event request cannot supply their authority."
     },
     "checkpoint_body": {
       "type": "object",
