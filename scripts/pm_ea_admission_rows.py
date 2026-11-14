@@ -166,7 +166,7 @@ def lane_contract(lane: str, event_type: str) -> dict:
     Keys: scope_policy, editions {scope: 'path#pointer'}, retention {scope: 'RP@v'} (may be
     partial), owners {semantic, payload, storage} (may be partial), contract_ref, prepared_row.
     """
-    out: dict[str, Any] = {"owners": {}, "retention": {}, "editions": {}, "scope_policy": None,
+    out: dict[str, Any] = {"owners": {}, "retention": {}, "editions": {}, "edition_ids": {}, "scope_policy": None,
                            "contract_ref": None, "prepared_row": None}
     if lane == "DCO":
         doc = load(COORDINATION_LEDGER)
@@ -191,6 +191,8 @@ def lane_contract(lane: str, event_type: str) -> dict:
         scopes = ("application", "project") if row["scope_policy"] == "application_or_project" else ("project",)
         out.update(scope_policy=row["scope_policy"], contract_ref=f"{rel}#/families/{i}",
                    editions={s: row["payload_schema_ref"] for s in scopes},
+                   edition_ids={"project": row["payload_schema_id"],
+                                **({"application": row["application_payload_schema_id"]} if "application" in scopes else {})},
                    retention={s: token for s in scopes},
                    owners={"semantic": row["semantic_owner_doc"] + "#" + row["semantic_unit"],
                            "payload": "Plans/Contracts_V0.md#" + row["contract_unit"],
@@ -232,6 +234,7 @@ def lane_contract(lane: str, event_type: str) -> dict:
         scopes = ("application", "project") if row["scope_policy"] == "application_or_project" else ("project",)
         out.update(scope_policy=row["scope_policy"], contract_ref=f"{rel}#/families/{i}",
                    editions={s: row["payload_schema_ref"] for s in scopes},
+                   edition_ids={"project": row["payload_schema_id"]},
                    retention={"project": row["retention_policy_ref"]},
                    owners={"semantic": row["semantic_owner"], "payload": row["payload_owner"],
                            "storage": row["storage_owner"]})
@@ -242,6 +245,7 @@ def lane_contract(lane: str, event_type: str) -> dict:
         variants = row.get("payload_variants") or {}
         out.update(scope_policy=row["scope_policy"], contract_ref=f"{rel}#/families/{i}",
                    editions={s: v["schema_ref"] for s, v in variants.items()},
+                   edition_ids={s: v["schema_id"] for s, v in variants.items()},
                    retention={"project": row["retention_policy_ref"]},
                    owners={"semantic": unit_ref(row["owner_unit"]), "payload": unit_ref(row["payload_unit"]),
                            "storage": unit_ref(row["storage_unit"])})
@@ -283,6 +287,7 @@ def lane_contract(lane: str, event_type: str) -> dict:
         scopes = ("application", "project") if row["scope"] == "application_or_project" else ("project",)
         out.update(scope_policy=row["scope"], contract_ref=f"{rel}#/rows/{i}",
                    editions={s: row["payload_schema_ref"] for s in scopes},
+                   edition_ids={"project": row["payload_schema_id"]},
                    retention={"project": row["retention_policy"]},
                    owners={"semantic": unit_ref(row["owner_unit"]), "payload": unit_ref(row["cv_unit"]),
                            "storage": unit_ref(row["sp_unit"])})
@@ -395,15 +400,17 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
             raise Gap("prepared registry row disagrees with the reviewed grade's family identity")
         return row, {"row": contract["contract_ref"] + "/registry_row (prepared, appended unchanged)"}
 
-    # Payload editions resolve exactly as readiness resolves them.
-    editions = {}
-    for scope, ref in sorted(contract["editions"].items()):
+    # Payload editions resolve exactly as readiness resolves them, each for its own scope edition
+    # (a closed payload listing one id per edition resolves that edition's id).
+    def resolve(scope: str, ref: str) -> dict:
         path, pointer = split_ref(ref)
         probe = {"payload_schema_ref": {"path": path, "json_pointer": pointer, "schema_id": "?"}}
-        schema, schema_id = readiness.event_family_payload_schema(probe)
+        schema, schema_id = readiness.event_family_payload_schema(probe, scope)
         if schema is None or not isinstance(schema_id, str) or not schema_id:
             raise Gap(f"{scope} payload {ref} has no single resolvable schema id (readiness resolver)")
-        editions[scope] = {"path": path, "json_pointer": pointer, "schema_id": schema_id, "schema": schema}
+        return {"path": path, "json_pointer": pointer, "schema_id": schema_id, "schema": schema}
+
+    editions = {scope: resolve(scope, ref) for scope, ref in sorted(contract["editions"].items())}
     if not editions:
         raise Gap("no payload edition stated")
     provenance["payload_editions"] = contract["contract_ref"]
@@ -428,9 +435,13 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
               "application_or_project": {"project", "application"}}[scope_policy]
     if scope_policy == "application_or_project" and set(editions) == {"project"}:
         # One closed payload serving both scopes (the DM precedent of a nullable project_id).
-        editions["application"] = dict(editions["project"])
+        project = editions["project"]
+        editions["application"] = resolve("application", project["path"] + project["json_pointer"])
     if set(editions) != needed:
         raise Gap(f"payload editions {sorted(editions)} do not match scope policy {scope_policy}")
+    for scope, stated in sorted(contract["edition_ids"].items()):
+        if scope in editions and editions[scope]["schema_id"] != stated:
+            raise Gap(f"{scope} edition resolves {editions[scope]['schema_id']}, the lane contract states {stated}")
 
     # Owners: the graded owner and payload units, cross-checked with the lane's own refs.
     owners = dict(contract["owners"])

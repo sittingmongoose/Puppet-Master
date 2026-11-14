@@ -270,6 +270,51 @@ class TestingSessionEventTests(unittest.TestCase):
         self.assertIn("event_family_registry_goal_payload_ref_mismatch", errors)
         self.assertIn("event_family_registry_goal_kernel_membership_mismatch", errors)
 
+    def test_one_closed_payload_resolves_exactly_one_id_per_scope_edition(self):
+        # PNC-019 S5: W3H and DCN close one payload over both scope editions and list both ids in
+        # schema_id.enum; readiness resolves the edition's id the way their checkers select it.
+        owner = gate.response.module("testing_event_readiness_editions", "pm-implementation-readiness.py")
+        cases = (
+            ("Plans/event_payloads/w3h/todo_created.schema.json", "#/$defs/payload",
+             "pm.event_payload.todo_created.v1", "pm.event_payload.todo_created.application.v1"),
+            ("Plans/card2_event_payloads.schema.json", "#/$defs/browser_session_created",
+             "pm.browser.session.created.payload.v1", "pm.browser.session.created.payload.application.v1"),
+        )
+        for path, pointer, project_id, application_id in cases:
+            with self.subTest(path=path):
+                ref = {"path": path, "json_pointer": pointer, "schema_id": project_id}
+                both = {"scope_policy": "application_or_project", "payload_schema_ref": ref}
+                schema, top = owner.event_family_payload_schema(both)
+                self.assertEqual(top, project_id)
+                self.assertEqual(owner.event_family_payload_schema(both, "project")[1], project_id)
+                self.assertEqual(owner.event_family_payload_schema(both, "application")[1], application_id)
+                only_app = {"scope_policy": "application_only", "payload_schema_ref": dict(ref, schema_id=application_id)}
+                self.assertEqual(owner.event_family_payload_schema(only_app)[1], application_id)
+                self.assertEqual(owner.payload_scope_edition_ids(schema), {"project": project_id, "application": application_id})
+        w3h = gate.load("Plans/event_payloads/w3h/todo_created.schema.json")["$defs"]["payload"]
+        p, a = "pm.event_payload.todo_created.v1", "pm.event_payload.todo_created.application.v1"
+
+        def mutated(change):
+            schema = copy.deepcopy(w3h)
+            change(schema)
+            return schema
+
+        def swap_branches(schema):
+            clause = schema["allOf"][0]
+            clause["then"]["properties"]["schema_id"]["const"], clause["else"]["properties"]["schema_id"]["const"] = p, a
+
+        refusals = {
+            "three ids": lambda s: s["properties"]["schema_id"].update(enum=[p, a, "pm.event_payload.todo_created.v2"]),
+            "unpaired ids": lambda s: s["properties"]["schema_id"].update(enum=[p, "pm.event_payload.other.application.v1"]),
+            "one scope": lambda s: s["properties"]["scope_kind"].update(enum=["project"]),
+            "repeated id": lambda s: s["properties"]["schema_id"].update(enum=[p, p]),
+            "if/then disagrees": swap_branches,
+        }
+        for name, change in refusals.items():
+            with self.subTest(refusal=name):
+                self.assertIsNone(owner.payload_scope_edition_ids(mutated(change)))
+        self.assertIsNone(owner.payload_scope_edition_ids({"properties": {"schema_id": {"const": p}}}))
+
 
 if __name__ == "__main__":
     unittest.main()
