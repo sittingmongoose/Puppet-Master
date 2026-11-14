@@ -806,6 +806,58 @@ class AnchorResolver:
         return sha256_text(self.content(ref)[0])
 
 
+REGISTRY_SELF_ANCHOR_SCOPE = "exclude_self.v1"
+
+
+class _RegistryAnchorResolver(AnchorResolver):
+    """Read a registry candidate at its real ref; optionally omit one re-audit row.
+
+    Exclusion is explicit on new rows only. Historical snapshots and unmarked rows
+    keep the original anchor.v1 semantics. Every other registry row still counts.
+    """
+
+    def __init__(
+        self, source: AnchorResolver, registry_ref: str, *,
+        registry_bytes: bytes | None = None, exclude_closure_id: str | None = None,
+    ) -> None:
+        super().__init__(source.root)
+        self.source = source
+        self.registry_ref = registry_ref
+        self.registry_bytes = registry_bytes
+        self.exclude_closure_id = exclude_closure_id
+
+    def read_bytes(self, rel_path: str) -> bytes:
+        if rel_path == self.registry_ref and self.registry_bytes is not None:
+            return self.registry_bytes
+        return self.source.read_bytes(rel_path)
+
+    def jsonl_rows(self, rel_path: str) -> list[dict[str, Any]]:
+        rows = super().jsonl_rows(rel_path)
+        if rel_path == self.registry_ref and self.exclude_closure_id is not None:
+            return [row for row in rows if row.get("closure_id") != self.exclude_closure_id]
+        return rows
+
+    def is_dir(self, rel_path: str) -> bool:
+        return self.source.is_dir(rel_path)
+
+
+def registry_row_resolver(
+    row: dict[str, Any], resolver: AnchorResolver, registry_ref: str | None = None,
+) -> AnchorResolver:
+    """Apply a row's explicit self-exclusion to currentness checks, never its review snapshot."""
+    hashes = row.get("hashes") if isinstance(row.get("hashes"), dict) else {}
+    if "registry_self_anchor" not in hashes:
+        return resolver
+    marker = hashes["registry_self_anchor"]
+    path = marker.get("path") if isinstance(marker, dict) else None
+    if not isinstance(path, str) or marker != {"path": path, "scope": REGISTRY_SELF_ANCHOR_SCOPE} \
+            or (registry_ref is not None and path != registry_ref) or hashes.get("hash_scope") != ANCHOR_SCOPE \
+            or not isinstance(row.get("reaudit"), dict):
+        raise AnchorError(f"registry_self_anchor must name this registry with scope {REGISTRY_SELF_ANCHOR_SCOPE} on a re-audit row")
+    canonical_rel_path(path)
+    return _RegistryAnchorResolver(resolver, path, exclude_closure_id=row.get("closure_id"))
+
+
 class CommitResolver(AnchorResolver):
     """Resolves anchored refs against the files of one git commit of the repository at root.
 
@@ -1395,6 +1447,10 @@ def _target_stale_refs(target: dict[str, Any], resolver: AnchorResolver) -> set[
     check never hashes (no repository path, or a directory) are left out, as it leaves them."""
     hashes = target.get("hashes") if isinstance(target.get("hashes"), dict) else {}
     anchored = hashes.get("hash_scope") == ANCHOR_SCOPE
+    try:
+        resolver = registry_row_resolver(target, resolver)
+    except AnchorError:
+        pass  # The registry validator reports malformed metadata as a structural error.
     out: set[tuple[str, str, str]] = set()
     for group in ("owner_evidence_hashes", "closure_evidence_hashes"):
         group_hashes = hashes.get(group)
@@ -1958,13 +2014,16 @@ def validate_reaudit_row(
     return {"target": line, "verdict": record.get("verdict"), "later_closure_id": record.get("later_closure_id")}
 
 
-def validate_registry(registry_path: Path) -> dict[str, Any]:
+def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None = None) -> dict[str, Any]:
     errors: list[str] = []
     warnings: list[str] = []
     rows = read_jsonl(registry_path, errors, required=True)
     raw_lines = raw_registry_lines(registry_path)
     rows_by_line = {row["_line_no"]: row for row in rows}
     resolver = AnchorResolver()
+    registry_ref = rel(anchor_registry_path or registry_path)
+    if anchor_registry_path is not None:
+        resolver = _RegistryAnchorResolver(resolver, registry_ref, registry_bytes=registry_path.read_bytes())
     record_cache: dict[str, dict[str, Any]] = {}
     closure_ids: set[str] = set()
     closed_by_key: dict[str, list[dict[str, Any]]] = {}
@@ -2017,7 +2076,13 @@ def validate_registry(registry_path: Path) -> dict[str, Any]:
 
         validate_evidence_refs(row.get("closure_evidence"), label, errors)
         stale: list[str] = []
-        validate_hashes(row.get("hashes"), label, errors, stale, resolver)
+        row_resolver = resolver
+        hashes = row.get("hashes")
+        try:
+            row_resolver = registry_row_resolver(row, resolver, registry_ref)
+        except AnchorError as exc:
+            errors.append(f"{label}: {exc}")
+        validate_hashes(hashes, label, errors, stale, row_resolver)
         if stale:
             stale_by_line[row["_line_no"]] = stale
 
@@ -4018,7 +4083,12 @@ def cmd_refresh_hashes(args: argparse.Namespace) -> int:
         if hashes.get("hash_scope") == ANCHOR_SCOPE:
             stale_now: list[str] = []
             structural: list[str] = []
-            validate_hashes(hashes, f"line {row.get('_line_no')}", structural, stale_now, AnchorResolver())
+            resolver = AnchorResolver()
+            try:
+                resolver = registry_row_resolver(row, resolver, rel(registry_path))
+            except AnchorError as exc:
+                structural.append(f"line {row.get('_line_no')}: {exc}")
+            validate_hashes(hashes, f"line {row.get('_line_no')}", structural, stale_now, resolver)
             errors.extend(structural)
             for group in ("owner_evidence_hashes", "closure_evidence_hashes"):
                 for ref in sorted(hashes.get(group) or {}) if isinstance(hashes.get(group), dict) else []:
@@ -4265,7 +4335,12 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         if changed:
             moved.append({"closure_id": closure_id, "line": line, "changed_anchors": changed})
             continue
-        new_rows.append(build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, now))
+        row = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, now)
+        if any(parse_anchor_ref(ref)[:2] == (rel(registry_path), "jsonlset") for ref in record["dependencies"]):
+            # A row cannot hash itself recursively. Keep the reviewed pre-append
+            # snapshot, excluding just this row from its own registry row-set hash.
+            row["hashes"]["registry_self_anchor"] = {"path": rel(registry_path), "scope": REGISTRY_SELF_ANCHOR_SCOPE}
+        new_rows.append(row)
     if not errors and new_rows:
         raw = registry_path.read_bytes()
         if raw and not raw.endswith(b"\n"):
@@ -4286,7 +4361,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
                 handle.write(registry_path.read_bytes() + "".join(
                     json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in new_rows
                 ).encode("utf-8"))
-            report = validate_registry(candidate)
+            report = validate_registry(candidate, anchor_registry_path=registry_path)
         finally:
             candidate.unlink(missing_ok=True)
         for error in report["errors"]:
