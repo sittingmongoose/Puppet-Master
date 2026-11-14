@@ -243,6 +243,19 @@ def run_family(adapter, family, trace=None, cut=None):
         counts['crash'] += 1
     assert store.publish(None, 'publication:old', rows, 1) == 'publication:old'
     counts['positive'] += 1
+    # Python equality otherwise admits True and 1.0 as the integer cutoff 1.
+    # The public numeric boundary must use the shared uint64 recipe before CAS.
+    for cutoff, code in ((True, 'integer_type'), (1.0, 'integer_type'),
+                         (-1, 'integer_range'), (2**64, 'integer_range')):
+        before = copy.deepcopy(store.data)
+        try:
+            store.withdraw('publication:old', cutoff, 'publication:numeric', rows)
+        except Refusal as error:
+            assert error.reason == code, (cutoff, error.reason)
+        else:
+            raise AssertionError(('non_uint64_cutoff_accepted', cutoff))
+        assert store.data == before
+        counts['negative'] += 1
     # A competing publisher cannot overwrite the installed head using the
     # earlier expected head, even with otherwise coherent rows and frontier.
     refuse(store, 'publication_cas', lambda: store.publish(None, 'publication:racer', rows, 1))

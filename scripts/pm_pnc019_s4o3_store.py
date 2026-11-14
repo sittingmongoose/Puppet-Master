@@ -230,6 +230,7 @@ class Store:
         return generation
 
     def withdraw(self, expected_head, cutoff, successor, rows):
+        storage_uint64(cutoff)
         old = self.data['head']
         self.require('withdraw', {
             'writer_generation': self.data['writer_generation'], 'expected_cutoff': cutoff,
