@@ -1062,19 +1062,29 @@
         },
         "checkpoint_key": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f]"
+          }
         },
         "checkpoint_ref": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f]"
+          }
         },
         "generation_id": {
           "type": "string",
-          "pattern": "^eig_[0-9a-f]{64}$"
+          "pattern": "^eig_[0-9a-f]{64}$",
+          "minLength": 68,
+          "maxLength": 68
         },
         "generation_anchor_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "frontier_revision": {
           "type": "integer",
@@ -1083,11 +1093,16 @@
         },
         "frontier_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "index_dataset_name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f]"
+          }
         },
         "source_selection": {
           "type": "object",
@@ -1117,7 +1132,9 @@
             },
             "current_bytes_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             "selected_segment_generation": {
               "type": "integer",
@@ -1129,7 +1146,9 @@
             },
             "manifest_bytes_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             "manifest_generation": {
               "type": "integer",
@@ -1143,23 +1162,33 @@
             },
             "manifest_survivor_prefix_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             "retained_inventory_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             "durable_watermarks_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             "excluded_ranges_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             },
             "retired_inputs_sha256": {
               "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
             }
           }
         }
@@ -1176,7 +1205,8 @@
         "projected_goal_run_revision",
         "last_supported_event_id",
         "last_original_result",
-        "event_commitment"
+        "event_commitment",
+        "lifecycle_metadata"
       ],
       "properties": {
         "scope": {
@@ -1184,7 +1214,9 @@
         },
         "generation_id": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^grsbg_[0-9a-f]{64}$",
+          "minLength": 70,
+          "maxLength": 70
         },
         "profile_sha256": {
           "type": "string",
@@ -1217,8 +1249,84 @@
           "pattern": "^[0-9a-f]{64}$",
           "minLength": 64,
           "maxLength": 64
+        },
+        "lifecycle_metadata": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StoppedRowMetadata"
+            },
+            {
+              "$ref": "#/$defs/BlockedRowMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "lifecycle_status": {
+                "const": "stopped"
+              }
+            },
+            "required": [
+              "lifecycle_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "lifecycle_metadata": {
+                "$ref": "#/$defs/StoppedRowMetadata"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lifecycle_status": {
+                "const": "blocked"
+              }
+            },
+            "required": [
+              "lifecycle_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "lifecycle_metadata": {
+                "$ref": "#/$defs/BlockedRowMetadata"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lifecycle_status": {
+                "enum": [
+                  "started",
+                  "cancelled",
+                  "certified"
+                ]
+              }
+            },
+            "required": [
+              "lifecycle_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "lifecycle_metadata": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     },
     "Processed": {
       "type": "object",
@@ -1313,7 +1421,9 @@
       "properties": {
         "generation_id": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^grsbg_[0-9a-f]{64}$",
+          "minLength": 70,
+          "maxLength": 70
         },
         "seed_hex": {
           "type": "string",
@@ -1377,7 +1487,9 @@
           "anyOf": [
             {
               "type": "string",
-              "minLength": 1
+              "pattern": "^grsbg_[0-9a-f]{64}$",
+              "minLength": 70,
+              "maxLength": 70
             },
             {
               "type": "null"
@@ -1437,7 +1549,9 @@
           "anyOf": [
             {
               "type": "string",
-              "minLength": 1
+              "pattern": "^grsbg_[0-9a-f]{64}$",
+              "minLength": 70,
+              "maxLength": 70
             },
             {
               "type": "null"
@@ -1513,6 +1627,529 @@
           "items": {
             "$ref": "#/$defs/Selection"
           }
+        }
+      }
+    },
+    "StoppedRowMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "stop_reason_code",
+        "resumable",
+        "safe_point_ref"
+      ],
+      "$comment": "SP-428 value delta for a stopped row, copied from the verified original goal_run.stopped v3 row only; the enum is the v3 payload enum (checked equal by ATS-1112).",
+      "properties": {
+        "kind": {
+          "const": "stopped"
+        },
+        "stop_reason_code": {
+          "enum": [
+            "user_stopped",
+            "forbidden_action",
+            "missing_source_ledger",
+            "missing_plans_or_target",
+            "permission_or_filesystem_failure",
+            "unsafe_or_destructive_scope",
+            "contradictory_goal",
+            "infrastructure_blocker",
+            "budget_exhausted",
+            "verification_terminal_failure"
+          ],
+          "type": "string"
+        },
+        "resumable": {
+          "type": "boolean"
+        },
+        "safe_point_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "resumable": {
+                "const": true
+              }
+            },
+            "required": [
+              "resumable"
+            ]
+          },
+          "then": {
+            "properties": {
+              "safe_point_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "BlockedRowMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "blocked_reason_code",
+        "block_receipt_ref"
+      ],
+      "$comment": "SP-428 value delta for a blocked row, copied from the verified original goal_run.blocked v3 row only; the enum is the v3 payload enum (checked equal by ATS-1112).",
+      "properties": {
+        "kind": {
+          "const": "blocked"
+        },
+        "blocked_reason_code": {
+          "enum": [
+            "approval_required",
+            "permission_denied",
+            "missing_source_ledger",
+            "missing_plans_or_target",
+            "permission_or_filesystem_failure",
+            "unsafe_or_destructive_scope",
+            "contradictory_goal",
+            "infrastructure_blocker",
+            "budget_exhausted",
+            "usage_exhausted",
+            "verification_terminal_failure",
+            "verifier_unavailable",
+            "storage_viewer",
+            "storage_blocked",
+            "storage_root_unavailable",
+            "storage_root_mismatch",
+            "storage_integrity_unknown",
+            "storage_recovery_in_progress",
+            "storage_recovery_unavailable",
+            "restore_refused",
+            "restore_failed",
+            "restore_recovery_required",
+            "dedupe_unavailable",
+            "idempotency_conflict",
+            "revision_conflict",
+            "authority_boundary",
+            "child_settlement_incomplete",
+            "external_dependency_unavailable"
+          ],
+          "type": "string"
+        },
+        "block_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ConsumerRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "method"
+      ],
+      "$comment": "The only caller input of a fresh stop/block consumer method; every source below is owner-acquired.",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "method": {
+          "enum": [
+            "owner.goal_run.stop_block.project_prefix.v1",
+            "owner.storage.goal_run.stop_block.read_sources.v1",
+            "owner.storage.goal_run.stop_block.publish.v1",
+            "owner.goal_run.stop_block.read_historical.v1",
+            "owner.goal_run.stop_block.read_current.v1"
+          ]
+        }
+      }
+    },
+    "PrefixFrame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sequence_id",
+        "event_id",
+        "stored_event",
+        "original_event_value_commitment",
+        "first_append_receipt",
+        "frame"
+      ],
+      "$comment": "One frame of the actual global Event prefix, read whole from Storage custody (SP-278, SP-286); off-run frames are validated before they are treated as no-ops.",
+      "properties": {
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stored_event": {
+          "$ref": "#/$defs/StoredPart"
+        },
+        "original_event_value_commitment": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        },
+        "frame": {
+          "$ref": "#/$defs/Selection"
+        }
+      }
+    },
+    "RetentionGapDisposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from_sequence_id",
+        "through_sequence_id",
+        "disposition"
+      ],
+      "properties": {
+        "from_sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "through_sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "disposition": {
+          "$ref": "#/$defs/Selection"
+        }
+      }
+    },
+    "GlobalPrefix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generic_token",
+        "frames",
+        "gap_dispositions"
+      ],
+      "properties": {
+        "generic_token": {
+          "$ref": "#/$defs/DurableToken"
+        },
+        "frames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PrefixFrame"
+          }
+        },
+        "gap_dispositions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RetentionGapDisposition"
+          }
+        }
+      }
+    },
+    "NativeChronologyStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before_revision",
+        "after_revision",
+        "kind",
+        "d01_update"
+      ],
+      "$comment": "One authenticated D01 update of the run; GRS-202 accepts a gap between the projected and a row's expected revision only across original_execution_progress and original_provisional_success steps.",
+      "properties": {
+        "before_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "enum": [
+            "original_execution_progress",
+            "original_provisional_success",
+            "original_run_stop",
+            "original_run_block",
+            "original_start",
+            "original_cancel",
+            "original_certify"
+          ]
+        },
+        "d01_update": {
+          "$ref": "#/$defs/Selection"
+        }
+      }
+    },
+    "StopBlockOriginal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family",
+        "event_id",
+        "operation_id",
+        "intent",
+        "native_result",
+        "d01_update",
+        "cause",
+        "first_receipt_custody",
+        "result"
+      ],
+      "properties": {
+        "family": {
+          "enum": [
+            "goal_run.stopped",
+            "goal_run.blocked"
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intent": {
+          "$ref": "#/$defs/Selection"
+        },
+        "native_result": {
+          "$ref": "#/$defs/Selection"
+        },
+        "d01_update": {
+          "$ref": "#/$defs/Selection"
+        },
+        "cause": {
+          "$ref": "#/$defs/Selection"
+        },
+        "first_receipt_custody": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        },
+        "result": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/StorageStopResult"
+            },
+            {
+              "$ref": "#/$defs/StorageBlockResult"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "family": {
+                "const": "goal_run.stopped"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/StorageStopResult"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/StorageBlockResult"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "StopBlockSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "birth",
+        "prefix",
+        "originals",
+        "native_chronology",
+        "current_disclosure"
+      ],
+      "$comment": "Own stop/block source bundle returned by owner.storage.goal_run.stop_block.read_sources.v1; inherited started/cancelled/certified sources are separate arguments in the fresh consumer realms.",
+      "properties": {
+        "birth": {
+          "$ref": "#/$defs/Birth"
+        },
+        "prefix": {
+          "$ref": "#/$defs/GlobalPrefix"
+        },
+        "originals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StopBlockOriginal"
+          }
+        },
+        "native_chronology": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NativeChronologyStep"
+          }
+        },
+        "current_disclosure": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/SourceMember"
+          }
+        }
+      }
+    },
+    "ProjectionState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint_key",
+        "row_table",
+        "row_key",
+        "checkpoint",
+        "projection"
+      ],
+      "$comment": "Whole own preimages read in the publishing transaction (SB5 CAS); null only for a genuinely absent key.",
+      "properties": {
+        "checkpoint_key": {
+          "type": "string",
+          "pattern": "^goal_run_stop_block_checkpoint\\.v1:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+$"
+        },
+        "row_table": {
+          "type": "string",
+          "pattern": "^goal_run_stop_block_projection\\.v1@grsbg_[0-9a-f]{64}$",
+          "minLength": 104,
+          "maxLength": 104
+        },
+        "row_key": {
+          "type": "string",
+          "pattern": "^goal_run_stop_block_projection\\.v1:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+$"
+        },
+        "checkpoint": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StorageCheckpoint"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StorageProjection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ProjectionCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transaction_id",
+        "preimage",
+        "checkpoint",
+        "projection"
+      ],
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preimage": {
+          "$ref": "#/$defs/ProjectionState"
+        },
+        "checkpoint": {
+          "$ref": "#/$defs/StorageCheckpoint"
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StorageProjection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ConsumerResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "generation_id",
+        "processed",
+        "projection"
+      ],
+      "properties": {
+        "outcome": {
+          "const": "success"
+        },
+        "generation_id": {
+          "type": "string",
+          "pattern": "^grsbg_[0-9a-f]{64}$",
+          "minLength": 70,
+          "maxLength": 70
+        },
+        "processed": {
+          "$ref": "#/$defs/Processed"
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StorageProjection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Halt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "sequence_id",
+        "event_id",
+        "reason"
+      ],
+      "$comment": "A row the reducer does not support halts before it; nothing is committed for it.",
+      "properties": {
+        "outcome": {
+          "const": "halt_before"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }

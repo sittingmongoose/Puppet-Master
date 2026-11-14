@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L43398-L46246
+Source lines: L43398-L46251
 
-Source SHA256: `8e6af96d8353ca32e1e2718e0773f3390c1c3caecd5fa22c5ec090e62640a724`
+Source SHA256: `29b0ec78f81d5c079ac217a91a4453a2ddaf4b3ee269fd5244bba2d51dcf6465`
 
 ---
 
@@ -2364,9 +2364,14 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: Newly authored DL-045 owner contract adopted by SP-428 and GRS-202. SB5 defines owner.goal_run.stop_block.project_prefix.v1
   and sole lower publisher owner.storage.goal_run.stop_block.publish.v1, plus read_historical.v1/read_current.v1
-  under owner.goal_run.stop_block, version 1.0.0. Exact physical row is goal_run_stop_block_projection.v1:K(project_id):K(goal_run_id)
+  under owner.goal_run.stop_block, version 1.0.0, and the Storage source reader owner.storage.goal_run.stop_block.read_sources.v1;
+  methods.json consumer_methods gives all five their typed arguments, return variants, SBP0-SBP10 entry and final
+  predicates and lower calls, with the inherited branch arguments rebound through the consumer realms of resource-map.json
+  (amended 2026-11-14, PNC-019 lane s3d, DG-OWN-A review F9). Exact physical row is goal_run_stop_block_projection.v1:K(project_id):K(goal_run_id)
   in goal_run_stop_block_projection.v1@<generation_id>; exact checkpoint in checkpoints is goal_run_stop_block_checkpoint.v1:K(storage_instance_id):K(project_id):K(goal_id):K(goal_run_id).
-  Closed StorageProjection/StorageCheckpoint roots are in contracts.schema.json. Adopt SP-278 and DL-076 full
+  Closed StorageProjection/StorageCheckpoint roots are in contracts.schema.json; the row's lifecycle_metadata carries
+  SP-428's stopped (stop_reason_code, resumable, safe_point_ref) or blocked (blocked_reason_code, block_receipt_ref)
+  members, copied from the verified original row (DG-OWN-A review F3). Adopt SP-278 and DL-076 full
   nine-field durable tokens including the whole thirteen-field source_selection; no redb_snapshot_id is persisted.
   Actual generic full global prefix, original native birth/profile/cause/first receipt and each complete original
   branch authenticate every row, including off-run no-ops and genuine gap proofs. SB5 fixes anchor/frontier

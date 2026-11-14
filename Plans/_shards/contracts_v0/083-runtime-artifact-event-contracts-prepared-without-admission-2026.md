@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L38382-L41418
+Source lines: L38382-L41419
 
-Source SHA256: `e9195b196df882f26ef47de04127c31cebc970e93f97e32d238af74b18312115`
+Source SHA256: `c57afec7d861fd04910fbfba1535e7a24eef3bab33abc0867d6af5ce61de7644`
 
 ---
 
@@ -2387,7 +2387,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). goal_run.stopped binds schema ID pm.goal_runtime_event.goal_run_stopped.schema.v3 at Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false), on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478 (the Workflow run's identity grammar, with no retired GoalRun build-flow obligation): expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision. The payload keeps goal_run_id, stop_reason_code, resumable and safe_point_ref (required when resumable is true); child_settlement_refs is an empty array (GRS-075); settlement_refs is required. The whole v2 schema stays unchanged as the historical reader. Prepared without admission: the registry row keeps v2 until its own admission landing.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). goal_run.stopped binds schema ID pm.goal_runtime_event.goal_run_stopped.schema.v3 at Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false), on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478 (the Workflow run's identity grammar, with no retired GoalRun build-flow obligation): expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision. The payload keeps goal_run_id, stop_reason_code, resumable and safe_point_ref (required when resumable is true); child_settlement_refs is an empty array (GRS-075); settlement_refs is required. The whole v2 schema stays unchanged as the historical reader. Prepared without admission: the registry row keeps v2 until its own admission landing; the prepared 3.0.0 successor row is in Plans/goal_run_stop_block_contracts/prepared-registry-rows.json, applied only at the S5b switch under EA-P3 A.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -2443,7 +2443,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). goal_run.blocked binds schema ID pm.goal_runtime_event.goal_run_blocked.schema.v3 at Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false), on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478 (the Workflow run's identity grammar, with no retired GoalRun build-flow obligation): expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision. The payload fields are those of v2: goal_run_id, blocked_reason_code, blocked_scope, allowed_action_ids, preserved_work_refs and block_receipt_ref. The whole v2 schema stays unchanged as the historical reader. Prepared without admission: the registry row keeps v2 until its own admission landing.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). goal_run.blocked binds schema ID pm.goal_runtime_event.goal_run_blocked.schema.v3 at Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false), on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478 (the Workflow run's identity grammar, with no retired GoalRun build-flow obligation): expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision. The payload fields are those of v2: goal_run_id, blocked_reason_code, blocked_scope, allowed_action_ids, preserved_work_refs and block_receipt_ref. The whole v2 schema stays unchanged as the historical reader. Prepared without admission: the registry row keeps v2 until its own admission landing; the prepared 3.0.0 successor row is in Plans/goal_run_stop_block_contracts/prepared-registry-rows.json, applied only at the S5b switch under EA-P3 A.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -2731,8 +2731,9 @@ canonical_text: "Newly authored DL-045 owner contract. CV-420 independently adop
   \ own wrapper records are closed, exact types are checked before semantics, identifiers require full-match/roundtrip\
   \ and timestamps/UUIDs require enforced format checks. SP-337 references apply to every stored source/operation/Event\
   \ part and complete wrapper size is measured. Original v2 payloads and old v7 banks remain byte-exact. The\
-  \ prepared Project v3 selector/adoption remains a separate O11 integration, so this bank grants no append\
-  \ admission. Shared number/retained-recipe and inherited-format/proof-isolation adoption remains the separately\
+  \ prepared Project v3 registry rows in prepared-registry-rows.json switch the selector only at the S5b step\
+  \ under EA-P3 A, so this bank grants no append admission. consumer-resource-bank.json holds the seven re-identified\
+  \ consumer realms of the fresh stop/block consumer (amended 2026-11-14, PNC-019 lane s3d). Shared number/retained-recipe and inherited-format/proof-isolation adoption remains the separately\
   \ assigned sweep."
 gui_related: false
 gui_classification_reason: Defines original event/source/custody and passive projection contracts without a

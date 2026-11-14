@@ -12020,6 +12020,8 @@ negative_constraints:
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-212, ContractName:Plans/Executor_Protocol.md#EP-1111, ContractName:Plans/storage-plan.md#SP-1110
 
+**Review fix round (2026-11-14, PNC-019 lane s3d).** The stopped source paths add owner-resolved settlement-census, safe-point and self-edge evidence joins and the cases listed under ATS-1112.
+
 
 ### ATS-1111 - Original blocked source-path oracles
 
@@ -12081,6 +12083,8 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-212, ContractName:Plans/Executor_Protocol.md#EP-1112, ContractName:Plans/storage-plan.md#SP-1111
+
+**Review fix round (2026-11-14, PNC-019 lane s3d).** The blocked source paths add the cause-owner receipt, reason and preserved-work joins (a forged block_receipt_ref refuses) and the cases listed under ATS-1112.
 
 
 ### ATS-1112 - Fresh source and projection/checkpoint oracles
@@ -12144,6 +12148,8 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-212, ContractName:Plans/Executor_Protocol.md#EP-1110, ContractName:Plans/storage-plan.md#SP-1112, ContractName:Plans/Goal_Runtime_System.md#GRS-1110
+
+**Review fix round (2026-11-14, PNC-019 lane s3d).** `python3 scripts/pm_goal_own_a_oracles.py` now models the owner store whole: actual registration and birth, the native body with its D01 chronology, the Goal, each cause original, Storage's global prefix with SP-286 first-receipt custody, the operation records and the physical projection keys. The writer validates the complete EventRecord and dispatches only the prepared v3 selector; the projector reads the prefix from Storage, never from caller rows; recovery and the readers resolve the original from Storage custody. It covers the GRS-202 revision relation (progress before a stop or block accepted; a gap, an emitting intervening step, a lower revision, a missing D01 update and an unsupported intervening Event refused), the row metadata in the closed StorageProjection root, typed receipt and StoredPart branches, inline selection by the complete wrapper with ASCII, two-byte and four-byte boundaries, the occurred_at_utc join, exact token identifier lengths, the anchor and frontier recipes, whole-preimage CAS, atomic commit, generation slots, rebuild and cutover coverage, and one-defect scope fixtures. Every product guard has a named one-defect negative in its guard_negative_inventory; every own root and all 638 fresh resources resolve eagerly, with the 78 typed consumer argument roots. The guard removal proof, the shared number and date-time calls and sealed-receipt retained reads belong to the Goal oracle sweep (lane s3ao); the inherited branch rows are recorded by commitment, not instantiated. Native execution stays NOT_RUN.
 
 ### ATS-1113 - Whole original goal.blocked oracle contract
 
