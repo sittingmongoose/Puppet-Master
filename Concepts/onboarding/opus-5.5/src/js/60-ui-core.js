@@ -295,8 +295,8 @@
     const x = r.left + r.width / 2, y = r.top + r.height / 2, end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     document.documentElement.setAttribute('data-o55-vt', family);
     /* FO-188: the app beneath holds still from the theme's write to the reveal's end (PM_LOOK_HOLD, 11-motion-start.js):
-       its after-layout work and the chat's redraw wait, its colours change at once by CSS, and data-o55-vt keeps it from
-       starting colour transitions (20-motion.css) */
+       its after-layout work and the chat's redraw wait (variant B, below: it is not drawn in the new look until the reveal
+       ends, so it starts no colour transitions inside the reveal either) */
     const release = window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.begin ? window.PM_LOOK_HOLD.begin() : () => {};
     /* A look's fonts (123 embedded faces) load the first time the page uses them, and each one that arrived during the
        reveal laid the whole page out again: two passes of 3,895 objects inside a Friendly reveal (62 and 70 ms on the VM,
