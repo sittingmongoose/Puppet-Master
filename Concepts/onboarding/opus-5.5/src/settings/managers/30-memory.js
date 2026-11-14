@@ -50,10 +50,12 @@
   }
   const notes = () => store().notes;
   const noteById = id => notes().find(n => n.id === id) || null;
-  /* FO-198: a note's identity keeps the letters and numbers of every script (NFKC, lowercase, \p{L}\p{N}); the old
-     ASCII-only key emptied every non-ASCII note, so two distinct notes shared one key and the second was dropped.
-     An empty key (emoji-only or punctuation-only words) is never a duplicate. */
-  const norm = t => String(t || '').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  /* FO-198: a note's identity keeps the letters, marks and numbers of every script (NFKC, lowercase, \p{L}\p{M}\p{N});
+     the old ASCII-only key emptied every non-ASCII note, so two distinct notes shared one key and the second was dropped.
+     FO-204: the combining marks (\p{M}) stay too — vowel and tone marks are what tell Hindi 'सिर' from 'सुर' and Thai
+     'ก่า' from 'ก้า', and stripping them collapsed those pairs into one note. An empty key (emoji-only or
+     punctuation-only words) is never a duplicate. */
+  const norm = t => String(t || '').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{M}\p{N}]+/gu, ' ').trim();
   function addNote(text, level) {
     const words = String(text || '').trim(); if (!words) return null;
     const key = norm(words);

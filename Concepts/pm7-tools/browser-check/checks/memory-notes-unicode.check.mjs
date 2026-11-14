@@ -7,7 +7,13 @@
 // - the same Japanese note added twice is deduplicated, with the existing "Memory added" notice;
 // - an ASCII pair that differs only in case and punctuation is still deduplicated;
 // - an emoji-only note is kept, and a second emoji-only note is not merged into it.
-// Fails main 87793bb7fd (the Japanese pair and the emoji pair); passes the FO-198 fix on both surfaces.
+// FO-204 (pm7-build, 2026-11-14): the FO-198 key kept only \p{L}\p{N}, so combining vowel and tone marks (\p{M})
+// were stripped and two notes that differ only in marks collapsed into one. The key now keeps \p{M} too. By real Add
+// clicks, on each surface, through the page AND the sheet: a Hindi pair that differs only in its vowel mark (सिर / सुर)
+// and a Thai pair that differs only in its tone mark (ก่า / ก้า) are each both kept; and one explicit Latin-accent case,
+// 'café' then 'cafe', are both kept as distinct notes — the deliberate choice being that NFKC does not strip accents, so
+// an accented word and its unaccented spelling are different notes ( accents are identity, not noise ).
+// Fails main 87793bb7fd (the Japanese pair and the emoji pair); the FO-204 mark pairs fail 936910536c; passes the fix.
 const WS = 'context-memory';
 const BODY = `[data-continuous-workspace-body="${WS}"]`;
 const JP1 = '回答は日本語でお願いします。';
@@ -18,6 +24,12 @@ const ASCII1 = 'Hello, World!';
 const ASCII2 = 'hello world';
 const EMO1 = '🎉🎊';
 const EMO2 = '🚀✨';
+const HI1 = 'सिर';
+const HI2 = 'सुर';
+const TH1 = 'ก่า';
+const TH2 = 'ก้า';
+const LAT1 = 'café';
+const LAT2 = 'cafe';
 
 async function settings(t, surface, [w, h] = [1390, 900]) {
 	await t.viewport(w, h);
@@ -129,6 +141,45 @@ async function workUnicode(t, f, place, tag) {
 	await t.check(`${tag}: a second emoji-only note is kept beside the first, not merged into it (thirteen notes)`, has(r, EMO1) && has(r, EMO2) && r.texts.length === 13 && (place === 'sheet' || r.count === '13 notes'), JSON.stringify(r));
 }
 
+// FO-204: notes that differ only in combining marks keep their own identity, in one place (page or sheet).
+// The Latin-accent case names the choice: NFKC does not strip accents, so 'café' and 'cafe' are deliberately
+// distinct notes — accents are identity, not noise.
+async function workMarks(t, f, place, tag) {
+	let r = await read(f, place);
+	await t.check(`${tag}: the saved notes start from the six seeded ones`, r && r.texts.length === 6, JSON.stringify(r));
+
+	// the Hindi pair differs only in its vowel mark (ि vs ु): both are kept
+	await add(t, f, place, HI1);
+	r = await read(f, place);
+	await t.check(`${tag}: the first Hindi note is saved (seven notes)`, has(r, HI1) && r.texts.length === 7, JSON.stringify(r));
+	await add(t, f, place, HI2);
+	r = await read(f, place);
+	await t.check(`${tag}: the Hindi note with the other vowel mark is kept beside the first, not merged (eight notes)`, has(r, HI1) && has(r, HI2) && r.texts.length === 8 && (place === 'sheet' || r.count === '8 notes'), JSON.stringify(r));
+	// the very same note again still deduplicates (keeping marks must not break identity)
+	await add(t, f, place, HI1);
+	const toasts = await f.evaluate(TOASTS);
+	await t.page.waitForTimeout(700);
+	r = await read(f, place);
+	await t.check(`${tag}: the same Hindi note again keeps one copy (still eight notes)`, times(r, HI1) === 1 && has(r, HI2) && r.texts.length === 8, JSON.stringify(r));
+	await t.check(`${tag}: the duplicate Hindi add answers with the existing “Memory added” notice`, [...new Set([...toasts, ...(await f.evaluate(TOASTS))])].includes('Memory added'), JSON.stringify(toasts));
+
+	// the Thai pair differs only in its tone mark (่ vs ้): both are kept
+	await add(t, f, place, TH1);
+	r = await read(f, place);
+	await t.check(`${tag}: the first Thai note is saved (nine notes)`, has(r, TH1) && r.texts.length === 9, JSON.stringify(r));
+	await add(t, f, place, TH2);
+	r = await read(f, place);
+	await t.check(`${tag}: the Thai note with the other tone mark is kept beside the first, not merged (ten notes)`, has(r, TH1) && has(r, TH2) && r.texts.length === 10 && (place === 'sheet' || r.count === '10 notes'), JSON.stringify(r));
+
+	// the Latin-accent case: NFKC keeps accents, so 'café' and 'cafe' are distinct notes by choice
+	await add(t, f, place, LAT1);
+	r = await read(f, place);
+	await t.check(`${tag}: the accented Latin note is saved (eleven notes)`, has(r, LAT1) && r.texts.length === 11, JSON.stringify(r));
+	await add(t, f, place, LAT2);
+	r = await read(f, place);
+	await t.check(`${tag}: the unaccented spelling is kept as its own note — NFKC does not strip accents (twelve notes)`, has(r, LAT1) && has(r, LAT2) && r.texts.length === 12 && (place === 'sheet' || r.count === '12 notes'), JSON.stringify(r));
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	const T = (name, fn) => { tests[`${name} (${surface})`] = async (t) => { if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; } await fn(t); }; };
@@ -141,6 +192,18 @@ for (const surface of ['normal', 'sandbox']) {
 	T('FO-198 the chat’s Memory sheet keeps distinct non-ASCII notes', async (t) => {
 		const f = await sheet(t, surface);
 		await workUnicode(t, f, 'sheet', 'the chat’s Memory sheet');
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(400);
+	});
+
+	T('FO-204 the Memory page keeps notes that differ only in combining marks', async (t) => {
+		const f = await settings(t, surface);
+		await workMarks(t, f, 'page', 'Settings › Memory');
+	});
+
+	T('FO-204 the chat’s Memory sheet keeps notes that differ only in combining marks', async (t) => {
+		const f = await sheet(t, surface);
+		await workMarks(t, f, 'sheet', 'the chat’s Memory sheet');
 		await t.page.keyboard.press('Escape');
 		await t.page.waitForTimeout(400);
 	});
