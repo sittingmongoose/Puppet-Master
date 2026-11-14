@@ -93,17 +93,17 @@
     "blockers": 0,
     "candidate_atoms": 0,
     "capability_lane_binding_policy": "accepted_compiled_governance_sealed_source_lineage",
-    "compile_queue_items": 1,
+    "compile_queue_items": 2,
     "compiled_owner_docs": 19,
     "compiled_plan_units": 23,
     "compiled_to_plan_atoms": 102,
-    "corrections": 11,
+    "corrections": 12,
     "decisions": 29,
     "deferred_questions": 0,
     "design_atoms": 104,
     "doc_builder_goal_conversion_contract": "accepted_compiled_governance_sealed_source_lineage",
     "doc_impact_matrix_docs_accounted_for": 68,
-    "events": 18,
+    "events": 19,
     "final_readiness_review": "source_lineage_final_readiness_completed_governance_sealed",
     "forbidden_artifacts": "not_created",
     "git_diff_check": "pass",
@@ -130,7 +130,7 @@
       "Plans/Goal_Runtime_System.md"
     ],
     "unclassified_candidates": 0,
-    "pm_bootstrap_ledger_validate_summary": "104_atoms_18_events_1_compile_queue_item_3306_planunits_checked",
+    "pm_bootstrap_ledger_validate_summary": "104_atoms_19_events_2_compile_queue_items_3762_planunits_checked",
     "post_seal_resolved_questions": [
       "q-0007",
       "q-0008",
@@ -138,7 +138,7 @@
     ],
     "archive17_projection_repair": "q-0007 through q-0009 resolved as source-lineage; terminal_ledger_event_id set to evt-0016"
   },
-  "updated_at_utc": "2026-11-05T17:10:37Z",
+  "updated_at_utc": "2026-11-14T13:17:44Z",
   "warnings": [
     "Executable WorkNode/NodeSeed generation remains gated by the Plan_To_Node_Compilation compiler contract and scheduler/permission/readiness gates."
   ]
