@@ -394,3 +394,132 @@ The self-grade (`W3D-self-grade.json`) records the per-cell evidence.
 **Open phase-2 item:** lead point 1 — rearchitect guard rows to real pure predicates the gated tool analyses
 (the synthetic observation pattern is not credited at the recheck bar). No admission, registry append, Decision Log
 change, governance reseal, `main` push, pm-mail or subagent.
+
+
+## Wave 3 phase 2, fix 1
+
+Start: `29b64d12886a2becf9958b7b61784bbdb6eb39d0`. Review: `reviews/W3D-p2-recheck/REVIEW.md`, NOT_CLEAN (code 7/10, tests 4/10). Implementation commit: `64127c49b1f4b50a17b23f75660c19a49f682942`. This section and the corrected self-grade are the subsequent reporting commit.
+
+**Supersedes the phase-2 coverage and grading claims above.** The old claim that all 12 weakened witnesses were accepted was false: AD03 moved to EN18. The old retained-number route was append, and the old reported PASS=30/PARTIAL=135 counts did not describe its cells (actual PASS=60/PARTIAL=105). Method B is credited under the recheck's explicit precedent-compatible bar: the gated tool proves the observation tables; derivation mutations separately test the real functions. No claim that the tool statically certifies those functions is made.
+
+### Five findings: location, cause and fix
+
+| Finding | Location and cause | Fix and verification |
+|---|---|---|
+| 1: compound clauses | SR06/RC26 hid independent reference, membership and subject conditions under one witness | `64127c49b1f4b50a17b23f75660c19a49f682942`: `scripts/pm_w3d_bsd_events.py:956` / `:1122`, row inventory `scripts/pm_w3d_bsd_rows.py:349` / `:495`. SR06 reference and committed membership; SR07 committed state and operation identity; RC24 count preservation and one original; RC25 prior CAS and operation; RC26 reference, membership and subject each have independent rows. All witnesses preserve their peers; the committed store remains a dictionary of wrappers. R05 and R09 now accept their weakened witnesses. |
+| 2: frozen verifier | HI05's old substituted-byte case also broke digest/commitment copies | `64127c49b1f4b50a17b23f75660c19a49f682942`: `scripts/pm_w3d_bsd_events.py:1272`, coherent fixture sealer `:1751`, negatives `:1921`. Three clocks, two payload-schema defects and three identity-recipe defects per family each keep digests, receipt copies and full-value commitments coherent. Operation identity, recipe, original source and private stored custody remain independent from the defective value. R13/R14/R15 kill all three former survivors. Frozen integer spelling checks also gain their own witnesses. |
+| 3: number adapter | Retained and retry names did not dispatch to their claimed boundaries; expected values came from the checker helpers | `64127c49b1f4b50a17b23f75660c19a49f682942`: `scripts/pm_w3d_bsd_numbers.py:43` / `:55`, `scripts/pm_w3d_bsd_number_expectations.json:1`, wrapper `scripts/pm-w3d-event-contracts.py:89`. Each named route dispatches to append/read/retry. The committed manifest pins the corpus hash and explicit expected first row/code per case and route. Original corpus API errors/outputs/returns are checked independently. No helper calculates the lane's expectation at runtime. |
+| 4: mutation success | A refusal at any different row was credited as a kill | `64127c49b1f4b50a17b23f75660c19a49f682942`: `scripts/pm_w3d_bsd_mutation_proof.py:93`. Acceptance or the explicitly expected first row/code is required; exceptions, unexpected refusals and dirty baselines fail. Each target is restored and rechecked. Replay-only is tested at each enforcing site and with the joint clause cut, preserving the separate append_once refusal. |
+| 5: self-grade | Unsupported C12 PASS, 30 fabricated line-1 quotes and stale aggregate counts | `64127c49b1f4b50a17b23f75660c19a49f682942`: `scripts/pm_w3d_selfgrade_update.py:19`, plus this reporting commit's `W3D-self-grade.json` and `W3D-self-grade-audit-fix1.json`. C12 is PARTIAL for all 15 families, the 30 records now quote exact result/source lines, and all 180 quotes are rechecked. Counts are recomputed from all cells. |
+
+**Lane-wide compound audit.** Also split cutoff/membership and scope kind/Project in admission; the four null migration members; created/updated source times; each checkpoint uint64 slot; cursor equality/non-regression, unique match/value equality and receipt presence/event join. Finding manifest schema, five independent operands and recomputed key are separate rows, as are start custody availability/reference. Their case factories re-derive dependent keys, packs, receipts and copies. Exact typed equality remains one predicate. Arity/readiness conditions only gate a single comparison; they are not independent join credit. For example RC08's `commitment is not None` is implied by equality to the custody-schema-required hash string. The existing 24 entailed rows stay alone with the proofs in their generated tables and the table above; none gains reachable-row credit.
+
+### Actual mutation outcomes
+
+The full baseline is **4973 cases**. Each derivation mutation runs every matching target witness in every applicable family, plus that route's positive controls. It does not claim to rerun all baseline negatives under every mutation. Every target below was **accepted** after weakening, its controls accepted, and its original exact refusal restored. There were zero unexpected first refusals. `mutations.json` reports every actual outcome, including the independent dispatcher diagnostic expected when R10 removes receipt presence.
+
+| Mutation | Target row / clause | Target witnesses | Actual weakened outcome | Killed |
+|---|---|---:|---|---|
+| R01 finding_ref pattern | `payload.finding_ref.pattern` | 1 | All accepted; 6 positive controls accept | Yes |
+| R02 policy_revision type | `payload.policy_revision.type` | 1 | All accepted; 6 positive controls accept | Yes |
+| R03 schema_version const | `payload.schema_version.const` | 1 | All accepted; 6 positive controls accept | Yes |
+| R04 wrapper subject | `SR02_wrapper_subject` | 15 | All accepted; 55 positive controls accept | Yes |
+| R05 committed wrapper membership | `SR06_committed_wrapper` | 15 | All accepted; 55 positive controls accept | Yes |
+| R06 operation committed | `SR07_operation_source` | 15 | All accepted; 55 positive controls accept | Yes |
+| R07 full value commitment | `RC08_full_value` | 15 | All accepted; 60 positive controls accept | Yes |
+| R08 prior head CAS | `RC25_head_cas` | 15 | All accepted; 60 positive controls accept | Yes |
+| R09 head subject | `RC26_head_subject` | 15 | All accepted; 60 positive controls accept | Yes |
+| R10 sealed receipt presence | `HI01_receipt_present` | 15 | All accepted; 45 positive controls accept | Yes |
+| R11 stored bytes snapshot | `HI06_bytes_preserved` | 15 | All accepted; 45 positive controls accept | Yes |
+| R12 sealed store snapshot | `HI07_no_receipt_created` | 15 | All accepted; 45 positive controls accept | Yes |
+| R13 frozen timestamps | `HI05_original_verifies` | 45 | All accepted; 45 positive controls accept | Yes |
+| R14 frozen payload schema | `HI05_original_verifies` | 30 | All accepted; 45 positive controls accept | Yes |
+| R15 frozen identity | `HI05_original_verifies` | 45 | All accepted; 45 positive controls accept | Yes |
+| O01 observed timestamp | `EN03_observed_clock` | 60 | All accepted; 55 positive controls accept | Yes |
+| O02 persisted timestamp | `EN04_persisted_clock` | 60 | All accepted; 55 positive controls accept | Yes |
+| O03 thread join | `JN03_thread_id_join` | 15 | All accepted; 55 positive controls accept | Yes |
+| O04 operation key | `OP02_operation_key` | 15 | All accepted; 55 positive controls accept | Yes |
+| O05 operation storage | `OP03_operation_storage` | 15 | All accepted; 55 positive controls accept | Yes |
+| O06 pack byte size | `PK03_pack_size` | 15 | All accepted; 55 positive controls accept | Yes |
+| O07 settlement receipt ref | `RC19_settlement_ref` | 15 | All accepted; 60 positive controls accept | Yes |
+| O08 checkpoint storage | `CP02_checkpoint_storage` | 15 | All accepted; 30 positive controls accept | Yes |
+| O09 publication fence | `CS06_fence_current` | 15 | All accepted; 30 positive controls accept | Yes |
+| O10 withdrawal cutoff | `WD01_cutoff_recorded` | 15 | All accepted; 15 positive controls accept | Yes |
+
+**Derivations: recheck 15/15; own 10/10; total 25/25.** The own rows were not in the worker's original 12 or the recheck's 15. All five specifically required former survivors are included (R05, R09, R13–R15).
+
+| Original table-site / duplicate probe | Expected and actual weakened outcome | Killed |
+|---|---|---|
+| `AD03_replay_writer` | envelope:EN18_replay_policy:replay_policy_invalid | Yes |
+| `EN02_occurred_clock` | accepted | Yes |
+| `EN05_sequence_uint64` | accepted | Yes |
+| `ID07_operation_recipe` | accepted | Yes |
+| `PK02_pack_digest` | accepted | Yes |
+| `RC08_full_value` | accepted | Yes |
+| `HI01_receipt_present` | accepted | Yes |
+| `HI07_no_receipt_created` | accepted | Yes |
+| `EL01_not_off` | accepted | Yes |
+| `SR09_sem_newer_generation` | accepted | Yes |
+| `SR08_sem_revision_cas` | accepted | Yes |
+| `SR24_start_admission_identity` | accepted | Yes |
+| `EN18 replay-only clause alone` | admission:AD03_replay_writer:replay_only_not_appendable | Yes |
+| `AD03 + EN18 replay-only clause joint cut` | accepted | Yes |
+
+AD03 alone refuses at exactly `envelope/EN18_replay_policy/replay_policy_invalid`, for the stated replay-only defect. Cutting EN18's replay-only clause alone leaves AD03's exact refusal. Cutting both accepts the replay-only witness while `append_once` still refuses at EN18. This is a clause cut for the same field/value invariant, not removal of EN18's unrelated policy condition. The 12 original site probes and two additional duplicate probes all pass their explicit expectations.
+
+**Retained-original component audit:** `191/191` originals each fail exactly one of envelope, payload, clocks, identity and numeric components (the envelope component remains true on these fixtures). Every shared dispatcher refusal is exactly `original_verification`; all digest and full-value copies agree. `frozen-audit.json` includes the component vector and record/receipt SHA-256 for each original. No read creates its seal.
+
+### Real number-corpus coverage
+
+The seven selected scalar-input API operations comprise **165 corpus cases: 96 accepted / 69 refused / 0 mismatches** against the corpus's explicit outputs, errors and returned values. **35 parser/API-only cases** materialize no scalar slot and receive no complete-checker route credit. Corpus-only bounds are tested at the original API; each lane route uses its own owner bounds. The whole number scope is checked by the shared self-test separately.
+
+| Route | Real boundary | Complete runs | Accepted | Refused | Mismatches / exceptions |
+|---|---|---:|---:|---:|---|
+| `producer_append` | `append` | 130 | 37 | 93 | 0 / 0 |
+| `sequence_append` | `append` | 130 | 86 | 44 | 0 / 0 |
+| `payload_integer` | `append` | 130 | 35 | 95 | 0 / 0 |
+| `producer_original` | `read` | 130 | 37 | 93 | 0 / 0 |
+| `producer_retry` | `retry` | 130 | 37 | 93 | 0 / 0 |
+
+These are **650 real complete-checker runs**, not a claim over every integer slot. The `2**64` and `10**4399` smoke vectors add 10 runs: append refuses at EN05 (sequence) or EN07 (semantic values), read at HI05, retry at RT05. Each exact expectation agrees, with no exception. An unencodable retained fixture has invalid stored bytes and proves the read boundary refuses them; it is not credited as a valid historical integer encoding. The manifest's expectations were transcribed independently from the schema/domain rules and exact integer/decimal representability, before comparing actual routes; the one initial UTF-8 BOM extraction mistake was corrected to parser/API-only rather than credited as a route.
+
+### Guard and acceptance results
+
+**233/233 fresh witness suites PASS; 1706 proved rows; 0 unproved reachable rows; 0 failures; 0 masked negatives; 0 duplicates.** 233 controls, 1706 negatives, 46435 evaluations, 93103 factories. The 24 singleton entailed tables bring the inventory to 257 tables / 1,730 rows. All witness suites were rerun; no prior report was reused.
+
+The final fixture polish preserves the actual observation-suite inputs: a fresh collect at the final source matched every suite's control and negative digest, and every report's `static.files` SHA-256 matches its current generated table. `guard-input-equivalence.json` records this comparison (including changed raw case/record counts). A child CLI's known uppercase PASS/lowercase comparison still returns 1 on PASS; the chunked runner judges the actual gated report and exits 0. The gated tool was not edited.
+
+| Check | Exit | Result |
+|---|---:|---|
+| Complete checker, final source (`pm-w3d-event-contracts.py --skip-inventory`) | 0 | 235 positives / 4,738 negatives; 4,723 single-row / 15 declared multi-row; 0 mismatches / 0 unresolved refs |
+| Strict mutation runner | 0 | Recheck 15/15, own 10/10, original sites 12/12 and duplicate probes 2/2 |
+| Frozen component/custody audit | 0 | 191/191 single-component defects; exact dispatcher reason |
+| Shared numbers self-test (`--scope numbers`) | 0 | pass, 276 positives / 304 negatives |
+| Explicit number corpus adapter | 0 | 165 API cases; 650 boundary runs; 10 additional large-integer runs; no mismatches or exceptions |
+| Table generator `--check` | 0 | 257 tables / 1,730 rows; 0 stale / 0 extra |
+| Gated chunked guard runner | 0 | All 233 witness suites PASS; counts above |
+| Shard check | 0 | 3,095 shards / 99 sources / 0 failures |
+| Index validate, lane-base pin | 0 | top-level pass / 0 failures; base f9c5de6561dff0a53a48e530f2a5c6804a7e941d; 15 ignored currentness files copied and SHA-256 matched |
+| Shared date-time inventory | 1 | 85 existing lane-tree drift rows, fail closed; recorded, not credited; no inventory or exclusion changes |
+| Immutable foundations audit | 0 | All 20 shared script files match the exact gated commits; no Plans changes |
+| Self-grade quote/count audit | 0 | 180/180 exact quote spans; counts recomputed from 180 cells |
+
+The full wrapper (including the inventory recording) passed before the final 26 frozen-number witnesses were added; the final wrapper with `--skip-inventory` covers those additions. The unchanged number routes, shard bodies, index and inventory were not credited with new behavior. Heavy commands waited for at least 12 GB available and used `systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0`; guard concurrency never exceeded four. All long runs used long-job and foreground waits. Setup failures (a syntax indentation error, a source matcher disrupted by an in-progress source edit, and a scratch comparison's unsupported chunk-name lookup) are preserved in logs and receive no passing credit.
+
+### Grades before and after
+
+| Scope | Before: actual phase-2 cells | After fix 1 |
+|---|---|---|
+| Criterion 12, all 15 families | PASS, unsupported | **PARTIAL** |
+| Aggregate PASS / PARTIAL / ABSENT | 60 / 105 / 15 (old reported 30 / 135 / 15 was wrong) | **45 / 120 / 15** |
+| Membership | ABSENT for all 15 | ABSENT for all 15 |
+| Native execution | NOT_RUN | NOT_RUN |
+| Independent review's code / tests scores | 7/10 / 4/10 | No replacement independent score claimed; targeted recheck pending |
+
+The remaining criterion-12 limit is explicit: 25 sampled derivations and five scalar-number routes do not certify every owner-plan obligation or every integer slot, and retention/restore/withdrawal models are not implementation-backed. Retention stays bound: 13 RP-RUNTIME-365D and two RP-AUTHORITY-INDEFINITE. No new ids, admission, Decision Log row, governance reseal, rebase or main push. `acknowledged_at_utc` retains EventRecord exactly as Jared ruled.
+
+### Evidence and handoff
+
+Reproduce findings 1, 2 and 4 with `python3 -B scripts/pm_w3d_bsd_mutation_proof.py --json <scratch>/mutations.json`; finding 3 with `python3 -B scripts/pm_w3d_bsd_numbers.py --json <scratch>/numbers.json`; finding 5 with `python3 scripts/pm_w3d_selfgrade_update.py`. Apply the same 12 GB admission floor and systemd scope to heavy runs, with long-job and foreground waits. The guard command is `python3 -B scripts/pm_w3d_bsd_guard_chunked.py --out-dir <scratch>/guards --reuse-dir <scratch>/nonexistent --cache <scratch>/collect.json --concurrency 4 --summary <scratch>/guard-summary.json`.
+
+Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/phase2-fix1`. `SHA256SUMS` covers the report, self-grade, compact summaries, full mutation/number/frozen outcomes, guard reports archive, command logs and reproduction scripts. Raw evidence stays outside the repository. The subsequent delivery record identifies the reporting head and both verified push URLs. No owner decision is stopped for Jared.
