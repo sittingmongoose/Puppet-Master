@@ -334,6 +334,10 @@
   {
    "event_type": "source_control.remote.fetch_completed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.remote.fetch_started",
+   "outcome": "registered"
   }
  ]
 }

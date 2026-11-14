@@ -1,0 +1,320 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-14.106",
+  "sha256": "3c0af6a0e4f8cfdfc778af116e9c0d0c57e8790d3a981ee0f23a91f6e6f048ad",
+  "family_count": 152,
+  "row_pointer": "#/families/151"
+ },
+ "base_commit": "a3436440cdfca1c33350f8ae0ea5df1fc3774bdb",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "source_control.remote.fetch_started",
+   "family_id": "event-family-source-control-remote-fetch-started",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-14.106 as #/families/151 (canonical row SHA-256 73c38865d14020006b71f598a3852ab896380f5db01078c61c404a6b6605f76c); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/151",
+       "line_start": 10467,
+       "line_end": 10509,
+       "quote": "\"event_type\": \"source_control.remote.fetch_started\"",
+       "quote_line": 10470,
+       "file_sha256": "3c0af6a0e4f8cfdfc778af116e9c0d0c57e8790d3a981ee0f23a91f6e6f048ad",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact family has newly authored normative owner text, closed source/payload/checkpoint schema routes and explicit prerequisite adoption; native execution is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 2938,
+       "line_end": 2938,
+       "quote": "Newly authored owner contract for",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact family has newly authored normative owner text, closed source/payload/checkpoint schema routes and explicit prerequisite adoption; native execution is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 2950,
+       "line_end": 2950,
+       "quote": "C2/C3 owner and producer:",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact family has newly authored normative owner text, closed source/payload/checkpoint schema routes and explicit prerequisite adoption; native execution is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 2964,
+       "line_end": 2964,
+       "quote": "C4/C5 payload and identity:",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact family has newly authored normative owner text, closed source/payload/checkpoint schema routes and explicit prerequisite adoption; native execution is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 2964,
+       "line_end": 2964,
+       "quote": "C4/C5 payload and identity:",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact family has newly authored normative owner text, closed source/payload/checkpoint schema routes and explicit prerequisite adoption; native execution is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 2977,
+       "line_end": 2977,
+       "quote": "C6 replay/idempotency:",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Saved event history bound by DL-455 (E-CARDS-3) and the separate original source fact source_control_remote_fetch_started_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 2987,
+       "line_end": 2987,
+       "quote": "C7 retention: the saved event history of this family is bound by DL-455",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 2990,
+       "line_end": 2990,
+       "quote": "The original source fact source_control_remote_fetch_started_fact is kept exactly as long as the history entry that points to it",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1255",
+       "line_start": 53397,
+       "line_end": 53397,
+       "quote": "Retention of the original source fact source_control_remote_fetch_started_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "1c6736e6267ee25a37abaf89858daf63321e17f44bf2592a9ab34294654050cd"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact family has newly authored normative owner text, closed source/payload/checkpoint schema routes and explicit prerequisite adoption; native execution is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 2998,
+       "line_end": 2998,
+       "quote": "C8 custody:",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact family has newly authored normative owner text, closed source/payload/checkpoint schema routes and explicit prerequisite adoption; native execution is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 3008,
+       "line_end": 3008,
+       "quote": "C9 transitions:",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact family has newly authored normative owner text, closed source/payload/checkpoint schema routes and explicit prerequisite adoption; native execution is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 3016,
+       "line_end": 3016,
+       "quote": "C10 consumers/checkpoints:",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact family has newly authored normative owner text, closed source/payload/checkpoint schema routes and explicit prerequisite adoption; native execution is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 3025,
+       "line_end": 3025,
+       "quote": "C11 compatibility/withdrawal:",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Executable synthetic oracles (scripts/pm_w3b_event_oracles.py): every refusal is one generated guard-table predicate; this family has its own positives and one-defect negatives in Plans/w3b_event_fixtures.json, every phase-1 plan entry witnessed (reports/event-authority-20261105/W3B-phase2-plan-coverage.json), rows proved by the gated shared tool and a single-guard mutation proof. Synthetic only: native execution NOT_RUN, membership ABSENT.",
+     "evidence": [
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 3034,
+       "line_end": 3034,
+       "quote": "C12 oracle plan:",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1255",
+       "line_start": 3035,
+       "line_end": 3035,
+       "quote": "Phase 2 (2026-11-13) executes them:",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3B-self-grade.json",
+      "sha256": "362baa2df0bca93060511349ac972f68b7602595900e19ace8716564e7bf8767",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
