@@ -576,7 +576,10 @@ class PostAugustAdmissionTests(unittest.TestCase):
         self.assertNotIn(self.POST[0], named['post_august_admitted'])
         self.assertIn('post_august_admission_incomplete', failures)
         self.assertIn(self.POST[0], failures['unexpected_august_set']['august'])
-        self.assertIn(self.POST[0], failures['individual_dispositions_evidence_gap_blocking']['sample'])
+        # PNC-019 S2: the individual-disposition row of context.compaction.completed now states KEEP_REGISTERED with
+        # twelve PASS cells (reports/event-authority-20261114/s2-ledger-application.json), so an incomplete record no
+        # longer surfaces as an evidence gap; the two failures above still keep the family out and block the seal.
+        self.assertNotIn(self.POST[0], (failures.get('individual_dispositions_evidence_gap_blocking') or {}).get('sample', []))
         self.assertIn('post_august_admission_incomplete', named['seal_prerequisites_blocking_errors'])
         self.assertFalse(named['post_august_admission_records_ok'])
 
