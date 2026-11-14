@@ -9613,6 +9613,1056 @@
           "profile": "fixture.future.stop_block.profile"
         }
       }
+    },
+    {
+      "id": "nonemitting_progress_then_block",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            },
+            {
+              "before": 2,
+              "after": 3,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:2->3",
+              "verified": true
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "advanced",
+        "status": "blocked",
+        "revision": 4
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "GRS-202 2026-11-14: two authenticated running->running progress revisions before a genuine block."
+    },
+    {
+      "id": "provisional_success_then_stop",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.stopped",
+          "goal_run_revision": 3,
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:2"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_provisional_success",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "advanced",
+        "status": "stopped",
+        "revision": 3
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "GRS-202 2026-11-14: authenticated provisional success, then a genuine stop."
+    },
+    {
+      "id": "nonemitting_progress_then_stop_then_cancel",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.stopped",
+          "goal_run_revision": 3,
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:2"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            }
+          ]
+        },
+        {
+          "event_type": "goal_run.cancelled",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:3"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "advanced",
+        "status": "cancelled",
+        "revision": 4
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "Progress, stop, then positive D06 cancellation at the next revision."
+    },
+    {
+      "id": "native_gap_without_chronology_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "Expected revision above the projected one with no chronology."
+    },
+    {
+      "id": "native_chronology_short_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "Chronology covers one of two intervening revisions."
+    },
+    {
+      "id": "native_chronology_discontinuous_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            },
+            {
+              "before": 3,
+              "after": 4,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:3->4",
+              "verified": true
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "Second step does not start where the first ended."
+    },
+    {
+      "id": "native_step_emitting_kind_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            },
+            {
+              "before": 2,
+              "after": 3,
+              "kind": "original_certification",
+              "d01_receipt_ref": "d01:receipt:2->3",
+              "verified": true
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "A step kind that is not a supported non-emitting native step."
+    },
+    {
+      "id": "native_step_unverified_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            },
+            {
+              "before": 2,
+              "after": 3,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:2->3",
+              "verified": false
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "One step not authenticated."
+    },
+    {
+      "id": "native_step_missing_d01_receipt_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            },
+            {
+              "before": 2,
+              "after": 3,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "",
+              "verified": true
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "One step without its original D01 receipt reference."
+    },
+    {
+      "id": "native_step_after_not_next_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            },
+            {
+              "before": 2,
+              "after": 4,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:2->3",
+              "verified": true
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "One step whose after-revision skips a revision."
+    },
+    {
+      "id": "native_step_boolean_before_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.stopped",
+          "goal_run_revision": 3,
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:2"
+          ],
+          "native_chronology": [
+            {
+              "before": true,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "Boolean true in place of integer 1 for a step before-revision."
+    },
+    {
+      "id": "native_step_extra_member_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            },
+            {
+              "before": 2,
+              "after": 3,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:2->3",
+              "verified": true,
+              "extra": "x"
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "A step with an undeclared member."
+    },
+    {
+      "id": "chronology_without_gap_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "A chronology on a row whose expected revision equals the projected revision."
+    },
+    {
+      "id": "native_step_verified_string_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 4,
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ],
+          "native_chronology": [
+            {
+              "before": 1,
+              "after": 2,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:1->2",
+              "verified": true
+            },
+            {
+              "before": 2,
+              "after": 3,
+              "kind": "original_execution_progress",
+              "d01_receipt_ref": "d01:receipt:2->3",
+              "verified": "true"
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "String \"true\" in place of boolean true."
+    },
+    {
+      "id": "expected_below_projected_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 3,
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 3,
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 3
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "Row before-revision below the projected revision."
+    },
+    {
+      "id": "cancel_expected_revision_not_projected_halts",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.cancelled",
+          "goal_run_revision": 3,
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:3"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      },
+      "note": "A positive D06 cancelled row keeps the exact expected-revision rule; only stop/block rows take GRS-202's authenticated native chronology."
     }
   ],
   "native_status": "NOT_RUN"

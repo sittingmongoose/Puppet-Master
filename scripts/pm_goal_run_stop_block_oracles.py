@@ -3,7 +3,8 @@
 
 goal_run.stopped and goal_run.blocked v3: payload cases against the prepared v3 schemas, SP-426/SP-427
 identity recipes, D-R21/D-R16 source-status tables, EP-200 wiring expectations and the GRS-202
-projection rule table. Static consistency only; the writers are not installable on any existing
+projection rule table, including the 2026-11-14 revision relation over authenticated
+non-emitting native steps. Static consistency only; the writers are not installable on any existing
 birth and every native obligation stays NOT_RUN. Exit 0 on full agreement.
 """
 from __future__ import annotations
@@ -50,6 +51,27 @@ EDGES = {
     ("blocked", "goal_run.blocked"), ("blocked", "goal_run.stopped"), ("blocked", "goal_run.cancelled"),
     ("stopped", "goal_run.stopped"), ("stopped", "goal_run.cancelled"),
 }
+# GRS-202 revision relation (amended 2026-11-14, s3a): a stop/block row's expected revision may exceed the projected
+# revision only across intervening native body revisions authenticated as supported non-emitting native steps.
+NON_EMITTING_NATIVE_STEPS = {"original_execution_progress", "original_provisional_success"}
+NATIVE_STEP_KEYS = {"before", "after", "kind", "d01_receipt_ref", "verified"}
+
+
+def native_chronology(chain, projected, expected):
+    """Bounded model of the original D01/native chronology between the projected and the row's own before-revision."""
+    if not isinstance(chain, list) or len(chain) != expected - projected:
+        return False
+    for i, step in enumerate(chain):
+        if not (isinstance(step, dict) and set(step) == NATIVE_STEP_KEYS):
+            return False
+        if not (integer_number(step["before"]) and integer_number(step["after"]) and step["before"] == projected + i and step["after"] == step["before"] + 1):
+            return False
+        if not (type(step["kind"]) is str and step["kind"] in NON_EMITTING_NATIVE_STEPS):
+            return False
+        if not (step["verified"] is True and type(step["d01_receipt_ref"]) is str and step["d01_receipt_ref"]):
+            return False
+    return True
+
 
 
 def project(rows: list[dict], birth, disabled=(), *, trace=False):
@@ -74,9 +96,15 @@ def project(rows: list[dict], birth, disabled=(), *, trace=False):
             g.require('projection/first_started',integer_number(r['goal_run_revision']) and ev=='goal_run.started')
         else:
             g.require('projection/edge', (status,ev) in EDGES)
-            g.require('projection/expected_revision',integer_number(r['expected_goal_run_revision']) and r['expected_goal_run_revision']==rev)
+            if stop_block:
+                # The floor (never below the projected revision) is part of native_chronology: its length is the gap.
+                g.require('projection/expected_revision_type',integer_number(r['expected_goal_run_revision']))
+            else:
+                g.require('projection/expected_revision',integer_number(r['expected_goal_run_revision']) and r['expected_goal_run_revision']==rev)
             if not g.errors:
                 g.require('projection/revision_step',integer_number(r['goal_run_revision']) and r['goal_run_revision']==r['expected_goal_run_revision']+1)
+            if not g.errors and stop_block:
+                g.require('projection/native_chronology',native_chronology(r.get('native_chronology',[]),rev,r['expected_goal_run_revision']))
             if status==ev.split('.',1)[1] and stop_block:
                 g.require('projection/new_evidence',r['evidence_refs']!=rows[i-1]['evidence_refs'])
         if g.errors:

@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L25036-L27780
 
-Source SHA256: `da01bb5b8995f081f223c1fed265377a35453f2a97e31e5b739209ed03c31ee9`
+Source SHA256: `f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423`
 
 ---
 
@@ -2543,7 +2543,7 @@ unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04): the Storage side of GRS-202. For a qualifying birth the mandatory run projection (GRS-085, with SP-317's projection and SP-312's started/cancelled checkpoint lineage) gains two supported same-run rows, goal_run.blocked v3 and goal_run.stopped v3. The projected value adds the current lifecycle status (started, blocked, stopped, cancelled or certified), the projected GoalRun revision and the last supported event ID. Each accepted row and the checkpoint's processed prefix and frontier commit in one Storage write transaction under the CAS fences SP-311 and SP-312 already use, adopting SP-278 with the nine-field durable token (DL-076). A halted row never advances the checkpoint. The new value is a new projection profile version; existing generations are never rewritten, and a qualifying run's projection is built in a new generation from a full scan.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04): the Storage side of GRS-202. For a qualifying birth the mandatory run projection (GRS-085, with SP-317's projection and SP-312's started/cancelled checkpoint lineage) gains two supported same-run rows, goal_run.blocked v3 and goal_run.stopped v3. The projected value adds the current lifecycle status (started, blocked, stopped, cancelled or certified), the projected GoalRun revision and the last supported event ID. The projected revision is the accepted row's own goal_run_revision; GRS-202's revision relation decides whether the next row's expected revision may exceed it, and only across intervening native body revisions authenticated by the original D01/native chronology, never by current native state. Each accepted row and the checkpoint's processed prefix and frontier commit in one Storage write transaction under the CAS fences SP-311 and SP-312 already use, adopting SP-278 with the nine-field durable token (DL-076). A halted row never advances the checkpoint. The new value is a new projection profile version; existing generations are never rewritten, and a qualifying run's projection is built in a new generation from a full scan.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false

@@ -11902,6 +11902,8 @@ owner_hints:
 
 The fixture lists, per family, what stays open: the fresh Workflow source edition that installs EP-200's writers, and native settlement, append and projector evidence.
 
+**GRS-202 revision relation (2026-11-14, PNC-019 lane s3a, under DL-045).** The bounded projection now takes a stop or block row whose expected revision exceeds the projected revision only with a `native_chronology` that covers every intervening revision with authenticated non-emitting native steps (`original_execution_progress`, `original_provisional_success`), each one revision, with its original D01 receipt reference. Three positives (progress then block, provisional success then stop, progress then stop then positive D06 cancellation) and thirteen single-defect negatives (no chronology, short, discontinuous, emitting kind, unverified, missing D01 receipt, skipped after-revision, boolean before-revision, extra member, chronology without a gap, string verified, revision below the projected one, and a cancelled row that keeps the exact rule) are in `Plans/goal_run_stop_block_oracle_fixtures.json`. The chronology is a bounded model with supplied verification flags; independent resolution of the original D01/native chronology stays with the complete source oracles, and native execution stays NOT_RUN.
+
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Decision_Log.md#DL-080
 
 ### ATS-213 - Project Goal blocked and ordinary completed successor oracles
