@@ -280,12 +280,50 @@ def admitted_coordination_rows():
     }
 
 
-def preexisting_preservation(admission, registry_rows, *, allow_historical=False, coordination_rows=None):
+POST_AUGUST_RECORD_DIR = "reports/event-authority-20260911/admission-records"
+
+
+def dl077_row_sha256(row):
+    """The DL-077 recipe the seal check uses for registry_row_sha256 (sorted keys, compact, UTF-8)."""
+    return hashlib.sha256(json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
+def admitted_record_rows():
+    """Registry rows pinned by their own DL-077 admission record, by identity and DL-077 row hash.
+
+    PNC-019 admission merges (DL-078, DL-096, DL-400; Jared's EA-P1 A and EA-P2 B, 2026-11-14) register
+    each family in its own commit with its own record. A row passes here only when the record named
+    after its event type pins exactly this family ID, event type and row hash; a changed, renamed,
+    foreign or unrecorded row stays unexpected. Whether the record is complete is the seal check's
+    judgment, not this gate's: the gate opens no family the record does not pin byte for byte.
+    """
+    directory = ROOT / POST_AUGUST_RECORD_DIR
+    pins = {}
+    try:
+        paths = sorted(directory.glob("*.json")) if directory.is_dir() else []
+    except OSError:
+        return {}
+    for path in paths:
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if (isinstance(record, dict) and isinstance(record.get("event_type"), str)
+                and path.name == record["event_type"] + ".json"
+                and isinstance(record.get("family_id"), str)
+                and isinstance(record.get("registry_row_sha256"), str)):
+            pins[(record["family_id"], record["event_type"])] = record["registry_row_sha256"]
+    return pins
+
+
+def preexisting_preservation(admission, registry_rows, *, allow_historical=False, coordination_rows=None,
+                             record_rows=None):
     """Verify historical39/40 lineage and require the active successor rows.
 
     Historical comparison is opt-in for isolated tests, never a CLI mode or
     permission to downgrade an active registry row to its retained reader.
     coordination_rows defaults to admitted_coordination_rows(); tests pass their own.
+    record_rows defaults to admitted_record_rows(); tests pass their own.
     """
     ids = admission["preexisting_family_ids"]
     original_ids = set(ids)
@@ -310,10 +348,12 @@ def preexisting_preservation(admission, registry_rows, *, allow_historical=False
     # prepared row passes (Step 9 batch 2, generalized 2026-09-25).
     browser_pairs = {(row["family_id"], row["event_type"]) for row in admission["rows"]}
     coordination = admitted_coordination_rows() if coordination_rows is None else coordination_rows
+    recorded = admitted_record_rows() if record_rows is None else record_rows
     if any(row["family_id"] not in original_ids | {COMPACTION_FAMILY}
            and (row["family_id"], row["event_type"]) not in browser_pairs
            and coordination.get((row["family_id"], row["event_type"])) != fingerprint(row)
            and REVIEWED_DL300_FAMILIES.get(row["family_id"], (None, None))[:2] != (row["event_type"], fingerprint(row))
+           and recorded.get((row["family_id"], row["event_type"])) != dl077_row_sha256(row)
            for row in registry_rows):
         failures.append({"error": "unexpected_central_event_family"})
     if len({row["family_id"] for row in registry_rows}) != len(registry_rows):

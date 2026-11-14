@@ -161,6 +161,7 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
 
     def test_each_other_historical_row_and_compaction_remain_exact(self):
         coordination = GATE.admitted_coordination_rows()
+        recorded = GATE.admitted_record_rows()
         for original in self.rows:
             if original["family_id"] in GATE.REVIEWED_GOAL_SUCCESSORS or original["event_type"].startswith("browser."):
                 continue
@@ -169,12 +170,32 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
                 next(row for row in rows if row["family_id"] == original["family_id"])["family_revision"] = "99.0.0"
                 report, failures = GATE.preexisting_preservation(self.admission, rows)
                 self.assertTrue(failures)
-                if (original["family_id"], original["event_type"]) in coordination or original["family_id"] in GATE.REVIEWED_DL300_FAMILIES:
-                    # An admitted coordination row (Step 9 batch 2) or DL-300 family is not historical: drift makes
-                    # it unexpected.
+                if ((original["family_id"], original["event_type"]) in coordination
+                        or original["family_id"] in GATE.REVIEWED_DL300_FAMILIES
+                        or ((original["family_id"], original["event_type"]) in recorded
+                            and original["family_id"] not in set(self.admission["preexisting_family_ids"]) | {GATE.COMPACTION_FAMILY})):
+                    # An admitted coordination row (Step 9 batch 2), a DL-300 family or a row its own DL-077
+                    # admission record pins is not historical: drift makes it unexpected.
                     self.assertIn("unexpected_central_event_family", {row["error"] for row in failures})
                     continue
                 self.assertFalse(report["historical_baseline_verified"])
+
+    def test_record_pinned_row_passes_only_byte_for_byte(self):
+        # PNC-019 admission merges: a row outside every allowlist passes only through its own DL-077 record pin.
+        extra = copy.deepcopy(next(row for row in self.rows if row["family_id"] == GATE.COMPACTION_FAMILY))
+        extra.update(family_id="event-family-pnc019-record-probe", event_type="pnc019.record_probe")
+        rows = copy.deepcopy(self.rows) + [extra]
+        pin = {(extra["family_id"], extra["event_type"]): GATE.dl077_row_sha256(extra)}
+        base = {k: v for k, v in GATE.admitted_record_rows().items()}
+        _, failures = GATE.preexisting_preservation(self.admission, rows, record_rows={**base, **pin})
+        self.assertNotIn("unexpected_central_event_family", {row["error"] for row in failures})
+        for name, record_rows in (("no_record", base),
+                                  ("changed_row", {**base, (extra["family_id"], extra["event_type"]): "0" * 64}),
+                                  ("renamed_family", {**base, ("event-family-other", extra["event_type"]): pin[(extra["family_id"], extra["event_type"])]}),
+                                  ("renamed_event", {**base, (extra["family_id"], "pnc019.other"): pin[(extra["family_id"], extra["event_type"])]})):
+            with self.subTest(case=name):
+                _, failures = GATE.preexisting_preservation(self.admission, rows, record_rows=record_rows)
+                self.assertIn("unexpected_central_event_family", {row["error"] for row in failures})
 
     def test_missing_duplicate_reordered_extra_and_changed_manifest_rejected(self):
         for mutation in ("missing", "duplicate", "order", "compaction_order", "extra", "manifest_order", "manifest_hash"):
