@@ -1955,10 +1955,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 137,
+        "False": 139,
         "True": 47
       },
-      "heading_count": 270,
+      "heading_count": 273,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
@@ -2055,6 +2055,8 @@
         "Plans/panel_event_contracts/",
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/server_command_gap_adjudication.json",
+        "Plans/setup_validation_event_contracts.schema.json",
+        "Plans/setup_validation_event_families.json",
         "Plans/shared_integration_runtime_expansion_contracts.schema.json",
         "Plans/shared_runtime_command_contract_fixtures.json",
         "Plans/shared_runtime_command_contracts.schema.json",
@@ -2097,6 +2099,7 @@
         "scripts/pm-orchestrator-event-contracts.py",
         "scripts/pm-plans-verify.py",
         "scripts/pm-server-command-gap-verify.py",
+        "scripts/pm-setup-validation-events.py",
         "scripts/pm-shared-runtime-command-contracts.py",
         "scripts/pm-touch-closure-verify.py",
         "scripts/pm-working-notebook-contracts.py",
@@ -2108,15 +2111,16 @@
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_packet_audit_census.py",
         "scripts/pm_packet_audit_verdicts.py",
+        "scripts/pm_setup_validation_oracles.py",
         "tests/fixtures/pm7_shared",
         "tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json",
         "tests/fixtures/usage_gui",
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 14149,
+      "line_count": 14245,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 184,
+      "plan_unit_count": 186,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -2301,7 +2305,9 @@
         "ATS-1281",
         "ATS-1282",
         "ATS-1283",
-        "ATS-1230"
+        "ATS-1230",
+        "ATS-3200",
+        "ATS-3201"
       ],
       "reasoning_tiers": [
         "high",
@@ -2381,6 +2387,7 @@
         "preview_event_or_compaction_event_authority_drift",
         "projection_reference_or_original_source_substitution",
         "protected_auth_browser_exposure",
+        "setup_history_identity_custody_and_replay_drift",
         "stale_test_debug_lease_or_awareness_leak",
         "static_fixture_or_false_execution_claim",
         "synthetic_suite_false_pass_or_unreviewed_case_omission",
@@ -2399,10 +2406,10 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+      "sha256": "661172c5d5d5f2ea7c8e6d6cfe6fb42a76f24b6b88f3951d80abbca5470ea1de",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 182,
+        "accepted": 184,
         "draft": 1,
         "superseded": 1
       },
@@ -2412,7 +2419,7 @@
         "acceptance_contract": 3,
         "acceptance_gate": 6,
         "constraint": 1,
-        "contract": 19,
+        "contract": 21,
         "event_contract": 5,
         "interface_contract": 6,
         "owner_boundary": 4,
@@ -2686,6 +2693,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-projects-refresh-contracts.py",
         "scripts/pm-settings-layering-check.py",
+        "scripts/pm-setup-validation-events.py",
         "scripts/pm-shard-plans.py",
         "scripts/pm7-build-check.py",
         "scripts/pm7-canon-check.py",
@@ -2695,6 +2703,7 @@
         "scripts/pm_goal_own_c_oracles.py",
         "scripts/pm_packet_audit_census.py",
         "scripts/pm_packet_audit_verdicts.py",
+        "tests/fixtures/setup_validation_history/controls.json",
         "tests/test_pm_finalgui_tour_v3.py static shared-owner references and causal presentation mutations only",
         "tests/test_pm_forge_backup_acceptance.py",
         "tests/test_pm_guided_tour_v3_contracts.py static v3 positive/negative record coverage only",
@@ -4957,9 +4966,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 642,
-        "True": 81
+        "True": 83
       },
-      "heading_count": 935,
+      "heading_count": 938,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -5106,6 +5115,8 @@
         "Plans/rewrite-tie-in-memo.md",
         "Plans/server_command_gap_adjudication.json",
         "Plans/server_command_gap_adjudication.schema.json",
+        "Plans/setup_validation_event_contracts.schema.json",
+        "Plans/setup_validation_event_families.json",
         "Plans/shared_runtime_command_contracts.schema.json",
         "Plans/shared_runtime_contracts.schema.json",
         "Plans/storage-plan.md",
@@ -5133,13 +5144,15 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py",
+        "scripts/pm-setup-validation-events.py",
         "scripts/pm_debug_investigation_transitions.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm_setup_validation_oracles.py"
       ],
-      "line_count": 51274,
+      "line_count": 51402,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 723,
+      "plan_unit_count": 725,
       "plan_unit_ids": [
         "CV-1200",
         "CV-1201",
@@ -5863,7 +5876,9 @@
         "CV-1361",
         "CV-1362",
         "CV-1363",
-        "CV-1364"
+        "CV-1364",
+        "CV-3200",
+        "CV-3201"
       ],
       "reasoning_tiers": [
         "high",
@@ -6187,6 +6202,7 @@
         "selectable_unit_identity_leak",
         "settings_ownership_drift",
         "setup_health_enum_drift",
+        "setup_history_identity_custody_and_replay_drift",
         "setup_readiness_auth_surface_collapse",
         "shared_contract_gap",
         "shared_receipt_identity_codec_or_restore_authority_drift",
@@ -6254,10 +6270,10 @@
         "worktree_lifecycle_record_loss",
         "wrong_original_source_realm_or_implicit_reference_alias"
       ],
-      "sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+      "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 707,
+        "accepted": 709,
         "draft": 15,
         "retired": 1
       },
@@ -6266,7 +6282,7 @@
         "compatibility_disposition": 32,
         "constraint": 58,
         "consumer_requirement": 1,
-        "contract": 48,
+        "contract": 50,
         "event_contract": 23,
         "future_scope_decision": 1,
         "integration_contract": 3,
@@ -6552,6 +6568,8 @@
         "scripts/pm-plan-index.py",
         "scripts/pm-plans-verify.py",
         "scripts/pm-projects-refresh-contracts.py",
+        "scripts/pm-setup-validation-events.py",
+        "scripts/pm-shard-plans.py",
         "scripts/pm_event_datetime.py",
         "scripts/pm_executor_event_contracts.py",
         "scripts/pm_goal_own_c3_w34b_oracles.py",
@@ -6562,6 +6580,7 @@
         "security receipts are visible and redacted.",
         "seglog replay tests",
         "tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json",
+        "tests/fixtures/setup_validation_history/controls.json",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_ui_command_response.py",
         "wrong Origin/CSRF/runtime id is rejected before initialize"
@@ -14224,7 +14243,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 33721,
+      "line_count": 33723,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 472,
       "plan_unit_ids": [
@@ -15149,7 +15168,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
+      "sha256": "21e7054b32964d9ed59add05ee7acc1006c4e7f1cc024ed6d05f24d7f581223d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -20500,10 +20519,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 604,
+        "False": 606,
         "True": 112
       },
-      "heading_count": 1225,
+      "heading_count": 1228,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -20641,6 +20660,8 @@
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
         "Plans/seglog_frame_v2_wire_fixtures.json",
+        "Plans/setup_validation_event_contracts.schema.json",
+        "Plans/setup_validation_event_families.json",
         "Plans/shared_runtime_contracts.schema.json",
         "Plans/storage-plan.md",
         "Plans/storage_boot_history_floor.schema.json",
@@ -20672,12 +20693,14 @@
         "future taught memory records",
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py",
+        "scripts/pm-setup-validation-events.py",
         "scripts/pm_event_numbers.py",
-        "scripts/pm_home_layout_v2_slot_receipt.py"
+        "scripts/pm_home_layout_v2_slot_receipt.py",
+        "scripts/pm_setup_validation_oracles.py"
       ],
-      "line_count": 66098,
+      "line_count": 66198,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 716,
+      "plan_unit_count": 718,
       "plan_unit_ids": [
         "SP-570",
         "SP-002",
@@ -21394,7 +21417,9 @@
         "SP-1362",
         "SP-1363",
         "SP-1364",
-        "SP-1365"
+        "SP-1365",
+        "SP-3200",
+        "SP-3201"
       ],
       "reasoning_tiers": [
         "high",
@@ -21524,6 +21549,7 @@
         "seglog_compression_profile_drift",
         "seglog_container_format_drift",
         "seglog_durability_recovery_drift",
+        "setup_history_identity_custody_and_replay_drift",
         "silent_data_loss",
         "source_control_history_identity_custody_or_duplicate_effect",
         "source_history_identity_safety_or_false_recovery",
@@ -21555,10 +21581,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a",
+      "sha256": "de84bfe2a63a8a9e12860196799ea56b3f9a0849280098df5ded7db29d57efa6",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 695,
+        "accepted": 697,
         "draft": 16,
         "retired": 4,
         "superseded": 1
@@ -21567,7 +21593,7 @@
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "constraint": 4,
-        "contract": 49,
+        "contract": 51,
         "event_contract": 23,
         "interface_contract": 109,
         "migration": 1,
@@ -22012,11 +22038,14 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plan-index.py",
         "scripts/pm-projects-refresh-contracts.py",
+        "scripts/pm-setup-validation-events.py",
+        "scripts/pm-shard-plans.py",
         "scripts/pm_executor_event_contracts.py",
         "scripts/pm_goal_own_c3_w34_reference_oracles.py",
         "scripts/pm_goal_own_c3_w5_projection_oracles.py",
         "scripts/pm_goal_own_c_oracles.py",
         "scripts/pm_terminal_workgroup_compatibility.py",
+        "tests/fixtures/setup_validation_history/controls.json",
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_workspace_created.py",
@@ -24145,7 +24174,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-14T16:55:46Z",
+  "generated_at_utc": "2026-11-14T23:20:55Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -24153,13 +24182,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 4861,
-      "True": 3931
+      "False": 4865,
+      "True": 3933
     },
-    "plan_unit_count": 8792,
+    "plan_unit_count": 8798,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 8512,
+      "accepted": 8518,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -24190,7 +24219,7 @@
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
-      "contract": 197,
+      "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
       "decision": 274,
