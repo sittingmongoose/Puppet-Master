@@ -30,11 +30,18 @@ def snapshot(owner):
         maps['_CUSTODY']={key:custody[key] for key in ('worlds','contracts','frozen','frozen_sha256')}
     if method.__func__.__code__.co_filename.endswith('/pm_dcw_number_custody.py') and method.__func__.__qualname__=='Owner.authenticated_original':
         maps['_ISSUED']=namespace['_ISSUED']
+    if method.__func__.__code__.co_filename.endswith('/pm_dg6a_custody.py') and method.__func__.__qualname__=='DG6AOriginalOwner.authenticated_original':
+        maps['SEALED']=namespace['SEALED']
     if method.__func__.__code__.co_filename.endswith('/pm-ds15-event-contracts.py') and method.__func__.__qualname__=='DS15OriginalOwner.authenticated_original':
         accessor=namespace['original_custody']
         if accessor.cache_info().currsize==0:
             raise TypeError('DS15 sealed catalogue was not composed before the read')
         maps['original_custody()']=accessor()
+    if method.__func__.__code__.co_filename.endswith('/pm_ds_retained.py') and method.__func__.__qualname__=='DSOriginalOwner.authenticated_original':
+        accessor=namespace['custody']
+        if accessor.cache_info().currsize==0:
+            raise TypeError('DS sealed catalogue was not composed before the read')
+        maps['custody()']=accessor()
     owner_state=vars(owner)
     if not maps and not any(type(v) in (dict,list,tuple,set,frozenset) or dataclasses.is_dataclass(v) for v in owner_state.values()):
         raise TypeError('no authenticated store snapshot surface')

@@ -112,6 +112,33 @@ class OracleAttribution(unittest.TestCase):
         with self.assertRaisesRegex(TypeError,'no authenticated store'):
             retained.snapshot(Owner())
 
+    def test_dg6a_snapshot_includes_actual_sealed_map(self):
+        import pm_dg6a_custody as custody
+        owner=custody.DG6AOriginalOwner(b'original')
+        before=retained.snapshot(owner)[0]
+        key='pnc019-snapshot-regression'
+        self.assertNotIn(key,custody.SEALED)
+        try:
+            custody.SEALED[key]={'changed':('binding','recipe')}
+            self.assertNotEqual(retained.snapshot(owner)[0],before)
+        finally:
+            custody.SEALED.pop(key,None)
+        self.assertEqual(retained.snapshot(owner)[0],before)
+
+    def test_ds_snapshot_includes_actual_cached_catalogue(self):
+        import pm_ds_retained as custody
+        catalogue=custody.custody()
+        owner=custody.DSOriginalOwner(b'original',None)
+        before=retained.snapshot(owner)[0]
+        key='pnc019-snapshot-regression'
+        self.assertNotIn(key,catalogue['sealed'])
+        try:
+            catalogue['sealed'][key]=[{'changed':True}]
+            self.assertNotEqual(retained.snapshot(owner)[0],before)
+        finally:
+            catalogue['sealed'].pop(key,None)
+        self.assertEqual(retained.snapshot(owner)[0],before)
+
     def test_forged_upstream_flip_cannot_hide_another_owner_refusal(self):
         schema={'properties':{'x':{'type':'string','minLength':1,'pattern':'.+'}}}
         case={'keyword':'minLength','schema_path':'/properties/x/minLength','instance_path':'/x',
