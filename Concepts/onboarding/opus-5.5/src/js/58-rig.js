@@ -1321,9 +1321,14 @@
          each frame, its box swept down through the bubble's place as it was lowered, and the bubble jumped out of its way
          and back, 50-100 px in a frame, two or three times in the 0.2 s after every screen change with a prop (FO-189,
          FO-191: "starts too high and jumps down"). */
+      /* (a place the bubble already holds is kept against where the props are now, not the ways they take: one coming in
+         keeps off the bubble on its way down (fit), one leaving is held under it (holdUnder); a way that moved as Pip
+         swayed under a prop still coming in sent the held bubble off a place nothing came to, FO-191) */
+      const now = [], box = (q) => { const a = this.toScreen([q[0], q[1]]), c = this.toScreen([q[2], q[3]]); return [a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]; };
       this.props.forEach((pr) => {
         if (!pr.box) return;
         const coming = pr.state !== 'out' && !pr.settled;
+        if (pr.op > .05) now.push(box(pr.box));
         if (!coming && pr.op <= .05) return;
         let q = pr.box;
         const r = coming ? this.restBox(pr) : null;
@@ -1331,7 +1336,7 @@
         /* (and one leaving, the way it is lifted out, up to the stage's top, while it shows: lifted into the place the
            bubble had taken beside it, it pushed the bubble away again) */
         else if (pr.state === 'out') q = [q[0], -1e4, q[2], q[3]];
-        const a = this.toScreen([q[0], q[1]]), c = this.toScreen([q[2], q[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]);
+        obs.push(box(q));
       });
       const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
       const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
@@ -1345,7 +1350,7 @@
       /* (a place it already holds is kept until it would touch what it keeps off, not just its margin: placed against the
          margin, it followed Pip's sway a pixel into it and jumped away, FO-191) */
       const inner = (o) => [o[0] + gap, o[1] + gap, o[2] - gap, o[3] - gap];
-      const holds = (cx, cy) => fits(cx, cy) && !over(cx, cy, inner(face)) && !obs.some((o) => over(cx, cy, inner(o)));
+      const holds = (cx, cy) => fits(cx, cy) && !over(cx, cy, inner(face)) && !(bar && over(cx, cy, inner(bar))) && !now.some((o) => over(cx, cy, inner(o)));
       /* (a place on Pip's other side counts as far: new words never send the bubble across Pip, it goes above instead) */
       const cost = ([cx, cy]) => Math.hypot(cx - x, cy - y) + (this.bubbleSide && sideOf(cx) !== this.bubbleSide && !(cy + bh <= face[1]) ? 400 : 0);
       const near = (list) => list.filter(([cx, cy]) => clear(cx, cy)).sort((p, q) => cost(p) - cost(q))[0];
