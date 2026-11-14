@@ -154,6 +154,10 @@
   {
    "event_type": "forge.mirror.sync_started",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.pipeline.cancelled",
+   "outcome": "registered"
   }
  ]
 }

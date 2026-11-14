@@ -35201,3 +35201,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-580: Event Authority registers forge.pipeline.cancelled (admission merge 1)
+
+```yaml
+plan_unit_id: DL-580
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `forge.pipeline.cancelled` as family `event-family-forge-pipeline-cancelled` revision 1.0.0 in admission merge 1 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the families ready then are admitted in a first merge. `forge.pipeline.cancelled` is one of the 249 names of the 2026-11-04 census recount (bucket e). Jared's answer to card EA-P1, option A ("Add each once its definition passes every check"), admits each such name once its full definition, its record and both reviews pass; DL-039's no bulk registration stands. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `forge.pipeline.cancelled`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-14.60 (106 families, SHA-256 2fb61d6ed3ae84d9b1e463096f8327ffbf92d6c9dd487762ef4fcf2fca1a3c0c) to 2026-11-14.61 (107 families, SHA-256 b08f7c588f0f964797e89b1d31304a04f69fffe200798ce007f95fa24b3add40). The appended row, canonical SHA-256 28c6aa90ef1dd2ea856ba20f9b8f78f4a39ed80824aadc61340bb16f0d10ac9c, has scope policy application_or_project, payload `https://puppetmaster.local/Plans/event_payloads/forge/forge_pipeline_cancelled.schema.json` at Plans/event_payloads/forge/forge_pipeline_cancelled.schema.json#, semantic owner Plans/Forge_Integrations.md#FGI-1210, payload owner Plans/Contracts_V0.md#CV-1210 and retention RP-OPERATIONAL-2555D@1.0.0. Its payload versions are application `https://puppetmaster.local/Plans/event_payloads/forge/forge_pipeline_cancelled.schema.json` (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/Plans/event_payloads/forge/forge_pipeline_cancelled.schema.json` (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-14.61 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 107 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261114/admission-merge-1/depth/forge.pipeline.cancelled.json (SHA-256 155ed5464ce363d1cd1bf0be8d27085fbc3175a1aa0c9fd81c2d166198f6eb50) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261105/W3A-self-grade.json (SHA-256 41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/forge.pipeline.cancelled.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `forge.pipeline.cancelled`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for forge.pipeline.cancelled, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/forge.pipeline.cancelled.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-14.61 and 107 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_1
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json (recount name)"
+- "reports/event-authority-20261105/W3A-self-grade.json; SHA-256 41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/INT3/admission-readiness.json; SHA-256 815ed8bfdc86b5fe565fac1cc5549fc590fa7b72cd9606fcb589f947bf8eaa8f"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["forge.pipeline.cancelled", "event-family-forge-pipeline-cancelled", "2026-11-14.61", "b08f7c588f0f964797e89b1d31304a04f69fffe200798ce007f95fa24b3add40", "28c6aa90ef1dd2ea856ba20f9b8f78f4a39ed80824aadc61340bb16f0d10ac9c", "Add each once its definition passes every check", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
