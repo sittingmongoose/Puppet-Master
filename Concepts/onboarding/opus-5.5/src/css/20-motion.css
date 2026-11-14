@@ -102,6 +102,13 @@
 /* ---- look reveal (View Transitions): the new world opens from the chosen tile; clicks keep working meanwhile ---- */
 html[data-o55-vt]::view-transition { pointer-events: none; }
 html[data-o55-vt]::view-transition-old(root), html[data-o55-vt]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+/* FO-188: through a look's reveal the app beneath the window starts no transitions. The new look's colours used to ease
+   in on about 1,165 of its elements inside the circle, and each frame of the reveal restyled all of them (89 ms frames on
+   the VM). It is dimmed and inert, and the reveal itself is the change. Set and removed with data-o55-vt, so this
+   restyle is the same pass as the browser's own restyle of the whole page at the transition's start and end
+   (60-ui-core.js applyLook). Finishing them in script (document.getAnimations) forced the page's style and layout in
+   the update: 770 ms on the VM. */
+html[data-o55-vt] body > [data-o55-held], html[data-o55-vt] body > [data-o55-held] * { transition: none !important; }
 
 /* ---- Reduced Motion: order and cause/effect kept, movement removed ---------------------------------------------- */
 html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st,

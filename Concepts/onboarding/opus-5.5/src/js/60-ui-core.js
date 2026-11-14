@@ -294,13 +294,41 @@
     const r = originEl ? originEl.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
     const x = r.left + r.width / 2, y = r.top + r.height / 2, end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     document.documentElement.setAttribute('data-o55-vt', family);
-    const vt = S.vt = document.startViewTransition(apply);
+    /* FO-188: the app beneath holds still from the theme's write to the reveal's end (PM_LOOK_HOLD, 11-motion-start.js):
+       its after-layout work and the chat's redraw wait, its colours change at once by CSS, and data-o55-vt keeps it from
+       starting colour transitions (20-motion.css) */
+    const release = window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.begin ? window.PM_LOOK_HOLD.begin() : () => {};
+    /* A look's fonts (123 embedded faces) load the first time the page uses them, and each one that arrived during the
+       reveal laid the whole page out again: two passes of 3,895 objects inside a Friendly reveal (62 and 70 ms on the VM,
+       layout invalidation "Fonts changed"). The update waits for the faces the new look asked for (its first layout runs
+       in the window's own look observer, just before this), at most 300 ms, so that layout is done before the reveal's
+       first frame. A look whose fonts are already in pays nothing. document.fonts is read only after that observer:
+       its ready and status flush the page's style and layout, and read at once they took the new look's whole restyle
+       ahead of the window's own attributes, which then restyled the window a second time (491 + 225 ms on the VM). */
+    const update = () => {
+      apply();
+      if (!document.fonts) return undefined;
+      return Promise.resolve().then(() => {
+        const F = document.fonts;
+        if (F.status !== 'loading') return undefined;
+        return Promise.race([F.ready, new Promise((res) => setTimeout(res, 300))]);
+      });
+    };
+    let vt;
+    try { vt = S.vt = document.startViewTransition(update); }
+    catch (_) { release(); S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); apply(); return; }
     vt.ready.then(() => {
       const retro = family === 'retro';
       document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
         { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)', pseudoElement: '::view-transition-new(root)' });
+      /* the window's own colour transitions end here too, as NieR's path ends them (syncTheme): about 500 of its elements
+         eased from the old colours inside the circle and were restyled in every frame of the reveal (the rig's frames,
+         25 ms each on the VM). At ready the new look's style is computed, so asking forces nothing. */
+      try { S.root.getAnimations({ subtree: true }).forEach((a) => { if (a.transitionProperty && a.playState === 'running' && /color|background|border|shadow|fill|stroke|outline/.test(a.transitionProperty)) a.finish(); }); } catch (_) { /* decoration only */ }
     }).catch(() => {});
-    vt.finished.finally(() => { if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); } });
+    /* what waited is still the look's repaint: it never counts toward low-resource mode either (it ran past the click's
+       quiet and switched the VM to the instant path after two changes) */
+    vt.finished.finally(() => { O55.motion.quiet(2500); release(); if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); } });
   }
   /* The app beneath holds still while the window is open (README Performance rule 6). A theme written under the window
      (a Project's settings loading as it is selected, the look saved into it) has the app's own listeners announce a
