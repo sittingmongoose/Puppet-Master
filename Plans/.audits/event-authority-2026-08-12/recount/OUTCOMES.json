@@ -362,6 +362,10 @@
   {
    "event_type": "scheduled_dispatch.dispatched",
    "outcome": "registered"
+  },
+  {
+   "event_type": "scheduled_dispatch.failed",
+   "outcome": "registered"
   }
  ]
 }
