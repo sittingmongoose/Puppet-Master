@@ -44,6 +44,8 @@
 // Guided Tour hides it (00-host.js syncTour takes data-pm56 off #chatPanel; the check does that one step, not the tour):
 // nothing of the chip's is armed while hidden (R41 F1: the quiet timer kept arming itself); shown again with words it
 // is flowing at the flowing length, listening, and turns to waiting 900 ms after the last word.
+// The page is opened with ?pm-still=off (a test hook, as perf-still-page uses it): main's still page (14-shell-still.js,
+// PERF-3 = B) holds every endless loop 20 s after the last input, the chip's breath included, and this check sends none.
 // Each look is SAVED through Settings before its run: a Settings save (the speed change) repaints the saved look, and
 // with the kit's unsaved look() the page went back to Basic Dark mid-run (first runs: a look change, read as a jump).
 // REDUCED (first look only): with Reduce motion on, the app's (Settings) and then the system's (prefers-reduced-motion),
@@ -453,7 +455,7 @@ export default async function (t) {
 	// the chat alone (its standalone build, `--set chat=<url>`): no Settings, no onboarding window, no pages
 	const alone = !!t.args.chat;
 	let f;
-	if (alone) { await t.goto(String(t.args.chat)); f = t.page.mainFrame(); } else f = await t.app.open({ query: 'pm-warm=0' });
+	if (alone) { await t.goto(String(t.args.chat)); f = t.page.mainFrame(); } else f = await t.app.open({ query: 'pm-warm=0&pm-still=off' });
 	await f.evaluate(() => document.fonts.ready.then(() => true));
 	const ready = alone
 		? await f.waitForFunction(() => !!(window.PM56_DEMO && window.PM56_DEMO.startWorking && window.PM56_SENDSTOP), null, { timeout: 60000 }).then(() => true, () => false)
