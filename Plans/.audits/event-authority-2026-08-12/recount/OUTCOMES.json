@@ -474,6 +474,10 @@
   {
    "event_type": "testing.capture.clip_saved",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.effective_quality_changed",
+   "outcome": "registered"
   }
  ]
 }
