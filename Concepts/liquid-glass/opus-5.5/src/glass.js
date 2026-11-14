@@ -2105,6 +2105,8 @@
     if (!due.length || !switchOn()) return;
     if (dragHeld()) { due.forEach(function (x) { heldScopes.push(x); }); flushHeldSoon(); return; }
     due.forEach(function (x) { settleStrips.add(x); });
+    /* (FO-188: while a look is revealed over the onboarding window, PM_LOOK_HOLD, the strips wait for the reveal's end) */
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(queueSync)) return;
     syncPending();
   }) : null;
   /* the boxes are named again at each sync of the strip: an app that redraws its content (the wizard's screens) keeps
@@ -2941,6 +2943,8 @@
      life: a frame that resizes the window delivers the root in its first round, and a probe observed during that frame
      is delivered in the same frame. Nothing is done on the root's report itself. */
   try { if (window.ResizeObserver) new ResizeObserver(function () {}).observe(document.documentElement); } catch (e) { /* none */ }
+  var lookPostQ = false, lookPostFns = [];
+  function lookPostRelease() { var q = lookPostQ, f = lookPostFns; lookPostQ = false; lookPostFns = []; if (q) queueSync(); f.forEach(function (x) { afterLayout(x); }); }
   function afterLayout(fn) {
     if (!window.ResizeObserver || !document.body) return false;
     if (fn) postFns.push(fn); else postQ = true;
@@ -2952,6 +2956,9 @@
         /* the queue is taken before the sync: a callback the sync itself queues waits for the next delivery instead of
            reading what the sync has just written (landing review GL-5) */
         var fns = postFns; postFns = [];
+        /* (FO-188: while a look is revealed over the onboarding window, PM_LOOK_HOLD, the sync and the callbacks wait for
+           the reveal's end, then are asked again) */
+        if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(lookPostRelease)) { lookPostQ = lookPostQ || postQ; postQ = false; lookPostFns = lookPostFns.concat(fns); return; }
         if (postQ) {
           postQ = false;
           if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
