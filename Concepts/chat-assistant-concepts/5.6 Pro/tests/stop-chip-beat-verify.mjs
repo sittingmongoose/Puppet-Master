@@ -36,8 +36,9 @@ for (const m of FLAT.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
 	const decl = Object.fromEntries(m[2].split(';').map((d) => d.split(':')).filter((p) => p.length >= 2).map(([k, ...v]) => [k.trim(), v.join(':').trim()]));
 	RULES.push({ sels, decl });
 }
-// which loop layer a selector styles, and whether it matches the chip's state ({ss, flow, flowed, light, nier, snap})
-const layerOf = (s) => (/\.ss-g$/.test(s) ? 'g' : /\.ss-bl::before$/.test(s) ? 'bl' : null);
+// which loop layer a selector styles (the backlight's: the danger backlight's ::before, or its gradient element), and
+// whether it matches the chip's state ({ss, flow, flowed, light, nier, snap})
+const layerOf = (s) => (/\.ss-g$/.test(s) ? 'g' : /\.ss-bl::before$|\.ss-blg$/.test(s) ? 'bl' : null);
 function matches(s, st) {
 	if (!/^(body\[data-theme\$="-light"\] )?(\.send-button)?\.sendstop/.test(s)) return false;     // NieR, Reduced Motion: below
 	if (/^body\[data-theme\$="-light"\]/.test(s) && !st.light) return false;
@@ -78,8 +79,8 @@ function sheetWord(w, k, vars) {
 // a shorthand's words, split at white space outside parentheses (as 17-look.js o55Words)
 const words = (v) => { const out = []; let depth = 0, cur = ''; for (const ch of v) { if (ch === '(') depth++; if (ch === ')') depth--; if (/\s/.test(ch) && !depth) { if (cur) out.push(cur); cur = ''; } else cur += ch; } if (cur) out.push(cur); return out; };
 function loopSpec(layer, st, k, inline) {
-	if (st.ss !== 'stop' || st.reduced || st.snap || !st.shown) return null;
-	if (layer === 'bl' && st.nier) return null;                                             // NieR: .ss-bl { display: none }
+	if (st.ss !== 'stop' || st.reduced || st.snap || !st.shown || st.boxless) return null;  // boxless: display: none
+	if (layer === 'bl' && st.nier && NIER_BL_GONE) return null;                             // NieR: .ss-bl { display: none }
 	const vars = varsOf(st, inline);
 	let name = null, duration = NaN, delay = 0;
 	for (const r of RULES) {
@@ -95,13 +96,18 @@ function loopSpec(layer, st, k, inline) {
 	return name && duration > 0 ? { name, duration, delay } : null;
 }
 const LD = evalv('var(--ss-ld)', varsOf({ ss: 'stop', flow: 'flowing' }, {}));
+// The onboarding window's hold rule (10-window.css) reaches elements, never a pseudo-element: the backlight's loop is
+// held with the glyph's only when it runs on an element. NieR Mode takes the backlight's loop away only when it takes
+// its box away (display: none). Both read from send-stop.css.
+const BL_PSEUDO = RULES.some((r) => r.decl.animation && r.sels.some((s) => /\.ss-bl::before$/.test(s) && /data-ss="stop"/.test(s)));
+const NIER_BL_GONE = RULES.some((r) => r.decl.display === 'none' && r.sels.some((s) => /^html\[data-o55-nier="on"\] \.sendstop \.ss-bl$/.test(s)));
 
 /* ---------------------------------------------------------------- the browser */
 const FRAME = 1000 / 120;
 function world({ clockApi = true } = {}) {
 	// clock: the wall clock (performance.now, timers, the compositor); ft: the last frame's time, which the document
 	// timeline and every Animation's current time read during a task (Chrome's frame clock)
-	const W = { clock: 0, ft: 0, k: 1, kAnim: 1, listeners: [], restarts: [], log: [], jumps: [], shown: new Map() };
+	const W = { clock: 0, ft: 0, k: 1, kAnim: 1, listeners: [], restarts: [], log: [], jumps: [], shown: new Map(), fired: 0 };
 	let seq = 0;
 	const timers = new Map();
 	let rafs = [];
@@ -110,13 +116,15 @@ function world({ clockApi = true } = {}) {
 	let rafId = 0;
 	const requestAnimationFrame = (cb) => { rafs.push({ id: ++rafId, cb }); return rafId; };
 	const cancelAnimationFrame = (id) => { rafs = rafs.filter((x) => x.id !== id); };
-	const st = { ss: null, flow: null, flowed: false, light: false, nier: false, reduced: false, snap: false, shown: true, held: false };
+	// shown: the chip is in the document (querySelector finds it); boxless: it is, but has no box (display: none on an
+	// ancestor: the Guided Tour hides the chat with the reply still streaming), so it has no loops
+	const st = { ss: null, flow: null, flowed: false, light: false, nier: false, reduced: false, snap: false, shown: true, boxless: false, held: false };
 	const attrs = new Map(), cls = new Set();
 	let anims = [];
 	class Anim {
 		constructor(layer, spec) {
 			Object.assign(this, { layer, animationName: spec.name, t: { duration: spec.duration, delay: spec.delay }, _start: W.ft, hold: null, playbackRate: 1 });
-			if (layer === 'g' && st.held) this.hold = 0;
+			if (st.held && (layer === 'g' || !BL_PSEUDO)) this.hold = 0;
 			const self = this;
 			this.effect = {
 				getTiming: () => ({ duration: self.t.duration, delay: self.t.delay, iterations: Infinity }),
@@ -152,6 +160,8 @@ function world({ clockApi = true } = {}) {
 		removeAttribute: (n) => { attrs.delete(n); syncState(); },
 		getAnimations: () => { flush(); return anims.slice(); },
 		get offsetWidth() { flush(); return 24; },
+		checkVisibility: () => !st.boxless,
+		getClientRects: () => (st.boxless ? [] : [{ width: 24, height: 24 }]),
 		closest: () => chip
 	};
 	const observers = [];
@@ -203,7 +213,7 @@ function world({ clockApi = true } = {}) {
 		for (;;) {
 			const next = [...timers].filter(([, x]) => x.at <= to).sort((a, b) => a[1].at - b[1].at)[0];
 			if (!next) break;
-			timers.delete(next[0]); W.clock = Math.max(W.clock, next[1].at); next[1].cb();
+			timers.delete(next[0]); W.clock = Math.max(W.clock, next[1].at); W.fired++; next[1].cb();
 		}
 		W.clock = to;
 	};
@@ -233,7 +243,16 @@ function world({ clockApi = true } = {}) {
 		W.k = k;
 		for (const o of observers) if (o.on) o.cb([{ type: 'childList', target: { nodeName: 'STYLE', id: 'o55-look-scale' }, addedNodes: [{ nodeType: 3, nodeName: '#text', parentNode: { nodeName: 'STYLE' } }], removedNodes: [] }], o);
 	};
-	W.hold = (on) => { st.held = on; const g = W.glyph(); if (!g) return; if (on && g.hold == null) g.hold = g.currentTime; if (!on && g.hold != null) { g._start = W.ft - g.hold; g.hold = null; } };
+	// the onboarding window opens (on) or closes: its rule holds every loop on an element (the glyph's; the backlight's
+	// only when it is not on a ::before)
+	W.hold = (on) => {
+		st.held = on;
+		for (const a of [W.glyph(), BL_PSEUDO ? null : W.glow()]) {
+			if (!a) continue;
+			if (on && a.hold == null) a.hold = a.currentTime;
+			if (!on && a.hold != null) { a._start = W.ft - a.hold; a.hold = null; }
+		}
+	};
 	// where the compositor shows a loop now (by what it was handed last) and where it will show it once handed this
 	W.shownNow = (a) => shown(W.shown.get(a), W.clock);
 	W.handedNow = (a) => shown({ start: a._start, hold: a.hold, d: a.t.duration, l: a.t.delay }, W.clock);
@@ -278,6 +297,8 @@ function start(opts = {}, flowing = true) {
 	return W;
 }
 const pace = (W) => W.glyph() && W.glyph().t.duration;
+// how far apart the backlight's loop and the glyph's are, in a loop (either way round)
+const apart = (W) => { const g = W.glyph(), b = W.glow(); if (!g || !b || g.place() == null || b.place() == null) return NaN; const d = (((b.place() - g.place()) % 1) + 1) % 1; return Math.min(d, 1 - d); };
 
 const CASES = {
 	'no listener for any animation or transition event': () => {
@@ -417,19 +438,27 @@ const CASES = {
 		assert.equal(pace(W), 2200, 'off again: the loop at the flowing length');
 		return 'ok';
 	},
-	'a light/dark change: the glyph keeps its place, the backlight starts its own keyframes at the right length': () => {
+	'a light/dark change and NieR Mode on and off keep the backlight on its own loop, in phase with the glyph (K3)': () => {
+		// K3: a light/dark change swapped the backlight's keyframes (ss-glow, ss-glow-l): a new loop that started again
+		// from its delay out of phase with the glyph, and NieR Mode off brought back a new one the same way; every change
+		// after that kept the difference (R40 F1)
 		const W = start({}, false);
 		W.until(() => { const g = W.glyph(); return g && g.place() != null && g.place() >= 1.3; });
-		const i0 = W.frames.length;
-		W.set('light', true); W.run(100);
-		smooth(W, i0 - 1);
-		const b = W.glow();
-		assert.ok(b && b.t.duration === 3200, `backlight at the waiting length: ${b && b.animationName} ${b && b.t.duration}`);
-		W.set('nier', true); W.run(100);
-		assert.equal(W.glow(), null, 'NieR Mode: no backlight');
-		W.set('nier', false); W.run(50);
-		assert.equal(W.glow().t.duration, 3200, 'NieR Mode off: the backlight comes back at the right length');
-		return `backlight ${b.animationName}`;
+		const i0 = W.frames.length, bl = W.glow(), out = [];
+		const check = (what) => {
+			assert.ok(W.glow() === bl, `${what}: the backlight's loop was made anew (${W.glow() && W.glow().animationName})`);
+			const a = apart(W);
+			assert.ok(a < 1e-6, `${what}: the backlight is ${a.toFixed(4)} of a loop from the glyph`);
+			out.push(`${what}: same loop, ${a.toFixed(6)} apart`);
+		};
+		W.set('light', true); W.run(100); check('light');
+		assert.equal(W.glow().t.duration, 3200, 'the light theme: the waiting length');
+		W.api.token('one'); W.run(300); check('light, then a word');
+		W.set('light', false); W.run(100); check('dark again');
+		W.set('nier', true); W.run(100); W.set('nier', false); W.run(100); check('NieR Mode on and off');
+		W.until(() => W.attrs.get('data-flow') === 'waiting', 3000); W.run(100); check('the waiting change after');
+		smooth(W, i0); smooth(W, i0, 'b');
+		return out.join('; ');
 	},
 	'a Stop chip missing for a moment (the quiet timer and the observer stop) is watched again from the next render': () => {
 		const W = start({}, true);
@@ -554,6 +583,103 @@ const CASES = {
 		assert.equal(pace(W), 1920, `the waiting length at Fast: ${pace(W)}`);
 		smooth(W, i0); smooth(W, i0, 'b');
 		return `glyph ${pace(W)} ms`;
+	},
+	'the onboarding window holds the backlight with the glyph, and every change after it finds them in phase (R40 F1)': () => {
+		// R40 F1, the reviewer's sequence: the window's hold reached the glyph but not the backlight's ::before (K2), and
+		// each change then mapped each loop's OWN place, so the 0.58 of a loop they drifted apart under the window stayed
+		// for the rest of the run
+		const W = start({}, true);
+		feed(W, 3400);
+		const out = [`before the window ${apart(W).toFixed(4)}`];
+		W.hold(true);
+		const i0 = W.frames.length;
+		W.run(1500);                                                  // no words under the window: the waiting change, held
+		assert.equal(W.attrs.get('data-flow'), 'waiting');
+		W.hold(false);
+		W.run(300);
+		out.push(`after the window ${apart(W).toFixed(4)}`);
+		assert.ok(apart(W) < 1e-6, `after the window the backlight is ${apart(W).toFixed(4)} of a loop from the glyph`);
+		W.api.token('one'); W.run(300);
+		out.push(`after the flowing change ${apart(W).toFixed(4)}`);
+		assert.ok(apart(W) < 1e-6, `after the flowing change the backlight is ${apart(W).toFixed(4)} of a loop from the glyph`);
+		W.until(() => W.attrs.get('data-flow') === 'waiting', 3000); W.run(300);
+		out.push(`after the waiting change ${apart(W).toFixed(4)}`);
+		assert.ok(apart(W) < 1e-6, `after the waiting change the backlight is ${apart(W).toFixed(4)} of a loop from the glyph`);
+		smooth(W, i0); smooth(W, i0, 'b');
+		return out.join('; ');
+	},
+	'a difference between the two loops from any other route does not survive the next change: both are placed from the glyph (R40 F1)': () => {
+		// no route is known to set them apart now (the window holds both; light, dark and NieR Mode keep the backlight's
+		// loop): this one is made by hand, and the next change puts the backlight at the glyph's place
+		const out = [];
+		for (const [flowing, ms] of [[false, 600], [true, -350]]) {
+			const W = start({}, flowing);
+			let last = W.clock;
+			const keep = () => { if (flowing && W.clock - last >= 100) { W.api.token('one'); last = W.clock; } };
+			W.until(() => { keep(); const g = W.glyph(); return g && g.place() != null && g.place() >= 1.3; });
+			W.glow()._start += ms;                                       // set apart by hand
+			W.run(100, keep);
+			const was = apart(W), i0 = W.frames.length;
+			if (flowing) W.until(() => W.attrs.get('data-flow') === 'waiting', 3000); else W.api.token('one');
+			W.run(300);
+			assert.ok(apart(W) < 1e-6, `${flowing ? 'the waiting' : 'the flowing'} change left them ${apart(W).toFixed(4)} of a loop apart`);
+			smooth(W, i0);
+			out.push(`${ms} ms apart (${was.toFixed(4)} of a loop): ${apart(W).toFixed(6)} after the ${flowing ? 'waiting' : 'flowing'} change`);
+		}
+		return out.join('; ');
+	},
+	'a word that came while a waiting chip was missing is taken when Stop is shown again for the same run (R40 F2)': () => {
+		// R40 F2, the reviewer's sequence: token() kept the word's time but, with no chip, did not want flowing, and
+		// showing Stop again for the same run (paceKeep) never compared the word with the cadence: 3200 ms, no timer
+		const W = start({}, false);
+		W.run(2000);                                                  // already waiting
+		W.set('shown', false);
+		W.api.token('one');                                           // the run's own thread; no chip
+		W.set('shown', true);
+		W.render({ busy: true });                                     // the same run, still Stop
+		W.frame();
+		const d = W.api.debug();
+		assert.equal(W.attrs.get('data-flow'), 'flowing', `the cadence after the frame: ${W.attrs.get('data-flow')} (want ${d.want})`);
+		assert.equal(pace(W), 2200, `the glyph's length: ${pace(W)}`);
+		assert.ok(W.armed().timers >= 1, `the quiet timer is armed for the word: ${JSON.stringify(W.armed())}`);
+		const t0 = W.clock;
+		W.until(() => W.attrs.get('data-flow') === 'waiting', 3000);
+		return `flowing at once; waiting again ${Math.round(W.clock - t0)} ms later`;
+	},
+	'a Stop chip hidden by display:none (the Guided Tour) arms nothing while hidden and picks up when shown again (R41 F1)': () => {
+		// R41 F1, the reviewer's sequence: the chip stays in the document with no box while the stream goes on; the quiet
+		// timer found a chip and a recent word each time and armed itself again (5 callbacks in 5 s, the listener on)
+		const out = [];
+		const W = start({}, true);
+		feed(W, 1000);
+		W.set('boxless', true);
+		const f0 = W.fired;
+		feed(W, 5000);                                                // words every 100 ms for 5 s, the chip hidden
+		const fired = W.fired - f0;
+		out.push(`hidden 5 s with words: ${fired} timer callback${fired === 1 ? '' : 's'}, armed ${JSON.stringify(W.armed())}`);
+		assert.ok(fired <= 1, `the quiet timer ran ${fired} times while the chip was hidden`);
+		assert.deepEqual(W.armed(), { timers: 0, rafs: 0, observing: 0 }, `armed while hidden: ${JSON.stringify(W.armed())}`);
+		W.set('boxless', false);                                      // shown again, the words still arriving
+		const i0 = W.frames.length;
+		feed(W, 400);
+		assert.equal(W.attrs.get('data-flow'), 'flowing', 'shown again with words: flowing');
+		assert.equal(pace(W), 2200, `shown again with words: ${pace(W)} ms`);
+		assert.ok(W.armed().observing === 1 && W.armed().timers >= 1, `shown again: the listener and the quiet timer are back: ${JSON.stringify(W.armed())}`);
+		W.until(() => W.attrs.get('data-flow') === 'waiting', 2000);
+		smooth(W, i0); smooth(W, i0, 'b');
+		out.push('shown again with words: flowing, then waiting 900 ms after the last');
+		// the words stop while it is hidden: shown again with no word since, it waits; a speed change made while it was
+		// hidden is read with the next word (R34 F1's route)
+		const V = start({}, true);
+		feed(V, 1000); V.set('boxless', true); feed(V, 1500); V.run(3000);
+		assert.deepEqual(V.armed(), { timers: 0, rafs: 0, observing: 0 }, `hidden, words stopped: ${JSON.stringify(V.armed())}`);
+		V.speed(0.6);
+		V.set('boxless', false); V.run(100);
+		assert.equal(pace(V), 3200, `shown again with no word since: ${pace(V)} ms`);
+		V.api.token('one'); V.run(100);
+		assert.equal(pace(V), 1320, `a word after: the flowing length at Fast, ${pace(V)} ms`);
+		out.push('words stopped while hidden: waiting when shown; the next word at the speed set while hidden');
+		return out.join('; ');
 	},
 	"another thread's words do not change the pace": () => {
 		const W = start({}, false);
