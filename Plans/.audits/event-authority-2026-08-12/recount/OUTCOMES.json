@@ -490,6 +490,10 @@
   {
    "event_type": "testing.capture.interrupted",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.paused",
+   "outcome": "registered"
   }
  ]
 }
