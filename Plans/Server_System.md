@@ -1042,6 +1042,1574 @@ No prose occurrence or schema fixture is Event Authority admission.
 
 ContractRef: SchemaID:pm.server_system.contracts.v1, ContractName:Plans/Contracts_V0.md, ContractName:Plans/event_family_registry.json
 
+
+
+### W3E per-family Event Authority drafts - phase 1 (2026-11-05)
+
+Newly authored, prepared without admission. Existing candidate and handler gates remain in force.
+
+### SRV-1411 - server.catalog_changed prepared owner contract
+
+```yaml
+plan_unit_id: SRV-1411
+unit_type: contract
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: 'Newly authored owner contract for server.catalog_changed@1.0.0, prepared without admission, authorized
+  only by deck 2 item 9.a A (DL-450). One durable ServerCatalog revision, distinct from LSP catalog data or changes
+  to a Project body.
+
+  Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
+  only this owner''s candidate list; no family-specific schema, producer/custody/checkpoint/withdrawal definition.
+  The recorded per-family evidence is reports/event-authority-20261105/W3E-search.json. Reuse SRV-002, SRV-007,
+  SRV-009, server_system_contracts.schema.json#/$defs/server_catalog, CV-317, CV-339, SP-236, SP-278, SP-286 and
+  SP-337; no sibling supplies a binding.
+
+  Original source_evidence_ref resolves Plans/event_payloads/w3e/server_catalog_changed.schema.json#/$defs/owner_fact,
+  a newly authored closed immutable source manifest with original operation/fact IDs, actual Server/scope, complete
+  existing-owner before/after records, original result and authority refs, and exact source schema/recipe. This
+  object stays in owner-controlled SP-337 custody, not ordinary event bytes. Current source acceptance verifies
+  genuine owner issuance and every independently required authority; rehashing a substituted snapshot is insufficient.
+  Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_catalog_changed.schema.json,
+  logical schema_id pm.event_payload.server.catalog_changed.v1, version 1.0.0. Its closed root has required fields
+  schema_id, schema_version, scope_kind, project_id, server_id, owner_operation_id, source_custody_ref, source_evidence_ref,
+  catalog_id, previous_catalog_revision, catalog_revision, catalog_ref. Only the listed fields are permitted. Current
+  payload/envelope/owner source scope and every subject identity must join exactly. This family is application-only
+  with project_id=null. It has no fabricated thread/run/node/attempt; out-of-scope EventRecord joins are null. Server
+  ID is actual owner/writer identity, not a URL/label, chosen UI context or an observed unverified identity. Compare
+  the accepted original Catalog mutation and exact prior revision under CAS/readback. catalog_revision strictly
+  increases for a changed value; first creation proves absence. Existing Server identities persist across label/endpoint
+  changes. Project registrations reference actual Vaults and contain no Project payload. Discovery/address equality
+  cannot deduplicate Server identity. A no-op, display refresh or rejected mutation emits nothing.
+
+  Producer: the sole newly authored ServerCatalogService.catalog_commit@1.0.0 method of the existing domain owner.
+  It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
+  success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
+  existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
+  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
+  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  No transport action or view refresh becomes an event source.
+
+  For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
+  issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1411;
+  append the exact EventRecord through CV-317/Case L-5 and SP-236. Resolve first full-value receipt custody before
+  marking pending state settled or publishing event-backed terminal history. Use barrier durability where the existing
+  authority/approval/outbox contract requires it. A late event refusal never undoes or fabricates an earlier independently
+  settled domain action. Crash/retry starts by resolving the original source and pending intent, then the original
+  append result; unavailable original evidence is recovery_required/unavailable, not a new operation.
+
+  Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes "pm.w3e.owner_fact.v1\0"
+  + hex(owner_method) + "\0" + hex(original_operation_id) + "\0" + hex(immutable_fact_id). hex is lowercase hexadecimal
+  of exact UTF-8 bytes, no normalization; immutable_fact_id is the original accepted phase/journal entry ID, observation
+  ID, detection ID or receipt fact, allocated once and durably preserved before use. Multiple facts in one operation
+  use distinct original fact IDs, never clock/focus or retry counters. event_id is w3e@1: plus lowercase SHA-256
+  of exact UTF-8 bytes "pm.event.server.catalog_changed.identity.v1\0" + scope_partition + "\0" + hex(server_id)
+  + "\0" + hex(owner_operation_id). No numeric or timestamp value is serialized by this string-only identity recipe.
+
+  Application idempotency_key is exactly CV-366 application@1:{hex(server_id)}:{hex(owner_operation_id)}. The Storage
+  scope_partition is app. Adopt CV-317''s exact producer_semantic_digest fields and exclusions; sequence_id, observed_at_utc
+  and persisted_at_utc come only from Storage and are excluded from caller semantic comparison. Preserve CV-366
+  semantic hashes, SP-236 MessagePack physical bytes, CV-339 full-value bytes and SP-337 BLAKE3 addressing as distinct
+  owner domains. Current number/format qualification uses the shared owner rule, never local number/timestamp code
+  or a new 2^53 schema cap. An unrepresentable semantic digest route refuses before new event effects without narrowing
+  the source schema.
+
+  Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first
+  receipt; different semantic digest is idempotency_conflict; missing authoritative dedupe is dedupe_unavailable.
+  Current writers/retries reject projector_replay_only as replay_only_not_appendable. Historical originals use their
+  authenticated original schema/recipe even after live trust, state, route, source visibility or stricter format
+  rules change, subject to current access/deletion/withdrawal checks. No original-provenance fallback to today''s
+  recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
+  revocation, backup, restore, route activation, billing, timer or canonical write.
+
+  Retention: retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Original source bodies, receipts and secrets keep their independent existing rules.
+  The newly prepared custody/history/checkpoint values inherit this family assignment and cannot create a shorter
+  lifetime or bypass dependency holds.
+
+  Redaction/custody: ServerCatalogService on the actual Server holds the original accepted intent, complete before/after
+  source, immutable owner result, pending event identity, source schema/recipe provenance and CV-339 original full-value
+  append result. Events/history expose IDs, closed state codes, public fingerprints and access-checked non-secret
+  refs only. No raw secret, password, recovery credential, QR/short code, callback/reusable URL, cookie, key, protected-auth
+  browser content, absolute local path or original request content may enter payload, source manifest, logs or projection.
+  Source values stay under their owner redaction and authorization; refs grant no access. Decode/recompute every
+  source and digest from actual owner-held bytes and check all duplicated identity/currentness fields. Coherent
+  BRS-031/033 capture includes pending/terminal custody, immutable source/result payloads, canonical EventRecord/commit
+  frame, first receipt/dedupe and deletion/hold fences at one captured point. Do not copy derived history/checkpoints;
+  rebuild after verified source restore. A missing member is disclosed, history stays unavailable and current effects
+  stay fenced; restore never grants current authority.
+
+  Consumer/checkpoint: newly authored projector.w3e.server_catalog_changed.history@1.0.0 and reader.w3e.server_catalog_changed.history@1.0.0
+  serve Server manager Catalog and Doctor catalog diagnostics. They project references to original history only,
+  never recreate live domain authority. This exact family adopts SP-278 by name: use reader.storage.event_record_index@1.0.0
+  with independently complete all-partition coverage, then filter exact event_type=server.catalog_changed, actual
+  scope_partition and writer server_id. Verify actual source frame, schema, original custody and current read/deletion/withdrawal
+  permission on every path. SP-1411 defines physical keys and exact closed values. Commit history rows plus checkpoint
+  in one redb transaction with exact prior-value CAS; only proven nonmatches may skip. Persist the nine-field durable
+  generic_read_token without redb_snapshot_id; each live read rejoins its own snapshot and verifies all ten live
+  fields. Inclusive restart checks original last frame identity/end offset. Empty retained source, nonempty zero-match,
+  stale and degraded stay distinct; unsupported/unavailable source never advances. Rebuild derives a fresh shadow
+  generation from the actual CURRENT-selected survivors and atomically cuts over under owner maintenance exclusion;
+  no source or receipt is repaired.
+
+  Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained
+  schema/version/recipe dispatch stays read-only; unknown versions are unavailable and never rewritten. Future changes
+  require a versioned owner migration. A family withdrawal first fences its exact current append admission under
+  writer exclusion, drains/resolves original pending appends and preserves original receipts; records a cutoff and
+  invalidates reader/projection generation authority before ordinary disclosure/advance. A permitted historical-only
+  reader must be separately bound to retained exact bytes and current access/deletion fences. Rebuild only after
+  a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
+  or reissue domain work. Source retention/deletion authority remains independent.
+
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/11 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+
+
+  This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, catalog_mutation_receipt,
+  prior_catalog, verified_identity_set. The owner, never a caller-supplied slot list, decides applicability from
+  the exact original phase. writer_fence and permission_or_service_authority are always non-null genuine original
+  evidence; other roles may be null only where that original phase has no such result. Verify every applicable role
+  independently. No all-true flag, substituted receipt or matching hash supplies a missing role.
+
+
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
+  is invented for a BackupRun or RestoreRun.
+
+  '
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- SRV-002
+- SRV-007
+- SRV-009
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: srv-1411_w3e_phase1
+implementation_surfaces:
+- Plans/Server_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- RP-AUTHORITY-INDEFINITE@1.0.0
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
+### SRV-1412 - server.client_pairing_state_changed prepared owner contract
+
+```yaml
+plan_unit_id: SRV-1412
+unit_type: contract
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: 'Newly authored owner contract for server.client_pairing_state_changed@1.0.0, prepared without admission,
+  authorized only by deck 2 item 9.a A (DL-450). One generation-fenced PairingRun transition for the explicitly
+  selected candidate.
+
+  Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
+  only this owner''s candidate list; no family-specific schema, producer/custody/checkpoint/withdrawal definition.
+  The recorded per-family evidence is reports/event-authority-20261105/W3E-search.json. Reuse SRV-004, SRV-007,
+  server_system_contracts.schema.json#/$defs/pairing_run, CV-317, CV-339, SP-236, SP-278, SP-286 and SP-337; no
+  sibling supplies a binding.
+
+  Original source_evidence_ref resolves Plans/event_payloads/w3e/server_client_pairing_state_changed.schema.json#/$defs/owner_fact,
+  a newly authored closed immutable source manifest with original operation/fact IDs, actual Server/scope, complete
+  existing-owner before/after records, original result and authority refs, and exact source schema/recipe. This
+  object stays in owner-controlled SP-337 custody, not ordinary event bytes. Current source acceptance verifies
+  genuine owner issuance and every independently required authority; rehashing a substituted snapshot is insufficient.
+  Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_client_pairing_state_changed.schema.json,
+  logical schema_id pm.event_payload.server.client_pairing_state_changed.v1, version 1.0.0. Its closed root has
+  required fields schema_id, schema_version, scope_kind, project_id, server_id, owner_operation_id, source_custody_ref,
+  source_evidence_ref, pairing_session_id, pairing_candidate_id, candidate_client_id, pairing_generation, prior_state,
+  state, pairing_receipt_ref. Only the listed fields are permitted. Current payload/envelope/owner source scope
+  and every subject identity must join exactly. This family is application-only with project_id=null. It has no
+  fabricated thread/run/node/attempt; out-of-scope EventRecord joins are null. Server ID is actual owner/writer
+  identity, not a URL/label, chosen UI context or an observed unverified identity. Follow created/waiting identity/waiting
+  approval/issuing trust/complete with owner-authorized reject, requester cancel, expiry, blocked or failed endings.
+  complete requires exact current candidate/Server fingerprints, explicit identity match/approval actor and original
+  trust issuance receipt; entering waiting or checking for a request grants nothing. Raw QR/code/setup material
+  and process-local handles never enter history. An answered request stays answered; a fresh request has a new generation.
+  Rejecting a later request preserves trust granted earlier.
+
+  Producer: the sole newly authored ClientTrustRegistry.pairing_phase_commit@1.0.0 method of the existing domain
+  owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact, never
+  a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease before
+  the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event
+  intent. Before any append, require this family''s exact registry/version/scope and retention admission; until
+  then return missing_event_registration and leave existing command expected_event_types=[] and independent owner
+  receipts unchanged. No transport action or view refresh becomes an event source.
+
+  For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
+  issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1412;
+  append the exact EventRecord through CV-317/Case L-5 and SP-236. Resolve first full-value receipt custody before
+  marking pending state settled or publishing event-backed terminal history. Use barrier durability where the existing
+  authority/approval/outbox contract requires it. A late event refusal never undoes or fabricates an earlier independently
+  settled domain action. Crash/retry starts by resolving the original source and pending intent, then the original
+  append result; unavailable original evidence is recovery_required/unavailable, not a new operation.
+
+  Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes "pm.w3e.owner_fact.v1\0"
+  + hex(owner_method) + "\0" + hex(original_operation_id) + "\0" + hex(immutable_fact_id). hex is lowercase hexadecimal
+  of exact UTF-8 bytes, no normalization; immutable_fact_id is the original accepted phase/journal entry ID, observation
+  ID, detection ID or receipt fact, allocated once and durably preserved before use. Multiple facts in one operation
+  use distinct original fact IDs, never clock/focus or retry counters. event_id is w3e@1: plus lowercase SHA-256
+  of exact UTF-8 bytes "pm.event.server.client_pairing_state_changed.identity.v1\0" + scope_partition + "\0" + hex(server_id)
+  + "\0" + hex(owner_operation_id). No numeric or timestamp value is serialized by this string-only identity recipe.
+
+  Application idempotency_key is exactly CV-366 application@1:{hex(server_id)}:{hex(owner_operation_id)}. The Storage
+  scope_partition is app. Adopt CV-317''s exact producer_semantic_digest fields and exclusions; sequence_id, observed_at_utc
+  and persisted_at_utc come only from Storage and are excluded from caller semantic comparison. Preserve CV-366
+  semantic hashes, SP-236 MessagePack physical bytes, CV-339 full-value bytes and SP-337 BLAKE3 addressing as distinct
+  owner domains. Current number/format qualification uses the shared owner rule, never local number/timestamp code
+  or a new 2^53 schema cap. An unrepresentable semantic digest route refuses before new event effects without narrowing
+  the source schema.
+
+  Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first
+  receipt; different semantic digest is idempotency_conflict; missing authoritative dedupe is dedupe_unavailable.
+  Current writers/retries reject projector_replay_only as replay_only_not_appendable. Historical originals use their
+  authenticated original schema/recipe even after live trust, state, route, source visibility or stricter format
+  rules change, subject to current access/deletion/withdrawal checks. No original-provenance fallback to today''s
+  recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
+  revocation, backup, restore, route activation, billing, timer or canonical write.
+
+  Retention: retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
+  create a shorter lifetime or bypass dependency holds.
+
+  Redaction/custody: ClientTrustRegistry on the actual Server holds the original accepted intent, complete before/after
+  source, immutable owner result, pending event identity, source schema/recipe provenance and CV-339 original full-value
+  append result. Events/history expose IDs, closed state codes, public fingerprints and access-checked non-secret
+  refs only. No raw secret, password, recovery credential, QR/short code, callback/reusable URL, cookie, key, protected-auth
+  browser content, absolute local path or original request content may enter payload, source manifest, logs or projection.
+  Source values stay under their owner redaction and authorization; refs grant no access. Decode/recompute every
+  source and digest from actual owner-held bytes and check all duplicated identity/currentness fields. Coherent
+  BRS-031/033 capture includes pending/terminal custody, immutable source/result payloads, canonical EventRecord/commit
+  frame, first receipt/dedupe and deletion/hold fences at one captured point. Do not copy derived history/checkpoints;
+  rebuild after verified source restore. A missing member is disclosed, history stays unavailable and current effects
+  stay fenced; restore never grants current authority.
+
+  Consumer/checkpoint: newly authored projector.w3e.server_client_pairing_state_changed.history@1.0.0 and reader.w3e.server_client_pairing_state_changed.history@1.0.0
+  serve Server pairing/Client management and permanent web pairing result. They project references to original history
+  only, never recreate live domain authority. This exact family adopts SP-278 by name: use reader.storage.event_record_index@1.0.0
+  with independently complete all-partition coverage, then filter exact event_type=server.client_pairing_state_changed,
+  actual scope_partition and writer server_id. Verify actual source frame, schema, original custody and current
+  read/deletion/withdrawal permission on every path. SP-1412 defines physical keys and exact closed values. Commit
+  history rows plus checkpoint in one redb transaction with exact prior-value CAS; only proven nonmatches may skip.
+  Persist the nine-field durable generic_read_token without redb_snapshot_id; each live read rejoins its own snapshot
+  and verifies all ten live fields. Inclusive restart checks original last frame identity/end offset. Empty retained
+  source, nonempty zero-match, stale and degraded stay distinct; unsupported/unavailable source never advances.
+  Rebuild derives a fresh shadow generation from the actual CURRENT-selected survivors and atomically cuts over
+  under owner maintenance exclusion; no source or receipt is repaired.
+
+  Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained
+  schema/version/recipe dispatch stays read-only; unknown versions are unavailable and never rewritten. Future changes
+  require a versioned owner migration. A family withdrawal first fences its exact current append admission under
+  writer exclusion, drains/resolves original pending appends and preserves original receipts; records a cutoff and
+  invalidates reader/projection generation authority before ordinary disclosure/advance. A permitted historical-only
+  reader must be separately bound to retained exact bytes and current access/deletion fences. Rebuild only after
+  a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
+  or reissue domain work. Source retention/deletion authority remains independent.
+
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/12 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+
+
+  This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, candidate_selection,
+  identity_confirmation, approval_or_terminal_refusal, trust_issuance. The owner, never a caller-supplied slot list,
+  decides applicability from the exact original phase. writer_fence and permission_or_service_authority are always
+  non-null genuine original evidence; other roles may be null only where that original phase has no such result.
+  Verify every applicable role independently. No all-true flag, substituted receipt or matching hash supplies a
+  missing role.
+
+
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
+  is invented for a BackupRun or RestoreRun.
+
+  '
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- SRV-004
+- SRV-007
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: srv-1412_w3e_phase1
+implementation_surfaces:
+- Plans/Server_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
+### SRV-1413 - server.client_revoked prepared owner contract
+
+```yaml
+plan_unit_id: SRV-1413
+unit_type: contract
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, prepared without admission, authorized
+  only by deck 2 item 9.a A (DL-450). One entire-Client trust revocation, distinct from revoking one session or
+  removing an already retired Catalog record.
+
+  Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
+  only this owner''s candidate list; no family-specific schema, producer/custody/checkpoint/withdrawal definition.
+  The recorded per-family evidence is reports/event-authority-20261105/W3E-search.json. Reuse SRV-004, SRV-011,
+  server_system_contracts.schema.json#/$defs/revocation_record, CV-317, CV-339, SP-236, SP-278, SP-286 and SP-337;
+  no sibling supplies a binding.
+
+  Original source_evidence_ref resolves Plans/event_payloads/w3e/server_client_revoked.schema.json#/$defs/owner_fact,
+  a newly authored closed immutable source manifest with original operation/fact IDs, actual Server/scope, complete
+  existing-owner before/after records, original result and authority refs, and exact source schema/recipe. This
+  object stays in owner-controlled SP-337 custody, not ordinary event bytes. Current source acceptance verifies
+  genuine owner issuance and every independently required authority; rehashing a substituted snapshot is insufficient.
+  Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_client_revoked.schema.json,
+  logical schema_id pm.event_payload.server.client_revoked.v1, version 1.0.0. Its closed root has required fields
+  schema_id, schema_version, scope_kind, project_id, server_id, owner_operation_id, source_custody_ref, source_evidence_ref,
+  client_id, revocation_record_id, previous_trust_generation, effective_trust_generation, reason_code, revocation_receipt_ref.
+  Only the listed fields are permitted. Current payload/envelope/owner source scope and every subject identity must
+  join exactly. This family is application-only with project_id=null. It has no fabricated thread/run/node/attempt;
+  out-of-scope EventRecord joins are null. Server ID is actual owner/writer identity, not a URL/label, chosen UI
+  context or an observed unverified identity. Consume cmd.client.revoke original receipt and RevocationRecord. effective_trust_generation
+  must equal previous_trust_generation plus one and the current trust record must be revoked. Independently enumerate
+  all active sessions at the revocation fence, terminate every one and reject future sessions/stale commands before
+  terminal publication. The caller cannot supply a conveniently incomplete session set. Session-only revoke, rename
+  and Catalog removal are not this fact. Re-delivery returns the immutable original result.
+
+  Producer: the sole newly authored ClientTrustRegistry.revoke_commit@1.0.0 method of the existing domain owner.
+  It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
+  success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
+  existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
+  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
+  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  No transport action or view refresh becomes an event source.
+
+  For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
+  issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1413;
+  append the exact EventRecord through CV-317/Case L-5 and SP-236. Resolve first full-value receipt custody before
+  marking pending state settled or publishing event-backed terminal history. Use barrier durability where the existing
+  authority/approval/outbox contract requires it. A late event refusal never undoes or fabricates an earlier independently
+  settled domain action. Crash/retry starts by resolving the original source and pending intent, then the original
+  append result; unavailable original evidence is recovery_required/unavailable, not a new operation.
+
+  Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes "pm.w3e.owner_fact.v1\0"
+  + hex(owner_method) + "\0" + hex(original_operation_id) + "\0" + hex(immutable_fact_id). hex is lowercase hexadecimal
+  of exact UTF-8 bytes, no normalization; immutable_fact_id is the original accepted phase/journal entry ID, observation
+  ID, detection ID or receipt fact, allocated once and durably preserved before use. Multiple facts in one operation
+  use distinct original fact IDs, never clock/focus or retry counters. event_id is w3e@1: plus lowercase SHA-256
+  of exact UTF-8 bytes "pm.event.server.client_revoked.identity.v1\0" + scope_partition + "\0" + hex(server_id)
+  + "\0" + hex(owner_operation_id). No numeric or timestamp value is serialized by this string-only identity recipe.
+
+  Application idempotency_key is exactly CV-366 application@1:{hex(server_id)}:{hex(owner_operation_id)}. The Storage
+  scope_partition is app. Adopt CV-317''s exact producer_semantic_digest fields and exclusions; sequence_id, observed_at_utc
+  and persisted_at_utc come only from Storage and are excluded from caller semantic comparison. Preserve CV-366
+  semantic hashes, SP-236 MessagePack physical bytes, CV-339 full-value bytes and SP-337 BLAKE3 addressing as distinct
+  owner domains. Current number/format qualification uses the shared owner rule, never local number/timestamp code
+  or a new 2^53 schema cap. An unrepresentable semantic digest route refuses before new event effects without narrowing
+  the source schema.
+
+  Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first
+  receipt; different semantic digest is idempotency_conflict; missing authoritative dedupe is dedupe_unavailable.
+  Current writers/retries reject projector_replay_only as replay_only_not_appendable. Historical originals use their
+  authenticated original schema/recipe even after live trust, state, route, source visibility or stricter format
+  rules change, subject to current access/deletion/withdrawal checks. No original-provenance fallback to today''s
+  recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
+  revocation, backup, restore, route activation, billing, timer or canonical write.
+
+  Retention: retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Original source bodies, receipts and secrets keep their independent existing rules.
+  The newly prepared custody/history/checkpoint values inherit this family assignment and cannot create a shorter
+  lifetime or bypass dependency holds.
+
+  Redaction/custody: ClientTrustRegistry on the actual Server holds the original accepted intent, complete before/after
+  source, immutable owner result, pending event identity, source schema/recipe provenance and CV-339 original full-value
+  append result. Events/history expose IDs, closed state codes, public fingerprints and access-checked non-secret
+  refs only. No raw secret, password, recovery credential, QR/short code, callback/reusable URL, cookie, key, protected-auth
+  browser content, absolute local path or original request content may enter payload, source manifest, logs or projection.
+  Source values stay under their owner redaction and authorization; refs grant no access. Decode/recompute every
+  source and digest from actual owner-held bytes and check all duplicated identity/currentness fields. Coherent
+  BRS-031/033 capture includes pending/terminal custody, immutable source/result payloads, canonical EventRecord/commit
+  frame, first receipt/dedupe and deletion/hold fences at one captured point. Do not copy derived history/checkpoints;
+  rebuild after verified source restore. A missing member is disclosed, history stays unavailable and current effects
+  stay fenced; restore never grants current authority.
+
+  Consumer/checkpoint: newly authored projector.w3e.server_client_revoked.history@1.0.0 and reader.w3e.server_client_revoked.history@1.0.0
+  serve Server Client Details and revocation-aware session/command availability. They project references to original
+  history only, never recreate live domain authority. This exact family adopts SP-278 by name: use reader.storage.event_record_index@1.0.0
+  with independently complete all-partition coverage, then filter exact event_type=server.client_revoked, actual
+  scope_partition and writer server_id. Verify actual source frame, schema, original custody and current read/deletion/withdrawal
+  permission on every path. SP-1413 defines physical keys and exact closed values. Commit history rows plus checkpoint
+  in one redb transaction with exact prior-value CAS; only proven nonmatches may skip. Persist the nine-field durable
+  generic_read_token without redb_snapshot_id; each live read rejoins its own snapshot and verifies all ten live
+  fields. Inclusive restart checks original last frame identity/end offset. Empty retained source, nonempty zero-match,
+  stale and degraded stay distinct; unsupported/unavailable source never advances. Rebuild derives a fresh shadow
+  generation from the actual CURRENT-selected survivors and atomically cuts over under owner maintenance exclusion;
+  no source or receipt is repaired.
+
+  Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained
+  schema/version/recipe dispatch stays read-only; unknown versions are unavailable and never rewritten. Future changes
+  require a versioned owner migration. A family withdrawal first fences its exact current append admission under
+  writer exclusion, drains/resolves original pending appends and preserves original receipts; records a cutoff and
+  invalidates reader/projection generation authority before ordinary disclosure/advance. A permitted historical-only
+  reader must be separately bound to retained exact bytes and current access/deletion fences. Rebuild only after
+  a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
+  or reissue domain work. Source retention/deletion authority remains independent.
+
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/13 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+
+
+  This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, revocation_receipt,
+  trust_before, trust_after, complete_active_session_set, session_termination_set. The owner, never a caller-supplied
+  slot list, decides applicability from the exact original phase. writer_fence and permission_or_service_authority
+  are always non-null genuine original evidence; other roles may be null only where that original phase has no such
+  result. Verify every applicable role independently. No all-true flag, substituted receipt or matching hash supplies
+  a missing role.
+
+
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
+  is invented for a BackupRun or RestoreRun.
+
+  '
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- SRV-004
+- SRV-011
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: srv-1413_w3e_phase1
+implementation_surfaces:
+- Plans/Server_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- RP-AUTHORITY-INDEFINITE@1.0.0
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
+### SRV-1414 - server.client_trust_changed prepared owner contract
+
+```yaml
+plan_unit_id: SRV-1414
+unit_type: contract
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: 'Newly authored owner contract for server.client_trust_changed@1.0.0, prepared without admission,
+  authorized only by deck 2 item 9.a A (DL-450). One accepted ClientTrustRecord or access-policy binding change,
+  distinct from ServerPeerTrustRecord settings.follow.
+
+  Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
+  only this owner''s candidate list; no family-specific schema, producer/custody/checkpoint/withdrawal definition.
+  The recorded per-family evidence is reports/event-authority-20261105/W3E-search.json. Reuse SRV-004, SRV-011,
+  SRV-016, server_system_contracts.schema.json#/$defs/client_trust_record, CV-317, CV-339, SP-236, SP-278, SP-286
+  and SP-337; no sibling supplies a binding.
+
+  Original source_evidence_ref resolves Plans/event_payloads/w3e/server_client_trust_changed.schema.json#/$defs/owner_fact,
+  a newly authored closed immutable source manifest with original operation/fact IDs, actual Server/scope, complete
+  existing-owner before/after records, original result and authority refs, and exact source schema/recipe. This
+  object stays in owner-controlled SP-337 custody, not ordinary event bytes. Current source acceptance verifies
+  genuine owner issuance and every independently required authority; rehashing a substituted snapshot is insufficient.
+  Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_client_trust_changed.schema.json,
+  logical schema_id pm.event_payload.server.client_trust_changed.v1, version 1.0.0. Its closed root has required
+  fields schema_id, schema_version, scope_kind, project_id, server_id, owner_operation_id, source_custody_ref, source_evidence_ref,
+  client_trust_id, client_id, client_access_policy_id, policy_generation, trust_generation, prior_state, state,
+  trust_receipt_ref. Only the listed fields are permitted. Current payload/envelope/owner source scope and every
+  subject identity must join exactly. This family is application-only with project_id=null. It has no fabricated
+  thread/run/node/attempt; out-of-scope EventRecord joins are null. Server ID is actual owner/writer identity, not
+  a URL/label, chosen UI context or an observed unverified identity. Validate the exact Client/Server/access policy
+  and original protected grant/update/expiry/revocation outcome, including expected trust/policy/session generations
+  and current permission. Active trust requires the actual pairing/grant proof; reachability, discovery, tailnet
+  membership or a view marker cannot create it. A revocation may also have its separately defined server.client_revoked
+  fact, with distinct original fact identities; neither substitutes for the other. Server-peer settings trust grants
+  no Client/content/work authority and is not accepted here.
+
+  Producer: the sole newly authored ClientTrustRegistry.trust_commit@1.0.0 method of the existing domain owner.
+  It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
+  success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
+  existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
+  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
+  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  No transport action or view refresh becomes an event source.
+
+  For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
+  issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1414;
+  append the exact EventRecord through CV-317/Case L-5 and SP-236. Resolve first full-value receipt custody before
+  marking pending state settled or publishing event-backed terminal history. Use barrier durability where the existing
+  authority/approval/outbox contract requires it. A late event refusal never undoes or fabricates an earlier independently
+  settled domain action. Crash/retry starts by resolving the original source and pending intent, then the original
+  append result; unavailable original evidence is recovery_required/unavailable, not a new operation.
+
+  Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes "pm.w3e.owner_fact.v1\0"
+  + hex(owner_method) + "\0" + hex(original_operation_id) + "\0" + hex(immutable_fact_id). hex is lowercase hexadecimal
+  of exact UTF-8 bytes, no normalization; immutable_fact_id is the original accepted phase/journal entry ID, observation
+  ID, detection ID or receipt fact, allocated once and durably preserved before use. Multiple facts in one operation
+  use distinct original fact IDs, never clock/focus or retry counters. event_id is w3e@1: plus lowercase SHA-256
+  of exact UTF-8 bytes "pm.event.server.client_trust_changed.identity.v1\0" + scope_partition + "\0" + hex(server_id)
+  + "\0" + hex(owner_operation_id). No numeric or timestamp value is serialized by this string-only identity recipe.
+
+  Application idempotency_key is exactly CV-366 application@1:{hex(server_id)}:{hex(owner_operation_id)}. The Storage
+  scope_partition is app. Adopt CV-317''s exact producer_semantic_digest fields and exclusions; sequence_id, observed_at_utc
+  and persisted_at_utc come only from Storage and are excluded from caller semantic comparison. Preserve CV-366
+  semantic hashes, SP-236 MessagePack physical bytes, CV-339 full-value bytes and SP-337 BLAKE3 addressing as distinct
+  owner domains. Current number/format qualification uses the shared owner rule, never local number/timestamp code
+  or a new 2^53 schema cap. An unrepresentable semantic digest route refuses before new event effects without narrowing
+  the source schema.
+
+  Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first
+  receipt; different semantic digest is idempotency_conflict; missing authoritative dedupe is dedupe_unavailable.
+  Current writers/retries reject projector_replay_only as replay_only_not_appendable. Historical originals use their
+  authenticated original schema/recipe even after live trust, state, route, source visibility or stricter format
+  rules change, subject to current access/deletion/withdrawal checks. No original-provenance fallback to today''s
+  recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
+  revocation, backup, restore, route activation, billing, timer or canonical write.
+
+  Retention: retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
+  create a shorter lifetime or bypass dependency holds.
+
+  Redaction/custody: ClientTrustRegistry on the actual Server holds the original accepted intent, complete before/after
+  source, immutable owner result, pending event identity, source schema/recipe provenance and CV-339 original full-value
+  append result. Events/history expose IDs, closed state codes, public fingerprints and access-checked non-secret
+  refs only. No raw secret, password, recovery credential, QR/short code, callback/reusable URL, cookie, key, protected-auth
+  browser content, absolute local path or original request content may enter payload, source manifest, logs or projection.
+  Source values stay under their owner redaction and authorization; refs grant no access. Decode/recompute every
+  source and digest from actual owner-held bytes and check all duplicated identity/currentness fields. Coherent
+  BRS-031/033 capture includes pending/terminal custody, immutable source/result payloads, canonical EventRecord/commit
+  frame, first receipt/dedupe and deletion/hold fences at one captured point. Do not copy derived history/checkpoints;
+  rebuild after verified source restore. A missing member is disclosed, history stays unavailable and current effects
+  stay fenced; restore never grants current authority.
+
+  Consumer/checkpoint: newly authored projector.w3e.server_client_trust_changed.history@1.0.0 and reader.w3e.server_client_trust_changed.history@1.0.0
+  serve Server Clients/access policy Details and session availability. They project references to original history
+  only, never recreate live domain authority. This exact family adopts SP-278 by name: use reader.storage.event_record_index@1.0.0
+  with independently complete all-partition coverage, then filter exact event_type=server.client_trust_changed,
+  actual scope_partition and writer server_id. Verify actual source frame, schema, original custody and current
+  read/deletion/withdrawal permission on every path. SP-1414 defines physical keys and exact closed values. Commit
+  history rows plus checkpoint in one redb transaction with exact prior-value CAS; only proven nonmatches may skip.
+  Persist the nine-field durable generic_read_token without redb_snapshot_id; each live read rejoins its own snapshot
+  and verifies all ten live fields. Inclusive restart checks original last frame identity/end offset. Empty retained
+  source, nonempty zero-match, stale and degraded stay distinct; unsupported/unavailable source never advances.
+  Rebuild derives a fresh shadow generation from the actual CURRENT-selected survivors and atomically cuts over
+  under owner maintenance exclusion; no source or receipt is repaired.
+
+  Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained
+  schema/version/recipe dispatch stays read-only; unknown versions are unavailable and never rewritten. Future changes
+  require a versioned owner migration. A family withdrawal first fences its exact current append admission under
+  writer exclusion, drains/resolves original pending appends and preserves original receipts; records a cutoff and
+  invalidates reader/projection generation authority before ordinary disclosure/advance. A permitted historical-only
+  reader must be separately bound to retained exact bytes and current access/deletion fences. Rebuild only after
+  a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
+  or reissue domain work. Source retention/deletion authority remains independent.
+
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/14 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+
+
+  This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, protected_grant_or_mutation,
+  client_access_policy, client_session_fence. The owner, never a caller-supplied slot list, decides applicability
+  from the exact original phase. writer_fence and permission_or_service_authority are always non-null genuine original
+  evidence; other roles may be null only where that original phase has no such result. Verify every applicable role
+  independently. No all-true flag, substituted receipt or matching hash supplies a missing role.
+
+
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
+  is invented for a BackupRun or RestoreRun.
+
+  '
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- SRV-004
+- SRV-011
+- SRV-016
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: srv-1414_w3e_phase1
+implementation_surfaces:
+- Plans/Server_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- RP-AUTHORITY-INDEFINITE@1.0.0
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
+### SRV-1415 - server.connection_state_changed prepared owner contract
+
+```yaml
+plan_unit_id: SRV-1415
+unit_type: contract
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: 'Newly authored owner contract for server.connection_state_changed@1.0.0, prepared without admission,
+  authorized only by deck 2 item 9.a A (DL-450). One owner-confirmed Client-to-Server connection-state change; a
+  repeated render of the same state emits nothing.
+
+  Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
+  only this owner''s candidate list; no family-specific schema, producer/custody/checkpoint/withdrawal definition.
+  The recorded per-family evidence is reports/event-authority-20261105/W3E-search.json. Reuse SRV-005, SRV-007,
+  server_system_contracts.schema.json#/$defs/server_connection_projection, CV-317, CV-339, SP-236, SP-278, SP-286
+  and SP-337; no sibling supplies a binding.
+
+  Original source_evidence_ref resolves Plans/event_payloads/w3e/server_connection_state_changed.schema.json#/$defs/owner_fact,
+  a newly authored closed immutable source manifest with original operation/fact IDs, actual Server/scope, complete
+  existing-owner before/after records, original result and authority refs, and exact source schema/recipe. This
+  object stays in owner-controlled SP-337 custody, not ordinary event bytes. Current source acceptance verifies
+  genuine owner issuance and every independently required authority; rehashing a substituted snapshot is insufficient.
+  Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_connection_state_changed.schema.json,
+  logical schema_id pm.event_payload.server.connection_state_changed.v1, version 1.0.0. Its closed root has required
+  fields schema_id, schema_version, scope_kind, project_id, server_id, owner_operation_id, source_custody_ref, source_evidence_ref,
+  projection_id, client_id, server_endpoint_id, remote_route_id, prior_state, state, connection_source_ref. Only
+  the listed fields are permitted. Current payload/envelope/owner source scope and every subject identity must join
+  exactly. This family is application-only with project_id=null. It has no fabricated thread/run/node/attempt; out-of-scope
+  EventRecord joins are null. Server ID is actual owner/writer identity, not a URL/label, chosen UI context or an
+  observed unverified identity. Bind the actual Client/Server/endpoint and connection attempt to ServerConnectionProjection.
+  current requires real session and trust generation and a verified cursor or snapshot catch-up. reconnect/resume
+  reuse cmd.server.connect, prior session and resume cursor without new work. Cached/offline is never current success;
+  mismatch is blocked, not another Server. Client close/sleep/refresh changes connectivity only and cannot cancel
+  Server-owned work or authorize failover.
+
+  Producer: the sole newly authored ServerConnectionService.connection_state_commit@1.0.0 method of the existing
+  domain owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact,
+  never a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease
+  before the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending
+  event intent. Before any append, require this family''s exact registry/version/scope and retention admission;
+  until then return missing_event_registration and leave existing command expected_event_types=[] and independent
+  owner receipts unchanged. No transport action or view refresh becomes an event source.
+
+  For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
+  issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1415;
+  append the exact EventRecord through CV-317/Case L-5 and SP-236. Resolve first full-value receipt custody before
+  marking pending state settled or publishing event-backed terminal history. Use barrier durability where the existing
+  authority/approval/outbox contract requires it. A late event refusal never undoes or fabricates an earlier independently
+  settled domain action. Crash/retry starts by resolving the original source and pending intent, then the original
+  append result; unavailable original evidence is recovery_required/unavailable, not a new operation.
+
+  Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes "pm.w3e.owner_fact.v1\0"
+  + hex(owner_method) + "\0" + hex(original_operation_id) + "\0" + hex(immutable_fact_id). hex is lowercase hexadecimal
+  of exact UTF-8 bytes, no normalization; immutable_fact_id is the original accepted phase/journal entry ID, observation
+  ID, detection ID or receipt fact, allocated once and durably preserved before use. Multiple facts in one operation
+  use distinct original fact IDs, never clock/focus or retry counters. event_id is w3e@1: plus lowercase SHA-256
+  of exact UTF-8 bytes "pm.event.server.connection_state_changed.identity.v1\0" + scope_partition + "\0" + hex(server_id)
+  + "\0" + hex(owner_operation_id). No numeric or timestamp value is serialized by this string-only identity recipe.
+
+  Application idempotency_key is exactly CV-366 application@1:{hex(server_id)}:{hex(owner_operation_id)}. The Storage
+  scope_partition is app. Adopt CV-317''s exact producer_semantic_digest fields and exclusions; sequence_id, observed_at_utc
+  and persisted_at_utc come only from Storage and are excluded from caller semantic comparison. Preserve CV-366
+  semantic hashes, SP-236 MessagePack physical bytes, CV-339 full-value bytes and SP-337 BLAKE3 addressing as distinct
+  owner domains. Current number/format qualification uses the shared owner rule, never local number/timestamp code
+  or a new 2^53 schema cap. An unrepresentable semantic digest route refuses before new event effects without narrowing
+  the source schema.
+
+  Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first
+  receipt; different semantic digest is idempotency_conflict; missing authoritative dedupe is dedupe_unavailable.
+  Current writers/retries reject projector_replay_only as replay_only_not_appendable. Historical originals use their
+  authenticated original schema/recipe even after live trust, state, route, source visibility or stricter format
+  rules change, subject to current access/deletion/withdrawal checks. No original-provenance fallback to today''s
+  recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
+  revocation, backup, restore, route activation, billing, timer or canonical write.
+
+  Retention: retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
+  create a shorter lifetime or bypass dependency holds.
+
+  Redaction/custody: ServerConnectionService on the actual Server holds the original accepted intent, complete before/after
+  source, immutable owner result, pending event identity, source schema/recipe provenance and CV-339 original full-value
+  append result. Events/history expose IDs, closed state codes, public fingerprints and access-checked non-secret
+  refs only. No raw secret, password, recovery credential, QR/short code, callback/reusable URL, cookie, key, protected-auth
+  browser content, absolute local path or original request content may enter payload, source manifest, logs or projection.
+  Source values stay under their owner redaction and authorization; refs grant no access. Decode/recompute every
+  source and digest from actual owner-held bytes and check all duplicated identity/currentness fields. Coherent
+  BRS-031/033 capture includes pending/terminal custody, immutable source/result payloads, canonical EventRecord/commit
+  frame, first receipt/dedupe and deletion/hold fences at one captured point. Do not copy derived history/checkpoints;
+  rebuild after verified source restore. A missing member is disclosed, history stays unavailable and current effects
+  stay fenced; restore never grants current authority.
+
+  Consumer/checkpoint: newly authored projector.w3e.server_connection_state_changed.history@1.0.0 and reader.w3e.server_connection_state_changed.history@1.0.0
+  serve Connected Server status/Details and permanent native/web catch-up. They project references to original history
+  only, never recreate live domain authority. This exact family adopts SP-278 by name: use reader.storage.event_record_index@1.0.0
+  with independently complete all-partition coverage, then filter exact event_type=server.connection_state_changed,
+  actual scope_partition and writer server_id. Verify actual source frame, schema, original custody and current
+  read/deletion/withdrawal permission on every path. SP-1415 defines physical keys and exact closed values. Commit
+  history rows plus checkpoint in one redb transaction with exact prior-value CAS; only proven nonmatches may skip.
+  Persist the nine-field durable generic_read_token without redb_snapshot_id; each live read rejoins its own snapshot
+  and verifies all ten live fields. Inclusive restart checks original last frame identity/end offset. Empty retained
+  source, nonempty zero-match, stale and degraded stay distinct; unsupported/unavailable source never advances.
+  Rebuild derives a fresh shadow generation from the actual CURRENT-selected survivors and atomically cuts over
+  under owner maintenance exclusion; no source or receipt is repaired.
+
+  Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained
+  schema/version/recipe dispatch stays read-only; unknown versions are unavailable and never rewritten. Future changes
+  require a versioned owner migration. A family withdrawal first fences its exact current append admission under
+  writer exclusion, drains/resolves original pending appends and preserves original receipts; records a cutoff and
+  invalidates reader/projection generation authority before ordinary disclosure/advance. A permitted historical-only
+  reader must be separately bound to retained exact bytes and current access/deletion fences. Rebuild only after
+  a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
+  or reissue domain work. Source retention/deletion authority remains independent.
+
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/15 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+
+
+  This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, connection_attempt,
+  session_authority, trust_authority, catchup_cursor_or_snapshot. The owner, never a caller-supplied slot list,
+  decides applicability from the exact original phase. writer_fence and permission_or_service_authority are always
+  non-null genuine original evidence; other roles may be null only where that original phase has no such result.
+  Verify every applicable role independently. No all-true flag, substituted receipt or matching hash supplies a
+  missing role.
+
+
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
+
+  '
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- SRV-005
+- SRV-007
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: srv-1415_w3e_phase1
+implementation_surfaces:
+- Plans/Server_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
+### SRV-1416 - server.discovery_expired prepared owner contract
+
+```yaml
+plan_unit_id: SRV-1416
+unit_type: contract
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: 'Newly authored owner contract for server.discovery_expired@1.0.0, prepared without admission, authorized
+  only by deck 2 item 9.a A (DL-450). Expiry of one specific discovery observation at its recorded expiry, not deletion
+  or revocation of the discovered Server.
+
+  Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
+  only this owner''s candidate list; no family-specific schema, producer/custody/checkpoint/withdrawal definition.
+  The recorded per-family evidence is reports/event-authority-20261105/W3E-search.json. Reuse SRV-003, SRV-007,
+  server_system_contracts.schema.json#/$defs/discovery_observation, CV-317, CV-339, SP-236, SP-278, SP-286 and SP-337;
+  no sibling supplies a binding.
+
+  Original source_evidence_ref resolves Plans/event_payloads/w3e/server_discovery_expired.schema.json#/$defs/owner_fact,
+  a newly authored closed immutable source manifest with original operation/fact IDs, actual Server/scope, complete
+  existing-owner before/after records, original result and authority refs, and exact source schema/recipe. This
+  object stays in owner-controlled SP-337 custody, not ordinary event bytes. Current source acceptance verifies
+  genuine owner issuance and every independently required authority; rehashing a substituted snapshot is insufficient.
+  Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_discovery_expired.schema.json,
+  logical schema_id pm.event_payload.server.discovery_expired.v1, version 1.0.0. Its closed root has required fields
+  schema_id, schema_version, scope_kind, project_id, server_id, owner_operation_id, source_custody_ref, source_evidence_ref,
+  observation_id, discovery_source, server_identity_fingerprint, expiry_decision_ref. Only the listed fields are
+  permitted. Current payload/envelope/owner source scope and every subject identity must join exactly. This family
+  is application-only with project_id=null. It has no fabricated thread/run/node/attempt; out-of-scope EventRecord
+  joins are null. Server ID is actual owner/writer identity, not a URL/label, chosen UI context or an observed unverified
+  identity. Resolve the exact original DiscoveryObservation and its expires_at_utc. The discovery owner compares
+  its admitted clock observation to that expiry and durably records the expiry decision once. Expiring one source
+  does not expire a newer observation or another source and never revokes pairing/trust. Replay reads the recorded
+  expiry decision; it must not compare old history to the present clock or mint expiry again.
+
+  Producer: the sole newly authored ServerDiscoveryService.expiry_commit@1.0.0 method of the existing domain owner.
+  It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
+  success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
+  existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
+  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
+  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  No transport action or view refresh becomes an event source.
+
+  For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
+  issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1416;
+  append the exact EventRecord through CV-317/Case L-5 and SP-236. Resolve first full-value receipt custody before
+  marking pending state settled or publishing event-backed terminal history. Use barrier durability where the existing
+  authority/approval/outbox contract requires it. A late event refusal never undoes or fabricates an earlier independently
+  settled domain action. Crash/retry starts by resolving the original source and pending intent, then the original
+  append result; unavailable original evidence is recovery_required/unavailable, not a new operation.
+
+  Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes "pm.w3e.owner_fact.v1\0"
+  + hex(owner_method) + "\0" + hex(original_operation_id) + "\0" + hex(immutable_fact_id). hex is lowercase hexadecimal
+  of exact UTF-8 bytes, no normalization; immutable_fact_id is the original accepted phase/journal entry ID, observation
+  ID, detection ID or receipt fact, allocated once and durably preserved before use. Multiple facts in one operation
+  use distinct original fact IDs, never clock/focus or retry counters. event_id is w3e@1: plus lowercase SHA-256
+  of exact UTF-8 bytes "pm.event.server.discovery_expired.identity.v1\0" + scope_partition + "\0" + hex(server_id)
+  + "\0" + hex(owner_operation_id). No numeric or timestamp value is serialized by this string-only identity recipe.
+
+  Application idempotency_key is exactly CV-366 application@1:{hex(server_id)}:{hex(owner_operation_id)}. The Storage
+  scope_partition is app. Adopt CV-317''s exact producer_semantic_digest fields and exclusions; sequence_id, observed_at_utc
+  and persisted_at_utc come only from Storage and are excluded from caller semantic comparison. Preserve CV-366
+  semantic hashes, SP-236 MessagePack physical bytes, CV-339 full-value bytes and SP-337 BLAKE3 addressing as distinct
+  owner domains. Current number/format qualification uses the shared owner rule, never local number/timestamp code
+  or a new 2^53 schema cap. An unrepresentable semantic digest route refuses before new event effects without narrowing
+  the source schema.
+
+  Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first
+  receipt; different semantic digest is idempotency_conflict; missing authoritative dedupe is dedupe_unavailable.
+  Current writers/retries reject projector_replay_only as replay_only_not_appendable. Historical originals use their
+  authenticated original schema/recipe even after live trust, state, route, source visibility or stricter format
+  rules change, subject to current access/deletion/withdrawal checks. No original-provenance fallback to today''s
+  recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
+  revocation, backup, restore, route activation, billing, timer or canonical write.
+
+  Retention: retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent existing rules.
+  The newly prepared custody/history/checkpoint values inherit this family assignment and cannot create a shorter
+  lifetime or bypass dependency holds.
+
+  Redaction/custody: ServerDiscoveryService on the actual Server holds the original accepted intent, complete before/after
+  source, immutable owner result, pending event identity, source schema/recipe provenance and CV-339 original full-value
+  append result. Events/history expose IDs, closed state codes, public fingerprints and access-checked non-secret
+  refs only. No raw secret, password, recovery credential, QR/short code, callback/reusable URL, cookie, key, protected-auth
+  browser content, absolute local path or original request content may enter payload, source manifest, logs or projection.
+  Source values stay under their owner redaction and authorization; refs grant no access. Decode/recompute every
+  source and digest from actual owner-held bytes and check all duplicated identity/currentness fields. Coherent
+  BRS-031/033 capture includes pending/terminal custody, immutable source/result payloads, canonical EventRecord/commit
+  frame, first receipt/dedupe and deletion/hold fences at one captured point. Do not copy derived history/checkpoints;
+  rebuild after verified source restore. A missing member is disclosed, history stays unavailable and current effects
+  stay fenced; restore never grants current authority.
+
+  Consumer/checkpoint: newly authored projector.w3e.server_discovery_expired.history@1.0.0 and reader.w3e.server_discovery_expired.history@1.0.0
+  serve Nearby/Known discovery freshness and Server candidate Details. They project references to original history
+  only, never recreate live domain authority. This exact family adopts SP-278 by name: use reader.storage.event_record_index@1.0.0
+  with independently complete all-partition coverage, then filter exact event_type=server.discovery_expired, actual
+  scope_partition and writer server_id. Verify actual source frame, schema, original custody and current read/deletion/withdrawal
+  permission on every path. SP-1416 defines physical keys and exact closed values. Commit history rows plus checkpoint
+  in one redb transaction with exact prior-value CAS; only proven nonmatches may skip. Persist the nine-field durable
+  generic_read_token without redb_snapshot_id; each live read rejoins its own snapshot and verifies all ten live
+  fields. Inclusive restart checks original last frame identity/end offset. Empty retained source, nonempty zero-match,
+  stale and degraded stay distinct; unsupported/unavailable source never advances. Rebuild derives a fresh shadow
+  generation from the actual CURRENT-selected survivors and atomically cuts over under owner maintenance exclusion;
+  no source or receipt is repaired.
+
+  Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained
+  schema/version/recipe dispatch stays read-only; unknown versions are unavailable and never rewritten. Future changes
+  require a versioned owner migration. A family withdrawal first fences its exact current append admission under
+  writer exclusion, drains/resolves original pending appends and preserves original receipts; records a cutoff and
+  invalidates reader/projection generation authority before ordinary disclosure/advance. A permitted historical-only
+  reader must be separately bound to retained exact bytes and current access/deletion fences. Rebuild only after
+  a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
+  or reissue domain work. Source retention/deletion authority remains independent.
+
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/16 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+
+
+  This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, original_observation,
+  expiry_clock_observation, expiry_decision. The owner, never a caller-supplied slot list, decides applicability
+  from the exact original phase. writer_fence and permission_or_service_authority are always non-null genuine original
+  evidence; other roles may be null only where that original phase has no such result. Verify every applicable role
+  independently. No all-true flag, substituted receipt or matching hash supplies a missing role.
+
+
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
+
+  '
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- SRV-003
+- SRV-007
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: srv-1416_w3e_phase1
+implementation_surfaces:
+- Plans/Server_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
+### SRV-1417 - server.discovery_observed prepared owner contract
+
+```yaml
+plan_unit_id: SRV-1417
+unit_type: contract
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: 'Newly authored owner contract for server.discovery_observed@1.0.0, prepared without admission,
+  authorized only by deck 2 item 9.a A (DL-450). One attributable, expiring minimal discovery observation; refresh
+  of an existing saved observation is replay unless the owner recorded a genuinely new observation.
+
+  Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
+  only this owner''s candidate list; no family-specific schema, producer/custody/checkpoint/withdrawal definition.
+  The recorded per-family evidence is reports/event-authority-20261105/W3E-search.json. Reuse SRV-002, SRV-003,
+  server_system_contracts.schema.json#/$defs/discovery_observation, CV-317, CV-339, SP-236, SP-278, SP-286 and SP-337;
+  no sibling supplies a binding.
+
+  Original source_evidence_ref resolves Plans/event_payloads/w3e/server_discovery_observed.schema.json#/$defs/owner_fact,
+  a newly authored closed immutable source manifest with original operation/fact IDs, actual Server/scope, complete
+  existing-owner before/after records, original result and authority refs, and exact source schema/recipe. This
+  object stays in owner-controlled SP-337 custody, not ordinary event bytes. Current source acceptance verifies
+  genuine owner issuance and every independently required authority; rehashing a substituted snapshot is insufficient.
+  Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_discovery_observed.schema.json,
+  logical schema_id pm.event_payload.server.discovery_observed.v1, version 1.0.0. Its closed root has required fields
+  schema_id, schema_version, scope_kind, project_id, server_id, owner_operation_id, source_custody_ref, source_evidence_ref,
+  observation_id, discovery_source, server_identity_fingerprint, observation_ref, grants_trust. Only the listed
+  fields are permitted. Current payload/envelope/owner source scope and every subject identity must join exactly.
+  This family is application-only with project_id=null. It has no fabricated thread/run/node/attempt; out-of-scope
+  EventRecord joins are null. Server ID is actual owner/writer identity, not a URL/label, chosen UI context or an
+  observed unverified identity. DiscoveryObservation supplies minimal fingerprint/human name/TLS port/protocol/capability/claim
+  summary, source and expiry. The observation fingerprint is not a verified observed Server ID. server_id in this
+  event names the actual writing Server, not an unclaimed discovered computer; no synthetic Server is claimed to
+  save discovery. A Client-only read-only discovery draft before durable Server custody remains an ordinary live
+  observation, not a new event writer. No subnet scan, Projects, paths, users, provider/settings/app-work metadata
+  or secrets are advertised or saved in the event. Discovery grants no trust or deduplication.
+
+  Producer: the sole newly authored ServerDiscoveryService.observation_commit@1.0.0 method of the existing domain
+  owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact, never
+  a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease before
+  the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event
+  intent. Before any append, require this family''s exact registry/version/scope and retention admission; until
+  then return missing_event_registration and leave existing command expected_event_types=[] and independent owner
+  receipts unchanged. No transport action or view refresh becomes an event source.
+
+  For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
+  issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1417;
+  append the exact EventRecord through CV-317/Case L-5 and SP-236. Resolve first full-value receipt custody before
+  marking pending state settled or publishing event-backed terminal history. Use barrier durability where the existing
+  authority/approval/outbox contract requires it. A late event refusal never undoes or fabricates an earlier independently
+  settled domain action. Crash/retry starts by resolving the original source and pending intent, then the original
+  append result; unavailable original evidence is recovery_required/unavailable, not a new operation.
+
+  Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes "pm.w3e.owner_fact.v1\0"
+  + hex(owner_method) + "\0" + hex(original_operation_id) + "\0" + hex(immutable_fact_id). hex is lowercase hexadecimal
+  of exact UTF-8 bytes, no normalization; immutable_fact_id is the original accepted phase/journal entry ID, observation
+  ID, detection ID or receipt fact, allocated once and durably preserved before use. Multiple facts in one operation
+  use distinct original fact IDs, never clock/focus or retry counters. event_id is w3e@1: plus lowercase SHA-256
+  of exact UTF-8 bytes "pm.event.server.discovery_observed.identity.v1\0" + scope_partition + "\0" + hex(server_id)
+  + "\0" + hex(owner_operation_id). No numeric or timestamp value is serialized by this string-only identity recipe.
+
+  Application idempotency_key is exactly CV-366 application@1:{hex(server_id)}:{hex(owner_operation_id)}. The Storage
+  scope_partition is app. Adopt CV-317''s exact producer_semantic_digest fields and exclusions; sequence_id, observed_at_utc
+  and persisted_at_utc come only from Storage and are excluded from caller semantic comparison. Preserve CV-366
+  semantic hashes, SP-236 MessagePack physical bytes, CV-339 full-value bytes and SP-337 BLAKE3 addressing as distinct
+  owner domains. Current number/format qualification uses the shared owner rule, never local number/timestamp code
+  or a new 2^53 schema cap. An unrepresentable semantic digest route refuses before new event effects without narrowing
+  the source schema.
+
+  Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first
+  receipt; different semantic digest is idempotency_conflict; missing authoritative dedupe is dedupe_unavailable.
+  Current writers/retries reject projector_replay_only as replay_only_not_appendable. Historical originals use their
+  authenticated original schema/recipe even after live trust, state, route, source visibility or stricter format
+  rules change, subject to current access/deletion/withdrawal checks. No original-provenance fallback to today''s
+  recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
+  revocation, backup, restore, route activation, billing, timer or canonical write.
+
+  Retention: retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent existing rules.
+  The newly prepared custody/history/checkpoint values inherit this family assignment and cannot create a shorter
+  lifetime or bypass dependency holds.
+
+  Redaction/custody: ServerDiscoveryService on the actual Server holds the original accepted intent, complete before/after
+  source, immutable owner result, pending event identity, source schema/recipe provenance and CV-339 original full-value
+  append result. Events/history expose IDs, closed state codes, public fingerprints and access-checked non-secret
+  refs only. No raw secret, password, recovery credential, QR/short code, callback/reusable URL, cookie, key, protected-auth
+  browser content, absolute local path or original request content may enter payload, source manifest, logs or projection.
+  Source values stay under their owner redaction and authorization; refs grant no access. Decode/recompute every
+  source and digest from actual owner-held bytes and check all duplicated identity/currentness fields. Coherent
+  BRS-031/033 capture includes pending/terminal custody, immutable source/result payloads, canonical EventRecord/commit
+  frame, first receipt/dedupe and deletion/hold fences at one captured point. Do not copy derived history/checkpoints;
+  rebuild after verified source restore. A missing member is disclosed, history stays unavailable and current effects
+  stay fenced; restore never grants current authority.
+
+  Consumer/checkpoint: newly authored projector.w3e.server_discovery_observed.history@1.0.0 and reader.w3e.server_discovery_observed.history@1.0.0
+  serve Nearby/Known Server candidates and identity-confirmation Details. They project references to original history
+  only, never recreate live domain authority. This exact family adopts SP-278 by name: use reader.storage.event_record_index@1.0.0
+  with independently complete all-partition coverage, then filter exact event_type=server.discovery_observed, actual
+  scope_partition and writer server_id. Verify actual source frame, schema, original custody and current read/deletion/withdrawal
+  permission on every path. SP-1417 defines physical keys and exact closed values. Commit history rows plus checkpoint
+  in one redb transaction with exact prior-value CAS; only proven nonmatches may skip. Persist the nine-field durable
+  generic_read_token without redb_snapshot_id; each live read rejoins its own snapshot and verifies all ten live
+  fields. Inclusive restart checks original last frame identity/end offset. Empty retained source, nonempty zero-match,
+  stale and degraded stay distinct; unsupported/unavailable source never advances. Rebuild derives a fresh shadow
+  generation from the actual CURRENT-selected survivors and atomically cuts over under owner maintenance exclusion;
+  no source or receipt is repaired.
+
+  Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained
+  schema/version/recipe dispatch stays read-only; unknown versions are unavailable and never rewritten. Future changes
+  require a versioned owner migration. A family withdrawal first fences its exact current append admission under
+  writer exclusion, drains/resolves original pending appends and preserves original receipts; records a cutoff and
+  invalidates reader/projection generation authority before ordinary disclosure/advance. A permitted historical-only
+  reader must be separately bound to retained exact bytes and current access/deletion fences. Rebuild only after
+  a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
+  or reissue domain work. Source retention/deletion authority remains independent.
+
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/17 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+
+
+  This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, bounded_discovery_source,
+  original_observation, expiry_assignment. The owner, never a caller-supplied slot list, decides applicability from
+  the exact original phase. writer_fence and permission_or_service_authority are always non-null genuine original
+  evidence; other roles may be null only where that original phase has no such result. Verify every applicable role
+  independently. No all-true flag, substituted receipt or matching hash supplies a missing role.
+
+
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
+
+  '
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- SRV-002
+- SRV-003
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: srv-1417_w3e_phase1
+implementation_surfaces:
+- Plans/Server_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
+### SRV-1418 - server.endpoint_changed prepared owner contract
+
+```yaml
+plan_unit_id: SRV-1418
+unit_type: contract
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: 'Newly authored owner contract for server.endpoint_changed@1.0.0, prepared without admission, authorized
+  only by deck 2 item 9.a A (DL-450). One accepted endpoint attribute/generation change beneath an existing Server;
+  an address is never its identity.
+
+  Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
+  only this owner''s candidate list; no family-specific schema, producer/custody/checkpoint/withdrawal definition.
+  The recorded per-family evidence is reports/event-authority-20261105/W3E-search.json. Reuse SRV-002, SRV-007,
+  server_system_contracts.schema.json#/$defs/server_endpoint_record, CV-317, CV-339, SP-236, SP-278, SP-286 and
+  SP-337; no sibling supplies a binding.
+
+  Original source_evidence_ref resolves Plans/event_payloads/w3e/server_endpoint_changed.schema.json#/$defs/owner_fact,
+  a newly authored closed immutable source manifest with original operation/fact IDs, actual Server/scope, complete
+  existing-owner before/after records, original result and authority refs, and exact source schema/recipe. This
+  object stays in owner-controlled SP-337 custody, not ordinary event bytes. Current source acceptance verifies
+  genuine owner issuance and every independently required authority; rehashing a substituted snapshot is insufficient.
+  Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_endpoint_changed.schema.json,
+  logical schema_id pm.event_payload.server.endpoint_changed.v1, version 1.0.0. Its closed root has required fields
+  schema_id, schema_version, scope_kind, project_id, server_id, owner_operation_id, source_custody_ref, source_evidence_ref,
+  server_endpoint_id, endpoint_generation, identity_verification, endpoint_ref, prior_endpoint_ref, change_kind.
+  Only the listed fields are permitted. Current payload/envelope/owner source scope and every subject identity must
+  join exactly. This family is application-only with project_id=null. It has no fabricated thread/run/node/attempt;
+  out-of-scope EventRecord joins are null. Server ID is actual owner/writer identity, not a URL/label, chosen UI
+  context or an observed unverified identity. Validate original endpoint mutation receipt, before/after endpoint
+  generations, parent Server and current Catalog/trust fences. First add proves absence; later retained-record changes
+  advance the exact endpoint generation. Verified identity requires independently checked fingerprint continuity;
+  mismatch creates a blocked non-preferred observation and cannot merge records, replace server_id or move a Project.
+  Event metadata keeps address/configuration by protected non-secret reference rather than copying URLs or local
+  paths.
+
+  Producer: the sole newly authored ServerCatalogService.endpoint_commit@1.0.0 method of the existing domain owner.
+  It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
+  success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
+  existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
+  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
+  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  No transport action or view refresh becomes an event source.
+
+  For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
+  issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1418;
+  append the exact EventRecord through CV-317/Case L-5 and SP-236. Resolve first full-value receipt custody before
+  marking pending state settled or publishing event-backed terminal history. Use barrier durability where the existing
+  authority/approval/outbox contract requires it. A late event refusal never undoes or fabricates an earlier independently
+  settled domain action. Crash/retry starts by resolving the original source and pending intent, then the original
+  append result; unavailable original evidence is recovery_required/unavailable, not a new operation.
+
+  Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes "pm.w3e.owner_fact.v1\0"
+  + hex(owner_method) + "\0" + hex(original_operation_id) + "\0" + hex(immutable_fact_id). hex is lowercase hexadecimal
+  of exact UTF-8 bytes, no normalization; immutable_fact_id is the original accepted phase/journal entry ID, observation
+  ID, detection ID or receipt fact, allocated once and durably preserved before use. Multiple facts in one operation
+  use distinct original fact IDs, never clock/focus or retry counters. event_id is w3e@1: plus lowercase SHA-256
+  of exact UTF-8 bytes "pm.event.server.endpoint_changed.identity.v1\0" + scope_partition + "\0" + hex(server_id)
+  + "\0" + hex(owner_operation_id). No numeric or timestamp value is serialized by this string-only identity recipe.
+
+  Application idempotency_key is exactly CV-366 application@1:{hex(server_id)}:{hex(owner_operation_id)}. The Storage
+  scope_partition is app. Adopt CV-317''s exact producer_semantic_digest fields and exclusions; sequence_id, observed_at_utc
+  and persisted_at_utc come only from Storage and are excluded from caller semantic comparison. Preserve CV-366
+  semantic hashes, SP-236 MessagePack physical bytes, CV-339 full-value bytes and SP-337 BLAKE3 addressing as distinct
+  owner domains. Current number/format qualification uses the shared owner rule, never local number/timestamp code
+  or a new 2^53 schema cap. An unrepresentable semantic digest route refuses before new event effects without narrowing
+  the source schema.
+
+  Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first
+  receipt; different semantic digest is idempotency_conflict; missing authoritative dedupe is dedupe_unavailable.
+  Current writers/retries reject projector_replay_only as replay_only_not_appendable. Historical originals use their
+  authenticated original schema/recipe even after live trust, state, route, source visibility or stricter format
+  rules change, subject to current access/deletion/withdrawal checks. No original-provenance fallback to today''s
+  recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
+  revocation, backup, restore, route activation, billing, timer or canonical write.
+
+  Retention: retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the deleted content. Original source bodies, receipts and secrets keep their independent existing rules.
+  The newly prepared custody/history/checkpoint values inherit this family assignment and cannot create a shorter
+  lifetime or bypass dependency holds.
+
+  Redaction/custody: ServerCatalogService on the actual Server holds the original accepted intent, complete before/after
+  source, immutable owner result, pending event identity, source schema/recipe provenance and CV-339 original full-value
+  append result. Events/history expose IDs, closed state codes, public fingerprints and access-checked non-secret
+  refs only. No raw secret, password, recovery credential, QR/short code, callback/reusable URL, cookie, key, protected-auth
+  browser content, absolute local path or original request content may enter payload, source manifest, logs or projection.
+  Source values stay under their owner redaction and authorization; refs grant no access. Decode/recompute every
+  source and digest from actual owner-held bytes and check all duplicated identity/currentness fields. Coherent
+  BRS-031/033 capture includes pending/terminal custody, immutable source/result payloads, canonical EventRecord/commit
+  frame, first receipt/dedupe and deletion/hold fences at one captured point. Do not copy derived history/checkpoints;
+  rebuild after verified source restore. A missing member is disclosed, history stays unavailable and current effects
+  stay fenced; restore never grants current authority.
+
+  Consumer/checkpoint: newly authored projector.w3e.server_endpoint_changed.history@1.0.0 and reader.w3e.server_endpoint_changed.history@1.0.0
+  serve Server endpoint list/Details and Remote Access endpoint association. They project references to original
+  history only, never recreate live domain authority. This exact family adopts SP-278 by name: use reader.storage.event_record_index@1.0.0
+  with independently complete all-partition coverage, then filter exact event_type=server.endpoint_changed, actual
+  scope_partition and writer server_id. Verify actual source frame, schema, original custody and current read/deletion/withdrawal
+  permission on every path. SP-1418 defines physical keys and exact closed values. Commit history rows plus checkpoint
+  in one redb transaction with exact prior-value CAS; only proven nonmatches may skip. Persist the nine-field durable
+  generic_read_token without redb_snapshot_id; each live read rejoins its own snapshot and verifies all ten live
+  fields. Inclusive restart checks original last frame identity/end offset. Empty retained source, nonempty zero-match,
+  stale and degraded stay distinct; unsupported/unavailable source never advances. Rebuild derives a fresh shadow
+  generation from the actual CURRENT-selected survivors and atomically cuts over under owner maintenance exclusion;
+  no source or receipt is repaired.
+
+  Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained
+  schema/version/recipe dispatch stays read-only; unknown versions are unavailable and never rewritten. Future changes
+  require a versioned owner migration. A family withdrawal first fences its exact current append admission under
+  writer exclusion, drains/resolves original pending appends and preserves original receipts; records a cutoff and
+  invalidates reader/projection generation authority before ordinary disclosure/advance. A permitted historical-only
+  reader must be separately bound to retained exact bytes and current access/deletion fences. Rebuild only after
+  a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
+  or reissue domain work. Source retention/deletion authority remains independent.
+
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/18 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+
+
+  This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, endpoint_mutation_receipt,
+  parent_server, identity_material. The owner, never a caller-supplied slot list, decides applicability from the
+  exact original phase. writer_fence and permission_or_service_authority are always non-null genuine original evidence;
+  other roles may be null only where that original phase has no such result. Verify every applicable role independently.
+  No all-true flag, substituted receipt or matching hash supplies a missing role.
+
+
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
+  is invented for a BackupRun or RestoreRun.
+
+
+  change_kind is derived only from the genuine accepted create/update/remove owner result and joins the original
+  source manifest. created proves original absence and a new record; updated proves exact changed before/after records;
+  removed proves the original removal receipt, an existing before record and absent after record. On removed, endpoint_ref
+  is null and the event generation is the last generation fenced by that original removal result, not a fabricated
+  successor object. Removal does not delete a backup repository, revoke unrelated trust or erase historical receipts.
+  No unchanged/failed result emits this event.
+
+  '
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- SRV-002
+- SRV-007
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: srv-1418_w3e_phase1
+implementation_surfaces:
+- Plans/Server_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- RP-AUTHORITY-INDEFINITE@1.0.0
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
+### SRV-1419 - server.identity_mismatch_detected prepared owner contract
+
+```yaml
+plan_unit_id: SRV-1419
+unit_type: contract
+status: accepted
+owner_doc: Plans/Server_System.md
+canonical_text: 'Newly authored owner contract for server.identity_mismatch_detected@1.0.0, prepared without admission,
+  authorized only by deck 2 item 9.a A (DL-450). One original verified detection that the reached endpoint identity
+  differs from the expected Server identity.
+
+  Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
+  only this owner''s candidate list; no family-specific schema, producer/custody/checkpoint/withdrawal definition.
+  The recorded per-family evidence is reports/event-authority-20261105/W3E-search.json. Reuse SRV-002, SRV-004,
+  SRV-007, server_system_contracts.schema.json#/$defs/server_endpoint_record, CV-317, CV-339, SP-236, SP-278, SP-286
+  and SP-337; no sibling supplies a binding.
+
+  Original source_evidence_ref resolves Plans/event_payloads/w3e/server_identity_mismatch_detected.schema.json#/$defs/owner_fact,
+  a newly authored closed immutable source manifest with original operation/fact IDs, actual Server/scope, complete
+  existing-owner before/after records, original result and authority refs, and exact source schema/recipe. This
+  object stays in owner-controlled SP-337 custody, not ordinary event bytes. Current source acceptance verifies
+  genuine owner issuance and every independently required authority; rehashing a substituted snapshot is insufficient.
+  Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_identity_mismatch_detected.schema.json,
+  logical schema_id pm.event_payload.server.identity_mismatch_detected.v1, version 1.0.0. Its closed root has required
+  fields schema_id, schema_version, scope_kind, project_id, server_id, owner_operation_id, source_custody_ref, source_evidence_ref,
+  server_endpoint_id, expected_fingerprint, observed_fingerprint, detection_id, mismatch_evidence_ref. Only the
+  listed fields are permitted. Current payload/envelope/owner source scope and every subject identity must join
+  exactly. This family is application-only with project_id=null. It has no fabricated thread/run/node/attempt; out-of-scope
+  EventRecord joins are null. Server ID is actual owner/writer identity, not a URL/label, chosen UI context or an
+  observed unverified identity. Recompute both public-key fingerprints from owner-held expected and observed identity
+  material; two supplied digest strings alone prove nothing. They must differ and join the same original endpoint/connection
+  detection. Persist blocked identity_mismatch/non-preferred disposition without merging Servers, replacing trust
+  or changing Project authority. The event carries only public fingerprints and refs, not certificates/private keys
+  or protected auth input. Repeated delivery of the same detection returns the original result.
+
+  Producer: the sole newly authored ServerIdentityVerifier.mismatch_commit@1.0.0 method of the existing domain owner.
+  It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
+  success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
+  existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
+  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
+  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  No transport action or view refresh becomes an event source.
+
+  For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
+  issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1419;
+  append the exact EventRecord through CV-317/Case L-5 and SP-236. Resolve first full-value receipt custody before
+  marking pending state settled or publishing event-backed terminal history. Use barrier durability where the existing
+  authority/approval/outbox contract requires it. A late event refusal never undoes or fabricates an earlier independently
+  settled domain action. Crash/retry starts by resolving the original source and pending intent, then the original
+  append result; unavailable original evidence is recovery_required/unavailable, not a new operation.
+
+  Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes "pm.w3e.owner_fact.v1\0"
+  + hex(owner_method) + "\0" + hex(original_operation_id) + "\0" + hex(immutable_fact_id). hex is lowercase hexadecimal
+  of exact UTF-8 bytes, no normalization; immutable_fact_id is the original accepted phase/journal entry ID, observation
+  ID, detection ID or receipt fact, allocated once and durably preserved before use. Multiple facts in one operation
+  use distinct original fact IDs, never clock/focus or retry counters. event_id is w3e@1: plus lowercase SHA-256
+  of exact UTF-8 bytes "pm.event.server.identity_mismatch_detected.identity.v1\0" + scope_partition + "\0" + hex(server_id)
+  + "\0" + hex(owner_operation_id). No numeric or timestamp value is serialized by this string-only identity recipe.
+
+  Application idempotency_key is exactly CV-366 application@1:{hex(server_id)}:{hex(owner_operation_id)}. The Storage
+  scope_partition is app. Adopt CV-317''s exact producer_semantic_digest fields and exclusions; sequence_id, observed_at_utc
+  and persisted_at_utc come only from Storage and are excluded from caller semantic comparison. Preserve CV-366
+  semantic hashes, SP-236 MessagePack physical bytes, CV-339 full-value bytes and SP-337 BLAKE3 addressing as distinct
+  owner domains. Current number/format qualification uses the shared owner rule, never local number/timestamp code
+  or a new 2^53 schema cap. An unrepresentable semantic digest route refuses before new event effects without narrowing
+  the source schema.
+
+  Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first
+  receipt; different semantic digest is idempotency_conflict; missing authoritative dedupe is dedupe_unavailable.
+  Current writers/retries reject projector_replay_only as replay_only_not_appendable. Historical originals use their
+  authenticated original schema/recipe even after live trust, state, route, source visibility or stricter format
+  rules change, subject to current access/deletion/withdrawal checks. No original-provenance fallback to today''s
+  recipe. Replay is only filtered derived history; it never dispatches a command, network test, notification, pairing,
+  revocation, backup, restore, route activation, billing, timer or canonical write.
+
+  Retention: retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotected entries are removed). The policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. Original source bodies, receipts and secrets keep their independent
+  existing rules. The newly prepared custody/history/checkpoint values inherit this family assignment and cannot
+  create a shorter lifetime or bypass dependency holds.
+
+  Redaction/custody: ServerIdentityVerifier on the actual Server holds the original accepted intent, complete before/after
+  source, immutable owner result, pending event identity, source schema/recipe provenance and CV-339 original full-value
+  append result. Events/history expose IDs, closed state codes, public fingerprints and access-checked non-secret
+  refs only. No raw secret, password, recovery credential, QR/short code, callback/reusable URL, cookie, key, protected-auth
+  browser content, absolute local path or original request content may enter payload, source manifest, logs or projection.
+  Source values stay under their owner redaction and authorization; refs grant no access. Decode/recompute every
+  source and digest from actual owner-held bytes and check all duplicated identity/currentness fields. Coherent
+  BRS-031/033 capture includes pending/terminal custody, immutable source/result payloads, canonical EventRecord/commit
+  frame, first receipt/dedupe and deletion/hold fences at one captured point. Do not copy derived history/checkpoints;
+  rebuild after verified source restore. A missing member is disclosed, history stays unavailable and current effects
+  stay fenced; restore never grants current authority.
+
+  Consumer/checkpoint: newly authored projector.w3e.server_identity_mismatch_detected.history@1.0.0 and reader.w3e.server_identity_mismatch_detected.history@1.0.0
+  serve Server/Remote Access mismatch attention and identity-confirmation Details. They project references to original
+  history only, never recreate live domain authority. This exact family adopts SP-278 by name: use reader.storage.event_record_index@1.0.0
+  with independently complete all-partition coverage, then filter exact event_type=server.identity_mismatch_detected,
+  actual scope_partition and writer server_id. Verify actual source frame, schema, original custody and current
+  read/deletion/withdrawal permission on every path. SP-1419 defines physical keys and exact closed values. Commit
+  history rows plus checkpoint in one redb transaction with exact prior-value CAS; only proven nonmatches may skip.
+  Persist the nine-field durable generic_read_token without redb_snapshot_id; each live read rejoins its own snapshot
+  and verifies all ten live fields. Inclusive restart checks original last frame identity/end offset. Empty retained
+  source, nonempty zero-match, stale and degraded stay distinct; unsupported/unavailable source never advances.
+  Rebuild derives a fresh shadow generation from the actual CURRENT-selected survivors and atomically cuts over
+  under owner maintenance exclusion; no source or receipt is repaired.
+
+  Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained
+  schema/version/recipe dispatch stays read-only; unknown versions are unavailable and never rewritten. Future changes
+  require a versioned owner migration. A family withdrawal first fences its exact current append admission under
+  writer exclusion, drains/resolves original pending appends and preserves original receipts; records a cutoff and
+  invalidates reader/projection generation authority before ordinary disclosure/advance. A permitted historical-only
+  reader must be separately bound to retained exact bytes and current access/deletion fences. Rebuild only after
+  a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
+  or reissue domain work. Source retention/deletion authority remains independent.
+
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/19 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+
+
+  This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, expected_identity_material,
+  observed_identity_material, mismatch_detection, blocked_endpoint_disposition. The owner, never a caller-supplied
+  slot list, decides applicability from the exact original phase. writer_fence and permission_or_service_authority
+  are always non-null genuine original evidence; other roles may be null only where that original phase has no such
+  result. Verify every applicable role independently. No all-true flag, substituted receipt or matching hash supplies
+  a missing role.
+
+
+  Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
+  is invented for a BackupRun or RestoreRun.
+
+  '
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- SRV-002
+- SRV-004
+- SRV-007
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: srv-1419_w3e_phase1
+implementation_surfaces:
+- Plans/Server_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
 ## 4. Integration Surfaces
 
 ### 4.1 Canonical command family requiring central integration
