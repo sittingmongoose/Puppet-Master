@@ -4289,6 +4289,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
     now = utc_now()
     new_rows: list[dict[str, Any]] = []
     moved: list[dict[str, Any]] = []
+    already_stale_moved: list[dict[str, Any]] = []
     skipped: list[str] = []
     for closure_id, record in records.items():
         if only and closure_id not in only:
@@ -4348,8 +4349,30 @@ def _reaudit_append(args: argparse.Namespace) -> int:
     if not errors and new_rows:
         # Validate the registry as it would be after the append, before writing anything. Every
         # error the candidate has that the registry does not have now blocks the append, whether
-        # it names a new line, an existing line or no line at all.
+        # it names a new line, an existing line or no line at all. A stale hash on the same
+        # row, group and ref is pre-existing when only its current hash has changed.
         baseline = set(validate_registry(registry_path)["errors"])
+        stale_pattern = re.compile(
+            rf"{re.escape(rel(registry_path))}:(?P<line>[1-9][0-9]*): "
+            r"(?P<group>owner_evidence_hashes|closure_evidence_hashes) for (?P<ref>.+) "
+            r"is stale \(stored (?P<stored>[0-9a-f]{64}), current (?P<current>[0-9a-f]{64})\)"
+        )
+
+        def stale_identity(error: str) -> tuple[tuple[int, str, str, str, str], str] | None:
+            match = stale_pattern.fullmatch(error)
+            if match is None:
+                return None
+            line = int(match["line"])
+            row = rows_by_line.get(line)
+            if row is None:
+                return None
+            return (line, str(row.get("closure_id", "")), match["group"], match["ref"], match["stored"]), match["current"]
+
+        stale_before = {}
+        for error in baseline:
+            stale = stale_identity(error)
+            if stale is not None:
+                stale_before[stale[0]] = stale[1]
         import tempfile  # noqa: PLC0415
 
         # A unique candidate created exclusively next to the registry: it can never be the input
@@ -4366,8 +4389,18 @@ def _reaudit_append(args: argparse.Namespace) -> int:
             candidate.unlink(missing_ok=True)
         for error in report["errors"]:
             as_registry = error.replace(rel(candidate), rel(registry_path))
-            if as_registry not in baseline:
-                errors.append(f"candidate registry would not validate: {as_registry}")
+            if as_registry in baseline:
+                continue
+            stale = stale_identity(as_registry)
+            if stale is not None and stale[0] in stale_before:
+                (line, closure_id, group, ref, stored), current = stale
+                already_stale_moved.append({
+                    "status": "already stale, current hash moved", "line": line,
+                    "closure_id": closure_id, "group": group, "ref": ref, "stored": stored,
+                    "before_append_current": stale_before[stale[0]], "candidate_current": current,
+                })
+                continue
+            errors.append(f"candidate registry would not validate: {as_registry}")
         superseded_now = set(report.get("superseded_lines", []))
         for row in new_rows:
             if row["supersedes"]["line"] not in superseded_now:
@@ -4387,6 +4420,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         "would_append": len(new_rows) if not errors else 0,
         "already_appended": len(skipped),
         "moved_since_recheck": moved,
+        "already_stale_current_hash_moved": already_stale_moved,
         "errors": errors,
     }, indent=2, ensure_ascii=False))
     return 1 if errors else 0

@@ -284,6 +284,61 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         code, report = self.append()
         self.assertEqual((code, report["appended"]), (1, 0))
         self.assertTrue(any(watched in error and "is stale" in error for error in report["errors"]), report)
+        self.assertEqual(report.get("already_stale_current_hash_moved", []), [])
+        self.assertEqual(self.registry.read_bytes(), before)
+
+    def test_already_stale_shared_anchor_does_not_block_append(self) -> None:
+        watcher = pm_audit_closure._self_test_registry_row(
+            closure_id="closure-watcher", audit_ids=["audit-watcher"], closed_by_audit_id="audit-watcher",
+            owner_docs=[self.registry_ref], closure_evidence=[self.registry_ref], detail_keys=["watcher"],
+            hashes={"hash_scope": pm_audit_closure.ANCHOR_SCOPE,
+                    "owner_evidence_hashes": {self.anchor: "0" * 64}},
+        )
+        write_jsonl(self.registry, [self.target, watcher])
+        self.prepare_record()
+        baseline = pm_audit_closure.validate_registry(self.registry)
+        self.assertEqual(len(baseline["errors"]), 1, baseline)
+        before_hash = pm_audit_closure.AnchorResolver().sha256(self.anchor)
+        before = self.registry.read_bytes()
+        code, report = self.append(dry_run=True)
+        self.assertEqual((code, report["would_append"], report["errors"]), (0, 1, []), report)
+        self.assertEqual(self.registry.read_bytes(), before)
+        moved = report["already_stale_current_hash_moved"]
+        self.assertEqual(len(moved), 1, report)
+        self.assertEqual(moved[0], {
+            "status": "already stale, current hash moved", "line": 2,
+            "closure_id": watcher["closure_id"], "group": "owner_evidence_hashes",
+            "ref": self.anchor, "stored": "0" * 64,
+            "before_append_current": before_hash, "candidate_current": moved[0]["candidate_current"],
+        })
+        self.assertNotEqual(moved[0]["candidate_current"], before_hash)
+        code, appended = self.append()
+        self.assertEqual((code, appended["appended"], appended["errors"]), (0, 1, []), appended)
+        self.assertEqual(pm_audit_closure.AnchorResolver().sha256(self.anchor),
+                         appended["already_stale_current_hash_moved"][0]["candidate_current"])
+        after = pm_audit_closure.validate_registry(self.registry)
+        self.assertEqual(after["unsuperseded_stale_hash_count"], 1, after)
+        self.assertEqual(len(after["errors"]), 1, after)
+
+    def test_stale_on_one_anchor_does_not_excuse_new_staleness_on_another(self) -> None:
+        stale_anchor = self.registry_ref + "#jsonlset=audit_ids=audit-absent"
+        watched = self.registry_ref + "#jsonlset=audit_ids=reaudit-fixture"
+        watcher = pm_audit_closure._self_test_registry_row(
+            closure_id="closure-watcher", audit_ids=["audit-watcher"], closed_by_audit_id="audit-watcher",
+            owner_docs=[self.registry_ref], closure_evidence=[self.registry_ref], detail_keys=["watcher"],
+            hashes={"hash_scope": pm_audit_closure.ANCHOR_SCOPE,
+                    "owner_evidence_hashes": {stale_anchor: "0" * 64, watched: pm_audit_closure.sha256_text("[]")}},
+        )
+        write_jsonl(self.registry, [self.target, watcher])
+        self.prepare_record()
+        baseline = pm_audit_closure.validate_registry(self.registry)
+        self.assertEqual(len(baseline["errors"]), 1, baseline)
+        self.assertIn(stale_anchor, baseline["errors"][0])
+        before = self.registry.read_bytes()
+        code, report = self.append(dry_run=True)
+        self.assertEqual((code, report["appended"], report["would_append"]), (1, 0, 0), report)
+        self.assertTrue(any(watched in error and "is stale" in error for error in report["errors"]), report)
+        self.assertEqual(report.get("already_stale_current_hash_moved", []), [])
         self.assertEqual(self.registry.read_bytes(), before)
 
     def test_later_matching_row_stales_self_anchor(self) -> None:
