@@ -22,6 +22,10 @@
   {
    "event_type": "assistant_plan.cancelled",
    "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.completed",
+   "outcome": "registered"
   }
  ]
 }
