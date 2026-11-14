@@ -19,8 +19,10 @@
 //             prefix) lists the model it means and shows the nickname beside it; an unknown nickname shows the
 //             empty-result line; the name search still works. The built-in "nano banana" lists Gemini 2.5 Flash
 //             Image only if it is a configured chat model (in this fixture it is not one: nothing asserted about it)
+//   r2 depth   a model row's depth survives the project round trip: real presses pick Claude Opus at Max in the
+//             shared picker, PM12_KIMI.reloadProject reloads, and the row and PM51.modelResolve still name Max
 // Fails main 564ed6a467 (a plain text box; the Media box drawn) and passes the head, both surfaces.
-// The r2 cases fail bd45b96e4c (the legacy line absent; a typed nickname finds nothing) and pass the head, both surfaces.
+// The r2 cases fail bd45b96e4c (the legacy line absent; a typed nickname finds nothing; the depth lost on reload) and pass the head, both surfaces.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-model-nicknames.check.mjs --set page=<build> --set sandbox=0
 import fs from 'node:fs';
 import path from 'node:path';
@@ -279,5 +281,39 @@ export const tests = {
 		} else {
 			await t.check('FO-186 r2 Gemini 2.5 Flash Image is not a configured chat model here: nothing asserted about it', true);
 		}
+	},
+	/* (d) a model row's depth survives the project round trip: real presses pick Claude Opus at its deepest level
+	   in the shared picker, PM12_KIMI.reloadProject reloads the saved project, and the row and PM51.modelResolve
+	   still name the same depth (the save keeps pm51.o55Depth beside pm51.o55Custom) */
+	'FO-186 r2 a model row keeps its depth through a project reload': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1920, 1080);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		await toModels(t, f);
+		const ROWID = 'ai.models.default-model';
+		const trig = f.locator(`#pm-settings-root .o55-msel[data-o55-msel="${ROWID}"] [role="combobox"]`).first();
+		await t.check('FO-186 r2 the Everyday model row has a picker to press', (await trig.count()) > 0);
+		if (!(await trig.count())) return;
+		await trig.click(); await t.page.waitForTimeout(450);
+		const opt = f.locator('.o55-pick-pop.is-open [role="option"]').filter({ hasText: 'Claude Opus' }).first();
+		await t.check('FO-186 r2 the shared picker offers Claude Opus', (await opt.count()) > 0);
+		if (!(await opt.count())) { await t.page.keyboard.press('Escape'); return; }
+		await opt.click(); await t.page.waitForTimeout(350);
+		await f.locator('[role="listbox"][aria-label^="Thinking depth"] [role="option"]').filter({ hasText: 'Max' }).first().click();
+		await t.page.waitForTimeout(700);
+		const readRow = (id) => {
+			const c = document.querySelector(`.o55-msel[data-o55-msel="${id}"] [role="combobox"]`);
+			const r = window.PM51 && PM51.modelResolve ? PM51.modelResolve(id) : null;
+			return { name: c ? ((c.querySelector('strong') || {}).textContent || '').trim() : '', small: c ? ((c.querySelector('small') || {}).textContent || '').trim() : '', effort: r ? r.effort : null, value: window.PM51 ? PM51.value(id) : null };
+		};
+		const before = await f.evaluate(readRow, ROWID);
+		await t.check(`FO-186 r2 the presses saved Claude Opus at Max depth ("${before.small}")`, /Claude Opus/.test(before.name) && before.small.includes('Max depth') && before.effort === 'Max', JSON.stringify(before));
+		await f.evaluate(() => window.PM12_KIMI.reloadProject());
+		await t.settle();
+		await toModels(t, f);
+		const after = await f.evaluate(readRow, ROWID);
+		await t.check(`FO-186 r2 after the reload the row still names the model at the same depth ("${after.small}")`, /Claude Opus/.test(after.name) && after.small.includes('Max depth'), JSON.stringify(after));
+		await t.check('FO-186 r2 after the reload PM51.modelResolve still shows the depth', after.effort === 'Max' && after.value === before.value, JSON.stringify(after));
 	}
 };
