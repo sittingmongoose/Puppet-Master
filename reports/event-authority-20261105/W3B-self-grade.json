@@ -296,7 +296,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.backend.detected`, DL-454 (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_backend_detected_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -602,7 +602,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.backend.selected`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_backend_selected_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -908,7 +908,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.checkpoint.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_created_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -1214,7 +1214,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.checkpoint.restored`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_restored_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -1520,7 +1520,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.remote.fetch_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage\u2019s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_fetch_completed_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -1826,7 +1826,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.remote.fetch_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage\u2019s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_fetch_started_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -2132,7 +2132,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.remote.publish_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage\u2019s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_publish_completed_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -2438,7 +2438,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.remote.publish_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage\u2019s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_publish_started_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -2744,7 +2744,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.remote.sync_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage\u2019s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_sync_completed_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -3050,7 +3050,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.remote.sync_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage\u2019s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_remote_sync_started_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -3356,7 +3356,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.repository.bound`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_repository_bound_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -3662,7 +3662,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.repository.unbound`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_repository_unbound_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -3968,7 +3968,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.status.refreshed`, DL-454 (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_status_refreshed_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -4274,7 +4274,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.workspace.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_workspace_created_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -4580,7 +4580,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.workspace.opened`, DL-454 (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_workspace_opened_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -4886,7 +4886,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.workspace.removed`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_workspace_removed_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -5192,7 +5192,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.workspace.switched`, DL-454 (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_workspace_switched_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -5498,7 +5498,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.writer_lease.granted`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_granted_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
@@ -5804,7 +5804,7 @@
    "pass_count": 10,
    "normative_depth_complete": false,
    "remaining_gaps": [
-    "For `source_control.writer_lease.lost`, DL-453 (E-CARDS-3 item 1.a) has its saved event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_lost_fact` (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow another rule?",
+    "Resolved at batch-3 integration: DL-510 (Jared E6-1 = A, \"Same as the history\") binds the source fact to its history policy.",
     "Sol and Astra review of wave 3 phase 2; batch-3 integration (rebase onto main, date-time inventory refresh for the two W3B data files, shared EventRecord payload_ref schema/prose integration noted in phase-1 review N1).",
     "Membership remains absent. Separate family admission, central value-row registration, backup/migration/source adoption and native implementation are not part of this lane."
    ],
