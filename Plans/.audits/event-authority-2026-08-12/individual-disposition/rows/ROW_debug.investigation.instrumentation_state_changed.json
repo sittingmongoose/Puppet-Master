@@ -2,68 +2,68 @@
   "event_type": "debug.investigation.instrumentation_state_changed",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to debug.investigation.instrumentation_state_changed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to debug.investigation.instrumentation_state_changed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-14.14 in admission merge 1 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-533); DL-077 admission record reports/event-authority-20260911/admission-records/debug.investigation.instrumentation_state_changed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261114/admission-merge-1/depth/debug.investigation.instrumentation_state_changed.json (sha256 753f5719eb996bb3ee5793e2309abe950503d85785a1c0ecc17cc0f4dacbc415); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation explicitly designates the accountable semantic Event Authority owner for `debug.investigation.instrumentation_state_changed`; document title, namespace, storage ownership, and surrounding family context were not treated as ownership evidence."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:5710",
+      "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B)."
     },
     "producer": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation explicitly designates the component authorized to emit `debug.investigation.instrumentation_state_changed`; namespace and neighboring event rows were not used to infer a producer."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:5786",
+      "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B)."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": "Plans/event_family_registry.json:3-8",
-      "note": "Exact-token search found no `debug.investigation.instrumentation_state_changed` member in live registry revision `2026-08-04.1`; unknown event types are quarantined without checkpoint advance."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:4181-4218",
+      "note": "Registered at registry revision 2026-11-14.14 as #/families/59 (canonical row SHA-256 784979e44b2f86e85da967e3e4ac1be3d4aab668c8296ec8e3e64aa9286634b9); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "Checked sources describe occurrence semantics or minimum/example fields for `debug.investigation.instrumentation_state_changed`, but do not close its payload with required/optional, nullability, enum, and additional-property rules."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:5712; Plans/debug_investigation_event_payloads.schema.json:230",
+      "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: every companion-schema integer slot is judged by the shared current_integer with its published bounds (a binary64 1.0 is now refused), the 16 KiB inline body and detail are measured in EVENT_VALUE bytes, and envelope timestamps by the shared date_time predicate with the EventRecord / CV-253 profiles (DDBG.md \"Sweep part 2B\")."
     },
     "scope_identity": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local authority closes `debug.investigation.instrumentation_state_changed` scope_kind plus all applicable identity, partition, and nullability rules; generic EventRecord choices do not select an event-specific value."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:5796",
+      "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the identity is SHA-256 of the shared qualified RFC 8785 over the unchanged preimage; every computable fixture identity is byte-identical to part 2A."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local citation selects `debug.investigation.instrumentation_state_changed` replay_policy and idempotency identity; generic EventRecord options were not used to infer a value."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:5227",
+      "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the semantic digest is the shared producer_semantic_digest over the unchanged CV-317 projection (type-sensitive at integer slots); the producer projection must qualify before effects; the shared number corpus runs through the append and retry routes."
     },
     "retention": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation assigns `debug.investigation.instrumentation_state_changed` an event-specific retention, compaction, tombstone, or legal-hold rule."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:5837; Plans/storage-plan.md:17602",
+      "note": "Exact family adopts current Storage G02 Project retention, original terminal-transition anchor, protected obligations, unchanged TTL/count and no derived family value."
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:1541-1546",
-      "note": "The debug-family rule explicitly forbids duplicated raw secrets/logs/traces/binary bytes and assigns raw material to artifact/blob refs while requiring bounded summaries to preserve redaction and omission state."
+      "citation": "Plans/Contracts_V0.md:5256",
+      "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B)."
     },
     "transitions": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "Checked sources do not define a complete legal predecessor/successor state machine and rejection behavior for `debug.investigation.instrumentation_state_changed`."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:5736",
+      "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B)."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation names the complete consumer set and atomic success, failure, replay, and poison-record checkpoint behavior for `debug.investigation.instrumentation_state_changed`."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:5811",
+      "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B)."
     },
     "compatibility_withdrawal": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation defines `debug.investigation.instrumentation_state_changed` event-specific compatibility, migration, alias normalization, and withdrawal behavior as a versioned member."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:5270",
+      "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the retained reader checks the original's own source time (EventRecord profile), Storage times (CV-253 storage_utc_z) and sequence_id (uint64), recomputes both identities, refuses an original the at-write recipe cannot digest and compares Storage metadata type-exactly."
     },
     "positive_negative_oracles": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "Checked sources do not provide both positive emission and negative non-emission/rejection oracles for `debug.investigation.instrumentation_state_changed` across required boundary cases."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:5855; Plans/debug_investigation_event_fixtures.json:2568; reports/event-authority-20261104/DDBG.md:106; reports/event-authority-20261104/DDBG.md:262",
+      "note": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. The shared guard-isolation tool (004bdedd63) proves every row of every phase suite: 512 of 512 rows in 33 suites, 9 suites rerun at part 2B and the rest carried with inputs, modules and tool unchanged (four with renumbered negative ids only). The shared date-time inventory gate and datetime_validator run at batch-2 integration. Native execution remains NOT_RUN."
     }
   },
   "citations_checked": [
