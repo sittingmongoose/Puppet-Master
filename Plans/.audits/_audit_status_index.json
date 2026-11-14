@@ -44,16 +44,6 @@
     },
     {
       "audit_ids": [
-        "audit-20260626-001-provider-updates-closed-world-semantic-fidelity",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-001",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: The finding was Multi-Account usage copy still contrasting 'Gemini Direct vs Gemini CLI pages'. Section 8 now says one shared Gemini-family surface for active entries and limits retired Gemini CLI terms to source-lineage or migration diagnostics; the old contrast phrase is gone from the section (it survives only in the audit's own FINAL_REPORT). MA-035, CBP-019 and 0PI-061 keep Gemini CLI as compatibility/source-lineage only and Gemini Direct active; MA-062 lists Gemini Direct and Antigravity CLI as live account rows. A grep of Plans for other 'Gemini CLI' mentions found only retirement statements, negative constraints or preserved-token lists, and two provider-native notes outside usage copy (assistant-memory-subsystem compression threshold, MCP_Integration preserved token); none presents Gemini CLI as an active usage page. Round 2 (lead): added anchors the sol review named: Plans/usage-feature.md#unit=UF-019. Lead: changed to not_supported. Accepted UF-019 still makes Gemini CLI an active Usage distinction, contradicting the claim that retired Gemini CLI vocabulary appears only as lineage or migration diagnostics.",
-      "finding_key": "sfk-2e1b920cfabc04dc0be69949",
-      "line": 965
-    },
-    {
-      "audit_ids": [
         "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
         "closure-reaudit-20261104"
       ],
@@ -194,7 +184,7 @@
       "line": 1095
     }
   ],
-  "generated_at_utc": "2026-11-12T07:07:24Z",
+  "generated_at_utc": "2026-11-14T04:56:20Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -1113,9 +1103,9 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "reopened": 3,
-          "repaired": 21
+          "repaired": 22
         },
-        "matching_rows": 24,
+        "matching_rows": 25,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1548,9 +1538,9 @@
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 1214,
-    "current_blocker_count": 19,
-    "current_reopened_finding_count": 19,
+    "closure_registry_row_count": 1215,
+    "current_blocker_count": 18,
+    "current_reopened_finding_count": 18,
     "current_report_blocker_count": 0,
     "historical_blocked_or_fail_report_count": 25,
     "report_count": 71,
