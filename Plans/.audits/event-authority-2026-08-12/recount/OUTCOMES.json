@@ -178,6 +178,10 @@
   {
    "event_type": "forge.pipeline.completed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.pipeline.retried",
+   "outcome": "registered"
   }
  ]
 }
