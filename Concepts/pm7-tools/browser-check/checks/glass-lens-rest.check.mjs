@@ -381,11 +381,12 @@ async function abandonCheck(t, f, x, tag, how) {
 	await t.check(`held: a hold abandoned by ${how} with no pointerup comes back to the chosen item and rests unbent ${what}`, row.restMs >= 400 && row.restBent === 0 && row.movingFlat === 0 && row.backOnChosen, JSON.stringify(row));
 }
 
-/* R43 F1 (2026-11-14): two pointers, by CDP touch points. Touch 1 holds the chosen page tab; touch 2 goes down off every
-   strip and control and lifts while touch 1 stays: the lens bends in every frame until touch 1 lifts (a lens stays bent
-   until the last pointer holding it ends), then rests. Frames are judged by the page's own pointer event times */
+/* R43 F1 (2026-11-14): two pointers. The mouse holds the chosen page tab; a CDP touch point goes down off every strip and
+   control and lifts (its pointerup and lostpointercapture) while the button stays down: the lens bends in every frame
+   until the button is released (a lens stays bent until the last pointer holding it ends), then rests. Frames are
+   judged by the page's own pointer event times */
 async function twoPointerCheck(t, f, x, tag) {
-	const what = `${tag} ${x.strip} (the chosen item; touch 2 lifts first)`;
+	const what = `${tag} ${x.strip} (the chosen item held by the mouse; a touch lifts first)`;
 	const off = await offsetOf(t, f), c = x.cur, p1 = { x: off.x + c.x + c.w / 2, y: off.y + c.y + c.h / 2 };
 	const q = await f.evaluate(() => {
 		/* a grid over the page's middle: the first point on plain content (no control, no strip, nothing that takes a tap) */
@@ -406,14 +407,16 @@ async function twoPointerCheck(t, f, x, tag) {
 	});
 	await f.evaluate((i) => window.__g.watch(i), x.lens);
 	await t.page.waitForTimeout(120);
-	const cdp = await t.page.context().newCDPSession(t.page), pt = (p, id) => ({ x: p.x, y: p.y, id });
-	await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [pt(p1, 1)] });
-	await t.page.waitForTimeout(400);
-	await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [pt(p1, 1), pt(p2, 2)] });
+	/* pointer 1 is the mouse, held; pointer 2 a CDP touch point, tapped and lifted while the button stays down (a CDP
+	   touchMove that leaves a point out does not lift it: both touches lifted together at the touchEnd, run r43red2) */
+	const cdp = await t.page.context().newCDPSession(t.page);
+	await t.page.mouse.move(p1.x, p1.y); await t.page.waitForTimeout(300);
+	await t.page.mouse.down(); await t.page.waitForTimeout(400);
+	await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: p2.x, y: p2.y, id: 7 }] });
 	await t.page.waitForTimeout(250);
-	await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [pt(p1, 1)] });   /* touch 2 lifts, touch 1 stays */
+	await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });   /* the touch lifts, the button stays down */
 	await t.page.waitForTimeout(1000);
-	await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+	await t.page.mouse.up();
 	await t.page.waitForTimeout(900);
 	await cdp.detach().catch(() => {});
 	const fr = await f.evaluate(() => window.__g.stop());
@@ -426,8 +429,8 @@ async function twoPointerCheck(t, f, x, tag) {
 	const row = { valid, events: ev.map((e) => `${e[0].replace('lostpointercapture', 'lostcap').replace('pointer', '')}#${e[1]}${e[2] === 'touch' ? '' : '/' + e[2]}@${e[3]}`), touch2: q.el,
 		stillHeld: mid.length, stillHeldMs: mid.length > 1 ? mid[mid.length - 1].t - mid[0].t : 0, stillHeldFlat: mid.filter((z) => !z.bend).length, after: after.length, afterBent: after.filter((z) => z.bend).length };
 	t.log(`two-pointers ${what}: ${JSON.stringify(row)}`);
-	await t.check(`held: with touch 1 still on the chosen item, touch 2's release does not end its bend ${what}`, valid && row.stillHeldMs >= 600 && row.stillHeldFlat === 0, JSON.stringify(row));
-	await t.check(`held: when touch 1 lifts too it rests unbent ${what}`, valid && row.after >= 5 && row.afterBent === 0, JSON.stringify(row));
+	await t.check(`held: with the button still down on the chosen item, a touch's release elsewhere does not end its bend ${what}`, valid && row.stillHeldMs >= 600 && row.stillHeldFlat === 0, JSON.stringify(row));
+	await t.check(`held: when the button is released too it rests unbent ${what}`, valid && row.after >= 5 && row.afterBent === 0, JSON.stringify(row));
 }
 
 /* R43 F2 (2026-11-14): a hold carried through a look change. The button is held on the chosen page tab in Glass; the
