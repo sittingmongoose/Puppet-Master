@@ -100,7 +100,7 @@ def family_sources(family, lane):
         if family == 'chat.response_stop_requested':
             fixture = 'Plans/dch_stop_contract_fixtures.json'
             data = read(fixture)
-            return 'Plans/dch_stop_outcome.schema.json', fixture, [data['bases']['DCH9-0001']['record']['payload']]
+            return 'Plans/dch_stop_request.schema.json', fixture, [data['bases']['DCH9-0001']['record']['payload']]
         fixture = 'Plans/dch_event_contract_fixtures.json'
         schema = find_row('Plans/dch_event_contracts.json', family, 'rows')['payload_schema_ref']
         return schema, fixture, [r['valid'] for r in read(fixture) if r['event_type'] == family]

@@ -41,7 +41,7 @@ def suite(required, control, negatives, label):
     return result
 
 
-def run(row, out):
+def run(row, out, width=1):
     from urllib.parse import urldefrag
     from pm_event_datetime import EVENT_RECORD, format_checker
     reg, documents = cells.registry()
@@ -62,8 +62,8 @@ def run(row, out):
             if not required or key in seen:
                 continue
             seen.add(key)
-            for start in range(0, len(required), 8):
-                group = required[start:start+8]
+            for start in range(0, len(required), width):
+                group = required[start:start+width]
                 negatives = []
                 full_path = tuple(p for p in sp if p != '$ref') + ('required',)
                 for member in group:
@@ -96,6 +96,7 @@ def main():
     parser.add_argument('--family')
     parser.add_argument('--start-position',type=int,default=1)
     parser.add_argument('--end-position',type=int,default=94)
+    parser.add_argument('--rows-per-table',type=int,choices=range(1,9),default=1)
     parser.add_argument('--out',required=True,type=Path)
     args=parser.parse_args()
     args.out.mkdir(parents=True,exist_ok=True)
@@ -103,7 +104,7 @@ def main():
               if args.start_position<=r['position']<=args.end_position and (not args.family or r['event_type']==args.family)]
     if not selected:
         parser.error('unknown family')
-    summaries=[run(row,args.out) for row in selected]
+    summaries=[run(row,args.out,args.rows_per_table) for row in selected]
     return int(any(p['tool_status']!='PASS' for r in summaries for p in r['phases']))
 
 

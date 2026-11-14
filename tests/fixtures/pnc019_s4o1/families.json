@@ -1222,7 +1222,7 @@
       "position": 35,
       "event_type": "chat.response_stop_requested",
       "lane": "DCH",
-      "schema": "Plans/dch_stop_outcome.schema.json",
+      "schema": "Plans/dch_stop_request.schema.json",
       "fixture": "Plans/dch_stop_contract_fixtures.json",
       "before": {
         "lane": "DCH",
@@ -1250,7 +1250,7 @@
         "source": "reports/event-authority-20261104/DCH-self-grade.json",
         "source_sha256": "888e84713193d7bdf0ada940e45c2cb1d330fb5816f39d6d5247e127eaff4215"
       },
-      "schema_sha256": "9e9c35b872dd3d7ad336aa848cbb345e25fac7b67d70821f2916eb32201e4bd7",
+      "schema_sha256": "a8b5dc689d3c8206ac4ba4d6c02d513647235182a74a39c339552bfc7b44c486",
       "fixture_sha256": "e68eea9642badb12c1e440db2fbb651b847a8bb59da868c819aa20e871687544",
       "control_sha256": [
         "aba52d6090127123790519b3afd10bed4bcd5323c46bf8e61d55bf283d55c4be"
