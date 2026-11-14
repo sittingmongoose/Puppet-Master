@@ -122,6 +122,10 @@
   {
    "event_type": "forge.connection.capabilities_changed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.connection.reauthorized",
+   "outcome": "registered"
   }
  ]
 }
