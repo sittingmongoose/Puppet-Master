@@ -29985,6 +29985,32 @@ html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-lookmenu .o55-opt-me
 /* ---- look reveal (View Transitions): the new world opens from the chosen tile; clicks keep working meanwhile ---- */
 html[data-o55-vt]::view-transition { pointer-events: none; }
 html[data-o55-vt]::view-transition-old(root), html[data-o55-vt]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+/* FO-188 variant B: the app beneath keeps its old picture through the reveal and takes the new look when the reveal
+   ends. Each part of it is captured on its own (match-element names, class o55-held), shown as it was, unmoved, for the
+   whole transition, and its new picture is not shown; the window is captured on its own too, so it stays above them,
+   and the circle reveals it as it reveals the page's ground (60-ui-core.js applyLook). In the update the parts are not
+   rendered (data-o55-vt-still: content-visibility hidden, at their last size), so the new look restyles and lays out
+   the window and the ground only, and the app's own observers have nothing to report until the reveal has ended. */
+html[data-o55-vt-b] body > [data-o55-held] { view-transition-name: match-element; view-transition-class: o55-held; }
+html[data-o55-vt-b] #pm-o55-onboarding { view-transition-name: o55-win; }
+html[data-o55-vt-b]::view-transition-group(*.o55-held), html[data-o55-vt-b]::view-transition-old(*.o55-held) { animation: none; }
+html[data-o55-vt-b]::view-transition-new(*.o55-held) { animation: none; opacity: 0; }
+html[data-o55-vt-b]::view-transition-group(o55-win) { animation: none; }
+html[data-o55-vt-b]::view-transition-old(o55-win), html[data-o55-vt-b]::view-transition-new(o55-win) { animation: none; mix-blend-mode: normal; }
+/* the window is see-through (its scrim dims the app at 74%): its old picture is shown outside the circle only, as the
+   circle grows (--o55-vt-r, animated with the circle; 60-ui-core.js). Left whole under the new one, the two scrims
+   dimmed the app's old picture to about 7% inside the circle (VM screenshot, t-b4). */
+@property --o55-vt-r { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@property --o55-vt-x { syntax: '<length-percentage>'; inherits: false; initial-value: 50%; }
+@property --o55-vt-y { syntax: '<length-percentage>'; inherits: false; initial-value: 50%; }
+html[data-o55-vt-b]::view-transition-old(o55-win) {
+  -webkit-mask-image: radial-gradient(circle at var(--o55-vt-x) var(--o55-vt-y), transparent var(--o55-vt-r), #000 calc(var(--o55-vt-r) + 0.5px));
+  mask-image: radial-gradient(circle at var(--o55-vt-x) var(--o55-vt-y), transparent var(--o55-vt-r), #000 calc(var(--o55-vt-r) + 0.5px)); }
+html[data-o55-open] body > [data-o55-held] { contain-intrinsic-size: auto 0px auto 0px; }
+/* (in the new state the parts have no name, so each picture is the old one alone, at the old part's box: named in the
+   new state too, a group took the hidden part's new box, which is empty under content-visibility, and the old picture
+   was drawn into it: the dimmed app vanished for the whole reveal, Alexis film t-b3) */
+html[data-o55-vt-still] body > [data-o55-held] { content-visibility: hidden; view-transition-name: none; }
 
 /* ---- Reduced Motion: order and cause/effect kept, movement removed ---------------------------------------------- */
 html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st,
@@ -99554,7 +99580,7 @@ var PMU_SERIES = {
   function fitLater(body) {
     if (fitQueue.indexOf(body) < 0) fitQueue.push(body);
     if (fitAgain.indexOf(body) < 0) fitAgain.push(body);
-    if (!fitScheduled && !C.fitDefer) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; fitFlush(); }); }
+    if (!fitScheduled && !C.fitDefer) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(fitQueued)) return; fitFlush(); }); }
     /* once more in the next frame: meters and charts finish their own layout after the render, and wrapped text can then
        push a foot past the body (a one-off frame, never a loop) */
     /* (engine 21:26Z request: during an arrival or room change this frame is the next slice's frame and its read forced a
@@ -99576,8 +99602,12 @@ var PMU_SERIES = {
   });
   /* the settled pass runs in idle slices of about 8 ms (NOTES3-perf C1: never a whole-board pass in a moment); over every
      shown board (D10 7.1) */
+  /* FO-188: while a look is revealed over the onboarding window (PM_LOOK_HOLD, the onboarding's 11-motion-start.js) these
+     fits wait for the reveal's end */
+  function fitQueued() { if (fitQueue.length) fitFlush(); }
   function fitSettled() {
     fitSettleT = 0;
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(fitSettled)) return;
     var bodies = shownBodies();
     var idle = window.requestIdleCallback || function (f) { return setTimeout(function () { f({ timeRemaining: function () { return 8; } }); }, 16); };
     (function step(deadline) {
@@ -166176,6 +166206,58 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    not held invisible through the GPU's first draw; other moves still wait for the second. */
 (function () {
   'use strict';
+  /* PM_LOOK_HOLD (FO-188): the app beneath the onboarding window holds still while a look is revealed over it (README
+     Performance rule 6). A look picked in the window plays one View Transition, a circular reveal of 760 ms (Retro 520 ms),
+     and the app's own work for the new look ran inside it: the chat redrew itself (515 ms on the VM), Home, the terminal
+     and the editor applied the look (98 ms in one frame), with the window's own work on top, so the reveal stuttered and
+     lurched (Jared's QA, 2026-11-13: tasks of 50 to 450 ms and frame gaps up to 880 ms on a fast PC). The colours still
+     change at once (CSS); what the app does in script for a look waits until the reveal has ended.
+       PM_LOOK_HOLD()         true while a reveal plays (60-ui-core.js applyLook holds it from the theme's write to the
+                              reveal's end)
+       PM_LOOK_HOLD.after(fn) while held: fn is kept (once) and run after it, and the answer is true; else false, and the
+                              caller runs fn itself as before
+       PM_LOOK_HOLD.begin()   holds; returns end(), which a reveal calls once
+     What was kept runs once the reveal has ended, in idle slices in the order asked: the frame after the reveal's last
+     one is the browser's own restyle of the whole page (the transition ending, about 4,800 elements), and one task doing
+     all of it after that was a long task of its own. A slice runs jobs until 6 ms have gone (at least one): a reveal
+     keeps dozens of after-layout callbacks, whose asking again costs nothing, and one job a slice left the chat's redraw
+     waiting behind them for 0.7 to 2 s after the reveal (Alexis, kit check perf-look-change), the dimmed app showing
+     the old family's glyphs all that time. A new reveal starting meanwhile holds the rest again. */
+  let lookHolds = 0, lookIdle = 0;
+  const lookLater = [];
+  const lookNext = () => {
+    lookIdle = 0;
+    const t0 = performance.now();
+    while (!lookHolds && lookLater.length) {
+      const fn = lookLater.shift();
+      try { fn(); } catch (e) { try { console.error('[PM_LOOK_HOLD]', e); } catch (_) { /* none */ } }
+      if (performance.now() - t0 >= 6) break;
+    }
+    if (lookLater.length) lookSlice();
+  };
+  const lookSlice = () => {
+    if (lookIdle || lookHolds) return;
+    lookIdle = 1;
+    if (window.requestIdleCallback) window.requestIdleCallback(lookNext, { timeout: 200 });
+    else setTimeout(lookNext, 16);
+  };
+  window.PM_LOOK_HOLD = function lookHold() { return lookHolds > 0; };
+  window.PM_LOOK_HOLD.after = function after(fn) {
+    if (!lookHolds || typeof fn !== 'function') return false;
+    if (lookLater.indexOf(fn) < 0) lookLater.push(fn);
+    return true;
+  };
+  window.PM_LOOK_HOLD.begin = function begin() {
+    lookHolds++;
+    let open = true;
+    return function end() {
+      if (!open) return;
+      open = false;
+      if (--lookHolds > 0) return;
+      /* past the frame of the transition's own end restyle, then the slices */
+      requestAnimationFrame(() => requestAnimationFrame(lookSlice));
+    };
+  };
   /* PM_AFTER_LAYOUT(fn): fn runs in the coming frame after its style and layout, before its paint (a ResizeObserver
      delivery), so what it reads is already computed. One observer, made as this script loads, serves every caller:
      ResizeObservers are told in the order they were made, and one made at the moment it was needed was told after the
@@ -166185,13 +166267,23 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      Never ask from inside another ResizeObserver's callback: that code already runs after layout, so do the work there.
      The root observed from inside a delivery cannot be delivered in that frame; the browser reports it as a
      'ResizeObserver loop' error and fn runs a frame late (the panels' bodyObserver asking for its resize flush, F4
-     settle bisect). Asked from inside this helper's own delivery, fn is moved to the next frame on purpose. */
-  const afterQ = [];
+     settle bisect). Asked from inside this helper's own delivery, fn is moved to the next frame on purpose.
+     While a look is revealed over the window (PM_LOOK_HOLD above) only the window's own callers run here (marked with
+     PM_AFTER_LAYOUT.own: the moves held for a frame on time, the hover tokens); every other one
+     is the app beneath applying the look (Home's render and tab bodies, the terminal's and editor's look, the rail's fit,
+     the wallpaper's reads), and is kept until the reveal has ended, then asked again, one per idle slice. */
+  const afterQ = [], afterOwn = new WeakSet(), afterHeld = new Set();
   let afterRo = null, observing = false, flushing = false, flushedAt = null;
   const watch = () => { if (!observing && afterQ.length) { observing = true; afterRo.observe(document.documentElement); } };
+  const afterHold = (fn) => {
+    if (afterHeld.has(fn)) return;
+    afterHeld.add(fn);
+    window.PM_LOOK_HOLD.after(() => { afterHeld.delete(fn); window.PM_AFTER_LAYOUT(fn); });
+  };
   const flushAfter = () => {
     if (afterRo && observing) { afterRo.unobserve(document.documentElement); observing = false; }
-    const q = afterQ.splice(0);
+    let q = afterQ.splice(0);
+    if (lookHolds) q = q.filter((fn) => { if (afterOwn.has(fn)) return true; afterHold(fn); return false; });
     flushing = true;
     flushedAt = document.timeline.currentTime;
     for (const fn of q) { try { fn(); } catch (e) { try { console.error('[PM_AFTER_LAYOUT]', e); } catch (_) { /* none */ } } }
@@ -166211,6 +166303,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (flushedAt != null && flushedAt === document.timeline.currentTime) { requestAnimationFrame(watch); return; }
     watch();
   };
+  /* the window's own callers: never held by a look's reveal (above) */
+  window.PM_AFTER_LAYOUT.own = function own(fn) { if (typeof fn === 'function') afterOwn.add(fn); return fn; };
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     /* o.wait: () => bool. While it says true the moves stay held, even when the frames are on time, for at most o.waitCap
@@ -166273,7 +166367,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* Each check runs in its frame after layout (PM_AFTER_LAYOUT, before paint), so reading
        the moves (getAnimations for CSS animations) finds style already computed: from an animation frame callback it
        forced that frame's style early (49.7 ms on the P1000 for the customizer's six panels, editor lane). What the
-       check changes is drawn in the same frame. */
+       check changes is drawn in the same frame. A look's reveal never holds it (PM_AFTER_LAYOUT.own). */
+    window.PM_AFTER_LAYOUT.own(tick);
     const next = () => requestAnimationFrame(() => window.PM_AFTER_LAYOUT(tick));
     next();
   };
@@ -166496,6 +166591,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const animOn = (k) => (e) => {
     const el = e.target;
     if (!el || el.nodeType !== 1) return;
+    /* a View Transition's own pseudo-elements (a look's reveal) end with it and are no motion of the page's: counted, the
+       lookup asked <html> for every animation under it, 196 ms inside a Light reveal on the VM (FO-188, variant B) */
+    if (e.pseudoElement && e.pseudoElement.indexOf('::view-transition') === 0) return;
     let m = warmAnims.get(el);
     if (!m) warmAnims.set(el, (m = new Map()));
     const now = performance.now();
@@ -166529,7 +166627,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return st;
   };
   /* in PM_AFTER_LAYOUT: style is computed, so reading an element's animations forces nothing. Only an element counted for
-     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review) */
+     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review). While a
+     look is revealed over the window this lookup waits for the reveal's end like the app's callers (PM_LOOK_HOLD): one
+     getAnimations per counted element, it was 112-115 ms inside a Light reveal on the VM (FO-188, variant B), and the
+     warm queue does nothing while the window is open anyway (PM_BUSY: 'onboarding'). */
   const classify = () => {
     warmClassing = false;
     const now = performance.now();
@@ -168440,10 +168541,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     };
     const it = roomSteps(c, kitName);
     if (typeof OfflineAudioContext !== 'undefined' && c instanceof OfflineAudioContext) { let r; while (!(r = it.next()).done); wire(r.value); return input; }
+    /* (FO-188: the room's convolver takes its impulse in one go, 32-39 ms on the VM for a look's first sound, so while a
+       look is revealed over the window it is wired once the reveal has ended, PM_LOOK_HOLD; a sound that starts in
+       the reveal plays without that room's tail, as every sound did until the room's steps were done) */
     const step = () => {
       const t0 = performance.now(); let r;
       while (!(r = it.next()).done) if (performance.now() - t0 > 5) break;
-      if (r.done) wire(r.value); else setTimeout(step, 0);
+      if (!r.done) { setTimeout(step, 0); return; }
+      const L = window.PM_LOOK_HOLD, b = r.value;
+      if (L && L.after && L.after(() => wire(b))) return;
+      wire(b);
     };
     setTimeout(step, 0);
     return input;
@@ -173903,7 +174010,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         stampSoon(300);
         if (hover || springs.size || lit.size) { moved = true; start(); }
       };
-      if (typeof window.PM_AFTER_LAYOUT === 'function') { tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
+      /* (the window shows the hover: a look's reveal over it never holds this read, PM_AFTER_LAYOUT.own) */
+      if (typeof window.PM_AFTER_LAYOUT === 'function') { if (window.PM_AFTER_LAYOUT.own) window.PM_AFTER_LAYOUT.own(retokenFrame); tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
       else tokenFrame = raf(retokenFrame);
     }
 
@@ -182395,18 +182503,119 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* into or out of NieR (the fifth theme, Q22), also while its moment still plays: NieR's own moment plays inside the
        window (O55.nierLook.pick) */
     if ((family === 'nier') !== (asked === 'nier') && O55.nierLook && O55.nierLook.pick) { O55.nierLook.pick(family, mode, originEl); return; }
-    if (!document.startViewTransition || O55.motion.reduced() || O55.motion.lowResource) { apply(); return; }
-    if (S.vt) { try { S.vt.skipTransition(); } catch (_) {} }
+    const motionOff = () => O55.motion.reduced() || O55.motion.lowResource;
+    if (!document.startViewTransition || motionOff()) { apply(); return; }
+    skipLook();
     const r = originEl ? originEl.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
     const x = r.left + r.width / 2, y = r.top + r.height / 2, end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     document.documentElement.setAttribute('data-o55-vt', family);
-    const vt = S.vt = document.startViewTransition(apply);
+    /* FO-188: the app beneath holds still from the theme's write to the reveal's end (PM_LOOK_HOLD, 11-motion-start.js):
+       its after-layout work and the chat's redraw wait (variant B, below: it is not drawn in the new look until the reveal
+       ends, so it starts no colour transitions inside the reveal either) */
+    const release = window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.begin ? window.PM_LOOK_HOLD.begin() : () => {};
+    /* A look's fonts (123 embedded faces) load the first time the page uses them, and each one that arrived during the
+       reveal laid the whole page out again: two passes of 3,895 objects inside a Friendly reveal (62 and 70 ms on the VM,
+       layout invalidation "Fonts changed"). The update waits for the faces the new look asked for (its first layout runs
+       in the window's own look observer, just before this), at most 300 ms, so that layout is done before the reveal's
+       first frame. A look whose fonts are already in pays nothing. document.fonts is read only after that observer:
+       its ready and status flush the page's style and layout, and read at once they took the new look's whole restyle
+       ahead of the window's own attributes, which then restyled the window a second time (491 + 225 ms on the VM). */
+    /* FO-188 variant B: the app beneath keeps its old picture through the reveal (20-motion.css data-o55-vt-b) and is
+       not rendered while it plays (data-o55-vt-still, set in the update just after the theme's write, before anything
+       reads the page): the new look styles and lays out the window and the ground only. When the reveal ends the app
+       takes the new look in one go, and its held work follows (PM_LOOK_HOLD). Where the browser cannot give each part
+       of the app its own picture (view-transition-name: match-element), the reveal runs as before. */
+    const still = !!(window.CSS && CSS.supports && CSS.supports('view-transition-name', 'match-element') && CSS.supports('view-transition-class', 'o55-held'));
+    /* (the app is shown for the new reveal's picture of it: skipLook, above, has ended a reveal still playing) */
+    document.documentElement.removeAttribute('data-o55-vt-still');
+    if (still) document.documentElement.setAttribute('data-o55-vt-b', '');
+    /* The whole wait belongs to its transition (R33). One end, whatever ends it: finished, the next pick, a press, a key,
+       close() (skipLook, below), or Reduced Motion or low-resource found on at ready. Its 900 ms cap and its frame chain
+       stop, its circles and corner clips are cancelled, play() does nothing any more, the app is shown in the new look
+       and the held work is released. An obsolete reveal's cap had played its old circles inside the next pick's reveal,
+       and Escape closed the window beneath the old window's picture, which stayed on top until the reveal played out. */
+    let vt, over = false, cap = 0;
+    const made = [];
+    const endWait = () => {
+      if (over) return;
+      over = true; clearTimeout(cap);
+      made.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } });
+      if (S.vtEnd === endWait) S.vtEnd = null;
+      if (still && S.vt === vt) { document.documentElement.removeAttribute('data-o55-vt-still'); document.documentElement.removeAttribute('data-o55-vt-b'); }
+      release();
+    };
+    const update = () => {
+      apply();
+      if (still && !over) document.documentElement.setAttribute('data-o55-vt-still', '');
+      if (!document.fonts) return undefined;
+      return Promise.resolve().then(() => {
+        const F = document.fonts;
+        if (F.status !== 'loading') return undefined;
+        return Promise.race([F.ready, new Promise((res) => setTimeout(res, 300))]);
+      });
+    };
+    try { vt = S.vt = document.startViewTransition(update); S.vtEnd = endWait; }
+    catch (_) { release(); S.vt = null; ['data-o55-vt', 'data-o55-vt-b', 'data-o55-vt-still'].forEach((a) => document.documentElement.removeAttribute(a)); apply(); return; }
     vt.ready.then(() => {
+      if (over) return;
+      /* Reduced Motion or low-resource switched on between the press and ready: the look shows at once, as it would
+         have had either been on at the press */
+      if (motionOff()) { try { vt.skipTransition(); } catch (_) { /* done */ } endWait(); return; }
       const retro = family === 'retro';
-      document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
-        { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)', pseudoElement: '::view-transition-new(root)' });
+      /* (variant B: the window is a picture of its own, revealed by the same circle as the ground) */
+      const timing = { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)' };
+      const anims = ['root'].concat(still ? ['o55-win'] : []).map((name) => document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        Object.assign({ pseudoElement: `::view-transition-new(${name})` }, timing)));
+      /* (variant B: the window's old picture gives way where the circle has passed, 20-motion.css --o55-vt-r) */
+      if (still) anims.push(document.documentElement.animate({ '--o55-vt-r': ['0px', end + 'px'], '--o55-vt-x': [x + 'px', x + 'px'], '--o55-vt-y': [y + 'px', y + 'px'] },
+        Object.assign({ pseudoElement: '::view-transition-old(o55-win)', fill: 'forwards' }, timing)));
+      /* FO-188 (c): the circle starts once the new look's frames flow. The first frame in a new look is a one-off cost: a
+         task at the first frame, and on a look's first use a GPU pause of 165-592 ms while the new look is rastered
+         (Alexis, t-b14); started at ready, the circle's fast first part was spent inside them, the part Jared misses. So the
+         animations wait at their first keyframe (the circle at 0: the old picture stays on screen) and start together on
+         the third of three frames on time in a row, or 900 ms after ready at the latest; at once on a hidden page (a
+         low-resource computer, or Reduced Motion, found on at ready or at the start, skips the reveal). 'o55:reveal' is
+         sent on window as they start (the kit check times the circle from it). */
+      anims.forEach((a) => { try { a.pause(); } catch (_) { /* gone */ } });
+      /* While it waits, the new picture is clipped to a path whose box is the whole viewport but which shows only two
+         1-pixel squares in opposite corners: a picture closed to nothing is not drawn at all, and a look's first raster
+         (the GPU pause) then came on the circle's first frame, 244-255 ms on a first Glass pick (Alexis, t-b16), however
+         long it had waited; clipped this way the whole new look is drawn while the old picture still shows. Made after the
+         circles, so it is the clip that applies until play() takes it away. Frames flow when three come on time in a row. */
+      const W = innerWidth, H = innerHeight, corners = `path('M0 0h1v1h-1z M${W - 1} ${H - 1}h1v1h-1z')`;
+      const holds = ['root'].concat(still ? ['o55-win'] : []).map((name) => document.documentElement.animate({ clipPath: [corners, corners] },
+        { pseudoElement: `::view-transition-new(${name})`, duration: 60000 }));
+      made.push(...anims, ...holds);
+      let go = false, last = null, onTime = 0;
+      const play = () => {
+        if (go || over) return;
+        if (motionOff()) { try { vt.skipTransition(); } catch (_) { /* done */ } endWait(); return; }
+        go = true; clearTimeout(cap);
+        holds.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } });
+        anims.forEach((a) => { try { a.play(); } catch (_) { /* gone */ } });
+        try { window.dispatchEvent(new Event('o55:reveal')); } catch (_) { /* none */ }
+      };
+      const flowing = (now) => {
+        if (go || over) return;
+        onTime = last != null && now - last < 34 ? onTime + 1 : 0;
+        if (onTime >= 2) { play(); return; }
+        last = now; O55.motion.real.raf(flowing);
+      };
+      if (document.hidden) play();
+      else { cap = setTimeout(play, 900); O55.motion.real.raf(flowing); }
+      /* the window's own colour transitions end here too, as NieR's path ends them (syncTheme): about 500 of its elements
+         eased from the old colours inside the circle and were restyled in every frame of the reveal (the rig's frames,
+         25 ms each on the VM). At ready the new look's style is computed, so asking forces nothing. */
+      try { S.root.getAnimations({ subtree: true }).forEach((a) => { if (a.transitionProperty && a.playState === 'running' && /color|background|border|shadow|fill|stroke|outline/.test(a.transitionProperty)) a.finish(); }); } catch (_) { /* decoration only */ }
     }).catch(() => {});
-    vt.finished.finally(() => { if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); } });
+    /* what waited is still the look's repaint: it never counts toward low-resource mode either (it ran past the click's
+       quiet and switched the VM to the instant path after two changes) */
+    vt.finished.finally(() => {
+      O55.motion.quiet(2500);
+      /* (variant B: the app takes the new look now, in the frame of the transition's own end restyle: endWait(), above) */
+      endWait();
+      if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); }
+    });
   }
   /* The app beneath holds still while the window is open (README Performance rule 6). A theme written under the window
      (a Project's settings loading as it is selected, the look saved into it) has the app's own listeners announce a
@@ -182423,12 +182632,38 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
   /* Input never waits for the look reveal. While a view transition plays, the browser hands every click to the page
      root, and on a heavy page on a slow computer the reveal outlasted a second: an early Continue was lost. A press
-     during the reveal ends it at once, and the click goes to whatever was under the pointer. */
+     during the reveal ends it at once, and the click goes to whatever was under the pointer. A key ends it the same way
+     wherever focus is (a deliberate key, below; a key-up never does: Space picks a look on its key-up), and so does
+     close(): Escape, or the Close button by keyboard, closed the window beneath the old window's picture (R33).
+     skipLook() is the one interruption: the transition is skipped and its wait's end (applyLook's endWait()) runs at
+     once, in the same task. */
+  function skipLook() {
+    const vt = S.vt, endWait = S.vtEnd;
+    if (!vt) return;
+    try { vt.skipTransition(); } catch (_) { /* done */ }
+    if (endWait) endWait();
+  }
   document.addEventListener('pointerdown', (e) => {
     if (!S.vt) return;
-    try { S.vt.skipTransition(); } catch (_) {}
+    skipLook();
     S.vtPress = { x: e.clientX, y: e.clientY, t: performance.now() };
   }, true);
+  /* Only a deliberate key ends it (R35). A key held down is not pressed again: a look picked by keyboard (Enter on its
+     row) began its reveal with that key, and its auto-repeat (flagged or not) is not new input; a key counts again once
+     it has come up. Nor is a key that says nothing to the page: an IME's composition (isComposing, 'Process', keyCode
+     229, the Enter that commits it), a dead key's accent, a modifier or lock (AltGr among them), the system's own keys
+     (media, volume, brightness, launch, browser, power, PrintScreen) or one the browser cannot name. */
+  const keysDown = new Set(), keyOf = (e) => e.code || e.key;
+  const notInput = (e) => e.isComposing || e.keyCode === 229
+    || /^(Process|Dead|Unidentified|Shift|Control|Alt|AltGraph|Meta|OS|Super|Hyper|CapsLock|NumLock|ScrollLock|Fn|FnLock|Symbol|SymbolLock|PrintScreen)$/.test(e.key)
+    || /^(Audio|Media|Volume|Launch|Browser|Brightness|Mic|Power|WakeUp|Sleep|Standby|Eject|Hibernate|LogOff)/.test(e.key);
+  document.addEventListener('keydown', (e) => {
+    const k = keyOf(e), again = e.repeat || keysDown.has(k);
+    keysDown.add(k);
+    if (S.vt && !again && !notInput(e)) skipLook();
+  }, true);
+  document.addEventListener('keyup', (e) => { keysDown.delete(keyOf(e)); }, true);
+  window.addEventListener('blur', () => keysDown.clear());
   document.addEventListener('click', (e) => {
     const k = S.vtPress; if (!k) return;
     S.vtPress = null;
@@ -183595,6 +183830,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* close(reason, {handoff}) — with handoff the window gives way at once, because the Guided Tour's first callout
      grows out of the same rectangle in the same frame (see O55.tour.start({from})) */
   function close(reason, o) {
+    skipLook(); /* a look's reveal ends with the window (R33) */
     if (pendingMount) { pendingMount = null; openGen++; clearOpenScrim(); }
     if (!S.open) return;
     const handoff = !!(o && o.handoff);
@@ -184271,9 +184507,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const n = N(); if (!n) return false;
     const on = family === 'nier';
     if (!inWindow()) { const tome = window.PM7_SETTINGS_TOME; try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(family); tome.setChromeThemeMode(mode); } } catch (_) {} return true; }
+    /* FO-188: the app beneath holds still from the pick until the cover's first frame (PM_LOOK_HOLD, 11-motion-start.js),
+       so its work for the new look (the chat's redraw: 704 ms on the VM, inside the click's own task with the window's)
+       is done under the cover, which is there to hide the repaint, and no longer holds the cover back. The instant path
+       (Reduced Motion, a low-resource computer) has no cover, and is unchanged. */
+    const L = window.PM_LOOK_HOLD, release = L && L.begin && !instant() ? L.begin() : null;
     try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); } catch (_) { /* the moment repaints it */ }
-    if (state().on === on) return true;
-    return flip(on, el);
+    if (state().on === on) { if (release) release(); return true; }
+    const flipped = flip(on, el, release);
+    if (!flipped && release) release();
+    return flipped;
   }
   /* after setup (the tour's look menu): Settings' page-wide moment, grown from the row pressed, with the sounds played
      here in O55's voice (they follow the tour's own sound control): the hum on the cover's first frame (its growth
@@ -184320,7 +184563,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
   /* the stage's moment, until the cover has lifted: the window re-renders the stage with its cast held in the wings */
   const busy = () => !!(flight && !flight.revealed);
-  function flip(next, el) {
+  function flip(next, el, release) {
     const n = N(); if (!n || !inWindow()) return false;
     const S = O55.S, A = O55.art, tr = troupe(), NW = O55.nierWindow, FX = O55.nierFx;
     heavy(4500);
@@ -184330,8 +184573,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!next) O55.sound.play('nierOff');
     look(S);
     /* a second toggle: the first one's beats end where they stand */
-    if (flight) { snap(); flight.timers.forEach((t) => t.cancel()); }
-    const F = flight = { id: ++flights, on: next, timers: [], revealed: false, entered: false, spoke: false, snapped: false, humAt: next ? null : O55.motion.now() };
+    if (flight) { snap(); flight.timers.forEach((t) => t.cancel()); held(flight); }
+    const F = flight = { id: ++flights, on: next, timers: [], revealed: false, entered: false, spoke: false, snapped: false, humAt: next ? null : O55.motion.now(), release };
+    /* (a cover that never reports its first frame lets the app go at its reveal, or after 1.5 s, also once the window
+       has closed) */
+    if (release) setTimeout(() => held(F), 1500);
     const st = stageEl();
     if (next) {
       /* T0: the thumbnail's units peek with joy as the brackets lock on; the resting Pod waits off stage */
@@ -184359,9 +184605,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     F.humAt = O55.motion.now();
     if (flight === F && inWindow()) O55.sound.play('nierOn');
   }
+  /* the app beneath goes on (the pick's hold, above) */
+  function held(F) { const r = F && F.release; if (r) { F.release = null; r(); } }
   function reveal(F, phase) {
-    if (phase === 'start') { hum(F); return; }
-    if (phase === 'gone') { F.gone = true; return; }
+    if (phase === 'start') { hum(F); held(F); return; }
+    if (phase === 'gone') { F.gone = true; held(F); return; }
+    held(F);
     if (phase !== 'reveal' || F.revealed) return;
     hum(F); /* a moment that never reported its first frame */
     F.revealed = true; F.revealAt = O55.motion.now();
@@ -202663,6 +202912,8 @@ function srchReveal(panel, tog) {
 let dsrWired = false, dsrTimer = 0, dsrLate = 0;
 function dsrFitAll() {
   if (!D.on) return;
+  /* FO-188: while a look is revealed over the onboarding window (PM_LOOK_HOLD, the onboarding's 11-motion-start.js) the fit waits for the reveal's end */
+  if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(dsrFitAll)) return;
   srchFit(document.getElementById('panel-search'));
   const run = document.getElementById('panel-run');
   if (run && typeof rdpFit === 'function') rdpFit(run);
@@ -205922,6 +206173,7 @@ render.schedule = function (opts) {
   paintQueued = true;
   var run = function () {
     if (!paintQueued) return;   // a synchronous paint already consumed this request
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(run)) return;   // FO-188: a look's reveal over the onboarding window holds it to the reveal's end (paintQueued stays set, so later schedules fold into it)
     paintQueued = false;
     var anim = paintAnimate; paintAnimate = false;
     try { render.paint({ animate: anim }); } catch (err) { try { console.error('[pm-home] paint failed', err); } catch (_) {} }
@@ -219216,7 +219468,8 @@ function setup() {
 
   /* re-measure every open editor when a font arrives (JetBrains Mono loads on first use) */
   try {
-    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function () { primedFontWidths.clear(); EDITORS.forEach(function (v) { v.relayout(); }); });
+    /* (FO-188: while a look is revealed over the onboarding window, PM_LOOK_HOLD, the re-measure waits for the reveal's end) */
+    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function fontsArrived() { if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(fontsArrived)) return; primedFontWidths.clear(); EDITORS.forEach(function (v) { v.relayout(); }); });
   } catch (_) {}
   /* PMW.editorPreview(host, { text, base, language, problems, view, caret }): a live editor that draws the given text the
      way an editor tab with that view's look would, as the Customize screen's preview; it takes no input */
@@ -253171,11 +253424,24 @@ window.PM56_CLASS_MAP={"activity-bar": "pm56-activity-bar"};
     if (!cp || typeof MutationObserver !== 'function') return;
     new MutationObserver(function () { if (frame.parentNode !== cp) mount(); }).observe(cp, { childList: true });
   })();
+  /* FO-188: a look picked in the onboarding window is revealed over the app (PM_LOOK_HOLD, the onboarding's
+     11-motion-start.js). The hosts take the new data-theme at once, so the chat's colours change with the page's by CSS;
+     its hooks (app.js redraws the whole chat for a look: 515 ms on the VM, most of it the first read of the page's new
+     layout) wait until the reveal has ended, and then run once for the look the page has then. */
+  var toldTheme = null;
+  function tellTheme() {
+    var t = root.getAttribute('data-theme');
+    if (t === toldTheme) return;
+    toldTheme = t;
+    themeFns.forEach(function (fn) { try { fn(t); } catch (err) { console.error('[pm56] theme hook failed', err); } });
+  }
   if (typeof MutationObserver === 'function') {
+    toldTheme = root.getAttribute('data-theme');
     new MutationObserver(function () {
-      var before = root.getAttribute('data-theme');
-      var t = syncTheme();
-      if (t !== before) themeFns.forEach(function (fn) { try { fn(t); } catch (err) { console.error('[pm56] theme hook failed', err); } });
+      syncTheme();
+      var L = window.PM_LOOK_HOLD;
+      if (L && L.after && L.after(tellTheme)) return;
+      tellTheme();
     }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
@@ -323419,7 +323685,11 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   /* ---- keeping up ---------------------------------------------------------------------------------------------- */
   /* the look changes (theme, NieR Mode): repaint the choice; another writer (glass.js's concept control) changes the
      wallpaper: only the gallery follows, nothing is written back, so no two writers can answer each other */
+  /* FO-188: while a look is revealed over the onboarding window (PM_LOOK_HOLD, the onboarding's 11-motion-start.js) the
+     repaint waits for the reveal's end */
+  function relookHeld() { choice(); apply(); resetWarm(); sync(); }
   new MutationObserver(function (recs) {
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(relookHeld)) return;
     var relook = false, was = stale; recs.forEach(function (r) { if (r.attributeName !== 'data-lg-wall') relook = true; });
     choice();
     /* the other writer showed a saved id this build lacks (choice() has just set it back to 'look'): paint the default
