@@ -345,6 +345,24 @@ await test('R38-1b: a pick into NieR (its own moment, no View Transition) ends a
 	expect(p.reveals().length === 0, 'nothing of the earlier reveal plays later');
 });
 
+await test('R36-1a: a key whose key-up was lost counts as pressed again after the next pick', async () => {
+	const p = makePage();
+	await p.key('KeyA'); // its key-up never reaches the page
+	await p.advance(50);
+	const a = await waitingAt(p, 'friendly');
+	await p.key('KeyA');
+	expect(a.skipped > 0, 'a fresh press of a key whose key-up was lost did not end the reveal');
+});
+
+await test('R36-1b: the keys held are forgotten when the page is hidden and shown again', async () => {
+	const p = makePage();
+	await p.key('Enter'); // the pick's own key; its key-up is lost (the window lost focus to another app, say)
+	const a = await waitingAt(p, 'retro');
+	await p.visibility();
+	await p.key('Enter');
+	expect(a.skipped > 0, 'after the page was hidden, a fresh Enter did not end the reveal');
+});
+
 for (const [label, turnOn] of [['Reduced Motion', (p) => { p.motion.reduced = true; }], ['low-resource mode', (p) => { p.motion.lowResource = true; }]]) {
 	await test(`R33-3: ${label} switched on between the press and ready: skipped at ready, held work released at once`, async () => {
 		const p = makePage();

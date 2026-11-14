@@ -286,6 +286,9 @@
     if (asked === family && now.selectedMode === mode) return;
     /* repainting the page for a look is expected heavy work: it never counts toward low-resource mode */
     O55.motion.quiet(2500);
+    /* the keys down are only the one that made this pick, if a key did (R36-1): a key whose key-up never reached the page
+       (the window lost focus, another app took the key) stayed held, and its next fresh press ended no reveal */
+    keysDown.clear(); if (keyNow) keysDown.add(keyNow);
     /* a pick ends a reveal still waiting or playing whichever way it goes on (R38-1): one made without a press or a key
        before it (O55.ui.act, Demo Studio's tools, a direct call) into NieR, or on the instant path, left it to play over
        the new look */
@@ -443,16 +446,20 @@
      229, the Enter that commits it), a dead key's accent, a modifier or lock (AltGr among them), the system's own keys
      (media, volume, brightness, launch, browser, power, PrintScreen) or one the browser cannot name. */
   const keysDown = new Set(), keyOf = (e) => e.code || e.key;
+  /* (the key whose keydown is being handled, until its task ends: Enter on a look row picks it in that task) */
+  let keyNow = null;
   const notInput = (e) => e.isComposing || e.keyCode === 229
     || /^(Process|Dead|Unidentified|Shift|Control|Alt|AltGraph|Meta|OS|Super|Hyper|CapsLock|NumLock|ScrollLock|Fn|FnLock|Symbol|SymbolLock|PrintScreen)$/.test(e.key)
     || /^(Audio|Media|Volume|Launch|Browser|Brightness|Mic|Power|WakeUp|Sleep|Standby|Eject|Hibernate|LogOff)/.test(e.key);
   document.addEventListener('keydown', (e) => {
     const k = keyOf(e), again = e.repeat || keysDown.has(k);
     keysDown.add(k);
+    keyNow = k; O55.motion.real.setTimeout(() => { if (keyNow === k) keyNow = null; }, 0);
     if (S.vt && !again && !notInput(e)) skipLook();
   }, true);
   document.addEventListener('keyup', (e) => { keysDown.delete(keyOf(e)); }, true);
   window.addEventListener('blur', () => keysDown.clear());
+  document.addEventListener('visibilitychange', () => keysDown.clear());
   document.addEventListener('click', (e) => {
     const k = S.vtPress; if (!k) return;
     S.vtPress = null;
