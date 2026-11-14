@@ -295,6 +295,13 @@
     if (!panelRO) panelRO = new ResizeObserver(() => { if (sheet && !sheet.layer.hidden) placeSheet(); });
     if (roPanel !== panel) { if (roPanel) panelRO.unobserve(roPanel); panelRO.observe(panel); roPanel = panel; }
   }
+  /* FO-210: a completed close releases the observer and clears the recorded target, so nothing stays subscribed
+     while the sheet is closed and a reopen observes again. A reopen during the close animation cancels the timer
+     (FO-200), so this never runs for a sheet that came back. */
+  function unwatchChatPanel() {
+    if (panelRO) { panelRO.disconnect(); panelRO = null; }
+    roPanel = null;
+  }
   /* Settings' look per theme, borrowed: every #panel-settings rule that styles a part the page draws (tokens, card,
      row, switch, field, dropdown trigger, buttons, tag, dialog) is copied once with .pm7-mem-sheet in its place, in
      page order and inside the same @media / @container / @supports, so the sheet follows the look exactly. Rules on
@@ -379,7 +386,7 @@
     sheet.portal.querySelectorAll('.overlay, .drawer-wrap').forEach(n => n.remove());
     const layer = sheet.layer;
     layer.classList.remove('is-open');
-    const done = () => { closeTimer = 0; layer.hidden = true; };
+    const done = () => { closeTimer = 0; layer.hidden = true; unwatchChatPanel(); };
     clearTimeout(closeTimer);
     if (motionReduced() || document.documentElement.getAttribute('data-motion') === 'reduced') done(); else closeTimer = setTimeout(done, 220);
     if (restore && opener && opener.isConnected) try { opener.focus({ preventScroll: true }); } catch (e) { /* gone */ }
@@ -399,6 +406,8 @@
   /* ---------- the chat's handle (pm7-port/js/80-quiet-memory.js) ---------- */
   window.PM7_MEMORY = {
     openSheet, closeSheet, isOpen: () => !!(sheet && !sheet.layer.hidden),
+    /* read-only probe: whether the chat-panel observer is subscribed (the kit asserts it is released while closed) */
+    observingChat: () => !!panelRO,
     save: (text, level) => { const n = addNote(text, level); if (n) { lightUp(n.id); redrawAll(); } return n ? { ok: true, id: n.id, level: n.level } : { ok: false }; },
     on: memoryOn, notes: () => clone(notes()), get: id => { const n = noteById(id); return n ? clone(n) : null; },
     levelLabel, levelPhrase

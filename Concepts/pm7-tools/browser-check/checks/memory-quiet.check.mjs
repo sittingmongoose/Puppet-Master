@@ -24,6 +24,9 @@
 //   every sampled frame; a quick Escape then Enter on the restored header button reopens the sheet and it stays open
 //   (the close timer never hides a reopen); under Reduce Motion set before load, Demo Studio's memory-saved then a
 //   real View paints a static highlight on the note (computed paint plus a pixel difference), without any animation.
+// - FO-210 (sol-recheck-fo199-205 L1): the chat-panel ResizeObserver is released on a completed close (the page's
+//   read-only PM7_MEMORY.observingChat probe says so) and a reopen observes again: a held real chat resize after the
+//   reopen still keeps the sheet on the chat column at every sampled frame.
 // --set looks=basic-dark,nier-dark limits the look test (none skips it).
 import { LOOKS } from '../browser-check.config.mjs';
 import { setLookBySetting, setMotionMedia } from '../helpers/settings-look.mjs';
@@ -488,6 +491,68 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.check('after release the sheet still fits the resized chat', after.open && Math.abs(after.final.sheetLeft - after.final.chatLeft) <= 1 && Math.abs(after.final.sheetRight - after.final.chatRight) <= 1 && Math.abs(after.final.sheetW - after.final.chatW) <= 2, JSON.stringify(after.final));
 		await t.page.keyboard.press('Escape');
 		await t.page.waitForTimeout(450);
+	});
+
+	T('FO-210 the chat observer is released on a completed close and observes again on reopen', async (t) => {
+		const f = await home(t, surface, [1920, 1080]);
+		await f.evaluate(() => PMW.chatCol.setWidth(600));
+		await t.settle();
+		await t.page.waitForTimeout(400);
+		const btn = f.locator('#pmRoot .chat-header .pm7-mem-btn').first();
+		const open = () => f.waitForFunction(() => { const l = document.querySelector('.pm7-mem-layer'); return l && !l.hidden && l.classList.contains('is-open'); }, null, { timeout: 8000 });
+		await btn.click();
+		await open();
+		await t.page.waitForTimeout(400);
+		// the probe: the page says whether the chat-panel observer is subscribed (FO-210's read-only hook)
+		const hasHook = await f.evaluate(() => typeof (window.PM7_MEMORY && PM7_MEMORY.observingChat) === 'function');
+		await t.check('the page exposes the observer-state probe (PM7_MEMORY.observingChat)', hasHook);
+		if (!hasHook) return;
+		await t.check('while the sheet is open the chat observer is subscribed', await f.evaluate(() => PM7_MEMORY.observingChat()));
+		await t.page.keyboard.press('Escape');
+		await f.waitForFunction(() => { const l = document.querySelector('.pm7-mem-layer'); return l && l.hidden; }, null, { timeout: 8000 });
+		await t.page.waitForTimeout(300);
+		await t.check('a completed close disconnects the observer', !(await f.evaluate(() => PM7_MEMORY.observingChat())));
+		// reopen observes again, and a held real resize still moves the sheet with the chat
+		await btn.click();
+		await open();
+		await t.page.waitForTimeout(400);
+		await t.check('a reopen observes the chat again', await f.evaluate(() => PM7_MEMORY.observingChat()));
+		await f.evaluate(() => {
+			window.__fo210 = { samples: [] };
+			const read = () => {
+				const l = document.querySelector('.pm7-mem-layer'), c = document.getElementById('chatPanel');
+				if (!l || l.hidden || !c) return;
+				const s = l.querySelector('.pm7-mem-sheet').getBoundingClientRect(), r = c.getBoundingClientRect();
+				window.__fo210.samples.push({ sheetLeft: s.left, chatLeft: r.left, sheetRight: s.right, chatRight: r.right });
+			};
+			// created after the sheet's own observer, so it reads the geometry that observer just re-placed
+			new ResizeObserver(() => { if (document.body.classList.contains('pm-resizing')) read(); }).observe(document.getElementById('chatPanel'));
+		});
+		const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+		const box = await f.evaluate(() => { const r = document.getElementById('chatResizer'); if (!r) return null; const b = r.getBoundingClientRect(); const grab = document.elementFromPoint(b.x + 1.5, b.y + b.height / 2); return { x: b.x, y: b.y, w: b.width, h: b.height, hidden: r.classList.contains('hidden'), grabOnResizer: !!(grab && grab.closest && grab.closest('#chatResizer')) }; });
+		await t.check('the chat resizer’s left edge is exposed beside the reopened sheet', !!box && !box.hidden && box.w >= 3 && box.h > 100 && box.grabOnResizer, JSON.stringify(box));
+		if (!box || box.hidden || !box.grabOnResizer) return;
+		const x0 = off.x + box.x + 1.5, y0 = off.y + box.y + box.h / 2;
+		await t.page.mouse.move(x0, y0);
+		await t.page.mouse.down();
+		await t.page.waitForTimeout(120);
+		for (let i = 1; i <= 10; i++) { await t.page.mouse.move(x0 + 120 * i / 10, y0); await t.page.waitForTimeout(16); }
+		for (let k = 0; k < 4; k++) { await t.page.mouse.move(x0 + 120 + (k % 2 ? 1 : -1), y0); await t.page.waitForTimeout(100); }
+		await t.page.mouse.up();
+		await t.page.waitForTimeout(500);
+		const after = await f.evaluate(() => {
+			const l = document.querySelector('.pm7-mem-layer'), c = document.getElementById('chatPanel');
+			const s = l.querySelector('.pm7-mem-sheet').getBoundingClientRect(), r = c.getBoundingClientRect();
+			return { samples: window.__fo210.samples, open: !l.hidden, final: { sheetLeft: s.left, chatLeft: r.left, sheetRight: s.right, chatRight: r.right, sheetW: s.width, chatW: r.width } };
+		});
+		const gap = (s) => Math.max(Math.abs(s.sheetLeft - s.chatLeft), Math.abs(s.sheetRight - s.chatRight));
+		const spill = after.samples.filter((s) => gap(s) > 1);
+		await t.check('after the reopen, every sampled frame of the held resize keeps the sheet on the chat', after.samples.length >= 6 && spill.length === 0, `${after.samples.length} samples, ${spill.length} spill`);
+		await t.check('after release the sheet fits the resized chat', after.open && gap(after.final) <= 1 && Math.abs(after.final.sheetW - after.final.chatW) <= 2, JSON.stringify(after.final));
+		await t.page.keyboard.press('Escape');
+		await f.waitForFunction(() => { const l = document.querySelector('.pm7-mem-layer'); return l && l.hidden; }, null, { timeout: 8000 });
+		await t.page.waitForTimeout(300);
+		await t.check('closing again releases the observer', !(await f.evaluate(() => PM7_MEMORY.observingChat())));
 	});
 
 	T('FO-200 a quick Escape then Enter reopen stays open', async (t) => {
