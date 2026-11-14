@@ -30,6 +30,7 @@ COMMANDS = [
     ('DFM', 'pm-filemanager-event-contracts.py', []),
     ('DF', 'pm_filesafe_event_contracts.py', []),
     ('DF-authority', 'pm_filesafe_event_authority.py', []),
+    ('DS-p2b', 'pm_ds_p2b_cases.py', ['--check']),
 ]
 
 
