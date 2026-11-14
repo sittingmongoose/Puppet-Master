@@ -540,6 +540,21 @@ const CASES = {
 		smooth(W, i0); smooth(W, i0, 'b');
 		return 'ok';
 	},
+	'a Settings speed change missed while the chip was missing and unwatched is taken when Stop is shown again (R34 F1)': () => {
+		// R34 F1: the quiet timer found no chip and switched the speed listener off; a speed change then was missed, and
+		// showing Stop again for the same run put the listener back without reading the speed (3200 ms where 1920 is due)
+		const W = start({}, true);
+		W.run(200);
+		W.set('shown', false); W.run(1200);                          // the quiet timer fires with no chip: listener off
+		assert.equal(W.api.debug().watching, false, 'unwatched while missing');
+		W.speed(0.6);                                                // missed: nobody listens
+		W.set('shown', true); W.render({ busy: true });              // Stop again, the same run
+		const i0 = W.frames.length;
+		W.run(6000);
+		assert.equal(pace(W), 1920, `the waiting length at Fast: ${pace(W)}`);
+		smooth(W, i0); smooth(W, i0, 'b');
+		return `glyph ${pace(W)} ms`;
+	},
 	"another thread's words do not change the pace": () => {
 		const W = start({}, false);
 		W.run(1500);
