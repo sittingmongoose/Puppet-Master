@@ -210,6 +210,10 @@
   {
    "event_type": "forge.review.changes_requested",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.closed",
+   "outcome": "registered"
   }
  ]
 }
