@@ -21,6 +21,10 @@
 // and closing it with Escape or a press outside move nothing in the panel (its body's scroll and every block stay put),
 // and it stays above the panel and a toast, with and without `isolation: isolate` on #panel-settings (FO-177's rule).
 // The listbox is found through the picker's aria-controls wherever it is drawn. Fails `f8b2098608` (the inline list).
+// FO-178 r2 (opus-recheck-fo178 M1 and L1): a real wheel over the panel body at 1280x500 closes the popup once the
+// trigger leaves the body's view, and no frame before the close overlaps the panel's sticky head; Tab and Shift+Tab
+// out of the popup close it and move focus on past the trigger (Escape still closes on it). These rows fail
+// `7beee5c8b6` (the popup rides over the head; Tab closes on the trigger).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-choices-picker.check.mjs --set page=<build>
 // --set looks=a,b narrows the looks; --set sizes=1390x900,740x900 the sizes; --set setting=<id> another model setting;
 // --set lists=<id,id> narrows the long lists; --set popSizes=1280x500,740x900 narrows FO-178's size sweep.
@@ -897,5 +901,173 @@ export const tests = {
 		await f.evaluate(() => { const st = document.getElementById('fo178-isolation'); if (st) st.remove(); });
 		await t.check(`FO-178 a toast overlapped the popup in at least one cell (${overlapped} of 4)`, overlapped >= 1, 'the toast never met the popup, so its stacking was not tested');
 		await t.viewport(1390, 900);
+	},
+
+	/* FO-178 r2 (opus-recheck-fo178 M1): at 1280x500, a real wheel over the Details panel's body scrolls the trigger
+	   out of the body's view; the popup closes as soon as the trigger is no longer wholly in that view (as an outside
+	   press does, with no focus jump), and in no frame before the close does it overlap the panel's sticky head. The
+	   trigger starts near the body's top so the popup stands under it; the wheel lands on the body's own right edge,
+	   outside the popup. Fails 7beee5c8b6 (the popup follows the trigger over the head and stays open). */
+	'FO-178 r2 a wheel over the panel body closes the popup before it rides over the head': async (t) => {
+		const f = await t.app.open();
+		await t.emulate({ reducedMotion: 'no-preference' });
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		if (!(await openDetails(t, f, SETTING))) return;
+		await t.viewport(1280, 500);
+		await t.page.waitForTimeout(500);
+		await f.waitForFunction(() => innerWidth === 1280 && innerHeight === 500, null, { timeout: 8000 });
+		const where = 'wheel 1280x500';
+		/* the trigger near the body's top, so the popup opens under it and the wheel can carry the trigger out of the
+		   body's view at the top */
+		const setup = await f.evaluate(() => {
+			const body = document.querySelector('#panel-settings .detail-inspector .o55-insp-body');
+			const trig = document.querySelector('#panel-settings .detail-inspector .o55-pick-trigger');
+			if (!body || !trig) return null;
+			body.scrollTop += trig.getBoundingClientRect().top - body.getBoundingClientRect().top - 8;
+			const br = body.getBoundingClientRect(), tr = trig.getBoundingClientRect();
+			return { top: Math.round((tr.top - br.top) * 10) / 10, room: Math.round(body.scrollHeight - body.clientHeight - body.scrollTop) };
+		});
+		await t.check(`${where}: the trigger stands near the body's top with room to scroll out`, !!setup && Math.abs(setup.top - 8) <= 1 && setup.room >= 60, JSON.stringify(setup));
+		if (!setup) { await closeDetails(t, f); return; }
+		await f.locator(PICKER).first().click();
+		await t.page.waitForTimeout(450);
+		const o = await f.evaluate(OPEN);
+		await t.check(`${where}: the popup opens under its trigger, a layer of its own`, o.open && o.layer && o.side === 'under its trigger', JSON.stringify({ open: o.open, layer: o.layer, side: o.side }));
+		/* every frame while the wheel turns: is a popup box on screen, does it overlap the sticky head, is the trigger
+		   still in the body's view */
+		await f.evaluate(() => {
+			const frames = []; let on = true;
+			const read = () => {
+				if (!on) return;
+				const trig = document.querySelector('#panel-settings .detail-inspector .o55-pick-trigger');
+				const body = document.querySelector('#panel-settings .detail-inspector .o55-insp-body');
+				const head = document.querySelector('#panel-settings .detail-inspector .o55-insp-head');
+				const pop = document.querySelector('.o55-pick-pop');
+				let overlap = 0;
+				if (pop && head && pop.getClientRects().length) {
+					const p = pop.getBoundingClientRect(), h = head.getBoundingClientRect();
+					const w = Math.min(p.right, h.right) - Math.max(p.left, h.left), hh = Math.min(p.bottom, h.bottom) - Math.max(p.top, h.top);
+					if (w > 0.5 && hh > 0.5) overlap = Math.round(w * hh);
+				}
+				const tr = trig && trig.getBoundingClientRect(), br = body && body.getBoundingClientRect();
+				frames.push({ pop: !!pop, open: !!(pop && pop.classList.contains('is-open')), overlap, out: !!(tr && br && tr.bottom <= br.top + 0.5), scroll: body ? Math.round(body.scrollTop) : -1 });
+				requestAnimationFrame(read);
+			};
+			requestAnimationFrame(read);
+			window.__fo178r2Watch = { stop() { on = false; return frames; } };
+		});
+		/* the wheel on the body's own right edge (its padding and scrollbar), a strip the popup never covers */
+		const bb = await f.locator('#panel-settings .detail-inspector .o55-insp-body').boundingBox();
+		const off = t.sandboxed ? await (await f.frameElement()).boundingBox() : { x: 0, y: 0 };
+		await t.page.mouse.move(off.x + bb.x + bb.width - 5, off.y + bb.y + 24);
+		let out = false, steps = 0, extra = 0, lastScroll = -1;
+		for (; steps < 24; steps++) {
+			const st = await f.evaluate(() => {
+				const body = document.querySelector('#panel-settings .detail-inspector .o55-insp-body');
+				const trig = document.querySelector('#panel-settings .detail-inspector .o55-pick-trigger');
+				const br = body.getBoundingClientRect(), tr = trig.getBoundingClientRect();
+				return { out: tr.bottom <= br.top + 0.5, scroll: body.scrollTop };
+			});
+			if (st.out) { out = true; extra++; if (extra > 2 || st.scroll === lastScroll) break; }
+			else if (st.scroll === lastScroll) break;
+			lastScroll = st.scroll;
+			await t.page.mouse.wheel(0, 18);
+			await t.page.waitForTimeout(150);
+		}
+		await t.page.waitForTimeout(600);
+		const frames = await f.evaluate(() => window.__fo178r2Watch.stop());
+		const after = await f.evaluate(() => ({
+			popped: !!document.querySelector('.o55-pick-pop'),
+			open: !!document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'),
+			panel: !!document.querySelector('#panel-settings .detail-inspector .o55-insp-head'),
+			focusTrigger: document.activeElement === document.querySelector('#panel-settings .detail-inspector .o55-pick-trigger'),
+			inPop: !!(document.activeElement && document.activeElement.closest && document.activeElement.closest('.o55-pick-pop'))
+		}));
+		const bad = frames.filter((x) => x.pop && x.overlap > 0);
+		t.log(`${where}: ${steps} wheel steps, ${frames.length} frames, trigger out ${out}, overlap frames ${bad.length}${bad.length ? ` (max ${Math.max(...bad.map((x) => x.overlap))} px²)` : ''}`);
+		await t.check(`${where}: the wheel carried the trigger out of the body's view`, out, `${steps} steps, last scroll ${lastScroll}`);
+		await t.check(`${where}: FO-178 r2 the popup closes once the trigger leaves the body's view, the panel stays, and focus does not jump to the trigger`, out && !after.popped && !after.open && after.panel && !after.focusTrigger && !after.inPop, JSON.stringify(after));
+		await t.check(`${where}: FO-178 r2 in no frame before the close does the popup overlap the panel's sticky head (${frames.length} frames)`, frames.length > 0 && bad.length === 0, bad.length ? `${bad.length} frames overlap, first at scroll ${bad[0].scroll}, max ${Math.max(...bad.map((x) => x.overlap))} px²` : 'no frames recorded');
+		await t.page.mouse.move(5, 5);
+		await closeDetails(t, f);
+		await t.viewport(1390, 900);
+	},
+
+	/* FO-178 r2 (opus-recheck-fo178 L1): Tab out of the popup closes it and moves focus on past the trigger, to the
+	   next focusable in the page (Shift+Tab to the one before it), as the chat's model picker walks on from its chip;
+	   a Shift+Tab inside the popup keeps it open, and Escape still closes on the trigger. The model setting at
+	   1390x900. Fails 7beee5c8b6 (Tab out closes on the trigger). */
+	'FO-178 r2 Tab out of the popup goes on past the trigger': async (t) => {
+		const f = await t.app.open();
+		await t.emulate({ reducedMotion: 'no-preference' });
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		if (!(await openDetails(t, f, SETTING))) return;
+		const where = 'Tab 1390x900';
+		/* the walk's target, marked so identity is judged, not a label: the next (or previous) focusable in the page
+		   after (or before) the trigger, the popup's own controls skipped */
+		const MARK = (back) => {
+			const trig = document.querySelector('#panel-settings .detail-inspector .o55-pick-trigger');
+			const pop = document.querySelector('.o55-pick-pop');
+			const stops = [...document.querySelectorAll('button, [href], input, select, textarea, [tabindex]')].filter((el) => {
+				if ((pop && pop.contains(el)) || el.disabled || el.getAttribute('aria-hidden') === 'true' || el.tabIndex < 0 || el.closest('[inert]')) return false;
+				const s = getComputedStyle(el); return s.visibility !== 'hidden' && s.display !== 'none';
+			});
+			const i = stops.indexOf(trig), n = i >= 0 ? stops[i + (back ? -1 : 1)] : null;
+			document.querySelectorAll('[data-fo178r2-mark]').forEach((el) => el.removeAttribute('data-fo178r2-mark'));
+			if (n) n.setAttribute('data-fo178r2-mark', back ? 'back' : 'next');
+			return { found: !!n, label: n ? ((n.getAttribute('aria-label') || n.textContent) || '').replace(/\s+/g, ' ').trim().slice(0, 60) : null };
+		};
+		const AFTER = () => {
+			const trig = document.querySelector('#panel-settings .detail-inspector .o55-pick-trigger');
+			const a = document.activeElement;
+			return {
+				popped: !!document.querySelector('.o55-pick-pop'),
+				expanded: trig ? trig.getAttribute('aria-expanded') : null,
+				onMark: !!(a && a.hasAttribute && a.hasAttribute('data-fo178r2-mark')),
+				onTrigger: a === trig,
+				active: a ? (((a.getAttribute && a.getAttribute('aria-label')) || a.textContent) || '').replace(/\s+/g, ' ').trim().slice(0, 60) : ''
+			};
+		};
+		await beforeOpen(t, f);
+		await f.locator(PICKER).first().click();
+		await t.page.waitForTimeout(450);
+		const o = await f.evaluate(OPEN);
+		await t.check(`${where}: the popup opens with focus in its search`, o.open && o.layer && o.searchFocused, JSON.stringify({ open: o.open, layer: o.layer, search: o.searchFocused }));
+		/* Tab from the search (the popup's last control) */
+		const next = await f.evaluate(MARK, false);
+		await t.check(`${where}: a focusable after the trigger to land on`, next.found, JSON.stringify(next));
+		await t.page.keyboard.press('Tab');
+		await t.page.waitForTimeout(600);
+		const a1 = await f.evaluate(AFTER);
+		t.log(`${where}: Tab lands on "${a1.active}" (wanted "${next.label}")`);
+		await t.check(`${where}: FO-178 r2 Tab out closes the popup and lands on the next focusable after the trigger, not the trigger`, !a1.popped && a1.expanded === 'false' && a1.onMark && !a1.onTrigger, JSON.stringify({ ...a1, wanted: next.label }));
+		/* reopen: Shift+Tab inside the popup stays in it; Shift+Tab from its first control goes on before the trigger */
+		await f.locator(PICKER).first().click();
+		await t.page.waitForTimeout(450);
+		await t.page.keyboard.press('Shift+Tab');
+		await t.page.waitForTimeout(250);
+		const inner = await f.evaluate(() => ({ popped: !!document.querySelector('.o55-pick-pop.is-open'), inPop: !!(document.activeElement && document.activeElement.closest && document.activeElement.closest('.o55-pick-pop')) }));
+		await t.check(`${where}: Shift+Tab inside the popup keeps it open with focus in it`, inner.popped && inner.inPop, JSON.stringify(inner));
+		await f.locator('.o55-pick-pop.is-open .o55-pick-chip').first().focus();
+		const back = await f.evaluate(MARK, true);
+		await t.check(`${where}: a focusable before the trigger to land on`, back.found, JSON.stringify(back));
+		await t.page.keyboard.press('Shift+Tab');
+		await t.page.waitForTimeout(600);
+		const a2 = await f.evaluate(AFTER);
+		t.log(`${where}: Shift+Tab lands on "${a2.active}" (wanted "${back.label}")`);
+		await t.check(`${where}: FO-178 r2 Shift+Tab out closes the popup and lands on the focusable before the trigger, not the trigger`, !a2.popped && a2.expanded === 'false' && a2.onMark && !a2.onTrigger, JSON.stringify({ ...a2, wanted: back.label }));
+		/* Escape still closes on the trigger */
+		await f.locator(PICKER).first().click();
+		await t.page.waitForTimeout(450);
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(400);
+		const a3 = await f.evaluate(AFTER);
+		await t.check(`${where}: Escape still closes the popup with focus back on the trigger`, !a3.popped && a3.expanded === 'false' && a3.onTrigger, JSON.stringify(a3));
+		await f.evaluate(() => document.querySelectorAll('[data-fo178r2-mark]').forEach((el) => el.removeAttribute('data-fo178r2-mark')));
+		await closeDetails(t, f);
 	}
 };

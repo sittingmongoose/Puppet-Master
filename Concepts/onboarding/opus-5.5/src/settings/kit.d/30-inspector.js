@@ -200,10 +200,12 @@ const o55PickBrands = (pm, size) => [`<button type="button" class="o55-pick-chip
                       its size bounce when a search or a maker changes its height; nothing under Reduced Motion
      its surface      a menu sheet in Glass (data-lg-surface="menu") and a popout in every other look
    Inside it, the maker strip (the chat's rail, laid flat for the narrow panel) and the search stay at the top and the
-   list is the popup's own scroll box. It keeps its own keys (arrows, Page Up/Down, Home/End, Enter, Escape, Tab out to
-   the trigger) and keeps focus in its search while a row is pressed (a press on a row is not focus leaving it); a press
-   outside it, focus leaving it, a window resize or its trigger leaving the page close it, and a scroll that moves its
-   trigger takes it along. */
+   list is the popup's own scroll box. It keeps its own keys (arrows, Page Up/Down, Home/End, Enter, Escape on the
+   trigger, Tab out past the trigger) and keeps focus in its search while a row is pressed (a press on a row is not
+   focus leaving it); a press outside it, focus leaving it, a window resize or its trigger leaving the page close it.
+   A scroll that moves its trigger takes it along while the trigger stays wholly in the panel body's view; once it
+   leaves that view (the body clips it under the sticky head), the popup closes instead, with no focus move
+   (FO-178 r2, M1). */
 let o55Pop = null;
 function o55PopClose(focusTrigger) {
   const e = o55Pop; if (!e) return; o55Pop = null;
@@ -212,6 +214,20 @@ function o55PopClose(focusTrigger) {
   const box = e.box;
   sproutClose(box, () => { if (box.isConnected && !box.classList.contains('is-open')) box.remove(); });
   if (focusTrigger && e.trigger.isConnected) { try { e.trigger.focus({ preventScroll: true }); } catch (err) { e.trigger.focus(); } }
+}
+/* Tab out of the popup lands where a Tab from the trigger itself would (the chat picker's walk: focus never leaves
+   its chip, so Tab goes straight on to the next control): the next or previous focusable in the page, in tab order,
+   skipping the popup's own controls. The popup closes first, with no focus move of its own; the walk's target takes
+   the focus. With nothing on that side of the trigger, focus stays on the trigger, as a pick leaves it (FO-178 r2, L1). */
+function o55PopTabOut(p, back) {
+  const stops = [...document.querySelectorAll('button, [href], input, select, textarea, [tabindex]')].filter(el => {
+    if (p.box.contains(el) || el.disabled || el.getAttribute('aria-hidden') === 'true' || el.tabIndex < 0 || el.closest('[inert]')) return false;
+    const s = getComputedStyle(el); return s.visibility !== 'hidden' && s.display !== 'none';
+  });
+  const i = stops.indexOf(p.trigger), next = i >= 0 ? stops[i + (back ? -1 : 1)] : null;
+  o55PopClose(false);
+  const land = next && next.isConnected ? next : p.trigger;
+  if (land && land.isConnected) { try { land.focus({ preventScroll: true }); } catch (err) { land.focus(); } }
 }
 /* Where it stands: the chat's model picker's rule (5.6 Pro positionOverlays, a scoped picker): from the trigger's left
    edge, under the trigger when the whole box fits there, else over it, its bottom edge kept by the trigger so a search
@@ -281,10 +297,12 @@ function o55PopOpen(trigger, setting, pm, src) {
     if ((k === 'Home' || k === 'End') && e.target !== entry.searchInput) { stop(); o55PopMove(entry, 0, k === 'Home' ? 'home' : 'end'); return; }
     if (k === 'Enter' && entry.active >= 0) { stop(); pick(entry.active); return; }
     /* the popup sits at the end of the page, away from its trigger: Tab past its last control, or Shift+Tab before its
-       first, closes it on the trigger, so the next Tab goes on from there through the panel */
+       first, closes it and goes on past the trigger, to the next (or previous) focusable in the page, as the chat's
+       model picker does (there focus stays on the chip, so Tab simply walks on from it). Escape still closes on the
+       trigger (FO-178 r2, L1). */
     if (k === 'Tab') {
       const stops = [...box.querySelectorAll('button, input')].filter(n => !n.disabled && n.getClientRects().length);
-      if ((!e.shiftKey && e.target === stops[stops.length - 1]) || (e.shiftKey && e.target === stops[0])) { stop(); o55PopClose(true); }
+      if ((!e.shiftKey && e.target === stops[stops.length - 1]) || (e.shiftKey && e.target === stops[0])) { stop(); o55PopTabOut(p, e.shiftKey); }
     }
   });
   box.addEventListener('focusout', () => { requestAnimationFrame(() => { if (o55Pop === p && !box.contains(document.activeElement) && document.activeElement !== trigger) o55PopClose(false); }); });
@@ -309,11 +327,18 @@ document.addEventListener('keydown', e => {
   e.preventDefault(); e.stopImmediatePropagation(); o55PopClose(true);
 }, true);
 /* a scroll that moves the trigger (the panel's body, the page) takes the popup along, as kit.js's lists go with their
-   anchor; a scroll inside the popup, or one that leaves the trigger where it was, changes nothing. A resize closes it,
-   as it closes every Settings popout. */
+   anchor, while the trigger stays wholly inside the panel body's visible box; once it leaves that box (the body clips
+   it under the sticky head), the popup closes instead, as an outside press does, with no focus move, so it never rides
+   over the head (FO-178 r2, M1). A scroll inside the popup, or one that leaves the trigger where it was, changes
+   nothing. A resize closes it, as it closes every Settings popout. */
 document.addEventListener('scroll', e => {
   const p = o55Pop; if (!p || p.box.contains(e.target) || !p.trigger.isConnected) return;
   const now = anchorAt(p.trigger); if (p.at && now && Math.abs(now.left - p.at.left) < 0.5 && Math.abs(now.top - p.at.top) < 0.5) return;
+  const body = p.trigger.closest('.o55-insp-body');
+  if (body) {
+    const br = body.getBoundingClientRect(), tr = p.trigger.getBoundingClientRect();
+    if (tr.top < br.top - 0.5 || tr.bottom > br.bottom + 0.5 || tr.left < br.left - 0.5 || tr.right > br.right + 0.5) { o55PopClose(false); return; }
+  }
   o55PopPlace(p);
 }, true);
 window.addEventListener('resize', () => o55PopClose(false));
