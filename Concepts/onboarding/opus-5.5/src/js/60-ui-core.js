@@ -814,7 +814,9 @@
     const c = layer.querySelector('.o55-scroll > .o55-content'), sc = c && c.parentElement;
     if (!c || !sc) return;
     const top = Math.max(0, Math.round(c.offsetTop - sc.offsetTop)); /* (layout offsets: the window's opening scale does not count) */
-    layer.style.setProperty('--o55-col-top', top + 'px'); layer.setAttribute('data-col-held', '');
+    /* (on the column itself, as a registered property that does not inherit, 10-window.css: set on the layer it was inherited
+       by the screen's every element, and restyled them all, 459 on the Look screen, FO-206) */
+    c.style.setProperty('--o55-col-top', top + 'px'); layer.setAttribute('data-col-held', '');
     /* the held top is also an attribute: a new one moves the column, and the tab strips in it, inside a scroller whose size
        did not change, so Liquid Glass (glass.js, its page observer) syncs their chips after this frame's layout, in the
        frame they move; a resize that centres a column held off-centre (a device card's note came in since, or a look
@@ -958,17 +960,19 @@
     layer.className = `o55-layer o55-entering o55-in-${dir || 'fwd'}${hold ? ' o55-hold' : ''}`;
     layer.setAttribute('data-screen', def.id);
     layer.innerHTML = paneHtml(def);
-    pane.appendChild(layer);
-    if (footRoom) footRoom.observe(layer); /* (its first report, before the first paint, fits the footer: fitFoot) */
-    O55.tips.write(layer); armLoaders(layer);
-    holdColumn(layer);
     /* (a card's ? sits beside it in its option and comes in with it, on its index: p75, the ? circles floated on empty
        space for 7-10 frames before their cards) */
+    /* (given before the screen is in the page, FO-206: given after, these inherited properties restyled each card's whole
+       subtree, and the next read of the page in the click's task paid it) */
     layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => {
       n.style.setProperty('--ci', i);
       const q = n.parentElement && n.parentElement.classList.contains('o55-opt') ? n.parentElement.querySelector(':scope > .o55-tipq') : null;
       if (q) q.style.setProperty('--ci', i);
     });
+    pane.appendChild(layer);
+    if (footRoom) footRoom.observe(layer); /* (its first report, before the first paint, fits the footer: fitFoot) */
+    O55.tips.write(layer); armLoaders(layer);
+    holdColumn(layer);
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
     renderScene(false, hold); renderRail(); renderSound();
