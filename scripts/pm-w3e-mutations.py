@@ -101,8 +101,8 @@ MUTATIONS = [
      'append_payload_full_consumption',
      "registry=STRICT_REGISTRY if strict else REGISTRY,", "registry=REGISTRY,"),
     ('W27', 'owner schema keyword dropped: the owner records lose their allOf', 'append_source_schema',
-     "RESOURCES = {rel: _load(rel) for rel in RESOURCE_FILES}\n",
-     "RESOURCES = {rel: _load(rel) for rel in RESOURCE_FILES}\n"
+     "\nRESOURCES = {rel: _load(rel) for rel in RESOURCE_FILES}\n",
+     "\nRESOURCES = {rel: _load(rel) for rel in RESOURCE_FILES}\n"
      "for _rel in ('Plans/server_system_contracts.schema.json', 'Plans/remote_access_system_contracts.schema.json',\n"
      "             'Plans/backup_restore_system_contracts.schema.json'):\n"
      "    for _d in RESOURCES[_rel]['$defs'].values():\n"

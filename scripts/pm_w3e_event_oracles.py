@@ -187,6 +187,25 @@ def strict_errors(root_id, pointer, value):
                   for e in _validator(root_id, pointer, True).iter_errors(value))
 
 
+# The fixture oracle's own copy of the owner schemas, loaded separately from disk: generated negatives take their
+# expected row from it, so a weakened validation copy in the checker (RESOURCES, REGISTRY, STRICT_REGISTRY) cannot
+# also move the expectation.
+ORACLE_RESOURCES = {rel: _load(rel) for rel in RESOURCE_FILES}
+ORACLE_REGISTRY = _registry(ORACLE_RESOURCES)
+ORACLE_STRICT_REGISTRY = _registry({rel: _strict(doc) for rel, doc in ORACLE_RESOURCES.items()})
+
+
+@functools.lru_cache(maxsize=None)
+def _oracle_validator(root_id, pointer, strict=False):
+    ref = root_id + (('#' + pointer) if pointer else '')
+    return Draft202012Validator({'$ref': ref}, registry=ORACLE_STRICT_REGISTRY if strict else ORACLE_REGISTRY,
+                                format_checker=format_checker(profile=EVENT_RECORD))
+
+
+def oracle_refuses(root_id, pointer, value, strict=False):
+    return any(True for _e in _oracle_validator(root_id, pointer, strict).iter_errors(value))
+
+
 def eager_refs(schema):
     """Resolve every $ref reachable from a root eagerly, transitively across resources, including dormant
     definitions and unvisited branches of every reached node (standing check 9). Raises on any dangling one."""
@@ -2945,9 +2964,9 @@ def _schema_oracle(root_id, pointer, schema_row, strict_row):
     def oracle(trial, _path):
         if physical_reason(trial) is not None:
             return None
-        if schema_errors(root_id, pointer, trial):
+        if oracle_refuses(root_id, pointer, trial):
             return schema_row
-        if strict_errors(root_id, pointer, trial):
+        if oracle_refuses(root_id, pointer, trial, strict=True):
             return strict_row
         return None
     return oracle
@@ -3268,7 +3287,7 @@ def build_negatives(controls, families=None):
                                [(sv, 'the sibling value ' + repr(sv)[:40]) for sv in siblings]):
                 trial = copy.deepcopy(case['event']['payload'])
                 trial[field] = alt
-                if schema_errors(PAYLOAD_ID[family], '', trial) or strict_errors(PAYLOAD_ID[family], '', trial):
+                if oracle_refuses(PAYLOAD_ID[family], '', trial) or oracle_refuses(PAYLOAD_ID[family], '', trial, True):
                     continue
                 N('append_join_' + field, _value(('event', 'payload', field), alt), 'full',
                   field + ' carries ' + label, control=control)
@@ -3655,13 +3674,13 @@ def _checkpoint_oracle(family):
         body_value = trial.get('body_inline')
         if type(body_value) is dict and any(slot_reason(body_value, p) is not None for _n, p in BODY_SLOTS):
             return None
-        if schema_errors(PAYLOAD_ID[family], '/$defs/checkpoint', trial):
+        if oracle_refuses(PAYLOAD_ID[family], '/$defs/checkpoint', trial):
             return 'checkpoint_schema'
         bare = dict(trial, body_inline=None, body_ref={'blake3_id': '0' * 64, 'byte_size': 1,
                                                        'media_type': CHECKPOINT_MEDIA})
-        if strict_errors(PAYLOAD_ID[family], '/$defs/checkpoint', bare):
+        if oracle_refuses(PAYLOAD_ID[family], '/$defs/checkpoint', bare, strict=True):
             return 'checkpoint_full_consumption'
-        if strict_errors(PAYLOAD_ID[family], '/$defs/checkpoint_body', body_value):
+        if oracle_refuses(PAYLOAD_ID[family], '/$defs/checkpoint_body', body_value, strict=True):
             return 'checkpoint_body_full_consumption'
         return None
     return oracle
