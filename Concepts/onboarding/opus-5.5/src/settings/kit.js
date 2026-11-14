@@ -791,7 +791,20 @@ PM51.on('noop', () => {});
 PM51.on('disabled', el => { showToast('Not available', el.dataset.disabledReason || 'This cannot be changed here.', 'info', 2600); });
 /* Narrow hosts: the roster becomes an off-canvas list toggled from the detail head. */
 PM51.on('toggle-roster', el => { state.resourceRosterOpen = !state.resourceRosterOpen; const body = el.closest('.manager-body'); if (body) body.classList.toggle('roster-open', state.resourceRosterOpen); });
-const applyRosterFilter = el => { const list = el.closest('.resource-roster')?.querySelector('.roster-list'); if (!list) return; const q = String(el.value || '').toLowerCase(); list.querySelectorAll('.resource-row').forEach(row => { row.hidden = !!q && !row.textContent.toLowerCase().includes(q); }); };
+const applyRosterFilter = el => {
+  const roster = el.closest('.resource-roster'), list = roster?.querySelector('.roster-list'); if (!list) return;
+  const q = String(el.value || '').toLowerCase(), rows = [...list.querySelectorAll('.resource-row')];
+  rows.forEach(row => { row.hidden = !!q && !row.textContent.toLowerCase().includes(q); });
+  const empty = !!q && !rows.some(row => !row.hidden);
+  let message = roster.querySelector('.pm51-filter-empty');
+  if (!message) {
+    message = document.createElement('div'); message.className = 'pm51-popout-empty pm51-filter-empty';
+    message.textContent = el.placeholder === 'Filter services' ? 'No services match. Clear the filter to see everything.' : 'No matches. Clear the filter to see everything.';
+    list.before(message);
+  }
+  message.hidden = !empty;
+  const title = roster.querySelector('.roster-title'); if (title) title.hidden = empty;
+};
 PM51.applyFilters = scope => { (scope || root).querySelectorAll('input[data-action="pm51-filter"]').forEach(el => { const stored = (PM51.s().filters || {})[ds(el, 'manager')]; if (stored != null && el.value !== stored) el.value = stored; if (el.value) applyRosterFilter(el); }); };
 PM51.onInput('filter', el => { PM51.s().filters = PM51.s().filters || {}; PM51.s().filters[ds(el, 'manager')] = el.value; applyRosterFilter(el); });
 
@@ -822,7 +835,8 @@ PM51.onInput('filter', el => { PM51.s().filters = PM51.s().filters || {}; PM51.s
   const proj = find('projects');
   if (proj) { proj.workspaces = proj.workspaces.filter(w => w.id !== 'project-sync'); proj.summary = 'All project settings, history, and artifacts.'; }
   const mem = find('memory');
-  if (mem) { mem.workspaces = mem.workspaces.filter(w => w.id !== 'owners'); mem.summary = 'Context, memories, Goals, personas, and crews.'; }
+  /* FO-167 (2026-11-12): the quiet Memory page is called Memory (PACKET: the Context & Memory launcher, kept as Memory) */
+  if (mem) { mem.workspaces = mem.workspaces.filter(w => w.id !== 'owners'); const cm = mem.workspaces.find(w => w.id === 'context-memory'); if (cm) cm.label = 'Memory'; mem.summary = 'Memory, Goals, personas, and crews.'; }
   const src = find('source');
   if (src) { const sm = src.workspaces.find(w => w.id === 'source-manager'); if (sm) sm.label = 'Source Control'; src.summary = 'Version history, code services, repositories, and safety.'; }
   const ai = find('ai'); if (ai) ai.summary = 'AI services, web and media abilities, and the Back Seat Driver.';
@@ -840,7 +854,7 @@ const INTROS = {
   mcp: 'Connect outside tools and services the assistant can call.',
   commands: 'Type / commands and press keys to do things faster.',
   testing: 'Decide how your work gets checked and how you debug it.',
-  'context-memory': 'What the assistant remembers about you and this workspace.',
+  'context-memory': 'What Puppet Master remembers between chats.',
   goals: 'Templates and rules for jobs the assistant runs on its own.',
   personas: 'The characters the assistant can play, alone or as a team.',
   'source-manager': 'Keep version history and connect the code services you use.',

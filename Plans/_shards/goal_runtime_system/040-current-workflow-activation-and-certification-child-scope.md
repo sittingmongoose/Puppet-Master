@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L7202-L7918
+Source lines: L7168-L7882
 
-Source SHA256: `a3d445f21fb597b64bb086e380015fe3ae5e7ff9445b60f75ae5bf17aea53614`
+Source SHA256: `89fd63627d92d52c7eb46ca8f019b279f72c15db055a54e46aeb9eec66c963bb`
 
 ---
 
@@ -532,7 +532,6 @@ gui_related: false
 gui_classification_reason: Defines original runtime source, custody, replay and retention contracts without a visual surface.
 split_recommended: false
 depends_on:
-- GRS-026
 - GRS-031
 - SP-214
 - EP-118
@@ -606,7 +605,6 @@ gui_related: false
 gui_classification_reason: Original runtime custody and derived source currentness contract without visual presentation.
 split_recommended: false
 depends_on:
-- GRS-026
 - GRS-031
 - SP-214
 - EP-118

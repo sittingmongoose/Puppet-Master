@@ -1,0 +1,759 @@
+{
+ "schema": "pm.ea.int2_rebase_replay.v1",
+ "old_head": "659e53a30631caa9905903a832423af28bfaa4ff",
+ "new_base": "b4e7a1c63978898b23da167cacfdfac54b2a5c16",
+ "first_parent_base_of_old_chain": "e9c6a46389626c2c5d70b1ff98936172fb65e6c1",
+ "steps": [
+  {
+   "old": "c5eb892ebb4cf7766340f80dc3c934847cf527ce",
+   "parents_kept": [
+    "58c2816ff33365384d4039553f5efdb5370930e6"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge the gated NUMRULE and date-time head (58c2816ff3) for batch-2 integration",
+   "on_b4e7a1c639": "67603ed412cd511c04449617a3dae739f1fa9b70",
+   "final": "56d5272026a3dfe53593f9408c2efcd293c61e52",
+   "on_b69d410c45": "063563668c38a5b58655f82c3ec962c9741658e2"
+  },
+  {
+   "old": "4fc207ea723da3228e86e4d0b289265de96b8605",
+   "parents_kept": [
+    "004bdedd632d9463f3535190a6ed5772338cdce1"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge the gated guard tool (004bdedd63, not the ungated head aecb2bf652) for batch-2 integration",
+   "on_b4e7a1c639": "511df045191cc0169afee8969ce6792b3ddb4030",
+   "final": "c91c7a734eea855b23b9da7815a7879147b24342",
+   "on_b69d410c45": "cf1c099ec32a0dcac0e9658c24795119f4144199"
+  },
+  {
+   "old": "cd7560f4a90bd8f29a1f696fab92a7bffef8f032",
+   "parents_kept": [
+    "86de8bb6d0bc1a0dff822a865c4becad045ef25a"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge the ledger compile witness (86de8bb6d0, plans/tools-batch1-20261105) for batch-2 integration",
+   "on_b4e7a1c639": "62d9bfab31a79030ab434e48e1a2e957c4279c18",
+   "final": "4dac9c543c9763aa4d571f3d2b6a6b63d1cec190",
+   "on_b69d410c45": "9906d30b546be301f1e5da3709a145714d52f1c1"
+  },
+  {
+   "old": "0539485278d8e025ef91b84f59d40a53281b7cf1",
+   "parents_kept": [
+    "ec84baffd08a93c3c276e77263600f66313872c1"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge the landing-check change T32 (ec84baffd0, fix/landing-check-renamed-shard-20261106) for batch-2 integration",
+   "on_b4e7a1c639": "c3527f03d07cba4b41706a4cc29fed31b909e8e0",
+   "final": "9e6f8ebe4da0db605d37a746c969e1ec7aaeaa68",
+   "on_b69d410c45": "aaba796e911f42eaeadf6f472c1e067bd5f69c28"
+  },
+  {
+   "old": "a961e4d0e7eb6a4ddd63997436ea33c88b2dee61",
+   "parents_kept": [
+    "ab613b2c3d398951cef1dc3d852edda1cdc67af1"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge the deck-3 answers (ab613b2c3d, DL-453..DL-464) for batch-2 integration",
+   "on_b4e7a1c639": "3ce38af524f02b14fabf5ff354b1c09258ffbf1c",
+   "final": "f2c8784e4e2e2d19df163737eb4427d5687dc112",
+   "on_b69d410c45": "42e139364b4185e128e4a9894e785bfae4705c57"
+  },
+  {
+   "old": "79e8d68d569185450772752ab3c3daee69f86d64",
+   "parents_kept": [
+    "322a63944d71bf27b3d1afb80c58c47178600549"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge the deck-3 retention (322a63944d, CA-RET3) for batch-2 integration",
+   "on_b4e7a1c639": "60b262215b5a46b883408bf006612d3a746a614b",
+   "final": "bff517fa5fe062aef6f6122098ddb497f39fd99b",
+   "on_b69d410c45": "5d6f826ae927610676ce139a0af1dff6ab3c00eb"
+  },
+  {
+   "old": "b0a403692312b99f6dd657b17e0a1a2456d60053",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "plans(storage): record an independent original's proved anchor with the entry (deck-3 pre-check R2-01)",
+   "on_b4e7a1c639": "9618692eb18b783835f30054a427ef358b62ff9a",
+   "final": "340e33e216fe64da8da260623c3dd3e7faf547b4",
+   "on_b69d410c45": "689e3c4b188088bc7ef0fa80a452c08806885ed8"
+  },
+  {
+   "old": "a14445ab0d75b6df926f834ede53ebfdab2ca7ee",
+   "parents_kept": [
+    "d43056709f2bd4d3698588a1513a59b4f40a2a4f"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge CA-SEAL2 (d43056709f, plans/ea-seal-check-recount-20261105; contains CA-SEAL d67201e885 and 17c842445a) for batch-2 integration",
+   "on_b4e7a1c639": "c754c59d6ec75b183d9f288bdcbbe3529be3e6d3",
+   "final": "a4f39e6882bbcecab01c4c63330931c912127fc7",
+   "on_b69d410c45": "687c68a2b4e8c0ca7a51e0e60faf35d1d8f25ae0"
+  },
+  {
+   "old": "1e6871f5aef019f3e537a6f80160264e8208ef2c",
+   "parents_kept": [
+    "525de6c2cd167306eb2c95d1ab06ee48eff48b1b"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DO (plans/ea-w2-orchestrator-20261104 @ 525de6c2cd) for batch-2 integration",
+   "on_b4e7a1c639": "1a0e3a5cfc7b0b0229ce9d95026d83d18675b1bc",
+   "final": "334e1c5e6535d72a38e2b066f72fdc2b2dde176c",
+   "on_b69d410c45": "3151dae3e4867f4b3e47cab00035d9cd5e784511"
+  },
+  {
+   "old": "3276ac1646fb3672d5d9be4ca429a0f3f9b345b0",
+   "parents_kept": [
+    "ea11e51a2147068914b7c61ce030cdb48387e1a2"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DG6B (plans/ea-w2-plugins-personas-github-20261104 @ ea11e51a21) for batch-2 integration",
+   "on_b4e7a1c639": "0ecc2c47a3c0e4afd444cdb3bc94413effa86682",
+   "final": "2e8d99a5e440436c33792071fe1832e10a28ebea",
+   "on_b69d410c45": "686018c598a9b712dbb07bcbaf5cca42dd2bf964"
+  },
+  {
+   "old": "a87be8871aea7c6e6e792eecf1843243e9e66964",
+   "parents_kept": [
+    "fd5710a1d03fb58acff418d0da4182a600ed060d"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DDBG (plans/ea-w2-debug-20261104 @ fd5710a1d0) for batch-2 integration",
+   "on_b4e7a1c639": "d5cd234cce0afb29f770187f43ad981180b512f7",
+   "final": "a0fc678e7d5048bca1e98c7467f84420963e667e",
+   "on_b69d410c45": "69678143eaa3f9324f12ba9b61b0cc057e4e82d5"
+  },
+  {
+   "old": "c8b7b752c9585f26f4e06056e2f60e7c01f232fb",
+   "parents_kept": [
+    "58a544186c635beeea6e23e16b9f9ff4c1bf42f3"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DC (plans/ea-collab-prep-20261104 @ 58a544186c) for batch-2 integration",
+   "on_b4e7a1c639": "5247760708b51e0cafcddb7ee5b2f868a8973ff8",
+   "final": "b5d2daa32e15a877c1803c6795a6e0d046906de7",
+   "on_b69d410c45": "5ab908db4493e1178b6b50573cd2cc8278600847"
+  },
+  {
+   "old": "8046c2ef29866948890e30346f92b3ad4c15c7d4",
+   "parents_kept": [
+    "bce520811699a2414a396ac4f802d9ee360620ce"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DT (plans/ea-w2-tools-gates-approvals-20261104 @ bce5208116) for batch-2 integration",
+   "on_b4e7a1c639": "7a2f661308d5294aaa6b66db09e36b0f3e5ac35a",
+   "final": "17ee6ce3f912088c26495c4ddcc7cb9b1261b770",
+   "on_b69d410c45": "8de97972bd674683655ecb896b1ac5a3de2ec2c6"
+  },
+  {
+   "old": "db0a8828f4fb70003883d47331913e426531945f",
+   "parents_kept": [
+    "81aff2aa2aebc4cdfe0add2dd6c7b6ea6055b73f"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DCH (plans/ea-w2-chat-20261104 @ 81aff2aa2a) for batch-2 integration",
+   "on_b4e7a1c639": "2395be8a86f9953c426eed25e545bcd4296211c9",
+   "final": "f9224a9c2b408a43dd289397338a3e9faf30125d",
+   "on_b69d410c45": "7caaa01a6c8963814fcab23a04da2e96d9f669d0"
+  },
+  {
+   "old": "f4f31dd3f21b47f55b1c72e08f8e624929d7a1d8",
+   "parents_kept": [
+    "d7f4bddfc713feed82e4602ae47aa47a4e6bc80d"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DX (plans/ea-w2-executor-20261104 @ d7f4bddfc7) for batch-2 integration",
+   "on_b4e7a1c639": "ffbde3c731948ecc946fa28d8ac14f1d760ee62e",
+   "final": "e93c16ef45c3475d7a150e8a7ca8f990a3af3de6",
+   "on_b69d410c45": "1c792a27920760431240c71bdea16785ff192212"
+  },
+  {
+   "old": "3b75e50eb8dc3af3bf98931428f6513706a31ed4",
+   "parents_kept": [
+    "b429745ee3fd50574a638d85598a638ba80206ae"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [
+    "Plans/assistant-memory-subsystem.md"
+   ],
+   "dropped": null,
+   "subject": "merge sweep lane DMEM (plans/ea-w2-memory-maintenance-20261104 @ b429745ee3) for batch-2 integration",
+   "on_b4e7a1c639": "cc6580bc7e8c68c7a1b281cacd56e625d4db4da4",
+   "final": "e0271799c792810ca1df399eb0dcd7549c183ede",
+   "on_b69d410c45": "41bb3acf6c7088ca60d2bb837b803be9a5eb0e8e"
+  },
+  {
+   "old": "381b40da1a0add578849ab4949abf6000045b1f2",
+   "parents_kept": [
+    "23b037b04093f8147f796071f9f935ca538c8f58"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DS15 (plans/ea-w2-section15-newtools-20261104 @ 23b037b040) for batch-2 integration",
+   "on_b4e7a1c639": "3989fc81df19570a161c9d87596ca7dcd30ce1c0",
+   "final": "b9515d7b78128b213efb4d955e44288dec7f1202",
+   "on_b69d410c45": "8f4e07459c826c182e2f492fcd35b31e92390037"
+  },
+  {
+   "old": "b85fa6ff626cefbcba33486bdb1ef6ec039ecead",
+   "parents_kept": [
+    "198ceb40d804156a24633e0281620bf65cc974d3"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DG6A (plans/ea-w2-gui-concerns-20261104 @ 198ceb40d8) for batch-2 integration",
+   "on_b4e7a1c639": "04704a1059d99778302164ae36852ccf51d3a430",
+   "final": "a6ff9b25a7600415cc99706816d773252105c60d",
+   "on_b69d410c45": "c1d83907ecf15f9f5415d4bcee64391196484d60"
+  },
+  {
+   "old": "f5c0c40d985946647507cf4d8cf332cf1b96e868",
+   "parents_kept": [
+    "913318b294d0457208c7357765f0d97519be9ca3"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [
+    "Plans/UI_Command_Catalog.md"
+   ],
+   "dropped": null,
+   "subject": "merge sweep lane DCN (plans/ea-w3-card2-names-20261104 @ 913318b294) for batch-2 integration",
+   "on_b4e7a1c639": "13eaa38e89f7cc5d4065595dc8342d983b360f38",
+   "final": "6d6c298ad707cd762858170862ae9ff28defb78d",
+   "on_b69d410c45": "8c3c021926fac26746bd4dc8e89f66637dd3470d"
+  },
+  {
+   "old": "9782a33143a9b04ccd96e809697d22774cb63da7",
+   "parents_kept": [
+    "35885406912be8bc4e42bb01799a6a821bc9b23f"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DFM (plans/ea-w2-filemanager-20261104 @ 3588540691) for batch-2 integration",
+   "on_b4e7a1c639": "ce173ecbf3d0c28e3421b802778322f040dfbabd",
+   "final": "01b338287e65af398a803fb88c00d2f62c308eb7",
+   "on_b69d410c45": "1e16dc530ab87700a105a8a00d8db111388ba106"
+  },
+  {
+   "old": "ac8fea2b5ceb0427cc157cafbc9482375f3e0494",
+   "parents_kept": [
+    "4cb6c1e44b2e12e43289e123ba91d6f049e058b6"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [
+    "Plans/UI_Command_Catalog.md"
+   ],
+   "dropped": null,
+   "subject": "merge sweep lane DM (plans/ea-w2-small-owners-20261104 @ 4cb6c1e44b) for batch-2 integration",
+   "on_b4e7a1c639": "0eceba2d2db0d137cb5290f1b74727e8f89ceb61",
+   "final": "1648ceb6613f6d1e186f5c207eceb893bea7b7c0",
+   "on_b69d410c45": "73b0a8328e1704831ed1b4894a82c8bdbd3140f2"
+  },
+  {
+   "old": "a1da3279daf9e4158cf5590e37f26743e3f56554",
+   "parents_kept": [
+    "32c260c53df9edf022f26a7495951ef0e336ef64"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [
+    "Plans/application_workflow_source_graph.json"
+   ],
+   "dropped": null,
+   "subject": "merge sweep lane DS (plans/ea-b1-seal-blockers-20261104 @ 32c260c53d) for batch-2 integration",
+   "on_b4e7a1c639": "476f5902977aa27fcb77fb07ee409f8b80b4de67",
+   "final": "f0d0737f31615f233a6c43da646f61050e2caf41",
+   "on_b69d410c45": "84b3eecffa95b9eb67ad6e7eab5421ff1b1cb035"
+  },
+  {
+   "old": "3e43e5eabd23acc5790d8b523db714c90d6fa206",
+   "parents_kept": [
+    "6c14c42433089a129fa14a404f21ef1798935bfd"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DR (plans/ea-w2-runtime-artifacts-20261104 @ 6c14c42433) for batch-2 integration",
+   "on_b4e7a1c639": "a399a8c55c1302a1699c06ae36a4ebddc43028fb",
+   "final": "314164172d74ff88ee80834781da80a2f8d79a62",
+   "on_b69d410c45": "6d1deeafc79ed11c26a7b02c8ac4297c4985ae57"
+  },
+  {
+   "old": "bf749785a3569bca76482ba3eda3b9dfaeab8395",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "plans(storage), scripts, tests: re-pin the storage census once from the batch-2 merged registry",
+   "on_b4e7a1c639": "cf2ea21b99bf679dbf617c249bda9f707ab91ec4",
+   "final": "e283551f8072752a7209fd9d7a8cc340558a0da3",
+   "on_b69d410c45": "7c16bd6da73da37e3bc9ab5c446eb698cdc6c019"
+  },
+  {
+   "old": "1ad380249ede910d504756267e936bf91bfe2989",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [
+    "Plans/application_workflow_source_graph.json"
+   ],
+   "dropped": null,
+   "subject": "plans: refresh CV-366's source-graph pin for the merged application workflow contracts",
+   "on_b4e7a1c639": "eb9985d525b7da737a2c4a2bd2f4ed0ff14eabf9",
+   "final": "d82c15da7e297bd9b04845ff747a3c18facc879c",
+   "on_b69d410c45": "59d5b175915060508c0e66585d7a43bc499a5418"
+  },
+  {
+   "old": "bf2a7b291add1daf60c6fc7233094a2dae88dc5e",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [
+    "Plans/UI_Command_Catalog.md",
+    "Plans/assistant-memory-subsystem.md"
+   ],
+   "dropped": "its UCC-230 line re-points and AMS-141 line re-points are superseded by main: main removed the UCC-230 evidence line fields and rewrote AMS-141 (7f6c2b00ed); resolved to main bytes, so the replay is empty",
+   "subject": "plans: re-point stream C's Q5 line citations after the batch-2 merges",
+   "on_b4e7a1c639": null,
+   "final": null
+  },
+  {
+   "old": "c82121276f6aa55d5b448d7736e9f58dc3669fab",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": "regeneration only; derived files are regenerated fresh in the final commit",
+   "subject": "plans: regenerate shards and the plan index for the batch-2 merged tree",
+   "on_b4e7a1c639": null,
+   "final": null
+  },
+  {
+   "old": "040ce3b62900164d99ba020e382002dc21cd438b",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "plans, scripts: refresh the date-time inventory and exclusions for the batch-2 merged tree (T198)",
+   "on_b4e7a1c639": "9914543f233346a0f0d8fc8ca608963c95170bec",
+   "final": "c0a3a37c58dea23425a253c9f1c1d20c4a69ef7a",
+   "on_b69d410c45": "11367d78ef3805e6830c17326fdb04034ad06224"
+  },
+  {
+   "old": "8a5f4517d4ebd8e10d80034259a59f7cc0fa1065",
+   "parents_kept": [
+    "b5bd6cafd1e500d2a6609b7c82989ebda734ea44"
+   ],
+   "kind": "main_merge",
+   "pure_main_paths_reset": 24,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge origin/main b5bd6cafd1 (C's snapshot, baseline and audit status refresh) into batch-2 integration",
+   "on_b4e7a1c639": "95545035101d63ca207499b351937ddd7b2536f0",
+   "final": "4ad66257a81d870ebade869c6e1cf4af93e39a3c",
+   "on_b69d410c45": "eaf4021fefeabab29deff020513468bfa4953eb3"
+  },
+  {
+   "old": "79795518542eadb7706ffb31a90582e8f5de88ab",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "scripts: renew the date-time scan exclusions after main's snapshot rotation (T198 pass 2)",
+   "on_b4e7a1c639": "8b5166508f6aaa61f8934039b68215910f5e509f",
+   "final": "73db99a80de84aef7bc66c7cbcb259df10d9502e",
+   "on_b69d410c45": "3aadda8918450532747a4e83e6651b00c48cf0ab"
+  },
+  {
+   "old": "ca3c431c814abd02406a31040db021ec85c0abcc",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "scripts, plans: refresh one stale date-time role pin and re-derive its inventory row (T198 pass 3)",
+   "on_b4e7a1c639": "92b677d69d6be96713449b03f31dde7f1646a5ed",
+   "final": "452c7eee55b2be9daa8cb924bf63c2ea5c97096a",
+   "on_b69d410c45": "6ea0c2c08bbf0d913f01a15839f9c408429d9332"
+  },
+  {
+   "old": "5fba5ed7e13e592a3b23c6601549cae2c720f9a8",
+   "parents_kept": [
+    "f12638df47d1fdd5619059787357ed798056cc1a"
+   ],
+   "kind": "main_merge",
+   "pure_main_paths_reset": 16,
+   "conflicted_paths": [
+    "Plans/Decision_Log.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Personas.md",
+    "Plans/Settings_System.md"
+   ],
+   "dropped": null,
+   "subject": "merge current main f12638df47 for INT2 final integration",
+   "on_b4e7a1c639": "7fa6c7c4ef72b819ede09f6cd2a9bbe9e9bb75ba",
+   "final": "129f5ae72b677d27f68ff4e3f3c52d562c202e63",
+   "on_b69d410c45": "d957381930f32faf3652a46aaa207e546c6e3cf7"
+  },
+  {
+   "old": "af3fb090c6115c454ea845505c838b609efd02ea",
+   "parents_kept": [
+    "5ba43b57010c53c781a0c6c2a5f8aca2dbd26a53"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DCW (plans/ea-w2-chain-wizard-20261104 @ 5ba43b5701) for batch-2 integration",
+   "on_b4e7a1c639": "c94563d1fcdf3256a0de221487f3041758c1c459",
+   "final": "0caa69a44ad28cdece50a002b825d678fb1e3ae0",
+   "on_b69d410c45": "5302459fb60072972d0e7c8dff91e48e8d59e177"
+  },
+  {
+   "old": "38deeed3b30ec24d272df11e4ec931c111906b66",
+   "parents_kept": [
+    "52aa6b4f7e9d9d69927180758b293975c8d5cd70"
+   ],
+   "kind": "main_merge",
+   "pure_main_paths_reset": 22,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge main snapshot and baseline follow-up 52aa6b4f7e into INT2",
+   "on_b4e7a1c639": "1bd470160907b232129ae3a2ad40db84f114ad46",
+   "final": "e7979dcbcb0e3616be76cd377d062004d99634ee",
+   "on_b69d410c45": "60c0cc2b04fedf7dc1eb30c5fe2fc3ec5fae21e1"
+  },
+  {
+   "old": "eecf4a5761d5029a6530d554c9891901b725c767",
+   "parents_kept": [
+    "59f36b0a2b774c828da4cc7ba925184265c22e52"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DF (plans/ea-w2-filesafe-20261104 @ 59f36b0a2b) for batch-2 integration",
+   "on_b4e7a1c639": "f6e53d5516e8c0b9926f5280676022925217287f",
+   "final": "efd0da471946c31a8d0db0019452b8fbbde104a3",
+   "on_b69d410c45": "7ca5e3710ce90aaf58b8f6c20271e8e9e2353cbf"
+  },
+  {
+   "old": "2a294a68970094a6afb6add9ef714cd8b874c549",
+   "parents_kept": [
+    "be7474cb7f9bb845d4d9f4c375a1d8b37eaead1b"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "merge sweep lane DCO (plans/ea-w2-coordination-20261104 @ be7474cb7f) for batch-2 integration",
+   "on_b4e7a1c639": "90f3a2ae05cead985ec4239f35829ee4ba9cdaca",
+   "final": "f89c7b13cd2a5e8db16d58c9313c7a86647c6c84",
+   "on_b69d410c45": "098f181b86eaacb5032ffec7bbae7d4673579bdf"
+  },
+  {
+   "old": "ef93bcc5a5e76edd7717d6a231cc0091f3a41092",
+   "parents_kept": [
+    "77e87db4d89b9b04732997152b24831c3667ce9c"
+   ],
+   "kind": "main_merge",
+   "pure_main_paths_reset": 7,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "Merge main audit closure records before final INT2 refresh",
+   "on_b4e7a1c639": "24f35cebbb267f340433ea7e6b9307630cde121e",
+   "final": "4157471fa14a16cf119e5ded5fe140147cda6b00",
+   "on_b69d410c45": "d4af126fe46a4f045c2c2b806c222c44ed863346"
+  },
+  {
+   "old": "c7b3deb332085ca4c5bf4bc81eda5ecbbedc23b1",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "plans, scripts, tests: refresh final INT2 census, graph pins and sanctioned T198 data",
+   "on_b4e7a1c639": "9622d2ff125c3b1e00dd3897f538ed761f692342",
+   "final": "436a9c7c681f3c6f669dac9485aa4807b6345c47",
+   "on_b69d410c45": "e90e88d569190bcff55fc50584cdfc1abc85d09a"
+  },
+  {
+   "old": "f9a49734f1d92197b0cbc4d57cbf7e4c68dc4253",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "reports: re-point DG6A evidence citations after INT2 owner merges",
+   "on_b4e7a1c639": "35a424c4bac824f4ad6ae3cd67df8eb7e6815c17",
+   "final": "fdbb4c4d00467c92d07b93a721d283a7893c00e1",
+   "on_b69d410c45": "3352f67d857084e926ab3e6b18b72bbb47c27820"
+  },
+  {
+   "old": "eb9618b2cf4b65ea10af89478052d9fee6c086db",
+   "parents_kept": [
+    "f304bfaf64334fe5255ce49a295f4ae5cec443d6"
+   ],
+   "kind": "merge",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "Merge gated NUMRULE nested-binding fix into EA batch-2 integration",
+   "on_b4e7a1c639": "8fad8ea16754b849e409e6b47bdbc28396d24a9a",
+   "final": "a4db9d2fb253806470cd5c0f42b3280cebbbb2a2",
+   "on_b69d410c45": "b2eda978ffde0cb8e8be6459eeb184a12d5722f9"
+  },
+  {
+   "old": "0fea76cc68670f8d7a7c882e1e26ae4341769717",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "fix: scope coordination timestamp census and record INT2 repair replays",
+   "on_b4e7a1c639": "dc7e8d81e3ff56c1d7e279dd5ccde4afff5ece29",
+   "final": "eb20eb185d52b86cecdd036b8ed38a7c62d6a6f4",
+   "on_b69d410c45": "f4dac35c187802f3c776bd557fb8519d02f27c3d"
+  },
+  {
+   "old": "7b51beeb464509f68e139f0cd5fc4461a2b90a18",
+   "parents_kept": [
+    "2880dfc517a672e5cb18a47f9a8ed45e70a1c3b5"
+   ],
+   "kind": "main_merge",
+   "pure_main_paths_reset": 24,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "Merge main snapshot and audit baseline follow-up into EA batch-2 integration",
+   "on_b4e7a1c639": "86d99f507c849afb88222c740a6ab2c9e1094032",
+   "final": "dffd142ca4fbb420ab54541d806919505d5ec6fa",
+   "on_b69d410c45": "06c838847297430f570cee5dd4c8a4c87df0c2a1"
+  },
+  {
+   "old": "85f80cebf3b09eb7e2d80d0d21c167ea6da29a1b",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "plans: renew INT2 snapshot pins and verify gated T198 closure",
+   "on_b4e7a1c639": "cad8ed694508238fe95a4e99cb381afc1bc26996",
+   "final": "b356fa45c41794792c2af18fd36f8a24b70dbf10",
+   "on_b69d410c45": "1a20487f8fa90aeb021c702b5027ecde1c8df010"
+  },
+  {
+   "old": "d91213ff98da70921a826362b2cf2c6df9baee06",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "plans: repair integrated surface paths and canonical envelope references",
+   "on_b4e7a1c639": "88189b165b4cbc740db000f5817f6b494408d802",
+   "final": "af9ff6b2e0b1a7c44b7cd96ae28629768fef6567",
+   "on_b69d410c45": "5d792bbef8f9173f75b9713bd7a1d159d6b6ef9e"
+  },
+  {
+   "old": "8d7201161119f5c3f8f1f1963e5b1649772cf6bd",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "reports: publish INT2 review packet and inherited landing blockers",
+   "on_b4e7a1c639": "5d026b8fe134948986d413ce1c49ff40ee6cad2e",
+   "final": "b86d0067e961160d426b2a96dcb41db7dd157db0",
+   "on_b69d410c45": "90a41b833585f0c997e5785340ab17a794e6cd83"
+  },
+  {
+   "old": "e638a6e347985893339d2377e2822da2e832f5ca",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "plans: repair313 technical registry diagnostics and preserve DCH editions",
+   "on_b4e7a1c639": "0f4c239686d850ae8be3f71fe52a8eda704170e8",
+   "final": "24d2d5a2769eedac453c6c2daafc73afa9c44ebd",
+   "on_b69d410c45": "4dd77d5a380c8d4827774091f263e4fdd81b80c8"
+  },
+  {
+   "old": "7a60dd72b9f1a1a132dfdb205ab5bfd838863ea0",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "plans: refresh DG6A citation pins and include final registry shards",
+   "on_b4e7a1c639": "8265035b66c49f849d8cf6fa30c36dca84a77e58",
+   "final": "f18c2bce55c727beee4d514de0acbe983d5b3b0e",
+   "on_b69d410c45": "89f5c5ecc34b0c1c3380ea7350aa907e12efaab2"
+  },
+  {
+   "old": "8d4155dbf98965894ae184cceef4beb3d784a5c4",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "reports: preserve INT2 restart handoff and persistent validation queue",
+   "on_b4e7a1c639": "43c80641f05f69e3061f17a5bd5097cdce454a46",
+   "final": "86dcf15fe25c83dfbc7e63d0d66da651815a2027",
+   "on_b69d410c45": "98b420bc96ddb1f2980484ba87e07bc10bffe362"
+  },
+  {
+   "old": "dce01cb874fea25cdb87d98eac0e815ad2f441f6",
+   "parents_kept": [
+    "002800123fcf2464ac3d8005538527d283c27b70"
+   ],
+   "kind": "main_merge",
+   "pure_main_paths_reset": 109,
+   "conflicted_paths": [
+    "Plans/Decision_Log.md"
+   ],
+   "dropped": null,
+   "subject": "plans: integrate current main and bind deck 4 retention for 86 values",
+   "on_b4e7a1c639": "167bc7ecd2483612d3612df032d6b61be9075b64",
+   "final": "1f36935683887395f128064d074a81cd4c73803b",
+   "on_b69d410c45": "1c219c6aa79d257cad17130a03e758528844603d"
+  },
+  {
+   "old": "a76b7e43a301317422dc3b60f00998a09d8381e1",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "plans: record refreshed retention inventory pins and final indexes",
+   "on_b4e7a1c639": "6bf1eed784fde97850c689d945f593d07e665002",
+   "final": "ff3c0010d32800eb848a1af910159fcbbc5eee12",
+   "on_b69d410c45": "2418ea2e7a7403026de070fe6d4b06e8d7d98a50"
+  },
+  {
+   "old": "659e53a30631caa9905903a832423af28bfaa4ff",
+   "parents_kept": [],
+   "kind": "commit",
+   "pure_main_paths_reset": 0,
+   "conflicted_paths": [],
+   "dropped": null,
+   "subject": "reports: record INT2 retention validation and dry result",
+   "on_b4e7a1c639": "2706702da234086eb5ce82093e781df7012a438d",
+   "final": "bc2aa2a217f50e876ca838240313c1f76803c373",
+   "on_b69d410c45": "8b9f7845ce51a7817e5e17485d00b32f033de7ba"
+  }
+ ],
+ "method": "first-parent replay: three-way tree merge per step (base C^1, ours = new chain, theirs = C) with Plans/_shards and Plans/.plan_index held at the chain bytes; for the six old-main merges, paths whose change was purely main's are reset (the new base already holds that or newer main); commits keep message, author and author date; parents = [new prev] + C's other parents.",
+ "added_commits": [
+  {
+   "subject": "regenerate shards and the plan index",
+   "on_b4e7a1c639": "e4c0ea4993",
+   "final": "0170bbd1bd1f56c94ad5cf2ed1a2e8c986023201",
+   "on_b69d410c45": "1da7ca539e1ff92346dcbdbedae8960f2d9717ff"
+  },
+  {
+   "subject": "T198 date-time inventory and exclusions refresh",
+   "on_b4e7a1c639": "160367cc18",
+   "final": "5e9d40ffad47190bd8efa7f5737e25630b55a7c2",
+   "on_b69d410c45": "cc61500fecdb604d778ee43e5ddf30ddb4bf7669"
+  },
+  {
+   "subject": "DG6A evidence citation re-point",
+   "on_b4e7a1c639": "fc4a5b9728af37074cf164d9eb61a28138efd1e4",
+   "final": "539cc75c96fd2972fbb7e1f82c4a25c02d1e427a",
+   "on_b69d410c45": "2db51d2a347f943b3d6fc557603ecc1a57766574"
+  }
+ ],
+ "replayed_head_on_b4e7a1c639": "2706702da234086eb5ce82093e781df7012a438d",
+ "final_commits_after_replay": [
+  {
+   "final": "0170bbd1bd1f56c94ad5cf2ed1a2e8c986023201",
+   "on_b4e7a1c639": "e4c0ea4993dbcf93713519705d2e2949bb5b5650",
+   "on_b69d410c45": "1da7ca539e1ff92346dcbdbedae8960f2d9717ff"
+  },
+  {
+   "final": "5e9d40ffad47190bd8efa7f5737e25630b55a7c2",
+   "on_b4e7a1c639": "160367cc186fdca6317bcf289f4417e58be55d0d",
+   "on_b69d410c45": "cc61500fecdb604d778ee43e5ddf30ddb4bf7669"
+  },
+  {
+   "final": "539cc75c96fd2972fbb7e1f82c4a25c02d1e427a",
+   "on_b4e7a1c639": "fc4a5b9728af37074cf164d9eb61a28138efd1e4",
+   "on_b69d410c45": "2db51d2a347f943b3d6fc557603ecc1a57766574"
+  }
+ ],
+ "concepts_only_moves": [
+  {
+   "from_base": "b4e7a1c63978898b23da167cacfdfac54b2a5c16",
+   "to_base": "b69d410c458d6e4e323655bfb025ba181566829a",
+   "head_on_b4e7a1c639": "fc4a5b9728af37074cf164d9eb61a28138efd1e4",
+   "final_content_head": "2db51d2a347f943b3d6fc557603ecc1a57766574",
+   "rule": "origin/main moved only under Concepts/ (0 other paths) and no chain commit changes Concepts/; each commit was rebuilt with the new base Concepts tree, same message, author, author date and second parents; diff(new base..final) is byte-identical to diff(b4e7a1c639..head_on_b4e7a1c639)."
+  },
+  {
+   "from_base": "b69d410c458d6e4e323655bfb025ba181566829a",
+   "to_base": "9b212f7aa943508e76e7c8f27cc0d5104a5dec83",
+   "head_before": "2db51d2a347f943b3d6fc557603ecc1a57766574",
+   "final_content_head": "539cc75c96fd2972fbb7e1f82c4a25c02d1e427a",
+   "rule": "origin/main moved only under Concepts/ (0 other paths) and no chain commit changes Concepts/; each commit was rebuilt with the new base Concepts tree, same message, author, author date and second parents; diff(new base..final) is byte-identical to diff(b69d410c45..head_on_b69d410c45)."
+  }
+ ],
+ "final_base": "9b212f7aa943508e76e7c8f27cc0d5104a5dec83",
+ "final_content_head": "539cc75c96fd2972fbb7e1f82c4a25c02d1e427a"
+}

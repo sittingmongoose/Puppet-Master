@@ -110,7 +110,12 @@
     window.PMIcon = window.PMIcon || function (name, cls) {
       var raw = window.PM_ICONS[name] || '';
       if (!raw) return '';
-      if (cls) raw = raw.replace('<svg ', '<svg class="' + cls + '" ');
+      /* every raw icon carries pm-isvg (beside the caller's class): hover, press and NieR cursor rules name it
+         (`:where(.pm-isvg):is(svg)`) instead of the tag, which put every svg into Chrome's page-wide invalidation sets
+         (lane J, 2026-11-11) */
+      var head = raw.slice(0, raw.indexOf('>'));
+      if (!cls && /\sclass="/.test(head)) raw = raw.replace(/(<svg\b[^>]*?\sclass=")/, '$1pm-isvg ');
+      else raw = raw.replace('<svg ', '<svg class="' + (cls ? cls + ' ' : '') + 'pm-isvg" ');
       return raw;
     };
     /* hydrate <i data-ico> placeholders in the rail + bottom debug tab.

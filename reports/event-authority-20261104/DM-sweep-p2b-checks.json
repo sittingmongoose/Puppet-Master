@@ -1,0 +1,331 @@
+{
+ "lane": "DM",
+ "round": "sweep-p2b-datetime",
+ "branch": "plans/ea-w2-small-owners-20261104",
+ "merges": {
+  "numrule_datetime": {
+   "commit": "911e3ed9ef5f438521a95709a444ede6ed615fbc",
+   "gated": "58c2816ff33365384d4039553f5efdb5370930e6",
+   "parents": [
+    "ef7ff84ec202b9fa3ce5e8533b8a48c8a76fd21f",
+    "58c2816ff33365384d4039553f5efdb5370930e6"
+   ],
+   "conflicts": 0,
+   "tree": "20d63be6f6aaa06734599900c4e16a397f08b2ce",
+   "tree_equals_clean_merge_tree": true
+  }
+ },
+ "commits": {
+  "adoption": "94a53ffbacdc5ec65aacba746f082264815eaeb1"
+ },
+ "grok_review_fixes": [
+  "scripts/pm-small-owner-guard-audit.py type_timestamp_catalogue: silent clock_ok skip replaced by an assertion",
+  "self-grade: 8 utc_datetime pins replaced by clock_ok/storage_clocks_ok/bound_profile; 84 re-pins; file_sha256 refreshed"
+ ],
+ "removed_negatives": "none; year-0000, lowercase t, +01:00, +00:00 and lowercase z converted (positive or event_record_only_positive, still negative on Storage clocks)",
+ "memory_rule": "lead 2026-11-11 23:22Z: capped runs (max_rss 2048 MiB, pause below 10 GiB) may start or resume at 11 GiB; uncapped runs keep 13.5 GiB",
+ "checks": {
+  "families": {
+   "command": "PM_DM_FAMILY=<family> python3 -B scripts/pm-small-owner-events.py",
+   "results": {
+    "format.applied": {
+     "exit": 0,
+     "assertions": 6956
+    },
+    "git.clone.completed": {
+     "exit": 0,
+     "assertions": 6983
+    },
+    "lsp.server.lifecycle_changed": {
+     "exit": 0,
+     "assertions": 7010
+    },
+    "model.catalog_refreshed": {
+     "exit": 0,
+     "assertions": 7172
+    },
+    "project.added": {
+     "exit": 0,
+     "assertions": 6910
+    },
+    "project.created": {
+     "exit": 0,
+     "assertions": 6914
+    },
+    "subagent.context_rehydrated": {
+     "exit": 0,
+     "assertions": 7381
+    },
+    "subagent.context_shrunk": {
+     "exit": 0,
+     "assertions": 7406
+    }
+   },
+   "summed_assertions": 56732
+  },
+  "numbers_scope": {
+   "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+   "exit": 0,
+   "status": "pass",
+   "cases": 580,
+   "passes": 580,
+   "negatives": 304,
+   "positives": 276
+  },
+  "datetime_inventory": {
+   "command": "python3 scripts/pm_event_datetime_inventory.py",
+   "exit": 1,
+   "credited": false,
+   "status": "fail",
+   "failures": 270,
+   "error_counts": [
+    [
+     "unclassified_mentioning_container",
+     134
+    ],
+    [
+     "unreadable_mentioning_container",
+     88
+    ],
+    [
+     "stale_scan_exclusion",
+     48
+    ]
+   ],
+   "cause": "content drift: all 80 failing paths differ from 58c2816ff3 in this tree; runs at batch-2 integration (addendum 2)"
+  },
+  "scope_all": {
+   "command": "python3 scripts/pm_event_numbers.py --self-test",
+   "exit": 1,
+   "credited": false,
+   "case_execution": "NOT_RUN_ADMISSION_REFUSED",
+   "corpus_cases": 13626,
+   "failures": [
+    {
+     "integration_check": "datetime_inventory_complete_and_classified"
+    }
+   ]
+  },
+  "guard_tool": {
+   "command": "python3 -B scripts/pm-small-owner-guard-tables.py --out <dir> --max-rss 2048 --pause-when-low 10 --resume-at 11",
+   "exit": 0,
+   "tool_sha256": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+   "tables_pass": "17/17",
+   "rows_proved": "174/174",
+   "masked": 0,
+   "unrelated": 0,
+   "own_flips": 174,
+   "stays": 2744,
+   "evaluations": 9467,
+   "collect_seconds": 317.9,
+   "seconds": 3589.2,
+   "counts": {
+    "accepted": 151286,
+    "records": 175397,
+    "refused": 24111
+   },
+   "witnesses": 30,
+   "phases": {
+    "checkpoint": {
+     "status": "PASS",
+     "proved": 5,
+     "rows": 5,
+     "tool_negatives": 5,
+     "collected_negatives": 6,
+     "flips": 5,
+     "stays": 20,
+     "evaluations": 96
+    },
+    "fullvalue": {
+     "status": "PASS",
+     "proved": 5,
+     "rows": 5,
+     "tool_negatives": 5,
+     "collected_negatives": 9,
+     "flips": 5,
+     "stays": 20,
+     "evaluations": 96
+    },
+    "payload": {
+     "status": "PASS",
+     "proved": 16,
+     "rows": 16,
+     "tool_negatives": 16,
+     "collected_negatives": 18,
+     "flips": 16,
+     "stays": 240,
+     "evaluations": 833
+    },
+    "publication": {
+     "status": "PASS",
+     "proved": 28,
+     "rows": 28,
+     "tool_negatives": 28,
+     "collected_negatives": 34,
+     "flips": 28,
+     "stays": 756,
+     "evaluations": 2465
+    },
+    "reader": {
+     "status": "PASS",
+     "proved": 11,
+     "rows": 11,
+     "tool_negatives": 11,
+     "collected_negatives": 11,
+     "flips": 11,
+     "stays": 110,
+     "evaluations": 408
+    },
+    "readfence": {
+     "status": "PASS",
+     "proved": 7,
+     "rows": 7,
+     "tool_negatives": 7,
+     "collected_negatives": 8,
+     "flips": 7,
+     "stays": 42,
+     "evaluations": 176
+    },
+    "rebuild": {
+     "status": "PASS",
+     "proved": 15,
+     "rows": 15,
+     "tool_negatives": 15,
+     "collected_negatives": 15,
+     "flips": 15,
+     "stays": 210,
+     "evaluations": 736
+    },
+    "receipt": {
+     "status": "PASS",
+     "proved": 2,
+     "rows": 2,
+     "tool_negatives": 2,
+     "collected_negatives": 2,
+     "flips": 2,
+     "stays": 2,
+     "evaluations": 21
+    },
+    "replay": {
+     "status": "PASS",
+     "proved": 4,
+     "rows": 4,
+     "tool_negatives": 4,
+     "collected_negatives": 5,
+     "flips": 4,
+     "stays": 12,
+     "evaluations": 65
+    },
+    "resolve": {
+     "status": "PASS",
+     "proved": 23,
+     "rows": 23,
+     "tool_negatives": 23,
+     "collected_negatives": 35,
+     "flips": 23,
+     "stays": 506,
+     "evaluations": 1680
+    },
+    "retained": {
+     "status": "PASS",
+     "proved": 5,
+     "rows": 5,
+     "tool_negatives": 5,
+     "collected_negatives": 5,
+     "flips": 5,
+     "stays": 20,
+     "evaluations": 96
+    },
+    "retry": {
+     "status": "PASS",
+     "proved": 9,
+     "rows": 9,
+     "tool_negatives": 9,
+     "collected_negatives": 11,
+     "flips": 9,
+     "stays": 72,
+     "evaluations": 280
+    },
+    "semantic": {
+     "status": "PASS",
+     "proved": 4,
+     "rows": 4,
+     "tool_negatives": 4,
+     "collected_negatives": 5,
+     "flips": 4,
+     "stays": 12,
+     "evaluations": 65
+    },
+    "settings": {
+     "status": "PASS",
+     "proved": 7,
+     "rows": 7,
+     "tool_negatives": 7,
+     "collected_negatives": 10,
+     "flips": 7,
+     "stays": 42,
+     "evaluations": 176
+    },
+    "token": {
+     "status": "PASS",
+     "proved": 6,
+     "rows": 6,
+     "tool_negatives": 6,
+     "collected_negatives": 14,
+     "flips": 6,
+     "stays": 30,
+     "evaluations": 133
+    },
+    "witness": {
+     "status": "PASS",
+     "proved": 1,
+     "rows": 1,
+     "tool_negatives": 1,
+     "collected_negatives": 1,
+     "flips": 1,
+     "stays": 0,
+     "evaluations": 8
+    },
+    "writer": {
+     "status": "PASS",
+     "proved": 26,
+     "rows": 26,
+     "tool_negatives": 26,
+     "collected_negatives": 64,
+     "flips": 26,
+     "stays": 650,
+     "evaluations": 2133
+    }
+   }
+  },
+  "regeneration": {
+   "shard_generate": 0,
+   "index_generate": 0,
+   "shard_check": {
+    "exit": 0,
+    "shards": 3100
+   },
+   "changed": {
+    "contracts_v0_shards": 66,
+    "storage_plan_shards": 91,
+    "plan_index": 5
+   },
+   "unexpected_paths": 0
+  },
+  "index_validate": {
+   "exit": 1,
+   "origin_main": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+   "failures": 60,
+   "plan_unit_removed_without_ledger_decision": 39,
+   "plan_unit_removal_ledger_invalid": 21,
+   "classification": "39 units exist on origin/main only (absent at part 2A head, merge and tree; lane base e42ce235b4, no rebase); 21 ledger rows in untouched Plans/ledgers/v2 files; no DM regression"
+  }
+ },
+ "grades": {
+  "candidates": "82 PASS / 6 PARTIAL / 8 ABSENT",
+  "with_exclusions": "86 PASS / 6 PARTIAL / 10 ABSENT / 18 N/A",
+  "changed": false
+ },
+ "readiness": "NOT_READY_REVIEW_PENDING",
+ "native": "NOT_RUN"
+}

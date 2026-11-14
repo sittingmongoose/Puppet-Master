@@ -64,7 +64,7 @@
       (sub ? ' has-sub' : '') + '" role="' + role + '"' + (role !== 'menuitem' ? ' aria-checked="' + (on ? 'true' : 'false') + '"' : '') +
       ' tabindex="-1" data-mi="' + i + '"' + (dis ? ' aria-disabled="true"' : '') +
       (r.hover ? ' data-pm-hover-label="' + esc(r.hover) + '"' : ' data-pm-hover-exempt="menu"') + '>' +
-      leadHtml(r) + '<span class="pmu-mcopy"><b>' + esc(r.label) + '</b>' + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</span>' +
+      leadHtml(r) + '<span class="pmu-mcopy"><b class="pmu-mlabel">' + esc(r.label) + '</b>' + (sub ? '<span class="pmu-msub">' + esc(sub) + '</span>' : '') + '</span>' +
       (r.right != null && r.right !== '' ? '<span class="pmu-mright">' + esc(r.right) + '</span>' : '') + trail + '</button>';
   }
   function railHtml(h) {

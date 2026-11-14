@@ -983,8 +983,8 @@ function mountBrowser(host, st, api) {
       var b = h('button', { type: 'button', class: 'pmw-br-cap pmw-cur' + (refused ? ' is-refused' : ''), 'data-pmh': 'row', 'data-pm-hover-visual-suppressed': 'true' }, [
         refused ? h('span', { class: 'pmw-br-thumb is-refused', 'aria-hidden': 'true' }, [ico('lock', 14)]) : thumb(c),
         h('span', { class: 'pmw-br-capcopy' }, [
-          h('b', { text: capLabel(c) }),
-          h('span', { text: refused ? c.reason : (c.title + (c.w ? ' · ' + c.w + ' × ' + c.h : '')) })
+          h('b', { class: 'pmw-br-capname', text: capLabel(c) }),
+          h('span', { class: 'pmw-br-capsub', text: refused ? c.reason : (c.title + (c.w ? ' · ' + c.w + ' × ' + c.h : '')) })
         ]),
         h('span', { class: 'pmw-br-captime', text: c.at })
       ]);

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json",
   "title": "Closed coordination event payloads",
-  "description": "Newly authored owner contract under DL-045: CV-353 in Plans/Contracts_V0.md, backed by the per-family search reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md. One closed definition per coordination payload row, each with its own schema ID. The seven agent families share lineage_envelope and non_secret_ref; OSI-438 is their semantic owner and SP-320 their Storage persistence, identity and transitions. debug_mirror_exported is prepared and not admitted. Nothing here admits a family: each stays quarantined before append or projection, and absent from Plans/event_family_registry.json, until its own Storage admission landing.",
+  "description": "Newly authored owner contract under DL-045: CV-353 in Plans/Contracts_V0.md, backed by the per-family search reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md. One closed definition per coordination payload row, each with its own schema ID. The seven agent families share lineage_envelope and non_secret_ref; OSI-438 is their semantic owner and SP-320 their Storage persistence, identity and transitions. debug_mirror_exported is prepared and not admitted. Nothing here admits a family: each stays quarantined before append or projection, and absent from Plans/event_family_registry.json, until its own Storage admission landing. SP-720..722 append the three crew.board EventRecord payload definitions, outside the root oneOf of agent rows: each carries schema_version and no stored schema_id because the envelope payload_schema_id names it (SP-320), and each equals its definition in Plans/orchestrator_event_payloads.schema.json apart from $schema and $id. They stay prepared without admission.",
   "oneOf": [
     {
       "$ref": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json#/$defs/agent_registered"
@@ -1501,6 +1501,408 @@
           "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
         }
       }
+    },
+    "crew_board_message_posted": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.event_payload.crew_board_message_posted.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "crew_id",
+        "parent_run_id",
+        "child_run_id",
+        "message_id",
+        "from_agent_id",
+        "subject",
+        "priority"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "crew_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from_agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_agent_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
+        },
+        "priority": {
+          "enum": [
+            "low",
+            "normal",
+            "high",
+            "urgent"
+          ]
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 16384,
+          "format": "pm-utf8-body-16k",
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
+        },
+        "content_ref": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "blake3_id",
+            "byte_size",
+            "media_type"
+          ],
+          "properties": {
+            "blake3_id": {
+              "type": "string",
+              "pattern": "^blake3:[0-9a-f]{64}$",
+              "minLength": 71,
+              "maxLength": 71
+            },
+            "byte_size": {
+              "type": "integer",
+              "minimum": 16385
+            },
+            "media_type": {
+              "const": "text/plain; charset=utf-8"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "content"
+          ],
+          "not": {
+            "required": [
+              "content_ref"
+            ]
+          }
+        },
+        {
+          "required": [
+            "content_ref"
+          ],
+          "not": {
+            "required": [
+              "content"
+            ]
+          }
+        }
+      ]
+    },
+    "crew_board_message_read": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.event_payload.crew_board_message_read.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "crew_id",
+        "message_id",
+        "agent_id",
+        "read_at_utc"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "crew_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "crew_board_messages_archived": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.event_payload.crew_board_messages_archived.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "crew_id",
+        "archived_before_utc",
+        "message_ids",
+        "archive_reason"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "crew_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "archived_before_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "message_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "archive_reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
     }
   }
 }

@@ -78,7 +78,10 @@
     const out = [], c = PSX.ctxFull(S.ctx);
     if (!r || r.notOffered) return out;
     if (r.ceiling) out.push({ key: 'info', text: `Limited to ${vt(id, r.ceiling.value)} on ${placeName('computer', r.ceiling.key)}` });
-    if (r.careful) out.push({ key: 'info', text: `For safety, ${placeName(r.careful.by.level, r.careful.by.key)}’s ${vt(id, r.value)} is used` });
+    // Astra max A1: a per_item row names only the items the careful rule decided ("This computer’s Bash: Block")
+    if (r.careful) out.push({ key: 'info', text: `For safety, ${placeName(r.careful.by.level, r.careful.by.key)}’s ${vt(id, r.careful.used !== undefined ? r.careful.used : r.value)} is used` });
+    // Astra max A4: less motion wins over a more specific request for full motion
+    if (r.motion && r.motion.overruled.length) out.push({ key: 'info', text: `Less motion wins: ${PSX.askerName(r.from)} asks for it` });
     if (r.stale.length) {
       const s = r.stale.find((x) => x.level === 'project') || r.stale.find((x) => x.level === 'computer') || r.stale[0];
       const wr = placeName('computer', PSX.writer(s.level, s.key));
@@ -92,7 +95,10 @@
 
   /* ------------------------------------------------------------------ decorating one end button */
   function rowOf(btn) { return btn.closest('.setting-row, .o55-field'); }
-  function decorateButton(btn) {
+  function decorateButton(btn, o) {
+    // the immediate pass (redrawNow) defers only Changed, and only while a change is on its way; otherwise it draws
+    // everything, so the next frame's pass finds the row done and does nothing
+    const sync = !!(o && o.sync) && inFlight(btn.getAttribute('data-setting') || '');
     const id = btn.getAttribute('data-setting'); if (!id) return;
     const row = rowOf(btn); if (!row) return;
     const kind = row.classList.contains('o55-field') ? 'field' : row.classList.contains('o55-scoped') ? 'scoped' : 'row';
@@ -111,19 +117,25 @@
     let wd = kind === 'scoped' ? { word: perWord(row), here: false, aria: 'each one has its own', sentence: '', mark2: '' } : where(id, r);
     const ln = demo && kind !== 'field' ? lines(id, r) : [];
     const changed = demo ? !!(r && r.changed && !r.notOffered) : null;
-    const sig = JSON.stringify([opt, S.opt.changed, wd.word, wd.here, wd.sentence, wd.mark2, ln, changed, kind]);
+    // looking at another device's screen: a screen row shows that device's value in place of the control (Jared #11)
+    const viewDev = S.ctx.device && S.ctx.device !== S.actor && opt !== 'today' && kind === 'row';
+    let devv = viewDev && demo && DEF[id].screen ? { name: placeName('device', S.ctx.device), text: vt(id, r.asked !== undefined ? r.asked : r.value) } : null;
+    // Light or dark is the second half of Theme: it shows the viewed device's half too
+    if (viewDev && id === 'general.visual.theme-mode') devv = { name: placeName('device', S.ctx.device), text: PSX.themePair(PSX.resolve('general.visual.theme', S.ctx).value)['general.visual.theme-mode'] };
+    const sig = JSON.stringify([opt, S.opt.changed, wd.word, wd.here, wd.sentence, wd.mark2, ln, changed, kind, devv]);
     // the engine's in-place redraw can patch a row back while keeping this attribute: check the drawing is still there
-    if (btn.dataset.psxDone === sig && row.dataset.psxDone === sig && intact(row, btn, opt, wd, ln, changed, kind)) return;
-    btn.dataset.psxDone = sig; row.dataset.psxDone = sig;
+    if (btn.dataset.psxDone === sig && row.dataset.psxDone === sig && intact(row, btn, opt, wd, ln, sync ? null : changed, kind) && !!row.querySelector(':scope > .setting-control > .psx-devval') === !!devv) return;
+    btn.dataset.psxDone = sync ? 'sync' : sig; row.dataset.psxDone = sync ? 'sync' : sig;
     // clear what an earlier option drew
     row.querySelectorAll(':scope .psx-mark2, :scope .psx-line, :scope .psx-risk').forEach((n) => { if (rowOf(n) === row) n.remove(); });
+    drawDevValue(row, btn, devv, id);
     btn.classList.remove('psx-end', 'is-here', 'psx-more', 'is-quiet');
     if (opt === 'today') {
       btn.innerHTML = btn.__psxOrig.html;
       if (btn.__psxOrig.aria) btn.setAttribute('aria-label', btn.__psxOrig.aria);
       if (btn.__psxOrig.hover) btn.setAttribute('data-pm-hover-label', btn.__psxOrig.hover);
       if (btn.__psxOrig.detail) btn.setAttribute('data-pm-hover-detail', btn.__psxOrig.detail); else btn.removeAttribute('data-pm-hover-detail');
-      syncChanged(row, id, changed, demo);
+      if (!sync) syncChanged(row, id, changed, demo);
       drawLines(row, id, ln);
       return;
     }
@@ -150,14 +162,28 @@
       const copy = row.querySelector('.setting-copy');
       if (copy) copy.insertAdjacentHTML('beforeend', `<div class="psx-line psx-src" data-o55-foreign>${mark('info')}<span>${esc(wd.sentence)}</span></div>`);
     }
-    syncChanged(row, id, changed, demo);
+    // the immediate redraw (redrawNow) leaves Changed as the base page drew it from the control's own value: the world
+    // takes the change only when its save reports back, and reconciling then means the mark appears once, never on, off
+    // and on again (Jared #4)
+    if (!sync) syncChanged(row, id, changed, demo);
     drawLines(row, id, ln);
+  }
+  function drawDevValue(row, btn, devv, id) {
+    const ctl = row.querySelector(':scope > .setting-control'); if (!ctl) return;
+    ctl.querySelectorAll(':scope > .psx-devval').forEach((n) => n.remove());
+    row.classList.toggle('psx-devview', !!devv);
+    if (!devv) return;
+    const el = D.createElement('span'); el.className = 'psx-devval'; el.setAttribute('data-o55-foreign', '');
+    el.innerHTML = `<span class="psx-devval-v" title="${esc(devv.name)}’s screen">${esc(devv.text)}</span><button type="button" class="psx-tb" data-psx-devchange="1" aria-label="Change ${esc(label(id))} for ${esc(devv.name)}’s screen">Change</button>`;
+    el.querySelector('button').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openPanel(btn); });
+    ctl.appendChild(el);
   }
   function intact(row, btn, opt, wd, ln, changed, kind) {
     if (opt === 'today' ? btn.classList.contains('psx-end') : !(btn.classList.contains('psx-end') && btn.querySelector('.psx-end-word'))) return false;
     if (kind === 'field') return true;
     const lab = row.querySelector('.setting-label');
-    if (changed !== null && lab && !!lab.querySelector('.o55-changed:not(.o55-needed)') !== !!changed) return false;
+    if (lab && lab.querySelectorAll('.o55-changed:not(.o55-needed)').length > 1) return false;
+    if (changed !== null && lab && !inFlight(btn.getAttribute('data-setting')) && !!lab.querySelector('.o55-changed:not(.o55-needed)') !== !!changed) return false;
     const lines = [...row.querySelectorAll('.psx-line')].filter((n) => rowOf(n) === row).length;
     if (kind === 'row' && lines !== ln.length + (opt === 'line' && wd.sentence ? 1 : 0)) return false;
     if (opt === 'mark' && wd.mark2 && lab && !lab.querySelector('.psx-mark2')) return false;
@@ -170,11 +196,28 @@
   };
   /* the Changed mark follows the resolver for the demo rows (the proposal's own default for "Show where each setting
      comes from" differs from the inventory's, and a value pushed from the world is not a change made here) */
+  /* a change on its way: the base page holds a value the layer hasn't routed yet (the world takes it when its save
+     reports back). Until then Changed stays as the base page drew it from the control's value */
+  let engSt = null;   // the base page's settings, read once per task (getState copies the whole state)
+  function engineSettings() {
+    if (!engSt) { try { const K = W.PM12_KIMI; engSt = (K && K.getState().settings) || {}; } catch (e) { engSt = {}; } Promise.resolve().then(() => { engSt = null; }); }
+    return engSt;
+  }
+  function inFlight(id) {
+    if (!PSX.last || !Object.prototype.hasOwnProperty.call(PSX.last, id)) return false;
+    const st = engineSettings();
+    return JSON.stringify(st[id]) !== JSON.stringify(PSX.last[id]);
+  }
   function syncChanged(row, id, changed, demo) {
     if (!demo || row.classList.contains('o55-field')) return;
+    const lab = row.querySelector('.setting-label');
+    // one Changed word per row, whoever drew it (Jared's screen 02 showed "Changed · Changed"; the 1920 film of the old
+    // build showed it on Thinking depth, since retired by main's one-model design, and on Everyday building after a redraw)
+    const all = lab ? [...lab.querySelectorAll('.o55-changed:not(.o55-needed)')] : []; all.slice(1).forEach((x) => x.remove());
+    if (inFlight(id)) return;
     row.classList.toggle('is-changed', !!changed);
-    const lab = row.querySelector('.setting-label'); if (!lab) return;
-    let m = lab.querySelector('.o55-changed:not(.o55-needed)');
+    if (!lab) return;
+    let m = all[0] || null;
     if (changed && !m) lab.insertAdjacentHTML('beforeend', `<span class="o55-changed" title="Changed from the default" data-o55-foreign>${mark('change-modified')}<span>Changed</span></span>`);
     if (!changed && m) m.remove();
     // FileSafe off for one project carries the risk word on that row (4.4)
@@ -218,47 +261,101 @@
     if (have) have.replaceWith(sec); else scroll.insertBefore(sec, scroll.firstChild);
   }
 
-  /* ------------------------------------------------------------------ the Settings head line (7.7) */
+  /* ------------------------------------------------------------------ the Settings header (7.7; Jared #11)
+     One calm line: the Project and the Computer, each named once ("tastebook on This computer"). Your own view is the open
+     project on the computer that does its work, with the screen of the device you're using; choosing another project
+     opens that project (the base page's project button, which this replaces, did the same). Looking at another
+     Computer, or at another device's screen, is the viewing state: the same line in the same box, framed and tinted,
+     with the word Viewing and Stop viewing. Nothing in the line wraps and the box never changes size, so changing the
+     view never moves the page. */
+  function ownOn(c) { const p = PSX.projectById(c.project); return p ? p.home : 'here'; }
+  function viewState() {
+    const c = PSX.ctxFull(S.ctx);
+    const comp = !!S.ctx.on && S.ctx.on !== ownOn(c);
+    const dev = c.device !== S.actor;
+    return { c, comp, dev, viewing: comp || dev };
+  }
+  PSX.viewState = viewState;
   function headLine() {
     const bar = D.querySelector('#pm-settings-root .document-toolbar'); if (!bar) return;
-    const c = PSX.ctxFull(S.ctx), dev = PSX.DEVICES[S.actor] || PSX.DEVICES.here;
-    const youre = S.actor === 'here' ? 'This computer' : dev.name;
-    const proj = c.project ? c.project : 'No project';
+    const v = viewState(), c = v.c;
     const home = PSX.home(), hn = PSX.homeName();
+    const proj = c.project ? c.project : 'No project';
+    const using = S.actor !== 'here' && !v.dev ? `, from ${placeName('device', S.actor)}` : '';
+    const ctxText = `${proj} on ${placeName('computer', c.on)}${v.dev ? `, with ${placeName('device', c.device)}’s screen` : using}`;
+    /* the same words, shorter each step, and the first that fits with no ellipsis is shown (fitHead): every name stays
+       whole at every width (review A-r1 finding 2); the box never changes size */
+    const B = (x) => `<b>${esc(x)}</b>`, comp = placeName('computer', c.on), dev = v.dev ? placeName('device', c.device) : '', actorName = placeName('device', S.actor);
+    const variants = [
+      { html: `${B(proj)} on ${B(comp)}${dev ? `, with ${B(dev)}’s screen` : using ? `, from ${B(actorName)}` : ''}`, label: true },
+      { html: `${B(proj)} on ${B(comp)}${dev ? `, with ${B(dev)}` : using ? `, from ${B(actorName)}` : ''}`, label: true },
+      { html: `${B(proj)} on ${B(comp)}${dev ? `, with ${B(dev)}` : using ? `, from ${B(actorName)}` : ''}`, label: false },
+      { html: `${B(proj)} · ${B(comp)}${dev ? ` · ${B(dev)}` : using ? ` · ${B(actorName)}` : ''}`, label: false },
+      /* review A-r2 N2: the last step always fits. The same dot form may take two lines inside the same 32px box, and
+         a name never splits across them (its spaces are no-break spaces) */
+      { html: [proj, comp].concat(dev ? [dev] : using ? [actorName] : []).map((x) => `<b>${esc(x).replace(/ /g, '\u00a0')}</b>`).join(' · '), label: false, two: true }
+    ];
+    const ctxHtml = variants[0].html;
+    const back = `${proj} on ${placeName('computer', ownOn(c))}`;
+    const desc = v.viewing
+      ? `You’re looking at ${proj}’s settings as they apply ${v.comp ? `when its work runs on ${placeName('computer', c.on)}` : `on ${placeName('computer', c.on)}`}${v.dev ? ` and on ${placeName('device', c.device)}’s screen` : ''}. Changes you make here are saved for real. Stop viewing goes back to ${back}.`
+      : c.project ? `Settings for ${proj} on ${placeName('computer', c.on)}, its default computer (work: Auto, default ${placeName('computer', c.on)}). Change opens another project, or lets you look at another computer or device.`
+        : `Settings for chats with no project, on ${placeName('computer', c.on)}. Changes here apply everywhere or to this computer.`;
     const lines2 = [];
-    // the settings home, whichever computer it is (7.2); a project's work computer that isn't answering is the row's line
+    // notices that are not about the view: they are lines under the header, never a change of the header itself
     if (!PSX.answering(home)) lines2.push(`<div class="psx-head-line" data-k="offline">${mark('offline')}<span>Can’t reach ${esc(hn)}, which keeps your settings. You’re seeing them as of ${esc(PSX.W.asOf)}.</span></div>`);
     if (S.firstStart) lines2.push(`<div class="psx-head-line" data-k="first">${mark('info')}<span>Set up Puppet Master on this computer first. Until then nothing is kept, so Settings is a preview in Basic Dark.</span></div>`);
-    else if (!c.project) lines2.push(`<div class="psx-head-line" data-k="none">${mark('info')}<span>No project is open. Changes here apply everywhere or on this computer.</span></div>`);
-    if (S.viewAs || c.view || c.device !== S.actor) lines2.push(`<div class="psx-head-line" data-k="view">${mark('info')}<span>You’re changing settings as ${esc(c.project || 'No project')} on ${esc(placeName('computer', c.on))}${c.device !== S.actor ? `, with ${esc(placeName('device', c.device))}’s screen` : ''}.</span><button type="button" class="psx-tb" data-psx-head="mine">Back to my view</button></div>`);
-    if (dev && dev.limited) lines2.push(`<div class="psx-head-line" data-k="limited">${mark('info')}<span>${esc(PSX.REASONS.limited_device[0])}</span></div>`);
-    if (S.runMode === 'yolo') lines2.push(`<div class="psx-head-line" data-k="yolo">${mark('info')}<span>YOLO: changes don’t wait for a yes. Each one is reported, with Undo; the guards YOLO never skips still ask.</span></div>`);
-    const html = `<div class="psx-head-main"><span class="psx-head-ctx"><b>${esc(proj)}</b><span aria-hidden="true">·</span><span>works on ${esc(placeName('computer', c.on))}</span><span aria-hidden="true">·</span><span>you’re on ${esc(youre)}</span></span><button type="button" class="psx-tb psx-head-btn" data-psx-head="view" aria-haspopup="menu">Change view${CHEV}</button></div>${lines2.join('')}`;
+    const actorDev = PSX.DEVICES[S.actor];
+    if (actorDev && actorDev.limited) lines2.push(`<div class="psx-head-line" data-k="limited">${mark('info')}<span>${esc(PSX.REASONS.limited_device[0])}</span></div>`);
+    const run = S.runMode === 'yolo' ? `<span class="psx-head-run" data-k="yolo" tabindex="0" data-pm-hover-label="YOLO" data-pm-hover-detail="Changes don’t wait for a yes. Each one is reported, with Undo; the guards YOLO never skips still ask." aria-label="YOLO: changes don’t wait for a yes. Each one is reported, with Undo; the guards YOLO never skips still ask.">${mark('info')}<span>YOLO</span></span>` : '';
+    const html = `<div class="psx-head-main${v.viewing ? ' is-viewing' : ''}" data-viewing="${v.viewing ? '1' : '0'}"><span class="psx-head-view" aria-hidden="${v.viewing ? 'false' : 'true'}">${mark('info')}<span>Viewing</span></span><span class="psx-head-ctx" title="${esc(ctxText)}" aria-description="${esc(desc)}">${ctxHtml}</span><span class="psx-head-gap"></span>${run}${v.viewing ? `<button type="button" class="psx-tb is-primary psx-head-stop" data-psx-head="mine" aria-label="Stop viewing; back to ${esc(back)}">Stop viewing</button>` : ''}<button type="button" class="psx-tb psx-head-btn" data-psx-head="view" aria-haspopup="menu" aria-label="Change: another project, or look at another computer or device">Change${CHEV}</button></div>${lines2.join('')}`;
     let el = bar.querySelector(':scope > .psx-head');
-    // the page's own actions (the project button, Page options) sit over the toolbar's right end: keep the line clear of them
+    // the page's own actions sit over the toolbar's right end (Page options; its project button is hidden): keep clear
     const pa = bar.querySelector(':scope > .page-actions');
-    const pr = pa && getComputedStyle(pa).position === 'absolute' ? pa.offsetWidth + 16 : 12;
+    const pr = pa && getComputedStyle(pa).position === 'absolute' ? Math.max(48, pa.offsetWidth + 16) : 12;
     if (el && el.__pr !== pr) { el.style.paddingRight = pr + 'px'; el.__pr = pr; }
     if (el && el.__html === html) return;
-    if (!el) { el = D.createElement('div'); el.className = 'psx-head'; el.setAttribute('data-o55-foreign', ''); el.setAttribute('role', 'group'); el.setAttribute('aria-label', 'Whose settings you’re seeing'); bar.insertBefore(el, bar.firstChild); }
-    el.innerHTML = html; el.__html = html;
+    if (!el) { el = D.createElement('div'); el.className = 'psx-head'; el.setAttribute('data-o55-foreign', ''); el.setAttribute('role', 'group'); el.setAttribute('aria-label', 'Whose settings these are'); bar.insertBefore(el, bar.firstChild); }
+    // keep the keyboard where it was when the header redraws (Change, Stop viewing)
+    const had = D.activeElement && el.contains(D.activeElement) ? D.activeElement.getAttribute('data-psx-head') : null;
+    el.innerHTML = html; el.__html = html; el.__variants = variants;
     if (el.__pr !== pr) { el.style.paddingRight = pr + 'px'; el.__pr = pr; }
+    fitHead(el);
+    if (!el.__psxRO && W.ResizeObserver) { el.__psxRO = new W.ResizeObserver(() => fitHead(el)); el.__psxRO.observe(el); }
+    if (had) { const f = el.querySelector(`[data-psx-head="${had}"]`) || el.querySelector('[data-psx-head="view"]'); if (f) try { f.focus({ preventScroll: true }); } catch (e) { /* gone */ } }
   }
+  function fitHead(el) {
+    const main = el.querySelector('.psx-head-main'), ctx = el.querySelector('.psx-head-ctx'), vs = el.__variants;
+    if (!main || !ctx || !vs) return;
+    for (let i = 0; i < vs.length; i++) {
+      if (ctx.innerHTML !== vs[i].html) ctx.innerHTML = vs[i].html;
+      main.classList.toggle('is-compact', !vs[i].label);
+      main.classList.toggle('is-two', !!vs[i].two);
+      main.setAttribute('data-fit', String(i));
+      if (ctx.scrollWidth <= ctx.clientWidth + 0.5 && ctx.scrollHeight <= ctx.clientHeight + 0.5) return;
+    }
+  }
+  PSX.fitHead = () => { const el = D.querySelector('#pm-settings-root .document-toolbar > .psx-head'); if (el) fitHead(el); };
   function viewMenu(anchor) {
-    const c = PSX.ctxFull(S.ctx);
-    const projects = PSX.PROJECTS.map((p) => ({ label: p.id, meta: `works on ${placeName('computer', p.home)}`, run: () => { S.viewAs = p.id !== 'tastebook'; PSX.setCtx({ project: p.id, on: null }); } }));
-    const comps = PSX.computerIds().map((k) => ({ label: PSX.COMPUTERS[k].name, meta: c.project ? `${c.project} as if it worked there` : 'chats with no project', disabled: PSX.W.up[k] === false ? `${PSX.COMPUTERS[k].name} isn’t answering` : null, run: () => { S.viewAs = true; PSX.setCtx({ on: k }); } }));
-    // viewing another device's screen values never gives that device's rights: you stay on the device you're using
-    const devs = Object.keys(PSX.DEVICES).map((k) => ({ label: PSX.DEVICES[k].name, meta: k === S.actor ? 'the one you’re using' : 'see its screen settings', run: () => PSX.setCtx({ device: k }) }));
-    PSX.menu(anchor, [
-      { label: 'Another project', items: projects },
-      { label: 'Another computer', items: comps },
-      { label: 'Another device', items: devs },
-      { label: 'No project', items: [{ label: 'No project', meta: 'chats with no project', run: () => { S.viewAs = false; PSX.setCtx({ project: 'none', on: null }); } }] },
+    const v = viewState(), c = v.c;
+    // another project opens it, on its own computer, with your own device's screen (no viewing state)
+    const projects = PSX.PROJECTS.map((p) => ({ label: p.id, meta: p.id === c.project ? 'open now' : `Auto (default: ${placeName('computer', p.home)})`, run: () => PSX.setCtx({ project: p.id, on: null, device: S.actor }) }))
+      .concat([{ label: 'No project', meta: c.project ? 'chats with no project' : 'open now', run: () => PSX.setCtx({ project: 'none', on: null, device: S.actor }) }]);
+    const comps = PSX.computerIds().map((k) => ({ label: PSX.COMPUTERS[k].name, meta: k === ownOn(c) ? (c.project ? `${c.project}’s own · ` : '') + (k === c.on ? 'shown now' : 'stop viewing') : k === c.on ? 'viewing now' : c.project ? `as if ${c.project}’s work ran there` : 'chats with no project, there', disabled: PSX.W.up[k] === false ? `${PSX.COMPUTERS[k].name} isn’t answering` : null, run: () => PSX.setCtx({ on: k === ownOn(c) ? null : k }) }));
+    // another device's screen values never give that device's rights: you stay on the device you're using
+    const devs = Object.keys(PSX.DEVICES).map((k) => ({ label: PSX.DEVICES[k].name, meta: k === S.actor ? (k === c.device ? 'the one you’re using' : 'the one you’re using · stop viewing') : k === c.device ? 'viewing now' : 'see its screen settings', run: () => PSX.setCtx({ device: k }) }));
+    const groups = [
+      { label: 'Project', items: projects },
+      { label: 'Look at another computer', items: comps },
+      { label: 'Look at another device’s screen', items: devs },
       // one place to see every difference (3.6), from any page
       { label: 'Everything at once', items: [{ label: 'All the differences…', meta: 'every project’s and computer’s own values', run: () => { if (PSX.moments) PSX.moments.differences(); } }] }
-    ], { label: 'Change view', search: true, width: 300 });
+    ];
+    if (v.viewing) groups.unshift({ label: 'Viewing', items: [{ label: 'Stop viewing', meta: `back to ${c.project || 'No project'} on ${placeName('computer', ownOn(c))}`, run: stopViewing }] });
+    PSX.menu(anchor, groups, { label: 'Change', search: true, width: 300, placeholder: 'Find a project, computer or device' });
   }
+  function stopViewing() { PSX.setCtx({ on: null, device: S.actor }); }
+  PSX.stopViewing = stopViewing;
 
   /* ------------------------------------------------------------------ the row's menu: option D, right-click, long-press */
   function rowMenu(btn, at) {
@@ -293,7 +390,7 @@
       if (btn && btn.classList.contains('psx-more')) { e.preventDefault(); e.stopImmediatePropagation(); rowMenu(btn); return; }
       if (btn && btn.hasAttribute('data-psx-own-panel')) { e.preventDefault(); e.stopImmediatePropagation(); openPanel(btn); return; }
       const head = e.target.closest && e.target.closest('[data-psx-head]');
-      if (head) { e.preventDefault(); e.stopImmediatePropagation(); if (head.dataset.psxHead === 'view') viewMenu(head); else if (head.dataset.psxHead === 'diff') { if (PSX.moments) PSX.moments.differences(); } else { S.viewAs = false; PSX.setCtx({ project: 'tastebook', on: null, device: S.actor }); } return; }
+      if (head) { e.preventDefault(); e.stopImmediatePropagation(); if (head.dataset.psxHead === 'view') viewMenu(head); else if (head.dataset.psxHead === 'diff') { if (PSX.moments) PSX.moments.differences(); } else stopViewing(); return; }
       // the setting's name opens its panel too (a bigger target, S5 A)
       const lab = e.target.closest && e.target.closest('#pm-settings-root .setting-row.o55-row .setting-label');
       if (lab && S.opt.end !== 'today' && !e.target.closest('.o55-changed, .psx-mark2, .o55-risk, a, button, input, select')) {
@@ -357,6 +454,93 @@
   }
   PSX.plainWords = () => plainWords(PSX.root());
 
+  /* ------------------------------------------------------------------ the end column's width (review A-r1 finding 3)
+     The column is one fixed width so every control lines up (#3), and that width comes from the widest end word the
+     concept can show, measured in the current look's own font: Retro's and NieR's faces are wider than Basic's, so a
+     fixed 124px cut "Each AI service". It is measured once per look (and again when fonts finish loading), never per
+     row, so nothing moves while you work. */
+  const END_WORDS = ['Details', 'Varies', 'More', 'This project', 'Each project', 'Each account', 'Each AI service', 'Each persona', 'Each Goal template', 'Each computer', 'Each one'];
+  let endKey = '';
+  function fitEndColumn() {
+    const host = D.getElementById('panel-settings') || PSX.root(); if (!host) return;
+    const nier = !!(W.PM_NIER && W.PM_NIER.on && W.PM_NIER.on());
+    const fontsReady = !D.fonts || D.fonts.status === 'loaded';
+    const key = [H.getAttribute('data-theme'), nier, !!S.scopeLabels, S.opt.end, fontsReady].join('|');
+    if (key === endKey) return;
+    endKey = key;
+    if (S.opt.end === 'today') return;
+    const words = END_WORDS.concat(Object.keys(PSX.COMPUTERS).map((k) => PSX.COMPUTERS[k].name), Object.keys(PSX.DEVICES).map((k) => PSX.DEVICES[k].name));
+    if (S.scopeLabels) Object.keys(PSX.COMPUTERS).forEach((k) => words.push(`Found on ${PSX.COMPUTERS[k].name}`), words.push('Everywhere', 'Default'));
+    const row = D.createElement('div'); row.className = 'setting-row o55-row psx-measure'; row.setAttribute('data-o55-foreign', ''); row.setAttribute('aria-hidden', 'true');
+    row.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;display:block;width:auto';
+    const b = D.createElement('button'); b.type = 'button'; b.tabIndex = -1; b.className = 'icon-btn details-btn o55-about psx-end'; b.style.maxWidth = 'none';
+    row.appendChild(b); host.appendChild(row);
+    let max = 0;
+    words.forEach((w) => { b.innerHTML = `<span class="psx-end-word">${esc(w)}</span>${CHEV}`; max = Math.max(max, b.getBoundingClientRect().width); });
+    row.remove();
+    const px = Math.max(96, Math.min(220, Math.ceil(max) + 2));
+    H.style.setProperty('--psx-end-w', px + 'px');
+    if (!fontsReady && D.fonts && !D.__psxFontsHooked) { D.__psxFontsHooked = true; D.fonts.ready.then(() => { endKey = ''; soon(); }); }
+  }
+  PSX.fitEndColumn = () => { endKey = ''; fitEndColumn(); return H.style.getPropertyValue('--psx-end-w'); };
+  /* review A-r3 R3-2: a row's label keeps the Changed mark's place while there is no mark (rows.css), so the row never
+     grows when Changed appears. The place is the mark's own size in the current look and Changed option, measured
+     with a real mark in a real label, once per look (and again when the fonts finish loading) */
+  let chgKey = '';
+  function fitChangedSlot() {
+    const host = D.getElementById('panel-settings') || PSX.root(); if (!host) return;
+    const fontsReady = !D.fonts || D.fonts.status === 'loaded';
+    const key = [H.getAttribute('data-theme'), !!(W.PM_NIER && W.PM_NIER.on && W.PM_NIER.on()), S.opt.changed, fontsReady].join('|');
+    if (key === chgKey) return;
+    chgKey = key;
+    const row = D.createElement('div'); row.className = 'setting-row o55-row psx-measure'; row.setAttribute('data-o55-foreign', ''); row.setAttribute('aria-hidden', 'true');
+    row.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;display:block;width:600px';
+    row.innerHTML = `<div class="setting-copy"><div class="setting-label"><span>x</span><span class="o55-changed" data-psx-measure>${mark('change-modified')}<span>Changed</span></span></div></div>`;
+    host.appendChild(row);
+    const b = row.querySelector('[data-psx-measure]').getBoundingClientRect();
+    row.remove();
+    // the mark's exact size, not rounded: a slot even half a pixel taller than the mark moved the row by that much
+    H.style.setProperty('--psx-chg-w', b.width + 'px');
+    H.style.setProperty('--psx-chg-h', b.height + 'px');
+    if (!fontsReady && D.fonts) D.fonts.ready.then(() => { chgKey = ''; soon(); });
+  }
+  /* review A-r3: a switch whose job is to change the page (names beside the activity-bar icons, where each setting comes
+     from) reflows everything above it, and the row you clicked could jump hundreds of pixels away from the pointer. For a
+     moment after a click on a switch, that row is held where it was on screen: after each layout, before it is painted
+     (ResizeObserver), and on each frame. Scrolling by hand, a key or the row being redrawn ends the hold */
+  function scrollersOf(el) {
+    const out = [];
+    for (let sc = el.parentElement; sc && sc !== D.body && sc !== H; sc = sc.parentElement) { const cs = W.getComputedStyle(sc); if (/(auto|scroll)/.test(cs.overflowY) && sc.scrollHeight > sc.clientHeight + 1) out.push(sc); }
+    return out;
+  }
+  function holdRow(row) {
+    const chain = scrollersOf(row); if (!chain.length) return;
+    const top0 = row.getBoundingClientRect().top, t0 = performance.now();
+    let done = false;
+    // the row is put back by the innermost scroller that can take the difference, then the next one out
+    const fix = () => {
+      if (done) return;
+      if (!row.isConnected || performance.now() - t0 > 1600) { end(); return; }
+      for (const sc of chain) {
+        const d = row.getBoundingClientRect().top - top0;
+        if (Math.abs(d) < 0.5) break;
+        const was = sc.style.scrollBehavior; sc.style.scrollBehavior = 'auto'; sc.scrollTop += d; sc.style.scrollBehavior = was;
+      }
+    };
+    const ro = new ResizeObserver(fix);
+    ro.observe(row); chain.forEach((sc) => [...sc.children].forEach((c) => ro.observe(c)));
+    const tick = () => { fix(); if (!done) requestAnimationFrame(tick); };
+    const end = () => { done = true; ro.disconnect(); chain.forEach((sc) => { sc.removeEventListener('wheel', end); sc.removeEventListener('touchmove', end); }); D.removeEventListener('keydown', end, true); };
+    chain.forEach((sc) => { sc.addEventListener('wheel', end, { passive: true }); sc.addEventListener('touchmove', end, { passive: true }); });
+    D.addEventListener('keydown', end, true);
+    requestAnimationFrame(tick);
+  }
+  D.addEventListener('click', (e) => {
+    const tg = e.target && e.target.closest && e.target.closest('#pm-settings-root .setting-row .toggle');
+    if (tg) holdRow(tg.closest('.setting-row'));
+  }, true);
+  PSX.fitChangedSlot = () => { chgKey = ''; fitChangedSlot(); return [H.style.getPropertyValue('--psx-chg-w'), H.style.getPropertyValue('--psx-chg-h')]; };
+
   /* ------------------------------------------------------------------ decorate everything (rAF-batched) */
   let raf = 0;
   function decorate() {
@@ -366,17 +550,41 @@
     if (PSX.panel) PSX.panel.install();   // the panel's host is drawn with a workspace page, not with Settings Home
     H.setAttribute('data-psx-end', S.opt.end);
     H.setAttribute('data-psx-changed', S.opt.changed);
+    H.toggleAttribute('data-psx-scope-labels', !!S.scopeLabels);
+    try { fitEndColumn(); } catch (e) { console.error('[psx end column]', e); }
+    try { fitChangedSlot(); } catch (e) { console.error('[psx changed slot]', e); }
     if (W.PM_PAGES && W.PM_PAGES.current === 'settings') { placeFolderRow(); headLine(); }
     rootEl.querySelectorAll('.o55-about').forEach((b) => { try { decorateButton(b); } catch (e) { console.error('[psx rows]', e); } });
     try { plainWords(rootEl); } catch (e) { console.error('[psx words]', e); }
     if (PSX.managers) try { PSX.managers.decorate(); } catch (e) { console.error('[psx managers]', e); }
   }
   const soon = () => { if (!raf) raf = requestAnimationFrame(decorate); };
+  /* Jared #4: toggling a setting shook the page. The base page redraws a changed row (refreshSettingRow) and puts its
+     round "?" back into the end button; the layer's word came back one frame later, so for that frame the control
+     jumped 40px sideways and back. The end column is now fixed (rows.css), and the rows a mutation touched are
+     decorated again inside this observer callback: a microtask after the base page's own change, so no frame is ever
+     painted with the "?" in it. Everything else (the header, the managers) still waits for the next frame. */
+  function redrawNow(muts) {
+    const btns = new Set();
+    for (const m of muts) {
+      const t = m.target && m.target.nodeType === 1 ? m.target : m.target && m.target.parentElement;
+      const b = t && t.closest && t.closest('.o55-about');
+      if (b) btns.add(b);
+      const row = t && t.closest && t.closest('.setting-row.o55-row, .o55-field');
+      if (row) row.querySelectorAll('.o55-about').forEach((x) => btns.add(x));
+      m.addedNodes.forEach((n) => { if (n.nodeType !== 1) return; if (n.matches('.o55-about')) btns.add(n); n.querySelectorAll && n.querySelectorAll('.o55-about').forEach((x) => btns.add(x)); });
+    }
+    // no cap: a whole page redrawn at once (a change that re-renders Settings) is decorated in the same task too
+    if (!btns.size) return false;
+    btns.forEach((b) => { if (b.isConnected) try { decorateButton(b, { sync: true }); } catch (e) { console.error('[psx rows]', e); } });
+    return true;
+  }
   function observe() {
     const rootEl = PSX.root(); if (!rootEl || rootEl.__psxObs) return;
     rootEl.__psxObs = new MutationObserver((muts) => {
       // our own writes only touch attributes we set and nodes we add; skip mutations that are entirely ours
       if (muts.every((m) => [...m.addedNodes, ...m.removedNodes].every((n) => n.nodeType !== 1 || (n.classList && [...n.classList].some((c) => /^psx-/.test(c)))))) return;
+      if (S.opt.end !== 'today' && PSX.booted) redrawNow(muts);
       soon();
     });
     rootEl.__psxObs.observe(rootEl, { childList: true, subtree: true });
@@ -394,5 +602,7 @@
     soon();
   }
   PSX.on('redraw', refreshAll); PSX.on('fed', refreshAll); PSX.on('ctx', refreshAll);
+  // a new look sizes the end column again (fitEndColumn), on the next frame
+  new MutationObserver(() => soon()).observe(H, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });
   PSX.rows = { decorate, soon, observe, wire, where, lines, rowMenu, openPanel, refreshAll, headLine };
 })(window);

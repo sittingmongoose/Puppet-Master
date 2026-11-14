@@ -1,0 +1,318 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope": {
+      "$ref": "pm.shared_integration_runtime.command_contracts.schema.v1#/$defs/WorkflowScopeV2"
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "guard_type": {
+      "enum": [
+        "bash_guard",
+        "file_guard",
+        "security_filter"
+      ]
+    },
+    "authorized_scope": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope_kind",
+            "project_id",
+            "run_id",
+            "worktree_id",
+            "normalized_command_identity"
+          ],
+          "properties": {
+            "scope_kind": {
+              "const": "project"
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "worktree_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "normalized_command_identity": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope_kind",
+            "project_id",
+            "server_id",
+            "computer_id",
+            "thread_id",
+            "run_id",
+            "host_id",
+            "environment_id",
+            "recorded_roots",
+            "normalized_command_identity"
+          ],
+          "properties": {
+            "scope_kind": {
+              "const": "application"
+            },
+            "project_id": {
+              "type": "null"
+            },
+            "server_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "run_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "recorded_roots": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "root_id",
+                  "root_generation",
+                  "canonical_path"
+                ],
+                "properties": {
+                  "root_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "root_generation": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "canonical_path": {
+                    "type": "string",
+                    "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                  }
+                }
+              },
+              "uniqueItems": true
+            },
+            "normalized_command_identity": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "auth_realm": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operator_identity_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "project_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "worktree_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "execution_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "root_generation": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "working_directory": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "thread_id",
+        "run_id",
+        "computer_id",
+        "host_id",
+        "environment_id",
+        "root_id",
+        "root_generation",
+        "working_directory"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "operation_id",
+    "scope",
+    "ts",
+    "request_id",
+    "receipt_id",
+    "guard_type",
+    "authorized_scope",
+    "reason",
+    "auth_realm",
+    "operator_identity_ref",
+    "issued_at",
+    "expires_at",
+    "project_id",
+    "execution_context"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/filesafe_destructive_override_granted/2.0.0",
+  "title": "filesafe.destructive_override_granted prepared closed payload; not admission",
+  "$comment": "filesafe.destructive_override_granted complete semantic root. Inline admission additionally measures the complete canonical UTF-8 JSON body (SP-337): at most 16384 bytes, inclusive. A larger root is resolved from the verified payload_ref; it is never retained inline. The byte rule is executable in pm_filesafe_event_contracts.py and pm_filesafe_event_authority.py, not a JSON Schema character-count constraint."
+}

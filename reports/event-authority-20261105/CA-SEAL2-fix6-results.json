@@ -1,0 +1,310 @@
+{
+  "tested_head": "90c0eacee18e0862e067f0f54b9e79a11ea331f8",
+  "reviewed_base": "ea7a74e364d5a2d30be082a1fd4af314d194e37c",
+  "validator_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+  "corpus": {
+    "checks": 158,
+    "passed": 158,
+    "refusals": 129,
+    "prior_records_identical": 140,
+    "real_sources_verified": 597
+  },
+  "original_survivors": {
+    "rows": 84,
+    "outcomes": {
+      "same-predicate duplicate": 5,
+      "implied": 16,
+      "structural": 13,
+      "negative added": 28,
+      "frozen-input only": 22
+    }
+  },
+  "removal": {
+    "variants": 182,
+    "killed": 126,
+    "outcome_classified": 56,
+    "unclassified": 0
+  },
+  "all_original_review_variants": {
+    "variants": 221,
+    "killed": 156,
+    "structural_interruptions": 9,
+    "survivors": 56,
+    "unclassified": 0
+  },
+  "mandatory_isolation": [
+    {
+      "guard": "authority_required_token_0",
+      "negative": "negative_authority_required_token_0",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "authority_required_token_1",
+      "negative": "negative_authority_required_token_1",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "authority_required_token_2",
+      "negative": "negative_authority_required_token_2",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "authority_required_token_3",
+      "negative": "negative_authority_required_token_3",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "nested_prior_receipt_path",
+      "negative": "negative_nested_prior_receipt_path",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "nested_prior_receipt_keys",
+      "negative": "negative_nested_prior_receipt_keys",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "nested_recount_receipt_path",
+      "negative": "negative_nested_recount_receipt_path",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "nested_recount_receipt_keys",
+      "negative": "negative_nested_recount_receipt_keys",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "nested_recount_list_path",
+      "negative": "negative_nested_recount_list_path",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "nested_recount_list_keys",
+      "negative": "negative_nested_recount_list_keys",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "decision_left_boundary",
+      "negative": "negative_exclusion_decision_prefix",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "main_August_complete_denominator_known",
+      "negative": "negative_main_August_complete_denominator_known",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "main_August_contract_depth_complete",
+      "negative": "negative_main_August_contract_depth_complete",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "main_August_overall_pass",
+      "negative": "negative_main_August_overall_pass",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "main_August_seal_prerequisites_met",
+      "negative": "negative_main_August_seal_prerequisites_met",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "aggregate_collect_recount_input_or_outcome_invalid",
+      "negative": "negative_aggregate_input_issue",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    },
+    {
+      "guard": "multi_family_after_hash",
+      "negative": "negative_third_semantic_after_hash",
+      "own_cut": "negative accepted",
+      "unchanged_peer_records": 157,
+      "unchanged_peer_refusals": 128
+    }
+  ],
+  "new_structural": [
+    {
+      "label": "anchor_entry_type",
+      "input": {
+        "canonical_ssot_hashes": {
+          "files": [
+            null
+          ]
+        }
+      },
+      "intact": {
+        "accepted": false,
+        "value": false
+      },
+      "cut": {
+        "accepted": false,
+        "type": "AttributeError",
+        "error": "'NoneType' object has no attribute 'get'"
+      }
+    },
+    {
+      "label": "anchor_ssot_type",
+      "input": {
+        "canonical_ssot_hashes": 1
+      },
+      "intact": {
+        "accepted": false,
+        "value": false
+      },
+      "cut": {
+        "accepted": false,
+        "type": "AttributeError",
+        "error": "'int' object has no attribute 'get'"
+      }
+    }
+  ],
+  "coverage_demo": {
+    "intact": "pass",
+    "demonstrations": [
+      {
+        "case": "one row removed",
+        "removed_site": "syntax:9d120f264d8c4acf6b3ff7349c23a7d3908529c8fa3790d635159f5034303ba7",
+        "test": "positive_complete_predicate_coverage",
+        "expected_failure": "coverage sites missing=['syntax:9d120f264d8c4acf6b3ff7349c23a7d3908529c8fa3790d635159f5034303ba7'] stale=[]",
+        "whole_corpus": {
+          "checks": 158,
+          "passed": 157,
+          "failed": 1,
+          "only_failed_test": "positive_complete_predicate_coverage"
+        }
+      },
+      {
+        "case": "stale row added",
+        "test": "positive_complete_predicate_coverage",
+        "expected_failure": "coverage sites missing=[] stale=['syntax:stale-site']"
+      }
+    ],
+    "restored": "pass"
+  },
+  "coverage": {
+    "syntax_sites": 286,
+    "semantic_expansions": 41,
+    "sites": 327,
+    "outcomes": {
+      "killed by": 191,
+      "structural": 63,
+      "implied": 20,
+      "same-predicate duplicate": 3,
+      "frozen-input only": 50
+    },
+    "unclassified": 0
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/baseline.json",
+      "sha256": "fe99e4084535f27cbd47951ff27777f62892c76227bb3931493e350d21866d98"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/restored.json",
+      "sha256": "fe99e4084535f27cbd47951ff27777f62892c76227bb3931493e350d21866d98"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/removal-summary.json",
+      "sha256": "4b7f3934bdf7f228d2d877d0acfadd19a76c2419ce7c362baafe2b96ef3b9af0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/supplemental-summary.json",
+      "sha256": "964ab95ca3678ff86cdf243793ab5ce5260211254421beb863c86641d92f566c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/additional-summary.json",
+      "sha256": "041e2c9217836013e884ecfbcc69056d48223f1208b0c401ab49ddada6afff62"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/dispatch-summary.json",
+      "sha256": "552904a1aaefbefff54215c487d33f324235080922918264aeb3635e5a184bce"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/touched-summary.json",
+      "sha256": "a1e5b541806ad806b5a73255b23250c246952f9b56d14128d823e86c2a95693b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/witnesses3.json",
+      "sha256": "6597882416b2dda4cd05f2eb9c41cd9aea17c48108f84927b8d4e8d61037e643"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/targeted.json",
+      "sha256": "cdbcb5a0718e528773ab9cc4ed6d225193c7bb72f6144323a9e519e6477bc33b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/predicate-inventory.json",
+      "sha256": "d6a2e5e7c4ed8cab0cd4ccd8eaacb1992cd8492aaebec2bf56fdf870ab80016a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/classification-regrade.json",
+      "sha256": "086302e1ba06cd5d0f123dd3b4b65954a43fcfd53808fb9b4fcd9e6c977d0040"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/audit-summary.json",
+      "sha256": "552353061c6b8574eca712f852c4e487aeea3189ca20101be189d6f27015b038"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/coverage-demo.json",
+      "sha256": "860ad5afbbafbf922fbdf9ae1d7d82d98a028a43e67840ba4e8cc49f16dc9114"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/shard-check.json",
+      "sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/index-validate.json",
+      "sha256": "d621619a356376b0ede68a4ad8dd05ec89ca300ffc0d74d98f78a819d4aaa2d2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/index-comparison.json",
+      "sha256": "9bc72ccb7c71e0448ccd2c4704100b11efde7be5ec951fef083e0bf9a4c8d644"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/currentness-copy.json",
+      "sha256": "ab1f0477f083f1453770147475ee39452b8f6cdcd92cdc7d9e9ad4734362d724"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/scope.json",
+      "sha256": "7e11fcf8682fe1a76ae82b300133a0ab79586de0bd0cf137312f9e3d6333d24f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix6/final-corpus.json",
+      "sha256": "fe99e4084535f27cbd47951ff27777f62892c76227bb3931493e350d21866d98"
+    }
+  ],
+  "limits": [
+    "Tests and records only. No validator, receipt, owner, governance, registry or Decision Log edit.",
+    "No admission, seal, main push or all-green production August run is claimed."
+  ]
+}

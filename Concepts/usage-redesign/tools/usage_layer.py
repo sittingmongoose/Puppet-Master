@@ -308,7 +308,8 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # The menu sprout's owner (2026-10-30, L8 B: PMU.menu opens and closes through PM6_SPROUT and its pm7-sprout.css class
 # contract) takes sixteen anchors out: the menu's own motion states, reduced-motion rules and NieR slice copies in
 # 15-menu.css and 90-nier-shell.css: 'rewritten' 2,641.
-HOST_SCOPE_EXPECT = {'rewritten': 2641, 'compound': 20}
+# 2642 (lane J, 2026-11-11): the Friendly account switch's hover rule names its two icons in two arms (50-accounts.css)
+HOST_SCOPE_EXPECT = {'rewritten': 2642, 'compound': 20}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

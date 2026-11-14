@@ -72,7 +72,7 @@ C_SPECS.docker = {
     ctxTrig.setAttribute('data-pmr-nav', 'menu'); ctxTrig.setAttribute('data-pmr-nav-id', 'ident:docker:context');
     ctxTrig.querySelector('.pmr-trigger-label').classList.add('is-mono');
     const where = h('button', { type: 'button', class: 'pmr-c-idstate pmr-cur', 'data-pmr-nav': 'select', 'data-pmr-nav-id': 'ident:docker:where', 'data-canon': d.context.lines[1].canon },
-      cGlyph(d.context.state, { loud: true }), h('span', { text: d.context.lines[1].text }));
+      cGlyph(d.context.state, { loud: true }), h('span', { class: 'pmr-part-text', text: d.context.lines[1].text }));
     PMR.hover(where, 'Where this runs: ' + d.context.state.word, d.context.lines[0].text + ' · engine handshake checked 12 seconds ago');
     where.addEventListener('click', () => cLensShow(P, { key: '__where', el: where, kind: 'Where this runs', icon: 'monitor', label: 'Home Server', build: () => cDockWhereDoc(P) }));
     return h('div.pmr-c-identcol', h('div.pmr-c-identrow', host, ctxTrig), where);

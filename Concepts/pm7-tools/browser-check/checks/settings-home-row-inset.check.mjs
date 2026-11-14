@@ -28,6 +28,8 @@
 //   --set looks=a,b   --set sizes=1280x500,740x900   --set dialog=0 (home cards only)   --set probe=1 (log every row)
 //   --set shots=friendly-dark,retro-light (normal surface, 1920: LOOK crops of the home page and the drawer per look;
 //   --set build=<name> names them)
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { LOOKS } from '../browser-check.config.mjs';
 import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
 
@@ -46,6 +48,14 @@ const MAIN_DIALOG_INSET = 14;
    860 and 740 and in light and dark. A drawer with another row count is a new inventory: record it again. */
 const MAIN_DRAWER_ROWS = 72;
 const MAIN_DRAWER_LINES = { basic: 194, friendly: 198, glass: 194, nier: 196, retro: 215 };
+/* Rows a later approved item adds to that drawer (settings-home-row-inset.added-rows.json, beside this check): each is
+   matched by its section title and label, held to every inset rule, and its lines logged; the rest must be main's 72
+   rows with main's totals. --set addedRows=<json>|none names another file or turns it off. */
+function addedRows(t) {
+	if (t.args.addedRows === 'none') return { path: 'none', rows: [] };
+	const p = t.args.addedRows ? String(t.args.addedRows) : fileURLToPath(new URL('./settings-home-row-inset.added-rows.json', import.meta.url));
+	return { path: p, rows: JSON.parse(fs.readFileSync(p, 'utf8')).rows || [] };
+}
 
 const r1 = (n) => Math.round(n * 10) / 10;
 
@@ -101,6 +111,7 @@ const DIALOG = () => {
 		return {
 			lines: lines(label) + lines(row.querySelector('.setup-meta')),
 			label: label ? label.textContent.trim().slice(0, 40) : '?',
+			section: title ? title.textContent.trim() : '?',
 			labelDx: title && label ? label.getBoundingClientRect().left - title.getBoundingClientRect().left : null,
 			chevIn: isChevron(chev) ? contentRight - chev.getBoundingClientRect().right : null,
 		};
@@ -184,6 +195,8 @@ for (const surface of ['normal', 'sandbox']) {
 		const sizes = want ? SIZES.filter((s) => want.some((x) => s.id.startsWith(x))) : SIZES;
 		const dialog = !/^(0|false|no|off)$/i.test(String(t.args.dialog ?? '1'));
 		const probe = !!t.args.probe;
+		const added = addedRows(t);
+		t.log(`added drawer rows: ${added.path} (${added.rows.length})`);
 		const shots = String(t.args.shots || '').split(',').map((s) => s.trim()).filter(Boolean);
 
 		await t.viewport(1920, 1080);
@@ -258,11 +271,15 @@ for (const surface of ['normal', 'sandbox']) {
 					await f.waitForFunction(STILL, '#panel-settings .panel-card > .setup-row', { polling: 'raf', timeout: 4000 }).catch(() => {});
 					await t.page.waitForTimeout(250);
 					const rows = await f.evaluate(DIALOG);
-					const drawn = rows.reduce((n, r) => n + r.lines, 0), want = MAIN_DRAWER_LINES[look.split('-')[0]];
-					t.log(`${cell} dialog: ${rows.length} rows draw ${drawn} label and meta lines`);
-					await t.check(`${cell} "Show all explanations": its rows draw main's ${want} label and meta lines`,
-						rows.length === MAIN_DRAWER_ROWS && drawn === want,
-						rows.length !== MAIN_DRAWER_ROWS ? `the drawer has ${rows.length} rows; main's totals are pinned for ${MAIN_DRAWER_ROWS}: record them again` : `${drawn} drawn, ${drawn - want > 0 ? '+' : ''}${drawn - want} against main`);
+					const isAdded = (r) => added.rows.some((a) => a.section === r.section && a.label.slice(0, 40) === r.label);
+					const extra = rows.filter(isAdded), mains = rows.filter((r) => !isAdded(r));
+					const missing = added.rows.filter((a) => !extra.some((r) => r.section === a.section && r.label === a.label.slice(0, 40)));
+					const drawn = mains.reduce((n, r) => n + r.lines, 0), want = MAIN_DRAWER_LINES[look.split('-')[0]];
+					t.log(`${cell} dialog: ${rows.length} rows; main's ${mains.length} draw ${drawn} label and meta lines; added ${extra.map((r) => `${r.section} › ${r.label}: ${r.lines} lines`).join(', ') || 'none'}`);
+					await t.check(`${cell} "Show all explanations": main's rows draw main's ${want} label and meta lines`,
+						mains.length === MAIN_DRAWER_ROWS && drawn === want,
+						mains.length !== MAIN_DRAWER_ROWS ? `the drawer has ${mains.length} rows besides the ${extra.length} listed in ${added.path}; main's totals are pinned for ${MAIN_DRAWER_ROWS}: record them again` : `${drawn} drawn, ${drawn - want > 0 ? '+' : ''}${drawn - want} against main`);
+					if (added.rows.length) await t.check(`${cell} "Show all explanations": every listed added row is drawn (${extra.length}/${added.rows.length})`, missing.length === 0, missing.map((a) => `${a.section} › ${a.label}`).join('; ') || 'all drawn');
 					if (shots.includes(look) && surface === 'normal' && size.id === '1920x1080') {
 						await t.crop(`${t.args.build || 'page'}-${look}-${size.id}-drawer`, f.locator('#panel-settings .drawer').first(), 'each section title against its card edge and its rows\' labels (14 px in), next to the home crop\'s card headers');
 					}

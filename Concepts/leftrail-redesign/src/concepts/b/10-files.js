@@ -25,7 +25,7 @@ B.panels.files = (function () {
         PMR.hover(b, 'Open ' + sub, 'Its files as a page');
         b.addEventListener('click', ev => { ev.preventDefault(); st.jump(folderDesc(st, f, null), -1); });
         box.appendChild(b);
-      } else box.appendChild(h('span', { text: seg }));
+      } else box.appendChild(h('span', { class: 'pmr-part-text', text: seg }));
     });
     return box;
   }
@@ -46,7 +46,7 @@ B.panels.files = (function () {
         const acts = asList(it.actions).concat(PMR.fileQuick(it));
         if (restore) acts.push(Object.assign({}, restore));
         const out = [];
-        if (it.note) out.push(h('div.pmr-b-callout', { 'data-state': 'info' }, PMR.glyph('info'), h('span', { text: it.note })));
+        if (it.note) out.push(h('div.pmr-b-callout', { 'data-state': 'info' }, PMR.glyph('info'), h('span', { class: 'pmr-part-text', text: it.note })));
         out.push(h('div.pmr-b-sub', { text: 'Facts' }), ...factList(facts, { key: it.id }));
         out.push(h('div.pmr-b-sub', { text: 'Actions' }), actionList(acts, panel.menus));
         out.push(h('div.pmr-b-acts', actRow({ label: 'All file actions', icon: 'layers', menu: 'fileContext' }, panel.menus)));
@@ -253,7 +253,7 @@ B.panels.files = (function () {
         /* the reveal-hidden notice, while ignored files are hidden */
         const nt = v.notices[0];
         const notice = h('div.pmr-b-block.pmr-b-callout', { 'data-state': 'info', hidden: !st.fm.hideIgnored, 'data-canon': nt.canon },
-          PMR.glyph('info'), h('span', { text: nt.text }), textAct(nt.action, panel.menus, { onLocal: () => setHideIgnored(st, page, false) }));
+          PMR.glyph('info'), h('span', { class: 'pmr-part-text', text: nt.text }), textAct(nt.action, panel.menus, { onLocal: () => setHideIgnored(st, page, false) }));
         page.notice = notice;
         out.push(notice);
         /* the tree */

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.storage_value.shared_alert_rule_state.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "alert_rule_id",
+    "revision",
+    "source_record_ref",
+    "root_cause_ref",
+    "mute_state",
+    "mute_expires_at"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.storage_value.shared_alert_rule_state.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "alert_rule_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source_record_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "root_cause_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mute_state": {
+      "enum": [
+        "unmuted",
+        "muted",
+        "expired"
+      ]
+    },
+    "mute_expires_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

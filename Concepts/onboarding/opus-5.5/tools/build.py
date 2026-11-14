@@ -34,6 +34,7 @@ import base_source
 import active_descendant_rewrite
 import css_bucket_split
 import css_media_split
+import invalidation_sets
 import css_comment_lint
 
 TOOLS = Path(__file__).resolve().parent
@@ -852,6 +853,7 @@ def check(built: str) -> list[str]:
         problems.append('Concepts/PMConcept7.html is missing; run build.py --publish-pm7')
     elif TARGET.read_bytes() != expected:
         problems.append('Concepts/PMConcept7.html differs from a fresh build; run build.py --publish-pm7')
+    problems.extend(invalidation_sets.published_problems(MEDIA_WHOLE.get(built, built)))
     unsplit = UNSPLIT.get(built)
     if unsplit is None:
         problems.append('page lint ratchet: no page from before step 7 for this build (build_text() must run first)')
@@ -888,6 +890,12 @@ def syntax_check(built: str) -> list[str]:
 
 
 def main() -> int:
+    # The Settings layers read Plans/settings_inventory.json (tracked, outside Concepts/). Without it the build
+    # silently drops inventory rows and fails later with a misleading placement error, so refuse a partial checkout.
+    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+    if not inventory.is_file():
+        print('BUILD FAILED: this build needs Plans/settings_inventory.json (a full repository checkout)', file=sys.stderr)
+        return 1
     unknown = [a for a in sys.argv[1:] if a.startswith('--') and a not in ('--check', '--publish-pm7', '--out')]
     if unknown:
         print(f"unknown option(s): {' '.join(unknown)} (the --no-usage and --no-home private reference builds were "
@@ -906,7 +914,9 @@ def main() -> int:
         return 0 if not problems else 1
     whole = MEDIA_WHOLE.get(built, built)
     problems = (lint_sources() + syntax_check(built) + _rail().published_problems(whole) + _glyphs().published_problems(whole)
-                + _home().published_problems(whole) + _chat56().published_problems(whole))
+                + _home().published_problems(whole) + _chat56().published_problems(whole)
+                # the page-wide invalidation sets a hover, press or selection change uses (tools/invalidation_sets.py)
+                + invalidation_sets.published_problems(whole))
     if css_media_split.join(built) != whole:
         problems.append('css_media_split: the published page with its viewport parts joined is not the page before the split')
     if problems:

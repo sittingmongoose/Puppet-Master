@@ -16,15 +16,38 @@ In a sandboxed preview (T3's file preview) the frame has no storage at all: PMCo
 The app file has no stand-in (the kit's sandbox check asserts the opaque origin; PMConcept7 and the layer keep their state
 in memory there) and no host to put PMConcept7's own Settings keys back when it closes, so its first script does that.
 
-    python3 tools/build_standalone.py OUTDIR [path/to/PMConcept7.html]
+    python3 tools/build_standalone.py OUTDIR [path/to/PMConcept7.html] [--inventory path/to/settings_inventory.json]
+
+Inventory alignment (2026-11-13): Plans' inventory layering is the per-row authority (SSYS-059), so both files carry the
+repository's Plans/settings_inventory.json (each row's id, type and layering, the group titles, and the file's SHA-256)
+as window.PSX_LAYERING, ahead of the layer. The served index.html fetches the same file instead.
 """
+import hashlib
 import html
+import json
 import pathlib
 import re
 import sys
 
 HERE = pathlib.Path(__file__).resolve().parent.parent
 PM7 = HERE.parent.parent / "PMConcept7.html"
+INVENTORY = HERE.parent.parent.parent / "Plans" / "settings_inventory.json"
+
+
+def layering(path):
+    """The part of Plans' inventory the layer reads: every row's id, type and layering, the group titles, the source."""
+    raw = path.read_bytes()
+    d = json.loads(raw)
+    rows = [{"id": r["id"], "type": r.get("type"), "layering": r["layering"]} for r in d.get("settings", []) if isinstance(r, dict) and r.get("id") and isinstance(r.get("layering"), dict)]
+    if not rows:
+        sys.exit(f"build_standalone: {path} has no rows with layering")
+    groups = {f"{c['id']}.{g['id']}": g.get("title") for c in d.get("categories", []) for g in c.get("subgroups", [])}
+    try:
+        shown = str(path.resolve().relative_to(HERE.parent.parent.parent))
+    except ValueError:
+        shown = str(path)
+    data = {"source": {"path": shown, "sha256": hashlib.sha256(raw).hexdigest(), "schema_version": d.get("schema_version"), "rows": len(rows)}, "groups": groups, "settings": rows}
+    return "<script>window.PSX_LAYERING=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/") + ";</script>\n"
 FIRST = ("<script>(function(){var ok=true;try{localStorage.getItem('x');}catch(e){ok=false;}"
          "if(!ok){var m=new Map();var s={getItem:function(k){return m.has(String(k))?m.get(String(k)):null;},"
          "setItem:function(k,v){m.set(String(k),String(v));},removeItem:function(k){m.delete(String(k));},clear:function(){m.clear();},"
@@ -54,8 +77,8 @@ def parts(host):
     return [("style" if k == "css" else "script", HERE / p) for k, p in re.findall(r"\['(css|js)', '([^']+)'\]", m.group(1))]
 
 
-def layered(app, host, first):
-    layer = ""
+def layered(app, host, first, inv):
+    layer = inv
     for tag, path in parts(host):
         body = path.read_text(encoding="utf-8")
         if f"</{tag}" in body:
@@ -75,15 +98,26 @@ def layered(app, host, first):
 
 
 def main():
-    if len(sys.argv) not in (2, 3):
+    args = sys.argv[1:]
+    inventory = INVENTORY
+    if "--inventory" in args:
+        i = args.index("--inventory")
+        if i + 1 >= len(args):
+            sys.exit(__doc__)
+        inventory = pathlib.Path(args[i + 1])
+        del args[i:i + 2]
+    if len(args) not in (1, 2):
         sys.exit(__doc__)
-    out = pathlib.Path(sys.argv[1])
+    if not inventory.is_file():
+        sys.exit(f"build_standalone: no inventory at {inventory} (Plans/settings_inventory.json, or --inventory PATH)")
+    inv = layering(inventory)
+    out = pathlib.Path(args[0])
     out.mkdir(parents=True, exist_ok=True)
-    pm7 = pathlib.Path(sys.argv[2]) if len(sys.argv) == 3 else PM7
+    pm7 = pathlib.Path(args[1]) if len(args) == 2 else PM7
     raw = pm7.read_text(encoding="utf-8")
     host = (HERE / "index.html").read_text(encoding="utf-8")
     # the shared file: the host page, PMConcept7 with the layer in its frame
-    app = layered(raw, host, FIRST)
+    app = layered(raw, host, FIRST, inv)
     frame = 'src="../../PMConcept7.html?o55=off"'
     if frame not in host:
         sys.exit("build_standalone: index.html no longer frames ../../PMConcept7.html?o55=off")
@@ -94,7 +128,7 @@ def main():
     target.write_text(shared, encoding="utf-8")
     print(f"{target} ({target.stat().st_size / 1e6:.1f} MB)")
     # the app file: PMConcept7 with the layer, no host
-    app2 = layered(raw, host, FIRST_APP + RESTORE)
+    app2 = layered(raw, host, FIRST_APP + RESTORE, inv)
     target2 = out / "settings-scope-app.html"
     target2.write_text(app2, encoding="utf-8")
     print(f"{target2} ({target2.stat().st_size / 1e6:.1f} MB)")

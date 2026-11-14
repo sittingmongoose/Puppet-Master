@@ -560,8 +560,8 @@
         },
         "rows": {
           "type": "array",
-          "minItems": 18,
-          "maxItems": 18,
+          "minItems": 17,
+          "maxItems": 17,
           "items": {
             "$ref": "#/$defs/handoff_row"
           }
@@ -3262,8 +3262,7 @@
         "H-014",
         "H-015",
         "H-016",
-        "H-017",
-        "H-018"
+        "H-017"
       ]
     },
     "schema_payload_ref": {

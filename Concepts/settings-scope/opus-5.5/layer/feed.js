@@ -40,8 +40,23 @@
     project: ['code.execution.build-context', 'safety.protection.custom-patterns-path'],
     thing: ['system.mcp.remote-url', 'system.mcp.transport', 'system.mcp.server-scope', 'system.mcp.server-enabled', 'system.mcp.tool-toggle', 'extensions.commands.command-scope', 'extensions.commands.command-mode',
       'extensions.commands.command-model', 'extensions.commands.command-persona', 'extensions.commands.command-permissions', 'ai.accounts.gcp-project-id', 'safety.rules.rule-editor', 'safety.rules.per-tool-permissions',
-      'safety.protection.web-tool-permissions'],
+      'safety.protection.web-tool-permissions',
+      /* review S1 (Sol-high recheck of the Sol max fixes): the Rules file is the Permissions owner's own. Plans'
+         inventory layering, which SSYS-059 makes the per-row authority, gives it home: thing with every ordinary level
+         not offered (set_inside_a_thing), and Permissions_System §9 with PS-144 make ~/.config/puppet-master/
+         permissions.toml a read-only projection of the Everywhere rules, never a second writer. SSYS-059 classifies
+         owner-held rows before host paths, and so does classify(): this list is read first, so the path branch below
+         never reaches it */
+      'safety.rules.storage-format'],
+    /* owner-held rows whose panel says what their owner does with them (panel.js ownerWhere), by view */
+    ownerView: { 'safety.rules.storage-format': 'permissions_projection' },
     computerOnly: ['system.advanced.auto-update', 'system.advanced.update-frequency', 'system.advanced.release-channel', 'system.advanced.catalog-updates'],
+    /* Jared #8: libraries were on the device rule, which offered "Set for a device" on rows that are not about a screen.
+       A library (your own themes, your sounds) is the same everywhere, kept with your settings */
+    library: ['general.visual.custom-theme-base'],
+    /* review A-r1 finding 5: these three open a library (a button, not a value), so they stay off the ladder and their
+       panel says where the library lives, with no value line and no Change (panel.js offWhere) */
+    libraryAction: ['general.visual.manage-custom-themes', 'general.interaction.sound-catalog', 'general.interaction.sound-management'],
     ceiling: ['branching.subagents.provider-concurrency-cap', 'memory.assembly.memory-capsule-budget']
   };
   /* a safety answer's careful order, most careful first, from its choices; a row whose order can't be told keeps the
@@ -54,11 +69,68 @@
     if (o.some((v) => rank(v) < 0)) return [];
     return o.slice().sort((a, b) => rank(a) - rank(b));
   }
+  /* ------------------------------------------------------------------ Plans' inventory decides first
+     Inventory alignment (2026-11-13): the inventory layering is the per-row authority (SSYS-059), so classify() reads it
+     first. An owner-held row (home: thing: an action, a manager, anything set inside an owner) stays off the ladder:
+     no ordinary level takes it, it has no Change, and its panel names its owner (panel.js ownerWhere). A row on the
+     ladder takes the inventory's places (may_differ_by), its Computer key (computer_key: an execution host, or the
+     server itself), its combine and careful order, and its reasons for the levels it doesn't offer (not_offered); the
+     concept's own treatment (the safety preview, a run's own choice) stays. heuristic() decides only rows the inventory
+     doesn't list; PSX.classReport() names them */
+  /* the inventory writes a switch's careful order in words (FileSafe: on before off); a switch's value is true or false.
+     Found next to Astra max A1/A4: compared as written, FileSafe's order matched neither value, so the "custom" rule
+     took the computer's own, and a computer's Off beat a project's On (the less careful value). A switch's order is
+     read as its values */
+  const carefulValues = (order, toggle) => order.map((x) => (!toggle ? x : /^(on|true)$/i.test(String(x)) ? true : /^(off|false)$/i.test(String(x)) ? false : x));
+  function placesOf(L, h, id, s) {
+    h = h || {};
+    const toggle = (PSX.layering && PSX.layering.types[id]) === 'toggle' || (s && typeof s.value === 'boolean') || typeof DEFAULTS[id] === 'boolean';
+    const may = (L.may_differ_by || []).filter((x) => x !== 'everywhere'), n = L.not_offered || {};
+    const r = { inventory: true, notOffered: n };
+    if (L.home === 'computer') Object.assign(r, { home: 'computer', reason: n.everywhere || 'names_a_program' });
+    else if (L.home === 'project') Object.assign(r, { home: 'project', reason: n.everywhere || 'about_this_project' });
+    else if (!may.length) Object.assign(r, { home: 'everywhere', reason: n.project || n.computer || 'same_for_you' });
+    else { r.may = may; if (may.includes('device')) r.screen = true; }
+    if (L.computer_key === 'execution_host') r.host = true;
+    if (L.combine === 'more_careful') { r.combine = 'more_careful'; r.careful = Array.isArray(L.careful_order) && L.careful_order.length ? carefulValues(L.careful_order, toggle) : (h.careful || []); }
+    else if (L.combine === 'computer_ceiling') r.combine = 'computer_ceiling';
+    /* Astra max A1: per_item is kept as the inventory says. resolve.js resolves each item by its owner's own rule
+       (PSX.PER_ITEM: Permissions' answers per exact key, and its ordered rules per rule), never by a generic merge */
+    else if (L.combine === 'per_item') r.combine = 'per_item';
+    // the concept's safety preview stays (1.7); its careful order only previews, the inventory's combine resolves
+    if (h.safety) { r.safety = true; if (!r.careful && h.careful && h.careful.length) r.careful = h.careful; }
+    if (h.run) r.run = true;
+    return r;
+  }
   function classify(ref, s) {
+    const L = PSX.layerOf(ref.id);
+    if (!L) return heuristic(ref, s);
+    return L.home === 'thing' ? null : placesOf(L, heuristic(ref, s), ref.id, s);
+  }
+  // an owner-held row: the inventory's home: thing, or (for a row it doesn't list) the reviewed list
+  const ownerHeld = (id) => { const L = PSX.layerOf(id); return L ? L.home === 'thing' : REVIEWED.thing.includes(id) || REVIEWED.libraryAction.includes(id); };
+  const OWNER_IDS = [...new Set(Object.keys((PSX.layering && PSX.layering.rows) || {}).filter((id) => PSX.layering.rows[id].home === 'thing')
+    .concat(REVIEWED.thing.concat(REVIEWED.libraryAction).filter((id) => !PSX.layerOf(id))))];
+  /* the demo world's own rows take their places from the inventory too (they were hand-written); a row the inventory
+     doesn't list (the layer's Projects folder, a row it has retired) keeps its own */
+  Object.keys(DEF).forEach((id) => {
+    const d = DEF[id], L = PSX.layerOf(id); if (!L || L.home === 'thing') return;
+    const r = placesOf(L, { safety: d.safety, careful: d.careful, run: d.run }, id);
+    ['home', 'may', 'screen', 'host'].forEach((k) => { delete d[k]; });
+    Object.keys(r).forEach((k) => { if (r[k] !== undefined) d[k] = r[k]; });
+  });
+
+  /* the concept's own heuristic over id, control and scope: only for rows Plans' inventory doesn't list */
+  function heuristic(ref, s) {
     const id = ref.id, sc = ref.scope || [];
-    if (REVIEWED.thing.includes(id)) return null;
+    if (REVIEWED.thing.includes(id) || REVIEWED.libraryAction.includes(id)) return null;
+    /* Jared #8: a row the reference marks only "for a single run" still holds the value each run starts with, so it
+       follows the ladder like every other row; its panel says a run can choose its own (it was off the ladder and showed
+       the base page's own Where it applies) */
+    if (sc.length && sc.every((x) => x === 'run')) { const r = heuristic(Object.assign({}, ref, { scope: [] }), s); return r ? Object.assign(r, { run: true }) : r; }
     if (sc.length && sc.every((x) => ['account', 'provider', 'persona', 'run'].includes(x))) return null;
     if ((sc.includes('account') || sc.includes('persona')) && !sc.includes('global')) return null;   // a field of one thing
+    if (REVIEWED.library.includes(id)) return { home: 'everywhere', reason: 'your_library', reviewed: true };
     if (REVIEWED.device.includes(id)) return { may: ['device'], screen: true, reviewed: true };
     if (REVIEWED.project.includes(id)) return { home: 'project', reason: 'about_this_project', reviewed: true };
     if (REVIEWED.computerOnly.includes(id)) return { may: ['computer'], reviewed: true };
@@ -68,16 +140,25 @@
     if (/(proxy|\.port$|-port$|bind-address|listen-)/.test(id)) return { home: 'computer', host: true, reason: 'about_the_network' };
     if (/(gpu|vram|cpu-cores|memory-limit-mb|hardware)/.test(id)) return { home: 'computer', host: true, reason: 'about_hardware' };
     if (s.control === 'path' || /(cli-path|binary-path|-binary$|executable|terminal\.shell$|launch-config|docker-host|socket-path)/.test(id)) return { home: 'computer', host: true, reason: /(dir|folder|location)$/.test(id) && !/cli|binary/.test(id) ? 'names_a_folder' : 'names_a_program' };
+    /* review Sol max F1, the same weakness here: a row whose value is a place on one computer (an absolute path: where
+       the layer's one rule says a word starts, PSX.paths.rootOf: /, ~, a drive, a UNC share, file:) is each computer's
+       own, whatever its control.
+       A value is one word, never a command line, so "anthropic/claude-sonnet-4" stays a model's name. Review S1: it
+       runs only after the reviewed owner-held rows (REVIEWED.thing, read first above), as SSYS-059 orders it */
+    if (typeof s.value === 'string' && /^(root|home|drive|unc|file)$/.test(PSX.paths.rootOf(s.value.trim()) || '')) return { home: 'computer', host: true, reason: 'names_a_path' };
     if (/^general\.visual\./.test(id) || /^general\.interaction\.(sound|submit-key|haptic)/.test(id) || /^general\.startup\.window/.test(id) || /(keyboard-shortcuts|font-family|ui-scale|zoom-level)/.test(id)) return { may: ['device'], screen: true };
     // a safety row: the more careful of a computer's and a project's own (1.4)
     if (/^safety\./.test(id) && !Array.isArray(s.value) && (typeof s.value !== 'object' || s.value === null)) return { may: ['computer', 'project'], combine: 'more_careful', careful: carefulOrder(s, id), safety: true };
     return { may: ['computer', 'project'] };
   }
   PSX.classReport = () => {
-    const out = { adopted: 0, reviewed: 0, byRule: {}, safety: [], ceiling: [], device: [], project: [], computer: [] };
+    // inventory alignment: which rows Plans' inventory decided, and the few the heuristic decided because it doesn't list them
+    const out = { adopted: 0, reviewed: 0, inventory: 0, fallback: [], ownerHeld: OWNER_IDS.length, source: PSX.layering ? PSX.layering.source : null, byRule: {}, safety: [], ceiling: [], device: [], project: [], computer: [] };
     Object.keys(DEF).forEach((id) => {
-      const d = DEF[id]; if (!d.adopted) return;
+      const d = DEF[id];
+      if (!d.adopted) { if (!d.inventory) out.fallback.push(id + ' (a demo row)'); return; }
       out.adopted++; if (d.reviewed) out.reviewed++;
+      if (d.inventory) out.inventory++; else out.fallback.push(id);
       const k = d.home ? 'home:' + d.home : (d.may || []).join('+') + (d.combine ? ' ' + d.combine : '');
       out.byRule[k] = (out.byRule[k] || 0) + 1;
       if (d.safety) out.safety.push(id); if (d.combine === 'computer_ceiling') out.ceiling.push(id);
@@ -111,6 +192,10 @@
     const st = K.getState().settings || {};
     let n = 0;
     Object.keys(PSX.REF).forEach((id) => { if (!DEF[id] && adopt(id, st[id])) n++; });
+    // rows Settings draws that the reference doesn't list (Animation speed, Accent color, Autosave and the rest): the same
+    // rule, decided from the id and the control (Jared #8: none of them may keep a different Where it applies)
+    const placed = (W.PM51 && W.PM51.placement && W.PM51.placement.byId) || {};
+    Object.keys(placed).forEach((id) => { if (DEF[id] || PSX.REF[id]) return; const s0 = W.PM51.setting ? W.PM51.setting(id) : null; if (!s0 || /^(resource|action)$/.test(String(s0.control || ''))) return; if (adopt(id, st[id])) n++; });
     PSX.adopted = n;
     return n;
   }
@@ -120,9 +205,12 @@
   /* ------------------------------------------------------------------ the values one context feeds */
   function engineValues(ctx) {
     const out = {}, changed = {};
+    /* looking at another device's screen (Jared #11): your own screen keeps painting with your own screen values, so
+       nothing on it moves; the rows show that device's values themselves (rows.js, psx-devval) */
+    const actorCtx = ctx && ctx.device && ctx.device !== S.actor ? Object.assign({}, ctx, { device: S.actor }) : null;
     IDS.forEach((id) => {
       if (DEF[id].demoRow) return;
-      const r = PSX.resolve(id, ctx);
+      const r = PSX.resolve(id, actorCtx && DEF[id].screen ? actorCtx : ctx);
       let v = r.notOffered ? DEFAULTS[id] : (r.asked !== undefined ? r.asked : r.value);
       if (id === 'general.visual.theme') { const pair = PSX.themePair(v); Object.assign(out, pair); changed['general.visual.theme'] = r.changed; changed['general.visual.theme-mode'] = r.changed; return; }
       out[id] = clone(v); changed[id] = !!r.changed && !r.notOffered;
@@ -321,7 +409,7 @@
       if (c.device === S.actor) acts.push({ label: 'Just this screen for now', primary: true, run: () => commit(id, nv, ov, { level: 'device', key: c.device }, { offline: true }) });
     } else if ((def.may || []).includes('computer')) {
       if (PSX.answering(c.on)) acts.push({ label: c.on === 'here' ? 'Just this computer for now' : `Just ${placeName('computer', c.on)} for now`, primary: true, run: () => commit(id, nv, ov, { level: 'computer', key: c.on }, { offline: true }) });
-      else body += ` ${c.project || 'This chat'} works on ${placeName('computer', c.on)}, which isn’t answering either, so nothing can change for it now.`;
+      else body += ` ${c.project ? `${c.project}’s default computer, ${placeName('computer', c.on)},` : `${placeName('computer', c.on)}, where this chat runs,`} isn’t answering either, so nothing can change for it now.`;
     }
     acts.push({ label: `Change it when ${home} is back`, hover: `Nothing is saved or queued now. Change it again once ${home} answers.`, run: () => {} });
     PSX.note({ title: 'Not changed everywhere', body, mark: 'offline', actions: acts, kind: 'offline', ms: 9000 });
@@ -452,5 +540,5 @@
   };
 
   PSX.on('world', () => { if (!feeding) PSX.emit('redraw'); });
-  Object.assign(PSX, { feed: { full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
+  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED, thing: OWNER_IDS, owned: REVIEWED.ownerView, library: REVIEWED.libraryAction }, ownerHeld, feed: { classify, heuristic, placesOf, full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
 })(window);

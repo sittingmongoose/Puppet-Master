@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L8754-L9693
+Source lines: L8765-L9704
 
-Source SHA256: `eb9a2bf3826aab67fe1fc232497cc0ffad9874e0d885322cc7e9b8c8102e96ee`
+Source SHA256: `2450820e22840f1cea0189821d2b80ceedad9d92513f96b75d38c7647161aaf0`
 
 ---
 
@@ -505,7 +505,7 @@ preserved_exact_tokens:
 - Cline
 negative_constraints: []
 observed_signal: Codex discussions request per-skill model selection and issues show custom subagent model config not honored; OpenCode issues request model variants and subagent model/effort selection; Cline SDK centralizes session/Plan/Act coordination and provider migration.
-pm_current_coverage: PM already has provider/model precedence by scope and Goal Runtime model-role policy.
+pm_current_coverage: PM already has provider/model precedence by scope. Goal Runtime model-role policy is retired by DL-478; Goals use the initiating chat model.
 pm_gap_or_delta: PM should map tasks to model/effort through a scored router instead of static defaults while preserving user policy and certification-tier rules.
 proposal_or_recommendation: Add ModelSelectionRouter with task_kind, risk_class, context_size, modalities, tool_need, verification_tier, cost_policy, latency_policy, provider availability, and fallback chain. Do not hardcode model names; use capability tiers.
 compile_disposition: create_new_planunit

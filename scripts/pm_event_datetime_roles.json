@@ -1,0 +1,1746 @@
+[
+  {
+    "node": [
+      "Plans/section15_browser_program_contracts.schema.json",
+      "json",
+      "/$defs/browser_program_result_validation/properties/result_schema_resources"
+    ],
+    "value_schema_sha256": "54ee3e3c961e3ca96880c2fa46c00d8de296718e7bb0a7cbecd1359e7dd00ee8",
+    "role": "schema_resource_string",
+    "reason": "result_schema_resources maps resource identifiers to nonempty original schema-resource strings. The cited value schema accepts all 653 battery timestamps and 15 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/section15_browser_program_contracts.schema.json",
+      "pointer": "/$defs/browser_program_result_validation/properties/result_schema_resources/additionalProperties",
+      "value": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+      "json",
+      "/$defs/common_node/properties/payload"
+    ],
+    "value_schema_sha256": "ff3d2790b5791382e7fb667cf2cdbe669db5f194a96d8474322b2ff1dba6e0bd",
+    "role": "arbitrary_graph_payload",
+    "reason": "common_node.properties.payload is the graph node payload object; its values are arbitrary payload values subject to the existing forbidden-name rule. The cited value constraint is the map's implicit true additionalProperties, which accepts every string, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json",
+      "pointer": "/$defs/common_node/properties/payload",
+      "value": {
+        "type": "object",
+        "propertyNames": {
+          "not": {
+            "pattern": "(?i)(retrieval_diagnostic|exact_source|hidden_source|hidden_url|benchmark_source)"
+          }
+        }
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/settings_system_contracts.schema.json",
+      "json",
+      "/$defs/setting_value/oneOf/5"
+    ],
+    "value_schema_sha256": "eb835cf9e07061402fa4cb831482cf58540ff46f2b8fcf4a5adcea867f6deeb1",
+    "role": "setting_value",
+    "reason": "The object branch of setting_value maps keys to the recursive setting_value union of null, boolean, number, string, array and object settings values. The union's string branch accepts all 653 battery timestamps and all 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/settings_system_contracts.schema.json",
+      "pointer": "/$defs/setting_value",
+      "value": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "string",
+            "maxLength": 16384
+          },
+          {
+            "type": "array",
+            "maxItems": 2048,
+            "items": {
+              "$ref": "#/$defs/setting_value"
+            }
+          },
+          {
+            "type": "object",
+            "maxProperties": 2048,
+            "propertyNames": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "additionalProperties": {
+              "$ref": "#/$defs/setting_value"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "c43929b80e75ed1123cad7a43a328b6fcb9370eccfbcd2ffbda2829ad7bb3c46",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "70e86e1fe47cacc39dce21f12440980d47babcdaddc01545e52fab99173907c6",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "d3af1edbb7bb85a81127dde1a2de33c9822d570de9b6c55f412066963be0aa30",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "4088171f66c50421b82a808a91c54504c5e6282a671d84c1993196655412de6a",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "9758b750369e038772a90428412ecf8ba2705dd7a68369c75cd95614aebf4952",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json",
+      "/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "a4d279bb8746f5ac89bf1732ed559c30920982d26a3377e61ae3bb2a7c5cb459",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "pointer": "/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/shared_runtime_contracts.schema.json",
+      "json",
+      "/$defs/permission_snapshot_record/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "ed78017d311abff3667c51970d61b8fed022d53781de7f1bbe94e169985f7edc",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference.",
+    "citation": {
+      "path": "Plans/shared_runtime_contracts.schema.json",
+      "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/storage_value_registry.json",
+      "json",
+      "/families/62/value_schema/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "67a3168fc9556a83e8b60426c8bdaef13e7f0f020cac22047d6fa41b94358b32",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference.",
+    "citation": {
+      "path": "Plans/storage_value_registry.json",
+      "pointer": "/families/62/value_schema/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+      "json",
+      "/$defs/permission_snapshot_record/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "f1452bc5dea90afb907785561c1115250225164d74a7bc3962d669cab6af4df3",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference.",
+    "citation": {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json",
+      "pointer": "/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "json",
+      "/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "3cf9f7025c3eb4cc0367441d0cbca9b4a333515b57691a092138cbee1b02db81",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference.",
+    "citation": {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "pointer": "/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "json",
+      "/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "3448da893874cf68ebc9f56c903693a4f904fac7eca8b037b8a6468266a0deb3",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference.",
+    "citation": {
+      "path": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "pointer": "/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/storage_value_registry.json",
+      "json",
+      "/families/84/value_schema/properties/tabs"
+    ],
+    "value_schema_sha256": "96d0610af7a02bc2f6dc7fd3e4dc2caa79557a931ca23c51ca97e4176fe64da7",
+    "role": "workspace_tab_record",
+    "reason": "tabs maps panel tab IDs to complete tab records (kind, label, pinned, mode, state, ref). Values are objects, never timestamp strings. The per-kind if/then rules and member schemas sit inside the cited definition, so this row no longer earns automatic credit.",
+    "citation": {
+      "path": "Plans/storage_value_registry.json",
+      "pointer": "/families/84/value_schema/$defs/tab",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "label",
+          "pinned",
+          "mode",
+          "state",
+          "ref"
+        ],
+        "properties": {
+          "kind": {
+            "$ref": "#/$defs/tab_kind"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The user's own label, or null for the kind's label."
+          },
+          "pinned": {
+            "type": "boolean"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "kept",
+              "preview"
+            ],
+            "description": "preview is the panel's one italic preview tab, for files only."
+          },
+          "state": {
+            "type": "object",
+            "description": "The kind's own serialized state, at most 16 KB of canonical JSON. No buffers, scrollback, transcripts, secrets or widget layout."
+          },
+          "ref": {
+            "$ref": "#/$defs/domain_ref"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "editor"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "path": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "path"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "terminal"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "terminal_session_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "terminal_session_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "browser"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "browser_session_id": true
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "dashboard"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "board_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "board_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "plan"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "plan_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "plan_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "document"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "path": true
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "artifact"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "artifact_id": true,
+                    "artifact_version": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "artifact_id",
+                    "artifact_version"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "run"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "run_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "run_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "transcript"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "thread_id": true
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "context"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "thread_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "thread_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "record"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "record_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "record_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "output"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "problems"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "ports"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "debug_console"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "preview"
+                }
+              },
+              "required": [
+                "mode"
+              ]
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "editor"
+                },
+                "pinned": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/home_workspace_layout_v2.schema.json",
+      "json",
+      "/properties/tabs"
+    ],
+    "value_schema_sha256": "b18be02c2b2106be3e136e030077790c06868974cb7eab7033350bee61fc728f",
+    "role": "workspace_tab_record",
+    "reason": "tabs maps panel tab IDs to complete tab records (kind, label, pinned, mode, state, ref). Values are objects, never timestamp strings. The per-kind if/then rules and member schemas sit inside the cited definition, so this row no longer earns automatic credit.",
+    "citation": {
+      "path": "Plans/home_workspace_layout_v2.schema.json",
+      "pointer": "/$defs/tab",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "label",
+          "pinned",
+          "mode",
+          "state",
+          "ref"
+        ],
+        "properties": {
+          "kind": {
+            "$ref": "#/$defs/tab_kind"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The user's own label, or null for the kind's label."
+          },
+          "pinned": {
+            "type": "boolean"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "kept",
+              "preview"
+            ],
+            "description": "preview is the panel's one italic preview tab, for files only."
+          },
+          "state": {
+            "type": "object",
+            "description": "The kind's own serialized state, at most 16 KB of canonical JSON. No buffers, scrollback, transcripts, secrets or widget layout."
+          },
+          "ref": {
+            "$ref": "#/$defs/domain_ref"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "editor"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "path": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "path"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "terminal"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "terminal_session_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "terminal_session_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "browser"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "browser_session_id": true
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "dashboard"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "board_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "board_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "plan"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "plan_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "plan_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "document"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "path": true
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "artifact"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "artifact_id": true,
+                    "artifact_version": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "artifact_id",
+                    "artifact_version"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "run"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "run_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "run_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "transcript"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "thread_id": true
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "context"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "thread_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "thread_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "record"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {
+                    "record_id": true
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "record_id"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "output"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "problems"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "ports"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "debug_console"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ref": {
+                  "properties": {},
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "preview"
+                }
+              },
+              "required": [
+                "mode"
+              ]
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "editor"
+                },
+                "pinned": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/project_system_contracts.schema.json",
+      "json",
+      "/$defs/project_creation_recovery_context/properties/settled_effects"
+    ],
+    "value_schema_sha256": "d5c583dce45d3105428b83c4d0dbb9f600cad4e6aed690b1b3c4961c0fefdce7",
+    "role": "settled_effect_record",
+    "reason": "settled_effects maps creation-recovery effect names to closed objects holding result_ref and receipt_ref. Values are objects, never timestamp strings. Their member schemas earn no automatic credit, so this row is explicitly reviewed.",
+    "citation": {
+      "path": "Plans/project_system_contracts.schema.json",
+      "pointer": "/$defs/project_creation_recovery_context/properties/settled_effects/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "result_ref",
+          "receipt_ref"
+        ],
+        "properties": {
+          "result_ref": {
+            "$ref": "#/$defs/safe_ref"
+          },
+          "receipt_ref": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        }
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/settings_system_contracts.schema.json",
+      "json",
+      "/$defs/values_by_setting_id"
+    ],
+    "value_schema_sha256": "215cd1e21474bc36c0adbe075dfa85a5930e87b7b02dcc786b2d1b7027bc19f4",
+    "role": "setting_value",
+    "reason": "values_by_setting_id maps setting IDs to the generic setting_value union. Its setting_id key grammar refuses both timestamp field names, so no battery sample is accepted at either field. setting_value itself accepts all 653 battery timestamps and all 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role, and its array and object members withhold automatic credit. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed.",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/settings_system_contracts.schema.json",
+      "pointer": "/$defs/setting_value",
+      "value": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "string",
+            "maxLength": 16384
+          },
+          {
+            "type": "array",
+            "maxItems": 2048,
+            "items": {
+              "$ref": "#/$defs/setting_value"
+            }
+          },
+          {
+            "type": "object",
+            "maxProperties": 2048,
+            "propertyNames": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "additionalProperties": {
+              "$ref": "#/$defs/setting_value"
+            }
+          }
+        ]
+      }
+    }
+  }
+]

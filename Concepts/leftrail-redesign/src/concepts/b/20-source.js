@@ -36,7 +36,7 @@ B.panels.source = (function () {
         out.push(h('div.pmr-b-sub', { text: 'Destination' }), factItems(facts.slice(0, 1), st.menus));
         if (push) {
           out.push(h('div.pmr-b-pushto', h('div.pmr-b-fact', h('div.pmr-b-fact-k', { text: push.name }),
-            h('div.pmr-b-fact-v', PMR.glyph(push.status.state), h('span', { text: push.meta.join(' · ') + ' · ' + push.status.word }))),
+            h('div.pmr-b-fact-v', PMR.glyph(push.status.state), h('span', { class: 'pmr-part-text', text: push.meta.join(' · ') + ' · ' + push.status.word }))),
           push.note ? noteEl(push.note) : null,
           asList(push.children).map(c => row({ key: 'source:' + c.id, lead: PMR.icon('globe'), name: c.name, mono: true, meta: c.meta, end: [wordEl(c.status)], cls: 'is-child', attrs: { 'data-canon': c.canon || null } }))));
         }
@@ -96,7 +96,7 @@ B.panels.source = (function () {
     const seg = h('div.pmr-b-seg', { role: 'radiogroup', 'aria-label': 'Local history engine (preview only)', 'data-cur': cur });
     seg.appendChild(h('span.pmr-b-seg-tile', { 'aria-hidden': 'true' }));
     opts.forEach(o => {
-      const b = h('button', Object.assign({ type: 'button', class: 'pmr-b-seg-opt', role: 'radio', 'aria-checked': String(o.id === cur) }, PMR.actionAttrs(o.action)), h('span', { text: o.label }));
+      const b = h('button', Object.assign({ type: 'button', class: 'pmr-b-seg-opt', role: 'radio', 'aria-checked': String(o.id === cur) }, PMR.actionAttrs(o.action)), h('span', { class: 'pmr-part-text', text: o.label }));
       b.addEventListener('click', ev => {
         ev.preventDefault();
         if (engine(panel) === o.id) return;

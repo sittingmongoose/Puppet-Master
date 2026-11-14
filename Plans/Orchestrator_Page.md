@@ -231,7 +231,7 @@ Reconciliation readiness is classified instead of treated as one undifferentiate
 #### Artifact envelope routing preference
 - Cost-bearing artifact routing prefers `usage_event_ref` instead of timestamp heuristics when linking to Usage and Ledger.
 - Runtime artifacts that summarize external operations must carry receipt linkage.
-- Orchestrator may self-initiate read-only web/search/fetch/extract/research/deep-research/crawl/map work only when orchestration needs current or external source verification, issue/PR/docs currentness, or visual/dynamic browser evidence. These calls route through the PM WebOperation/BrowserAction dispatcher, not through slash-help-only command discovery, and use `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, or `BrowserAction/Site Reader` with `invocation_source = goal`, required `agent_reason`, permission/capability gates, visible operation cards, and `orchestrator_evidence_receipts`. Orchestrator web evidence does not create WorkNodes, NodeSeeds, runtime queues, implementation files, or build tasks; it records source/evidence receipts for the current GoalRun or blocked-state decision.
+- Orchestrator may self-initiate read-only web/search/fetch/extract/research/deep-research/crawl/map work only when orchestration needs current or external source verification, issue/PR/docs currentness, or visual/dynamic browser evidence. These calls route through the PM WebOperation/BrowserAction dispatcher, not through slash-help-only command discovery, and use `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, or `BrowserAction/Site Reader` with `invocation_source = goal`, required `agent_reason`, permission/capability gates, visible operation cards, and `orchestrator_evidence_receipts`. Orchestrator web evidence does not create WorkNodes, NodeSeeds, runtime queues, implementation files, or build tasks; it records source/evidence receipts for the current build or blocked-state decision.
 
 #### External runtime receipt and blocked-state pivots
 - Orchestrator remains the page-level recovery owner for blocked flows, while Source Control, GitHub Actions, Docker Manager, and Docker Manager Kubernetes views mirror the same blocked episode, same `blocked_reason_code`, same ordered `allowed_action_ids[]`, same requested/effective state, and same explanation text.
@@ -587,6 +587,10 @@ status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
   Concern is a first-class durable record with exact lifecycle states, resolution_kind values, owner/creator/resolver separation, source-event/record/projection layers, required minimum fields, and explicit authority direction.
+  concern.created preparation reuses OP-002's five authorized creators and worker nomination-only boundary.
+  Its independent technical contract is SP-666/CV-686; closed original record/operation/checkpoint schemas
+  and oracles do not grant another creator or settle any other concern-action authority question.
+
 gui_related: false
 gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
 split_recommended: true
@@ -1579,25 +1583,17 @@ owner_hints: [Plans/Orchestrator_Page.md, Plans/Contracts_V0.md]
 ```yaml
 plan_unit_id: OP-022
 unit_type: requirement
-status: accepted
+status: retired
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
+  RETIRED BY DL-478 (Jared, 2026-11-12, "Sweep and retire all") -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The GoalRun verification and certification projection flow is retired; the old text is retained only for source lineage.
   The Orchestrator page projects each GoalRun through the existing seven-tab shell with GoalRun and WorkGraph overlays; the Plan Compile tab is used for plan-to-code compile projection and remains separate from Executor execution progress. The Goal header shows goal_id, objective, phase, scope, authority/write surface, budget/cost, and certification status. Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger each show only their scoped projections: Plan Compile shows compile projection and handoff readiness, while the execution tabs show WorkGraph dependencies, WorkNode state, SubagentWaves, concerns/blockers, VerificationCycles, DefectBundles, RepairWorkNodes, receipts, replans, source-lineage refs, and certification events without becoming scheduler truth. The projected flow mirrors GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification as a projection over owner records, not scheduler truth. VerificationCycle projection rows expose attempt, status failed | passed | blocked, findings, and defect_signatures when contract/storage records provide them. Projected GoalRun and WorkNode statuses include ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, with contract, storage, permission, worktree, and model-owner records remaining authoritative for the underlying fields. Old fixed-hierarchy, six-tab, and tier-era Orchestrator labels may survive only as compatibility/search aliases for search or import; active projection prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Orchestrator page header, tabs, projections, side-drawer content, and status surfaces.
 depends_on: [OP-020, GRS-026, GRS-027, EP-098, OSI-428]
 unblocks: [RGV-012, F3-394, RAP-027]
 acceptance_criteria:
-  - The seven canonical tabs remain Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger.
-  - Plan Compile is a canonical Orchestrator tab for plan-to-code compile projection, not an Executor execution dashboard.
-  - GoalRun, WorkGraph, WorkNode, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, WorkNodeReceipt, and GoalCompletionReceipt are visible as projections where relevant.
-  - Subagents projections expose active waves, bounded task, model/capability lane, input boundaries, output status, and failure/retry state.
-  - Orchestrator projection preserves GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification without becoming scheduler truth.
-  - VerificationCycle projection rows can show attempt, status failed | passed | blocked, findings, and defect_signatures from contract/storage records.
-  - GoalRun and WorkNode status projections distinguish ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped.
-  - Old fixed-hierarchy and tier-era Orchestrator labels remain compatibility/search aliases only; they do not replace GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, or Receipt terminology in active projection prose.
-  - Sensitive Orchestrator mutations require current or directly validated projections; stale projections cannot authorize sensitive actions.
-  - True blockers distinguish owner, legal next actions, escalation target, projection freshness, reversibility, and audit trail.
+  - No product work or acceptance obligation is compiled from this retired unit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Orchestrator page surface review
@@ -1657,12 +1653,6 @@ preserved_exact_tokens:
   - "cancelled"
   - "stopped"
   - "GoalRun → WorkGraph → WorkNode execution → VerificationCycle → repair loop → receipt → certification"
-  - "active waves"
-  - "bounded task"
-  - "model/capability lane"
-  - "input boundaries"
-  - "output status"
-  - "failure/retry state"
   - "attempt"
   - "failed | passed | blocked"
   - "defect_signatures"
@@ -1692,7 +1682,7 @@ canonical_text: >-
   The tab can label the compile as Plans to WorkNodes, but Plan Compile tab scope excludes Executor execution progress except summarized handoff readiness or final handoff status.
 gui_related: true
 gui_classification_reason: This unit defines a user-visible Orchestrator tab, status panels, progress projection, and activity details.
-depends_on: [OP-022, PNC-010, PNC-014, MS-110, ATS-001, GRS-028]
+depends_on: [PNC-010, PNC-014, MS-110, ATS-001, GRS-028]
 unblocks: [F3-397, RGV-013, RAP-029]
 acceptance_criteria:
   - Plan Compile tab shows progress/speed/ETA/status panels for progress, speed, stage status, counts, blockers, warnings, ETA confidence, model lane status, test capability status, and handoff readiness.
@@ -1742,7 +1732,7 @@ canonical_text: >-
   Existing execution views, not Plan Compile, own Executor execution progress after handoff.
 gui_related: true
 gui_classification_reason: This unit maps visible execution progress to existing Orchestrator tabs and panels.
-depends_on: [OP-023, EP-103, GRS-030, RAP-029, W-072]
+depends_on: [OP-023, EP-103, RAP-029, W-072]
 unblocks: [RGV-013, F3-397]
 acceptance_criteria:
   - Execution progress remains on existing execution views.
@@ -1791,8 +1781,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: 'The default testing visibility policy is show_when_possible: when a meaningful headed or visual surface exists, expose the active test session rather than hiding all verification in background logs. For web work, open the built-in browser or headed browser view and visibly show navigation, clicks, form input, assertions, screenshots, console and network evidence, and pass/fail progression when supported. For Swift and other native work, show the appropriate live preview, hot-reload surface, simulator, emulator, device stream, application window, interaction trace, screenshots, and relevant logs when available and permitted. Users may collapse, detach, background, or leave a visible test session while automation continues; the system preserves session state and does not require the user to watch every action. When a live surface cannot be embedded, expose an Open or Watch action, snapshots, screenshot sequence, video
-  or stream where supported, structured interaction timeline, logs, console and network traces, and evidence links. After Approve And Build succeeds locally, the application automatically switches to the Orchestrator page and opens the Plan Compile tab so the user sees launch reconciliation and compilation starting. If PlanApproved publication or PlanCompileRun identity has not yet reconciled, the Plan Compile tab shows a pending launch shell tied to the approval command and then binds to the durable compile identity without creating a duplicate. Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt. Implementation readiness of the complete pipeline requires a clean-room fixture proving Approve And Build creates exactly one PlanCompileRun, executes mandatory parallel stages, certifies a complete WorkGraph
-  and WorkNodeRequests, passes Executor intake/provisioning, atomically creates GoalRun and WorkNodes, queues an entrypoint, and appears in Orchestrator. Long-running topic conversion, audit, repair, final integration, and final audit display active stage, progress counts, assignment counts, findings fixed, current pass, and user-relevant status so the interface never appears stalled. Orchestrator Plan Compile tab shows immutable source pack, current stage, stage timeline, subagent assignments, PlanUnit coverage, NodeSeed candidates, WorkGraph status, WorkNodeRequest count, testing/model/source-control readiness, audit/repair cycles, blockers, receipts, and handoff status. Plan Compile tab owns compilation and handoff progress; after BuildStarted, Orchestrator execution views own WorkNode dispatch, code changes, live testing, repairs, safe points, and completion while Plan Compile remains a historical launch view with an Open Build action. Commands
+  or stream where supported, structured interaction timeline, logs, console and network traces, and evidence links. After Approve And Build succeeds locally, the application automatically switches to the Orchestrator page and opens the Plan Compile tab so the user sees launch reconciliation and compilation starting. If PlanApproved publication or PlanCompileRun identity has not yet reconciled, the Plan Compile tab shows a pending launch shell tied to the approval command and then binds to the durable compile identity without creating a duplicate. Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt. Implementation readiness of the complete pipeline requires a clean-room fixture proving Approve And Build creates exactly one PlanCompileRun, executes mandatory parallel stages, prepares a complete WorkGraph
+  and WorkNodeRequests, passes Executor intake/provisioning, atomically creates WorkNodes, queues an entrypoint, and appears in Orchestrator. Long-running topic conversion, audit, repair, final integration, and final audit display active stage, progress counts, assignment counts, findings fixed, current pass, and user-relevant status so the interface never appears stalled. Orchestrator Plan Compile tab shows immutable source pack, current stage, stage timeline, subagent assignments, PlanUnit coverage, NodeSeed candidates, WorkGraph status, WorkNodeRequest count, testing/model/source-control readiness, audit/repair cycles, blockers, receipts, and handoff status. Plan Compile tab owns compilation and handoff progress; after BuildStarted, Orchestrator execution views own WorkNode dispatch, code changes, live testing, repairs, safe points, and completion while Plan Compile remains a historical launch view with an Open Build action. Commands
   for topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting build define permission, enablement, disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery. Approve And Build intentionally navigates to Orchestrator Plan Compile, but later transitions present strong Open Build and status actions rather than forcibly moving the user whenever state changes.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
@@ -2711,7 +2701,7 @@ owner_hints:
 
 ## Worker Notebook Detail Access Addendum (2026-09-05)
 
-Packet `PM-WNC-2026-09-05-v1`. The Orchestrator exposes notebook access for the selected run/worker through existing detail surfaces: the SubagentWave/worker inspector rows (OP-022 patterns) gain a notebook entry point rendering the worker_lineage/coordinator_run notebook with author, epistemic kind, freshness, evidence refs, and included-context status, under OP-006 projection-trust freshness (stale/degraded/unavailable disables mutation). No new rail or tab is added; a trivially empty worker notebook renders a positive empty state, and notebook data never becomes scheduling or completion truth (OSI-436).
+Packet `PM-WNC-2026-09-05-v1`. The Orchestrator exposes notebook access for the selected run/worker through existing detail surfaces: the worker inspector rows gain a notebook entry point rendering the worker_lineage/coordinator_run notebook with author, epistemic kind, freshness, evidence refs, and included-context status, under OP-006 projection-trust freshness (stale/degraded/unavailable disables mutation). The Goal-bound SubagentWave projection and OP-022 patterns are retired by DL-478. No new rail or tab is added; a trivially empty worker notebook renders a positive empty state, and notebook data never becomes scheduling or completion truth (OSI-436).
 
 ```yaml
 plan_unit_id: OP-035

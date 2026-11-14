@@ -1,0 +1,74 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "actor_ref",
+    "correlation_id",
+    "idempotency_key",
+    "ts",
+    "concern_id",
+    "prior_revision",
+    "result_revision",
+    "before_record_ref",
+    "after_record_ref",
+    "action_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.card5.concern_resolved.payload.v2"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+    },
+    "actor_ref": {
+      "type": "string",
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+    },
+    "correlation_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "concern_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+    },
+    "prior_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "result_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "before_record_ref": {
+      "type": "string",
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+    },
+    "after_record_ref": {
+      "type": "string",
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+    },
+    "action_ref": {
+      "type": "string",
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.card5.concern_resolved.payload.v2",
+  "description": "Closed family-specific payload/decoded historical view. No event admission. Original historical bytes are never rewritten."
+}

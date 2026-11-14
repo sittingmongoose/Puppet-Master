@@ -1,33 +1,33 @@
 # Shard Index: Plans/Prompt_Pipeline.md
 
-Generated: 2026-11-12T15:13:20Z
+Generated: 2026-11-13T15:35:54Z
 
-Source SHA256: `98b14aa766512aa10031600a7555f0164bf580f4a0c038a0aeb10d9b666e7a48`
+Source SHA256: `4a7ca3e5bf3a6205aea1933761797561e18df799a05cec0f560a0d01f9158174`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `a4238300e173cf3cd050c58eac8461c851a65f1552edd6b050a8b3e0a635ce60`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `618f5d903339ccb861a4b89d30799fb51ba3510624813330cb03991645242860`
-- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L14-L44 `ecc36709fd88aa7796533aa1f50be74f8ff0c8879d71b0345301d5dd2e354e73`
-- [004 - 1. Prompt assembly pipeline](004-1.-prompt-assembly-pipeline.md) L46-L241 `e970debab3d9615a92fb8a76ca56d7daa1cbe393cf93a167822afacd96e467cc`
-- [005 - 2. Compaction and pruning](005-2.-compaction-and-pruning.md) L243-L402 `1cde684a75209985f878a00996e487b630d442a064aab2dc11c1a71ff7f11825`
-- [006 - 3. Rotation (follow-up run spawning)](006-3.-rotation-follow-up-run-spawning.md) L403-L419 `728db8b06e9878541a13694456b21af41b761a0859790df0311da8bfebfa99c4`
-- [007 - 4. GUI integration](007-4.-gui-integration.md) L421-L431 `cd09e0bdafdce7e7df6832e39f1cb40e346153187831657289884ceeae8b403a`
-- [008 - 5. Acceptance criteria](008-5.-acceptance-criteria.md) L433-L445 `99f0f1de73dd91da9126cb41b24650c4283003c3bc0daf4cc2aa08a8f28f7b49`
-- [009 - 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)](009-6.-effective-persona-and-runtime-resolution-pipeline-2026-03-06.md) L446-L663 `b592cf7cdfb8f20ab1f44f59eef98b84aef48ff89957443e87d5d936a2ce525e`
-- [010 - Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)](010-runtime-attempt-snapshot-and-handoff-consolidation-addendum-2026.md) L665-L671 `ff425888b771c128e8c219fedf69eb843fee418e1cc18ac1e59a819cc01aa01d`
-- [011 - Owner / Consumer Map](011-owner-consumer-map.md) L673-L677 `90f93c4c29f472501e4bc6436d8fb532b5cbd3fe6f3dfd708871400925e1347e`
-- [012 - PlanUnits](012-planunits.md) L679-L3546 `60ab47c24e32d059d8323dbaeaf02ce7cb10b520ac6831d00aa989f476fec54e`
-- [013 - Migration Coverage](013-migration-coverage.md) L3548-L3558 `951cb9bc9a8483c2221a6b6746386539aa2a7d0b96508d230273787a5d8fa500`
-- [014 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](014-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L3560-L3601 `1b80f3d6fea84b08090f2b697a3110db8e9386d396784441b7a26e5a5fbea91f`
-- [015 - Ledger Compile Addendum - pldg-20260626-001-feature-name](015-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3604-L3970 `1e6e9dd0f196ff712663d1f389029c8814d59cdccd5f353ea9cf8229463c466e`
-- [016 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L3972-L4038 `e4f02f549772d92a05566eac5b804825d29d340b374b65c4e4c0cbb60d034837`
-- [017 - Ledger Compile Addendum - pldg-20260629-001-feature-name](017-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L4040-L4098 `e96dca3b3fafe6b03308b51937d545258b351c5c172b276bd3153a61316acb4b`
-- [018 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L4100-L4192 `205641d3900c4d1d4229dc4da53d6c16a25f7e876f89ff3c83ac0bd73d435f3c`
-- [019 - Usage GUI Propagation Addendum - 2026-07-09](019-usage-gui-propagation-addendum-2026-07-09.md) L4194-L4264 `a3ff2c7060494dab7357b94f50fe36e6bf78c755ae2d0be45d66f34c1dc07915`
-- [020 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L4266-L5192 `029075f093604397a4300470072f25bdb2d3f929545cad3ed675b30903f7cacd`
-- [021 - Shared Runtime Context and Provider Dispatch Integration Addendum (2026-08-13)](021-shared-runtime-context-and-provider-dispatch-integration-addendu.md) L5194-L5758 `c27211c19c7bac66bd0a5b9cb04041b3ec99890d6c82620378e7e4194f08299e`
-- [022 - Additive Correction v4 — Consumed Correction Truth (2026-09-03)](022-additive-correction-v4-consumed-correction-truth-2026-09-03.md) L5760-L5779 `37386b1b3dc658173780d09c190ef5403587e7969acee09b456a06620502bbe2`
-- [023 - Working Notebook And Fresh Context Window Addendum (2026-09-05)](023-working-notebook-and-fresh-context-window-addendum-2026-09-05.md) L5781-L6112 `2ea9451104f38960cce5bec11b206c65d165ba7b73a40c621e98a7623891f88a`
+- [001 - Preamble](001-preamble.md) L1-L1 `bb8a28efd43b008ad7a2299423b099ba9660d927b29ec6021f3fb48fc7fa6b5f`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `459c186a5934acabca325415edf04f11ebe1ddc9184507a5995ca2818c42e1bb`
+- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L14-L44 `dd34d6a3313e38cd195c075249ab6028a4953ad4743f482dde7cf0a4903dbbb8`
+- [004 - 1. Prompt assembly pipeline](004-1.-prompt-assembly-pipeline.md) L46-L241 `141768cd54dbdccbc916dc4787ce67149274b431e4764fc0b01ff9ed7c99da82`
+- [005 - 2. Compaction and pruning](005-2.-compaction-and-pruning.md) L243-L402 `f6a1c9e1fbb16b80af583a11144f6753e7e69bacc7629eb5127fb8fe494d333d`
+- [006 - 3. Rotation (follow-up run spawning)](006-3.-rotation-follow-up-run-spawning.md) L403-L419 `e0a0f38c36c216fb9c874c24a3d4f49f6910fdfe9ac653f5dd593a9ff8759f8d`
+- [007 - 4. GUI integration](007-4.-gui-integration.md) L421-L431 `54d6a2194927669f219494d29ff73cb135378fb7e04fd77f6e7ac0c4412071f4`
+- [008 - 5. Acceptance criteria](008-5.-acceptance-criteria.md) L433-L445 `b401b19ef3e2ba3aea188eedc881c90c82dde5a2dfa821e1382307deab48943c`
+- [009 - 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)](009-6.-effective-persona-and-runtime-resolution-pipeline-2026-03-06.md) L446-L663 `e374ed6db330daf0f7dc9b129232b4178539d3d1bbdb726510a2649e3884b17c`
+- [010 - Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)](010-runtime-attempt-snapshot-and-handoff-consolidation-addendum-2026.md) L665-L671 `96c396721d2286a4042ff4b4790c74ca61e2ac8797b1bad851d525230417bb83`
+- [011 - Owner / Consumer Map](011-owner-consumer-map.md) L673-L677 `9c4b1e41dc766445d753dd86779c563dd52d44bac784be33d8e1d8a22b1eec87`
+- [012 - PlanUnits](012-planunits.md) L679-L3546 `1d43236cf4441148a9338e641a933835fce86c40651e487abafcb44158a331c4`
+- [013 - Migration Coverage](013-migration-coverage.md) L3548-L3558 `f33ccbaae4ac6cbf929f954e37617eed07bc6b5b461d8d1aeb12b8e8d2634550`
+- [014 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](014-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L3560-L3601 `9b5f1ec6a3eb9e597a368962b50619a52f2cd41591f8643f033c019a1928d0bb`
+- [015 - Ledger Compile Addendum - pldg-20260626-001-feature-name](015-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3604-L3970 `ddea78b5dcb3add353ef5158d7dd1a5de0d5f87f9eff445566c887efb443ebd3`
+- [016 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L3972-L4038 `e0159e2a4b2a35d0bb3508c1c663e713b8bfc906c902d864d3b93796bedabe00`
+- [017 - Ledger Compile Addendum - pldg-20260629-001-feature-name](017-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L4040-L4098 `ea0eac5ac75450442661899081761c23da9076613deea9b2afcf440428a7d32b`
+- [018 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L4100-L4192 `13862d191e8598165d4974b44ae2ef470c64fee8563d39af4649de6952e5ac77`
+- [019 - Usage GUI Propagation Addendum - 2026-07-09](019-usage-gui-propagation-addendum-2026-07-09.md) L4194-L4264 `2e129de53635429f3a500b270a12e9ea7131ee86c5a3256de3ecc06e2372de72`
+- [020 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L4266-L5192 `c89b8f205cca1d0ba96a24a2940da4fe62ff507f49ab7cd0ff6892bc8c5b2e09`
+- [021 - Shared Runtime Context and Provider Dispatch Integration Addendum (2026-08-13)](021-shared-runtime-context-and-provider-dispatch-integration-addendu.md) L5194-L5758 `099220176b545b4d75e2a6e26044a2a56ec6a55ddde1188bc4ace554951e76d1`
+- [022 - Additive Correction v4 — Consumed Correction Truth (2026-09-03)](022-additive-correction-v4-consumed-correction-truth-2026-09-03.md) L5760-L5779 `f74149dd5afcc85f73b09cd0e95730b447decead704459a44425434fd49abb89`
+- [023 - Working Notebook And Fresh Context Window Addendum (2026-09-05)](023-working-notebook-and-fresh-context-window-addendum-2026-09-05.md) L5781-L6218 `da9afbe5c629699fd5967d29b94417c2702ceed36b69ddead90108c51d97655b`

@@ -67,12 +67,18 @@
     "personas.tuning.default-platform",
     "personas.tuning.reasoning-effort",
     "extensions.commands.command-model",
-    "media.image.provider"
+    "media.image.provider",
+    "planning.verification.goal-template",
+    "planning.verification.certification-level",
+    "planning.verification.receipt-type",
+    "planning.verification.goal-replan-behavior",
+    "planning.verification.goal-replan-events",
+    "media.image.model-aliases"
   ],
   "provenance": {
     "source_path": "Concepts/pm6-build/sidecar/pm_settings_data.json",
     "source_sha256": "9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d",
-    "disposition": "source-lineage-only concept demo baseline; this registry is the canonical restatement and may contain later owner-approved rows. Demo runtime fields (value, static status, src attributions) are excluded: status is derived from live subsystem state per F3-435 and never authored here. Q22, Jared 2026-10-30 (DL-257): NieR is the fifth family; retired nier-mode is migration-only, not an inventory row. The live census is the unique IDs in settings, including later owner-approved additions; dated admission counts are historical. Settings batch 3 retires 18 model-related rows and admits five; census is derived from unique live settings IDs. Compatibility inputs are not rows or new writer authority."
+    "disposition": "source-lineage-only concept demo baseline; this registry is the canonical restatement and may contain later owner-approved rows. Demo runtime fields (value, static status, src attributions) are excluded: status is derived from live subsystem state per F3-435 and never authored here. Q22, Jared 2026-10-30 (DL-257): NieR is the fifth family; retired nier-mode is migration-only, not an inventory row. The live census is the unique IDs in settings, including later owner-approved additions; dated admission counts are historical. Settings batch 3 retires 18 model-related rows and admits five; census is derived from unique live settings IDs. DL-479 retires the Media Model nicknames row into the one Model nicknames list, ai.models.model-alias. Compatibility inputs are not rows or new writer authority."
   },
   "related_features_vocabulary": [
     "assistant_memory",
@@ -7276,34 +7282,43 @@
       "label":
         "Model nicknames",
       "desc":
-        "Pickers find a model by its nickname first.",
-      "type": "text",
-      "default": "",
+        "Short names you can type instead of a full model name, for chat and media models.",
+      "type": "keyvalue",
+      "default": {},
       "scope": [
-        "global"
+        "global",
+        "project"
       ],
       "tier": "advanced",
       "search": [
         "alias",
         "friendly name",
-        "normalized key"
+        "normalized key",
+        "nickname",
+        "alias table",
+        "canonical model id",
+        "model mapping",
+        "Media Model Nicknames"
       ],
       "related_features": [
-        "models"
+        "models",
+        "media_generation"
       ],
       "layering": {
-        "home": "thing",
-        "may_differ_by": [],
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "project"
+        ],
         "computer_key": null,
-        "combine": "most_specific",
+        "combine": "per_item",
         "atomic_group": null,
         "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
+          "computer": "same_for_you",
+          "device": "not_about_the_screen"
         }
-      }
+      },
+      "presentation_contract": "One Model nicknames list for chat and media models, on Models › Presets and nicknames (DL-479). Each line is a nickname and the one model it means, stored as the canonical provider_id/model_id with no depth; presets, not nicknames, hold a model with depth (Models §6.7). Choose the model with the shared chat model picker as an overlay, under the model rows' rules: an exact typed name must pass one small call before saving, and a refusal or unreachable service saves nothing. The Models §6.8 built-ins are listed in the same list, marked Built in; a line whose normalized nickname matches one replaces it for lookup, and removing that line brings the built-in back. The stored value holds only the person's own lines, so the default is {}. Nicknames normalize per §6.7 (lowercase; spaces, underscores and hyphens collapse). A second nickname that normalizes the same as one already in the list at that level is refused, with the reason; so is a nickname equal to an exact model id, because it would hide that model. A nickname never proves the model is available (§6.8). Everywhere is home and a project may have its own lines; there is no Computer value (same for you) or Device value (not about the screen). Each nickname resolves on its own (per_item, keyed by the normalized nickname): a project's line wins for that nickname, and nicknames set only Everywhere still apply in the project. Typing a nickname in chat or in a media request still resolves through §6.7. A value saved in this row's former shape (one nickname kept inside a model's record) reads as that model's line Everywhere, under the same refusal rules. The retired media.image.model-aliases box is a compatibility read into this list."
     },
     {
       "id":
@@ -21667,66 +21682,6 @@
     },
     {
       "id":
-        "planning.verification.goal-template",
-      "label":
-        "Kind of job",
-      "desc":
-        "Set in each template. A Goal started from a template begins with its kind of job.",
-      "type": "select",
-      "options": [
-        "bug_fix",
-        "feature_build",
-        "test_until_pass",
-        "doc_update",
-        "repo_research",
-        "refactor",
-        "migration",
-        "audit_and_repair",
-        "ledger_to_plan_transfer",
-        "governance_seal"
-      ],
-      "option_labels": {
-        "bug_fix": "Fix a bug",
-        "feature_build": "Build a feature",
-        "test_until_pass": "Test until it passes",
-        "doc_update": "Update docs",
-        "repo_research": "Research the code",
-        "refactor": "Tidy up code",
-        "migration": "Migrate",
-        "audit_and_repair": "Audit and fix",
-        "ledger_to_plan_transfer": "Turn a ledger into a plan",
-        "governance_seal": "Seal records"
-      },
-      "default": "",
-      "scope": [
-        "run"
-      ],
-      "tier": "simple",
-      "search": [
-        "goal type template",
-        "completion criteria",
-        "Goal Type"
-      ],
-      "related_features": [
-        "planning_wizard",
-        "prd_builder"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
-        }
-      }
-    },
-    {
-      "id":
         "planning.verification.heartbeat-interval",
       "label":
         "Helpers check in every",
@@ -22194,64 +22149,11 @@
     },
     {
       "id":
-        "planning.verification.certification-level",
-      "label":
-        "Proof needed",
-      "desc":
-        "How much proof completion needs: lightweight for read-only work, standard for code, strong for anything destructive. Set per goal risk.",
-      "type": "select",
-      "options": [
-        "lightweight",
-        "standard",
-        "strong"
-      ],
-      "option_labels": {
-        "lightweight": "Light",
-        "standard": "Standard",
-        "strong": "Strong"
-      },
-      "default": "standard",
-      "scope": [
-        "global",
-        "project",
-        "run"
-      ],
-      "tier": "advanced",
-      "search": [
-        "certification level",
-        "strong verification",
-        "governance",
-        "Proof Level By Risk"
-      ],
-      "badges": [
-        "new"
-      ],
-      "related_features": [
-        "planning_wizard",
-        "prd_builder"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
         "planning.verification.completion-receipts",
       "label":
         "Write a receipt when a Goal finishes",
       "desc":
-        "What was checked, how, and what is left.",
+        "Evidence of the outcome, supporting references and what is left under GRS-050; no certification, tier or Goal-owned checking step.",
       "type": "toggle",
       "default": true,
       "scope": [
@@ -22260,7 +22162,7 @@
       "tier": "advanced",
       "recommended": true,
       "search": [
-        "completion receipt requirements",
+        "goal evidence receipt",
         "Completion Receipts"
       ],
       "related_features": [
@@ -22279,55 +22181,6 @@
         "atomic_group": null,
         "not_offered": {
           "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
-        "planning.verification.receipt-type",
-      "label":
-        "Receipt strength",
-      "desc":
-        "Earned from the checks a Goal passed, not chosen. Shown on each finished Goal in the assistant chat.",
-      "type": "select",
-      "options": [
-        "lightweight",
-        "standard",
-        "strong",
-        "degraded",
-        "blocked"
-      ],
-      "option_labels": {
-        "lightweight": "Light",
-        "standard": "Standard",
-        "strong": "Strong",
-        "degraded": "Finished, not fully checked",
-        "blocked": "Blocked"
-      },
-      "default": "standard",
-      "scope": [
-        "run"
-      ],
-      "tier": "advanced",
-      "search": [
-        "goal completion receipt type",
-        "replayable evidence"
-      ],
-      "related_features": [
-        "planning_wizard",
-        "prd_builder"
-      ],
-      "layering": {
-        "home": "thing",
-        "may_differ_by": [],
-        "computer_key": null,
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "everywhere": "set_inside_a_thing",
-          "computer": "set_inside_a_thing",
-          "device": "set_inside_a_thing",
-          "project": "set_inside_a_thing"
         }
       }
     },
@@ -22916,105 +22769,6 @@
     },
     {
       "id":
-        "planning.verification.goal-replan-behavior",
-      "label":
-        "Rethink the plan",
-      "desc":
-        "When goal mode builds a fresh plan: only after failures, when work drifts off course, or after every step.",
-      "type": "select",
-      "options": [
-        "never",
-        "on_failure",
-        "on_divergence",
-        "always"
-      ],
-      "option_labels": {
-        "never": "Never",
-        "on_failure": "After a failure",
-        "on_divergence": "When work drifts off course",
-        "always": "After every step"
-      },
-      "default": "on_failure",
-      "scope": [
-        "project"
-      ],
-      "tier": "advanced",
-      "recommended": "on_failure",
-      "search": [
-        "goal mode replan behavior",
-        "divergence",
-        "When To Rethink The Plan"
-      ],
-      "related_features": [
-        "planning_wizard",
-        "prd_builder"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
-        "planning.verification.goal-replan-events",
-      "label":
-        "If I change my mind mid-Goal",
-      "desc":
-        "If you make a material change mid-goal: pause and replan, apply it as an immediate hard rule, or just take note.",
-      "type": "select",
-      "options": [
-        "pause_and_replan",
-        "immediate_hard_constraint",
-        "notify_only"
-      ],
-      "option_labels": {
-        "pause_and_replan": "Pause and replan",
-        "immediate_hard_constraint": "Apply it as a firm rule now",
-        "notify_only": "Just note it"
-      },
-      "default": "pause_and_replan",
-      "scope": [
-        "global",
-        "project"
-      ],
-      "tier": "advanced",
-      "recommended": "pause_and_replan",
-      "search": [
-        "goal replan event handling",
-        "mid-goal user changes",
-        "When You Change Your Mind Mid-Run"
-      ],
-      "related_features": [
-        "planning_wizard",
-        "prd_builder"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
-    },
-    {
-      "id":
         "planning.verification.goal-interruption",
       "label":
         "If I step in",
@@ -23152,16 +22906,14 @@
         "proposal_only",
         "patch_only",
         "isolated_worktree",
-        "leased_writer",
-        "parent_writer"
+        "leased_writer"
       ],
       "option_labels": {
         "read_only": "Nothing (read only)",
         "proposal_only": "Suggest changes only",
         "patch_only": "Prepare patches",
         "isolated_worktree": "Work in their own copy",
-        "leased_writer": "Edit files, one writer at a time",
-        "parent_writer": "Hand edits to the main assistant"
+        "leased_writer": "Edit files, one writer at a time"
       },
       "default": "read_only",
       "scope": [
@@ -23172,7 +22924,6 @@
       "search": [
         "goal write mode",
         "worktree lease",
-        "child goals",
         "What Goals May Write"
       ],
       "badges": [
@@ -26578,7 +26329,7 @@
       "label":
         "View Helper Work Contract",
       "desc":
-        "Opens from a running Goal.",
+        "Opens the work contract for a subagent supervised by its parent agent.",
       "type": "action",
       "scope": [
         "run"
@@ -26586,7 +26337,7 @@
       "tier": "advanced",
       "search": [
         "child lease",
-        "parent goal",
+        "parent agent",
         "allowed node",
         "return channel"
       ],
@@ -26905,46 +26656,6 @@
         ]
       },
       "presentation_contract": "Use the shared chat model picker as an overlay, with depth inside it. Show the inherited source and its current model/depth. Explicit values use the model_selection shape; legacy scalar model IDs remain compatibility reads. Exact typed names must pass one small call before saving; refusal or unreachable service saves nothing and proves no capability."
-    },
-    {
-      "id":
-        "media.image.model-aliases",
-      "label":
-        "Model nicknames",
-      "desc":
-        "Short names you can type instead of a full model name.",
-      "type": "keyvalue",
-      "default": {
-        "nano banana": "gemini-2.5-flash-image",
-        "veo fast": "veo-3.1-fast-generate-preview"
-      },
-      "scope": [
-        "global"
-      ],
-      "tier": "advanced",
-      "search": [
-        "alias table",
-        "canonical model id",
-        "model mapping",
-        "Media Model Nicknames"
-      ],
-      "related_features": [
-        "media_generation"
-      ],
-      "layering": {
-        "home": "everywhere",
-        "may_differ_by": [
-          "everywhere",
-          "computer",
-          "project"
-        ],
-        "computer_key": "server",
-        "combine": "most_specific",
-        "atomic_group": null,
-        "not_offered": {
-          "device": "not_about_the_screen"
-        }
-      }
     },
     {
       "id":
@@ -40748,6 +40459,71 @@
     }
   ],
   "compatibility_reads": {
+    "planning.verification.goal-template": {
+      "replacement_ids": [],
+      "read_rule": "DL-478 retires Goal task templates. Read only for historical inspection; never instantiate a Goal template.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label": "Kind of job",
+      "search": [
+        "goal type template",
+        "completion criteria",
+        "Goal Type"
+      ]
+    },
+    "planning.verification.certification-level": {
+      "replacement_ids": [],
+      "read_rule": "DL-478 retires Goal risk-tiered certification. Read only for historical inspection; GRS-050 evidence has no certification tier.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label": "Proof needed",
+      "search": [
+        "certification level",
+        "strong verification",
+        "governance",
+        "Proof Level By Risk"
+      ]
+    },
+    "planning.verification.receipt-type": {
+      "replacement_ids": [],
+      "read_rule": "DL-478 retires earned Goal certification strength. Read only for historical inspection; do not infer a certification from GRS-050 evidence.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label": "Receipt strength",
+      "search": [
+        "goal completion receipt type",
+        "replayable evidence"
+      ]
+    },
+    "planning.verification.goal-replan-behavior": {
+      "replacement_ids": [],
+      "read_rule": "DL-478 retires the GRS-007 replan policy. Read only for historical inspection; current user changes follow GRS-054 without this setting.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label": "Rethink the plan",
+      "search": [
+        "goal mode replan behavior",
+        "divergence",
+        "When To Rethink The Plan"
+      ]
+    },
+    "planning.verification.goal-replan-events": {
+      "replacement_ids": [],
+      "read_rule": "DL-478 retires the GRS-007 replan-event policy. Read only for historical inspection; current change authority follows GRS-054 without this setting.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label": "If I change my mind mid-Goal",
+      "search": [
+        "goal replan event handling",
+        "mid-goal user changes",
+        "When You Change Your Mind Mid-Run"
+      ]
+    },
     "ai.models.default-variant": {
       "replacement_ids": [],
       "read_rule": "Old preset defaults are inert; choose a preset as an explicit run choice or set the shared model row.",
@@ -41051,6 +40827,23 @@
         "capability-gated",
         "default gpt-image-2 alternative",
         "Image Generation Service"
+      ]
+    },
+    "media.image.model-aliases": {
+      "replacement_ids": [
+        "ai.models.model-alias"
+      ],
+      "read_rule": "DL-479 folds the Media Model nicknames box into the one Model nicknames list, ai.models.model-alias. Merge the person's own entries into that list at the same level (Everywhere or This project), normalizing nicknames per Models §6.7, and drop an entry only when its normalized nickname and its resolved canonical model both equal a shipped built-in pair (Models §6.8); the same nickname naming another model is the person's own override and merges like any other entry, and an entry whose model can't be resolved unambiguously is listed for review, never dropped or applied silently. A Computer-level entry has no level in the new list: show it once for review and never apply it silently. On a clash (the same normalized nickname naming a different model), keep the Model nicknames entry and list the other. An entry the list would refuse is listed with the reason, never applied.",
+      "write_policy": "omit_retired_key",
+      "search_policy": "explain_retirement",
+      "transfer_policy": "omit_with_notice",
+      "label":
+        "Model nicknames",
+      "search": [
+        "alias table",
+        "canonical model id",
+        "model mapping",
+        "Media Model Nicknames"
       ]
     }
   },

@@ -59,7 +59,8 @@ html[data-o55-nier="on"] #rsStage > .o55-resume.pmn-pin { background: var(--o55-
 html[data-o55-nier="on"] #rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"] > svg { border-radius: 0; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
 html[data-o55-nier="on"] #rsStage > .o55-resume.pmn-pin .o55-resume-x { color: var(--o55-nier-ink); border-left-color: rgba(var(--o55-nier-ink-rgb), .3); }
 html[data-o55-nier-parts~="cursor"] #rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"]:hover { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
-html[data-o55-nier-parts~="cursor"] #rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"]:hover > svg { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink); }
+/* (the mark named class-first, C.small's .o55-sg; same specificity as svg: a bare svg after :hover went into the page-wide set) */
+html[data-o55-nier-parts~="cursor"] #rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"]:hover > :where(.o55-sg):is(svg) { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink); }
 
 /* ---------------------------------------------------------------------------------------------------------------
    2. The Home note and the Usage note: the look's toast material in their own places

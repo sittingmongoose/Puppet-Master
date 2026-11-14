@@ -1,5 +1,5 @@
 {
- "_about": "DL-475 quiet Memory inventory retirement. Retired tuning keys have no live row, search, All Settings or transfer entry; owner UI redesign is specified in Plans.",
+ "_about": "DL-475 quiet Memory inventory retirement. Retired tuning keys have no live row, search, All Settings or transfer entry; owner UI redesign is specified in Plans. FO-167 preserves these retirements and the surviving row metadata; its quiet renderer uses one page, and the six surviving non-Memory rows move to their approved owner homes.",
  "sections": {
   "memory-home": {
    "to": "context-memory",
@@ -129,6 +129,13 @@
    "order": 106,
    "tab": "context",
    "advanced": true
+  },
+  "personas-instructions": {
+   "to": "personas",
+   "title": "Standing instructions",
+   "help": "Rules every run reads, in every project and in this one.",
+   "order": 421,
+   "tab": "defaults"
   }
  },
  "overrides": [
@@ -139,32 +146,32 @@
    ]
   },
   {
-   "section": "memory-context-meter",
+   "section": "app-chat-view",
    "ids": [
     "general.interaction.context-usage"
    ]
   },
   {
-   "section": "memory-per-chat",
+   "section": "app-chat-view",
    "ids": [
     "memory.limits.manual-compact"
    ]
   },
   {
-   "section": "memory-limits",
+   "section": "providers-limits-more",
    "ids": [
     "memory.limits.max-context-ktokens"
    ]
   },
   {
-   "section": "memory-assembly",
+   "section": "personas-instructions",
    "ids": [
     "memory.assembly.app-rules",
     "memory.assembly.project-rules"
    ]
   },
   {
-   "section": "memory-sources",
+   "section": "history-retention",
    "ids": [
     "memory.retention.history-retention"
    ]
@@ -172,15 +179,8 @@
  ],
  "managers": {
   "context-memory": {
-   "tabs": {
-    "memories": "Memories",
-    "context": "Context space",
-    "instructions": "Instructions",
-    "retrieval": "Finding memories",
-    "retention": "Keeping & privacy",
-    "sources": "Sources"
-   },
-   "defaultTab": "memories"
+   "tabs": {},
+   "defaultTab": null
   }
  },
  "retire_ids": [

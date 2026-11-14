@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L12645-L13361
+Source lines: L12453-L13170
 
-Source SHA256: `05f6c960c0d7f3540770e5a41234e5c80eb2331fb42e27036c2b9a413511bba9`
+Source SHA256: `c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e`
 
 ---
 
@@ -104,6 +104,7 @@ canonical_text: >-
   shell profile. Settings resolves future defaults; a chat conversion never moves its PTY, process,
   port or scrollback owner to another Computer, and future sessions resolve the destination. Protected
   remote reconnect and every earlier restore/secret notice rule remain.
+  Amended 2026-11-05 (DL-449): terminal.workgroup_moved remains withdrawn, with no operating family consumer or new history view. Both this owner and SP-319 remove the saved viewing-result, original-move/results companion and obsolete move-test obligations. SP-319 preserves saved events' original meaning, bytes, identities and lifetime and the refusal of new writes/reminting; generic Storage data protection remains.
 gui_related: true
 gui_classification_reason: Owns the terminal's session and tab model that every visible terminal surface presents.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1393-L7575
+Source lines: L1400-L7586
 
-Source SHA256: `eb9a2bf3826aab67fe1fc232497cc0ffad9874e0d885322cc7e9b8c8102e96ee`
+Source SHA256: `2450820e22840f1cea0189821d2b80ceedad9d92513f96b75d38c7647161aaf0`
 
 ---
 
@@ -2825,7 +2825,8 @@ status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: Model aliases are optional friendly names that resolve to canonical provider_id/model_id identifiers for model
   override parsing; keys normalize lowercase and spaces/underscores/hyphens, and resolution order is alias, exact model id,
-  exact display name.
+  exact display name. A person's own nicknames live in one Settings list, Model nicknames (ai.models.model-alias), whose
+  rules MS-053 owns (DL-479).
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -2879,8 +2880,9 @@ plan_unit_id: MS-053
 unit_type: alias_registry
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: The default media alias registry includes canonical image, video, and TTS aliases that resolve per the alias
-  normalization rules and may be extended or overridden by users.
+canonical_text: |-
+  The default media alias registry includes canonical image, video, and TTS aliases that resolve per the alias normalization rules and may be extended or overridden by users.
+  DL-479: users MAY add or override aliases in the one Model nicknames list, ai.models.model-alias, on Settings › Models › Presets and nicknames, for chat and media models; Media has no nickname setting of its own. A line is a nickname and its canonical provider_id/model_id, with no depth (presets hold depth), chosen with the shared chat model picker as an overlay; an exact typed name passes one small call before saving. The built-ins are listed in the same list, marked built in; a line whose normalized nickname matches one replaces it for lookup, and removing that line brings it back. The stored value holds only the person's own lines, default {}. A second nickname that normalizes the same as one already at that level, or one equal to an exact model id, is refused with the reason. A nickname never proves availability. Everywhere is home with optional This project lines and no Computer or Device value; each nickname resolves on its own, so a project's line wins for that nickname and Everywhere-only nicknames still apply in the project. The retired media.image.model-aliases box is a compatibility read: own entries merge at the same level; an entry drops only when its normalized nickname and resolved canonical model both equal a shipped built-in pair (the same nickname with another model is the person's override and merges, and an unresolvable model is listed for review); a Computer-level entry is shown once for review and never applied silently, and on a clash the Model nicknames entry is kept and the other listed.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -2907,6 +2909,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0039
 - pldg-20260624-001-provider-updates:atom-0141
+- DL-479; Jared 2026-11-13, one nickname list (settings feedback item 4)
 preserved_exact_tokens:
 - MEDIA-ALIASES
 - nano banana
@@ -3120,8 +3123,9 @@ canonical_text: >-
   public `agy` capability rows. One Default models list offers Everywhere and This project only, showing
   the named fallback source and its current model/depth. §7.2 owns all rows, including the six jobs,
   naming, Teach, BSD and per-kind media routes. Depth is chosen inside the model picker, with no separate
-  helper/model/depth setting. Presets and nicknames remain below, More options links What actually ran to
-  run history, and Service tried first moves to Limits & switching.
+  helper/model/depth setting. Presets and nicknames remain below, the nicknames as the one Model nicknames
+  list for chat and media models (DL-479), More options links What actually ran to run history, and Service
+  tried first moves to Limits & switching.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.

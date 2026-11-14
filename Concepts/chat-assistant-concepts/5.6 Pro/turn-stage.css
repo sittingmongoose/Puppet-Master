@@ -224,15 +224,16 @@ body[data-theme$="-light"] :is(.transcript-inner, .tx-feed-inner) > [data-family
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"].positive > .event-icon { color: var(--positive); }
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy { display: flex; align-items: baseline; gap: 7px; min-width: 0; flex: 1 1 auto; }
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-kind { display: none; }
-:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy strong { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 12px; font-weight: 620; color: color-mix(in srgb, var(--text) 84%, transparent); white-space: nowrap; }
+:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy strong { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 12px; font-weight: 620; color: color-mix(in srgb, var(--text) 84%, transparent); white-space: var(--pm56-lg-ws, nowrap); }
 /* Detail takes the space after the title instead of shrinking a short title alongside its full line of text. */
-:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy p { flex: 1 1 0; margin: 0; font-size: 12px; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy p { flex: 1 1 var(--pm56-lg-basis, 0); margin: 0; font-size: 12px; color: var(--subtle); white-space: var(--pm56-lg-ws, nowrap); overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy p:empty { display: none; }
-:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy p:not(:empty) ~ p:not(:empty) { display: none; }
-:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"]:is(:hover, :focus-within) .event-copy { flex-wrap: wrap; row-gap: 2px; }
-:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"]:is(:hover, :focus-within) .event-copy p { white-space: normal; flex-basis: 100%; }
-:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"]:is(:hover, :focus-within) .event-copy strong { white-space: normal; }
-:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"]:is(:hover, :focus-within) .event-copy p:not(:empty) ~ p:not(:empty) { display: block; }
+:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .event-copy p:not(:empty) ~ p:not(:empty) { display: var(--pm56-lg-more, none); }
+/* A hovered or focused line opens out: the line's .event-copy hands its words the open values as custom properties they
+   read above (fallbacks = the closed values). Rules naming the words themselves after :hover put p and strong into
+   Chrome's one :hover set for the whole page, so every hover change anywhere restyled every p and strong below it
+   (lane J, 2026-11-11); the values are the same: wrapping, a full-width detail and its second line shown. */
+:is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"]:is(:hover, :focus-within) .event-copy { flex-wrap: wrap; row-gap: 2px; --pm56-lg-ws: normal; --pm56-lg-basis: 100%; --pm56-lg-more: block; }
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .plan-actions { margin: 0; flex: 0 0 auto; }
 :is(.transcript-inner, .tx-feed-inner) > [data-family="ledger"] .plan-actions > .soft-button {
   min-height: 24px; padding: 0 8px; font-size: 11px; background: transparent; border-color: var(--tx-sheet-edge); color: var(--muted);

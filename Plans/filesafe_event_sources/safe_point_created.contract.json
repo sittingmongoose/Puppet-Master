@@ -1,0 +1,209 @@
+{
+  "schema_id": "pm.filesafe.safe_point_created.source_graph.v1",
+  "schema_version": "1.0.0",
+  "event_type": "safe_point.created",
+  "owner_refs": [
+    "Plans/Contracts_V0.md#CV-557",
+    "Plans/storage-plan.md#SP-557",
+    "Plans/FileSafe.md#F2-213",
+    "Plans/Contracts_V0.md#CV-366"
+  ],
+  "producer": "FileSafe::capture_pre_write_safe_point -> commit_safe_point_record",
+  "resources": [
+    {
+      "path": "Plans/filesafe_event_sources/safe_point_created.schema.json",
+      "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/safe_point_created/1.0.0",
+      "sha256": "573bbd22119662f5353eafd716c73704061e7cef707a94b7d349c7ddfcf02a35"
+    },
+    {
+      "path": "Plans/event_payloads/safe_point_created_v2.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_payloads/safe_point_created/2.0.0",
+      "sha256": "3c482b32e53217e1d1ac604c4542744cb74910755f2cf73c6e7c2b840a7e58af"
+    },
+    {
+      "path": "Plans/shared_integration_runtime.schema.json",
+      "uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
+      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+      "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/original-project/original-safe-point.v1.schema.json",
+      "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e"
+    },
+    {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60"
+    }
+  ],
+  "methods": [
+    {
+      "interface_id": "owner.filesafe.safe_point_created.original_source.project@1.0.0",
+      "component": "FileSafe::capture_pre_write_safe_point -> commit_safe_point_record",
+      "input_root_ref": "Plans/filesafe_event_sources/safe_point_created.schema.json#/$defs/project_request",
+      "output_root_ref": "Plans/filesafe_event_sources/safe_point_created.schema.json#/$defs/project_source",
+      "operations": [
+        "capture_at_original_commit",
+        "read_same_operation",
+        "recover_same_operation"
+      ],
+      "adoption_disposition": "specified_unimplemented",
+      "authority": "Private view over genuine original owner custody; caller event/payload/boolean cannot create original acceptance."
+    },
+    {
+      "interface_id": "owner.filesafe.safe_point_created.original_source.application@1.0.0",
+      "component": "FileSafe::capture_pre_write_safe_point -> commit_safe_point_record",
+      "input_root_ref": "Plans/filesafe_event_sources/safe_point_created.schema.json#/$defs/application_request",
+      "output_root_ref": "Plans/filesafe_event_sources/safe_point_created.schema.json#/$defs/application_source",
+      "operations": [
+        "capture_at_original_commit",
+        "read_same_operation",
+        "recover_same_operation"
+      ],
+      "adoption_disposition": "specified_unimplemented",
+      "authority": "Private view over genuine original owner custody; caller event/payload/boolean cannot create original acceptance.",
+      "complete_original_records_root_ref": "Plans/filesafe_event_sources/safe_point_created.schema.json#/$defs/application_records"
+    }
+  ],
+  "request_payload_joins": [
+    "safe_point_id",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "baseline_ref",
+    "replan_generation",
+    "creation_reason",
+    "snapshot_format_version",
+    "content_scope_version"
+  ],
+  "required_body_roles": [
+    "capture_request",
+    "snapshot_manifest",
+    "snapshot_blobs",
+    "safe_point_record"
+  ],
+  "ordered_stages": [
+    {
+      "ordinal": 0,
+      "role": "original_intent",
+      "barrier": "capture_admitted: admit actual owner operation; no native write unless exact family is independently admitted and retention is resolved"
+    },
+    {
+      "ordinal": 1,
+      "role": "body_commit",
+      "barrier": "capture_committed: Verify immutable manifest and every addressed blob, then commit safe_point_record before append and before mutation. Worktree metadata comes from that manifest. Incomplete capture fences the mutation."
+    },
+    {
+      "ordinal": 2,
+      "role": "prepared_event",
+      "barrier": "Freeze the original semantic envelope after source/result commit; retain the same operation on retry"
+    },
+    {
+      "ordinal": 3,
+      "role": "append",
+      "barrier": "Ordinary SeglogFrameV2 barrier append; SP-026/SP-236 and SP-336/SP-347"
+    },
+    {
+      "ordinal": 4,
+      "role": "first_receipt",
+      "barrier": "SP-286/CV-339 strict full-value v2; resolve original issued value and all eleven receipt fields"
+    },
+    {
+      "ordinal": 5,
+      "role": "terminal_publication",
+      "barrier": "Publish original terminal/outbox only after full-value receipt custody; never repeat a domain effect"
+    },
+    {
+      "ordinal": 6,
+      "role": "history_read",
+      "barrier": "SP-278 verified CURRENT/index generation and fresh live token; passive consumer only"
+    },
+    {
+      "ordinal": 7,
+      "role": "backup_restore",
+      "barrier": "Original source/body/receipt/index selection share coherent backup/restore epoch; missing older-restored source fences"
+    },
+    {
+      "ordinal": 8,
+      "role": "withdrawal",
+      "barrier": "Stop new writer admissions; reconcile same pending originals, fence reader/index, then verified retained-survivor rebuild; no zero cursor"
+    },
+    {
+      "ordinal": 9,
+      "role": "retention_release",
+      "barrier": "DL-401 G28 Run year: real run completion + 365 days, 1,000,000 per run / applicable 5,000,000 per Project, linked successor, existing holds/protections. Original snapshots, bodies and journals retain their own lifetimes."
+    }
+  ],
+  "consumer_id": "storage.safe_point_created_history_read.v1@1.0.0",
+  "family_checkpoint": "none_required",
+  "retention_policy_ref": "RP-RUNTIME-365D",
+  "native_admission": "unavailable_until_complete_owner_adoption",
+  "preserved_project_resources": [
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json",
+      "sha256": "8a42fa18bbe6ffb9d3a87f037b85c3fa380e0aae0269a0aa4aa9dd713f52eec0",
+      "use": "Original Project native source bytes retained; application source never null-widens this resource. Existing genuine Project source resolution is independently required."
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+      "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e",
+      "use": "Original Project native source bytes retained; application source never null-widens this resource. Existing genuine Project source resolution is independently required."
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+      "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47",
+      "use": "Original Project native source bytes retained; application source never null-widens this resource. Existing genuine Project source resolution is independently required."
+    }
+  ],
+  "original_project_body_role": "safe_point_record",
+  "original_project_joins": [
+    "project_id",
+    "safe_point_id",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "baseline_ref",
+    "replan_generation",
+    "snapshot_format_version",
+    "content_scope_version",
+    "snapshot_manifest_ref",
+    "snapshot_manifest_sha256",
+    "content_state_sha256",
+    "capture_status",
+    "worktree_id",
+    "worktree_path",
+    "branch_name",
+    "HEAD_sha"
+  ],
+  "graph_sha256": "acd5d93a90d82571b951d4479b2b753585839eae46e92c5d380fd99d9b365833",
+  "application_body_roots": {
+    "capture_request": "#/$defs/application_request",
+    "safe_point_record": "#/$defs/application_records/properties/safe_point_record",
+    "snapshot_manifest": "#/$defs/application_records/properties/snapshot_manifest",
+    "snapshot_blobs": "#/$defs/application_records/properties/snapshot_blobs"
+  },
+  "application_body_codecs": {
+    "capture_request": "pm.application.physical_messagepack.v1",
+    "safe_point_record": "pm.application.physical_messagepack.v1",
+    "snapshot_manifest": "RFC8785",
+    "snapshot_blobs": "pm.application.physical_messagepack.v1"
+  },
+  "application_original_composition_root": "Plans/filesafe_event_sources/safe_point_created.schema.json#/$defs/application_records",
+  "application_required_body_roles": [
+    "capture_request",
+    "safe_point_record",
+    "snapshot_manifest",
+    "snapshot_blobs"
+  ],
+  "retention_decision_ref": "DL-401"
+}

@@ -3269,9 +3269,9 @@ canonical_text: 'Approve And Build atomically writes the immutable pack, user ap
   transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved
   uses a deterministic idempotency key derived from project_id, pack_id, pack version, and pack hash; duplicate
   delivery returns the existing PlanCompileRun rather than creating another run. After provisioning acceptance,
-  one activation transaction creates or binds the GoalRun in activating state, installs the certified WorkGraph
-  revision, materializes all WorkNodes, queues runnable entrypoints, records the activation receipt, and writes
-  GoalRunStarted or BuildStarted through a transactional outbox. Commands for topic navigation, reopen, defer,
+  one activation transaction materializes all WorkNodes, queues runnable entrypoints, records the activation
+  receipt, and writes BuildStarted through a transactional outbox. GoalRun build activation and certified-graph
+  installation are retired (DL-478). Commands for topic navigation, reopen, defer,
   annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect
   evidence, inspect assignment, request bounded recompile, and open resulting build define permission, enablement,
   disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery. Run a doc-impact pass
@@ -3354,7 +3354,6 @@ preserved_exact_tokens:
 - idempotency_key
 - project_id
 - pack_hash
-- GoalRunStarted
 - BuildStarted
 - activation transaction
 - Approve And Build
@@ -4392,9 +4391,9 @@ plan_unit_id: WM-040
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Under DL-041, the eventual DRY Method mutation path reuses the existing cmd.settings.transaction.preview
+canonical_text: 'Under DL-408 (replacing DL-041 naming), the eventual DRY Method mutation path reuses the existing cmd.settings.transaction.preview
   and cmd.settings.transaction.apply sequence for the exact app.agent_rules.dry_method_default_guard identity,
-  preserving enabled | disabled_by_user and default enabled. The approved future event spelling is settings.updated;
+  preserving enabled | disabled_by_user and default enabled. The sole Settings change event spelling is settings.layer.changed;
   its eventual closed contract must preserve this exact key and the existing transaction_id, request_id, project_id,
   changed_setting_ids, revisions and receipt_ref of pm.settings_transaction_result.v1. Settings and Storage
   retain scope and persistence authority; the app. spelling alone confers no scope or writer authority; the
@@ -4402,8 +4401,7 @@ canonical_text: 'Under DL-041, the eventual DRY Method mutation path reuses the 
   owner key is not automatically a valid ordinary setting_id: do not insert it into changed_setting_ids, silently
   substitute memory.assembly.dry-method-guard, or claim a closed writer mapping until owner evidence establishes
   it. Until that mapping and writer are proven, owner_contract_missing disables the toggle and prevents mutation
-  command dispatch and setting writes; naming agreement alone cannot enable the action. Until separate Event
-  Authority admission, no settings.updated EventRecord is emitted. Assistant Chat and run-detail DRY disclosure
+  command dispatch and setting writes; naming agreement alone cannot enable the action. Until the existing owner-adoption prerequisites are satisfied, no settings.layer.changed EventRecord is emitted. Assistant Chat and run-detail DRY disclosure
   projections continue to consume owner readback and receipts, and SSYS-023 renders the same requested/effective
   owner projection. The retired cmd.settings.agent_rules.dry_method_default_guard.set row cannot grant dispatch,
   handler or emission authority. Historical settings.agent_rules.dry_method_default_guard.updated records remain
@@ -4435,7 +4433,7 @@ acceptance_criteria:
 - Missing owner-key/writer mapping yields owner_contract_missing with zero mutation dispatches and writes.
   Only after the mapping is proven may the existing transaction sequence write enabled or disabled_by_user
   under current owner scope, revision and receipt rules.
-- Only settings.updated is the approved future event name for that change; independent admission is required,
+- Only settings.layer.changed records that change under DL-408 and existing owner-adoption prerequisites,
   and historical dedicated names are not automatic aliases.
 - Assistant Chat and run-detail disclosures refresh after the setting changes.
 - Disabled DRY state remains receipt-backed and does not bypass non-DRY authority boundaries.
