@@ -501,7 +501,11 @@
   /* ---- keeping up ---------------------------------------------------------------------------------------------- */
   /* the look changes (theme, NieR Mode): repaint the choice; another writer (glass.js's concept control) changes the
      wallpaper: only the gallery follows, nothing is written back, so no two writers can answer each other */
+  /* FO-188: while a look is revealed over the onboarding window (PM_LOOK_HOLD, the onboarding's 11-motion-start.js) the
+     repaint waits for the reveal's end */
+  function relookHeld() { choice(); apply(); resetWarm(); sync(); }
   new MutationObserver(function (recs) {
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(relookHeld)) return;
     var relook = false, was = stale; recs.forEach(function (r) { if (r.attributeName !== 'data-lg-wall') relook = true; });
     choice();
     /* the other writer showed a saved id this build lacks (choice() has just set it back to 'look'): paint the default
