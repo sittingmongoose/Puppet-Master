@@ -2,6 +2,71 @@
 
 Branch `plans/ea-batch3-int-20261114`, full worktree `/home/sittingmongoose/pm-worktrees/int3` (kept). No landing, landing lock, `main` push, reseal, registry append, admission or admission Decision Log entry. Native execution stays NOT_RUN everywhere; every result below is synthetic oracle or planning evidence.
 
+## Landing note (batch 3)
+
+**What lands (2026-11-14):** DG-INT, the nine wave-3 phase-2 lanes (W3A to W3I), Jared's E5-2 and E6-1 answers (DL-510), the integration repairs and fix 1. The landing worker is `ea-land-batch3`, holding the landing lock. No reseal, registry append, admission or admission Decision Log entry.
+
+- **Base.** The reviewed head `3c33510c576d87a9ad512c4519d417e4fd4441df` sat on `main` `f4e49a6dc4`. `main` then moved 11 commits to `090bafbbe9ee2184b64b3d61d153ad58eafc3413`, only under `Concepts/` (17 paths: the Projects New Project "Done opens the next section" fix and the Settings Jared 1113 scope fixes).
+- **Merge.** `git merge --no-ff origin/main` as `77f7e5adbc`. No conflict, and no path changed on both sides.
+- **Regeneration.** The 15-file currentness edition `Plans/.audits/event-authority-2026-08-13-currentness/` was copied in from the shared checkout first (identical per `diff -rq`).
+  - `pm-shard-plans.py --generate`: no change.
+  - `pm-plan-index.py generate`: rewrote only `generated_at_utc` in four `Plans/.plan_index` files (`coverage_report.json`, `dependencies.json`, `doc_cards.json`, `node_readiness_report.json`). Those were restored, so the index equals the reviewed head's byte for byte, Event Authority drift rows included.
+  - `pm-shard-plans.py --check`: pass, 99 sources.
+- **Archive.** The reviewed head is kept by tag `archive/ea-batch3-reviewed-3c33510c57` (tag object `516cc85910`) on both push URLs.
+
+### Preservation proof
+
+Blob-level comparison at the merge `77f7e5adbc`, rename detection off, deletions included. Merge base `f4e49a6dc4`. Record: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/landing/batch3-20261114/merge/preservation-merge.json` (SHA-256 `475edeeb6dc044878434e951d1f72b8ba48cadf1356df37d6620c4af0b6e4fbb`).
+
+| Set | Paths | Equal | Differ |
+|---|---:|---:|---:|
+| Non-derived paths the reviewed head changed since its base | 1,984 | 1,984 equal `3c33510c57` | 0 |
+| Derived paths (`_shards`, `.plan_index`, `.plan_migration`) the reviewed head changed | 2,157 | 2,157 equal `3c33510c57` | 0 |
+| Paths `main` changed since the base (all `Concepts/`) | 17 | 17 equal `090bafbbe9` | 0 |
+| Paths whose content at the merge equals neither side | — | — | 0 |
+
+The batch's changes survive the merge exactly. No clean-merge exception is needed.
+
+### Reviews and verdicts
+
+| Review | Reviewed head | Verdict |
+|---|---|---|
+| GPT-6 Astra, reasoning max | `92f9cc9283` | **LANDING_READY_WITH_NOTES**. No REAL finding. Notes: `main` had moved after the batch base (a virtual merge kept it without conflict); E5-2's narrow Storage writer with broad receipt validation is intended; inherited NUMRULE and lane limits are disclosed; T216 (below); W3I's projection-bound sum is 2,159, not the printed 2,129 (editorial, still far under 16,384). |
+| GPT-6.1 Sol, reasoning max | `92f9cc9283` | **NOT_READY on one REAL finding**: the head lacked the `main` commits after its last main merge `65f5bba1f5` (12 commits at fetched `main` `ef429abcaa`). Note 2, 19 stale W3B citation hashes, is not REAL. **Both are fixed by fix 1.** |
+| Fix 1 | `92f9cc9283` → `3c33510c57` | Merged `origin/main` `f4e49a6dc4` (`a03eba09be`), refreshed the T198 exclusions (`72382ead8d`) and re-pinned W3B's 19 citations (`6c1efe4421`). See "Batch 3 fix 1" below. |
+| GPT-6.1 Sol high, targeted recheck of fix 1 | `92f9cc9283..3c33510c57` | **LANDING_READY_WITH_NOTES**. No REAL finding. Main is included, the batch is preserved, and the full dry landing exits 1 with 0 blocking. |
+
+Reports: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/BATCH3-astra/`, `BATCH3-sol/` and `BATCH3-fix1-solhigh/` (`REVIEW.md` SHA-256 `10a84388…`, `38b78d7f…` and `af3f6159…`).
+
+### Jared's words
+
+- **E5-2 = A, "Any valid time"; E5-3 = A, "Same as batch 2".** Answered in chat at 4:27 PM EST Nov 13 and relayed verbatim by pm7-build (pm-mail `1113212755-6079` and `1113212756-7e5a`).
+  - E5-2: the receipt's `acknowledged_at_utc` takes the EventRecord profile (item 1 below).
+  - E5-3: a review pair before merging, then one targeted recheck for REAL findings, with anything beyond it going to Jared. This landing followed that order: Astra max and Sol max, fix 1, then the Sol high recheck. The one Astra after merging is the lead's next step.
+  - Record: `decision-answers/ANSWERS_E-CARDS-5_20261113.md` (SHA-256 `419b8bd118e5c0b89bd3a5167b0412a6efdfcc31fee3f7fa5162de67975562ea`).
+- **E6-1 = A, "Same as the history".** Answered in chat at 10:43 PM EST Nov 13 and relayed by pm7-build (pm-mail `1114034303-dce3`). Each Source Control source record is kept as long as the history entry that points to it: DL-510 (item 4 below). Record: `decision-answers/ANSWERS_E-CARDS-6_20261114.md` (SHA-256 `980b44d2a58373758e20eb0cd376748a4146bffac774b265781521e0d9d3a2da`).
+
+### The lead's integration decisions
+
+| # | Mail (UTC) | Answer | What it decided |
+|---|---|---|---|
+| 1 | `1114033940-c7c6` (03:39Z) | A | W3A's `generic_token` becomes `generic_read_token` everywhere W3A uses it. `DurableGenericToken` is exactly SP-278's durable read-token projection. The trailing-LF refusal is its own row (`CP16_token_full_match`). No change to `pm-implementation-readiness.py`. Item 3. |
+| 2 | `1114034125-27ac` (03:41Z) | B | Each of W3E's six backup/restore rows is split into a Project row (`RP-OPERATIONAL-2555D` with the first-save anchor adapter) and an `_application` row (`RP-OPERATIONAL-SECURITY-APPLICATION-2555D`), following `main`'s 46 `*_application` families. The other 54 rows are bound to their single policy. Item 3. |
+| 3 | `1114043819-8582` (04:38Z) | A, as INT2's decision A | A T198 NUMRULE data supplement: 35 CV-1101 line re-pins (line numbers only); two DG `GenericIndexRow` nodes take `event_record_index` by hash equality with `main`'s node; 34 node controls, each citing its source, with negatives. No tool code. Item 2. |
+| 4 | `1114044744-41c8` (04:47Z) | A | Apply decision 3's data. Keep W3H's `$ref` to EventRecord. File the 32 W3H node-check refusals as T215, and say whether they appear in the dry landing check. Item 2. |
+
+### T215 and T216 (TOOL-ISSUES)
+
+- **T215, open.** NUMRULE's `_node_validator` (`scripts/pm_event_datetime_selfcheck.py:4064-4077`) preloads only a node's own resource. The 32 W3H `external_prepared_event` nodes take fields by `$ref` to EventRecord, so the scope-all self-test fails them with `datetime_resource_not_preloaded`. Each control is owner-valid, and its negatives are refused at the exact fields once EventRecord is preloaded.
+  - This is a false refusal, not a false pass.
+  - These checks are not landing-check subchecks, so they do not block this landing.
+  - The fix (preload external `$ref` targets) is for the NUMRULE owner. W3H's admission waits on it.
+- **T216.** Stopping a long-job does not stop a memory-capped `systemd-run --scope` it started (Astra note 4). Landing workers check for leftover scopes and stop them by unit name.
+
+### What comes after the landing
+
+The landing check runs at this note's commit, in a clean full local worktree. The governance staleness it reports goes to Jared as a reseal request in `/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-RESEAL-BATCH3.md`, with DG's GRS-1132, GRS-1136, SP-1134 and EP-1130 and the reseal request below. The snapshot and baseline refresh follows as its own commit. Native execution stays NOT_RUN.
+
 ## Batch 3 fix 1: merge of newer main (2026-11-14)
 
 This answers Sol 6.1 max finding 1 (`reviews/BATCH3-sol/REVIEW.md`, REAL): the reviewed head `92f9cc9283` lacked the `main` commits after its last main merge `65f5bba1f5`. Astra max was LANDING_READY_WITH_NOTES. No landing, lock, `main` push or reseal.
