@@ -35,6 +35,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 
+from pm_pnc019_currentness import event_authority_denominator_status  # noqa: E402 - the denominator state comes from the installed edition
+
 from pm_coordination_guard_bridge import gate_code, gate_items
 from pm_coordination_numbers import (
     SEALED_TIMESTAMP_PROFILE,
@@ -2033,7 +2035,7 @@ def validate(*, root: Path = ROOT) -> dict[str, Any]:
         "claim_boundary": CLAIM_BOUNDARY,
         "admission_claimed": False,
         "native_proof": False,
-        "global_event_denominator": "UNKNOWN_OPEN",
+        "global_event_denominator": event_authority_denominator_status(ROOT),
         "failures": failures,
     }
 
