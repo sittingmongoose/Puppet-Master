@@ -289,8 +289,9 @@
     /* into or out of NieR (the fifth theme, Q22), also while its moment still plays: NieR's own moment plays inside the
        window (O55.nierLook.pick) */
     if ((family === 'nier') !== (asked === 'nier') && O55.nierLook && O55.nierLook.pick) { O55.nierLook.pick(family, mode, originEl); return; }
-    if (!document.startViewTransition || O55.motion.reduced() || O55.motion.lowResource) { apply(); return; }
-    if (S.vt) { try { S.vt.skipTransition(); } catch (_) {} }
+    const motionOff = () => O55.motion.reduced() || O55.motion.lowResource;
+    if (!document.startViewTransition || motionOff()) { apply(); return; }
+    skipLook();
     const r = originEl ? originEl.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
     const x = r.left + r.width / 2, y = r.top + r.height / 2, end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     document.documentElement.setAttribute('data-o55-vt', family);
@@ -314,9 +315,24 @@
     /* (a reveal skipped by this pick left the app hidden: it is shown again for the new one's picture of it) */
     document.documentElement.removeAttribute('data-o55-vt-still');
     if (still) document.documentElement.setAttribute('data-o55-vt-b', '');
+    /* The whole wait belongs to its transition (R33). One end, whatever ends it: finished, the next pick, a press, a key,
+       close() (skipLook, below), or Reduced Motion or low-resource found on at ready. Its 900 ms cap and its frame chain
+       stop, its circles and corner clips are cancelled, play() does nothing any more, the app is shown in the new look
+       and the held work is released. An obsolete reveal's cap had played its old circles inside the next pick's reveal,
+       and Escape closed the window beneath the old window's picture, which stayed on top until the reveal played out. */
+    let vt, over = false, cap = 0;
+    const made = [];
+    const endWait = () => {
+      if (over) return;
+      over = true; clearTimeout(cap);
+      made.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } });
+      if (S.vtEnd === endWait) S.vtEnd = null;
+      if (still && S.vt === vt) { document.documentElement.removeAttribute('data-o55-vt-still'); document.documentElement.removeAttribute('data-o55-vt-b'); }
+      release();
+    };
     const update = () => {
       apply();
-      if (still) document.documentElement.setAttribute('data-o55-vt-still', '');
+      if (still && !over) document.documentElement.setAttribute('data-o55-vt-still', '');
       if (!document.fonts) return undefined;
       return Promise.resolve().then(() => {
         const F = document.fonts;
@@ -324,10 +340,13 @@
         return Promise.race([F.ready, new Promise((res) => setTimeout(res, 300))]);
       });
     };
-    let vt;
-    try { vt = S.vt = document.startViewTransition(update); }
+    try { vt = S.vt = document.startViewTransition(update); S.vtEnd = endWait; }
     catch (_) { release(); S.vt = null; ['data-o55-vt', 'data-o55-vt-b', 'data-o55-vt-still'].forEach((a) => document.documentElement.removeAttribute(a)); apply(); return; }
     vt.ready.then(() => {
+      if (over) return;
+      /* Reduced Motion or low-resource switched on between the press and ready: the look shows at once, as it would
+         have had either been on at the press */
+      if (motionOff()) { try { vt.skipTransition(); } catch (_) { /* done */ } endWait(); return; }
       const retro = family === 'retro';
       /* (variant B: the window is a picture of its own, revealed by the same circle as the ground) */
       const timing = { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)' };
@@ -340,8 +359,9 @@
          task at the first frame, and on a look's first use a GPU pause of 165-592 ms while the new look is rastered
          (Alexis, t-b14); started at ready, the circle's fast first part was spent inside them, the part Jared misses. So the
          animations wait at their first keyframe (the circle at 0: the old picture stays on screen) and start together on
-         the third of three frames on time in a row, or 900 ms after ready at the latest; at once on a low-resource
-         computer or a hidden page. 'o55:reveal' is sent on window as they start (the kit check times the circle from it). */
+         the third of three frames on time in a row, or 900 ms after ready at the latest; at once on a hidden page (a
+         low-resource computer, or Reduced Motion, found on at ready or at the start, skips the reveal). 'o55:reveal' is
+         sent on window as they start (the kit check times the circle from it). */
       anims.forEach((a) => { try { a.pause(); } catch (_) { /* gone */ } });
       /* While it waits, the new picture is clipped to a path whose box is the whole viewport but which shows only two
          1-pixel squares in opposite corners: a picture closed to nothing is not drawn at all, and a look's first raster
@@ -351,21 +371,23 @@
       const W = innerWidth, H = innerHeight, corners = `path('M0 0h1v1h-1z M${W - 1} ${H - 1}h1v1h-1z')`;
       const holds = ['root'].concat(still ? ['o55-win'] : []).map((name) => document.documentElement.animate({ clipPath: [corners, corners] },
         { pseudoElement: `::view-transition-new(${name})`, duration: 60000 }));
-      let go = false, last = null, onTime = 0, cap = 0;
+      made.push(...anims, ...holds);
+      let go = false, last = null, onTime = 0;
       const play = () => {
-        if (go) return;
+        if (go || over) return;
+        if (motionOff()) { try { vt.skipTransition(); } catch (_) { /* done */ } endWait(); return; }
         go = true; clearTimeout(cap);
         holds.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } });
         anims.forEach((a) => { try { a.play(); } catch (_) { /* gone */ } });
         try { window.dispatchEvent(new Event('o55:reveal')); } catch (_) { /* none */ }
       };
       const flowing = (now) => {
-        if (go || S.vt !== vt) return;
+        if (go || over) return;
         onTime = last != null && now - last < 34 ? onTime + 1 : 0;
         if (onTime >= 2) { play(); return; }
         last = now; O55.motion.real.raf(flowing);
       };
-      if (O55.motion.lowResource || document.hidden) play();
+      if (document.hidden) play();
       else { cap = setTimeout(play, 900); O55.motion.real.raf(flowing); }
       /* the window's own colour transitions end here too, as NieR's path ends them (syncTheme): about 500 of its elements
          eased from the old colours inside the circle and were restyled in every frame of the reveal (the rig's frames,
@@ -376,11 +398,8 @@
        quiet and switched the VM to the instant path after two changes) */
     vt.finished.finally(() => {
       O55.motion.quiet(2500);
-      /* (variant B: the app takes the new look now, in the frame of the transition's own end restyle) */
-      if (still && S.vt === vt) {
-        document.documentElement.removeAttribute('data-o55-vt-still'); document.documentElement.removeAttribute('data-o55-vt-b');
-      }
-      release();
+      /* (variant B: the app takes the new look now, in the frame of the transition's own end restyle: endWait(), above) */
+      endWait();
       if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); }
     });
   }
@@ -399,12 +418,22 @@
   };
   /* Input never waits for the look reveal. While a view transition plays, the browser hands every click to the page
      root, and on a heavy page on a slow computer the reveal outlasted a second: an early Continue was lost. A press
-     during the reveal ends it at once, and the click goes to whatever was under the pointer. */
+     during the reveal ends it at once, and the click goes to whatever was under the pointer. A key ends it the same way
+     wherever focus is (any key but a lone modifier, as a moment's snap takes them), and so does close(): Escape, or the
+     Close button by keyboard, closed the window beneath the old window's picture (R33). skipLook() is the one
+     interruption: the transition is skipped and its wait's end (applyLook's endWait()) runs at once, in the same task. */
+  function skipLook() {
+    const vt = S.vt, endWait = S.vtEnd;
+    if (!vt) return;
+    try { vt.skipTransition(); } catch (_) { /* done */ }
+    if (endWait) endWait();
+  }
   document.addEventListener('pointerdown', (e) => {
     if (!S.vt) return;
-    try { S.vt.skipTransition(); } catch (_) {}
+    skipLook();
     S.vtPress = { x: e.clientX, y: e.clientY, t: performance.now() };
   }, true);
+  document.addEventListener('keydown', (e) => { if (S.vt && !/^(Shift|Control|Alt|Meta|CapsLock|Fn)$/.test(e.key)) skipLook(); }, true);
   document.addEventListener('click', (e) => {
     const k = S.vtPress; if (!k) return;
     S.vtPress = null;
@@ -1571,6 +1600,7 @@
   /* close(reason, {handoff}) — with handoff the window gives way at once, because the Guided Tour's first callout
      grows out of the same rectangle in the same frame (see O55.tour.start({from})) */
   function close(reason, o) {
+    skipLook(); /* a look's reveal ends with the window (R33) */
     if (pendingMount) { pendingMount = null; openGen++; clearOpenScrim(); }
     if (!S.open) return;
     const handoff = !!(o && o.handoff);
