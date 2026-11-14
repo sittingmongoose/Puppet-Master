@@ -530,7 +530,7 @@ For the exact `goal_receipt` family, SP-289 explicitly registers concurrent gene
 - **SP-320 keyed value compositions.** For exactly `coordination_event_records` and `coordination_read_model_projections` (SP-320, 2026-09-25), the registry `value_schema_id`, `schema_version` and inline `value_schema` name a nonstored validation composition, not a stored header. The inline schema has only `$id`, `$comment`, `oneOf` and `$defs`, and its `$id` is the row's `value_schema_id`. `oneOf` holds one local `#/$defs` reference per key shape of the row, in key-shape order, each to a distinct closed object that requires `schema_version` with the row's version as its constant. A projection member requires its own literal `schema_id`, distinct from the other members and never the composition identity. An event-record member is an EventRecord payload: it carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it. The row's `required_fields` are the fields every member requires, in the first member's order, and `required_fields` plus `optional_fields` are exactly the member properties. The members are copies of the definitions in the owner schema file that `value_schema_ref` names, with references made local; readiness checks the shape above, and the coordination static checker compares the copies with the owner file. Secret material and a stored `redb_snapshot_id` are rejected as for every inline value schema. Every other row keeps the single stored header, and readiness rejects this shape on any other row.
 - **MVP rows retired to import readers.** Exactly two MVP-required, non-launch families, `runtime_resource_admission` and `observable_work_projection`, keep their MVP membership at tier `migration_only`. Their owner retired their vocabulary to a one-time owner-boundary import under the Shared_Integration_Runtime full-thread addendum of 2026-08-31. This holds only while the row has no writer, its only consumer is the `StorageMigrationCoordinator one-time owner-boundary normalizer`, its `migration_disposition` is `compatibility_read_only` with read-only compatibility keys and fail-closed ambiguity, and its crosswalk names the successor as `legacy_reader_import_only_to_<successor>`. Every other MVP row keeps its required tier, whatever its shape; retiring another family this way needs the owner to name it here first.
 - **Retention-hold authority.** The family-level recovery authority of `retention_hold_record` is the SP-288 v2 `canonical_non_rebuildable` with `restore_from_mandatory_backup`. `canonical_dual_homed` belongs only to the separate v1 roles.
-- **Census.** Readiness pins the family count, the retention-policy count and the status and tier counts. It re-pins them only to landed, recorded registry changes. The 2026-11-05 pin is 344 families and 41 retention policies (DL-401 and DL-415 through DL-421 materialize the telemetry policy and six separate no-project count policies, and DL-454, DL-455, DL-457, DL-460, DL-463 and DL-464 add six further application count policies): 320 materialized, 23 deferred and 1 compatibility alias; 61 tier-0 launch-critical, 273 later GUI or feature projection and 10 migration-only. It moved from the 2026-09-25 pin (294 families and 27 policies; 274 materialized, 19 deferred; 40 tier-0, 251 later and 3 migration-only) through the family additions and re-tierings that `scripts/pm-implementation-readiness.py` records from 2026-09-27 to 2026-11-04, and when Case L-3 materialized the Chat content class as `RP-CHAT-THREAD-LIFETIME@1.0.0` after the DL-084 and DL-092 reuse check, the one policy added by that 2026-11-04 step; the seven Card 1 policies were added on 2026-11-05, and the six third-sitting application policies (DL-454, DL-455, DL-457, DL-460, DL-463, DL-464) were added the same day. The 2026-09-25 pin had moved from the 2026-09-23 pin (272 materialized, 21 deferred) when SP-320 materialized `coordination_event_records` and `coordination_read_model_projections` in place; the family count, the policies and the tiers did not change then. The batch-2 integration pin, taken once from the merged registry of that landing rather than from any lane, is 496 families and 41 retention policies: 465 materialized, 30 deferred and 1 compatibility alias; 79 tier-0 launch-critical, 407 later GUI or feature projection and 10 migration-only. Its 152 added families come from the batch's lanes (DO 1, DG6B 19, DC 9, DT 41, DCH 17, DMEM 8, DS15 17, DG6A 33, DFM 2, DCW 5), and DG6A also moves `concern_record` from deferred to materialized; no retention policy is added.
+- **Census.** Readiness pins the family count, the retention-policy count and the status and tier counts. It re-pins them only to landed, recorded registry changes. The 2026-11-05 pin is 344 families and 41 retention policies (DL-401 and DL-415 through DL-421 materialize the telemetry policy and six separate no-project count policies, and DL-454, DL-455, DL-457, DL-460, DL-463 and DL-464 add six further application count policies): 320 materialized, 23 deferred and 1 compatibility alias; 61 tier-0 launch-critical, 273 later GUI or feature projection and 10 migration-only. It moved from the 2026-09-25 pin (294 families and 27 policies; 274 materialized, 19 deferred; 40 tier-0, 251 later and 3 migration-only) through the family additions and re-tierings that `scripts/pm-implementation-readiness.py` records from 2026-09-27 to 2026-11-04, and when Case L-3 materialized the Chat content class as `RP-CHAT-THREAD-LIFETIME@1.0.0` after the DL-084 and DL-092 reuse check, the one policy added by that 2026-11-04 step; the seven Card 1 policies were added on 2026-11-05, and the six third-sitting application policies (DL-454, DL-455, DL-457, DL-460, DL-463, DL-464) were added the same day. The 2026-09-25 pin had moved from the 2026-09-23 pin (272 materialized, 21 deferred) when SP-320 materialized `coordination_event_records` and `coordination_read_model_projections` in place; the family count, the policies and the tiers did not change then. The batch-2 integration pin, taken once from the merged registry of that landing rather than from any lane, is 496 families and 41 retention policies: 465 materialized, 30 deferred and 1 compatibility alias; 79 tier-0 launch-critical, 407 later GUI or feature projection and 10 migration-only. Its 152 added families come from the batch's lanes (DO 1, DG6B 19, DC 9, DT 41, DCH 17, DMEM 8, DS15 17, DG6A 33, DFM 2, DCW 5), and DG6A also moves `concern_record` from deferred to materialized; no retention policy is added. The batch-3 integration pin, taken once from the merged registry of that landing, is 678 families and 41 retention policies: 647 materialized, 30 deferred and 1 compatibility alias; 79 tier-0 launch-critical, 589 later GUI or feature projection and 10 migration-only. Its 182 added families, all materialized later GUI or feature projection, come from the batch's items (DG-INT 6, W3A 70, W3E 66, W3F 2, W3H 32, W3I 6); W3E's 66 include the six `*_application` editions of its backup and restore values, split from their Project rows under DL-455 at integration. No retention policy is added.
 
 These rules describe existing canon. They add no family, policy, field or stored identity, and they do not change the registry schema. The 2026-09-24 additions are owner decisions recorded as DL-076: the SP-310 member digest recipe, and the durable read token that removes `redb_snapshot_id` from four stored checkpoint values. Neither adds a family, policy or stored identity. On 2026-09-25 the `browser_workspace_created_index_checkpoint` v2 value, admitted under DL-046 as SP-266's same-family successor, became a fifth stored checkpoint value holding the same nine-field durable token; it adds no family or policy. The 2026-09-25 addition, SP-320 keyed value compositions, is a newly authored Storage owner contract under DL-045 for the two coordination rows. It adds no family or policy and does not change the registry schema; the stored schema IDs of the projection and checkpoint members are SP-320's newly authored values.
 
@@ -52826,12 +52826,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.backe
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1250 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-454 (E-CARDS-3 item 2.a): RP-TELEMETRY-90D@1.0.0, kept for 90
   days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance.
-  Retention of the original source fact is PENDING_RETENTION_DECISION: For `source_control.backend.detected`, DL-454
-  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
-  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
-  does not decide the separate original source fact `source_control_backend_detected_fact` (the accepted request,
-  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
-  history entry, or follow another rule? No central family append, admission, native
+  Retention of the original source fact source_control_backend_detected_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-TELEMETRY-90D@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission, native
   activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -52869,7 +52866,7 @@ preserved_exact_tokens:
 - source_control.backend.detected
 - source_control_backend_detected_fact
 - source_control_backend_detected_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -52942,12 +52939,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.backe
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1251 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
-  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
-  PENDING_RETENTION_DECISION: For `source_control.backend.selected`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_backend_selected_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No central family append, admission,
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact source_control_backend_selected_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -52985,7 +52979,7 @@ preserved_exact_tokens:
 - source_control.backend.selected
 - source_control_backend_selected_fact
 - source_control_backend_selected_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -53058,12 +53052,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.check
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1252 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
-  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
-  PENDING_RETENTION_DECISION: For `source_control.checkpoint.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_created_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No central family append, admission,
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact source_control_checkpoint_created_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -53101,7 +53092,7 @@ preserved_exact_tokens:
 - source_control.checkpoint.created
 - source_control_checkpoint_created_fact
 - source_control_checkpoint_created_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -53174,12 +53165,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.check
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1253 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
-  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
-  PENDING_RETENTION_DECISION: For `source_control.checkpoint.restored`, DL-453 (E-CARDS-3 item 1.a) has its saved
-  event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records
-  their own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_restored_fact`
-  (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep
-  the same lifetime as its history entry, or follow another rule? No central family append, admission,
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact source_control_checkpoint_restored_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -53217,7 +53205,7 @@ preserved_exact_tokens:
 - source_control.checkpoint.restored
 - source_control_checkpoint_restored_fact
 - source_control_checkpoint_restored_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -53292,13 +53280,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1254 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
   years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
-  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
-  For `source_control.remote.fetch_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven
-  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
-  Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the
-  separate original source fact `source_control_remote_fetch_completed_fact` (the accepted request, native evidence
-  refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry,
-  or follow another rule? No central family
+  Storage’s Project first-save anchor adapter. Retention of the original source fact source_control_remote_fetch_completed_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the
+  history entry that points to it. No central family
   append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -53336,7 +53320,7 @@ preserved_exact_tokens:
 - source_control.remote.fetch_completed
 - source_control_remote_fetch_completed_fact
 - source_control_remote_fetch_completed_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -53410,13 +53394,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1255 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
   years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
-  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
-  For `source_control.remote.fetch_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
-  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
-  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
-  original source fact `source_control_remote_fetch_started_fact` (the accepted request, native evidence refs and
-  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
-  another rule? No central family
+  Storage’s Project first-save anchor adapter. Retention of the original source fact source_control_remote_fetch_started_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the
+  history entry that points to it. No central family
   append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -53454,7 +53434,7 @@ preserved_exact_tokens:
 - source_control.remote.fetch_started
 - source_control_remote_fetch_started_fact
 - source_control_remote_fetch_started_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -53529,13 +53509,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1256 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
   years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
-  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
-  For `source_control.remote.publish_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven
-  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
-  Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the
-  separate original source fact `source_control_remote_publish_completed_fact` (the accepted request, native evidence
-  refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry,
-  or follow another rule? No central family
+  Storage’s Project first-save anchor adapter. Retention of the original source fact source_control_remote_publish_completed_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the
+  history entry that points to it. No central family
   append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -53573,7 +53549,7 @@ preserved_exact_tokens:
 - source_control.remote.publish_completed
 - source_control_remote_publish_completed_fact
 - source_control_remote_publish_completed_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -53648,13 +53624,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1257 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
   years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
-  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
-  For `source_control.remote.publish_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven
-  years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
-  Storage’s Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the
-  separate original source fact `source_control_remote_publish_started_fact` (the accepted request, native evidence
-  refs and owner result ref the history cites). Should that source fact keep the same lifetime as its history entry,
-  or follow another rule? No central family
+  Storage’s Project first-save anchor adapter. Retention of the original source fact source_control_remote_publish_started_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the
+  history entry that points to it. No central family
   append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -53692,7 +53664,7 @@ preserved_exact_tokens:
 - source_control.remote.publish_started
 - source_control_remote_publish_started_fact
 - source_control_remote_publish_started_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -53766,13 +53738,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1258 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
   years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
-  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
-  For `source_control.remote.sync_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
-  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
-  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
-  original source fact `source_control_remote_sync_completed_fact` (the accepted request, native evidence refs and
-  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
-  another rule? No central family
+  Storage’s Project first-save anchor adapter. Retention of the original source fact source_control_remote_sync_completed_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the
+  history entry that points to it. No central family
   append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -53810,7 +53778,7 @@ preserved_exact_tokens:
 - source_control.remote.sync_completed
 - source_control_remote_sync_completed_fact
 - source_control_remote_sync_completed_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -53884,13 +53852,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.remot
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1259 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-455 (E-CARDS-3 item 3.a): RP-OPERATIONAL-2555D@1.0.0, kept seven
   years (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and
-  Storage’s Project first-save anchor adapter. Retention of the original source fact is PENDING_RETENTION_DECISION:
-  For `source_control.remote.sync_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
-  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
-  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
-  original source fact `source_control_remote_sync_started_fact` (the accepted request, native evidence refs and owner
-  result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
-  another rule? No central family append, admission,
+  Storage’s Project first-save anchor adapter. Retention of the original source fact source_control_remote_sync_started_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -53928,7 +53892,7 @@ preserved_exact_tokens:
 - source_control.remote.sync_started
 - source_control_remote_sync_started_fact
 - source_control_remote_sync_started_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -54001,12 +53965,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.repos
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1260 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
-  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
-  PENDING_RETENTION_DECISION: For `source_control.repository.bound`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_repository_bound_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No central family append, admission,
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact source_control_repository_bound_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -54044,7 +54005,7 @@ preserved_exact_tokens:
 - source_control.repository.bound
 - source_control_repository_bound_fact
 - source_control_repository_bound_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -54117,12 +54078,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.repos
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1261 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
-  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
-  PENDING_RETENTION_DECISION: For `source_control.repository.unbound`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_repository_unbound_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No central family append, admission,
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact source_control_repository_unbound_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -54160,7 +54118,7 @@ preserved_exact_tokens:
 - source_control.repository.unbound
 - source_control_repository_unbound_fact
 - source_control_repository_unbound_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -54234,12 +54192,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.statu
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1262 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-454 (E-CARDS-3 item 2.a): RP-TELEMETRY-90D@1.0.0, kept for 90
   days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance.
-  Retention of the original source fact is PENDING_RETENTION_DECISION: For `source_control.status.refreshed`, DL-454
-  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
-  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
-  does not decide the separate original source fact `source_control_status_refreshed_fact` (the accepted request,
-  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
-  history entry, or follow another rule? No central family append, admission, native
+  Retention of the original source fact source_control_status_refreshed_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-TELEMETRY-90D@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission, native
   activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -54277,7 +54232,7 @@ preserved_exact_tokens:
 - source_control.status.refreshed
 - source_control_status_refreshed_fact
 - source_control_status_refreshed_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -54350,12 +54305,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.works
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1263 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
-  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
-  PENDING_RETENTION_DECISION: For `source_control.workspace.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_workspace_created_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact source_control_workspace_created_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No
   central family append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -54393,7 +54345,7 @@ preserved_exact_tokens:
 - source_control.workspace.created
 - source_control_workspace_created_fact
 - source_control_workspace_created_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -54467,12 +54419,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.works
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1264 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-454 (E-CARDS-3 item 2.a): RP-TELEMETRY-90D@1.0.0, kept for 90
   days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance.
-  Retention of the original source fact is PENDING_RETENTION_DECISION: For `source_control.workspace.opened`, DL-454
-  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
-  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
-  does not decide the separate original source fact `source_control_workspace_opened_fact` (the accepted request,
-  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
-  history entry, or follow another rule? No central family append, admission, native
+  Retention of the original source fact source_control_workspace_opened_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-TELEMETRY-90D@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission, native
   activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -54510,7 +54459,7 @@ preserved_exact_tokens:
 - source_control.workspace.opened
 - source_control_workspace_opened_fact
 - source_control_workspace_opened_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -54583,12 +54532,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.works
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1265 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
-  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
-  PENDING_RETENTION_DECISION: For `source_control.workspace.removed`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_workspace_removed_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact source_control_workspace_removed_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No
   central family append, admission, native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -54626,7 +54572,7 @@ preserved_exact_tokens:
 - source_control.workspace.removed
 - source_control_workspace_removed_fact
 - source_control_workspace_removed_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -54700,12 +54646,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.works
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1266 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-454 (E-CARDS-3 item 2.a): RP-TELEMETRY-90D@1.0.0, kept for 90
   days from the first successful save that survives a restart, under the existing 2,000,000-entry Project allowance.
-  Retention of the original source fact is PENDING_RETENTION_DECISION: For `source_control.workspace.switched`, DL-454
-  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
-  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
-  does not decide the separate original source fact `source_control_workspace_switched_fact` (the accepted request,
-  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
-  history entry, or follow another rule? No central family append, admission,
+  Retention of the original source fact source_control_workspace_switched_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-TELEMETRY-90D@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -54743,7 +54686,7 @@ preserved_exact_tokens:
 - source_control.workspace.switched
 - source_control_workspace_switched_fact
 - source_control_workspace_switched_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -54816,12 +54759,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.write
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1267 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
-  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
-  PENDING_RETENTION_DECISION: For `source_control.writer_lease.granted`, DL-453 (E-CARDS-3 item 1.a) has its saved
-  event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records
-  their own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_granted_fact`
-  (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep
-  the same lifetime as its history entry, or follow another rule? No central family append, admission,
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact source_control_writer_lease_granted_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -54859,7 +54799,7 @@ preserved_exact_tokens:
 - source_control.writer_lease.granted
 - source_control_writer_lease_granted_fact
 - source_control_writer_lease_granted_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -54932,12 +54872,9 @@ canonical_text: 'Newly authored Storage binding for exactly source_control.write
   fences and never revives a lease or repeats a remote effect. StorageMigrationCoordinator must register these rows,
   exact schema/codec/backup closure and compatible reader ceilings before activation; no store version is invented.
   Withdrawal follows this exact family''s SCS-1268 cutoff, receipt retention and verified successor rebuild. Retention of the saved event history is bound by DL-453 (E-CARDS-3 item 1.a): RP-AUTHORITY-INDEFINITE@1.0.0, kept
-  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact is
-  PENDING_RETENTION_DECISION: For `source_control.writer_lease.lost`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_lost_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No central family append, admission,
+  permanently, with no age or count expiry and no new count allowance. Retention of the original source fact source_control_writer_lease_lost_fact is the same as its saved event history (DL-510, E-CARDS-6
+  E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the
+  history entry that points to it. No central family append, admission,
   native activation or depth pass occurs in phase 1.'
 gui_related: false
 gui_classification_reason: Defines saved-history contracts and verification, without changing product presentation.
@@ -54975,7 +54912,7 @@ preserved_exact_tokens:
 - source_control.writer_lease.lost
 - source_control_writer_lease_lost_fact
 - source_control_writer_lease_lost_checkpoint
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-278
 - SP-286
 ```
@@ -58368,23 +58305,25 @@ unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for backup.state_changed@1.0.0, prepared without admission.
-  BRS-1401/CV-1401 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
-  w3e_backup_state_changed_custody, w3e_backup_state_changed_history and w3e_backup_state_changed_checkpoint. Current
-  writes remain missing_event_registration; Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_security (DL-455, E-CARDS-3 item 3.a, option A), seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore. The application policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in canonical
-  redb uses w3e_backup_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
+  BRS-1401/CV-1401 own the exact semantic contract. Six closed independently keyed values live in Plans/storage_value_registry.json, one row per value and edition
+  (INT3 integration repair, 2026-11-14): w3e_backup_state_changed_custody, w3e_backup_state_changed_history and w3e_backup_state_changed_checkpoint hold Project editions;
+  w3e_backup_state_changed_custody_application, w3e_backup_state_changed_history_application and w3e_backup_state_changed_checkpoint_application hold application editions
+  under the same owner value schemas. Current
+  writes remain missing_event_registration; Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_security (DL-455, E-CARDS-3 item 3.a, option A), seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore. The application policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment: the three Project rows carry RP-OPERATIONAL-2555D and the three application rows carry RP-OPERATIONAL-SECURITY-APPLICATION-2555D, bound at the batch-3 integration. Custody in canonical
+  redb uses w3e_backup_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)} (Project editions; application editions use w3e_backup_state_changed_custody.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(owner_operation_id)})
   and Plans/event_payloads/w3e/backup_state_changed.schema.json#/$defs/custody. It retains original intent, complete
   before/after source refs, original owner result, semantic input, stable event identity/digest and nullable first
   append-result ref. pending_append becomes settled only with actual CV-339 full-value original result; source/receipt
   ambiguity becomes recovery_required. It is not reconstructed from the event. Domain authority remains BackupCoordinator.backup_phase_commit@1.0.0;
   Storage owns atomic persistence only.
 
-  Derived history in redb projections uses w3e_backup_state_changed_history.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
+  Derived history in redb projections uses w3e_backup_state_changed_history.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)} (Project editions; application editions use w3e_backup_state_changed_history.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(owner_operation_id)})
   and Plans/event_payloads/w3e/backup_state_changed.schema.json#/$defs/history. Its only producer is projector.w3e.backup_state_changed.history@1.0.0;
   reader.w3e.backup_state_changed.history@1.0.0 serves Backup History and the one BRS-031 backup-status projection
   under source/access/deletion/withdrawal checks. It contains only the original event/custody/payload references,
   canonical sequence and publication generation, no new live domain state.
 
-  The exact checkpoint in derived redb checkpoints is w3e_backup_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}
+  The exact checkpoint in derived redb checkpoints is w3e_backup_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)} (Project editions; application editions use w3e_backup_state_changed_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)})
   and Plans/event_payloads/w3e/backup_state_changed.schema.json#/$defs/checkpoint. Adopt SP-278 reader.storage.event_record_index@1.0.0
   by name for actual all-partition source completeness, then exact-family/scope/writer filtering. Both the projection-generation
   pointer and exact checkpoint advance with changed rows under prior-value CAS in one write transaction. Persist
@@ -59165,23 +59104,25 @@ unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'Newly authored Storage bindings only for restore.state_changed@1.0.0, prepared without admission.
-  BRS-1410/CV-1410 own the exact semantic contract. Three closed independently keyed values live in Plans/storage_value_registry.json:
-  w3e_restore_state_changed_custody, w3e_restore_state_changed_history and w3e_restore_state_changed_checkpoint.
-  Current writes remain missing_event_registration; Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_security (DL-455, E-CARDS-3 item 3.a, option A), seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore. The application policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment; their Storage registry rows carry it at the batch-3 rebase, when every decided policy object is on the lane. Custody in
-  canonical redb uses w3e_restore_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
+  BRS-1410/CV-1410 own the exact semantic contract. Six closed independently keyed values live in Plans/storage_value_registry.json, one row per value and edition
+  (INT3 integration repair, 2026-11-14): w3e_restore_state_changed_custody, w3e_restore_state_changed_history and w3e_restore_state_changed_checkpoint hold Project editions;
+  w3e_restore_state_changed_custody_application, w3e_restore_state_changed_history_application and w3e_restore_state_changed_checkpoint_application hold application editions
+  under the same owner value schemas.
+  Current writes remain missing_event_registration; Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_security (DL-455, E-CARDS-3 item 3.a, option A), seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore. The application policy object is defined on main (Plans/storage-plan.md third-sitting retention assignments) and arrives on this lane with the batch-3 rebase. The custody, history and checkpoint values below inherit this assignment: the three Project rows carry RP-OPERATIONAL-2555D and the three application rows carry RP-OPERATIONAL-SECURITY-APPLICATION-2555D, bound at the batch-3 integration. Custody in
+  canonical redb uses w3e_restore_state_changed_custody.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)} (Project editions; application editions use w3e_restore_state_changed_custody.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(owner_operation_id)})
   and Plans/event_payloads/w3e/restore_state_changed.schema.json#/$defs/custody. It retains original intent, complete
   before/after source refs, original owner result, semantic input, stable event identity/digest and nullable first
   append-result ref. pending_append becomes settled only with actual CV-339 full-value original result; source/receipt
   ambiguity becomes recovery_required. It is not reconstructed from the event. Domain authority remains BackupCoordinator.restore_phase_commit@1.0.0;
   Storage owns atomic persistence only.
 
-  Derived history in redb projections uses w3e_restore_state_changed_history.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)}
+  Derived history in redb projections uses w3e_restore_state_changed_history.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}:{hex(owner_operation_id)} (Project editions; application editions use w3e_restore_state_changed_history.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(owner_operation_id)})
   and Plans/event_payloads/w3e/restore_state_changed.schema.json#/$defs/history. Its only producer is projector.w3e.restore_state_changed.history@1.0.0;
   reader.w3e.restore_state_changed.history@1.0.0 serves Restore History/preview/result Details and shared backup
   status under source/access/deletion/withdrawal checks. It contains only the original event/custody/payload references,
   canonical sequence and publication generation, no new live domain state.
 
-  The exact checkpoint in derived redb checkpoints is w3e_restore_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}
+  The exact checkpoint in derived redb checkpoints is w3e_restore_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)} (Project editions; application editions use w3e_restore_state_changed_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)})
   and Plans/event_payloads/w3e/restore_state_changed.schema.json#/$defs/checkpoint. Adopt SP-278 reader.storage.event_record_index@1.0.0
   by name for actual all-partition source completeness, then exact-family/scope/writer filtering. Both the projection-generation
   pointer and exact checkpoint advance with changed rows under prior-value CAS in one write transaction. Persist

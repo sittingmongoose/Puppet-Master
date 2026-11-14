@@ -63,8 +63,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1250).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-TELEMETRY-90D@1.0.0, the same policy as this family's saved event history (DL-454), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-TELEMETRY-90D",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -79,8 +79,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1250/SP-1250",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/backend_detected_fact"
       }
@@ -226,8 +226,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1251).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as this family's saved event history (DL-453), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -242,8 +242,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1251/SP-1251",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/backend_selected_fact"
       }
@@ -389,8 +389,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1252).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as this family's saved event history (DL-453), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -405,8 +405,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1252/SP-1252",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/checkpoint_created_fact"
       }
@@ -552,8 +552,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1253).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as this family's saved event history (DL-453), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -568,8 +568,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1253/SP-1253",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/checkpoint_restored_fact"
       }
@@ -715,8 +715,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1254).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as this family's saved event history (DL-455), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -731,8 +731,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1254/SP-1254",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_fetch_completed_fact"
       }
@@ -878,8 +878,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1255).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as this family's saved event history (DL-455), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -894,8 +894,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1255/SP-1255",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_fetch_started_fact"
       }
@@ -1041,8 +1041,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1256).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as this family's saved event history (DL-455), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -1057,8 +1057,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1256/SP-1256",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_publish_completed_fact"
       }
@@ -1204,8 +1204,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1257).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as this family's saved event history (DL-455), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -1220,8 +1220,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1257/SP-1257",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_publish_started_fact"
       }
@@ -1367,8 +1367,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1258).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as this family's saved event history (DL-455), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -1383,8 +1383,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1258/SP-1258",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_sync_completed_fact"
       }
@@ -1530,8 +1530,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-455 (RP-OPERATIONAL-2555D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1259).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as this family's saved event history (DL-455), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -1546,8 +1546,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1259/SP-1259",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/remote_sync_started_fact"
       }
@@ -1693,8 +1693,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1260).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as this family's saved event history (DL-453), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -1709,8 +1709,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1260/SP-1260",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/repository_bound_fact"
       }
@@ -1856,8 +1856,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1261).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as this family's saved event history (DL-453), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -1872,8 +1872,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1261/SP-1261",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/repository_unbound_fact"
       }
@@ -2019,8 +2019,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1262).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-TELEMETRY-90D@1.0.0, the same policy as this family's saved event history (DL-454), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-TELEMETRY-90D",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -2035,8 +2035,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1262/SP-1262",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/status_refreshed_fact"
       }
@@ -2182,8 +2182,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1263).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as this family's saved event history (DL-453), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -2198,8 +2198,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1263/SP-1263",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_created_fact"
       }
@@ -2345,8 +2345,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1264).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-TELEMETRY-90D@1.0.0, the same policy as this family's saved event history (DL-454), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-TELEMETRY-90D",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -2361,8 +2361,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1264/SP-1264",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_opened_fact"
       }
@@ -2508,8 +2508,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1265).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as this family's saved event history (DL-453), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -2524,8 +2524,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1265/SP-1265",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_removed_fact"
       }
@@ -2671,8 +2671,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-454 (RP-TELEMETRY-90D@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1266).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-TELEMETRY-90D@1.0.0, the same policy as this family's saved event history (DL-454), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-TELEMETRY-90D",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -2687,8 +2687,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1266/SP-1266",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/workspace_switched_fact"
       }
@@ -2834,8 +2834,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1267).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as this family's saved event history (DL-453), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -2850,8 +2850,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1267/SP-1267",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/writer_lease_granted_fact"
       }
@@ -2997,8 +2997,8 @@
           "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this original source fact; no default becomes an approved policy. The saved event history of the family is bound by DL-453 (RP-AUTHORITY-INDEFINITE@1.0.0); that decision leaves original records their own lifetimes, so the fact keeps its own pending question (SP-1268).",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-510 (E-CARDS-6 E6-1, option A, \"Same as the history\"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as this family's saved event history (DL-453), so the source fact is kept exactly as long as the history entry that points to it. Existing policy anchors, counts, overflow, holds and required dependencies apply; snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs and authorized non-secret refs; no credentials, file/log/auth bodies or private endpoints. Revalidate permission and deletion on read.",
       "legacy_canonical_crosswalk_status": "Newly authored preparation only; central registry unchanged.",
       "recovery_disposition": {
@@ -3013,8 +3013,8 @@
         "user_disclosure_required": true
       },
       "deferred_owner": "SCS-1268/SP-1268",
-      "deferred_reason": "Prepared, not registered; retention/phase-2 verification/native source and migration/backup adoption remain incomplete.",
-      "reopen_condition": "Exact retention, reviewed phase-2 oracles and separate admission/registry/native adoption.",
+      "deferred_reason": "Prepared, not registered; phase-2 verification/native source and migration/backup adoption remain incomplete.",
+      "reopen_condition": "Reviewed phase-2 oracles and separate admission/registry/native adoption.",
       "value_schema": {
         "$ref": "https://puppetmaster.local/Plans/source_control_event_contracts.schema.json#/$defs/writer_lease_lost_fact"
       }

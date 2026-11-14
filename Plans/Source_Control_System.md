@@ -2252,15 +2252,11 @@ canonical_text: 'Newly authored owner contract for source_control.backend.detect
 
   C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
   RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
-  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
-  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.backend.detected`, DL-454
-  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
-  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
-  does not decide the separate original source fact `source_control_backend_detected_fact` (the accepted request,
-  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
-  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact source_control_backend_detected_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-TELEMETRY-90D@1.0.0, the same policy as
+  its DL-454 history, so retained history always resolves its original source. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1250 keeps the source fact unavailable pending its exact policy; the event history policy is
+  policies; no event reference retains their bodies implicitly. SP-1250 binds the source fact to the same policy as its event history (DL-510):
   RP-TELEMETRY-90D@1.0.0.
 
 
@@ -2338,7 +2334,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.backend.detected
 - pm.source_control_event.backend_detected.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -2402,14 +2398,11 @@ canonical_text: 'Newly authored owner contract for source_control.backend.select
 
   C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
   RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
-  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
-  PENDING_RETENTION_DECISION: For `source_control.backend.selected`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_backend_selected_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
+  reprocessing and restore never restart its clock. The original source fact source_control_backend_selected_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as
+  its DL-453 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1251 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1251 binds the source fact to the same policy as its event history (DL-510):
   RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
@@ -2487,7 +2480,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.backend.selected
 - pm.source_control_event.backend_selected.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -2551,14 +2544,11 @@ canonical_text: 'Newly authored owner contract for source_control.checkpoint.cre
 
   C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
   RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
-  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
-  PENDING_RETENTION_DECISION: For `source_control.checkpoint.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_created_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
+  reprocessing and restore never restart its clock. The original source fact source_control_checkpoint_created_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as
+  its DL-453 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1252 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1252 binds the source fact to the same policy as its event history (DL-510):
   RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
@@ -2636,7 +2626,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.checkpoint.created
 - pm.source_control_event.checkpoint_created.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -2701,14 +2691,11 @@ canonical_text: 'Newly authored owner contract for source_control.checkpoint.res
 
   C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
   RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
-  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
-  PENDING_RETENTION_DECISION: For `source_control.checkpoint.restored`, DL-453 (E-CARDS-3 item 1.a) has its saved
-  event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records
-  their own lifetimes; it does not decide the separate original source fact `source_control_checkpoint_restored_fact`
-  (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep
-  the same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
+  reprocessing and restore never restart its clock. The original source fact source_control_checkpoint_restored_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as
+  its DL-453 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1253 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1253 binds the source fact to the same policy as its event history (DL-510):
   RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
@@ -2787,7 +2774,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.checkpoint.restored
 - pm.source_control_event.checkpoint_restored.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -2853,15 +2840,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.fetch_c
   C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
   RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
   2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
-  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
-  `source_control.remote.fetch_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
-  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
-  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
-  original source fact `source_control_remote_fetch_completed_fact` (the accepted request, native evidence refs and
-  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
-  another rule? No source-fact lifetime is selected here.
+  never restart its clock. The original source fact source_control_remote_fetch_completed_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as
+  its DL-455 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1254 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1254 binds the source fact to the same policy as its event history (DL-510):
   RP-OPERATIONAL-2555D@1.0.0.
 
 
@@ -2939,7 +2922,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.remote.fetch_completed
 - pm.source_control_event.remote_fetch_completed.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -3004,15 +2987,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.fetch_s
   C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
   RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
   2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
-  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
-  `source_control.remote.fetch_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
-  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
-  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
-  original source fact `source_control_remote_fetch_started_fact` (the accepted request, native evidence refs and
-  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
-  another rule? No source-fact lifetime is selected here.
+  never restart its clock. The original source fact source_control_remote_fetch_started_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as
+  its DL-455 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1255 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1255 binds the source fact to the same policy as its event history (DL-510):
   RP-OPERATIONAL-2555D@1.0.0.
 
 
@@ -3089,7 +3068,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.remote.fetch_started
 - pm.source_control_event.remote_fetch_started.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -3155,15 +3134,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.publish
   C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
   RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
   2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
-  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
-  `source_control.remote.publish_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
-  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
-  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
-  original source fact `source_control_remote_publish_completed_fact` (the accepted request, native evidence refs and
-  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
-  another rule? No source-fact lifetime is selected here.
+  never restart its clock. The original source fact source_control_remote_publish_completed_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as
+  its DL-455 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1256 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1256 binds the source fact to the same policy as its event history (DL-510):
   RP-OPERATIONAL-2555D@1.0.0.
 
 
@@ -3243,7 +3218,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.remote.publish_completed
 - pm.source_control_event.remote_publish_completed.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -3309,15 +3284,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.publish
   C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
   RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
   2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
-  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
-  `source_control.remote.publish_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
-  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
-  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
-  original source fact `source_control_remote_publish_started_fact` (the accepted request, native evidence refs and
-  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
-  another rule? No source-fact lifetime is selected here.
+  never restart its clock. The original source fact source_control_remote_publish_started_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as
+  its DL-455 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1257 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1257 binds the source fact to the same policy as its event history (DL-510):
   RP-OPERATIONAL-2555D@1.0.0.
 
 
@@ -3396,7 +3367,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.remote.publish_started
 - pm.source_control_event.remote_publish_started.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -3464,15 +3435,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.sync_co
   C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
   RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
   2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
-  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
-  `source_control.remote.sync_completed`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
-  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
-  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
-  original source fact `source_control_remote_sync_completed_fact` (the accepted request, native evidence refs and
-  owner result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
-  another rule? No source-fact lifetime is selected here.
+  never restart its clock. The original source fact source_control_remote_sync_completed_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as
+  its DL-455 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1258 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1258 binds the source fact to the same policy as its event history (DL-510):
   RP-OPERATIONAL-2555D@1.0.0.
 
 
@@ -3554,7 +3521,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.remote.sync_completed
 - pm.source_control_event.remote_sync_completed.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -3621,15 +3588,11 @@ canonical_text: 'Newly authored owner contract for source_control.remote.sync_st
   C7 retention: the saved event history of this family is bound by DL-455 (E-CARDS-3 item 3.a, option A):
   RP-OPERATIONAL-2555D@1.0.0, kept seven years (2,555 days) from the original saved change, under the existing
   2,000,000-entry Project allowance and Storage’s Project first-save anchor adapter; retry, reprocessing and restore
-  never restart its clock. The original source fact keeps its own lifetime and stays PENDING_RETENTION_DECISION: For
-  `source_control.remote.sync_started`, DL-455 (E-CARDS-3 item 3.a) has its saved event history kept seven years
-  (2,555 days) from the original saved change, under the existing 2,000,000-entry Project allowance and Storage’s
-  Project first-save anchor adapter, and leaves original records their own lifetimes; it does not decide the separate
-  original source fact `source_control_remote_sync_started_fact` (the accepted request, native evidence refs and owner
-  result ref the history cites). Should that source fact keep the same lifetime as its history entry, or follow
-  another rule? No source-fact lifetime is selected here.
+  never restart its clock. The original source fact source_control_remote_sync_started_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, the same policy as
+  its DL-455 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1259 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1259 binds the source fact to the same policy as its event history (DL-510):
   RP-OPERATIONAL-2555D@1.0.0.
 
 
@@ -3710,7 +3673,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.remote.sync_started
 - pm.source_control_event.remote_sync_started.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -3774,14 +3737,11 @@ canonical_text: 'Newly authored owner contract for source_control.repository.bou
 
   C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
   RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
-  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
-  PENDING_RETENTION_DECISION: For `source_control.repository.bound`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_repository_bound_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  reprocessing and restore never restart its clock. The original source fact source_control_repository_bound_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as
+  its DL-453 history, so retained history always resolves its original source. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1260 keeps the source fact unavailable pending its exact policy; the event history policy is
+  policies; no event reference retains their bodies implicitly. SP-1260 binds the source fact to the same policy as its event history (DL-510):
   RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
@@ -3859,7 +3819,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.repository.bound
 - pm.source_control_event.repository_bound.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -3923,14 +3883,11 @@ canonical_text: 'Newly authored owner contract for source_control.repository.unb
 
   C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
   RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
-  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
-  PENDING_RETENTION_DECISION: For `source_control.repository.unbound`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_repository_unbound_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  reprocessing and restore never restart its clock. The original source fact source_control_repository_unbound_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as
+  its DL-453 history, so retained history always resolves its original source. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1261 keeps the source fact unavailable pending its exact policy; the event history policy is
+  policies; no event reference retains their bodies implicitly. SP-1261 binds the source fact to the same policy as its event history (DL-510):
   RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
@@ -4008,7 +3965,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.repository.unbound
 - pm.source_control_event.repository_unbound.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -4072,15 +4029,11 @@ canonical_text: 'Newly authored owner contract for source_control.status.refresh
 
   C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
   RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
-  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
-  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.status.refreshed`, DL-454
-  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
-  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
-  does not decide the separate original source fact `source_control_status_refreshed_fact` (the accepted request,
-  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
-  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact source_control_status_refreshed_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-TELEMETRY-90D@1.0.0, the same policy as
+  its DL-454 history, so retained history always resolves its original source. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1262 keeps the source fact unavailable pending its exact policy; the event history policy is
+  policies; no event reference retains their bodies implicitly. SP-1262 binds the source fact to the same policy as its event history (DL-510):
   RP-TELEMETRY-90D@1.0.0.
 
 
@@ -4157,7 +4110,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.status.refreshed
 - pm.source_control_event.status_refreshed.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -4221,13 +4174,10 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.crea
 
   C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
   RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
-  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
-  PENDING_RETENTION_DECISION: For `source_control.workspace.created`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_workspace_created_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies, native receipts, checkpoint contents, repository files and credential
-  resources keep their independently assigned policies; no event reference retains their bodies implicitly. SP-1263 keeps the source fact unavailable pending its exact policy; the event history policy is
+  reprocessing and restore never restart its clock. The original source fact source_control_workspace_created_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as
+  its DL-453 history, so retained history always resolves its original source. Snapshot bodies, native receipts, checkpoint contents, repository files and credential
+  resources keep their independently assigned policies; no event reference retains their bodies implicitly. SP-1263 binds the source fact to the same policy as its event history (DL-510):
   RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
@@ -4305,7 +4255,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.workspace.created
 - pm.source_control_event.workspace_created.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -4369,15 +4319,11 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.open
 
   C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
   RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
-  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
-  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.workspace.opened`, DL-454
-  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
-  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
-  does not decide the separate original source fact `source_control_workspace_opened_fact` (the accepted request,
-  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
-  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact source_control_workspace_opened_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-TELEMETRY-90D@1.0.0, the same policy as
+  its DL-454 history, so retained history always resolves its original source. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1264 keeps the source fact unavailable pending its exact policy; the event history policy is
+  policies; no event reference retains their bodies implicitly. SP-1264 binds the source fact to the same policy as its event history (DL-510):
   RP-TELEMETRY-90D@1.0.0.
 
 
@@ -4454,7 +4400,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.workspace.opened
 - pm.source_control_event.workspace_opened.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -4518,13 +4464,10 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.remo
 
   C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
   RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
-  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
-  PENDING_RETENTION_DECISION: For `source_control.workspace.removed`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_workspace_removed_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies, native receipts, checkpoint contents, repository files and credential
-  resources keep their independently assigned policies; no event reference retains their bodies implicitly. SP-1265 keeps the source fact unavailable pending its exact policy; the event history policy is
+  reprocessing and restore never restart its clock. The original source fact source_control_workspace_removed_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as
+  its DL-453 history, so retained history always resolves its original source. Snapshot bodies, native receipts, checkpoint contents, repository files and credential
+  resources keep their independently assigned policies; no event reference retains their bodies implicitly. SP-1265 binds the source fact to the same policy as its event history (DL-510):
   RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
@@ -4602,7 +4545,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.workspace.removed
 - pm.source_control_event.workspace_removed.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -4666,15 +4609,11 @@ canonical_text: 'Newly authored owner contract for source_control.workspace.swit
 
   C7 retention: the saved event history of this family is bound by DL-454 (E-CARDS-3 item 2.a, option A):
   RP-TELEMETRY-90D@1.0.0, kept for 90 days from the first successful save that survives a restart, under the existing
-  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact
-  keeps its own lifetime and stays PENDING_RETENTION_DECISION: For `source_control.workspace.switched`, DL-454
-  (E-CARDS-3 item 2.a) has its saved event history kept for 90 days from the first successful save that survives a
-  restart, under the existing 2,000,000-entry Project allowance, and leaves original records their own lifetimes; it
-  does not decide the separate original source fact `source_control_workspace_switched_fact` (the accepted request,
-  native evidence refs and owner result ref the history cites). Should that source fact keep the same lifetime as its
-  history entry, or follow another rule? No source-fact lifetime is selected here. Snapshot bodies,
+  2,000,000-entry Project allowance; retry, reprocessing and restore never restart its clock. The original source fact source_control_workspace_switched_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-TELEMETRY-90D@1.0.0, the same policy as
+  its DL-454 history, so retained history always resolves its original source. Snapshot bodies,
   native receipts, checkpoint contents, repository files and credential resources keep their independently assigned
-  policies; no event reference retains their bodies implicitly. SP-1266 keeps the source fact unavailable pending its exact policy; the event history policy is
+  policies; no event reference retains their bodies implicitly. SP-1266 binds the source fact to the same policy as its event history (DL-510):
   RP-TELEMETRY-90D@1.0.0.
 
 
@@ -4752,7 +4691,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.workspace.switched
 - pm.source_control_event.workspace_switched.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -4816,14 +4755,11 @@ canonical_text: 'Newly authored owner contract for source_control.writer_lease.g
 
   C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
   RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
-  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
-  PENDING_RETENTION_DECISION: For `source_control.writer_lease.granted`, DL-453 (E-CARDS-3 item 1.a) has its saved
-  event history kept permanently, with no age or count expiry and no new count allowance, and leaves original records
-  their own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_granted_fact`
-  (the accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep
-  the same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
+  reprocessing and restore never restart its clock. The original source fact source_control_writer_lease_granted_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as
+  its DL-453 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1267 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1267 binds the source fact to the same policy as its event history (DL-510):
   RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
@@ -4901,7 +4837,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.writer_lease.granted
 - pm.source_control_event.writer_lease_granted.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only
@@ -4965,14 +4901,11 @@ canonical_text: 'Newly authored owner contract for source_control.writer_lease.l
 
   C7 retention: the saved event history of this family is bound by DL-453 (E-CARDS-3 item 1.a, option A):
   RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, with no age or count expiry and no new count allowance; retry,
-  reprocessing and restore never restart its clock. The original source fact keeps its own lifetime and stays
-  PENDING_RETENTION_DECISION: For `source_control.writer_lease.lost`, DL-453 (E-CARDS-3 item 1.a) has its saved event
-  history kept permanently, with no age or count expiry and no new count allowance, and leaves original records their
-  own lifetimes; it does not decide the separate original source fact `source_control_writer_lease_lost_fact` (the
-  accepted request, native evidence refs and owner result ref the history cites). Should that source fact keep the
-  same lifetime as its history entry, or follow another rule? No source-fact lifetime is selected here.
+  reprocessing and restore never restart its clock. The original source fact source_control_writer_lease_lost_fact is kept exactly as long as the history entry that points to it
+  (DL-510, E-CARDS-6 E6-1, option A; Jared: "Same as the history"): RP-AUTHORITY-INDEFINITE@1.0.0, the same policy as
+  its DL-453 history, so retained history always resolves its original source.
   Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently
-  assigned policies; no event reference retains their bodies implicitly. SP-1268 keeps the source fact unavailable pending its exact policy; the event history policy is
+  assigned policies; no event reference retains their bodies implicitly. SP-1268 binds the source fact to the same policy as its event history (DL-510):
   RP-AUTHORITY-INDEFINITE@1.0.0.
 
 
@@ -5050,7 +4983,7 @@ negative_constraints:
 preserved_exact_tokens:
 - source_control.writer_lease.lost
 - pm.source_control_event.writer_lease_lost.payload.v1
-- PENDING_RETENTION_DECISION
+- DL-510
 - SP-286
 - SP-278
 - projector_replay_only

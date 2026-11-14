@@ -137,35 +137,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-454 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-454 (E-CARDS-3) and the separate original source fact source_control_backend_detected_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-TELEMETRY-90D@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1250",
-       "line_start": 2200,
-       "line_end": 2200,
+       "line_start": 2253,
+       "line_end": 2253,
        "quote": "C7 retention: the saved event history of this family is bound by DL-454",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1250",
-       "line_start": 2203,
-       "line_end": 2203,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 2255,
+       "line_end": 2255,
+       "quote": "The original source fact source_control_backend_detected_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1250",
+       "line_start": 52829,
+       "line_end": 52829,
+       "quote": "Retention of the original source fact source_control_backend_detected_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-454 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -425,35 +443,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-453 (E-CARDS-3) and the separate original source fact source_control_backend_selected_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1251",
-       "line_start": 2350,
-       "line_end": 2350,
+       "line_start": 2399,
+       "line_end": 2399,
        "quote": "C7 retention: the saved event history of this family is bound by DL-453",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1251",
-       "line_start": 2353,
-       "line_end": 2353,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 2401,
+       "line_end": 2401,
+       "quote": "The original source fact source_control_backend_selected_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1251",
+       "line_start": 52942,
+       "line_end": 52942,
+       "quote": "Retention of the original source fact source_control_backend_selected_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -713,35 +749,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-453 (E-CARDS-3) and the separate original source fact source_control_checkpoint_created_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1252",
-       "line_start": 2499,
-       "line_end": 2499,
+       "line_start": 2545,
+       "line_end": 2545,
        "quote": "C7 retention: the saved event history of this family is bound by DL-453",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1252",
-       "line_start": 2502,
-       "line_end": 2502,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 2547,
+       "line_end": 2547,
+       "quote": "The original source fact source_control_checkpoint_created_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1252",
+       "line_start": 53055,
+       "line_end": 53055,
+       "quote": "Retention of the original source fact source_control_checkpoint_created_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -1001,35 +1055,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-453 (E-CARDS-3) and the separate original source fact source_control_checkpoint_restored_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1253",
-       "line_start": 2649,
-       "line_end": 2649,
+       "line_start": 2692,
+       "line_end": 2692,
        "quote": "C7 retention: the saved event history of this family is bound by DL-453",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1253",
-       "line_start": 2652,
-       "line_end": 2652,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 2694,
+       "line_end": 2694,
+       "quote": "The original source fact source_control_checkpoint_restored_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1253",
+       "line_start": 53168,
+       "line_end": 53168,
+       "quote": "Retention of the original source fact source_control_checkpoint_restored_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -1289,35 +1361,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-455 (E-CARDS-3) and the separate original source fact source_control_remote_fetch_completed_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1254",
-       "line_start": 2800,
-       "line_end": 2800,
+       "line_start": 2840,
+       "line_end": 2840,
        "quote": "C7 retention: the saved event history of this family is bound by DL-455",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1254",
-       "line_start": 2803,
-       "line_end": 2803,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 2843,
+       "line_end": 2843,
+       "quote": "The original source fact source_control_remote_fetch_completed_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1254",
+       "line_start": 53283,
+       "line_end": 53283,
+       "quote": "Retention of the original source fact source_control_remote_fetch_completed_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -1577,35 +1667,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-455 (E-CARDS-3) and the separate original source fact source_control_remote_fetch_started_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1255",
-       "line_start": 2951,
-       "line_end": 2951,
+       "line_start": 2987,
+       "line_end": 2987,
        "quote": "C7 retention: the saved event history of this family is bound by DL-455",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1255",
-       "line_start": 2954,
-       "line_end": 2954,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 2990,
+       "line_end": 2990,
+       "quote": "The original source fact source_control_remote_fetch_started_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1255",
+       "line_start": 53397,
+       "line_end": 53397,
+       "quote": "Retention of the original source fact source_control_remote_fetch_started_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -1865,35 +1973,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-455 (E-CARDS-3) and the separate original source fact source_control_remote_publish_completed_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1256",
-       "line_start": 3102,
-       "line_end": 3102,
+       "line_start": 3134,
+       "line_end": 3134,
        "quote": "C7 retention: the saved event history of this family is bound by DL-455",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1256",
-       "line_start": 3105,
-       "line_end": 3105,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 3137,
+       "line_end": 3137,
+       "quote": "The original source fact source_control_remote_publish_completed_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1256",
+       "line_start": 53512,
+       "line_end": 53512,
+       "quote": "Retention of the original source fact source_control_remote_publish_completed_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -2153,35 +2279,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-455 (E-CARDS-3) and the separate original source fact source_control_remote_publish_started_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1257",
-       "line_start": 3256,
-       "line_end": 3256,
+       "line_start": 3284,
+       "line_end": 3284,
        "quote": "C7 retention: the saved event history of this family is bound by DL-455",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1257",
-       "line_start": 3259,
-       "line_end": 3259,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 3287,
+       "line_end": 3287,
+       "quote": "The original source fact source_control_remote_publish_started_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1257",
+       "line_start": 53627,
+       "line_end": 53627,
+       "quote": "Retention of the original source fact source_control_remote_publish_started_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -2441,35 +2585,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-455 (E-CARDS-3) and the separate original source fact source_control_remote_sync_completed_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1258",
-       "line_start": 3411,
-       "line_end": 3411,
+       "line_start": 3435,
+       "line_end": 3435,
        "quote": "C7 retention: the saved event history of this family is bound by DL-455",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1258",
-       "line_start": 3414,
-       "line_end": 3414,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 3438,
+       "line_end": 3438,
+       "quote": "The original source fact source_control_remote_sync_completed_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1258",
+       "line_start": 53741,
+       "line_end": 53741,
+       "quote": "Retention of the original source fact source_control_remote_sync_completed_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -2729,35 +2891,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-455 (E-CARDS-3) and the separate original source fact source_control_remote_sync_started_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1259",
-       "line_start": 3568,
-       "line_end": 3568,
+       "line_start": 3588,
+       "line_end": 3588,
        "quote": "C7 retention: the saved event history of this family is bound by DL-455",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1259",
-       "line_start": 3571,
-       "line_end": 3571,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 3591,
+       "line_end": 3591,
+       "quote": "The original source fact source_control_remote_sync_started_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1259",
+       "line_start": 53855,
+       "line_end": 53855,
+       "quote": "Retention of the original source fact source_control_remote_sync_started_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-455 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -3017,35 +3197,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-453 (E-CARDS-3) and the separate original source fact source_control_repository_bound_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1260",
-       "line_start": 3722,
-       "line_end": 3722,
+       "line_start": 3738,
+       "line_end": 3738,
        "quote": "C7 retention: the saved event history of this family is bound by DL-453",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1260",
-       "line_start": 3725,
-       "line_end": 3725,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 3740,
+       "line_end": 3740,
+       "quote": "The original source fact source_control_repository_bound_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1260",
+       "line_start": 53968,
+       "line_end": 53968,
+       "quote": "Retention of the original source fact source_control_repository_bound_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -3305,35 +3503,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-453 (E-CARDS-3) and the separate original source fact source_control_repository_unbound_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1261",
-       "line_start": 3871,
-       "line_end": 3871,
+       "line_start": 3884,
+       "line_end": 3884,
        "quote": "C7 retention: the saved event history of this family is bound by DL-453",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1261",
-       "line_start": 3874,
-       "line_end": 3874,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 3886,
+       "line_end": 3886,
+       "quote": "The original source fact source_control_repository_unbound_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1261",
+       "line_start": 54081,
+       "line_end": 54081,
+       "quote": "Retention of the original source fact source_control_repository_unbound_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -3593,35 +3809,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-454 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-454 (E-CARDS-3) and the separate original source fact source_control_status_refreshed_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-TELEMETRY-90D@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1262",
-       "line_start": 4020,
-       "line_end": 4020,
+       "line_start": 4030,
+       "line_end": 4030,
        "quote": "C7 retention: the saved event history of this family is bound by DL-454",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1262",
-       "line_start": 4023,
-       "line_end": 4023,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 4032,
+       "line_end": 4032,
+       "quote": "The original source fact source_control_status_refreshed_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1262",
+       "line_start": 54195,
+       "line_end": 54195,
+       "quote": "Retention of the original source fact source_control_status_refreshed_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-454 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -3881,35 +4115,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-453 (E-CARDS-3) and the separate original source fact source_control_workspace_created_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1263",
-       "line_start": 4169,
-       "line_end": 4169,
+       "line_start": 4175,
+       "line_end": 4175,
        "quote": "C7 retention: the saved event history of this family is bound by DL-453",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1263",
-       "line_start": 4172,
-       "line_end": 4172,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 4177,
+       "line_end": 4177,
+       "quote": "The original source fact source_control_workspace_created_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1263",
+       "line_start": 54308,
+       "line_end": 54308,
+       "quote": "Retention of the original source fact source_control_workspace_created_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -4169,35 +4421,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-454 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-454 (E-CARDS-3) and the separate original source fact source_control_workspace_opened_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-TELEMETRY-90D@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
-      {
-       "path": "Plans/Source_Control_System.md",
-       "unit": "SCS-1264",
-       "line_start": 4317,
-       "line_end": 4317,
-       "quote": "C7 retention: the saved event history of this family is bound by DL-454",
-       "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
-      },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1264",
        "line_start": 4320,
        "line_end": 4320,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "quote": "C7 retention: the saved event history of this family is bound by DL-454",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/Source_Control_System.md",
+       "unit": "SCS-1264",
+       "line_start": 4322,
+       "line_end": 4322,
+       "quote": "The original source fact source_control_workspace_opened_fact is kept exactly as long as the history entry that points to it",
+       "quote_check": "exact",
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1264",
+       "line_start": 54422,
+       "line_end": 54422,
+       "quote": "Retention of the original source fact source_control_workspace_opened_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-454 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -4457,35 +4727,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-453 (E-CARDS-3) and the separate original source fact source_control_workspace_removed_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1265",
-       "line_start": 4466,
-       "line_end": 4466,
+       "line_start": 4465,
+       "line_end": 4465,
        "quote": "C7 retention: the saved event history of this family is bound by DL-453",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1265",
-       "line_start": 4469,
-       "line_end": 4469,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 4467,
+       "line_end": 4467,
+       "quote": "The original source fact source_control_workspace_removed_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1265",
+       "line_start": 54535,
+       "line_end": 54535,
+       "quote": "Retention of the original source fact source_control_workspace_removed_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -4745,35 +5033,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-454 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-454 (E-CARDS-3) and the separate original source fact source_control_workspace_switched_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-TELEMETRY-90D@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1266",
-       "line_start": 4614,
-       "line_end": 4614,
+       "line_start": 4610,
+       "line_end": 4610,
        "quote": "C7 retention: the saved event history of this family is bound by DL-454",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1266",
-       "line_start": 4617,
-       "line_end": 4617,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 4612,
+       "line_end": 4612,
+       "quote": "The original source fact source_control_workspace_switched_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1266",
+       "line_start": 54649,
+       "line_end": 54649,
+       "quote": "Retention of the original source fact source_control_workspace_switched_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-454 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -5033,35 +5339,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-453 (E-CARDS-3) and the separate original source fact source_control_writer_lease_granted_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1267",
-       "line_start": 4764,
-       "line_end": 4764,
+       "line_start": 4756,
+       "line_end": 4756,
        "quote": "C7 retention: the saved event history of this family is bound by DL-453",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1267",
-       "line_start": 4767,
-       "line_end": 4767,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 4758,
+       "line_end": 4758,
+       "quote": "The original source fact source_control_writer_lease_granted_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1267",
+       "line_start": 54762,
+       "line_end": 54762,
+       "quote": "Retention of the original source fact source_control_writer_lease_granted_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -5321,35 +5645,53 @@
      "change_reason": "New deck-2 9.a definition following current-text per-family search."
     },
     "retention": {
-     "status": "PARTIAL",
+     "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered.",
+     "finding": "Saved event history bound by DL-453 (E-CARDS-3) and the separate original source fact source_control_writer_lease_lost_fact bound by DL-510 (Jared, E-CARDS-6 E6-1, option A, \"Same as the history\") to the same policy object, RP-AUTHORITY-INDEFINITE@1.0.0; the source fact is kept exactly as long as the history entry that points to it. No pending retention cell remains for this family.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1268",
-       "line_start": 4913,
-       "line_end": 4913,
+       "line_start": 4902,
+       "line_end": 4902,
        "quote": "C7 retention: the saved event history of this family is bound by DL-453",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
       },
       {
        "path": "Plans/Source_Control_System.md",
        "unit": "SCS-1268",
-       "line_start": 4916,
-       "line_end": 4916,
-       "quote": "PENDING_RETENTION_DECISION:",
+       "line_start": 4904,
+       "line_end": 4904,
+       "quote": "The original source fact source_control_writer_lease_lost_fact is kept exactly as long as the history entry that points to it",
        "quote_check": "exact",
-       "file_sha256": "3c9910fe829be12ced56cfde17dc9344b55fb0df94e7960f0f1b9777887ca325"
+       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1268",
+       "line_start": 54875,
+       "line_end": 54875,
+       "quote": "Retention of the original source fact source_control_writer_lease_lost_fact is the same as its saved event history (DL-510",
+       "quote_check": "exact",
+       "file_sha256": "5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-510",
+       "line_start": 32532,
+       "line_end": 32532,
+       "quote": "His answer, verbatim: \"Same as the history\"",
+       "quote_check": "exact",
+       "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
       }
      ],
      "prior": {
       "status": "PARTIAL",
-      "finding": "PENDING_RETENTION_DECISION for event and canonical source fact; no analogy selects a lifetime."
+      "finding": "Saved event history bound by DL-453 (E-CARDS-3, landed on main) to its policy object; the separate original source-fact lifetime is not decided by that answer and stays PENDING_RETENTION_DECISION with an exact question. PARTIAL until that question is answered."
      },
-     "change": "phase2",
-     "change_reason": "Wave 3 phase 2: event history bound to the landed decision; source-fact question kept."
+     "change": "int3",
+     "change_reason": "Batch-3 integration (INT3 item 4): retention deck 6 answered; source fact bound to its history policy."
     },
     "redaction_custody": {
      "status": "PASS",
@@ -5481,5 +5823,12 @@
   "evidence_quotes_repinned": 266,
   "quotes_moved_or_rehashed": 209,
   "oracle_status": "PASS"
+ },
+ "int3_retention_regrade": {
+  "decision": "DL-510",
+  "answer_record": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-6_20261114.md",
+  "criterion_7": "PARTIAL -> PASS for all 19 families",
+  "quotes_pinned": 76,
+  "other_cells": "unchanged by INT3; their quotes are pinned at the phase-2 head"
  }
 }

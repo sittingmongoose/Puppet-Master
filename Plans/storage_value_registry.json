@@ -226471,7 +226471,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -226513,7 +226513,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -227282,7 +227282,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -227324,7 +227324,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -228093,7 +228093,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -228135,7 +228135,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -228904,7 +228904,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -228946,7 +228946,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -229715,7 +229715,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -229757,7 +229757,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -230526,7 +230526,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -230568,7 +230568,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -231337,7 +231337,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -231379,7 +231379,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -232148,7 +232148,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -232190,7 +232190,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -232959,7 +232959,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -233001,7 +233001,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -233770,7 +233770,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -233812,7 +233812,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -234581,7 +234581,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -234623,7 +234623,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -235392,7 +235392,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -235434,7 +235434,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -236203,7 +236203,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -236245,7 +236245,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -237014,7 +237014,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -237056,7 +237056,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -237825,7 +237825,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -237867,7 +237867,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -238636,7 +238636,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -238678,7 +238678,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -239447,7 +239447,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -239489,7 +239489,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -240258,7 +240258,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -240300,7 +240300,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -241114,7 +241114,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -241156,7 +241156,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -241970,7 +241970,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -242012,7 +242012,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -242781,7 +242781,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -242823,7 +242823,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -243592,7 +243592,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -243634,7 +243634,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -244403,7 +244403,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -244445,7 +244445,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -245214,7 +245214,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -245256,7 +245256,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -246025,7 +246025,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -246067,7 +246067,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -246836,7 +246836,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -246878,7 +246878,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -247647,7 +247647,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -247689,7 +247689,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -248458,7 +248458,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -248500,7 +248500,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -249269,7 +249269,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -249311,7 +249311,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -250080,7 +250080,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -250122,7 +250122,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -250891,7 +250891,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -250933,7 +250933,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -251702,7 +251702,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -251744,7 +251744,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -252513,7 +252513,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -252555,7 +252555,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -253324,7 +253324,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -253366,7 +253366,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -254135,7 +254135,7 @@
                     "consumer_version",
                     "publication_revision",
                     "previous_checkpoint_sha256",
-                    "generic_token",
+                    "generic_read_token",
                     "last_scanned",
                     "matched_count",
                     "state",
@@ -254177,7 +254177,7 @@
                         }
                       ]
                     },
-                    "generic_token": {
+                    "generic_read_token": {
                       "$ref": "#/$defs/DurableGenericToken"
                     },
                     "last_scanned": {
@@ -254477,8 +254477,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1400 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -254720,8 +254720,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1400 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -254885,8 +254885,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1400 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -255095,10 +255095,261 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): Project editions only, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, sharing the existing 2,000,000-entry seven-year Project allowance; each entry starts its clock at its own saved state change and retry, reprocessing or restore never resets it. Application editions are the separate w3e_backup_state_changed_custody_application row (SP-1401). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "server_id",
+          "scope_partition",
+          "owner_operation_id",
+          "source_method",
+          "intent_ref",
+          "before_source_ref",
+          "after_source_ref",
+          "original_owner_result_ref",
+          "semantic_input_ref",
+          "event_id",
+          "producer_semantic_digest",
+          "append_result_ref",
+          "state"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.w3e_backup_state_changed_custody.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "server_id": {
+            "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            },
+            "pattern": "^(?:app|project~(?=[A-Za-z0-9_-])(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-][AQgw]|[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048])?)(?![\\s\\S])"
+          },
+          "owner_operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "source_method": {
+            "const": "BackupCoordinator.backup_phase_commit@1.0.0"
+          },
+          "intent_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "before_source_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "not": {
+                  "pattern": "[\\u0000-\\u0020\\u007f]"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "after_source_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "original_owner_result_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "semantic_input_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "producer_semantic_digest": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64,
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "append_result_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "not": {
+                  "pattern": "[\\u0000-\\u0020\\u007f]"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "state": {
+            "enum": [
+              "pending_append",
+              "settled",
+              "recovery_required"
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "settled"
+                }
+              },
+              "required": [
+                "state"
+              ]
+            },
+            "then": {
+              "properties": {
+                "append_result_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256,
+                  "not": {
+                    "pattern": "[\\u0000-\\u0020\\u007f]"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1401",
+          "Plans/Backup_Restore_System.md#BRS-1401"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      }
+    },
+    {
+      "family_id": "w3e_backup_state_changed_custody_application",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "w3e_backup_state_changed_custody.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.w3e_backup_state_changed_custody.v1",
+      "value_schema_ref": "Plans/event_payloads/w3e/backup_state_changed.schema.json#/$defs/custody",
+      "owner_doc": "Plans/storage-plan.md#SP-1401",
+      "producer": [
+        "BackupCoordinator.backup_phase_commit@1.0.0; specified_unimplemented; missing_event_registration"
+      ],
+      "consumers": [
+        "reader.w3e.backup_state_changed.history@1.0.0",
+        "Backup History and the one BRS-031 backup-status projection",
+        "BRS-031/033 coherent custody or verified derived rebuild"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "owner_operation_id",
+        "source_method",
+        "intent_ref",
+        "before_source_ref",
+        "after_source_ref",
+        "original_owner_result_ref",
+        "semantic_input_ref",
+        "event_id",
+        "producer_semantic_digest",
+        "append_result_ref",
+        "state"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "before_source_ref",
+        "append_result_ref"
+      ],
+      "replay_behavior": "Immutable original source/result lookup, never domain redispatch.",
+      "migration": "Explicit exact-version dispatch; no legacy writer or alias; future coordinator migration, no source restamp.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/Backup_Restore_System.md#BRS-1401",
+          "Plans/storage-plan.md#SP-1401"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/Backup_Restore_System.md#BRS-1401",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1401",
+          "Plans/Backup_Restore_System.md#BRS-031"
+        ]
+      },
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): application editions only, RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, seven years (220,752,000 seconds) from the original saved change in the one application allowance app:operational_security, never restarted by retry, reprocessing or restore. Project editions are the separate w3e_backup_state_changed_custody row (SP-1401). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+      "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority. Application edition of w3e_backup_state_changed_custody (scope_partition app); same owner value schema.",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -255338,8 +255589,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): Project editions only, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, sharing the existing 2,000,000-entry seven-year Project allowance; each entry starts its clock at its own saved state change and retry, reprocessing or restore never resets it. Application editions are the separate w3e_backup_state_changed_history_application row (SP-1401). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -255448,6 +255699,172 @@
       }
     },
     {
+      "family_id": "w3e_backup_state_changed_history_application",
+      "storage_kind": "redb_projection",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "w3e_backup_state_changed_history.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.w3e_backup_state_changed_history.v1",
+      "value_schema_ref": "Plans/event_payloads/w3e/backup_state_changed.schema.json#/$defs/history",
+      "owner_doc": "Plans/storage-plan.md#SP-1401",
+      "producer": [
+        "projector.w3e.backup_state_changed.history@1.0.0; specified_unimplemented"
+      ],
+      "consumers": [
+        "reader.w3e.backup_state_changed.history@1.0.0",
+        "Backup History and the one BRS-031 backup-status projection",
+        "BRS-031/033 coherent custody or verified derived rebuild"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "payload_ref",
+        "source_custody_ref",
+        "projection_generation_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-278 exact-family/scope/writer filter, complete coverage and checkpoint-atomic derived rebuild.",
+      "migration": "Explicit exact-version dispatch; no legacy writer or alias; future coordinator migration, no source restamp.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/Backup_Restore_System.md#BRS-1401",
+          "Plans/storage-plan.md#SP-1401"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/Backup_Restore_System.md#BRS-1401",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1401",
+          "Plans/Backup_Restore_System.md#BRS-031"
+        ]
+      },
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): application editions only, RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, seven years (220,752,000 seconds) from the original saved change in the one application allowance app:operational_security, never restarted by retry, reprocessing or restore. Project editions are the separate w3e_backup_state_changed_history row (SP-1401). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+      "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority. Application edition of w3e_backup_state_changed_history (scope_partition app); same owner value schema.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "server_id",
+          "scope_partition",
+          "owner_operation_id",
+          "event_id",
+          "sequence_id",
+          "payload_ref",
+          "source_custody_ref",
+          "projection_generation_ref"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.w3e_backup_state_changed_history.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "server_id": {
+            "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            },
+            "pattern": "^(?:app|project~(?=[A-Za-z0-9_-])(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-][AQgw]|[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048])?)(?![\\s\\S])"
+          },
+          "owner_operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "sequence_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "payload_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "source_custody_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "projection_generation_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "event_record_index",
+          "w3e_backup_state_changed_custody_application"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1401",
+          "Plans/Backup_Restore_System.md#BRS-1401"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      }
+    },
+    {
       "family_id": "w3e_backup_state_changed_checkpoint",
       "storage_kind": "redb_checkpoint",
       "status": "materialized",
@@ -255503,8 +255920,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): Project editions only, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, sharing the existing 2,000,000-entry seven-year Project allowance; each entry starts its clock at its own saved state change and retry, reprocessing or restore never resets it. Application editions are the separate w3e_backup_state_changed_checkpoint_application row (SP-1401). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -255649,6 +256066,207 @@
       }
     },
     {
+      "family_id": "w3e_backup_state_changed_checkpoint_application",
+      "storage_kind": "redb_checkpoint",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "w3e_backup_state_changed_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.w3e_backup_state_changed_checkpoint.v1",
+      "value_schema_ref": "Plans/event_payloads/w3e/backup_state_changed.schema.json#/$defs/checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1401",
+      "producer": [
+        "projector.w3e.backup_state_changed.history@1.0.0; specified_unimplemented"
+      ],
+      "consumers": [
+        "reader.w3e.backup_state_changed.history@1.0.0",
+        "Backup History and the one BRS-031 backup-status projection",
+        "BRS-031/033 coherent custody or verified derived rebuild"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "body_inline",
+        "body_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "body_inline",
+        "body_ref"
+      ],
+      "replay_behavior": "SP-278 exact-family/scope/writer filter, complete coverage and checkpoint-atomic derived rebuild.",
+      "migration": "Explicit exact-version dispatch; no legacy writer or alias; future coordinator migration, no source restamp.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/Backup_Restore_System.md#BRS-1401",
+          "Plans/storage-plan.md#SP-1401"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/Backup_Restore_System.md#BRS-1401",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1401",
+          "Plans/Backup_Restore_System.md#BRS-031"
+        ]
+      },
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): application editions only, RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, seven years (220,752,000 seconds) from the original saved change in the one application allowance app:operational_security, never restarted by retry, reprocessing or restore. Project editions are the separate w3e_backup_state_changed_checkpoint row (SP-1401). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+      "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority. Application edition of w3e_backup_state_changed_checkpoint (scope_partition app); same owner value schema.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "server_id",
+          "scope_partition",
+          "body_inline",
+          "body_ref"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.w3e_backup_state_changed_checkpoint.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "server_id": {
+            "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            },
+            "pattern": "^(?:app|project~(?=[A-Za-z0-9_-])(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-][AQgw]|[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048])?)(?![\\s\\S])"
+          },
+          "body_inline": {
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_state_changed/1.0.0/schema.json#/$defs/checkpoint_body"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "body_ref": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "blake3_id",
+                  "byte_size",
+                  "media_type"
+                ],
+                "properties": {
+                  "blake3_id": {
+                    "type": "string",
+                    "minLength": 64,
+                    "maxLength": 64,
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "byte_size": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "media_type": {
+                    "const": "application/msgpack"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "body_inline": {
+                "$ref": "https://puppetmaster.local/schemas/event_payloads/w3e/backup_state_changed/1.0.0/schema.json#/$defs/checkpoint_body"
+              },
+              "body_ref": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "body_inline": {
+                "type": "null"
+              },
+              "body_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "blake3_id",
+                  "byte_size",
+                  "media_type"
+                ],
+                "properties": {
+                  "blake3_id": {
+                    "type": "string",
+                    "minLength": 64,
+                    "maxLength": 64,
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "byte_size": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "media_type": {
+                    "const": "application/msgpack"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "description": "Physical checkpoint wrapper. Exactly one route: inline logical body, or complete SP-337 MessagePack body reference. Validate and authenticate the resolved body; full stored wrapper and each payload/index part follow SP-337/SP-340 limits."
+      },
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "event_record_index",
+          "w3e_backup_state_changed_custody_application"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1401",
+          "Plans/Backup_Restore_System.md#BRS-1401"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      }
+    },
+    {
       "family_id": "w3e_remote_access_private_endpoint_state_changed_custody",
       "storage_kind": "redb",
       "status": "materialized",
@@ -255713,8 +256331,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1402 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -255956,8 +256574,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1402 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -256121,8 +256739,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1402 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -256331,8 +256949,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1403 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -256574,8 +257192,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1403 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -256739,8 +257357,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1403 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -256949,8 +257567,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1404 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -257192,8 +257810,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1404 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -257357,8 +257975,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1404 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -257567,8 +258185,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1405 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -257810,8 +258428,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1405 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -257975,8 +258593,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1405 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -258185,8 +258803,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1406 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -258428,8 +259046,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1406 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -258593,8 +259211,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1406 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -258803,8 +259421,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1407 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -259046,8 +259664,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1407 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -259211,8 +259829,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1407 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -259421,8 +260039,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1408 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -259664,8 +260282,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1408 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -259829,8 +260447,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1408 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -260039,8 +260657,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1409 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -260282,8 +260900,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1409 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -260447,8 +261065,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1409 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -260657,10 +261275,261 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): Project editions only, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, sharing the existing 2,000,000-entry seven-year Project allowance; each entry starts its clock at its own saved state change and retry, reprocessing or restore never resets it. Application editions are the separate w3e_restore_state_changed_custody_application row (SP-1410). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "server_id",
+          "scope_partition",
+          "owner_operation_id",
+          "source_method",
+          "intent_ref",
+          "before_source_ref",
+          "after_source_ref",
+          "original_owner_result_ref",
+          "semantic_input_ref",
+          "event_id",
+          "producer_semantic_digest",
+          "append_result_ref",
+          "state"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.w3e_restore_state_changed_custody.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "server_id": {
+            "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            },
+            "pattern": "^(?:app|project~(?=[A-Za-z0-9_-])(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-][AQgw]|[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048])?)(?![\\s\\S])"
+          },
+          "owner_operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "source_method": {
+            "const": "BackupCoordinator.restore_phase_commit@1.0.0"
+          },
+          "intent_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "before_source_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "not": {
+                  "pattern": "[\\u0000-\\u0020\\u007f]"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "after_source_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "original_owner_result_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "semantic_input_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "producer_semantic_digest": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64,
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "append_result_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "not": {
+                  "pattern": "[\\u0000-\\u0020\\u007f]"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "state": {
+            "enum": [
+              "pending_append",
+              "settled",
+              "recovery_required"
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "settled"
+                }
+              },
+              "required": [
+                "state"
+              ]
+            },
+            "then": {
+              "properties": {
+                "append_result_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256,
+                  "not": {
+                    "pattern": "[\\u0000-\\u0020\\u007f]"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1410",
+          "Plans/Backup_Restore_System.md#BRS-1410"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      }
+    },
+    {
+      "family_id": "w3e_restore_state_changed_custody_application",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "w3e_restore_state_changed_custody.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.w3e_restore_state_changed_custody.v1",
+      "value_schema_ref": "Plans/event_payloads/w3e/restore_state_changed.schema.json#/$defs/custody",
+      "owner_doc": "Plans/storage-plan.md#SP-1410",
+      "producer": [
+        "BackupCoordinator.restore_phase_commit@1.0.0; specified_unimplemented; missing_event_registration"
+      ],
+      "consumers": [
+        "reader.w3e.restore_state_changed.history@1.0.0",
+        "Restore History/preview/result Details and shared backup status",
+        "BRS-031/033 coherent custody or verified derived rebuild"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "owner_operation_id",
+        "source_method",
+        "intent_ref",
+        "before_source_ref",
+        "after_source_ref",
+        "original_owner_result_ref",
+        "semantic_input_ref",
+        "event_id",
+        "producer_semantic_digest",
+        "append_result_ref",
+        "state"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "before_source_ref",
+        "append_result_ref"
+      ],
+      "replay_behavior": "Immutable original source/result lookup, never domain redispatch.",
+      "migration": "Explicit exact-version dispatch; no legacy writer or alias; future coordinator migration, no source restamp.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/Backup_Restore_System.md#BRS-1410",
+          "Plans/storage-plan.md#SP-1410"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/Backup_Restore_System.md#BRS-1410",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1410",
+          "Plans/Backup_Restore_System.md#BRS-031"
+        ]
+      },
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): application editions only, RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, seven years (220,752,000 seconds) from the original saved change in the one application allowance app:operational_security, never restarted by retry, reprocessing or restore. Project editions are the separate w3e_restore_state_changed_custody row (SP-1410). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+      "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority. Application edition of w3e_restore_state_changed_custody (scope_partition app); same owner value schema.",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -260900,8 +261769,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): Project editions only, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, sharing the existing 2,000,000-entry seven-year Project allowance; each entry starts its clock at its own saved state change and retry, reprocessing or restore never resets it. Application editions are the separate w3e_restore_state_changed_history_application row (SP-1410). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -261010,6 +261879,172 @@
       }
     },
     {
+      "family_id": "w3e_restore_state_changed_history_application",
+      "storage_kind": "redb_projection",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "w3e_restore_state_changed_history.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.w3e_restore_state_changed_history.v1",
+      "value_schema_ref": "Plans/event_payloads/w3e/restore_state_changed.schema.json#/$defs/history",
+      "owner_doc": "Plans/storage-plan.md#SP-1410",
+      "producer": [
+        "projector.w3e.restore_state_changed.history@1.0.0; specified_unimplemented"
+      ],
+      "consumers": [
+        "reader.w3e.restore_state_changed.history@1.0.0",
+        "Restore History/preview/result Details and shared backup status",
+        "BRS-031/033 coherent custody or verified derived rebuild"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "owner_operation_id",
+        "event_id",
+        "sequence_id",
+        "payload_ref",
+        "source_custody_ref",
+        "projection_generation_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-278 exact-family/scope/writer filter, complete coverage and checkpoint-atomic derived rebuild.",
+      "migration": "Explicit exact-version dispatch; no legacy writer or alias; future coordinator migration, no source restamp.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/Backup_Restore_System.md#BRS-1410",
+          "Plans/storage-plan.md#SP-1410"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/Backup_Restore_System.md#BRS-1410",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1410",
+          "Plans/Backup_Restore_System.md#BRS-031"
+        ]
+      },
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): application editions only, RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, seven years (220,752,000 seconds) from the original saved change in the one application allowance app:operational_security, never restarted by retry, reprocessing or restore. Project editions are the separate w3e_restore_state_changed_history row (SP-1410). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+      "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority. Application edition of w3e_restore_state_changed_history (scope_partition app); same owner value schema.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "server_id",
+          "scope_partition",
+          "owner_operation_id",
+          "event_id",
+          "sequence_id",
+          "payload_ref",
+          "source_custody_ref",
+          "projection_generation_ref"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.w3e_restore_state_changed_history.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "server_id": {
+            "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            },
+            "pattern": "^(?:app|project~(?=[A-Za-z0-9_-])(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-][AQgw]|[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048])?)(?![\\s\\S])"
+          },
+          "owner_operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "sequence_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "payload_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "source_custody_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "projection_generation_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "event_record_index",
+          "w3e_restore_state_changed_custody_application"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1410",
+          "Plans/Backup_Restore_System.md#BRS-1410"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      }
+    },
+    {
       "family_id": "w3e_restore_state_changed_checkpoint",
       "storage_kind": "redb_checkpoint",
       "status": "materialized",
@@ -261065,8 +262100,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): Project editions only, RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter, sharing the existing 2,000,000-entry seven-year Project allowance; each entry starts its clock at its own saved state change and retry, reprocessing or restore never resets it. Application editions are the separate w3e_restore_state_changed_checkpoint_application row (SP-1410). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -261211,6 +262246,207 @@
       }
     },
     {
+      "family_id": "w3e_restore_state_changed_checkpoint_application",
+      "storage_kind": "redb_checkpoint",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "w3e_restore_state_changed_checkpoint.application.v1:{hex(storage_instance_id)}:{hex(server_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.w3e_restore_state_changed_checkpoint.v1",
+      "value_schema_ref": "Plans/event_payloads/w3e/restore_state_changed.schema.json#/$defs/checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1410",
+      "producer": [
+        "projector.w3e.restore_state_changed.history@1.0.0; specified_unimplemented"
+      ],
+      "consumers": [
+        "reader.w3e.restore_state_changed.history@1.0.0",
+        "Restore History/preview/result Details and shared backup status",
+        "BRS-031/033 coherent custody or verified derived rebuild"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope_partition",
+        "body_inline",
+        "body_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "body_inline",
+        "body_ref"
+      ],
+      "replay_behavior": "SP-278 exact-family/scope/writer filter, complete coverage and checkpoint-atomic derived rebuild.",
+      "migration": "Explicit exact-version dispatch; no legacy writer or alias; future coordinator migration, no source restamp.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/Backup_Restore_System.md#BRS-1410",
+          "Plans/storage-plan.md#SP-1410"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/Backup_Restore_System.md#BRS-1410",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1410",
+          "Plans/Backup_Restore_System.md#BRS-031"
+        ]
+      },
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): application editions only, RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, seven years (220,752,000 seconds) from the original saved change in the one application allowance app:operational_security, never restarted by retry, reprocessing or restore. Project editions are the separate w3e_restore_state_changed_checkpoint row (SP-1410). Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+      "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority. Application edition of w3e_restore_state_changed_checkpoint (scope_partition app); same owner value schema.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "server_id",
+          "scope_partition",
+          "body_inline",
+          "body_ref"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.w3e_restore_state_changed_checkpoint.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            }
+          },
+          "server_id": {
+            "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u0020\\u007f]"
+            },
+            "pattern": "^(?:app|project~(?=[A-Za-z0-9_-])(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-][AQgw]|[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048])?)(?![\\s\\S])"
+          },
+          "body_inline": {
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_payloads/w3e/restore_state_changed/1.0.0/schema.json#/$defs/checkpoint_body"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "body_ref": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "blake3_id",
+                  "byte_size",
+                  "media_type"
+                ],
+                "properties": {
+                  "blake3_id": {
+                    "type": "string",
+                    "minLength": 64,
+                    "maxLength": 64,
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "byte_size": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "media_type": {
+                    "const": "application/msgpack"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "body_inline": {
+                "$ref": "https://puppetmaster.local/schemas/event_payloads/w3e/restore_state_changed/1.0.0/schema.json#/$defs/checkpoint_body"
+              },
+              "body_ref": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "body_inline": {
+                "type": "null"
+              },
+              "body_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "blake3_id",
+                  "byte_size",
+                  "media_type"
+                ],
+                "properties": {
+                  "blake3_id": {
+                    "type": "string",
+                    "minLength": 64,
+                    "maxLength": 64,
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "byte_size": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "media_type": {
+                    "const": "application/msgpack"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "description": "Physical checkpoint wrapper. Exactly one route: inline logical body, or complete SP-337 MessagePack body reference. Validate and authenticate the resolved body; full stored wrapper and each payload/index part follow SP-337/SP-340 limits."
+      },
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_seglog",
+        "source_family_ids": [
+          "event_record_index",
+          "w3e_restore_state_changed_custody_application"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-1410",
+          "Plans/Backup_Restore_System.md#BRS-1410"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      }
+    },
+    {
       "family_id": "w3e_server_catalog_changed_custody",
       "storage_kind": "redb",
       "status": "materialized",
@@ -261275,8 +262511,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1411 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -261518,8 +262754,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1411 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -261683,8 +262919,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1411 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -261893,8 +263129,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1412 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -262136,8 +263372,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1412 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -262301,8 +263537,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1412 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -262511,8 +263747,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1413 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -262754,8 +263990,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1413 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -262919,8 +264155,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1413 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -263129,8 +264365,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1414 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -263372,8 +264608,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1414 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -263537,8 +264773,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1414 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -263747,8 +264983,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1415 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -263990,8 +265226,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1415 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -264155,8 +265391,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1415 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -264365,8 +265601,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1416 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -264608,8 +265844,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1416 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -264773,8 +266009,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1416 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -264983,8 +266219,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1417 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -265226,8 +266462,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1417 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -265391,8 +266627,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-454 (E-CARDS-3 item 2.a, option A): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0, application editions only, 90 days from the first successful save that survives a restart, in the one application allowance app:routine_observation; the batch-3 rebase brought the policy object, as SP-1417 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -265601,8 +266837,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1418 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -265844,8 +267080,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1418 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -266009,8 +267245,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-453 (E-CARDS-3 item 1.a, option A): RP-AUTHORITY-INDEFINITE@1.0.0, kept permanently, application editions only, with no age or count expiry and no new count allowance; the batch-3 rebase brought the policy object, as SP-1418 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -266219,8 +267455,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1419 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -266462,8 +267698,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1419 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -266627,8 +267863,8 @@
           "Plans/Backup_Restore_System.md#BRS-031"
         ]
       },
-      "retention_compaction": "PENDING_RETENTION_DECISION for this exact family; no age/count removal while incomplete. Independent source/receipt/hold/backup dependencies survive.",
-      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_compaction": "DL-455 (E-CARDS-3 item 3.a, option A): RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, application editions only, seven years from the original saved change, in the one application allowance app:operational_security; the batch-3 rebase brought the policy object, as SP-1419 states. Existing policy anchors, counts, overflow and holds apply. Independent source/receipt/hold/backup dependencies survive.",
+      "retention_policy_ref": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
       "redaction_no_secret_rule": "IDs/enums/public fingerprints/access-checked refs only; no codes, secrets, reusable URLs, raw local paths or protected auth/browser content. Entire wrapper <=16384 bytes; SP-337 for every larger referenced part.",
       "legacy_canonical_crosswalk_status": "Newly authored owner contract; prepared without admission; no native handler or event authority.",
       "value_schema": {
@@ -278709,420 +279945,420 @@
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_backup_destination_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_backup_destination_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_backup_state_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_backup_state_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_backup_state_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_private_endpoint_state_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_private_endpoint_state_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_private_endpoint_state_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_proxy_state_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_proxy_state_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_proxy_state_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_public_security_violation_detected_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_public_security_violation_detected_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_public_security_violation_detected_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_remote_link_state_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_remote_link_state_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_remote_link_state_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_migration_state_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_migration_state_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_migration_state_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_preference_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_preference_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_preference_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_state_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_state_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_state_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_test_completed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_test_completed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_remote_access_route_test_completed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_restore_state_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_restore_state_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_restore_state_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_catalog_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_catalog_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_catalog_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_client_pairing_state_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_client_pairing_state_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_client_pairing_state_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_client_revoked_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_client_revoked_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_client_revoked_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_client_trust_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_client_trust_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_client_trust_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_connection_state_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_connection_state_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_connection_state_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_discovery_expired_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_discovery_expired_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_discovery_expired_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_discovery_observed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_discovery_observed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_discovery_observed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_endpoint_changed_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_endpoint_changed_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_endpoint_changed_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_identity_mismatch_detected_custody": {
         "redb_file": "canonical",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_identity_mismatch_detected_history": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "w3e_server_identity_mismatch_detected_checkpoint": {
         "redb_file": "derived",
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
-        "encoding_note": "new W3E reference-only binding; native unavailable and retention pending",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       },
       "autonomy_ceiling_projection": {
@@ -279399,6 +280635,48 @@
         "storage_group": "coordination_and_storage",
         "encoding_target": "projection_checkpoint",
         "encoding_note": "Matches the declared continuity checkpoint encoding (SP-1600..1603, SP-278).",
+        "max_value_bytes": 16384
+      },
+      "w3e_backup_state_changed_custody_application": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
+        "max_value_bytes": 16384
+      },
+      "w3e_backup_state_changed_history_application": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
+        "max_value_bytes": 16384
+      },
+      "w3e_backup_state_changed_checkpoint_application": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
+        "max_value_bytes": 16384
+      },
+      "w3e_restore_state_changed_custody_application": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
+        "max_value_bytes": 16384
+      },
+      "w3e_restore_state_changed_history_application": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
+        "max_value_bytes": 16384
+      },
+      "w3e_restore_state_changed_checkpoint_application": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "new W3E reference-only binding; native unavailable",
         "max_value_bytes": 16384
       }
     },

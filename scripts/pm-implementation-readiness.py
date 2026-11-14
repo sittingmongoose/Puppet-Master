@@ -801,20 +801,26 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # DG6A also moves concern_record from deferred to materialized: 320 + 144 + 1 = 465 materialized,
 # 23 + 8 - 1 = 30 deferred, 1 alias. Tiers: 61 + 18 = 79 tier-0, 273 + 134 = 407 later, 10 migration-only.
 # All 41 retention policies are unchanged. No event admission follows from this census re-pin.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 496
+# Re-pinned once for the batch-3 merged registry (plans/ea-batch3-int-20261114; storage-plan.md:533):
+# batch 2's 496 + 182 added rows (DG-INT 6, W3A 70, W3E 66 including the six *_application editions the
+# integration split from backup/restore under DL-455, W3F 2, W3H 32, W3I 6; W3B, W3C and W3G add none) = 678
+# unique families, every added row materialized later_gui_or_feature_projection: 465 + 182 = 647 materialized,
+# 30 deferred, 1 alias; 79 tier-0, 407 + 182 = 589 later, 10 migration-only. All 41 retention policies are
+# unchanged. No event admission follows from this census re-pin.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 678
 # Re-pinned 2026-11-05 (DL-401, DL-415..DL-421): telemetry plus six independent no-project
 # policies are materialized; existing policies and every family/status/tier count remain unchanged.
 # Re-pinned 2026-11-05 (DL-454, DL-455, DL-457, DL-460, DL-463, DL-464): six further independent
 # application policies are materialized; existing policies and every family/status/tier count remain unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 41
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 465,
+    "materialized": 647,
     "deferred_not_build_blocking": 30,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 79,
-    "later_gui_or_feature_projection": 407,
+    "later_gui_or_feature_projection": 589,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
