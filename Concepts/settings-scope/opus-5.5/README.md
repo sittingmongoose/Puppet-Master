@@ -424,8 +424,27 @@ happen the same on bare PMConcept7; item 4 waits for Jared; item 8 is the Projec
   the check refuses two nicknames that normalize the same, a nickname that is a model's own name and a model you can't
   use. Nothing here reads the retired `media.image.model-aliases`. PMConcept7 draws the old row until stream F's FO-186.
 
-Checks: `feedback.check.mjs --set only=jared1113` (`--set j1113=models,paths,limits` narrows it, `--set j1113max=N`
-walks only the first N rows). `models` presses Change and + Set for… on every model row, `paths` walks every adopted
+- **Found while testing, not on Jared's list: opening a page wrote a value.** Revealing Safety › Rules wrote Rules,
+  in order, Everywhere and said "Saved for everywhere" (also Back Seat Driver's stage bindings and three notification
+  and sound maps). PMConcept7 fills a row the first time it draws its page, and the press that opened the page made
+  the router (`feed.js` `diff`) read the fill as a person's change. Now a move that no press on that row, its editor, a
+  side panel, a list or the Details panel caused, and that came from a press that only opens a page (a chapter, a
+  page's tab, a manager's tab, the index) or from a row that held no value, is the engine's first fill: it becomes the
+  row's starting value and nothing is written.
+- **Per-account rows Plans' inventory ladders.** Sign-in method, Cooldown and Use this service are per-account in the
+  page's view, but Plans' inventory gives them Everywhere, a computer and a project; their panel kept "Not per
+  computer". It now keeps the page's list of each account's value and adds Where it applies with those places.
+- **Base hooks the per-place editors use.** `PM51.setting`, `PM51.rowMeta`, `PM51.settingRows`, `PM51.valueText` and
+  `valueHint`, `PM51.readyModels`, `PM56_PICKERS.providerMark`, `PM12_KIMI.dispatchAction('open-structured-setting')`
+  and the kit's `.pm51-popout` and `o55-pick-*` classes. Which rows are model rows comes from Plans' inventory, never
+  from the kit's `O55_PICK_MODELS`, so stream F's FO-182 (that set built from the inventory) changes nothing here.
+  FO-182's `PM51.modelSelect` draws a picker that saves through the engine's own write for the context in use; a line
+  here holds a draft for another place until Save, so it isn't wired in.
+
+Checks: `feedback.check.mjs --set only=jared1113` (`--set j1113=fills,models,paths,limits` narrows it, `--set j1113max=N`
+walks only the first N rows). `fills` opens every chapter, page tab and manager tab with real presses and finds no
+History entry and no note, then makes one real change on Rules, which routes with its note; `models` presses Change and
++ Set for… on every model row, `paths` walks every adopted
 row's + Set for a computer… / device… / project… with real presses and carries the first three of each kind through a
 Save, `limits` types a value past the limits into every bounded row's per-place editor and writes one through
 `PSX.write` at every place each row offers.
