@@ -358,6 +358,10 @@
   {
    "event_type": "source_control.repository.bound",
    "outcome": "registered"
+  },
+  {
+   "event_type": "source_control.repository.unbound",
+   "outcome": "registered"
   }
  ]
 }
