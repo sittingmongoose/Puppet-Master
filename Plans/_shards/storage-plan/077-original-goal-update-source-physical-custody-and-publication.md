@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L25036-L27786
 
-Source SHA256: `098f89c0d2b22a3a1d9a8c3c782cbba142091cb4e6933e392b18706d14116a1e`
+Source SHA256: `11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586`
 
 ---
 
@@ -2602,7 +2602,7 @@ owner_hints:
 - Plans/storage-plan.md
 ```
 
-**Value delta.** The added members are `lifecycle_status` (`started | blocked | stopped | cancelled | certified`), `projected_goal_run_revision` (canonical nonnegative integer) and `last_supported_event_id`. A blocked row also records its `blocked_reason_code` and `block_receipt_ref`; a stopped row records `stop_reason_code`, `resumable` and `safe_point_ref`. They are copied from the verified original row only; nothing is derived from current native state.
+**Value delta.** The added members are `lifecycle_status` (`started | blocked | stopped | cancelled | certified`), `projected_goal_run_revision` (canonical nonnegative integer) and `last_supported_event_id`. A blocked row also records its `blocked_reason_code` and `block_receipt_ref`; a stopped row records `stop_reason_code`, `resumable` and `safe_point_ref`. They are copied from the verified original row only; nothing is derived from current native state. SP-1112's closed `StorageProjection` root stores them as `lifecycle_metadata`, whose shape is tied to `lifecycle_status` (null for started, cancelled and certified rows); amended 2026-11-14 (PNC-019 lane s3d) after the DG-OWN-A review found the closed root could not hold them (F3).
 
 **Physical families and retention.** The value and checkpoint stay in the derived redb file and are never backed up (DL-270, BRS-027/028); a restore rebuilds them. `RP-PROJECTION-3GEN` governs generations. SP-1112 now fixes the complete 1.0.0 profile, exact physical keys, full StorageProjection/StorageCheckpoint schemas, anchor/frontier and CAS/cutover protocol for EP-1110 fresh births. Installation and per-family selector adoption remain separate; no existing birth or generation is converted.
 

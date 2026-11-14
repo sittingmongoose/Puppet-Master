@@ -27627,7 +27627,7 @@ owner_hints:
 - Plans/storage-plan.md
 ```
 
-**Value delta.** The added members are `lifecycle_status` (`started | blocked | stopped | cancelled | certified`), `projected_goal_run_revision` (canonical nonnegative integer) and `last_supported_event_id`. A blocked row also records its `blocked_reason_code` and `block_receipt_ref`; a stopped row records `stop_reason_code`, `resumable` and `safe_point_ref`. They are copied from the verified original row only; nothing is derived from current native state.
+**Value delta.** The added members are `lifecycle_status` (`started | blocked | stopped | cancelled | certified`), `projected_goal_run_revision` (canonical nonnegative integer) and `last_supported_event_id`. A blocked row also records its `blocked_reason_code` and `block_receipt_ref`; a stopped row records `stop_reason_code`, `resumable` and `safe_point_ref`. They are copied from the verified original row only; nothing is derived from current native state. SP-1112's closed `StorageProjection` root stores them as `lifecycle_metadata`, whose shape is tied to `lifecycle_status` (null for started, cancelled and certified rows); amended 2026-11-14 (PNC-019 lane s3d) after the DG-OWN-A review found the closed root could not hold them (F3).
 
 **Physical families and retention.** The value and checkpoint stay in the derived redb file and are never backed up (DL-270, BRS-027/028); a restore rebuilds them. `RP-PROJECTION-3GEN` governs generations. SP-1112 now fixes the complete 1.0.0 profile, exact physical keys, full StorageProjection/StorageCheckpoint schemas, anchor/frontier and CAS/cutover protocol for EP-1110 fresh births. Installation and per-family selector adoption remain separate; no existing birth or generation is converted.
 
@@ -45749,9 +45749,14 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: Newly authored DL-045 owner contract adopted by SP-428 and GRS-202. SB5 defines owner.goal_run.stop_block.project_prefix.v1
   and sole lower publisher owner.storage.goal_run.stop_block.publish.v1, plus read_historical.v1/read_current.v1
-  under owner.goal_run.stop_block, version 1.0.0. Exact physical row is goal_run_stop_block_projection.v1:K(project_id):K(goal_run_id)
+  under owner.goal_run.stop_block, version 1.0.0, and the Storage source reader owner.storage.goal_run.stop_block.read_sources.v1;
+  methods.json consumer_methods gives all five their typed arguments, return variants, SBP0-SBP10 entry and final
+  predicates and lower calls, with the inherited branch arguments rebound through the consumer realms of resource-map.json
+  (amended 2026-11-14, PNC-019 lane s3d, DG-OWN-A review F9). Exact physical row is goal_run_stop_block_projection.v1:K(project_id):K(goal_run_id)
   in goal_run_stop_block_projection.v1@<generation_id>; exact checkpoint in checkpoints is goal_run_stop_block_checkpoint.v1:K(storage_instance_id):K(project_id):K(goal_id):K(goal_run_id).
-  Closed StorageProjection/StorageCheckpoint roots are in contracts.schema.json. Adopt SP-278 and DL-076 full
+  Closed StorageProjection/StorageCheckpoint roots are in contracts.schema.json; the row's lifecycle_metadata carries
+  SP-428's stopped (stop_reason_code, resumable, safe_point_ref) or blocked (blocked_reason_code, block_receipt_ref)
+  members, copied from the verified original row (DG-OWN-A review F3). Adopt SP-278 and DL-076 full
   nine-field durable tokens including the whole thirteen-field source_selection; no redb_snapshot_id is persisted.
   Actual generic full global prefix, original native birth/profile/cause/first receipt and each complete original
   branch authenticate every row, including off-run no-ops and genuine gap proofs. SB5 fixes anchor/frontier

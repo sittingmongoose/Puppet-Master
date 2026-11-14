@@ -189,10 +189,858 @@
     }
   ],
   "consumer_methods": [
-    "owner.goal_run.stop_block.project_prefix.v1",
-    "owner.storage.goal_run.stop_block.publish.v1",
-    "owner.goal_run.stop_block.read_historical.v1",
-    "owner.goal_run.stop_block.read_current.v1"
+    {
+      "method": "owner.goal_run.stop_block.project_prefix.v1",
+      "owner": "GoalRuntime",
+      "phase": "project_prefix",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerRequest",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "stop_block_sources",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StopBlockSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "own_projection_state",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ProjectionState",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "inherited_generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/0b0bd21b3cb6d12e1663f24ae7b4355169f9599709658bc58e8794f4167c34f7.schema.json#/$defs/GenericSnapshot",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/generic"
+        },
+        {
+          "name": "inherited_actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/0b0bd21b3cb6d12e1663f24ae7b4355169f9599709658bc58e8794f4167c34f7.schema.json#/$defs/ActualGenericSources",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/actual_generic_sources"
+        },
+        {
+          "name": "inherited_original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/OriginalCertifiedSet",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/original_certifications"
+        },
+        {
+          "name": "inherited_legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/LegacyProjectionEvidence",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/legacy_sources"
+        },
+        {
+          "name": "inherited_goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_goal_consumer/b8f46044dc8e40f11ff4993bbc451953eeda7de429e1f02e5d3ba7f1350964c6.schema.json#/$defs/ProjectGoalCauses",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/goal_causes"
+        },
+        {
+          "name": "inherited_filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_filesafe_consumer/d5df9fdeb6f59723bc085a539176b5a1bbee52fbc415d5bbb6d9b6c56f141acb.schema.json#/$defs/RetainedFileSafeEffects",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/filesafe_effects"
+        },
+        {
+          "name": "inherited_whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/ActualConsumerSources",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/whole_original_custody_source"
+        },
+        {
+          "name": "inherited_whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/producer/de78285319ce01e73e1d15b6f095f982d54e85f62d9cde6688fcf287f13c0686.schema.json#/$defs/OriginalStructuredValue",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/whole_current_disclosure_source"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerResult"
+            }
+          ]
+        },
+        {
+          "outcome": "halt_before",
+          "results": [
+            {
+              "name": "halt",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/Halt"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/Unavailable"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "SBP0",
+        "SBP1",
+        "SBP2",
+        "SBP3",
+        "SBP4",
+        "SBP5",
+        "SBP6",
+        "SBP7",
+        "SBP8",
+        "SBP9"
+      ],
+      "final_post_all_helpers_predicates": [
+        "SBP0",
+        "SBP1",
+        "SBP2",
+        "SBP3",
+        "SBP4",
+        "SBP5",
+        "SBP6",
+        "SBP7",
+        "SBP8",
+        "SBP9"
+      ],
+      "own_boundary": "Independently admit the complete genuine source graph and complete candidate at entry; rerun the pure full predicate after every returning helper and immediately before this method's release or effect under the actual held owner fence. No helper, callback, await or log between the final predicate and release. The outer method's success never replaces a lower owner's own checks.",
+      "effects": "none of its own; its only effect is the lower publish call",
+      "lower_calls": [
+        {
+          "method": "owner.storage.goal_run.stop_block.read_sources.v1",
+          "arguments": [
+            "request"
+          ],
+          "returns": [
+            "stop_block_sources",
+            "own_projection_state"
+          ]
+        },
+        {
+          "method": "owner.storage.goal_run.stop_block.publish.v1",
+          "arguments": [
+            "request",
+            "stop_block_sources",
+            "own_projection_state",
+            "candidate",
+            "inherited_generic",
+            "inherited_actual_generic_sources",
+            "inherited_original_certifications",
+            "inherited_legacy_sources",
+            "inherited_goal_causes",
+            "inherited_filesafe_effects",
+            "inherited_whole_original_custody_source",
+            "inherited_whole_current_disclosure_source"
+          ],
+          "returns": [
+            "value"
+          ]
+        }
+      ],
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.storage.goal_run.stop_block.read_sources.v1",
+      "owner": "Storage",
+      "phase": "read_sources",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerRequest",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "stop_block_sources",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StopBlockSources"
+            },
+            {
+              "name": "own_projection_state",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ProjectionState"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/Unavailable"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "SBP0",
+        "SBP1",
+        "SBP2",
+        "SBP4",
+        "SBP9"
+      ],
+      "final_post_all_helpers_predicates": [
+        "SBP0",
+        "SBP1",
+        "SBP2",
+        "SBP4",
+        "SBP9"
+      ],
+      "own_boundary": "Independently admit the complete genuine source graph and complete candidate at entry; rerun the pure full predicate after every returning helper and immediately before this method's release or effect under the actual held owner fence. No helper, callback, await or log between the final predicate and release. The outer method's success never replaces a lower owner's own checks.",
+      "effects": "none",
+      "lower_calls": [],
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.storage.goal_run.stop_block.publish.v1",
+      "owner": "Storage",
+      "phase": "publish",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerRequest",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "stop_block_sources",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StopBlockSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "own_projection_state",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ProjectionState",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "candidate",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ProjectionCandidate",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "inherited_generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/0b0bd21b3cb6d12e1663f24ae7b4355169f9599709658bc58e8794f4167c34f7.schema.json#/$defs/GenericSnapshot",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/generic"
+        },
+        {
+          "name": "inherited_actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/0b0bd21b3cb6d12e1663f24ae7b4355169f9599709658bc58e8794f4167c34f7.schema.json#/$defs/ActualGenericSources",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/actual_generic_sources"
+        },
+        {
+          "name": "inherited_original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/OriginalCertifiedSet",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/original_certifications"
+        },
+        {
+          "name": "inherited_legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/LegacyProjectionEvidence",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/legacy_sources"
+        },
+        {
+          "name": "inherited_goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_goal_consumer/b8f46044dc8e40f11ff4993bbc451953eeda7de429e1f02e5d3ba7f1350964c6.schema.json#/$defs/ProjectGoalCauses",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/goal_causes"
+        },
+        {
+          "name": "inherited_filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_filesafe_consumer/d5df9fdeb6f59723bc085a539176b5a1bbee52fbc415d5bbb6d9b6c56f141acb.schema.json#/$defs/RetainedFileSafeEffects",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/filesafe_effects"
+        },
+        {
+          "name": "inherited_whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/ActualConsumerSources",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/whole_original_custody_source"
+        },
+        {
+          "name": "inherited_whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/producer/de78285319ce01e73e1d15b6f095f982d54e85f62d9cde6688fcf287f13c0686.schema.json#/$defs/OriginalStructuredValue",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/whole_current_disclosure_source"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerResult"
+            }
+          ]
+        },
+        {
+          "outcome": "halt_before",
+          "results": [
+            {
+              "name": "halt",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/Halt"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/Unavailable"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "SBP0",
+        "SBP1",
+        "SBP2",
+        "SBP3",
+        "SBP4",
+        "SBP5",
+        "SBP6",
+        "SBP7",
+        "SBP8",
+        "SBP9"
+      ],
+      "final_post_all_helpers_predicates": [
+        "SBP0",
+        "SBP1",
+        "SBP2",
+        "SBP3",
+        "SBP4",
+        "SBP5",
+        "SBP6",
+        "SBP7",
+        "SBP8",
+        "SBP9"
+      ],
+      "own_boundary": "Independently admit the complete genuine source graph and complete candidate at entry; rerun the pure full predicate after every returning helper and immediately before this method's release or effect under the actual held owner fence. No helper, callback, await or log between the final predicate and release. The outer method's success never replaces a lower owner's own checks.",
+      "effects": "one Storage write transaction: whole projection row plus whole checkpoint root under full-preimage CAS, stage or cutover; nothing else",
+      "lower_calls": [],
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.stop_block.read_historical.v1",
+      "owner": "GoalRuntime",
+      "phase": "read_historical",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerRequest",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "stop_block_sources",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StopBlockSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "own_projection_state",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ProjectionState",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "inherited_generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/0b0bd21b3cb6d12e1663f24ae7b4355169f9599709658bc58e8794f4167c34f7.schema.json#/$defs/GenericSnapshot",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/generic"
+        },
+        {
+          "name": "inherited_actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/0b0bd21b3cb6d12e1663f24ae7b4355169f9599709658bc58e8794f4167c34f7.schema.json#/$defs/ActualGenericSources",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/actual_generic_sources"
+        },
+        {
+          "name": "inherited_original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/OriginalCertifiedSet",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/original_certifications"
+        },
+        {
+          "name": "inherited_legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/LegacyProjectionEvidence",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/legacy_sources"
+        },
+        {
+          "name": "inherited_goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_goal_consumer/b8f46044dc8e40f11ff4993bbc451953eeda7de429e1f02e5d3ba7f1350964c6.schema.json#/$defs/ProjectGoalCauses",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/goal_causes"
+        },
+        {
+          "name": "inherited_filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_filesafe_consumer/d5df9fdeb6f59723bc085a539176b5a1bbee52fbc415d5bbb6d9b6c56f141acb.schema.json#/$defs/RetainedFileSafeEffects",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/filesafe_effects"
+        },
+        {
+          "name": "inherited_whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/ActualConsumerSources",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/whole_original_custody_source"
+        },
+        {
+          "name": "inherited_whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/producer/de78285319ce01e73e1d15b6f095f982d54e85f62d9cde6688fcf287f13c0686.schema.json#/$defs/OriginalStructuredValue",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/whole_current_disclosure_source"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerResult"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/Unavailable"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "SBP0",
+        "SBP1",
+        "SBP2",
+        "SBP3",
+        "SBP4",
+        "SBP5",
+        "SBP6",
+        "SBP7",
+        "SBP9"
+      ],
+      "final_post_all_helpers_predicates": [
+        "SBP0",
+        "SBP1",
+        "SBP2",
+        "SBP3",
+        "SBP4",
+        "SBP5",
+        "SBP6",
+        "SBP7",
+        "SBP9"
+      ],
+      "own_boundary": "Independently admit the complete genuine source graph and complete candidate at entry; rerun the pure full predicate after every returning helper and immediately before this method's release or effect under the actual held owner fence. No helper, callback, await or log between the final predicate and release. The outer method's success never replaces a lower owner's own checks.",
+      "effects": "none",
+      "lower_calls": [
+        {
+          "method": "owner.storage.goal_run.stop_block.read_sources.v1",
+          "arguments": [
+            "request"
+          ],
+          "returns": [
+            "stop_block_sources",
+            "own_projection_state"
+          ]
+        }
+      ],
+      "native": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.stop_block.read_current.v1",
+      "owner": "GoalRuntime",
+      "phase": "read_current",
+      "arguments": [
+        {
+          "name": "request",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerRequest",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "stop_block_sources",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/StopBlockSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "own_projection_state",
+          "realm": "own",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ProjectionState",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority"
+        },
+        {
+          "name": "inherited_generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/0b0bd21b3cb6d12e1663f24ae7b4355169f9599709658bc58e8794f4167c34f7.schema.json#/$defs/GenericSnapshot",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/generic"
+        },
+        {
+          "name": "inherited_actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/0b0bd21b3cb6d12e1663f24ae7b4355169f9599709658bc58e8794f4167c34f7.schema.json#/$defs/ActualGenericSources",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/actual_generic_sources"
+        },
+        {
+          "name": "inherited_original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/OriginalCertifiedSet",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/original_certifications"
+        },
+        {
+          "name": "inherited_legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/LegacyProjectionEvidence",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/legacy_sources"
+        },
+        {
+          "name": "inherited_goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_goal_consumer/b8f46044dc8e40f11ff4993bbc451953eeda7de429e1f02e5d3ba7f1350964c6.schema.json#/$defs/ProjectGoalCauses",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/goal_causes"
+        },
+        {
+          "name": "inherited_filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_filesafe_consumer/d5df9fdeb6f59723bc085a539176b5a1bbee52fbc415d5bbb6d9b6c56f141acb.schema.json#/$defs/RetainedFileSafeEffects",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/filesafe_effects"
+        },
+        {
+          "name": "inherited_whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/consumer/ea47de6ab86bb5e3a7f1e6fae0ad873f3877c4cfa3c6c3ba2e98f4dcc6c4d7b9.schema.json#/$defs/ActualConsumerSources",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/whole_original_custody_source"
+        },
+        {
+          "name": "inherited_whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/producer/de78285319ce01e73e1d15b6f095f982d54e85f62d9cde6688fcf287f13c0686.schema.json#/$defs/OriginalStructuredValue",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.started_cancelled_certified.project_prefix.v1/whole_current_disclosure_source"
+        },
+        {
+          "name": "inherited_coordinator_request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/52459fbfbe1bf0c716b84c0704025009b1918e9957988b00c0e6dadcf6f2e2aa.schema.json#/$defs/Request",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Request",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_request"
+        },
+        {
+          "name": "inherited_coordinator_original_certification_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/6446a67755ae7f5b0c5cd7c158eb68721db044bbea620c23c9d92e0d19291fd9.schema.json#/$defs/OriginalCertificationSource",
+          "original_schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_original_certification_source"
+        },
+        {
+          "name": "inherited_coordinator_current_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/goal/5b6498b7cde7084a28ece3f68d0896ebad1fdee242f6b8ace24d90ee9cfd25a4.schema.json#/$defs/CurrentGoalArgument",
+          "original_schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_current_goal"
+        },
+        {
+          "name": "inherited_coordinator_durable_standard",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/standard/80ee3f944d0de51e321abff6f1b4edd6e1d1e46dd11f8f63c82e65ebe2d301eb.schema.json#/$defs/DurableStandardRead",
+          "original_schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/DurableStandardRead",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_durable_standard"
+        },
+        {
+          "name": "inherited_coordinator_whole_producer_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/producer/4632344c4dedd5e4d0f819d53d8957bd779cddfaf14b131782b27985f454581d.schema.json#/$defs/WholeProducerSource",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/WholeProducerSource",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_whole_producer_source"
+        },
+        {
+          "name": "inherited_coordinator_identity_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/2131ee943828da32b229d0019a81469de50dd4e64261a589d3d55337c91fe15a.schema.json#/$defs/IdentityResult",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_identity_result"
+        },
+        {
+          "name": "inherited_coordinator_whole_native_candidate",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/6446a67755ae7f5b0c5cd7c158eb68721db044bbea620c23c9d92e0d19291fd9.schema.json#/$defs/CertificationCandidateResult",
+          "original_schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/CertificationCandidateResult",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_whole_native_candidate"
+        },
+        {
+          "name": "inherited_coordinator_producer25",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/event/4226b09d4c1293e8ed11308dc66b05fbb86a6d817f4b184055dee0a6f5e8c0f1.schema.json",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_producer25"
+        },
+        {
+          "name": "inherited_coordinator_intent",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/52459fbfbe1bf0c716b84c0704025009b1918e9957988b00c0e6dadcf6f2e2aa.schema.json#/$defs/StorageIntent",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageIntent",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_intent"
+        },
+        {
+          "name": "inherited_coordinator_event_phase",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/52459fbfbe1bf0c716b84c0704025009b1918e9957988b00c0e6dadcf6f2e2aa.schema.json#/$defs/StorageEventPhase",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageEventPhase",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_event_phase"
+        },
+        {
+          "name": "inherited_coordinator_commit",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/52459fbfbe1bf0c716b84c0704025009b1918e9957988b00c0e6dadcf6f2e2aa.schema.json#/$defs/StorageCommit",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageCommit",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_commit"
+        },
+        {
+          "name": "inherited_coordinator_origin",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/52459fbfbe1bf0c716b84c0704025009b1918e9957988b00c0e6dadcf6f2e2aa.schema.json#/$defs/StorageOrigin",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageOrigin",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_origin"
+        },
+        {
+          "name": "inherited_coordinator_control",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/52459fbfbe1bf0c716b84c0704025009b1918e9957988b00c0e6dadcf6f2e2aa.schema.json#/$defs/StorageControl",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_control"
+        },
+        {
+          "name": "inherited_coordinator_published_native",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/native/6446a67755ae7f5b0c5cd7c158eb68721db044bbea620c23c9d92e0d19291fd9.schema.json#/$defs/PublishedWorkflow",
+          "original_schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/PublishedWorkflow",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_published_native"
+        },
+        {
+          "name": "inherited_coordinator_whole_original_event_source",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/event/a2330ab08d19a549070787d77288dd81e16a13214660862a2eb11d9f1f5bf77c.schema.json#/$defs/OriginalEventPrerequisite",
+          "original_schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_whole_original_event_source"
+        },
+        {
+          "name": "inherited_coordinator_all_member_append_evidence",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/a87d3ba7e5cdda862b3e83ad03127f2e73e35b24a1dc6ef550d4642f9c6f09f6.schema.json#/$defs/AppendEvidence",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_all_member_append_evidence"
+        },
+        {
+          "name": "inherited_coordinator_release",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/52459fbfbe1bf0c716b84c0704025009b1918e9957988b00c0e6dadcf6f2e2aa.schema.json#/$defs/StorageRelease",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageRelease",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/coordinator_release"
+        },
+        {
+          "name": "inherited_actual_guard_source",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/52459fbfbe1bf0c716b84c0704025009b1918e9957988b00c0e6dadcf6f2e2aa.schema.json#/$defs/GuardStoreSource",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardStoreSource",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/actual_guard_source"
+        },
+        {
+          "name": "inherited_actual_guard_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/stop_block.v1/coordinator/52459fbfbe1bf0c716b84c0704025009b1918e9957988b00c0e6dadcf6f2e2aa.schema.json#/$defs/GuardReadResult",
+          "original_schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardReadResult",
+          "authority": "Actual independent owner-private acquisition; whole schema transport is not authority",
+          "inherited_from": "Plans/goal_run_certified_consumer_contracts/methods.json#owner.goal_run.certified.read_current.v1/actual_guard_result"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/ConsumerResult"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "own",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json#/$defs/Unavailable"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "SBP0",
+        "SBP1",
+        "SBP2",
+        "SBP3",
+        "SBP4",
+        "SBP5",
+        "SBP6",
+        "SBP7",
+        "SBP8",
+        "SBP9",
+        "SBP10"
+      ],
+      "final_post_all_helpers_predicates": [
+        "SBP0",
+        "SBP1",
+        "SBP2",
+        "SBP3",
+        "SBP4",
+        "SBP5",
+        "SBP6",
+        "SBP7",
+        "SBP8",
+        "SBP9",
+        "SBP10"
+      ],
+      "own_boundary": "Independently admit the complete genuine source graph and complete candidate at entry; rerun the pure full predicate after every returning helper and immediately before this method's release or effect under the actual held owner fence. No helper, callback, await or log between the final predicate and release. The outer method's success never replaces a lower owner's own checks.",
+      "effects": "none",
+      "lower_calls": [
+        {
+          "method": "owner.storage.goal_run.stop_block.read_sources.v1",
+          "arguments": [
+            "request"
+          ],
+          "returns": [
+            "stop_block_sources",
+            "own_projection_state"
+          ]
+        }
+      ],
+      "native": "NOT_RUN"
+    }
   ],
-  "native_source_method": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json"
+  "native_source_method": "https://puppetmaster.local/proposals/stop_block.v1/native/35a9da2026442c967926648c9c5d6386738457789c9626282b261e3c2aa518f6.schema.json",
+  "consumer_binding": {
+    "inherited_branch_source": "Plans/goal_run_certified_consumer_contracts/methods.json (whole bank in inherited-method-banks.json)",
+    "rebinding": "Every inherited argument keeps its original name, realm and predicate set; only its resource prefix is replaced through resource-map.json[that realm], whose seven consumer realms are consumer-resource-bank.json (scripts/pm_goal_own_a_consumer_realms.py). The original certified consumer, its URIs and its v7 generations are unchanged and are never selected for a fresh birth.",
+    "own_predicates": "SBP0..SBP10 in protocol.md SB5; inherited started, positive-D06 cancelled and clean certified rows additionally satisfy the certified consumer predicates P0..P8 over the rebound roots.",
+    "all_arguments_required": true,
+    "unavailable_is_not_lifecycle_state": true
+  }
 }

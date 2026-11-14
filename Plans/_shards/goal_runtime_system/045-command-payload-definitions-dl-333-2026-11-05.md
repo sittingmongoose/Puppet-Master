@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8801-L9790
+Source lines: L8801-L9794
 
-Source SHA256: `aceef93973de0cd94201d09f598de316338cc13b17b073feb8c940061a673446`
+Source SHA256: `7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed`
 
 ---
 
@@ -625,12 +625,16 @@ canonical_text: Newly authored DL-045 owner contract. GRS-200 independently adop
   GRS-201 independently adopts EP-1112/SP-1111 for goal_run.blocked. GRS-202 adopts EP-1110 qualifying fresh
   birth and the concrete SP-1112/SB5 consumer/checkpoint profile. For GRS-085 fresh-birth mapping only, the
   full original started/positive-D06-cancelled/clean-certified branch arguments and all original source predicates
-  are explicitly rebound through resource-map.json to the fresh source edition; historical v7/native generations
+  are explicitly rebound to the fresh source edition through resource-map.json, its seven consumer realms in
+  consumer-resource-bank.json and the typed methods.json consumer methods (amended 2026-11-14, PNC-019 lane s3d,
+  DG-OWN-A review F9); historical v7/native generations
   retain GRS-085 unchanged. Stop and block events preserve Goal objective/revision/four-state lifecycle and
   never grant a resume, Replan, action or certification. Every source transition uses actual D01/native revision,
   exact cause/settlement and first receipt; readers independently resolve original source and current disclosure
-  fences before and after helpers. Application goal_run.stopped remains Jared question 7.a; no application contract
-  or answer is authored. Application goal_run.blocked remains dormant.
+  fences before and after helpers. A row's expected revision follows GRS-202's revision relation over the
+  D01-authenticated native chronology. The distinct application edition of goal_run.stopped that DL-448 approves
+  is prepared and admitted at its own registry checkpoint; this unit authors none of it. Application goal_run.blocked
+  remains dormant.
 gui_related: false
 gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
   visual surface.
