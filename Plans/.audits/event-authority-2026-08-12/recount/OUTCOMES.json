@@ -242,6 +242,10 @@
   {
    "event_type": "forge.webhook.delivery_recovered",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.webhook.received",
+   "outcome": "registered"
   }
  ]
 }

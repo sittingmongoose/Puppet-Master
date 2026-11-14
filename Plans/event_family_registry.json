@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-14.82",
+  "registry_revision": "2026-11-14.83",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -9007,6 +9007,87 @@
           "producer_admission": "requires_owner_adoption",
           "append_owner_ref": "Plans/Forge_Integrations.md#FGI-1231",
           "read_owner_ref": "Plans/Forge_Integrations.md#FGI-1231",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-TELEMETRY-90D",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+    },
+    {
+      "family_id": "event-family-forge-webhook-received",
+      "family_revision": "1.0.0",
+      "event_type": "forge.webhook.received",
+      "scope_policy": "application_or_project",
+      "semantic_owner_doc": "Plans/Forge_Integrations.md#FGI-1232",
+      "payload_owner_doc": "Plans/Contracts_V0.md#CV-1232",
+      "payload_schema_id": "https://puppetmaster.local/Plans/event_payloads/forge/forge_webhook_received.schema.json",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/forge/forge_webhook_received.schema.json",
+        "json_pointer": "#",
+        "schema_id": "https://puppetmaster.local/Plans/event_payloads/forge/forge_webhook_received.schema.json"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [],
+          "thread_id": []
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Forge_Integrations.md#FGI-1232",
+        "Plans/Contracts_V0.md#CV-1232",
+        "Plans/storage-plan.md#SP-1232",
+        "Plans/event_payloads/forge/forge_webhook_received.schema.json#",
+        "reports/event-authority-20261105/W3A-self-grade.json"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-TELEMETRY-90D",
+        "policy_version": "1.0.0"
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "https://puppetmaster.local/Plans/event_payloads/forge/forge_webhook_received.schema.json",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/forge/forge_webhook_received.schema.json",
+            "json_pointer": "#",
+            "schema_id": "https://puppetmaster.local/Plans/event_payloads/forge/forge_webhook_received.schema.json"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Forge_Integrations.md#FGI-1232",
+          "read_owner_ref": "Plans/Forge_Integrations.md#FGI-1232",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-ROUTINE-OBSERVATION-APPLICATION-90D",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "https://puppetmaster.local/Plans/event_payloads/forge/forge_webhook_received.schema.json",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/forge/forge_webhook_received.schema.json",
+            "json_pointer": "#",
+            "schema_id": "https://puppetmaster.local/Plans/event_payloads/forge/forge_webhook_received.schema.json"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Forge_Integrations.md#FGI-1232",
+          "read_owner_ref": "Plans/Forge_Integrations.md#FGI-1232",
           "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
           "retention_policy_ref": {
             "registry_schema_id": "pm.storage_value_registry.v2",
