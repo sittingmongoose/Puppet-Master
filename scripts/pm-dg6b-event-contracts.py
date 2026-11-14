@@ -29,7 +29,7 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 from pm_event_numbers import (  # noqa: E402
     APP_PHYSICAL, EVENT_VALUE, PRODUCER_FIELDS, Refusal, current_integer, loads_current_json, producer_semantic_bytes,
     producer_semantic_digest, storage_uint64, storage_value_bytes)
-from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time  # noqa: E402
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time, datetime_validator  # noqa: E402
 import pm_dg6b_original_custody as custody_store  # noqa: E402
 
 # Personas section 6, protected core built-ins only. First-party team Personas
@@ -1055,7 +1055,22 @@ def event_record_contract(event):
     """The enforced EventRecord validator (CV-1101): the pinned envelope schema with the
     shared date-time predicate, composed with CV-253 and SP-1100 on the Storage fields."""
     envelope = load_plan('Plans/event_record.schema.json')
-    require('event_record', {'errors': error_count(envelope, event, format_checker=FORMAT) + storage_field_errors(event)})
+    # The inventory-authenticated shared boundary now runs in every original
+    # append, retry and retained route. Local exact-integer/uint64 checks remain
+    # composed with it; no extracted schema phase substitutes for this call.
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        shared_errors = sum(1 for _ in enforced_event_record_validator().iter_errors(event))
+    finally:
+        sys.set_int_max_str_digits(previous)
+    require('event_record', {'errors': error_count(envelope, event, format_checker=FORMAT)
+                            + storage_field_errors(event) + shared_errors})
+
+
+@cache
+def enforced_event_record_validator():
+    return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)
 
 
 # SP-1101: each family edition's at-write validator, keyed by its frozen recipe tuple.
@@ -1228,6 +1243,14 @@ def check_append_contract(row, schema):
             expect_failure(call, code, name, label, row=target)
     complete['p2b_negatives'] = sum(target is not None for _, target, _, _ in p2b)
     complete['p2b_positives'] = sum(target is None for _, target, _, _ in p2b)
+    from pm_dg6b_c12_custody import family_cases as c12_custody_cases
+    retained = c12_custody_cases(globals(), row, schema)
+    for label, target, code, call in retained:
+        if target is None:
+            call()
+        else:
+            expect_failure(call, code, name, label, row=target)
+    complete['c12_custody_negatives'] = sum(target is not None for _, target, _, _ in retained)
     return {**complete, 'positive_envelopes': len(row['append_valid']), 'negative_envelopes': len(row['append_invalid']),
             'replay_only_refused': True, 'transport_boundary_bytes': [16383, 16384, 16385],
             'operation_cases': len(row['operation_cases']), 'history_cases': len(row['history_cases']),

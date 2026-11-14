@@ -112,8 +112,17 @@ class DG6BOriginalOwner:
         entry = sealed.get(hashlib.sha256(self.record_bytes).hexdigest())
         if entry is None:
             raise Refusal('original_authority')
-        return OriginalCustody(entry['binding'], entry['recipe'], self.record_bytes, self.result_bytes,
-                               self.receipt_bytes)
+        # The reader supplies a query, never the receipt/result to authenticate.
+        # These bytes belong to the write-side sealed store. A missing or
+        # ambiguous receipt cannot select an edition, even for matching IDs.
+        receipts = entry.get('receipts', ())
+        if len(receipts) != 1:
+            raise Refusal('original_receipt_unavailable')
+        if (self.record_bytes != entry['record_bytes'] or self.result_bytes != entry['result_bytes']
+                or self.receipt_bytes != receipts[0]):
+            raise Refusal('original_authority')
+        return OriginalCustody(entry['binding'], entry['recipe'], entry['record_bytes'], entry['result_bytes'],
+                               receipts[0])
 
 
 def identity_recipe(name, payload, scope_key, server_id):
@@ -177,8 +186,11 @@ def seal_original(name, original, recipe=None):
     """The writer's side (static stand-in): Storage seals an original's EventRecord bytes at its seglog ref with
     its write-time recipe tuple. Only composition and the lane's writer-side builders call this, never a reader."""
     binding = original_binding(name, original)
-    ORIGINAL_CUSTODY.setdefault('seglog:' + original['event_record']['event_id'], {})[binding.source_commitment] = {
-        'binding': binding, 'recipe': recipe if recipe is not None else written_tuple(name)}
+    entry = {'binding': binding, 'recipe': recipe if recipe is not None else written_tuple(name),
+             'record_bytes': record_bytes_of(original['event_record']),
+             'result_bytes': storage_value_bytes(original['payload'], profile=EVENT_VALUE),
+             'receipts': (storage_value_bytes(original['durable_read_token'], profile=EVENT_VALUE),)}
+    ORIGINAL_CUSTODY.setdefault('seglog:' + original['event_record']['event_id'], {})[binding.source_commitment] = entry
     return original
 
 
