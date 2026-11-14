@@ -197,7 +197,7 @@
       if (!d.files.touched) d.files = blankFiles();
       s.settled = [];
       if (way === 'restore') d.like = blankLike();
-      s.ui.open = undefined; s.ui.err = {}; s.ui.mini = {}; s.ui.entered = false;
+      s.ui.open = undefined; s.ui.err = {}; s.ui.mini = {}; s.ui.entered = false; s.ui.finished = {};
     }
     d.way = way;
     enforce(s);
@@ -1096,12 +1096,26 @@
   function enter(s) { if (!s.ui.entered) { s.ui.entered = true; s.ui.open = s.d.way === 'chat' ? 'chat' : firstNotDone(s) || null; } }
   function open(s, id) { s.ui.open = id; s.ui.err[id] = null; s.changed(); }
   function fold(s) { s.ui.open = null; s.changed(); }
-  /* Continue: a problem stays open and names the field; otherwise the next section that isn't done opens */
+  /* Jared 2026-11-13 (#8): "when you choose your option and click done for each section, it should open the next section
+     after you hit done on the previous section. Not just close them all." Most sections start with a good answer
+     already (a fresh project's where, look and versions are all fine), so "the next section that isn't done" was none,
+     and Done closed them all. A section is finished once the person has pressed its Continue or Done with no problem
+     in it (and a problem later makes it unfinished again). The next one is the next unfinished section after it, then
+     any unfinished one before it (a section reopened out of order); when none is left they all close. */
+  const finished = (s, id) => !!(s.ui.finished && s.ui.finished[id]) && !problem(s, id);
+  function nextUnfinished(s, after) {
+    const list = sections(s), i = after ? list.indexOf(after) : -1;
+    const order = list.slice(i + 1).concat(list.slice(0, i + 1));
+    return order.find((id) => id !== after && !finished(s, id)) || null;
+  }
+  /* Continue (Done on the last one): a problem stays open and names the field; otherwise this section is finished and
+     the next unfinished one opens */
   function cont(s, id) {
     const p = problem(s, id);
     if (p && !p.blocked) { s.ui.err[id] = p; s.changed(); return p; }
     s.ui.err[id] = null;
-    s.ui.open = firstNotDone(s, id) || null;
+    if (!p) { s.ui.finished = s.ui.finished || {}; s.ui.finished[id] = true; }
+    s.ui.open = nextUnfinished(s, id) || null;
     s.changed();
     return null;
   }
@@ -1673,7 +1687,7 @@
   }
 
   PJX.np = {
-    SETTINGS, WAYS, VERB, SECTIONS, start, set, enforce, chooseWay, wayLoss, startOver, sections, problem, summary, state, enter, open, fold, cont, allDone, firstProblem, firstNotDone,
+    SETTINGS, WAYS, VERB, SECTIONS, start, set, enforce, chooseWay, wayLoss, startOver, sections, problem, summary, state, enter, open, fold, cont, allDone, firstProblem, firstNotDone, finished, nextUnfinished,
     moveStart, moveBlocker, chatPicked, waitingApprovals, convEffects, untilWord, nowWord, clockNow, undoEnded, workAccepted, moveRetry, moveReport, neverMoved, moveTargets, moveMark, moveHist, movePlace, movePicked, moveSame, moveConflicts, moveMoving, moveProblem, moveStatement, moveLabel, movePhases, moveCommit, moveUndoStatement, moveUndo, moved,
     volOfPath, netCheck, netSignIn, bkHost, bkOnNas, likeSel, takenFor, forkNameCheck, visWord, restoredHist, kindWord, needsAccount, dropUi, onSettled: null,
     op, peek, retry, look, lookDone, lookTarget, limits, inspectAt, trusted, devicesFor, lookFor, addKey, resolveShare, smbShareKey, nfsShareKey, smbOk, nfsOk, volOk, dev, share, vol, comp, chatOf, chatFiles, serverOn,

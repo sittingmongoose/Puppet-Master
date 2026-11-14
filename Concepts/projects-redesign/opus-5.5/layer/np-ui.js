@@ -1254,7 +1254,8 @@
     NPx.enter(s);
     s.ui.esc = {};
     const list = NPx.sections(s), n = list.length;
-    const nextOpen = s.ui.open ? NPx.firstNotDone(s, s.ui.open) : null;
+    // the open section's button says Done only when no other section is left unfinished (np.js nextUnfinished)
+    const nextOpen = s.ui.open ? NPx.nextUnfinished(s, s.ui.open) : null;
     const kids = list.map((id, i) => {
       const stt = NPx.state(s, id), p = NPx.problem(s, id), bid = 'pjx-np-b-' + s.id + '-' + id, hid = 'pjx-np-h-' + s.id + '-' + id;
       const open = stt === 'open';
