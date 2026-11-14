@@ -1163,7 +1163,12 @@ def apply(args) -> int:
             git("clean", "-fdq", "--", args.report_dir, RECORD_DIR, AUDIT + "/recount")
             raise SystemExit(f"{fam['event_type']}: {gap}")
         if args.commit:
-            git("add", "--", *sorted(set(touched)))
+            audit = sorted(p for p in set(touched) if p.startswith(AUDIT + "/"))
+            other = sorted(p for p in set(touched) if not p.startswith(AUDIT + "/"))
+            git("add", "--", *other)
+            if audit:
+                # Plans/.audits/* is ignored for new files; these ledger and outcome files are tracked canon.
+                git("add", "-f", "--", *audit)
             msg = commit_message(fam, dl, state["results"][-1])
             git("commit", "-q", "-m", msg + "\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n")
             state["results"][-1]["commit"] = git("rev-parse", "HEAD").strip()
