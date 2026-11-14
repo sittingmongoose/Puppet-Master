@@ -25,7 +25,7 @@ function itemRow(st, it, list, cfg) {
     : statusLead ? h('span.pmr-b-meta', h('span.pmr-b-word', { 'data-state': it.status.state, text: it.status.word }), metaParts.filter(Boolean).length ? h('span.pmr-b-meta-rest', { text: metaParts.filter(Boolean).join(' · ') }) : null, cfg.diffInMeta && it.diff ? diffEl(it.diff) : null)
     : metaWith(cfg.statusEnd ? null : it.status, metaParts);
   if (cfg.diffInMeta && it.diff && !statusLead && metaEl) metaEl.appendChild(diffEl(it.diff));
-  const extra = it.blocked && cfg.blockedLine !== false ? h('span.pmr-b-rowblock', PMR.glyph('blocked'), h('span', { text: it.blocked.reason })) : null;
+  const extra = it.blocked && cfg.blockedLine !== false ? h('span.pmr-b-rowblock', PMR.glyph('blocked'), h('span', { class: 'pmr-part-text', text: it.blocked.reason })) : null;
   const end = [it.diff && !cfg.diffInMeta && !fileish ? diffEl(it.diff) : null, cfg.statusEnd && it.status ? PMR.statusEl(it.status) : null, cfg.end ? cfg.end(it) : null];
   const prim = fileish ? asList(it.actions).find(a => a.primary && !a.disabled) : null;
   return row({
@@ -99,7 +99,7 @@ function areaDesc(st, v, views, cfg) {
   return {
     key: st.panel.id + ':area:' + v.id, kind: 'area', title: v.label, siblingNoun: 'area of ' + st.panel.title,
     siblings: () => views().map(x => ({ key: st.panel.id + ':area:' + x.id, title: x.label, count: x.conditional && !x.conditional.shown ? 'hidden' : (x.count != null ? x.count : ''), icon: x.icon, open: () => make(x) })),
-    sub: () => (v.attention ? h('div.pmr-b-subline.is-att', { 'data-state': v.attention.state }, PMR.glyph(v.attention.state), h('span', { text: v.attention.text })) : h('div.pmr-b-subline', h('span.pmr-b-meta-rest', { text: v.summary }))),
+    sub: () => (v.attention ? h('div.pmr-b-subline.is-att', { 'data-state': v.attention.state }, PMR.glyph(v.attention.state), h('span', { class: 'pmr-part-text', text: v.attention.text })) : h('div.pmr-b-subline', h('span.pmr-b-meta-rest', { text: v.summary }))),
     actions: () => {
       const out = [];
       if (v.filters) out.push(filterBtn(st, v));
@@ -109,7 +109,7 @@ function areaDesc(st, v, views, cfg) {
     build: (page) => {
       const out = [];
       if (v.conditional && !v.conditional.shown) {
-        out.push(h('div.pmr-b-callout', { 'data-state': 'info' }, PMR.glyph('info'), h('span', { text: v.conditional.why })));
+        out.push(h('div.pmr-b-callout', { 'data-state': 'info' }, PMR.glyph('info'), h('span', { class: 'pmr-part-text', text: v.conditional.why })));
         if (v.empty) out.push(h('p.pmr-b-note', { text: v.empty.text }));
         out.push(actionList([Object.assign({ primary: true }, v.conditional.action)], st.menus));
       }
@@ -117,7 +117,7 @@ function areaDesc(st, v, views, cfg) {
       if (cfg.after) asList(cfg.after(v, page)).forEach(n => out.push(n));
       asList(v.notes).forEach(n => out.push(noteEl(n)));
       if (v.canonNote) out.push(noteEl(v.canonNote, 'is-canon'));
-      page.filterEmpty = h('div.pmr-b-callout', { hidden: true, 'data-state': 'info' }, PMR.glyph('info'), h('span', { text: 'No ' + v.label.toLowerCase() + ' match this filter. The list itself is not empty.' }));
+      page.filterEmpty = h('div.pmr-b-callout', { hidden: true, 'data-state': 'info' }, PMR.glyph('info'), h('span', { class: 'pmr-part-text', text: 'No ' + v.label.toLowerCase() + ' match this filter. The list itself is not empty.' }));
       if (v.filters) out.splice(0, 0, page.filterEmpty);
       return out;
     },

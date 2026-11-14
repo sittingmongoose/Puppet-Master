@@ -188,16 +188,20 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 /* Hosts are button, summary, [role=button] and [data-action]; the glyph is the host's child or grandchild (not
    inside a nested host). The rightmost compound is svg, with no :has(). Self-lit hosts (the bar, the lens
    trigger, jump-bottom, the pending chip, Orbit's nodes, discs and rail) and status, nx-self and brand glyphs are
-   excluded. Only custom properties change, never the svg's own animation. */
-:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > svg:where(.nx-r-control:not(.nx-self)),
-:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg:where(.nx-r-control:not(.nx-self)) {
+   excluded. Only custom properties change, never the svg's own animation.
+   The glyph is named `:where(.nx-r-<role> ...):is(svg)` (specificity 0,0,1 as `svg:where(...)` was): Chrome files a hover
+   change under the last compound's first feature, and `svg:where(.x)` filed it under the tag, so every hover change
+   anywhere restyled every svg below it; written class-first it is filed under the class (measured in Chrome 157: one
+   role class per arm, since a two-class :where() beside :is(svg) falls back to the tag). Lane J, 2026-11-11. */
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > :where(.nx-r-control:not(.nx-self)):is(svg),
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > :where(.nx-r-control:not(.nx-self)):is(svg) {
   /* control: the halo fades in over 180 ms and flickers once; the act plays once, then rests */
   --nx-hiv: visible; --nx-hi-a: var(--nx-h-hover-i);
   --nx-fl: nx-flick 300ms linear;
   --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
-:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > svg:where(.nx-r-concept:not(.nx-self)),
-:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg:where(.nx-r-concept:not(.nx-self)) {
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > :where(.nx-r-concept:not(.nx-self)):is(svg),
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .af-chip-pending, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > :where(.nx-r-concept:not(.nx-self)):is(svg) {
   /* concept: the halo swells and the act plays once; no flicker, no dimming of the tube */
   --nx-hi-a: var(--nx-h-swell-i);
   --nx-1: var(--nx-d1) var(--nx-ease) backwards;
@@ -214,8 +218,10 @@ svg:where(.nx-z0) .nx-p { animation: none; }
    specificity, so it is excluded rather than outranked); any rule that inks a glyph through --nx-ink at a specificity
    above zero (the Fast bolt, a NieR cursor bar) still wins. neon-verify 17 holds both. (No .af-chip-pending here: no
    source draws that class any more, and orphan-gate counts it.) */
-:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > svg:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])),
-:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > :where(:not(button, summary, [role="button"], [data-action], .work-output-icon, .event-icon)) > svg:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])) {
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > :where(.nx-r-control):where(:not(.nx-self, [class*="nx-t-"])):is(svg),
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > :where(.nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])):is(svg),
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > :where(:not(button, summary, [role="button"], [data-action], .work-output-icon, .event-icon)) > :where(.nx-r-control):where(:not(.nx-self, [class*="nx-t-"])):is(svg),
+:where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item, .active, .is-on, .is-pinned, [aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], [class*="danger"], [class*="warn"], .primary-button, .primary, .orbit-core, [data-tone])) > :where(:not(button, summary, [role="button"], [data-action], .work-output-icon, .event-icon)) > :where(.nx-r-concept):where(:not(.nx-self, [class*="nx-t-"])):is(svg) {
   --nx-ink: var(--text);
 }
 /* Filled chips (primary buttons) already carry their own fill: the act plays, the halo stays off. (Send/Stop is

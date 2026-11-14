@@ -324,7 +324,7 @@
       '<form class="pmt-cz-psave" data-psave hidden><input type="text" class="pmt-cz-pname-in" data-pname maxlength="40" autocomplete="off" spellcheck="false" aria-label="Preset name" placeholder="Name this look"' + NOTAG + '>' +
       '<button type="submit" class="pmt-textbtn pmt-cz-psave-go"' + NOTAG + '>Save</button><button type="button" class="pmt-textbtn" data-act="preset-cancel"' + NOTAG + '>Cancel</button></form>' +
       '<div class="pmt-cz-sets" role="group" aria-label="Built-in presets">' + SETS.map(function (s) {
-        return '<button type="button" class="pmt-cz-set" aria-pressed="false" data-set="' + s.id + '" data-pmh="tile"' + NOTAG + '><span>' + esc(s.label) + '</span><small>' + esc(s.help) + '</small></button>';
+        return '<button type="button" class="pmt-cz-set" aria-pressed="false" data-set="' + s.id + '" data-pmh="tile"' + NOTAG + '><span>' + esc(s.label) + '</span><small class="pmt-cz-small">' + esc(s.help) + '</small></button>';
       }).join('') + '</div>' +
       '<div class="pmt-cz-mylist" role="group" aria-label="Your presets" data-presets hidden></div>' +
       '<p class="pmt-cz-pnote" data-pnote role="status" hidden></p></div>' +
@@ -759,7 +759,7 @@
         return '<div class="pmt-cz-mycard" data-pid="' + esc(p.id) + '">' +
           (renaming === p.id ? '<div class="pmt-cz-set pmt-cz-myset">' + presetArt(v, p.fields) + label + '</div>' :
           '<button type="button" class="pmt-cz-set pmt-cz-myset" aria-pressed="' + on + '" data-preset="' + esc(p.id) + '" data-pmh="tile"' + tagged('Put on ' + p.name, n ? n + (n === 1 ? ' choice' : ' choices') + '; everything else follows the look' : 'Everything follows the look') + '>' +
-            presetArt(v, p.fields) + label + '<small>' + (n ? n + (n === 1 ? ' choice' : ' choices') : 'The look’s own') + '</small></button>') +
+            presetArt(v, p.fields) + label + '<small class="pmt-cz-small">' + (n ? n + (n === 1 ? ' choice' : ' choices') : 'The look’s own') + '</small></button>') +
           '<span class="pmt-cz-pacts"><button type="button" class="pmt-pop-x pmt-cz-pact" data-act="preset-rename" data-pid="' + esc(p.id) + '" aria-label="Rename ' + esc(p.name) + '"' + NOTAG + '><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13l.6-2.6L10.5 3.5l2 2-6.9 6.9z M9.4 4.6l2 2"/></svg></button>' +
           '<button type="button" class="pmt-pop-x pmt-cz-pact" data-act="preset-delete" data-pid="' + esc(p.id) + '" aria-label="Delete ' + esc(p.name) + '"' + NOTAG + '><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></span></div>';
       }).join('');

@@ -189,7 +189,7 @@ C_SPECS.files = {
     trig.querySelector('.pmr-trigger-label').classList.add('is-mono');
     const state = P.panel.context.state;
     const about = h('button', { type: 'button', class: 'pmr-c-idstate pmr-cur', 'data-pmr-nav': 'select', 'data-pmr-nav-id': 'ident:files:about' },
-      cGlyph(state), h('span', { text: state.word }));
+      cGlyph(state), h('span', { class: 'pmr-part-text', text: state.word }));
     PMR.hover(about, 'About this tree', P.panel.footer.join(' · '));
     about.addEventListener('click', () => cLensShow(P, {
       key: '__about', el: about, kind: 'File tree', icon: 'files', label: 'About this tree',

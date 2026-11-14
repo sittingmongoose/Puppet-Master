@@ -49,12 +49,12 @@ html[data-lg="on"][data-theme="glass-light"] .pmed-cz .pmt-cz-preview { backgrou
 .pmed-cur-look i { width: 8px; background: transparent; outline: 1.5px dashed var(--pmt-cz-accent); outline-offset: -1.5px; }
 /* ---- blinks: played while the tile is pointed at or focused ---- */
 @media (prefers-reduced-motion: no-preference) {
-  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-blink i { animation: pmed-blink 1.06s steps(1, end) infinite; }
-  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-smooth i { animation: pmed-fade 1.06s ease-in-out infinite; }
-  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-expand i { animation: pmed-expand 1.06s ease-in-out infinite; }
-  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-instant i { animation: pmed-hop 1.4s steps(1, end) infinite; }
-  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-snappy i { animation: pmed-glide 1.4s cubic-bezier(.2, .8, .2, 1) infinite; }
-  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-glide i { animation: pmed-glide-slow 1.4s cubic-bezier(.2, .75, .25, 1) infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-blink :where(.pmed-cur-i):is(i) { animation: pmed-blink 1.06s steps(1, end) infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-smooth :where(.pmed-cur-i):is(i) { animation: pmed-fade 1.06s ease-in-out infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-expand :where(.pmed-cur-i):is(i) { animation: pmed-expand 1.06s ease-in-out infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-instant :where(.pmed-move-i):is(i) { animation: pmed-hop 1.4s steps(1, end) infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-snappy :where(.pmed-move-i):is(i) { animation: pmed-glide 1.4s cubic-bezier(.2, .8, .2, 1) infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-glide :where(.pmed-move-i):is(i) { animation: pmed-glide-slow 1.4s cubic-bezier(.2, .75, .25, 1) infinite; }
 }
 @keyframes pmed-blink { 50% { opacity: 0; } }
 @keyframes pmed-fade { 0%, 22% { opacity: 1; } 50%, 72% { opacity: 0; } 100% { opacity: 1; } }
@@ -139,7 +139,7 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
   linear-gradient(var(--o55-nier-warn-text), var(--o55-nier-warn-text)) 8px 26px / 14px 3px no-repeat,
   linear-gradient(rgba(var(--o55-nier-ink-rgb), .5), rgba(var(--o55-nier-ink-rgb), .5)) 8px 34px / 34px 3px no-repeat, var(--o55-nier-paper); }
 @media (prefers-reduced-motion: no-preference) {
-  html[data-o55-nier="on"]:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) :is(.pmed-move-snappy, .pmed-move-glide) i { animation-timing-function: steps(8, end); }
+  html[data-o55-nier="on"]:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) :is(.pmed-move-snappy, .pmed-move-glide) :where(.pmed-move-i):is(i) { animation-timing-function: steps(8, end); }
 }
 
 /* code named in help: the code face, nothing joined */
