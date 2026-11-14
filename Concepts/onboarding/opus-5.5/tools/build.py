@@ -117,6 +117,8 @@ PAGE_STATE_OK = {
     'data-o55-nier-mode': 'NieR Mode switches light/dark: the whole page is restyled anyway',
     'data-o55-nier-parts': 'a NieR part is installed or removed: the NieR repaint restyles the whole page anyway',
     'data-focus': 'the focus ring style is changed in Settings: a look change',
+    'data-o55-vt': 'a look\'s View Transition starts or ends: the browser restyles the whole page anyway (FO-188: a bare '
+                   'transition restyled 4,809 elements at its start and 4,806 at its end)',
 }
 # Runtime switches that already have such a rule, named exactly (file, selector) so that no new one gets in. Each is a
 # NOTE in every build until its owner gives it a class tail; the rule is then simply gone from here. Measured
