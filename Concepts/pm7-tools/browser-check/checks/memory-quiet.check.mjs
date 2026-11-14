@@ -452,8 +452,12 @@ for (const surface of ['normal', 'sandbox']) {
 			document.addEventListener('pointermove', () => {
 				if (!document.body.classList.contains('pm-resizing')) return;
 				window.__fo199.moves++;
-				requestAnimationFrame(() => read('move'));
 			}, true);
+			// sample what the frame paints: ResizeObserver callbacks run after layout and before paint, in the
+			// observers' creation order. The sheet's own observer (openSheet made it) re-places the sheet first;
+			// this one, created after it, reads the re-placed geometry. A rAF read would run before that step and
+			// catch a one-step lag that never paints.
+			new ResizeObserver(() => { if (document.body.classList.contains('pm-resizing')) read('move'); }).observe(document.getElementById('chatPanel'));
 		});
 		const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
 		// the sheet's scrim covers the resizer's right half (the chat's left edge); only its left edge is exposed,
