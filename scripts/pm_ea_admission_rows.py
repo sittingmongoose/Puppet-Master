@@ -171,6 +171,24 @@ def find_by_event(rows: list, event_type: str, key: str = "event_type") -> tuple
     return hits[0]
 
 
+def owner_contract(doc: str, event_type: str) -> tuple[str, int, str]:
+    """(unit, canonical_text line, text) of the one PlanUnit in doc that is the owner contract 'for exactly <type>@'."""
+    lines = (REPO / doc).read_text(encoding="utf-8").split("\n")
+    hits = []
+    for i, line in enumerate(lines):
+        match = re.fullmatch(r"plan_unit_id: ([A-Z][A-Z0-9]*-[0-9]+)", line)
+        if not match:
+            continue
+        end = next((k for k in range(i + 1, len(lines)) if lines[k] == "```"), len(lines))
+        body = "\n".join(lines[i:end])
+        if re.search(r"for exactly " + re.escape(event_type) + r"@[0-9]", body):
+            start = next((k for k in range(i, end) if lines[k].startswith("canonical_text:")), i)
+            hits.append((match.group(1), start + 1, body))
+    if len(hits) != 1:
+        raise Gap(f"owner contracts for exactly {event_type} in {doc}: {len(hits)}")
+    return hits[0]
+
+
 def lane_contract(lane: str, event_type: str) -> dict:
     """Normalized lane facts: scope, payload editions, owner refs and retention as each lane states them.
 
@@ -223,6 +241,14 @@ def lane_contract(lane: str, event_type: str) -> dict:
         if suffix == event_type or suffix not in load(rel).get("$defs", {}):
             raise Gap("no debug investigation payload definition for the family")
         out.update(contract_ref=f"{rel}#/$defs/{suffix}", editions={"project": f"{rel}#/$defs/{suffix}"})
+        # The family's own owner contract states its edition (CV-574, CV-578): "the preserved Project
+        # edition", with the application edition kept apart by CV-365/366 and SP-349 and not admitted here.
+        unit, line, text = owner_contract("Plans/Contracts_V0.md", event_type)
+        flat = " ".join(text.split())
+        if "preserved Project edition" in flat and re.search(
+                r"application edition(?: without admission here)?\.|separately unadmitted application edition", flat):
+            out["scope_policy"] = "project_only"
+            out["scope_source"] = f"Plans/Contracts_V0.md:{line} ({unit}: the preserved Project edition; the application edition is not admitted here)"
         return out
     if lane == "W3A":
         rel = "reports/event-authority-20261105/W3A-contracts.json"
@@ -430,7 +456,7 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
     graded_scope = scope_from_grade(grade)
     schema_scope = scope_from_schema(next(iter(editions.values()))["schema"])
     if scope_policy is not None:
-        provenance["scope_policy"] = contract["contract_ref"]
+        provenance["scope_policy"] = contract.get("scope_source") or contract["contract_ref"]
     elif graded_scope is not None:
         scope_policy = graded_scope
         provenance["scope_policy"] = SELF_GRADES[family["lane"]] + " scope_identity evidence"
