@@ -1136,9 +1136,11 @@ def apply(args) -> int:
     if args.only:
         wanted = set(args.only.split(","))
         ready = [f for f in ready if f["event_type"] in wanted]
-    if args.limit:
-        ready = ready[: args.limit]
     ids = dl_numbers(args.dl_ids)
+    if args.limit:
+        live_now = {f["event_type"] for f in load(REGISTRY)["families"]}
+        done = sum(f["event_type"] in live_now for f in ready)
+        ready = ready[: done + args.limit]
     if len(ids) < len(ready):
         raise SystemExit(f"{len(ready)} admissions need {len(ready)} DL ids; --dl-ids gives {len(ids)}")
     if args.require_three_digit and any(not re.fullmatch(r"DL-\d{3}", i) for i in ids[: len(ready)]):
@@ -1155,7 +1157,15 @@ def apply(args) -> int:
         "frozen": load_module("pm_ea_frozen_check_for_writer", FROZEN),
         "results": [],
     }
+    live = {f["event_type"] for f in load(REGISTRY)["families"]}
     for fam, dl in zip(ready, ids):
+        if fam["event_type"] in live:
+            # Resume: a family already written by this writer keeps the id it was given.
+            record_path = REPO / RECORD_DIR / (fam["event_type"] + ".json")
+            record = json.loads(record_path.read_text(encoding="utf-8")) if record_path.is_file() else {}
+            if record.get("decision_ref") != f"Plans/Decision_Log.md#{dl}":
+                raise SystemExit(f"{fam['event_type']} is registered without this run's record for {dl}")
+            continue
         try:
             touched = apply_family(fam, dl, args, state)
         except Gap as gap:
