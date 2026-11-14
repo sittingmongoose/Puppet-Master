@@ -7,8 +7,9 @@ Each case names its boundary and expectation; a negative passes only when its FI
 target row. Also runs: the eager schema-reference closure, the timestamp-field inventory (every
 timestamp field the lane validates, with the shared pm_event_datetime check that covers it), the
 retained-read custody invariants (no receipt created, bytes unchanged, recipe only from the sealed
-receipt), and the shared NUMRULE corpus through the complete append/retry/retained routes at every
-integer slot (scripts/pm_w3d_bsd_numbers.py). Exit 0 only when everything agrees.
+receipt), and the shared scalar-number corpus through five named append/retry/retained routes
+(scripts/pm_w3d_bsd_numbers.py). Parser/API coverage is reported separately; this is not a claim
+over every integer slot. Exit 0 only when everything agrees.
 """
 import argparse
 import json
@@ -84,7 +85,11 @@ def main(argv=None):
     result['retained_custody'] = retained_custody_invariants()
     if not args.skip_numbers:
         import pm_w3d_bsd_numbers as numbers
-        result['numbers'] = numbers.main()
+        number_path = ROOT / 'reports/event-authority-20261105/W3D-numbers-fix1.json'
+        result['numbers'] = numbers.main(['--json', str(number_path)])
+        number_result = json.loads(number_path.read_text())
+        result['number_coverage'] = {k: number_result[k] for k in
+            ('corpus_api', 'parser_api_only', 'complete_checker_routes', 'extra_large_integer_smoke')}
     if not args.skip_inventory:
         import subprocess
         proc = subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/pm_event_datetime_inventory.py')],

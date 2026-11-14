@@ -1,4 +1,4 @@
-"""W3D guard table retry: Lost-ack retry and original custody.
+"""W3D guard table retry__c0: Lost-ack retry and original custody [chunk 0].
 
 Method B guard rows (scripts/pm_guard_isolation.py) for the W3D BSD checker. Each predicate
 reads one observation the checker derives from the complete boundary input. Predicates never

@@ -105,6 +105,9 @@ def main():
     done = 0
 
     def spawn(phase):
+        # Every child is a heavy command; enforce the lane's admission floor per launch.
+        while int(subprocess.check_output(['free', '-g'], text=True).splitlines()[1].split()[-1]) < 12:
+            time.sleep(10)
         log = open(logs / f'{phase}.log', 'w')
         cmd = SCOPE + [sys.executable, '-B', str(ROOT / 'scripts' / 'pm_w3d_bsd_guard_suites.py'),
                        '--phase', phase, '--out-dir', str(out), '--collect-cache', args.cache]

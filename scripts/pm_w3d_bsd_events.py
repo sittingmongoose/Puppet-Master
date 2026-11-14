@@ -534,6 +534,8 @@ def build(fam, muts=None, variant=None, empty=False, external=False):
     authentic_inputs = identity_inputs(cap, W)
     W['finding_key'] = finding_key_normalized(authentic_inputs)
     W['identity_inputs'] = hook(m, 'identity_inputs', authentic_inputs, W)
+    if IDENTITY_INPUTS_VALIDATOR.is_valid(W['identity_inputs']):
+        W['finding_key'] = finding_key_normalized(W['identity_inputs'])
     payload = hook(m, 'payload', make_payload(fam, cap, W), W)
     W['payload_view'] = payload
     meta = hook(m, 'meta', {'sequence_id': 7, 'observed_at_utc': '2026-11-01T08:00:01.250Z',
@@ -564,6 +566,7 @@ def build(fam, muts=None, variant=None, empty=False, external=False):
                                              W['operation_id'], logical_body(fam, cap, W), W, {})
     W['other_wrapper_ref'] = f'pmref:wrapper.{slug}.0002'
     W['committed_wrappers'][W['other_wrapper_ref']] = other_wrapper
+    W['committed_wrappers'] = hook(m, 'committed_wrappers', W['committed_wrappers'], W)
     W['operation_committed'] = hook(m, 'operation_committed', True, W)
     build_review_chain(fam, cap, W, m)
     operation = {'schema_id': f'pm.bsd.event_operation.{slug}.v1', 'schema_version': '1.0.0',
@@ -613,7 +616,7 @@ def build_review_chain(fam, cap, W, m):
     W['terminal_body'] = terminal
     term_wrapper, term_pack = wrapper_for(fam, 'review_cycle', 'cycle-0001', W['operation_id'], terminal, W, m)
     term_wrapper['review_start_ref'] = W['start_wrapper_ref']
-    W['terminal_wrapper'] = term_wrapper
+    W['terminal_wrapper'] = hook(m, 'terminal_wrapper', term_wrapper, W)
     W['terminal_pack'] = hook(m, 'terminal_pack', term_pack, W)
     W['terminal_wrapper_ref'] = 'pmref:wrapper.review_cycle.0001'
     if fam['source_kind'] == 'review_cycle':
@@ -682,6 +685,11 @@ def build_retry(fam, env, digest, W, m):
                    {'digest': digest, 'receipt': W['receipt_ref']}},
         'result': {'receipt': copy.deepcopy(W['custody']['first_append_receipt']), 'remote_operations': 0},
         'original_custody_available': True}, W)
+    if 'retry_original_digest' in m:
+        # An independently sealed original with the same semantic number spelling.
+        # Useful for isolating exact integer validation from idempotency comparison.
+        key = (partition_for(PROJECT), fam['event_type'], env['idempotency_key'])
+        W['retry']['dedupe'][key]['digest'] = digest_or_none(W['retry']['env'])
 
 
 def build_publication(fam, env, W, m, empty):
@@ -754,21 +762,21 @@ def build_read(fam, env, W, m):
 def obs_admission(W):
     a, env, native = W['admission'], W['env'], W['native']
     fam = W['fam']
-    out = {'AD01_registration': a['cutoff'] is False and (
+    out = {'AD01_cutoff': a['cutoff'] is False,
+           'AD01_registration': (
                fam['event_type'], fam['payload_schema_id'], '1.0.0') in a['registry'],
            'AD02_physical_admission': a['physical'] is True,
            'AD03_replay_writer': env.get('replay_policy') != 'projector_replay_only',
-           'AD04_project_scope': native['scope']['scope_kind'] == 'project' and same(
-               native['scope']['project_id'], PROJECT),
+           'AD04_scope_kind': native['scope']['scope_kind'] == 'project',
+           'AD04_project_scope': same(native['scope']['project_id'], PROJECT),
            'AD05_actor': same(W['capture'].get('actor_ref'), native['actor_ref']),
            'AD06_dedupe_available': a['dedupe_available'] is True,
            'AD07_current_write_permission': a['permission'] is True,
            'AD08_current_owner': same(a['live_owner'], native['owner']),
-           'AD09_current_writer_generation': a['live_writer_generation'] == native['writer_generation'] and type(
-               a['live_writer_generation']) is int,
+           'AD09_current_writer_generation': same(a['live_writer_generation'], native['writer_generation']),
            'AD10_current_stop': a['stop'] == 'allow'}
     if fam['assignment_backed']:
-        out['AD11_current_epoch'] = a['live_epoch'] == native['epoch'] and type(a['live_epoch']) is int
+        out['AD11_current_epoch'] = same(a['live_epoch'], native['epoch'])
     return out
 
 
@@ -794,7 +802,6 @@ def obs_envelope(W):
     string_parts = {k: v for k, v in env.items() if type(v) is str} if type(env) is dict else {}
     meta_size = encoded_len(string_parts, EVENT_VALUE)
     migration = env.get('migration')
-    migration_null = type(migration) is dict and all(v is None for v in migration.values())
     pseq = env.get('producer_sequence_id')
     return {
         'EN01_envelope_schema': type(env) is dict and ENVELOPE_VALIDATOR.is_valid(env),
@@ -809,7 +816,9 @@ def obs_envelope(W):
         'EN10_redaction_join': same(env.get('redaction_profile'), native['redaction_profile']),
         'EN11_inline_size': inline_ok,
         'EN12_payload_route': (payload is None) != (env.get('payload_ref') is None),
-        'EN13_migration_null': migration_null,
+        'EN13_migration_null': type(migration) is dict and migration.get('migration_id') is None,
+        **{f'EN13_migration_{k}': type(migration) is dict and migration.get(k) is None
+           for k in rows_spec.MIGRATION_FIELDS},
         'EN14_sequence_join': same(env.get('sequence_id'), meta['sequence_id']),
         'EN15_observed_join': same(env.get('observed_at_utc'), meta['observed_at_utc']),
         'EN16_persisted_join': same(env.get('persisted_at_utc'), meta['persisted_at_utc']),
@@ -953,10 +962,10 @@ def obs_source(W):
         'SR02_wrapper_subject': same(wrapper.get('subject_id'), payload.get(fam['subject_field'])),
         'SR04_wrapper_operation': same(wrapper.get('owner_operation_id'), W['operation_id']),
         'SR05_wrapper_original': wrapper.get('original_source_ref') in W['originals'],
-        'SR06_source_commitment': same(payload.get('source_state_ref'), W['wrapper_ref']) and payload.get(
-            'source_state_ref') in W['committed_wrappers'],
-        'SR07_operation_source': same(W['operation'].get('owner_operation_id'), W['operation_id']) and W[
-            'operation_committed'] is True,
+        'SR06_source_commitment': same(payload.get('source_state_ref'), W['wrapper_ref']),
+        'SR06_committed_wrapper': payload.get('source_state_ref') in W['committed_wrappers'],
+        'SR07_operation_source': W['operation_committed'] is True,
+        'SR07_operation_identity': same(W['operation'].get('owner_operation_id'), W['operation_id']),
     }
     for i, (name, _inv, fn, _target, _neg, _variant) in enumerate(fam['semantic'], 8):
         out[f'SR{i:02d}_sem_{name}'] = fn(native['facts'], payload) is True
@@ -965,20 +974,25 @@ def obs_source(W):
         inputs = W['identity_inputs']
         body = W['logical_pack']['body']
         ok_inputs = IDENTITY_INPUTS_VALIDATOR.is_valid(inputs)
-        agree = (inputs.get('finding_family') == 'Advisor.Concern!v1'
-                 and sorted(inputs.get('affected_object_refs', [])) == sorted(body.get('affected_object_refs', []))
-                 and sorted(inputs.get('rule_or_constraint_refs', [])) == sorted(body.get('rule_or_constraint_refs', []))
-                 and inputs.get('evidence_fingerprint') == W['evidence_fingerprint']
-                 and inputs.get('original_source_ref') == 'pmref:finding.decision.0001')
-        recomputed = finding_key_normalized(inputs) if ok_inputs else None
-        out[f'SR{nxt:02d}_finding_identity_operands'] = bool(
-            ok_inputs and agree and recomputed is not None and same(payload.get('finding_key'), recomputed))
+        # Schema readiness gates the comparisons; each independent equality has its own row.
+        prefix = f'SR{nxt:02d}_finding_identity_operands'
+        out[prefix] = ok_inputs
+        refs = {
+            'family': (inputs.get('finding_family'), 'Advisor.Concern!v1'),
+            'affected': (sorted(inputs.get('affected_object_refs', [])), sorted(body.get('affected_object_refs', []))),
+            'rules': (sorted(inputs.get('rule_or_constraint_refs', [])), sorted(body.get('rule_or_constraint_refs', []))),
+            'evidence': (inputs.get('evidence_fingerprint'), W['evidence_fingerprint']),
+            'original': (inputs.get('original_source_ref'), 'pmref:finding.decision.0001'),
+        } if ok_inputs else {}
+        for suffix in rows_spec.FINDING_OPERANDS:
+            out[prefix + '_' + suffix] = not ok_inputs or same(*refs[suffix])
+        out[prefix + '_key'] = not ok_inputs or same(payload.get('finding_key'), finding_key_normalized(inputs))
         nxt += 1
     if W['review_chain']:
         start, terminal = W['start_body'], W['terminal_body']
-        out[f'SR{nxt:02d}_terminal_start_custody'] = (
-            W['start_custody_available'] is True
-            and same(W['terminal_wrapper'].get('review_start_ref'), W['start_wrapper_ref']))
+        out[f'SR{nxt:02d}_terminal_start_custody'] = W['start_custody_available'] is True
+        out[f'SR{nxt:02d}_terminal_start_custody_ref'] = same(
+            W['terminal_wrapper'].get('review_start_ref'), W['start_wrapper_ref'])
         nxt += 1
         for field in rows_spec.TERMINAL_START_FIELDS:
             out[f'SR{nxt:02d}_terminal_start_{field}_join'] = same(terminal.get(field), start.get(field))
@@ -1078,15 +1092,15 @@ def obs_pack(W):
     lparts = _pack_parts(lp.get('ref'))
     lraw = lp['store'].get(lparts[3]) if lparts else None
     wrapper = W['wrapper']
-    body_ok = clock_okay = True
+    body_ok = clock_okay = updated_okay = True
     if lraw is not None:
         try:
             body = decode_storage_value(lraw, profile=EVENT_VALUE)
             kind = W['fam']['source_kind']
             validator = START_BODY_VALIDATOR if kind == 'review_start' else LOGICAL_VALIDATORS[kind]
             body_ok = validator.is_valid(body)
-            clocks = [v for k, v in body.items() if k in ('created_at', 'updated_at')]
-            clock_okay = all(clock_ok(v, EVENT_RECORD) for v in clocks)
+            clock_okay = 'created_at' not in body or clock_ok(body['created_at'], EVENT_RECORD)
+            updated_okay = 'updated_at' not in body or clock_ok(body['updated_at'], EVENT_RECORD)
         except Refusal:
             body_ok = False
             clock_okay = False
@@ -1101,6 +1115,7 @@ def obs_pack(W):
         'PK08_source_pack_size': lraw is None or wrapper.get('logical_payload_byte_size') == len(lraw),
         'PK09_source_body_schema': body_ok,
         'PK10_source_body_clocks': clock_okay,
+        'PK10_source_updated_clock': updated_okay,
     }
 
 
@@ -1144,10 +1159,13 @@ def obs_receipt(W):
         'RC21_settlement_release': row.get('pending_intent_ref') is None,
         'RC22_pin_released': f'pending:{W["operation_key"]}' not in pins_after,
         'RC23_other_holds_kept': 'hold:protected-backup' in pins_after,
-        'RC24_no_new_receipt': settle['receipts_after'] == settle['receipts_before'] == 1,
-        'RC25_head_cas': same(W['head_expected'], prior) and same(head.get('current_owner_operation_id'), W['operation_id']),
-        'RC26_head_source_join': same(head.get('current_source_ref'), W['wrapper_ref']) and W['wrapper_ref'] in W[
-            'committed_wrappers'] and same(head.get('subject_id'), W['native']['subject_id']),
+        'RC24_no_new_receipt': same(settle['receipts_after'], settle['receipts_before']),
+        'RC24_one_original_receipt': same(settle['receipts_before'], 1),
+        'RC25_head_cas': same(W['head_expected'], prior),
+        'RC25_head_operation': same(head.get('current_owner_operation_id'), W['operation_id']),
+        'RC26_head_source_join': same(head.get('current_source_ref'), W['wrapper_ref']),
+        'RC26_head_committed': W['wrapper_ref'] in W['committed_wrappers'],
+        'RC26_head_subject': same(head.get('subject_id'), W['native']['subject_id']),
     })
     return out
 
@@ -1165,6 +1183,9 @@ def obs_retry(W):
         'RT06_retry_receipt_original': same(R['result']['receipt'], W['custody']['first_append_receipt']),
         'RT07_retry_no_remote': R['result']['remote_operations'] == 0 and type(R['result']['remote_operations']) is int,
         'RT08_original_retry_custody': R['original_custody_available'] is True,
+        'RT09_retry_envelope_schema': ENVELOPE_VALIDATOR.is_valid(env),
+        'RT10_retry_producer_sequence': env.get('producer_sequence_id') is None or ok(
+            current_integer, env.get('producer_sequence_id'), minimum=0),
     }
 
 
@@ -1188,7 +1209,9 @@ def obs_checkpoint(W):
     nxt = base + len(rows_spec.SELECTION_FIELDS)
     uint_slots = [token.get('frontier_revision'), selection.get('selected_segment_generation'),
                   selection.get('manifest_generation'), selection.get('recovery_epoch')]
-    out[f'CP{nxt:02d}_token_uint64'] = all(uint64_ok(v) for v in uint_slots)
+    out[f'CP{nxt:02d}_token_uint64'] = uint64_ok(uint_slots[0])
+    for field, value in zip(rows_spec.CHECKPOINT_INTEGERS, uint_slots[1:]):
+        out[f'CP{nxt:02d}_uint64_' + field] = uint64_ok(value)
     return out
 
 
@@ -1218,16 +1241,16 @@ def obs_scan(W):
     pred_seq = W['pred'].get('last_scanned_sequence')
     no_regress = last_seq is None or pred_seq is None or last_seq >= pred_seq
     cursor_ok = same(cand.get('last_matched_event_id'), W['env']['event_id'] if log else None)
-    cursor_value_ok = (not log) or (not cursor_ok) or (
-        len(matched) == 1 and same(value_hash(matched[0]), value_hash(W['env'])))
     return {
         'SC01_generic_source': W['generic_index_complete'] is True,
         'SC02_coverage_complete': same(request.get('scanned'), [r['sequence_id'] for r in log]),
         'SC03_cursor_event': cursor_ok,
-        'SC04_cursor_sequence': same(cand.get('last_scanned_sequence'), last_seq) and no_regress,
-        'SC05_cursor_value': cursor_value_ok,
-        'SC06_matched_verified': bool(W['receipt_index']) and same(
-            W['custody'].get('event_id'), W['env'].get('event_id')),
+        'SC04_cursor_sequence': same(cand.get('last_scanned_sequence'), last_seq),
+        'SC04_no_regression': no_regress,
+        'SC05_cursor_unique': not log or not cursor_ok or len(matched) == 1,
+        'SC05_cursor_value': not log or not cursor_ok or len(matched) != 1 or same(value_hash(matched[0]), value_hash(W['env'])),
+        'SC06_matched_verified': bool(W['receipt_index']),
+        'SC06_custody_event': same(W['custody'].get('event_id'), W['env'].get('event_id')),
         'SC07_no_second_disclosure': W['env']['event_id'] not in request.get('disclosed', []),
         'SC08_empty_proof': bool(log) or request.get('empty_proof') is True,
     }
@@ -1286,7 +1309,14 @@ def frozen_verify(original, pack_store=None):
                                                           b.owner_operation_id)
                    and record.get('idempotency_key') == key_for(b.project_id, b.owner_operation_id)
                    and payload.get('owner_operation_id') == b.owner_operation_id)
-    return (envelope_ok and payload_ok and clocks_ok and identity_ok
+    # This frozen edition's integer domains are enforced independently of jsonschema,
+    # whose integer checker admits integral floats. No current writer gate is called.
+    numbers_ok = (uint64_ok(record.get('sequence_id'))
+                  and (record.get('producer_sequence_id') is None or ok(
+                      current_integer, record.get('producer_sequence_id'), minimum=0))
+                  and all(ok(current_integer, payload[k], minimum=0)
+                          for k in ('policy_revision', 'epoch', 'primary_generation') if payload.get(k) is not None))
+    return (envelope_ok and payload_ok and clocks_ok and identity_ok and numbers_ok
             and record.get('event_id') == b.event_id and record.get('idempotency_key') == b.idempotency_key
             and record.get('event_type') == b.event_type and digest is not None and digest == b.source_commitment
             and source_row.get('owner_operation_id') == b.owner_operation_id
@@ -1638,6 +1668,8 @@ def shared_negatives(fam):
                       empty=empty, external=external))
 
     # admission
+    add('AD01_cutoff', 'append', {'admission': setp('cutoff', True)}, 'cutoff with registry retained')
+    add('AD04_scope_kind', 'append', {'native': setp('scope', 'scope_kind', 'application')}, 'scope kind differs')
     add('AD01_registration', 'append', {'admission': setp('registry', set())}, 'membership absent')
     add('AD02_physical_admission', 'append', {'admission': setp('physical', False)}, 'SP-318 still pending')
     add('AD03_replay_writer', 'append', {'envelope': setp('replay_policy', 'projector_replay_only')})
@@ -1676,6 +1708,8 @@ def shared_negatives(fam):
     add('EN12_payload_route', 'append', {'envelope': setp('payload_ref', 'pm-payload-ref:v1:blake3:' + '0' * 64 + ':10:application/msgpack')},
         'both inline body and reference present')
     add('EN13_migration_null', 'append', {'envelope': setp('migration', 'migration_id', 'migration-1')})
+    for field in rows_spec.MIGRATION_FIELDS:
+        add('EN13_migration_' + field, 'append', {'envelope': setp('migration', field, 'old-edition')}, field)
     add('EN14_sequence_join', 'append', {'envelope': setp('sequence_id', 8)}, 'caller-supplied sequence')
     add('EN15_observed_join', 'append', {'envelope': setp('observed_at_utc', '2026-11-01T08:00:09Z')})
     add('EN16_persisted_join', 'append', {'envelope': setp('persisted_at_utc', '2026-11-01T08:00:09Z')})
@@ -1714,6 +1748,35 @@ def _pack_raw(pack, raw):
     pack['store'] = {digest: raw}
     pack['ref'] = f'pm-payload-ref:v1:blake3:{digest}:{len(raw)}:{PACK_MEDIA}'
 
+def retained_original_record(R, record):
+    """Seal a historical fixture at write time, before its independently installed frozen verifier runs.
+
+    The supplied record may have one historical defect. Re-derive the receipt and binding copies
+    from it, but retain the independent operation identity and source row from authentic custody.
+    This models authentic custody of invalid bytes, not a caller choosing a recipe while reading.
+    """
+    ref = R['original_ref']
+    stored = R['stored'][ref]
+    record = copy.deepcopy(record)
+    stored['record'] = storage_value_bytes(record, profile=EVENT_VALUE)
+    digest = digest_or_none(record) or '0' * 64
+    for binding in (R['expected'], R['sealed'][0]['binding']):
+        binding.update(event_id=record['event_id'], idempotency_key=record['idempotency_key'], source_commitment=digest)
+    custody = stored['custody'] = copy.deepcopy(stored['custody'])
+    custody.update(event_id=record['event_id'], idempotency_key=record['idempotency_key'], producer_semantic_digest=digest)
+    custody['first_append_receipt']['event_id'] = record['event_id']
+    custody['original_event_value_commitment']['sha256'] = full_value_commitment(record)
+
+
+def frozen_defect(field, value, payload=False):
+    def mutate(R, W):
+        record = copy.deepcopy(W['env'])
+        target = record['payload'] if payload else record
+        target[field] = value
+        retained_original_record(R, record)
+    return mutate
+
+
 def shared_negatives_storage(fam):
     big = big_integer()
     N = []
@@ -1751,6 +1814,8 @@ def shared_negatives_storage(fam):
     add('PK09_source_body_schema', 'append', {'logical_body': setp('extension', 1)}, 'closed logical body extra member')
     if fam['source_kind'] in ('finding', 'review_cycle', 'quarantine', 'workflow_binding'):
         add('PK10_source_body_clocks', 'append', {'logical_body': setp('created_at', '2026-11-01T09:00:00')}, 'logical body clock missing zone')
+    if fam['source_kind'] == 'finding':
+        add('PK10_source_updated_clock', 'append', {'logical_body': setp('updated_at', '2026-11-01T09:00:00')}, 'updated clock missing zone')
     # receipt / settlement
     add('RC01_custody_schema', 'settle', {'custody': setp('extension', 1)})
     for row, field, value in (('RC02_custody_event', 'event_id', 'bsd-event@1:00'),
@@ -1776,6 +1841,12 @@ def shared_negatives_storage(fam):
     add('RC22_pin_released', 'settle', {'settle': lambda s, W: s.__setitem__('pins_after', copy.deepcopy(s['pins_before']))})
     add('RC23_other_holds_kept', 'settle', {'settle': lambda s, W: s.__setitem__('pins_after', {k: [] for k in s['pins_after']})})
     add('RC24_no_new_receipt', 'settle', {'settle': setp('receipts_after', 2)}, 'restart minted a second receipt')
+    add('RC24_one_original_receipt', 'settle', {'settle': lambda r, W: r.update(receipts_before=2, receipts_after=2)},
+        'two original receipts; count preserved')
+    add('RC25_head_operation', 'settle', {'head': setp('current_owner_operation_id', 'bsd-op@1:00:00:00')})
+    add('RC26_head_committed', 'settle', {'committed_wrappers': lambda r, W: (r.pop(W['wrapper_ref']), None)},
+        'correct head source absent from committed store')
+    add('RC26_head_subject', 'settle', {'head': setp('subject_id', 'subject-other')}, 'head subject differs')
     add('RC25_head_cas', 'settle', {'head_expected': lambda h, W: h.__setitem__('current_source_ref', 'pmref:wrapper.stale')})
     add('RC26_head_source_join', 'settle', {'head': setp('current_source_ref', 'pmref:wrapper.other.0001')},
         'coherent wrapper for a different subject')
@@ -1788,6 +1859,9 @@ def shared_negatives_storage(fam):
     add('RT06_retry_receipt_original', 'retry', {'retry': setp('result', 'receipt', 'sequence_id', 9)}, 'a new receipt minted')
     add('RT07_retry_no_remote', 'retry', {'retry': setp('result', 'remote_operations', 1)})
     add('RT08_original_retry_custody', 'retry', {'retry': setp('original_custody_available', False)})
+    add('RT09_retry_envelope_schema', 'retry', {'retry': setp('env', 'extension', 1)}, 'retry envelope extra member')
+    add('RT10_retry_producer_sequence', 'retry', {'retry': setp('env', 'producer_sequence_id', 1.0),
+        'retry_original_digest': None}, 'retry float integer with coherent dedupe digest')
     # checkpoint
     add('CP01_root_schema', 'publish', {'cand': setp('extension', 1)})
     add('CP02_checkpoint_storage', 'publish', {'cand': setp('storage_instance_id', OTHER_STORAGE)})
@@ -1807,6 +1881,10 @@ def shared_negatives_storage(fam):
     nxt = base + len(rows_spec.SELECTION_FIELDS)
     add(f'CP{nxt:02d}_token_uint64', 'publish', {'cand': setp('index_read_token', 'frontier_revision', 8.0),
                                                  'live': setp('frontier_revision', 8.0)}, 'float spelling in candidate and live control')
+    for field in rows_spec.CHECKPOINT_INTEGERS:
+        add('CP26_uint64_' + field, 'publish',
+            {'cand': setp('index_read_token', 'source_selection', field, 3.0),
+             'live': setp('source_selection', field, 3.0)}, 'float spelling in candidate and live')
     # scan
     add('SC01_generic_source', 'publish', {'generic_index': False}, 'incomplete generic index')
     add('SC02_coverage_complete', 'publish', {'request': setp('scanned', [7])}, 'filtered maximum presented as coverage')
@@ -1817,6 +1895,11 @@ def shared_negatives_storage(fam):
     add('SC06_matched_verified', 'publish', {'receipt_index': lambda i, W: {}})
     add('SC07_no_second_disclosure', 'publish', {'request': lambda r, W: r.__setitem__('disclosed', [W['env']['event_id']])})
     add('SC08_empty_proof', 'publish', {'request': setp('empty_proof', False)}, 'empty claim without inventory proof', empty=True)
+    add('SC04_no_regression', 'publish', {'pred': setp('last_scanned_sequence', 9)}, 'cursor regresses behind prior')
+    add('SC05_cursor_unique', 'publish',
+        {'log': lambda log, W: [log[0], log[0], log[1]], 'request': setp('scanned', [7, 7, 8])},
+        'two stored matches for one selected event')
+    add('SC06_custody_event', 'publish', {'custody': setp('event_id', 'bsd-event@1:00')}, 'receipt index present but other event')
     # cas
     add('CS01_expected_revision', 'publish', {'request': setp('expected_revision', 6)})
     add('CS02_revision_step', 'publish', {'cand': setp('index_read_token', 'frontier_revision', 9),
@@ -1834,6 +1917,24 @@ def shared_negatives_storage(fam):
     add('HI05_original_verifies', 'read', {'read': lambda r, W: r['stored'][r['original_ref']].__setitem__(
         'record', storage_value_bytes(dict(W['env'], actor_ref='pmref:actor.other'), profile=EVENT_VALUE))},
         'stored bytes differ from the sealed original')
+    for label, mutate in (
+        ('frozen occurred clock', frozen_defect('occurred_at_utc', '2026-11-01T10:00:00')),
+        ('frozen observed clock', frozen_defect('observed_at_utc', '2026-11-01T08:00:01+00:00')),
+        ('frozen persisted clock', frozen_defect('persisted_at_utc', '2026-11-01T08:00:02+00:00')),
+        ('frozen payload schema', frozen_defect('schema_version', 'invalid', payload=True)),
+        ('frozen payload identifier', frozen_defect('source_state_ref', 'invalid reference', payload=True)),
+        ('frozen event identity', frozen_defect('event_id', 'bsd-event@1:00')),
+        ('frozen key identity', frozen_defect('idempotency_key', 'bsd-key@1:00')),
+        ('frozen operation identity', frozen_defect('owner_operation_id', 'bsd-op@1:00:00:00', payload=True)),
+        ('frozen producer integer', frozen_defect('producer_sequence_id', 1.0)),
+        ('frozen storage integer', frozen_defect('sequence_id', 7.0)),
+        ('frozen payload integer', frozen_defect('policy_revision', 3.0, payload=True)),
+    ):
+        add('HI05_original_verifies', 'read', {'read': mutate}, label)
+    if fam['assignment_backed']:
+        for field, value in (('epoch', 2.0), ('primary_generation', 4.0)):
+            add('HI05_original_verifies', 'read', {'read': frozen_defect(field, value, payload=True)},
+                'frozen payload integer ' + field)
     add('HI06_bytes_preserved', 'read', {'read': setp('reader_kind', 'alters_bytes')}, 'reader alters stored bytes')
     add('HI07_no_receipt_created', 'read', {'read': setp('reader_kind', 'writes_receipt')}, 'reader mints a receipt while reading')
     add('HI09_reader_enabled', 'read', {'read': setp('withdrawn', True)})
@@ -1942,6 +2043,10 @@ def family_negatives(fam):
     else:
         add('source', 'SR06_source_commitment', 'append', {'payload': setp('source_state_ref', f'pmref:wrapper.{slug}.0002')},
             'source-state reference names a different committed wrapper')
+    add('source', 'SR06_committed_wrapper', 'append',
+        {'committed_wrappers': lambda r, W: (r.pop(W['wrapper_ref']), None)}, 'exact source absent from committed store')
+    add('source', 'SR07_operation_identity', 'append',
+        {'operation': setp('owner_operation_id', 'bsd-op@1:00:00:00')}, 'operation identity differs')
     add('source', 'SR07_operation_source', 'append', {'operation_committed': False}, 'operation not owner-committed')
     # semantic witnesses
     for i, (name, _inv, _fn, target, neg, variant) in enumerate(fam['semantic'], 8):
@@ -1956,13 +2061,28 @@ def family_negatives(fam):
     # finding identity operands
     if fam['source_kind'] == 'finding':
         nxt = 8 + len(fam['semantic'])
-        add('source', f'SR{nxt:02d}_finding_identity_operands', 'append',
-            {'identity_inputs': setp('finding_family', 'Substituted.Family!v1')}, 'captured finding_family operand substituted')
+        prefix = f'SR{nxt:02d}_finding_identity_operands'
+        add('source', prefix, 'append', {'identity_inputs': setp('extension', 1)}, 'identity manifest schema')
+        values = {
+            'family': ('finding_family', 'Substituted.Family!v1'),
+            'affected': ('affected_object_refs', ['pmref:affected.other']),
+            'rules': ('rule_or_constraint_refs', ['pmref:rule.other']),
+            'evidence': ('evidence_fingerprint', sha(b'other evidence')),
+            'original': ('original_source_ref', 'pmref:finding.decision.other'),
+        }
+        for suffix, (field, value) in values.items():
+            add('source', prefix + '_' + suffix, 'append', {'identity_inputs': setp(field, value)},
+                'single operand differs; derived key and packs coherent')
+        add('source', prefix + '_key', 'append', {'payload': setp('finding_key', 'bsd-finding@1:' + sha(b'wrong key'))},
+            'key differs from authentic identity manifest')
     # review chain
     if slug in rows_spec.REVIEW_CHAIN:
         nxt = 8 + len(fam['semantic']) + (1 if fam['source_kind'] == 'finding' else 0)
         add('source', f'SR{nxt:02d}_terminal_start_custody', 'append', {'start_custody': False},
             'original start custody unavailable')
+        add('source', f'SR{nxt:02d}_terminal_start_custody_ref', 'append',
+            {'terminal_wrapper': setp('review_start_ref', 'pmref:wrapper.review_start.other')},
+            'terminal names another original start')
         nxt += 1
         for field in rows_spec.TERMINAL_START_FIELDS:
             wrong = 999 if field == 'primary_generation' else ('substituted-' + field)
@@ -2125,6 +2245,8 @@ def main(argv=None):
                 if phase_name == 'joins' and not fam['assignment_backed']:
                     continue
                 for r in rows:
+                    if r[0] == 'PK10_source_updated_clock' and fam['source_kind'] != 'finding':
+                        continue  # only finding has updated_at
                     if r[0] == 'PK10_source_body_clocks' and fam['source_kind'] not in (
                             'finding', 'review_cycle', 'quarantine', 'workflow_binding'):
                         continue  # no source-body timestamp field exists for this kind; derived from the schema

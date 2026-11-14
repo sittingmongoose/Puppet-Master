@@ -1,0 +1,2995 @@
+{
+ "corpus_sha256": "e281c7735d53c1a6c1a7041668e6183f21f5dec57b60d9e18af286305a9ffaaf",
+ "scope": "Seven scalar-number corpus operations only; original API outcomes checked separately. Explicit lane expectations apply lane-owned bounds, not corpus-only bounds. No claim over all integer fields.",
+ "routes": {
+  "producer_append": "append",
+  "sequence_append": "append",
+  "payload_integer": "append",
+  "producer_original": "read",
+  "producer_retry": "retry"
+ },
+ "cases": {
+  "token-0": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "token-1": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "token--1": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.minimum",
+     "payload_policy_revision_minimum_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "token-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "token-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "token-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "token-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "token-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "token-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "token-18446744073709551616": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN05_sequence_uint64",
+     "sequence_out_of_domain"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "token--9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "token--9223372036854775809": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "bad-token-'1.0'": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "bad-token-'1e0'": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "bad-token-'-0'": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "bad-token-'-0.0'": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "bad-token-'+1'": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "bad-token-'01'": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "bad-token-'1\\n'": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "bad-token-' 1'": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "bad-token-'\u0661'": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "bad-token-'1e-7'": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "bad-token-'1e20'": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "slot-1.0": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "slot-1e0": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "slot--0": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "slot--0.0": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "slot-+1": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "slot-01": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "slot-9007199254740993.0": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "slot-9.007199254740993e15": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "slot-ok-0": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "slot-ok-1": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "slot-ok-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "slot-ok-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "int-string": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "int-string-zero": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "int-string-false": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "int-bool": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "int-false": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "int-null": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "int-array": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "int-object": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "int-float": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN06_producer_sequence",
+     "producer_sequence_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN05_sequence_uint64",
+     "sequence_out_of_domain"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT10_retry_producer_sequence",
+     "retry_producer_sequence_invalid"
+    ]
+   }
+  },
+  "int-decimal": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "range--1": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.minimum",
+     "payload_policy_revision_minimum_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "range-11": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "parse-NaN": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse-Infinity": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse--Infinity": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "json-syntax-01": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "json-syntax-+1": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "json-syntax-1 2": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "json-syntax-{\"a\":1,}": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "json-syntax-[1,]": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "duplicate-json": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "surrogate-json": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "current-nested-minuszero": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "current-large-exact": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "token-unbounded": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN05_sequence_uint64",
+     "sequence_out_of_domain"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-sequence_id-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-sequence_id-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-sequence_id-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-sequence_id-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-sequence_id-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-sequence_id-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-segment_generation-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-segment_generation-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-segment_generation-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-segment_generation-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-segment_generation-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-segment_generation-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-selected_segment_generation-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-selected_segment_generation-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-selected_segment_generation-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-selected_segment_generation-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-selected_segment_generation-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-selected_segment_generation-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-manifest_generation-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-manifest_generation-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-manifest_generation-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-manifest_generation-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-manifest_generation-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-manifest_generation-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-recovery_epoch-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-recovery_epoch-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-recovery_epoch-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-recovery_epoch-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-recovery_epoch-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-recovery_epoch-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-frontier_revision-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-frontier_revision-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-frontier_revision-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-frontier_revision-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-frontier_revision-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-frontier_revision-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-retained_event_count-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-retained_event_count-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-retained_event_count-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-retained_event_count-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-retained_event_count-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-retained_event_count-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-byte_offset-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-byte_offset-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-byte_offset-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-byte_offset-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-byte_offset-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-byte_offset-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-frame_end_offset-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-frame_end_offset-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-frame_end_offset-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-frame_end_offset-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-frame_end_offset-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-frame_end_offset-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-byte_size-9007199254740991": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-byte_size-9007199254740992": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "metadata-byte_size-9007199254740993": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-byte_size-1152921504606846976": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-byte_size-9223372036854775808": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "metadata-byte_size-18446744073709551615": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "uint64-overflow--1": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.minimum",
+     "payload_policy_revision_minimum_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "uint64-overflow-18446744073709551616": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN05_sequence_uint64",
+     "sequence_out_of_domain"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "uint64-type-bool": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "uint64-type-string": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "uint64-type-float": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN06_producer_sequence",
+     "producer_sequence_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN05_sequence_uint64",
+     "sequence_out_of_domain"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT10_retry_producer_sequence",
+     "retry_producer_sequence_invalid"
+    ]
+   }
+  },
+  "uint64-type-null": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "current-nested-exact-types": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "current-numeric-kinds-declared": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "current-logical-integer-4400-digits": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "current-slot-2^53+1-maximum-equal": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "current-slot-2^53+1-minimum-equal": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "current-slot-2^53+1-above-maximum": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "current-slot-uint64-max": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "current-slot-uint64-max-plus-1": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN05_sequence_uint64",
+     "sequence_out_of_domain"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "current-slot-logical-negative-2^100-1": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "current-slot-fraction": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "current-slot-fraction-2^53+1": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "current-slot-exponent": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "current-slot-type-string": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "current-slot-type-boolean": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "current-slot-negative-zero": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "integer-minimum-equal": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "integer-maximum-equal": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "uint64-zero": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "token-maximum-equal": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "token-above-maximum": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "slot-above-maximum": {
+   "routes": {
+    "producer_append": null,
+    "sequence_append": null,
+    "payload_integer": null,
+    "producer_original": null,
+    "producer_retry": null
+   }
+  },
+  "slot-below-minimum": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "payload_advice_emitted",
+     "payload.policy_revision.minimum",
+     "payload_policy_revision_minimum_invalid"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "parse-exact-tree": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse-2^53+1": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "sequence_append": null,
+    "payload_integer": [
+     "envelope",
+     "EN07_producer_qualified",
+     "producer_not_qualified"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT05_retry_digest_equal",
+     "idempotency_conflict"
+    ]
+   }
+  },
+  "parse-utf8-bytes": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse-invalid-utf8-bytes": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse-key-lone-surrogate": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse-input-type-number": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "token-input-type": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse-raw-control-character": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "bad-token-'1\u0661'": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse-array-lone-surrogate": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse-array-object-lone-surrogate": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse-nested-array-lone-surrogate": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  },
+  "parse-exponent-1e+2": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "parse-exponent-1E5": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "parse-exponent-1E+5": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "parse-exponent--2.5E-3": {
+   "routes": {
+    "producer_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "sequence_append": [
+     "envelope",
+     "EN01_envelope_schema",
+     "envelope_schema_invalid"
+    ],
+    "payload_integer": [
+     "envelope",
+     "EN11_inline_size",
+     "inline_body_oversize"
+    ],
+    "producer_original": [
+     "history",
+     "HI05_original_verifies",
+     "original_invalid"
+    ],
+    "producer_retry": [
+     "retry",
+     "RT09_retry_envelope_schema",
+     "retry_envelope_invalid"
+    ]
+   }
+  },
+  "parse-utf8-bom-bytes": {
+   "routes": null,
+   "note": "parser/API only: no materialized scalar slot"
+  }
+ }
+}

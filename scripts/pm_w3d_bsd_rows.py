@@ -17,6 +17,9 @@ from pathlib import Path
 import pm_w3d_bsd_spec as spec
 
 ROOT = Path(__file__).resolve().parents[1]
+MIGRATION_FIELDS = ('migrated_from_schema_id', 'migrated_from_schema_version', 'compatibility_event_type')
+CHECKPOINT_INTEGERS = ('selected_segment_generation', 'manifest_generation', 'recovery_epoch')
+FINDING_OPERANDS = ('family', 'affected', 'rules', 'evidence', 'original')
 
 # Nine-field durable token (SP-278) and its source-selection control fields.
 TOKEN_FIELDS = ('storage_instance_id', 'checkpoint_key', 'checkpoint_ref', 'generation_id',
@@ -233,6 +236,9 @@ SHARED.update({
         ('retry_no_remote', 'Retry performs no remote operation.', 'retry_remote_effect'),
         ('original_retry_custody', 'Retry resolves the authentic original record/receipt custody before returning a terminal result.',
          'original_custody_unavailable'),
+        ('retry_envelope_schema', 'The retry candidate is a complete valid EventRecord.', 'retry_envelope_invalid'),
+        ('retry_producer_sequence', 'The retry producer_sequence_id is null or an exact non-negative current integer.',
+         'retry_producer_sequence_invalid'),
     ])),
     'checkpoint': ('SP-278 derived checkpoint value and nine-field durable token', [
         ('CP01_root_schema', 'CP01_root_schema', 'The complete closed checkpoint schema validates with every referenced branch resolved.', 'checkpoint_schema_invalid'),
@@ -338,6 +344,37 @@ SHARED.update({
         ('no_event_created', 'Withdrawal creates no event.', 'withdrawal_event_created'),
     ])),
 })
+
+# Independent compound clauses found in the lane-wide derivation audit.
+_extras = {
+    'AD01_registration': [('AD01_cutoff', 'No writer cutoff is active.', 'writer_cutoff')],
+    'AD04_project_scope': [('AD04_scope_kind', 'The actual source scope kind is Project.', 'scope_kind_mismatch')],
+    'EN13_migration_null': [('EN13_migration_' + k, 'This migration member remains null: ' + k,
+                            'migration_' + k + '_not_null') for k in MIGRATION_FIELDS],
+    'PK10_source_body_clocks': [('PK10_source_updated_clock', 'The source updated_at satisfies EventRecord time.', 'source_updated_clock_invalid')],
+    'CP26_token_uint64': [('CP26_uint64_' + k, 'Exact Storage uint64 source_selection slot: ' + k,
+                          k + '_out_of_domain') for k in CHECKPOINT_INTEGERS],
+    'SC04_cursor_sequence': [('SC04_no_regression', 'The scanned cursor does not regress behind its prior.', 'cursor_regressed')],
+    'SC05_cursor_value': [('SC05_cursor_unique', 'Exactly one stored record matches a non-empty selected cursor.', 'cursor_ambiguous')],
+    'SC06_matched_verified': [('SC06_custody_event', 'The selected custody belongs to the original event.', 'scan_custody_event_mismatch')],
+}
+for _phase in ('admission', 'admission_config', 'envelope', 'pack', 'checkpoint', 'scan'):
+    _title, _rows0 = SHARED[_phase]
+    SHARED[_phase] = (_title, [r for row in _rows0 for r in
+        [row] + [(n, n, inv, code) for n, inv, code in _extras.get(row[0], [])]])
+
+
+# Separate independent receipt clauses, preserving original stable row ids.
+_receipt_extras = {
+    'RC24_no_new_receipt': [('RC24_one_original_receipt', 'Exactly one original receipt existed before settlement.', 'original_receipt_count_invalid')],
+    'RC25_head_cas': [('RC25_head_operation', 'The head operation id equals the authentic operation.', 'head_operation_mismatch')],
+    'RC26_head_source_join': [
+        ('RC26_head_committed', 'The selected head source exists in the committed wrapper store.', 'head_source_not_committed'),
+        ('RC26_head_subject', 'The head subject equals the authentic source subject.', 'head_subject_mismatch')],
+}
+_title, _receipt_rows = SHARED['receipt']
+SHARED['receipt'] = (_title, [r for row in _receipt_rows for r in
+    [row] + [(n, n, inv, code) for n, inv, code in _receipt_extras.get(row[0], [])]])
 
 # Shared phase order of each path through the complete checker.
 PATHS = {
@@ -455,6 +492,10 @@ def source_rows(fam):
         ('SR07_operation_source', 'The selected transition source is the original owner-committed operation, not an arbitrary reference.',
          'operation_source_invalid'),
     ]
+    wrapper.insert(5, ('SR06_committed_wrapper', 'The exact selected source reference is present in the committed wrapper store.',
+                       'source_not_committed'))
+    wrapper.append(('SR07_operation_identity', 'The selected source operation id equals the canonical operation id.',
+                    'source_operation_identity_mismatch'))
     entries = []
     for name, inv, _fn, _target, _neg, _variant in fam['semantic']:
         entries.append((f'sem_{name}', inv, f'semantic_{name}_invalid'))
@@ -486,7 +527,20 @@ def source_rows(fam):
                             f'start_{field}_source_join_mismatch'))
     numbered = [(f'SR{i:02d}_{name}', f'SR{i:02d}_{name}', inv, code)
                 for i, (name, inv, code) in enumerate(entries, 8)]
-    return [(name, name, inv, code) for name, inv, code in wrapper] + numbered
+    expanded = []
+    for row in numbered:
+        expanded.append(row)
+        name = row[0]
+        if name.endswith('_finding_identity_operands'):
+            for suffix in (*FINDING_OPERANDS, 'key'):
+                child = name + '_' + suffix
+                expanded.append((child, child, f'Authenticated finding identity {suffix} equals its independent source.',
+                                 f'finding_identity_{suffix}_mismatch'))
+        if name.endswith('_terminal_start_custody'):
+            child = name + '_ref'
+            expanded.append((child, child, 'The terminal wrapper resolves the exact original immutable start reference.',
+                             'terminal_start_ref_mismatch'))
+    return [(name, name, inv, code) for name, inv, code in wrapper] + expanded
 
 
 def source_logical_schema_entailed():
