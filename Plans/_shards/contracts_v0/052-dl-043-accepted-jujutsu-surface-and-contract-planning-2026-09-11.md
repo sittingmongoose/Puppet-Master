@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23176-L23650
+Source lines: L26886-L27366
 
-Source SHA256: `e91c8b29fb8a1eb9c2c6c5a5e4f3b96f44d02552c3b0358d0decce4b7b5c0900`
+Source SHA256: `7607355445ed385c0f6b89282b6688e97f8b115e7918712a620fc8f56d52bf35`
 
 ---
 
@@ -238,6 +238,8 @@ acceptance_criteria:
 - Historical v2 envelope/payload/identity joins and only supported exact v1 normalization remain required;
   restoration preserves genuine original custody and cannot backdate newly invented events.
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_child_status_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json
 - Plans/event_family_registry.json
@@ -294,6 +296,8 @@ unblocks: []
 reasoning_tier: high
 context_scope: goal_degraded_exact_family_historical_contract
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_degraded_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_degraded.schema.json
 - Plans/goal_runtime_events.schema.json
@@ -392,6 +396,8 @@ unblocks: []
 reasoning_tier: high
 context_scope: goal_scheduled_exact_family_historical_contract
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_scheduled_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_scheduled.schema.json
 - Plans/goal_runtime_events.schema.json

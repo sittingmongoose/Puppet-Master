@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23997-L24701
+Source lines: L27713-L28439
 
-Source SHA256: `e91c8b29fb8a1eb9c2c6c5a5e4f3b96f44d02552c3b0358d0decce4b7b5c0900`
+Source SHA256: `7607355445ed385c0f6b89282b6688e97f8b115e7918712a620fc8f56d52bf35`
 
 ---
 
@@ -93,6 +93,11 @@ owner_hints:
 - Plans/Contracts_V0.md
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated adopts U1-U7/W1 and CV-1130 newly selected approval roots while preserving the complete original update resource realm. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
+Amended 2026-11-04 (DL-045 depth): ProducerMetadata.event_id and idempotency_key take the values SP-421 derives.
+
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/goal_update_schema_resources.json
 
 ### CV-343 - Exact historical goal.progressed writer exclusion
@@ -127,6 +132,9 @@ acceptance_criteria:
   current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
   quarantine or a checkpoint.
 validation_surfaces:
+- Plans/goal_progressed_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_progressed.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -202,6 +210,9 @@ acceptance_criteria:
   current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
   quarantine or a checkpoint.
 validation_surfaces:
+- Plans/goal_replanned_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_replanned.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -277,6 +288,9 @@ acceptance_criteria:
   current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
   quarantine or a checkpoint.
 validation_surfaces:
+- Plans/goal_stopped_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_stopped.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -352,6 +366,9 @@ acceptance_criteria:
   current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
   quarantine or a checkpoint.
 validation_surfaces:
+- Plans/goal_verification_decided_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -451,11 +468,16 @@ negative_constraints:
 - No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
 ```
 
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.cancelled adopts M1-M9/W2 and CV-1131 separate migration roots while preserving complete original cancellation realms. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
 The exact schema owners are `Plans/goal_cancel_command_custody.schema.json` and `Plans/goal_execution_binding_custody.schema.json`. The central `Plans/goal_runtime_contracts.schema.json` adds only `GoalCancelRequestV2` and `GoalCancelResultV2`; all old central definitions and actual Start/Update schemas remain exact. No generic Pause/Resume contract is inferred. The active event is `pm.goal_runtime_event.goal_cancelled.schema.v3`; its whole unchanged `pm.goal_runtime_event.goal_cancelled.schema.v2` is selected only at `#/legacy_v2_reader` for actual historical reads. This existing event changes revision, not family count, aliases, EventRecord envelope, legacy joins or indefinite event retention.
 
 `Plans/goal_cancel_schema_resources.json` selects all nineteen complete local schema documents by actual retrieval URI/path/hash and separately enrolls all three whole embedded historical resources by containing-document hash and exact pointer. Use a standard offline JSON Schema registry with these explicit registrations; no network fetch, basename guessing, lexical fallback or inferred custom-container crawling is allowed. The current cancellation, execution-association, selected body-control, original Start/Update callers, body/history/currentness readers, SIR/append/migration/backup and retained historical readers require the actual corresponding complete graph/role installation. File hashes and role strings are necessary bindings, not native installation or authority evidence.
 
 GRS-064's local arbitrary-precision Goal JSON qualification is preserved in the new local codec. EventRecord producer semantics and CV-333 owner-result hashes retain RFC8785, and the complete event/first receipt retain their original MessagePack formats. SP-305 must prove the actual complete possible assignment domain, not rely on current small values. Unsupported valid Goal values are an unavailable codec route, never a corrupt Goal or a new schema limit. SP-304/SP-305 own complete full-value versus semantic hash preimages and the final cross-object predicates; shape-only agreement cannot admit original source, currentness, side effects, result, replay or disclosure.
+
+Amended 2026-11-04 (DL-045 depth): ProducerMetadata.event_id and idempotency_key take the values SP-422 derives.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
 

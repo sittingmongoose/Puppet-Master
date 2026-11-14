@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L20791-L21649
+Source lines: L20802-L21672
 
-Source SHA256: `8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8`
+Source SHA256: `5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb`
 
 ---
 
@@ -328,6 +328,8 @@ acceptance_criteria:
 - Existing source/index retention, backup, holds, tombstones, authorization and secret-handling rules
   remain intact; the adapter owns no new retention clock or material.
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_child_status_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json
 - Plans/event_family_registry.json
@@ -383,6 +385,8 @@ At the original reader entry, before the first returning decoder, resolver, vali
 
 **Withdrawal.** Unsupported adapter/payload/envelope version disables the family read, preserves original bytes and indexes under their owners, and grants no fallthrough writer, parent projection or alias. Removing reader availability does not change registry membership or retention. Contract/schema/oracle materialization is not native proof, checker success, registry admission, WorkNode/readiness admission or a governance seal.
 
+**Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.child_status_changed` (`Plans/event_family_registry.json#/families/8`, payload `pm.goal_runtime_event.goal_child_status_changed.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-060 with CV-334 refuses current writers, so member 2 resolves for no `goal.child_status_changed` record. This reader's own rule already makes unresolved historical admission custody return `unavailable`. So every `goal.child_status_changed` lookup returns `unavailable` until member 2 is shown, and `original_admission` is never an unresolved obligation of this reader. No lookup of this family returns `verified_historical` under current canon. **Closed answer.** The ephemeral answer has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the request `{project_id, event_id, sequence_id}`. `reader_binding` is the constant `storage.goal_child_status_history_read.v1@1.0.0`. `kind` is `verified_historical | unresolved_historical_validation | unavailable`, with `original_validation` respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and the full SP-278 read token; `unavailable` carries null for both and an empty obligation array. `verified_historical` has an empty obligation array. `unresolved_historical_validation` has a nonempty unique array drawn only from `original_producer_authority`, `original_revision_cas`, `original_child_identity`, `original_child_transition`, `original_completion_receipt`, `original_result_or_receipt`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_row_predicate`, each naming one unproved D-R03 predicate of this row; it is allowed only when the current generic source read and permission authorize the complete raw observation. No answer adds dynamic source text, a partial or redacted original or a lifecycle claim. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.child_status_changed` EventRecord, they call `storage.goal_child_status_history_read.v1@1.0.0` with that record's own `{project_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_child_status_history_answer`; `Plans/goal_child_status_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-060, ContractName:Plans/Contracts_V0.md#CV-334, ContractName:Plans/Runtime_Artifacts_Panel.md, SchemaID:pm.storage_value.event_record_index.v2
 
 ### SP-277 - Historical Goal degradation direct source reader
@@ -398,6 +402,8 @@ unblocks: []
 reasoning_tier: high
 context_scope: goal_degraded_exact_family_historical_contract
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_degraded_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_degraded.schema.json
 - Plans/goal_runtime_events.schema.json
@@ -563,6 +569,8 @@ preserved_exact_tokens:
 - projector_replay_only
 ```
 
+**Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.degraded` (`Plans/event_family_registry.json#/families/11`, payload `pm.goal_runtime_event.goal_degraded.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-061 with CV-335 refuses current writers, so member 2 resolves for no `goal.degraded` record. This reader's own rule already makes unresolved historical admission custody return `unavailable`. So every `goal.degraded` lookup returns `unavailable` until member 2 is shown, and `original_admission` is never an unresolved obligation of this reader. No lookup of this family returns `verified_historical` under current canon. **Closed answer.** The ephemeral answer has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the request `{project_id, goal_id, event_id, sequence_id}`. `reader_binding` is the constant `storage.goal_degraded_history_read.v1@1.0.0`. `kind` is `verified_historical | unresolved_historical_validation | unavailable`, with `original_validation` respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and the full SP-278 read token; `unavailable` carries null for both and an empty obligation array. `verified_historical` has an empty obligation array. `unresolved_historical_validation` has a nonempty unique array drawn only from `original_producer_authority`, `original_revision_cas`, `original_predecessor_state`, `original_tier_predicate`, `original_exception_evidence`, `original_approval_evidence`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_row_predicate`, each naming one unproved D-R06 predicate of this row; it is allowed only when the current generic source read and permission authorize the complete raw observation. No answer adds dynamic source text, a partial or redacted original or a lifecycle claim. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.degraded` EventRecord, they call `storage.goal_degraded_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_degraded_history_answer`; `Plans/goal_degraded_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-061, ContractName:Plans/Contracts_V0.md#CV-335, ContractName:Plans/storage-plan.md#SP-277, ContractName:Plans/Decision_Log.md#DL-039
 
 ### SP-280 - Exact historical Goal scheduling contract
@@ -578,6 +586,8 @@ unblocks: []
 reasoning_tier: high
 context_scope: goal_scheduled_exact_family_historical_contract
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_scheduled_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_scheduled.schema.json
 - Plans/goal_runtime_events.schema.json
@@ -740,6 +750,8 @@ preserved_exact_tokens:
 - none_required
 - storage.goal_scheduled_history_read.v1
 ```
+
+**Original admission proof, operating consumer and oracle fixture (newly authored owner contract under DL-045, 2026-11-04).** For `goal.scheduled` (`Plans/event_family_registry.json#/families/16`, payload `pm.goal_runtime_event.goal_scheduled.schema.v2`), this reader adopts SP-420 by name: original lawful admission of a record is proved only by SP-420's pair for that exact record. SP-420's search found no owner unit that names a writer for this payload version, and GRS-062 with CV-336 refuses current writers, so member 2 resolves for no `goal.scheduled` record. This reader's own rule already makes unresolved historical admission custody return `unavailable`. So every `goal.scheduled` lookup returns `unavailable` until member 2 is shown, and `original_admission` is never an unresolved obligation of this reader. No lookup of this family returns `verified_historical` under current canon. **Closed answer.** The ephemeral answer has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the request `{project_id, goal_id, event_id, sequence_id}`. `reader_binding` is the constant `storage.goal_scheduled_history_read.v1@1.0.0`. `kind` is `verified_historical | unresolved_historical_validation | unavailable`, with `original_validation` respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and the full SP-278 read token; `unavailable` carries null for both and an empty obligation array. `verified_historical` has an empty obligation array. `unresolved_historical_validation` has a nonempty unique array drawn only from `original_producer_authority`, `original_revision_cas`, `original_predecessor_state`, `original_queue_admission`, `original_budget_snapshot`, `original_permission_evidence`, `original_recovery_truth`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_row_predicate`, each naming one unproved D-R11 predicate of this row; it is allowed only when the current generic source read and permission authorize the complete raw observation. No answer adds dynamic source text, a partial or redacted original or a lifecycle claim. **Operating consumer.** The operating consumers are SP-339's `pm inspect` and the record inspector F3-666 opened through `cmd.storage.open_value`. When the record they open is a `goal.scheduled` EventRecord, they call `storage.goal_scheduled_history_read.v1@1.0.0` with that record's own `{project_id, goal_id, event_id, sequence_id}` and take its historical interpretation and validation disposition only from this reader's answer; they add no other family-specific interpretation, and neither turns an answer into a control, Goal state, To-Do or action. `pm tail` and `pm export` list and export the stored record under SP-339 without calling this reader. **Oracles.** The closed answer is `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_scheduled_history_answer`; `Plans/goal_scheduled_history_contract_fixtures.json` holds its positive and negative cases, checked by `python3 scripts/pm_goal_history_reader_fixtures.py`.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-062, ContractName:Plans/Contracts_V0.md#CV-336, ContractName:Plans/storage-plan.md#SP-280, ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-045
 

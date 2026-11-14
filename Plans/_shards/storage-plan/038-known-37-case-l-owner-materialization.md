@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18438-L18523
+Source lines: L18449-L18534
 
-Source SHA256: `8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8`
+Source SHA256: `5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb`
 
 ---
 
@@ -43,7 +43,7 @@ All have `source_policy_ref=null`, `max_bytes=null`; only runtime has additional
 
 ### Goal Runtime persistence and dispatch
 
-The 21 v2 Goal roots at `Plans/event_payloads/goal_runtime/*.schema.json#` are authoritative validation schemas; current emission follows each exact event owner disposition. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. The legacy aggregate `Plans/goal_runtime_events.schema.json` is immutable reader-only input. V1 may enter only a registered legacy normalizer and `projector_replay_only`; it may rebuild disposable projections but may not emit, mutate, schedule, approve, charge, write a receipt, or certify.
+The 21 v2 Goal roots at `Plans/event_payloads/goal_runtime/*.schema.json#` are authoritative validation schemas; current emission follows each exact event owner disposition. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), `goal.scheduled` (GRS-062/CV-336), `goal.progressed` (GRS-069/CV-343), `goal.replanned` (GRS-070/CV-344), `goal.stopped` (GRS-071/CV-345) and `goal.verification_decided` (GRS-072/CV-346) are historical-only and admit no current writes under their individual owner rulings; their readers adopt SP-420 for original admission proof. The legacy aggregate `Plans/goal_runtime_events.schema.json` is immutable reader-only input. V1 may enter only a registered legacy normalizer and `projector_replay_only`; it may rebuild disposable projections but may not emit, mutate, schedule, approve, charge, write a receipt, or certify.
 
 All v2 rows use `replay_policy=dedupe_by_idempotency_key`, reject unhandled secrets, have no redaction transform, and use the matrix semantic identity tuple. Same identity/digest returns the original durable result; same identity/different digest is `idempotency_conflict`; unavailable proof is `dedupe_unavailable`. Stale CAS is `revision_conflict`. Unknown schema/event/enum, illegal transition, unresolved ref, identity join conflict, raw secret, viewer storage, or unknown recovery truth appends nothing and advances no checkpoint. Canonical receipts stay distinct from disposable projections.
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5288-L5417
+Source lines: L5288-L5420
 
-Source SHA256: `02a13c270486be30954aea1afce8358d487024dbe45e9cfc41b19f3966616255`
+Source SHA256: `f8ea41765327d5d0508d27999695154fbd7dbbff24b2317b2fc5cc971f3b737f`
 
 ---
 
@@ -136,5 +136,8 @@ node_compile_hint:
 gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
   no new visual presentation.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.certified adopts W5/ATS-1118 each CF-01..12 and P4-P8 complete original tuple and boundary requirement. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-057, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json

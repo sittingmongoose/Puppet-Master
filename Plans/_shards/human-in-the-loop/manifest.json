@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-04T16:52:04Z",
+  "generated_at_utc": "2026-11-14T03:58:11Z",
   "index_path": "Plans/_shards/human-in-the-loop/00-index.md",
-  "index_sha256": "1bda9cc2f2e1b11a742189910a16afd661134c9dfc87c0e36cbe045398db0894",
+  "index_sha256": "4efe87beb0a1b2878ae3b2fb0c857c28394022a8f06ef85746d79c443679ba2f",
   "manifest_path": "Plans/_shards/human-in-the-loop/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/human-in-the-loop/001-preamble.md",
-      "sha256": "62a37f173af3ba6688caeae5d6641976da698dadf847f9a19e0346a684cec089",
+      "sha256": "a8a8a0ee432bbccee7ead6c87ed1821520ef151eb9bc8d96870c56c164831ba8",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/human-in-the-loop/002-canonical-owner-section-requirements.md",
-      "sha256": "3615f5141bebbdf3d81165d0a94db357515486ec4f3a4b123f7351470ce319ea",
+      "sha256": "c896a0ff5400778c4c25484d0e7266c637a2cf3b9cd86d7f7ed1a83dbbf8061e",
       "shard_id": "002",
       "source_line_end": 17,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Plan Document Status",
       "path": "Plans/_shards/human-in-the-loop/003-plan-document-status.md",
-      "sha256": "bc05c5833073e3efb920ed6aa5696baffa5f7610d30a2ba85b9e43d0ea55b6f3",
+      "sha256": "2c9e0a7246dee53af8179594582123e920945a7bd3d002b965f7c0d992a6f0f8",
       "shard_id": "003",
       "source_line_end": 26,
       "source_line_start": 20,
@@ -35,7 +35,7 @@
     {
       "heading": "Rewrite alignment (2026-02-21)",
       "path": "Plans/_shards/human-in-the-loop/004-rewrite-alignment-2026-02-21.md",
-      "sha256": "76d30f2622ad710b2bd03d493da0dbfc332da57af384ac9ab15da80a98659f17",
+      "sha256": "0f516cf8c401659a3b10fedcb8b3f520aa855bad57af158e34f3c13a402bfd37",
       "shard_id": "004",
       "source_line_end": 125,
       "source_line_start": 28,
@@ -44,7 +44,7 @@
     {
       "heading": "Executive Summary",
       "path": "Plans/_shards/human-in-the-loop/005-executive-summary.md",
-      "sha256": "971308e9c249590dbefa48b25cf58d1974094e6f86db5631e7e501568acc5fa6",
+      "sha256": "ebc445ed1916f2d3c1400e0b1f70320d249c3aa94451621d48d635ed54239cc7",
       "shard_id": "005",
       "source_line_end": 134,
       "source_line_start": 127,
@@ -53,7 +53,7 @@
     {
       "heading": "Relationship to Other Plans",
       "path": "Plans/_shards/human-in-the-loop/006-relationship-to-other-plans.md",
-      "sha256": "d81cf75f7e7ab45ee1c562d99449871e327bebb715fe65700c77ab1971248151",
+      "sha256": "60992b80b52da0f9eef2f0c7ae3af716d95416a5cd750fad47da35730d5a02a0",
       "shard_id": "006",
       "source_line_end": 143,
       "source_line_start": 136,
@@ -62,7 +62,7 @@
     {
       "heading": "Derived Grouping Boundaries (DRY)",
       "path": "Plans/_shards/human-in-the-loop/007-derived-grouping-boundaries-dry.md",
-      "sha256": "0f1d29faed1738d52cfd0395cdc7c3b7b488d594536cb426627bc8f990edb48f",
+      "sha256": "83d6aad7c955c768452b85c3a6033e5c8e2039de669cc4b952f387a252fc85e5",
       "shard_id": "007",
       "source_line_end": 155,
       "source_line_start": 145,
@@ -71,7 +71,7 @@
     {
       "heading": "Package and Seam Completion Gates",
       "path": "Plans/_shards/human-in-the-loop/008-package-and-seam-completion-gates.md",
-      "sha256": "535ed47f8ca0a60b15a797f0fee1062af3f14b967b969b364e8cee6a6b57a720",
+      "sha256": "2c3883fe47351ae8d4f599839f66316fab748967b4a8b5e98dbf9ae8b3aa69ea",
       "shard_id": "008",
       "source_line_end": 167,
       "source_line_start": 157,
@@ -80,7 +80,7 @@
     {
       "heading": "Settings Model",
       "path": "Plans/_shards/human-in-the-loop/009-settings-model.md",
-      "sha256": "982061c3c6d968793f2ea895622b667bb891fd7187cc71f08674a3808b63cd84",
+      "sha256": "cf4e00c370f4f62ee8a10c7f565c1e7494308aee4c22e531909e76169f8d5cf8",
       "shard_id": "009",
       "source_line_end": 254,
       "source_line_start": 168,
@@ -89,7 +89,7 @@
     {
       "heading": "DRY Summary",
       "path": "Plans/_shards/human-in-the-loop/010-dry-summary.md",
-      "sha256": "8194fbd8c0f5aa0db08f06dd10ff95130482730ea14a5e7641e73d0198fa0dc9",
+      "sha256": "873f2e95e55187260c2e7fb2bea1758e0c5310326ab6fa6d0ea331b5fabe37c9",
       "shard_id": "010",
       "source_line_end": 260,
       "source_line_start": 256,
@@ -98,7 +98,7 @@
     {
       "heading": "Implementation Hooks (Planning Only)",
       "path": "Plans/_shards/human-in-the-loop/011-implementation-hooks-planning-only.md",
-      "sha256": "08a04e6b55678f075cad00aab102516565bacbfcd687b5ba25cb53bddc88213e",
+      "sha256": "2d8fe921fa2dfe907c331a51895f742de175fad14d811c89842fd3c7f1be9da1",
       "shard_id": "011",
       "source_line_end": 294,
       "source_line_start": 262,
@@ -107,7 +107,7 @@
     {
       "heading": "HITL Retry and Safe-Point Clarification Addendum (2026-03-08)",
       "path": "Plans/_shards/human-in-the-loop/012-hitl-retry-and-safe-point-clarification-addendum-2026-03-08.md",
-      "sha256": "68ec00fd2ea8397ed318a6e2a210f091830921e8b9517652bbd583cec4a4eca0",
+      "sha256": "24f5b2d4c443eb2257a7c33db714c0986b538603bee8afb6ab840448fa2a70de",
       "shard_id": "012",
       "source_line_end": 343,
       "source_line_start": 296,
@@ -116,7 +116,7 @@
     {
       "heading": "Canonical HITL Recovery Action Alignment Addendum (2026-03-09)",
       "path": "Plans/_shards/human-in-the-loop/013-canonical-hitl-recovery-action-alignment-addendum-2026-03-09.md",
-      "sha256": "3cdffa7741308e4d3dc67cc3a2dacff604f1521271346d496deff32a0dd4d297",
+      "sha256": "3526a38e0c62c568b856290b80e9bb248084a7a41bbbc84b9dec9abb91e1341e",
       "shard_id": "013",
       "source_line_end": 399,
       "source_line_start": 344,
@@ -125,7 +125,7 @@
     {
       "heading": "Shared approval-ladder alignment (2026-04-04)",
       "path": "Plans/_shards/human-in-the-loop/014-shared-approval-ladder-alignment-2026-04-04.md",
-      "sha256": "8a80a867704d5d1f2bea76be9f3bb14be50fc97c631e2ecd4be3f08d007cc1f4",
+      "sha256": "30dd7bcce4681046ee2ef1b3b5db1c9844c470f5446c6f1f450d4389ae62159e",
       "shard_id": "014",
       "source_line_end": 413,
       "source_line_start": 401,
@@ -134,7 +134,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/human-in-the-loop/015-owner-consumer-map.md",
-      "sha256": "34c3939dc369e85c4292f386a1e473c1dc4d0e49090dee2d38aa8d78762aaba5",
+      "sha256": "c846fda3f95067fb65ca8fd701070bca642f3a6bae3387227f55508df16d6103",
       "shard_id": "015",
       "source_line_end": 419,
       "source_line_start": 415,
@@ -143,7 +143,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/human-in-the-loop/016-planunits.md",
-      "sha256": "a963404831062a12af317095401c2cdb2575181e3d19afd68422daa15d8e5ab0",
+      "sha256": "82d40f2855e691a14da6084144b60416b46c5808f32108275285e0d1608cfafb",
       "shard_id": "016",
       "source_line_end": 2460,
       "source_line_start": 421,
@@ -152,7 +152,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/human-in-the-loop/017-migration-coverage.md",
-      "sha256": "fe7520d153435b4645270ef8c32e68c2df0302b117aecd22b0f49ccc72dfa56b",
+      "sha256": "7ee7ba756b9a1c60ba2b73ddbafdd406b1f921b8bb80bd7afb1778848fc7ab18",
       "shard_id": "017",
       "source_line_end": 2472,
       "source_line_start": 2462,
@@ -161,7 +161,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/human-in-the-loop/018-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "04eefd2b12381cc07aa98de8c8b9f5c81baf173978b4244c487a3f69b47cebfd",
+      "sha256": "2bbe80ca8daa71b8b41ac770327875eb2f309bf7e9f130dcd5345834c7485847",
       "shard_id": "018",
       "source_line_end": 2520,
       "source_line_start": 2474,
@@ -170,7 +170,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/human-in-the-loop/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "9199aedcbc953cc3bf40107e043a3453d7ddabf0d6000327c08d6b6a4b87dcce",
+      "sha256": "e249481a904f51b32e2d54c63eb2c620ec7803f1c160fe4c534ad60a9fc1d6c6",
       "shard_id": "019",
       "source_line_end": 2643,
       "source_line_start": 2523,
@@ -179,7 +179,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/human-in-the-loop/020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "001e60ee83b4fc934dcdf30e129929ef654fdacd5086fdf5c96247f7e32d80c4",
+      "sha256": "ee32a74519888fcb9712dfdd2809bc9538db517972feed08e8033525c9eb1c12",
       "shard_id": "020",
       "source_line_end": 2681,
       "source_line_start": 2645,
@@ -188,16 +188,25 @@
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/human-in-the-loop/021-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "02509cb12bbd6b607f326df2c137ea592a91bbed41fb1f861142f2a10c9e8b9c",
+      "sha256": "59b9e462349cd84790ac320e76d96e3a26646301364d00e8c7eebf485a91c9c4",
       "shard_id": "021",
       "source_line_end": 2803,
       "source_line_start": 2682,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "DG-OWN-C original source and boundary contracts (2026-11-05)",
+      "path": "Plans/_shards/human-in-the-loop/022-dg-own-c-original-source-and-boundary-contracts-2026-11-05.md",
+      "sha256": "84787d82348ac1fb4830bda564139498beb2af17e3c70fa2b0b3cf57694f6aa1",
+      "shard_id": "022",
+      "source_line_end": 2858,
+      "source_line_start": 2805,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 2803,
+    "line_count": 2858,
     "path": "Plans/human-in-the-loop.md",
-    "sha256": "e83477fb5445aacd63eb29a0513ee20fb69444fe64add25776c30616f3de13a0"
+    "sha256": "1cdfb7b5831131f91336e60315b7ae325a3cf2e112724c4d2ec06a6349a0ba58"
   }
 }

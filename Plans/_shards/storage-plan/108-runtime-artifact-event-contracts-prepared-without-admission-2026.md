@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L42654-L44561
+Source lines: L43331-L45532
 
-Source SHA256: `8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8`
+Source SHA256: `5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb`
 
 ---
 
@@ -1916,3 +1916,297 @@ This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` se
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-558, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-401
 
 **Physical numbers and retained reads for `safe_point.restored` (sweep part 2B numbers).** Storage-assigned sequence, generation and offset integers keep their exact domains end to end under SP-1100: each schema integer slot is admitted by the shared CV-1100 exact-integer call within its own schema bounds, and physical bytes dispatch by purpose (EVENT_VALUE for the CV-339 full-value commitment, APP_PHYSICAL for application bodies) with no float narrowing, signed-zero erasure or lane ceiling; an integer outside a profile's encodable range refuses through its guard row instead of truncating. History reads, retries, recovery and rebuilds resolve every retained original through SP-1101's authenticated dispatcher over the sealed custody catalogue: the recorded write-time edition and frozen resource manifest select the frozen verifier, forged or downgraded custody resolves to no verifier, and current-writer number guards never run on retained bytes. The ordered custody, first-receipt and retention rules above are unchanged. CV-1101 is adopted: observed_at_utc and persisted_at_utc use date_time with the storage_utc_z profile, and every other timestamp this family validates uses date_time with the EventRecord profile. The SP-1101 frozen verifier checks retained originals with those profiles.
+
+### SP-429 - Project goal.blocked identity custody and observation
+
+```yaml
+plan_unit_id: SP-429
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored goal.blocked v3 identity, SP-286 custody, original-body publication order and read-only
+  none_required observation; no event-built Goal state.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-203
+- SP-286
+- SP-287
+- SP-278
+unblocks: []
+acceptance_criteria:
+- Same original operation and semantic body resolve original receipts while Storage-only metadata differs.
+- Project v3 and historical whole-v2 stay distinct; writer/reader withdrawal preserves custody.
+- No family projection or durable checkpoint; SP-278 remains mandatory for event reads.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json
+- Plans/goal_lifecycle_successor_fixtures.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: sp-429_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Newly authored exact-family owner contract under DL-045.** Search for `goal.blocked` in GRS-048/050/064, GREPLAY-004..010, SP-287, the old Known-37 recipe, CV-366, Goal source/custody schemas and live Plans found no current event recipe or passive reader for this successor; GRS-203 records the original-source gap. This unit supplies no writer installation.
+
+**Identity and frozen input.** Let D be lowercase SHA-256 of RFC 8785 JCS of `["pm.goal.blocked.lifecycle.v1", "project", storage_instance_id, project_id, thread_id, goal_id, str(before_revision), continuation_id, owning_run_id, next_attempt_ref]`, with the original null next_attempt_ref retained as null. Event ID is `goal.blocked.v1:{D}`, idempotency key `goal.blocked.lifecycle.v1:{D}`. Each string is exact; no Unicode/whitespace normalization or final LF. The original continuation tuple, operation ID and body-mutation intent digest are frozen; a change is a new admitted operation, never an equal retry. CV-339's producer_semantic_digest covers exactly its enumerated caller fields and excludes sequence_id/observed_at_utc/persisted_at_utc. Normal append and retry reject projector_replay_only before dedupe. For equal selected identity/body, synchronously caught-up custody resolves the exact original event and SP-286 first receipt; differing body conflicts; unavailable proof appends nothing. No retry repeats a body mutation, provider call, notification, Usage charge or dispatch. This recipe supersedes the old v2 recipe only for this v3 Project successor, never an app key.
+
+**Custody and publication.** Adopt SP-286 by name for first receipt, immutable complete producer input and independent original full-value commitment. GRS-203's body-before-event order and fenced unknown results are mandatory. The same exact body/control reservation key and ordinary revision/currentness are used across host owners; no second Goal state machine or event-built body exists. SP-287 owns canonical body/history/origin/control and body receipt; Storage owns original EventRecord/first receipt. Coherent backup/identity-preserving restore preserves their joins and original terminal meaning, not guessed current state. Original event/dedupe/receipt authority remains RP-AUTHORITY-INDEFINITE@1.0.0; body and source content retain DL-047 bound-thread lifetime and referenced evidence retains its actual owner clock. Refs create no hold. Current read permission, tombstones, legal holds and reject-unhandled-secrets remain mandatory. A missing original receipt/source is unavailable, not reconstructed from a projection. Inline payloads are capped at 16 KiB by SP-337; oversized body values use its BLAKE3/byte-size/media-type payload-reference ownership, never raw embedded objective/output. This prepared event is bounded metadata; a missing exact payload-reference resolution contract refuses that edition rather than inventing an encoding.
+
+**Consumers and exact checkpoint disposition.** Current Activity/body/history/continuation consume `reader.goal.body@1.0.0` and `reader.goal.objective_history@1.0.0` under GRS-064/SP-287. They read already committed canonical custody; they never build Goal state from this event. The existing SP-339 pm inspect / F3-666 raw record inspector, pm tail and pm export retain their own generic exact EventRecord reads and exact schema dispatch. This family adds no separately needed interpretation adapter or output binding. Generic current lookup independently requires SP-278's complete actual index/root/generation dataset, immutable birth anchor, global frontier/token/source-selection/frame/translation proof and current permission/deletion/hold/secret/maintenance fences, joining all represented Project/thread/Goal/event/sequence/Storage identities. Original body receipt and SP-286 first-receipt/full-value custody retain their separate owners; inspecting the event proves no terminal producer result or current lifecycle authority. Lawful body purge cannot recreate objective/history/source content. The generic inspector's bounded output stays exactly its existing contract; no new output shape is invented.
+
+For this exact family, no family-specific event consumer/projector is required beyond those explicitly adopted generic reads and the existing canonical body consumers. Its family durable checkpoint is individually `none_required`: no projector, replay cursor, acknowledgment, idempotency ledger, outbox or owned write. The generic SP-278 checkpoint remains mandatory. The complete old v2 resource and original predicates keep their separate supported historical dispatch; no v2-to-v3 or app fallback exists. Native source/writer availability remains refused on GRS-203's concrete original-host-source dependency, independent of this consumer disposition.
+
+**Withdrawal.** A writer cutoff prevents new reservations/append before dedupe, preserving genuinely accepted original pending effects for the exact source/result resolver. It grants no retry under a new identity or event rollback. Reader withdrawal stops this exact binding; source, first receipts, old schemas, original meaning and retention remain. Rebuild may rebuild only the generic disposable index under a new admitted generation and full SP-278 fences; it cannot recreate canonical body, evidence, first receipts or a family projector. App and other payload versions never become fallbacks.
+
+### SP-430 - Project goal.completed identity custody and observation
+
+```yaml
+plan_unit_id: SP-430
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Newly authored goal.completed v3 identity, SP-286 custody, original-body publication order and read-only
+  none_required observation; no event-built Goal state.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-204
+- SP-286
+- SP-287
+- SP-278
+unblocks: []
+acceptance_criteria:
+- Same original operation and semantic body resolve original receipts while Storage-only metadata differs.
+- Project v3 and historical whole-v2 stay distinct; writer/reader withdrawal preserves custody.
+- No family projection or durable checkpoint; SP-278 remains mandatory for event reads.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json
+- Plans/goal_lifecycle_successor_fixtures.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: sp-430_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Newly authored exact-family owner contract under DL-045.** Search for `goal.completed` in GRS-048/050/064, GREPLAY-004..010, SP-287, the old Known-37 recipe, CV-366, Goal source/custody schemas and live Plans found no current event recipe or passive reader for this successor; GRS-204 records the original-source gap. This unit supplies no writer installation.
+
+**Identity and frozen input.** Let D be lowercase SHA-256 of RFC 8785 JCS of `["pm.goal.completed.lifecycle.v1", "project", storage_instance_id, project_id, thread_id, goal_id, str(before_revision), continuation_id, owning_run_id, next_attempt_ref]`, with the original null next_attempt_ref retained as null. Event ID is `goal.completed.v1:{D}`, idempotency key `goal.completed.lifecycle.v1:{D}`. Each string is exact; no Unicode/whitespace normalization or final LF. The original continuation tuple, operation ID and body-mutation intent digest are frozen; a change is a new admitted operation, never an equal retry. CV-339's producer_semantic_digest covers exactly its enumerated caller fields and excludes sequence_id/observed_at_utc/persisted_at_utc. Normal append and retry reject projector_replay_only before dedupe. For equal selected identity/body, synchronously caught-up custody resolves the exact original event and SP-286 first receipt; differing body conflicts; unavailable proof appends nothing. No retry repeats a body mutation, provider call, notification, Usage charge or dispatch. This recipe supersedes the old v2 recipe only for this v3 Project successor, never an app key.
+
+**Custody and publication.** Adopt SP-286 by name for first receipt, immutable complete producer input and independent original full-value commitment. GRS-204's body-before-event order and fenced unknown results are mandatory. The same exact body/control reservation key and ordinary revision/currentness are used across host owners; no second Goal state machine or event-built body exists. SP-287 owns canonical body/history/origin/control and body receipt; Storage owns original EventRecord/first receipt. Coherent backup/identity-preserving restore preserves their joins and original terminal meaning, not guessed current state. Original event/dedupe/receipt authority remains RP-AUTHORITY-INDEFINITE@1.0.0; body and source content retain DL-047 bound-thread lifetime and referenced evidence retains its actual owner clock. Refs create no hold. Current read permission, tombstones, legal holds and reject-unhandled-secrets remain mandatory. A missing original receipt/source is unavailable, not reconstructed from a projection. Inline payloads are capped at 16 KiB by SP-337; oversized body values use its BLAKE3/byte-size/media-type payload-reference ownership, never raw embedded objective/output. This prepared event is bounded metadata; a missing exact payload-reference resolution contract refuses that edition rather than inventing an encoding.
+
+**Consumers and exact checkpoint disposition.** Current Activity/body/history/continuation consume `reader.goal.body@1.0.0` and `reader.goal.objective_history@1.0.0` under GRS-064/SP-287. They read already committed canonical custody; they never build Goal state from this event. The existing SP-339 pm inspect / F3-666 raw record inspector, pm tail and pm export retain their own generic exact EventRecord reads and exact schema dispatch. This family adds no separately needed interpretation adapter or output binding. Generic current lookup independently requires SP-278's complete actual index/root/generation dataset, immutable birth anchor, global frontier/token/source-selection/frame/translation proof and current permission/deletion/hold/secret/maintenance fences, joining all represented Project/thread/Goal/event/sequence/Storage identities. Original body receipt and SP-286 first-receipt/full-value custody retain their separate owners; inspecting the event proves no terminal producer result or current lifecycle authority. Lawful body purge cannot recreate objective/history/source content. The generic inspector's bounded output stays exactly its existing contract; no new output shape is invented.
+
+For this exact family, no family-specific event consumer/projector is required beyond those explicitly adopted generic reads and the existing canonical body consumers. Its family durable checkpoint is individually `none_required`: no projector, replay cursor, acknowledgment, idempotency ledger, outbox or owned write. The generic SP-278 checkpoint remains mandatory. The complete old v2 resource and original predicates keep their separate supported historical dispatch; no v2-to-v3 or app fallback exists. Native source/writer availability remains refused on GRS-204's concrete original-host-source dependency, independent of this consumer disposition.
+
+**Withdrawal.** A writer cutoff prevents new reservations/append before dedupe, preserving genuinely accepted original pending effects for the exact source/result resolver. It grants no retry under a new identity or event rollback. Reader withdrawal stops this exact binding; source, first receipts, old schemas, original meaning and retention remain. Rebuild may rebuild only the generic disposable index under a new admitted generation and full SP-278 fences; it cannot recreate canonical body, evidence, first receipts or a family projector. App and other payload versions never become fallbacks.
+
+### SP-431 - Historical goal.evidence_captured reader custody
+
+```yaml
+plan_unit_id: SP-431
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Individually bind storage.goal_evidence_captured_history_read.v1@1.0.0, unchanged whole-v2 original
+  predicates, SP-420 custody and full SP-278 proof; current-source admission absence returns unavailable; no owned
+  durable effect.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-205
+- SP-278
+- SP-286
+- SP-420
+unblocks: []
+acceptance_criteria:
+- Complete original source/admission/identity and final current disclosure fences precede every answer.
+- Lawful retained originals survive writer retirement; forged/withdrawn originals do not.
+- Family checkpoint none_required, with mandatory generic checkpoint and unchanged retention.
+validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- Plans/goal_evidence_captured_history_contract_fixtures.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: sp-431_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Per-family current-source search (2026-11-04).** Searched all live top-level Plans documents/JSON, exact-family v2 and app resources, Goal/Workflow/Permissions source graphs, production wiring and admission records for `goal.evidence_captured` at `0c40a7809826bcf509bbb16483bbdd8f4c48760b`. Found old D-R07/Known-37 schema-minima/identity listings and the unadopted CV-366 application selector; no current original producer, admitted source edition, family read/checkpoint binding or admission record names this exact event. GRS-048/049/052/064 and GRS-065 retain the ownership move in DL-079. E-CARDS-1 Card 3 A (DL-409 on unlanded origin/plans/ea-cards1-answers-20261104) confirms it for both scopes and approves withdrawal of this exact unused app edition at the next registry checkpoint. No new product or retention decision is taken.
+**Newly authored exact historical reader under DL-045.** `storage.goal_evidence_captured_history_read.v1@1.0.0` accepts exactly {project_id, goal_id, event_id, sequence_id} under current Project/audit permission and reads only `pm.goal_runtime_event.goal_evidence_captured.schema.v2` / `goal.evidence_captured` with the original supported EventRecord. The unused app edition has never had an adopted writer; it is not a readable historical fallback. Unsupported app/future/legacy input uses only its separately pre-existing exact route, or unavailable. No default fill, conversion, stripping or rehashing of original bytes.
+
+**Physical identity and independent original proof.** Explicitly adopt SP-278's actual admitted `reader.storage.event_record_index@1.0.0`: key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`, partition exactly project~base64url_no_pad(UTF8(project_id)), full source frame cursor/bounds/CRC/durable watermark, actual Storage/root/generation dataset, immutable birth anchor, complete global frontier/source-selection token including other-project/application records, actual source translation and later append suffix. Join selector and all represented envelope/payload identities, complete token Storage/key/ref/generation/dataset and source_selection Storage, authentic original frame/value/digests and generic current checkpoint. A same-generation nonmatching append invalidates an old token. No matching-row maximum, detached hash or coherent obsolete snapshot supplies current authority.
+
+Individually adopt SP-420's two-member proof for this exact record: its own retained original SP-286 first-receipt custody joined on Storage/event/key/type/schema, plus the owner unit accepted at original issue and approved registry checkpoint that admitted this exact writer/version. GRS-205's search finds no such admitted writer today. Missing original admission for this reader is unavailable, not verified and not synthetic unresolved content. If an authentic original pair is later established, validate D-R07's complete original row/source/authority/revision/CAS/runtime/reference/idempotency predicates under that original contract, even when the current writer is retired or the live Goal has changed. Goal evidence collection moved to the actual Workflow/run evidence owner; GoalRecordV2 carries no evidence ledger. Preserve original evidence_kind/source_spans/content_hash/currentness/redaction and optional snapshot/retention refs. Non-validator spans, artifact snapshots, outer/inner redaction equality, provenance/hash/span bounds, original source/permission and nonterminal-state preservation are required. Unknown currentness cannot satisfy verification or completion. Original source/reference/tier/predicate evidence not preserved is unresolved historical validation only if current generic source/access independently permits the complete raw observation. Forged, withdrawn, unavailable or unsupported source is unavailable; current live state is never an original predicate.
+
+**Closed output and final disclosure.** Exactly the eight fields kind, reader_binding, selector, original_event, original_validation, unresolved_obligations, read_token, action_authority, materialized separately at `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_evidence_captured_history_answer`. Binding is `storage.goal_evidence_captured_history_read.v1@1.0.0`; action_authority=none. verified_historical/verified has exact original EventRecord/full SP-278 token and no obligations; unresolved_historical_validation/unresolved has them with a nonempty unique enumerated original obligation list; unavailable/unavailable has null original_event/token and no obligations. Invalid current source/access cannot become unresolved content. Independently capture real original source/admission/selector and current owner/access/deletion/hold/maintenance fences before helpers, derive the whole permitted value before output builders, then compare the complete candidate/source/token/current fence after the last helper in one pure predicate immediately before disclosure. Every independently callable resolver/validator/output helper repeats that boundary for its own actual input and typed result. No helper/witness or unchanged invalid bytes replace native origin proof.
+
+**Consumer, replay and custody.** SP-339 pm inspect / F3-666 call this exact binding for its original event and consume only its historical interpretation. Repeated reads recompute the same observation under current source/fence, never append or replay an action. This family's checkpoint is individually none_required: no durable state projector, cursor, idempotency ledger, acknowledgment, receipt or any owned write. SP-278's generic checkpoint remains mandatory. Canonical source/first receipts retain RP-AUTHORITY-INDEFINITE@1.0.0; lookup/index retains RP-EVENT-INDEX-SOURCE@1.0.0. Referenced evidence/output/receipt retention, thread deletion, permissions, holds, backup and identity-preserving restore follow their existing separate owners. A ref creates no hold or right to reacquire disposed source/control bytes; canonical receipts are not rebuildable from index/events. Reject unhandled secrets rather than partially redacting an original. This reader performs no quarantine/recovery write or payload resurrection. Bodies above the current 16 KiB ingest cap follow SP-337 under their source owner; no new over-limit inline positive or payload-reference codec is claimed here.
+
+**Withdrawal.** Current writers in both scopes are already cut off by GRS-205, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
+
+### SP-432 - Historical goal.receipt_recorded reader custody
+
+```yaml
+plan_unit_id: SP-432
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Individually bind storage.goal_receipt_recorded_history_read.v1@1.0.0, unchanged whole-v2 original
+  predicates, SP-420 custody and full SP-278 proof; current-source admission absence returns unavailable; no owned
+  durable effect.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-206
+- SP-278
+- SP-286
+- SP-420
+unblocks: []
+acceptance_criteria:
+- Complete original source/admission/identity and final current disclosure fences precede every answer.
+- Lawful retained originals survive writer retirement; forged/withdrawn originals do not.
+- Family checkpoint none_required, with mandatory generic checkpoint and unchanged retention.
+validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- Plans/goal_receipt_recorded_history_contract_fixtures.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: sp-432_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Per-family current-source search (2026-11-04).** Searched all live top-level Plans documents/JSON, exact-family v2 and app resources, Goal/Workflow/Permissions source graphs, production wiring and admission records for `goal.receipt_recorded` at `0c40a7809826bcf509bbb16483bbdd8f4c48760b`. Found old D-R09/Known-37 schema-minima/identity listings and the unadopted CV-366 application selector; no current original producer, admitted source edition, family read/checkpoint binding or admission record names this exact event. GRS-048/049/052/064 and GRS-065 retain the ownership move in DL-079. E-CARDS-1 Card 3 A (DL-409 on unlanded origin/plans/ea-cards1-answers-20261104) confirms it for both scopes and approves withdrawal of this exact unused app edition at the next registry checkpoint. No new product or retention decision is taken.
+**Newly authored exact historical reader under DL-045.** `storage.goal_receipt_recorded_history_read.v1@1.0.0` accepts exactly {project_id, goal_id, event_id, sequence_id} under current Project/audit permission and reads only `pm.goal_runtime_event.goal_receipt_recorded.schema.v2` / `goal.receipt_recorded` with the original supported EventRecord. The unused app edition has never had an adopted writer; it is not a readable historical fallback. Unsupported app/future/legacy input uses only its separately pre-existing exact route, or unavailable. No default fill, conversion, stripping or rehashing of original bytes.
+
+**Physical identity and independent original proof.** Explicitly adopt SP-278's actual admitted `reader.storage.event_record_index@1.0.0`: key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`, partition exactly project~base64url_no_pad(UTF8(project_id)), full source frame cursor/bounds/CRC/durable watermark, actual Storage/root/generation dataset, immutable birth anchor, complete global frontier/source-selection token including other-project/application records, actual source translation and later append suffix. Join selector and all represented envelope/payload identities, complete token Storage/key/ref/generation/dataset and source_selection Storage, authentic original frame/value/digests and generic current checkpoint. A same-generation nonmatching append invalidates an old token. No matching-row maximum, detached hash or coherent obsolete snapshot supplies current authority.
+
+Individually adopt SP-420's two-member proof for this exact record: its own retained original SP-286 first-receipt custody joined on Storage/event/key/type/schema, plus the owner unit accepted at original issue and approved registry checkpoint that admitted this exact writer/version. GRS-206's search finds no such admitted writer today. Missing original admission for this reader is unavailable, not verified and not synthetic unresolved content. If an authentic original pair is later established, validate D-R09's complete original row/source/authority/revision/CAS/runtime/reference/idempotency predicates under that original contract, even when the current writer is retired or the live Goal has changed. The actual Workflow/run owns certification and receipts; Goal V2 has no certification tier, child receipt graph or receipt-driven state. Preserve original receipt/kind/tier/output/dependency refs and original certifier decision. Require pre-existing valid original receipt, exact dependency completeness, original exception approval/residual-risk evidence and rejection/block reason evidence. The original running|verifying|repairing|degraded|blocked state is preserved; terminal/created/scheduled/paused/stopped originals reject. Recording receipt history never completes a current Goal. Original source/reference/tier/predicate evidence not preserved is unresolved historical validation only if current generic source/access independently permits the complete raw observation. Forged, withdrawn, unavailable or unsupported source is unavailable; current live state is never an original predicate.
+
+**Closed output and final disclosure.** Exactly the eight fields kind, reader_binding, selector, original_event, original_validation, unresolved_obligations, read_token, action_authority, materialized separately at `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_receipt_recorded_history_answer`. Binding is `storage.goal_receipt_recorded_history_read.v1@1.0.0`; action_authority=none. verified_historical/verified has exact original EventRecord/full SP-278 token and no obligations; unresolved_historical_validation/unresolved has them with a nonempty unique enumerated original obligation list; unavailable/unavailable has null original_event/token and no obligations. Invalid current source/access cannot become unresolved content. Independently capture real original source/admission/selector and current owner/access/deletion/hold/maintenance fences before helpers, derive the whole permitted value before output builders, then compare the complete candidate/source/token/current fence after the last helper in one pure predicate immediately before disclosure. Every independently callable resolver/validator/output helper repeats that boundary for its own actual input and typed result. No helper/witness or unchanged invalid bytes replace native origin proof.
+
+**Consumer, replay and custody.** SP-339 pm inspect / F3-666 call this exact binding for its original event and consume only its historical interpretation. Repeated reads recompute the same observation under current source/fence, never append or replay an action. This family's checkpoint is individually none_required: no durable state projector, cursor, idempotency ledger, acknowledgment, receipt or any owned write. SP-278's generic checkpoint remains mandatory. Canonical source/first receipts retain RP-AUTHORITY-INDEFINITE@1.0.0; lookup/index retains RP-EVENT-INDEX-SOURCE@1.0.0. Referenced evidence/output/receipt retention, thread deletion, permissions, holds, backup and identity-preserving restore follow their existing separate owners. A ref creates no hold or right to reacquire disposed source/control bytes; canonical receipts are not rebuildable from index/events. Reject unhandled secrets rather than partially redacting an original. This reader performs no quarantine/recovery write or payload resurrection. Bodies above the current 16 KiB ingest cap follow SP-337 under their source owner; no new over-limit inline positive or payload-reference codec is claimed here.
+
+**Withdrawal.** Current writers in both scopes are already cut off by GRS-206, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.
+
+### SP-433 - Historical goal.tool_check_recorded reader custody
+
+```yaml
+plan_unit_id: SP-433
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Individually bind storage.goal_tool_check_recorded_history_read.v1@1.0.0, unchanged whole-v2 original
+  predicates, SP-420 custody and full SP-278 proof; current-source admission absence returns unavailable; no owned
+  durable effect.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-207
+- SP-278
+- SP-286
+- SP-420
+unblocks: []
+acceptance_criteria:
+- Complete original source/admission/identity and final current disclosure fences precede every answer.
+- Lawful retained originals survive writer retirement; forged/withdrawn originals do not.
+- Family checkpoint none_required, with mandatory generic checkpoint and unchanged retention.
+validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- Plans/goal_tool_check_recorded_history_contract_fixtures.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: sp-433_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Per-family current-source search (2026-11-04).** Searched all live top-level Plans documents/JSON, exact-family v2 and app resources, Goal/Workflow/Permissions source graphs, production wiring and admission records for `goal.tool_check_recorded` at `0c40a7809826bcf509bbb16483bbdd8f4c48760b`. Found old D-R13/Known-37 schema-minima/identity listings and the unadopted CV-366 application selector; no current original producer, admitted source edition, family read/checkpoint binding or admission record names this exact event. GRS-048/049/052/064 and GRS-065 retain the ownership move in DL-079. E-CARDS-1 Card 3 A (DL-409 on unlanded origin/plans/ea-cards1-answers-20261104) confirms it for both scopes and approves withdrawal of this exact unused app edition at the next registry checkpoint. No new product or retention decision is taken.
+**Newly authored exact historical reader under DL-045.** `storage.goal_tool_check_recorded_history_read.v1@1.0.0` accepts exactly {project_id, goal_id, event_id, sequence_id} under current Project/audit permission and reads only `pm.goal_runtime_event.goal_tool_check_recorded.schema.v2` / `goal.tool_check_recorded` with the original supported EventRecord. The unused app edition has never had an adopted writer; it is not a readable historical fallback. Unsupported app/future/legacy input uses only its separately pre-existing exact route, or unavailable. No default fill, conversion, stripping or rehashing of original bytes.
+
+**Physical identity and independent original proof.** Explicitly adopt SP-278's actual admitted `reader.storage.event_record_index@1.0.0`: key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`, partition exactly project~base64url_no_pad(UTF8(project_id)), full source frame cursor/bounds/CRC/durable watermark, actual Storage/root/generation dataset, immutable birth anchor, complete global frontier/source-selection token including other-project/application records, actual source translation and later append suffix. Join selector and all represented envelope/payload identities, complete token Storage/key/ref/generation/dataset and source_selection Storage, authentic original frame/value/digests and generic current checkpoint. A same-generation nonmatching append invalidates an old token. No matching-row maximum, detached hash or coherent obsolete snapshot supplies current authority.
+
+Individually adopt SP-420's two-member proof for this exact record: its own retained original SP-286 first-receipt custody joined on Storage/event/key/type/schema, plus the owner unit accepted at original issue and approved registry checkpoint that admitted this exact writer/version. GRS-207's search finds no such admitted writer today. Missing original admission for this reader is unavailable, not verified and not synthetic unresolved content. If an authentic original pair is later established, validate D-R13's complete original row/source/authority/revision/CAS/runtime/reference/idempotency predicates under that original contract, even when the current writer is retired or the live Goal has changed. The executing Workflow/run owns tool checks and evidence; Permissions owns policy/approval resolution. Goal V2 has no tool-check loop or Goal-owned worker authority. Preserve tool_call_id/name/check_kind/result/policy_decision and original output/log refs. Passed+allow/not_applicable needs an original output/log; failed/blocked/unknown needs an original log; approval_required needs original common approval/block proof and cannot pass; deny cannot pass. All output stays by reference with original secret handling. Preserve scheduled|running|verifying|repairing|degraded|blocked; any state change was a separately named event. Original source/reference/tier/predicate evidence not preserved is unresolved historical validation only if current generic source/access independently permits the complete raw observation. Forged, withdrawn, unavailable or unsupported source is unavailable; current live state is never an original predicate.
+
+**Closed output and final disclosure.** Exactly the eight fields kind, reader_binding, selector, original_event, original_validation, unresolved_obligations, read_token, action_authority, materialized separately at `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_tool_check_recorded_history_answer`. Binding is `storage.goal_tool_check_recorded_history_read.v1@1.0.0`; action_authority=none. verified_historical/verified has exact original EventRecord/full SP-278 token and no obligations; unresolved_historical_validation/unresolved has them with a nonempty unique enumerated original obligation list; unavailable/unavailable has null original_event/token and no obligations. Invalid current source/access cannot become unresolved content. Independently capture real original source/admission/selector and current owner/access/deletion/hold/maintenance fences before helpers, derive the whole permitted value before output builders, then compare the complete candidate/source/token/current fence after the last helper in one pure predicate immediately before disclosure. Every independently callable resolver/validator/output helper repeats that boundary for its own actual input and typed result. No helper/witness or unchanged invalid bytes replace native origin proof.
+
+**Consumer, replay and custody.** SP-339 pm inspect / F3-666 call this exact binding for its original event and consume only its historical interpretation. Repeated reads recompute the same observation under current source/fence, never append or replay an action. This family's checkpoint is individually none_required: no durable state projector, cursor, idempotency ledger, acknowledgment, receipt or any owned write. SP-278's generic checkpoint remains mandatory. Canonical source/first receipts retain RP-AUTHORITY-INDEFINITE@1.0.0; lookup/index retains RP-EVENT-INDEX-SOURCE@1.0.0. Referenced evidence/output/receipt retention, thread deletion, permissions, holds, backup and identity-preserving restore follow their existing separate owners. A ref creates no hold or right to reacquire disposed source/control bytes; canonical receipts are not rebuildable from index/events. Reject unhandled secrets rather than partially redacting an original. This reader performs no quarantine/recovery write or payload resurrection. Bodies above the current 16 KiB ingest cap follow SP-337 under their source owner; no new over-limit inline positive or payload-reference codec is claimed here.
+
+**Withdrawal.** Current writers in both scopes are already cut off by GRS-207, before dedupe including equal-key retries. Reader withdrawal or unsupported schema stops this binding and preserves source/schema/retention; it grants no sibling fallback, app adoption or transformed current event. Generic index rebuild remains solely SP-278's owner operation with fresh generation/frontier fences; there is no family state to rebuild. Approved unused app withdrawal is a registry-checkpoint follow-up only.

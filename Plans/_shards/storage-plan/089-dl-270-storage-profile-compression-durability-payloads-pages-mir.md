@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28815-L30948
+Source lines: L29484-L31625
 
-Source SHA256: `8735657f27c873b99ebcc7407fac98348a874078c39a3ae05d1fd1536f5c12f8`
+Source SHA256: `5065d9e04e53131a2344a6f1759caa92647dc0714c5e80d03fd384f1779318fb`
 
 ---
 
@@ -379,6 +379,14 @@ negative_constraints:
 owner_hints:
   - "Plans/storage-plan.md"
 ```
+
+**Historical Goal readers (2026-11-04, DL-045).** When `pm inspect`, or the record inspector (F3-666) that matches it, opens an EventRecord of `goal.child_status_changed`, `goal.degraded`, `goal.scheduled`, `goal.progressed`, `goal.replanned`, `goal.stopped` or `goal.verification_decided`, it calls that family's own historical reader (SP-271, SP-277, SP-280, SP-300, SP-301, SP-302 or SP-303 respectively) with the record's own selector and takes the record's historical interpretation and validation disposition only from that reader's answer. `pm tail`, `pm export` and `pm db dump` call none of them. This adds no verb, no output file and no write.
+
+For exactly `goal.evidence_captured`, `pm inspect` and F3-666 call `storage.goal_evidence_captured_history_read.v1@1.0.0` under SP-431 with the original record's selector, taking historical interpretation and validation only from that answer; pm tail/export/db dump do not call it. GRS-205/CV-424 prohibit every current writer in both scopes.
+
+For exactly `goal.receipt_recorded`, `pm inspect` and F3-666 call `storage.goal_receipt_recorded_history_read.v1@1.0.0` under SP-432 with the original record's selector, taking historical interpretation and validation only from that answer; pm tail/export/db dump do not call it. GRS-206/CV-425 prohibit every current writer in both scopes.
+
+For exactly `goal.tool_check_recorded`, `pm inspect` and F3-666 call `storage.goal_tool_check_recorded_history_read.v1@1.0.0` under SP-433 with the original record's selector, taking historical interpretation and validation only from that answer; pm tail/export/db dump do not call it. GRS-207/CV-426 prohibit every current writer in both scopes.
 
 ### SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction
 
