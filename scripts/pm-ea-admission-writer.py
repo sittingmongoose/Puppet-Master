@@ -441,6 +441,21 @@ def membership_cell(fam: dict, ctx: dict) -> dict:
     }
 
 
+def ledger_cell(cell: dict) -> dict:
+    """One individual-disposition evidence cell from a depth cell: PASS, Plans citations first, the finding."""
+    spans = []
+    for item in sorted(cell["evidence"], key=lambda e: not str(e.get("path", "")).startswith("Plans/")):
+        start, end = item.get("line_start"), item.get("line_end")
+        span = f"{item['path']}:{start}" if start == end or end is None else f"{item['path']}:{start}-{end}"
+        if start is None:
+            span = item["path"]
+        if span not in spans:
+            spans.append(span)
+    if not spans or not spans[0].startswith("Plans/"):
+        raise SystemExit("a projected ledger cell needs a Plans citation first")
+    return {"status": "PASS", "citation": "; ".join(spans), "note": cell.get("finding") or ""}
+
+
 def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     et, row = fam["event_type"], fam["registry_row"]
     touched = []
@@ -521,7 +536,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         "recorded_by": args.recorded_by,
         "recorded_at_utc": args.recorded_at,
         "notes": [
-            f"Admission merge 1 (EA-P2 B), written by {WRITER_ID} from the manifest row for this family; one commit holds the registry append, this record, its Decision Log entry, its depth assessment, its {'ledger rationale' if fam['kind'] == 'cpu' else 'recount OUTCOMES row'} and the DL-078 checkpoint pins.",
+            f"Admission merge 1 (EA-P2 B), written by {WRITER_ID} from the manifest row for this family; one commit holds the registry append, this record, its Decision Log entry, its depth assessment, its {'KEEP_REGISTERED ledger row' if fam['kind'] == 'cpu' else 'recount OUTCOMES row'} and the DL-078 checkpoint pins.",
             "The decision entry is " + dl + ", which DL-096 makes Jared's decision entry for this family.",
             "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
             "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only.",
@@ -537,10 +552,16 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     state["record_problems"] = problems
     # 5. CPU ledger rationale or recount OUTCOMES row.
     if fam["kind"] == "cpu":
+        # The family's row is brought into agreement with its registration (PLAN section 2: the closing proof
+        # needs no CPU row left KEEP_QUARANTINED): KEEP_REGISTERED, provisional false and twelve PASS cells
+        # projected from this commit's depth assessment, the receipted row update lane S2 used; bucket,
+        # cohort pins, July classification and every other field stay as written.
         sentence = (f" Registered at registry revision {after['revision']} in admission merge 1 under DL-078, DL-096 and DL-400 "
-                    f"(decision Plans/Decision_Log.md#{dl}); DL-077 admission record {ctx['record_path']}. The seal check judges "
-                    "this family by that record (INDIVIDUAL_DISPOSITION_SCHEMA.md, DL-077 note); the bucket, disposition, cohort "
-                    "pins and retained evidence stay as written, since the frozen schema has no registered J248 value.")
+                    f"(decision Plans/Decision_Log.md#{dl}); DL-077 admission record {ctx['record_path']}. Disposition "
+                    "KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells " + ", ".join(EVIDENCE_FIELDS) + " projected with "
+                    f"twelve PASS cells from the family's admission depth assessment {depth_rel} (sha256 "
+                    f"{ctx['depth_sha256']}); bucket, cohort pins, July classification and every other field are unchanged; "
+                    "no seal or owner choice.")
         lines = read_raw(LEDGER).split("\n")
         hits = [i for i, line in enumerate(lines) if line.strip() and json.loads(line).get("event_type") == et]
         if len(hits) != 1:
@@ -550,6 +571,16 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         ledger_row = json.loads(line)
         if json.dumps(ledger_row, ensure_ascii=False) + ending != line:
             raise SystemExit("ledger row serialization does not round-trip: " + et)
+        if ledger_row.get("disposition") != "KEEP_QUARANTINED" or ledger_row.get("bucket") != "confirmed_persisted_unregistered":
+            raise SystemExit("ledger row is not a quarantined confirmed_persisted_unregistered row: " + et)
+        original_row = copy.deepcopy(ledger_row)
+        evidence = ledger_row.get("evidence")
+        if not isinstance(evidence, dict) or set(evidence) != set(EVIDENCE_FIELDS):
+            raise SystemExit("ledger row does not carry exactly the twelve evidence cells: " + et)
+        ledger_row["disposition"] = "KEEP_REGISTERED"
+        if "provisional" in ledger_row:
+            ledger_row["provisional"] = False
+        ledger_row["evidence"] = {field: ledger_cell(cells[field]) for field in evidence}  # the row's own key order
         ledger_row["disposition_rationale"] = ledger_row["disposition_rationale"] + sentence
         lines[hits[0]] = json.dumps(ledger_row, ensure_ascii=False) + ending
         before_lines = read_raw(LEDGER).split("\n")
@@ -563,10 +594,9 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         row_doc = json.loads(row_raw)
         if json.dumps(row_doc, indent=2, ensure_ascii=False) + "\n" != row_raw.replace("\r\n", "\n"):
             raise SystemExit("ledger row file serialization does not round-trip: " + row_rel)
-        if row_doc.get("disposition_rationale") != ledger_row["disposition_rationale"][: -len(sentence)]:
+        if row_doc != original_row or list(row_doc) != list(original_row):
             raise SystemExit("ledger row file and LEDGER.jsonl disagree before the edit: " + et)
-        row_doc["disposition_rationale"] = ledger_row["disposition_rationale"]
-        write_text(row_rel, json.dumps(row_doc, indent=2, ensure_ascii=False) + "\n", crlf=crlf)
+        write_text(row_rel, json.dumps(ledger_row, indent=2, ensure_ascii=False) + "\n", crlf=crlf)
         touched.append(row_rel)
     else:
         path = REPO / OUTCOMES
@@ -648,7 +678,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
 
 def commit_message(fam: dict, dl: str, result: dict) -> str:
     et = fam["event_type"]
-    what = "ledger rationale" if fam["kind"] == "cpu" else "recount OUTCOMES row"
+    what = "ledger row moved to KEEP_REGISTERED" if fam["kind"] == "cpu" else "recount OUTCOMES row"
     return (
         f"plans: {dl} registers {et} (admission merge 1, EA-P2 B)\n\n"
         f"One commit per family ({WRITER_ID}): registry {result['registry_after']['revision']} with "
