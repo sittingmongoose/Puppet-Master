@@ -23,7 +23,6 @@ COMMANDS = [
     ('DG6B', 'pm-dg6b-event-contracts.py', []),
     ('DC', 'pm_collaboration_events.py', ['--self-test']),
     ('DS15', 'pm-ds15-event-contracts.py', []),
-    ('DS15-deck2', 'pm-ds15-deck2-contracts.py', []),
     ('DCW', 'pm_bundle_revision_events.py', []),
     ('DCH', 'pm_dch_events.py', []),
     ('DCH-stop', 'pm_dch_stop.py', []),
@@ -58,6 +57,8 @@ def main():
     commands=list(COMMANDS)
     selected=cells.load_rows()
     for row in selected:
+        if row['lane']=='DS15' and 'ds15_deck2_fixtures' in row['fixture']:
+            commands.append(('DS15-deck2-'+row['event_type'],'pm-ds15-deck2-contracts.py',['--family',row['event_type']]))
         if row['lane']=='DG6A' and 'card5_event_contracts' in row['fixture']:
             commands.append(('DG6A-'+row['event_type'],'pm-card5-event-contracts-check.py',['--family',row['event_type']]))
     commands.append(('DS','pm_event_authority_ds_round4.py',['--output',str(args.out/'DS-complete.json')]))
