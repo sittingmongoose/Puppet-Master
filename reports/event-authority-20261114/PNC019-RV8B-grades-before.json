@@ -1,0 +1,683 @@
+{
+ "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+ "criteria": [
+  "membership_version",
+  "owner_doc",
+  "producer",
+  "closed_payload_schema",
+  "scope_identity",
+  "replay_idempotency",
+  "retention",
+  "redaction_custody",
+  "transitions",
+  "consumers_checkpoints",
+  "compatibility_withdrawal",
+  "positive_negative_oracles"
+ ],
+ "status_meaning": "PASS/PARTIAL/ABSENT/CONFLICT as in the rubric; a PASS grades owner text, never native or runtime proof. Native execution NOT_RUN for every family.",
+ "oracle_bar": "Criterion 12 PASS requires an executable checker whose guard rows are proved by the gated tool (scripts/pm_guard_isolation.py), using the shared number and date-time calls and retained reads from the sealed receipt (PNC019-RUN quality bar; same bar as lane s3b). Authored cases without that checker grade PARTIAL.",
+ "schema_id": "pm.pnc019.rv8b.depth_grades.v1",
+ "grade": "before",
+ "assessed_tree": {
+  "commit": "2f44dc23cdc12ca49c82b43b16bd0310f8e11777",
+  "branch": "plans/ea-pnc-s3a-20261114 (lane rv8b base)",
+  "note": "Lane s3a's after-grade row for goal_run.replanned, re-checked at the rv8b base; s3a graded Plans at e05abaa0c6 and 2f44dc23cd changed only reports and the s3a grade checker."
+ },
+ "rows": [
+  {
+   "event_type": "goal_run.replanned",
+   "family_id": "event-family-goal-run-replanned",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/3",
+   "scope_policy": "project_only",
+   "group": "goal",
+   "disposition": "UNDISPOSITIONED",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-run-replanned at 2.0.0 in registry revision 2026-11-04.1, scope_policy project_only; payload_schema_ref resolves with matching $id and closed root; no payload_versions (CV-366 keeps it Project-only). No sibling admission. Membership says nothing about current emission.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+       "unit": "$id",
+       "line_start": 750,
+       "line_end": 750,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_run_replanned.schema.v2\"",
+       "excerpt_sha256": "ac6ff3810ccf872585debe1e9e9ce816c888043c73369a85ed6511d6354cb66a",
+       "file_sha256": "535a5510a5d0ef7c1c7c6b9a329d36af0564e14671809657b9faa62564194175",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "Known-37 Goal Runtime v2 schema registration",
+       "line_start": 8625,
+       "line_end": 8625,
+       "quote": "`pm.goal_runtime_event.goal_run_replanned.schema.v2`",
+       "excerpt_sha256": "32c4da7c40e96d657702d9e17ddc5db304a1dbad70686bb1ef17b37af96f64d2",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 228,
+       "line_end": 228,
+       "quote": "\"family_id\": \"event-family-goal-run-replanned\"",
+       "excerpt_sha256": "64ce4718954de9b85ce0125676e5bc871605bef2829774ea5369cc0de71e25c1",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The semantic anchor resolves to 'Goal and GoalRun payload minima', whose goal_run.replanned row lists the registered v2 fields and leads into Known-37 D-R19; the payload anchor resolves to SP-214. Neither is stale for v2 or disclaims its role. GRS-070 calls the family 'separately governed', and GRS-027 moved repair custody to Orchestrator/Executor, but no other governing text exists.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 232,
+       "line_end": 232,
+       "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\"",
+       "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 233,
+       "line_end": 233,
+       "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer\"",
+       "excerpt_sha256": "8a56f9ea8fd0001d6045b55116400600fead64f75505be23b9feac0e3a619ddc",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal and GoalRun payload minima",
+       "line_start": 2883,
+       "line_end": 2883,
+       "quote": "### Goal and GoalRun payload minima",
+       "excerpt_sha256": "a5682d5f543e6aebdda84cdbd40b6af0c291b7148c9685694f8c24cba7088c4a",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal and GoalRun payload minima",
+       "line_start": 2907,
+       "line_end": 2907,
+       "quote": "| `goal_run.replanned` |",
+       "excerpt_sha256": "ef4161b0d743a20fe0ec227be7e74607cf4ae6500b9f176c23794d0aa38f26fb",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "producer": {
+     "status": "PARTIAL",
+     "representation": "listed_only",
+     "finding": "GRS-070 leaves Workflow WorkGraph regeneration to 'the actual workflow and separately governed goal_run.replanned', and Known-37 section 4.2 makes it the only resume path for fenced runs. No producer exists: EP-118 supplies no 'optional/replanned materialization route', GRS-082 adds no replan writer, and the Workflow standard source does not 'claim that goal_run.replanned occurred'. SP-286 is not adopted.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-070 prose",
+       "line_start": 6962,
+       "line_end": 6962,
+       "quote": "workflow WorkGraph generation and affected WorkNode disposition remain with the actual workflow and separately governed goal_run.replanned.",
+       "excerpt_sha256": "05d1c6d8713aef392d3315d5f4afda39a1aba3c6f6474f38be16d44f819f26d5",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 4.2 GoalRun state",
+       "line_start": 3724,
+       "line_end": 3724,
+       "quote": "`blocked` and `stopped` are fenced, resumable only through a new revision and valid `goal_run.replanned` admission.",
+       "excerpt_sha256": "83ca77d2c8cecaf05ed8d636f25a7a5c4a62e8521c5be55a02233eb790a389b6",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-118",
+       "line_start": 7612,
+       "line_end": 7612,
+       "quote": "this adoption supplies no completion, certification, ownership-transfer or optional/replanned materialization route.",
+       "excerpt_sha256": "5f1e91758639938fdf9604f7bd7bdd23840135ce881627b379172f89ef007d24",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-082",
+       "line_start": 8138,
+       "line_end": 8138,
+       "quote": "this source adds no direct verifying/replan/repair",
+       "excerpt_sha256": "318bea8e2a3f9d449f974a08e06bcb43a83b503de75c702dd8688ba703e31f28",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "closed_payload_schema": {
+     "status": "CONFLICT",
+     "representation": "registry_structured",
+     "finding": "The v2 payload (WorkGraph refs, generation, WorkNode dispositions, next_action) carries no retired Goal structure, but the closed root requires expected_goal_revision and, by D-CAS-01, advances the Goal revision on each GoalRun replan, with no Workflow revision fields and an optional parent_goal_id. Current GoalRun contracts keep the Goal revision unchanged, use goal_run_revision fields, and forbid reinterpreting v2's expected Goal revision.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+       "unit": "root",
+       "line_start": 752,
+       "line_end": 752,
+       "quote": "\"additionalProperties\": false",
+       "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+       "file_sha256": "535a5510a5d0ef7c1c7c6b9a329d36af0564e14671809657b9faa62564194175",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+       "unit": "root required",
+       "line_start": 853,
+       "line_end": 853,
+       "quote": "\"expected_goal_revision\"",
+       "excerpt_sha256": "a4e596c20f9144dcf2744ecc36f1835812228b131f148926862f349df44e3e41",
+       "file_sha256": "535a5510a5d0ef7c1c7c6b9a329d36af0564e14671809657b9faa62564194175",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+       "unit": "$comment",
+       "line_start": 2,
+       "line_end": 2,
+       "quote": "For non-created rows, goal_revision = expected_goal_revision + 1 and expected_goal_revision = current.goal_revision remain owner/runtime equality predicates",
+       "excerpt_sha256": "ba46f3f029616e4d3def5936125f510eb12c7738dfef6ba46ffa440db2c60c73",
+       "file_sha256": "535a5510a5d0ef7c1c7c6b9a329d36af0564e14671809657b9faa62564194175",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+       "unit": "root properties",
+       "line_start": 808,
+       "line_end": 808,
+       "quote": "\"parent_goal_id\": {",
+       "excerpt_sha256": "801df66c49e0d8df96bac8d9a967918c36f99189a3436203ec4165f9d49d4e7b",
+       "file_sha256": "535a5510a5d0ef7c1c7c6b9a329d36af0564e14671809657b9faa62564194175",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "CONFLICT"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "scope_identity": {
+     "status": "PARTIAL",
+     "representation": "registry_structured",
+     "finding": "Exact: project_only scope, identity pointers, the Known-37 outer join including run_id = payload.payload.goal_run_id, Case L project scoping, and the v2 key with tuple goal_run_id, replan_generation, new_workgraph_ref, next_action. Missing: the Workflow revision joins that current GoalRun events use, a required inner idempotency_key, and a registry run_id pointer.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 231,
+       "line_end": 231,
+       "quote": "\"scope_policy\": \"project_only\"",
+       "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 245,
+       "line_end": 245,
+       "quote": "\"/payload/project_id\"",
+       "excerpt_sha256": "b861f066719e794f56a69524d7b92dec3b4ab10ed1684a901d05e5fd0f46796a",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 3.3 Outer EventRecord join",
+       "line_start": 3696,
+       "line_end": 3696,
+       "quote": "`event_type=payload.event_name`, `payload_schema_id=payload.schema_version=row schema ID`",
+       "excerpt_sha256": "bc6cfc31ef33c207e402cd1a0420875f8340a0d29383288c569dd05e9508cf0a",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 7.1 Exact idempotency construction",
+       "line_start": 3828,
+       "line_end": 3828,
+       "quote": "\"pm.goal-runtime-event.v2:\" +",
+       "excerpt_sha256": "790e291a36f934951fdb9f05b7b36f97949afa96becf0e75e51e1b59214754a4",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "replay_idempotency": {
+     "status": "PARTIAL",
+     "representation": "exact_normative_owner",
+     "finding": "Known-37 7.1 fixes the v2 key and lifetime identity domain: same identity/digest returns the original result with no second effect; conflicts and dedupe_unavailable append nothing; the oracle forbids WorkNode dispatch from the event itself. Current GoalRun routes use v3 keys and a lost-acknowledgement rule this family lacks; SP-286 is unadopted and no projection is registered.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 7.1 Exact idempotency construction",
+       "line_start": 3845,
+       "line_end": 3845,
+       "quote": "same identity and same EventRecord application-data digest returns the original `event_id`, receipt, sequence, and transition result without a second append or side effect",
+       "excerpt_sha256": "1d8c26c5ddeece45702f747ec6cb963ce53b73551da88e9840f856a3b2257af7",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 7.1 Exact idempotency construction",
+       "line_start": 3847,
+       "line_end": 3847,
+       "quote": "if that cannot be proven, return `dedupe_unavailable`, append nothing",
+       "excerpt_sha256": "22032e617e617878f24d78b45ef955917492332eaf98e6c0f8b4c80b4bea2abf",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 7.1 Exact idempotency construction",
+       "line_start": 3850,
+       "line_end": 3850,
+       "quote": "Replay of a valid v2 event may rebuild only registered disposable projections.",
+       "excerpt_sha256": "32fddd966e4b82ec81941d579f513f9b843da0b9b2158ecbd9aadee42ed36203",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Goal Runtime persistence and dispatch",
+       "line_start": 18486,
+       "line_end": 18486,
+       "quote": "All v2 rows use `replay_policy=dedupe_by_idempotency_key`",
+       "excerpt_sha256": "1623d34a6368744712f19b83f879e688cd03cf7dc328affd0f276a99d6ffbb06",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The registry assigns RP-RUNTIME-365D@1.0.0 (fixed 365-day TTL from run_completion, 1,000,000 per run plus 5,000,000 per project, roll_successor, compact). The RET-K37-ASSIGNMENT-001 table lists goal_run.replanned there, and ATS P5 states the expectation. No admitted projection or checkpoint is owned, so no retention choice is open.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 265,
+       "line_end": 265,
+       "quote": "\"policy_id\": \"RP-RUNTIME-365D\"",
+       "excerpt_sha256": "ff4d0a8da38a8f3056162d8a1f66e9cc6a187fe4827aa9f5f6c952963259f7b3",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 266,
+       "line_end": 266,
+       "quote": "\"policy_version\": \"1.0.0\"",
+       "excerpt_sha256": "42ad19f2cac0b98558f527227ff8377def128614a9bb06e731c74185ee4dc978",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Known-37 retention assignment (RET-K37-ASSIGNMENT-001@1.0.0)",
+       "line_start": 18474,
+       "line_end": 18474,
+       "quote": "| `goal_run.replanned`, `goal_run.started`, `run.started` | `RP-RUNTIME-365D@1.0.0` | 3 |",
+       "excerpt_sha256": "0a74d6b6381a3d76cc0d8ab829a321301ad7372c59e0f7638139809acde65685",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "#/retention_policies RP-RUNTIME-365D",
+       "line_start": 459,
+       "line_end": 459,
+       "quote": "\"anchor_kind\": \"run_completion\"",
+       "excerpt_sha256": "74fb930770acaee56830ee30228eeb8061c5ce58904701fba46b4bc573be33dd",
+       "file_sha256": "68271aa87c1ec0e19fe4701795564ed9bc776b963a4a554b24f724e672c4a8ed",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "redaction_custody": {
+     "status": "PARTIAL",
+     "representation": "registry_structured",
+     "finding": "Redaction is covered by the registry mode reject_unhandled_secrets, the EventRecord redaction_profile, Known-37 7.2 and the V2 no-secret rule. Custody is absent: no unit names who holds the original replan record or WorkNode disposition records, their backup/restore coherence, or access and deletion checks at read.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/3",
+       "line_start": 253,
+       "line_end": 253,
+       "quote": "\"mode\": \"reject_unhandled_secrets\"",
+       "excerpt_sha256": "91c21aae18a31744144bca6d3504227098463bc391436ab5b9042a5b03d04763",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "1.2 EventRecord",
+       "line_start": 1020,
+       "line_end": 1020,
+       "quote": "Raw secrets are never valid EventRecord content.",
+       "excerpt_sha256": "6ea3a4c4b0fbab8920d01eb07244d493218150b607905e8fca7a507780451610",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 7.2 Redaction",
+       "line_start": 3854,
+       "line_end": 3854,
+       "quote": "Secret material is represented only by an owner-issued opaque ref.",
+       "excerpt_sha256": "a2da95855bc4e667177d9d8ba3cb3a542fff3ccc8da1814f676e9956bf588032",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal V2 events",
+       "line_start": 276,
+       "line_end": 276,
+       "quote": "no event may carry secrets, tokens, provider credentials, or raw file bodies.",
+       "excerpt_sha256": "6d4dcd6c0274d52b826b20a32787972ca3153a27362773c7f96f094fb0dc166b",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "transitions": {
+     "status": "PARTIAL",
+     "representation": "exact_normative_owner",
+     "finding": "D-R19 gives exact successor-by-action edges over the GoalRun lifecycle, which current text treats as live and separate (GRS-065, GRS-080, GRS-082). They are unadopted: GRS-082 adds no replan writer, EP-118 no replanned route, D-R19's basis GRS-027 is superseded, and GRS-085 halts on same-run replanned rows. The cancel=>cancelled successor is unreconciled with GRS-080's cancelled-v3 route.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "EA-UND-0019-GOAL (D-R19)",
+       "line_start": 4016,
+       "line_end": 4016,
+       "quote": "`running|provisional_success|verifying|failed_verification|repairing|blocked|stopped ->` successor by action",
+       "excerpt_sha256": "c8d07579900906e75d17de4e9de37e42532eb7102191fc04985a2bd6ccbb7d76",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "EA-UND-0019-GOAL (D-R19)",
+       "line_start": 3943,
+       "line_end": 3943,
+       "quote": "`cancel=>cancelled`",
+       "excerpt_sha256": "1e6e5a10311c733fe70532bfdd4d827802bb727a049b3b197dbea0d6cdffe5c9",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "EA-UND-0019-GOAL (D-R19)",
+       "line_start": 4017,
+       "line_end": 4017,
+       "quote": "`C-GRS-LIFE` (`GRS-026..027`)",
+       "excerpt_sha256": "138b16c45040f408794039627ee485909dc4764dd12578881925ec561fcd2dab",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 4.2 GoalRun state",
+       "line_start": 3722,
+       "line_end": 3722,
+       "quote": "`GoalRunStatus = ready | running | provisional_success | verifying | failed_verification | repairing | certified | failed | blocked | cancelled | stopped`",
+       "excerpt_sha256": "818c7ddd7a2eb40336985c347fbbbf1a006c971102ff2aa69504659df0e722f7",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "consumers_checkpoints": {
+     "status": "ABSENT",
+     "representation": "absent",
+     "finding": "No consumer exists. The only current GoalRun projection (GRS-085, with SP-312 owning the started/cancelled checkpoint) treats same-run replanned as unsupported and halts before the row without advancing its checkpoint. SP-214's goal_run_projection.v1 inventory is not an admitted route, and no SP-278 adoption exists for this family.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-214",
+       "line_start": 15459,
+       "line_end": 15459,
+       "quote": "rebuilds disposable projections goal_state.v1:{project_id}:{goal_id}",
+       "excerpt_sha256": "4f84541f864dccc6a33418a9a884eda428f605f2165dd4d573bb040393425953",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-214",
+       "line_start": 15494,
+       "line_end": 15494,
+       "quote": "applies only to an individually admitted projection route",
+       "excerpt_sha256": "67703a2bef6c331abab290148cebc8bb4a417034827345650f350a16177ae7fd",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Current update consumers (updated-v3 view map)",
+       "line_start": 25121,
+       "line_end": 25121,
+       "quote": "A future durable projection or another Goal/GoalRun event still requires its own exact source/write/checkpoint adoption.",
+       "excerpt_sha256": "0f1d9bf64623262bef9bb30b8ca80127e06ea9492998591ca27e33b0aeba592c",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 10 Common failure behavior",
+       "line_start": 4085,
+       "line_end": 4085,
+       "quote": "A projector advances its checkpoint only after all events through that sequence validate and apply atomically.",
+       "excerpt_sha256": "96153c19d8d0ad067a0fd9d1e55476b6d2251f16a8f6ae31e9e178866b04e65a",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "ABSENT"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "compatibility_withdrawal": {
+     "status": "PARTIAL",
+     "representation": "exact_normative_owner",
+     "finding": "Compatibility is explicit for legacy v1 input (reader-only, projector_replay_only) and the v2 writer root, and the current v3 reducer halts on 'incompatible v2/v3 profile' rows. There is no withdrawal protocol: no writer-admission cutoff, reader withdrawal or rebuild fence for goal_run.replanned.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-041",
+       "line_start": 5384,
+       "line_end": 5384,
+       "quote": "New v1 writes fail; valid `pm.goal_runtime_events.schema.v1` input remains",
+       "excerpt_sha256": "85d44d9630040e09077589e01a5f8de095cd36c78810321749fedbe5ee0c6666",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-041",
+       "line_start": 5385,
+       "line_end": 5385,
+       "quote": "reader-only, enters only the registered legacy normalizer and",
+       "excerpt_sha256": "274f24a99759b5a1f8da719e3050984751b35b921b836132f0a143fa4de96e13",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Goal Runtime persistence and dispatch",
+       "line_start": 18484,
+       "line_end": 18484,
+       "quote": "The legacy aggregate `Plans/goal_runtime_events.schema.json` is immutable reader-only input.",
+       "excerpt_sha256": "5af951afc449d7f47acc952120e648293436d5860fa8456b5888f1750740036c",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Known-37 Goal Runtime v2 owner materialization",
+       "line_start": 2934,
+       "line_end": 2934,
+       "quote": "new writes select exactly one self-contained v2 root per event",
+       "excerpt_sha256": "f740ecf735facc836904b5352626bb95dd1bd1cba58d0f5fac2e6413d9bdd562",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    },
+    "positive_negative_oracles": {
+     "status": "PARTIAL",
+     "representation": "exact_normative_owner",
+     "finding": "EA-UND-0019 has one positive and one negative oracle in prose, mirrored in Automated_Testing_System as NOT_EXECUTABLE, and retention P5 covers the TTL. The positive case replans into the repair loop that GRS-027 moved to Orchestrator/Executor ownership. No v2 fixtures exist, and the owner-named fixture check validates only legacy v1.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal Runtime v2 event acceptance oracles",
+       "line_start": 4035,
+       "line_end": 4035,
+       "quote": "These 21 positive/negative pairs are normative oracle prose, not executable artifacts.",
+       "excerpt_sha256": "39164939147fe8fc4926f079a161d5e5d62ae67489d8db1783d6cfc063185349",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal Runtime v2 event acceptance oracles",
+       "line_start": 3814,
+       "line_end": 3814,
+       "quote": "| `EA-UND-0019-GOAL` |",
+       "excerpt_sha256": "dee058ac226b10e737dd03f09930f9610137963702da5cd153ebbc981b748557",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "Goal Runtime v2 event acceptance oracles",
+       "line_start": 2664,
+       "line_end": 2664,
+       "quote": "- `EA-UND-0019-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`",
+       "excerpt_sha256": "b8ad1b0480de8e5b1ac7115db8a1deb0955b3725ec5f9a86b51571832c16f4d3",
+       "file_sha256": "a5d610c482aaab958ae88afb208df462409c8e63f9133f97530700b53f4d002e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "Goal Runtime v2 event acceptance oracles",
+       "line_start": 2665,
+       "line_end": 2665,
+       "quote": "- `EA-UND-0019-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`",
+       "excerpt_sha256": "278ff44dfe7d2abbd5346a8fcec0447d543b3869de5fb6fed3a862b6de15d634",
+       "file_sha256": "a5d610c482aaab958ae88afb208df462409c8e63f9133f97530700b53f4d002e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json (s3a, assessed e05abaa0c6)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "s3a after-grade cell, quotes re-found at the rv8b base."
+    }
+   },
+   "remaining_gaps": [
+    "All nine non-PASS cells wait on DL-080 order: goal_run.stopped and goal_run.blocked contracts first, then the Workflow Replan source work (pm.executor.workflow_source.all_writers.v8) before any goal_run.replanned contract (DL-080 negative constraint). Technical work that DL-080 makes needed and does not schedule; no Jared question.",
+    "closed_payload_schema CONFLICT: the v2 payload requires retired Goal replan structure for current writes until the v8-based contract exists."
+   ],
+   "notes": [],
+   "pass_count": 3,
+   "vector": "P P p C p p P p p A p p"
+  }
+ ]
+}
