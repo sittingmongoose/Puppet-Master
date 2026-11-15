@@ -90,15 +90,15 @@
             {
               "path": "Plans/assistant-chat-design.md",
               "unit": "ACD-571",
-              "line_start": 29065,
-              "line_end": 29066,
+              "line_start": 33163,
+              "line_end": 33164,
               "quote": "bundle.revision_requested` has current semantic ownership here under ACD-049/050, not retired\n  Chain Wizard ownership. The document review owner accepts Resubmit with Annotations for o"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24615,
-              "line_end": 24616,
+              "line_start": 39078,
+              "line_end": 39079,
               "quote": "bundle.revision_requested` has payload schema Plans/event_payloads/bundle_revision/revision_requested.schema.json,\n  schema_id pm.event_payload.bundle.revision_requested.v1, schema_vers"
             }
           ],
@@ -117,43 +117,43 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24626,
-              "line_end": 24629,
+              "line_start": 39089,
+              "line_end": 39092,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thr"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29722,
-              "line_end": 29724,
+              "line_start": 44062,
+              "line_end": 44064,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30176,
-              "line_end": 30177,
+              "line_start": 44516,
+              "line_end": 44517,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24653,
-              "line_end": 24653,
+              "line_start": 39116,
+              "line_end": 39116,
               "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or s"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24653,
-              "line_end": 24653,
+              "line_start": 39116,
+              "line_end": 39116,
               "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 787,
-              "line_end": 792,
+              "line_start": 788,
+              "line_end": 793,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -206,15 +206,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24629,
-              "line_end": 24630,
+              "line_start": 39092,
+              "line_end": 39093,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thread_id,bundle_id,revision_id,phase_sequence]\n"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24623,
-              "line_end": 24624,
+              "line_start": 39086,
+              "line_end": 39087,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -233,15 +233,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24626,
-              "line_end": 24629,
+              "line_start": 39089,
+              "line_end": 39092,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thr"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24643,
-              "line_end": 24645,
+              "line_start": 39106,
+              "line_end": 39108,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
@@ -260,8 +260,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29757,
-              "line_end": 29758,
+              "line_start": 44097,
+              "line_end": 44098,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -280,8 +280,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30165,
-              "line_end": 30166,
+              "line_start": 44505,
+              "line_end": 44506,
               "quote": "mandatory coherent backup authority with original documents, annotations,\n  FileSafe results, immutable intent/results, seglog identity/dedupe and SP-286 custody. Restore admits one ver"
             },
             {
@@ -294,15 +294,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30176,
-              "line_end": 30177,
+              "line_start": 44516,
+              "line_end": 44517,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 531,
-              "line_end": 531,
+              "line_start": 532,
+              "line_end": 532,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -321,8 +321,8 @@
             {
               "path": "Plans/assistant-chat-design.md",
               "unit": "ACD-571",
-              "line_start": 29068,
-              "line_end": 29070,
+              "line_start": 33166,
+              "line_end": 33168,
               "quote": "predecessor_event_id\n  is null. Source references resolve the exact immutable request/result/interruption recovery evidence, without\n  embedding document or annotation bodies. Existing "
             }
           ],
@@ -341,22 +341,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29737,
-              "line_end": 29739,
+              "line_start": 44077,
+              "line_end": 44079,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29739,
-              "line_end": 29740,
+              "line_start": 44079,
+              "line_end": 44080,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 1004,
-              "line_end": 1004,
+              "line_start": 1005,
+              "line_end": 1005,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -375,36 +375,36 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29763,
-              "line_end": 29764,
+              "line_start": 44103,
+              "line_end": 44104,
               "quote": "Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revis"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29765,
-              "line_end": 29767,
+              "line_start": 44105,
+              "line_end": 44107,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 615,
-              "line_end": 616,
+              "line_start": 616,
+              "line_end": 617,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 16017,
-              "line_end": 16017,
+              "line_start": 20820,
+              "line_end": 20820,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "require_storage_timestamps",
-              "line_start": 852,
-              "line_end": 852,
+              "line_start": 853,
+              "line_end": 853,
               "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
             },
             {
@@ -430,94 +430,95 @@
           "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
+          "finding": "PASS (C12-DCW): all 238 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 15, cut_accepts 179, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 26914 exact kills and 10683 INVALID proposals over 20 real check_schema sites, plus 26891 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_supplement 33); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "source_storage",
-              "line_start": 519,
-              "line_end": 519,
-              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
+              "unit": "index_read",
+              "line_start": 482,
+              "line_end": 482,
+              "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "full checker",
-              "line_start": 729,
-              "line_end": 729,
-              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 395,
+              "line_end": 395,
+              "quote": "EXPECTED = ['refused', 'OE001', 'schema']"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "verify",
-              "line_start": 598,
-              "line_end": 598,
-              "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 439,
+              "line_end": 439,
+              "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "run",
-              "line_start": 699,
-              "line_end": 699,
-              "quote": "schema_references(schema)"
+              "path": "scripts/pm_dcw_c12_boundary.py",
+              "unit": "classify",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "return dict(status='complete_boundary', first=first, cut=single)"
             },
             {
-              "path": "scripts/pm_dcw_event_regressions.py",
-              "unit": "audit",
-              "line_start": 154,
-              "line_end": 154,
-              "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+              "path": "scripts/pm_dcw_c12_implications.py",
+              "unit": "check",
+              "line_start": 147,
+              "line_end": 147,
+              "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
+              "path": "scripts/pm_dcw_c12_retained.py",
+              "unit": "observe",
+              "line_start": 222,
+              "line_end": 222,
+              "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_datetime.py",
+              "unit": "field_profile",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_entailments.py",
+              "unit": "run_spec",
+              "line_start": 185,
+              "line_end": 185,
+              "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_cases.py",
               "unit": "bundle.revision_requested",
-              "line_start": 6746,
-              "line_end": 6751,
-              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
+              "line_start": 138,
+              "line_end": 138,
+              "quote": "yield witness('O062', 'bundle.revision_requested', requested, control(requested, 'append'),"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
+              "path": "scripts/pm_dcw_c12_cases.py",
               "unit": "bundle.revision_requested",
-              "line_start": 7124,
-              "line_end": 7129,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
+              "line_start": 189,
+              "line_end": 189,
+              "quote": "yield witness('O132', 'bundle.revision_requested', requested, control(requested, 'read'), token_key, 'index_currentness', 'read')"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
+              "path": "scripts/pm_dcw_c12_cases.py",
               "unit": "bundle.revision_requested",
-              "line_start": 7589,
-              "line_end": 7594,
-              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
-            },
-            {
-              "path": "scripts/pm_dcw_guard_suites.py",
-              "unit": "bounded phase suite and complete-path diagnostic",
-              "line_start": 3,
-              "line_end": 4,
-              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
-            },
-            {
-              "path": "scripts/pm_dcw_event_numeric_cases.py",
-              "unit": "bundle.revision_requested",
-              "line_start": 1,
-              "line_end": 4,
-              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
-            },
-            {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "bundle.revision_requested",
-              "line_start": 1004,
-              "line_end": 1004,
-              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
+              "line_start": 197,
+              "line_end": 197,
+              "quote": "yield witness('O133', 'bundle.revision_requested', requested, control(requested, 'read'), index_key, 'index_currentness', 'read')"
             }
           ],
           "prior": {
-            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
-            "status": "PARTIAL"
+            "source": "sweep part 2B self-grade at 6bd3b82b1a (reports/event-authority-20261104/DCW.self-grade.json)",
+            "status": "PASS",
+            "finding": "PASS (C12-DCW): all 238 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 15, cut_accepts 179, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 26914 exact kills and 10683 INVALID proposals over 20 real check_schema sites, plus 26891 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_supplement 33); keyword independence is not claimed. Every two-copy join row has a single-copy witness; its other copy is witnessed too, located and pinned by named earlier joins, or derived/configuration (lane-wide 193 rows: 91 both, 76 pinned, 24 written, 2 by construction). Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN."
           },
-          "change": "carried",
-          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
+          "change": "upgraded",
+          "change_reason": "C12-DCW closure: complete-boundary witnesses or checked implications for every reached row, whole-definition schema clause ledger, sealed-store retained reads, date-time corpus, O234."
         }
       },
       "remaining_gaps": [
@@ -654,15 +655,15 @@
             {
               "path": "Plans/assistant-chat-design.md",
               "unit": "ACD-572",
-              "line_start": 29113,
-              "line_end": 29114,
+              "line_start": 33211,
+              "line_end": 33212,
               "quote": "bundle.revision_started` has current semantic ownership here under ACD-049/050, not retired Chain\n  Wizard ownership. The targeted revision runner starts only after the exact requested "
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24692,
-              "line_end": 24693,
+              "line_start": 39155,
+              "line_end": 39156,
               "quote": "bundle.revision_started` has payload schema Plans/event_payloads/bundle_revision/revision_started.schema.json,\n  schema_id pm.event_payload.bundle.revision_started.v1, schema_version 1."
             }
           ],
@@ -681,43 +682,43 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24703,
-              "line_end": 24706,
+              "line_start": 39166,
+              "line_end": 39169,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_started\",project_id,threa"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29821,
-              "line_end": 29823,
+              "line_start": 44161,
+              "line_end": 44163,
               "quote": "SP-286 and CV-339 including strict full-value v2 resolution,\n  SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract under DL-045:\n  produ"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30176,
-              "line_end": 30177,
+              "line_start": 44516,
+              "line_end": 44517,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24730,
-              "line_end": 24730,
+              "line_start": 39193,
+              "line_end": 39193,
               "quote": "NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or ser"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24730,
-              "line_end": 24730,
+              "line_start": 39193,
+              "line_end": 39193,
               "quote": "NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never J"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 787,
-              "line_end": 792,
+              "line_start": 788,
+              "line_end": 793,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -770,15 +771,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24706,
-              "line_end": 24707,
+              "line_start": 39169,
+              "line_end": 39170,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_started\",project_id,thread_id,bundle_id,revision_id,phase_sequence]\n  "
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24700,
-              "line_end": 24701,
+              "line_start": 39163,
+              "line_end": 39164,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -797,15 +798,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24703,
-              "line_end": 24706,
+              "line_start": 39166,
+              "line_end": 39169,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_started\",project_id,threa"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24720,
-              "line_end": 24722,
+              "line_start": 39183,
+              "line_end": 39185,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
@@ -824,8 +825,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29855,
-              "line_end": 29856,
+              "line_start": 44195,
+              "line_end": 44196,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -844,8 +845,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30165,
-              "line_end": 30166,
+              "line_start": 44505,
+              "line_end": 44506,
               "quote": "mandatory coherent backup authority with original documents, annotations,\n  FileSafe results, immutable intent/results, seglog identity/dedupe and SP-286 custody. Restore admits one ver"
             },
             {
@@ -858,15 +859,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30176,
-              "line_end": 30177,
+              "line_start": 44516,
+              "line_end": 44517,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 531,
-              "line_end": 531,
+              "line_start": 532,
+              "line_end": 532,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -885,8 +886,8 @@
             {
               "path": "Plans/assistant-chat-design.md",
               "unit": "ACD-572",
-              "line_start": 29115,
-              "line_end": 29116,
+              "line_start": 33213,
+              "line_end": 33214,
               "quote": "predecessor_event_id names that request for the same project/thread/bundle/revision. On resume\n  the predecessor is instead the exact interrupted event for this revision. Start is recor"
             }
           ],
@@ -905,22 +906,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29835,
-              "line_end": 29837,
+              "line_start": 44175,
+              "line_end": 44177,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29837,
-              "line_end": 29838,
+              "line_start": 44177,
+              "line_end": 44178,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 1004,
-              "line_end": 1004,
+              "line_start": 1005,
+              "line_end": 1005,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -939,36 +940,36 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29861,
-              "line_end": 29862,
+              "line_start": 44201,
+              "line_end": 44202,
               "quote": "Withdrawal first cuts off new writer admission for bundle.revision_started; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revisio"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29863,
-              "line_end": 29865,
+              "line_start": 44203,
+              "line_end": 44205,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 615,
-              "line_end": 616,
+              "line_start": 616,
+              "line_end": 617,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 16017,
-              "line_end": 16017,
+              "line_start": 20820,
+              "line_end": 20820,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "require_storage_timestamps",
-              "line_start": 852,
-              "line_end": 852,
+              "line_start": 853,
+              "line_end": 853,
               "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
             },
             {
@@ -994,94 +995,74 @@
           "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
+          "finding": "PASS (C12-DCW): all 235 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 14, cut_accepts 177, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 30264 exact kills and 12977 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "source_storage",
-              "line_start": 519,
-              "line_end": 519,
-              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
+              "unit": "index_read",
+              "line_start": 482,
+              "line_end": 482,
+              "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "full checker",
-              "line_start": 729,
-              "line_end": 729,
-              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 395,
+              "line_end": 395,
+              "quote": "EXPECTED = ['refused', 'OE001', 'schema']"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "verify",
-              "line_start": 598,
-              "line_end": 598,
-              "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 439,
+              "line_end": 439,
+              "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "run",
-              "line_start": 699,
-              "line_end": 699,
-              "quote": "schema_references(schema)"
+              "path": "scripts/pm_dcw_c12_boundary.py",
+              "unit": "classify",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "return dict(status='complete_boundary', first=first, cut=single)"
             },
             {
-              "path": "scripts/pm_dcw_event_regressions.py",
-              "unit": "audit",
-              "line_start": 154,
-              "line_end": 154,
-              "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+              "path": "scripts/pm_dcw_c12_implications.py",
+              "unit": "check",
+              "line_start": 147,
+              "line_end": 147,
+              "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_started",
-              "line_start": 6746,
-              "line_end": 6751,
-              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
+              "path": "scripts/pm_dcw_c12_retained.py",
+              "unit": "observe",
+              "line_start": 222,
+              "line_end": 222,
+              "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_started",
-              "line_start": 7124,
-              "line_end": 7129,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
+              "path": "scripts/pm_dcw_c12_datetime.py",
+              "unit": "field_profile",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_started",
-              "line_start": 7589,
-              "line_end": 7594,
-              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
-            },
-            {
-              "path": "scripts/pm_dcw_guard_suites.py",
-              "unit": "bounded phase suite and complete-path diagnostic",
-              "line_start": 3,
-              "line_end": 4,
-              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
-            },
-            {
-              "path": "scripts/pm_dcw_event_numeric_cases.py",
-              "unit": "bundle.revision_started",
-              "line_start": 1,
-              "line_end": 4,
-              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
-            },
-            {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "bundle.revision_started",
-              "line_start": 1004,
-              "line_end": 1004,
-              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
+              "path": "scripts/pm_dcw_c12_entailments.py",
+              "unit": "run_spec",
+              "line_start": 185,
+              "line_end": 185,
+              "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)"
             }
           ],
           "prior": {
-            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
-            "status": "PARTIAL"
+            "source": "sweep part 2B self-grade at 6bd3b82b1a (reports/event-authority-20261104/DCW.self-grade.json)",
+            "status": "PASS",
+            "finding": "PASS (C12-DCW): all 235 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 14, cut_accepts 177, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 30264 exact kills and 12977 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Every two-copy join row has a single-copy witness; its other copy is witnessed too, located and pinned by named earlier joins, or derived/configuration (lane-wide 193 rows: 91 both, 76 pinned, 24 written, 2 by construction). Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN."
           },
-          "change": "carried",
-          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
+          "change": "upgraded",
+          "change_reason": "C12-DCW closure: complete-boundary witnesses or checked implications for every reached row, whole-definition schema clause ledger, sealed-store retained reads, date-time corpus, O234."
         }
       },
       "remaining_gaps": [
@@ -1218,15 +1199,15 @@
             {
               "path": "Plans/assistant-chat-design.md",
               "unit": "ACD-573",
-              "line_start": 29161,
-              "line_end": 29162,
+              "line_start": 33259,
+              "line_end": 33260,
               "quote": "bundle.revision_completed` has current semantic ownership here under ACD-049/050, not retired\n  Chain Wizard ownership. The targeted revision runner reports completion only after the va"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24769,
-              "line_end": 24770,
+              "line_start": 39232,
+              "line_end": 39233,
               "quote": "bundle.revision_completed` has payload schema Plans/event_payloads/bundle_revision/revision_completed.schema.json,\n  schema_id pm.event_payload.bundle.revision_completed.v1, schema_vers"
             }
           ],
@@ -1245,43 +1226,43 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24780,
-              "line_end": 24783,
+              "line_start": 39243,
+              "line_end": 39246,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_completed\",project_id,thr"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29919,
-              "line_end": 29921,
+              "line_start": 44259,
+              "line_end": 44261,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30176,
-              "line_end": 30177,
+              "line_start": 44516,
+              "line_end": 44517,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24807,
-              "line_end": 24807,
+              "line_start": 39270,
+              "line_end": 39270,
               "quote": "NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or s"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24807,
-              "line_end": 24807,
+              "line_start": 39270,
+              "line_end": 39270,
               "quote": "NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 787,
-              "line_end": 792,
+              "line_start": 788,
+              "line_end": 793,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -1334,15 +1315,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24783,
-              "line_end": 24784,
+              "line_start": 39246,
+              "line_end": 39247,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_completed\",project_id,thread_id,bundle_id,revision_id,phase_sequence]\n"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24777,
-              "line_end": 24778,
+              "line_start": 39240,
+              "line_end": 39241,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -1361,15 +1342,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24780,
-              "line_end": 24783,
+              "line_start": 39243,
+              "line_end": 39246,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_completed\",project_id,thr"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24797,
-              "line_end": 24799,
+              "line_start": 39260,
+              "line_end": 39262,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
@@ -1388,8 +1369,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29954,
-              "line_end": 29955,
+              "line_start": 44294,
+              "line_end": 44295,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -1408,8 +1389,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30165,
-              "line_end": 30166,
+              "line_start": 44505,
+              "line_end": 44506,
               "quote": "mandatory coherent backup authority with original documents, annotations,\n  FileSafe results, immutable intent/results, seglog identity/dedupe and SP-286 custody. Restore admits one ver"
             },
             {
@@ -1422,15 +1403,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30176,
-              "line_end": 30177,
+              "line_start": 44516,
+              "line_end": 44517,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 531,
-              "line_end": 531,
+              "line_start": 532,
+              "line_end": 532,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -1449,8 +1430,8 @@
             {
               "path": "Plans/assistant-chat-design.md",
               "unit": "ACD-573",
-              "line_start": 29163,
-              "line_end": 29165,
+              "line_start": 33261,
+              "line_end": 33263,
               "quote": "predecessor_event_id\n  names the exact started event. Completion neither starts execution nor runs Multi-Pass Review. Source references\n  resolve the exact immutable request/result/inte"
             }
           ],
@@ -1469,22 +1450,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29934,
-              "line_end": 29936,
+              "line_start": 44274,
+              "line_end": 44276,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29936,
-              "line_end": 29937,
+              "line_start": 44276,
+              "line_end": 44277,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 1004,
-              "line_end": 1004,
+              "line_start": 1005,
+              "line_end": 1005,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -1503,36 +1484,36 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29960,
-              "line_end": 29961,
+              "line_start": 44300,
+              "line_end": 44301,
               "quote": "Withdrawal first cuts off new writer admission for bundle.revision_completed; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revis"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29962,
-              "line_end": 29964,
+              "line_start": 44302,
+              "line_end": 44304,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 615,
-              "line_end": 616,
+              "line_start": 616,
+              "line_end": 617,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 16017,
-              "line_end": 16017,
+              "line_start": 20820,
+              "line_end": 20820,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "require_storage_timestamps",
-              "line_start": 852,
-              "line_end": 852,
+              "line_start": 853,
+              "line_end": 853,
               "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
             },
             {
@@ -1558,94 +1539,81 @@
           "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
+          "finding": "PASS (C12-DCW): all 238 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 15, cut_accepts 179, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 29329 exact kills and 12664 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "source_storage",
-              "line_start": 519,
-              "line_end": 519,
-              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
+              "unit": "index_read",
+              "line_start": 482,
+              "line_end": 482,
+              "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "full checker",
-              "line_start": 729,
-              "line_end": 729,
-              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 395,
+              "line_end": 395,
+              "quote": "EXPECTED = ['refused', 'OE001', 'schema']"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "verify",
-              "line_start": 598,
-              "line_end": 598,
-              "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 439,
+              "line_end": 439,
+              "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "run",
-              "line_start": 699,
-              "line_end": 699,
-              "quote": "schema_references(schema)"
+              "path": "scripts/pm_dcw_c12_boundary.py",
+              "unit": "classify",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "return dict(status='complete_boundary', first=first, cut=single)"
             },
             {
-              "path": "scripts/pm_dcw_event_regressions.py",
-              "unit": "audit",
-              "line_start": 154,
-              "line_end": 154,
-              "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+              "path": "scripts/pm_dcw_c12_implications.py",
+              "unit": "check",
+              "line_start": 147,
+              "line_end": 147,
+              "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
+              "path": "scripts/pm_dcw_c12_retained.py",
+              "unit": "observe",
+              "line_start": 222,
+              "line_end": 222,
+              "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_datetime.py",
+              "unit": "field_profile",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_entailments.py",
+              "unit": "run_spec",
+              "line_start": 185,
+              "line_end": 185,
+              "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_cases.py",
               "unit": "bundle.revision_completed",
-              "line_start": 6746,
-              "line_end": 6751,
-              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
-            },
-            {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_completed",
-              "line_start": 7124,
-              "line_end": 7129,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
-            },
-            {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_completed",
-              "line_start": 7589,
-              "line_end": 7594,
-              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
-            },
-            {
-              "path": "scripts/pm_dcw_guard_suites.py",
-              "unit": "bounded phase suite and complete-path diagnostic",
-              "line_start": 3,
-              "line_end": 4,
-              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
-            },
-            {
-              "path": "scripts/pm_dcw_event_numeric_cases.py",
-              "unit": "bundle.revision_completed",
-              "line_start": 1,
-              "line_end": 4,
-              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
-            },
-            {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "bundle.revision_completed",
-              "line_start": 1004,
-              "line_end": 1004,
-              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
+              "line_start": 142,
+              "line_end": 142,
+              "quote": "yield witness('O075', 'bundle.revision_completed', completed, control(completed, 'append'),"
             }
           ],
           "prior": {
-            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
-            "status": "PARTIAL"
+            "source": "sweep part 2B self-grade at 6bd3b82b1a (reports/event-authority-20261104/DCW.self-grade.json)",
+            "status": "PASS",
+            "finding": "PASS (C12-DCW): all 238 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 15, cut_accepts 179, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 29329 exact kills and 12664 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Every two-copy join row has a single-copy witness; its other copy is witnessed too, located and pinned by named earlier joins, or derived/configuration (lane-wide 193 rows: 91 both, 76 pinned, 24 written, 2 by construction). Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN."
           },
-          "change": "carried",
-          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
+          "change": "upgraded",
+          "change_reason": "C12-DCW closure: complete-boundary witnesses or checked implications for every reached row, whole-definition schema clause ledger, sealed-store retained reads, date-time corpus, O234."
         }
       },
       "remaining_gaps": [
@@ -1782,15 +1750,15 @@
             {
               "path": "Plans/assistant-chat-design.md",
               "unit": "ACD-574",
-              "line_start": 29209,
-              "line_end": 29210,
+              "line_start": 33307,
+              "line_end": 33308,
               "quote": "bundle.revision_interrupted` has current semantic ownership here under ACD-049/050, not retired\n  Chain Wizard ownership. The targeted revision runner records an actual interruption aft"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24846,
-              "line_end": 24847,
+              "line_start": 39309,
+              "line_end": 39310,
               "quote": "bundle.revision_interrupted` has payload schema Plans/event_payloads/bundle_revision/revision_interrupted.schema.json,\n  schema_id pm.event_payload.bundle.revision_interrupted.v1, schem"
             }
           ],
@@ -1809,43 +1777,43 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24857,
-              "line_end": 24860,
+              "line_start": 39320,
+              "line_end": 39323,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_interrupted\",project_id,t"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 30018,
-              "line_end": 30020,
+              "line_start": 44358,
+              "line_end": 44360,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30176,
-              "line_end": 30177,
+              "line_start": 44516,
+              "line_end": 44517,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24884,
-              "line_end": 24884,
+              "line_start": 39347,
+              "line_end": 39347,
               "quote": "NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24884,
-              "line_end": 24884,
+              "line_start": 39347,
+              "line_end": 39347,
               "quote": "NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, nev"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 787,
-              "line_end": 792,
+              "line_start": 788,
+              "line_end": 793,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -1898,15 +1866,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24860,
-              "line_end": 24860,
+              "line_start": 39323,
+              "line_end": 39323,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_interrupted\",project_id,thread_id,bundle_id,revision_id,phase_sequence"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24854,
-              "line_end": 24855,
+              "line_start": 39317,
+              "line_end": 39318,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -1925,15 +1893,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24857,
-              "line_end": 24860,
+              "line_start": 39320,
+              "line_end": 39323,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_interrupted\",project_id,t"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24875,
-              "line_end": 24876,
+              "line_start": 39338,
+              "line_end": 39339,
               "quote": "replay_only_not_appendable; compatibility history remains passive and cannot select the writer. EventRecord\n  follows Contracts_V0.md#EventRecord and Plans/event_record.schema.json, wit"
             }
           ],
@@ -1952,8 +1920,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 30053,
-              "line_end": 30054,
+              "line_start": 44393,
+              "line_end": 44394,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -1972,8 +1940,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30165,
-              "line_end": 30166,
+              "line_start": 44505,
+              "line_end": 44506,
               "quote": "mandatory coherent backup authority with original documents, annotations,\n  FileSafe results, immutable intent/results, seglog identity/dedupe and SP-286 custody. Restore admits one ver"
             },
             {
@@ -1986,15 +1954,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30176,
-              "line_end": 30177,
+              "line_start": 44516,
+              "line_end": 44517,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 531,
-              "line_end": 531,
+              "line_start": 532,
+              "line_end": 532,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -2013,8 +1981,8 @@
             {
               "path": "Plans/assistant-chat-design.md",
               "unit": "ACD-574",
-              "line_start": 29211,
-              "line_end": 29213,
+              "line_start": 33309,
+              "line_end": 33311,
               "quote": "predecessor_event_id names the exact\n  started event. This event does not convert interruption into successful completion or silently retry effects.\n  Source references resolve the exac"
             }
           ],
@@ -2033,22 +2001,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 30033,
-              "line_end": 30035,
+              "line_start": 44373,
+              "line_end": 44375,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 30035,
-              "line_end": 30036,
+              "line_start": 44375,
+              "line_end": 44376,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 1004,
-              "line_end": 1004,
+              "line_start": 1005,
+              "line_end": 1005,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -2067,36 +2035,36 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 30059,
-              "line_end": 30060,
+              "line_start": 44399,
+              "line_end": 44400,
               "quote": "Withdrawal first cuts off new writer admission for bundle.revision_interrupted; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_rev"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 30061,
-              "line_end": 30063,
+              "line_start": 44401,
+              "line_end": 44403,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 615,
-              "line_end": 616,
+              "line_start": 616,
+              "line_end": 617,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 16017,
-              "line_end": 16017,
+              "line_start": 20820,
+              "line_end": 20820,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "require_storage_timestamps",
-              "line_start": 852,
-              "line_end": 852,
+              "line_start": 853,
+              "line_end": 853,
               "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
             },
             {
@@ -2122,94 +2090,74 @@
           "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
+          "finding": "PASS (C12-DCW): all 235 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 14, cut_accepts 177, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 30562 exact kills and 13226 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "source_storage",
-              "line_start": 519,
-              "line_end": 519,
-              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
+              "unit": "index_read",
+              "line_start": 482,
+              "line_end": 482,
+              "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "full checker",
-              "line_start": 729,
-              "line_end": 729,
-              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 395,
+              "line_end": 395,
+              "quote": "EXPECTED = ['refused', 'OE001', 'schema']"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "verify",
-              "line_start": 598,
-              "line_end": 598,
-              "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 439,
+              "line_end": 439,
+              "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "run",
-              "line_start": 699,
-              "line_end": 699,
-              "quote": "schema_references(schema)"
+              "path": "scripts/pm_dcw_c12_boundary.py",
+              "unit": "classify",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "return dict(status='complete_boundary', first=first, cut=single)"
             },
             {
-              "path": "scripts/pm_dcw_event_regressions.py",
-              "unit": "audit",
-              "line_start": 154,
-              "line_end": 154,
-              "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+              "path": "scripts/pm_dcw_c12_implications.py",
+              "unit": "check",
+              "line_start": 147,
+              "line_end": 147,
+              "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_interrupted",
-              "line_start": 6746,
-              "line_end": 6751,
-              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
+              "path": "scripts/pm_dcw_c12_retained.py",
+              "unit": "observe",
+              "line_start": 222,
+              "line_end": 222,
+              "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_interrupted",
-              "line_start": 7124,
-              "line_end": 7129,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
+              "path": "scripts/pm_dcw_c12_datetime.py",
+              "unit": "field_profile",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_interrupted",
-              "line_start": 7589,
-              "line_end": 7594,
-              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
-            },
-            {
-              "path": "scripts/pm_dcw_guard_suites.py",
-              "unit": "bounded phase suite and complete-path diagnostic",
-              "line_start": 3,
-              "line_end": 4,
-              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
-            },
-            {
-              "path": "scripts/pm_dcw_event_numeric_cases.py",
-              "unit": "bundle.revision_interrupted",
-              "line_start": 1,
-              "line_end": 4,
-              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
-            },
-            {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "bundle.revision_interrupted",
-              "line_start": 1004,
-              "line_end": 1004,
-              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
+              "path": "scripts/pm_dcw_c12_entailments.py",
+              "unit": "run_spec",
+              "line_start": 185,
+              "line_end": 185,
+              "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)"
             }
           ],
           "prior": {
-            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
-            "status": "PARTIAL"
+            "source": "sweep part 2B self-grade at 6bd3b82b1a (reports/event-authority-20261104/DCW.self-grade.json)",
+            "status": "PASS",
+            "finding": "PASS (C12-DCW): all 235 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 14, cut_accepts 177, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 30562 exact kills and 13226 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Every two-copy join row has a single-copy witness; its other copy is witnessed too, located and pinned by named earlier joins, or derived/configuration (lane-wide 193 rows: 91 both, 76 pinned, 24 written, 2 by construction). Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN."
           },
-          "change": "carried",
-          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
+          "change": "upgraded",
+          "change_reason": "C12-DCW closure: complete-boundary witnesses or checked implications for every reached row, whole-definition schema clause ledger, sealed-store retained reads, date-time corpus, O234."
         }
       },
       "remaining_gaps": [
@@ -2301,8 +2249,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25072,
-              "line_end": 25072,
+              "line_start": 39535,
+              "line_end": 39535,
               "quote": "prepared without admission."
             },
             {
@@ -2328,8 +2276,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25074,
-              "line_end": 25074,
+              "line_start": 39537,
+              "line_end": 39537,
               "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,"
             }
           ],
@@ -2348,8 +2296,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25102,
-              "line_end": 25102,
+              "line_start": 39565,
+              "line_end": 39565,
               "quote": "Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component''s observer of its original"
             }
           ],
@@ -2368,8 +2316,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25093,
-              "line_end": 25093,
+              "line_start": 39556,
+              "line_end": 39556,
               "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,"
             },
             {
@@ -2395,8 +2343,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25119,
-              "line_end": 25119,
+              "line_start": 39582,
+              "line_end": 39582,
               "quote": "NEW identity recipe"
             }
           ],
@@ -2415,8 +2363,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25127,
-              "line_end": 25127,
+              "line_start": 39590,
+              "line_end": 39590,
               "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,"
             }
           ],
@@ -2435,15 +2383,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25211,
-              "line_end": 25211,
+              "line_start": 39674,
+              "line_end": 39674,
               "quote": "Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_blocked_evidence"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25215,
-              "line_end": 25215,
+              "line_start": 39678,
+              "line_end": 39678,
               "quote": "Exact question: For wizard.blocked event history, which Case L-3 class/lifetime applies: planning/chat"
             }
           ],
@@ -2462,8 +2410,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25160,
-              "line_end": 25160,
+              "line_start": 39623,
+              "line_end": 39623,
               "quote": "NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under"
             }
           ],
@@ -2482,8 +2430,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25143,
-              "line_end": 25143,
+              "line_start": 39606,
+              "line_end": 39606,
               "quote": "The planning component''s immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run."
             }
           ],
@@ -2502,8 +2450,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25197,
-              "line_end": 25197,
+              "line_start": 39660,
+              "line_end": 39660,
               "quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported"
             }
           ],
@@ -2522,15 +2470,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25224,
-              "line_end": 25224,
+              "line_start": 39687,
+              "line_end": 39687,
               "quote": "Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25191,
-              "line_end": 25191,
+              "line_start": 39654,
+              "line_end": 39654,
               "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,"
             },
             {
@@ -2543,8 +2491,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "require_storage_timestamps",
-              "line_start": 852,
-              "line_end": 852,
+              "line_start": 853,
+              "line_end": 853,
               "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
             }
           ],
@@ -2556,31 +2504,95 @@
           "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
+          "finding": "PASS (C12-DCW): all 219 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 5, complete_boundary_reclassified 11, cut_accepts 167, entailed 17, precondition 19). The whole-definition OE001 schema ledger has 20160 exact kills and 8428 INVALID proposals over 15 real check_schema sites, plus 3756 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1353, witnessed_by_shared_site 13, witnessed_supplement 43); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-596",
-              "line_start": 25235,
-              "line_end": 25235,
-              "quote": "Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py,"
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "index_read",
+              "line_start": 482,
+              "line_end": 482,
+              "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})"
             },
             {
-              "path": "scripts/pm_dcw_blockage_events.py",
-              "unit": "main",
-              "line_start": 300,
-              "line_end": 300,
-              "quote": "guard_isolation='PARTIAL_PHASE_TABLES',"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 395,
+              "line_end": 395,
+              "quote": "EXPECTED = ['refused', 'OE001', 'schema']"
+            },
+            {
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 439,
+              "line_end": 439,
+              "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_boundary.py",
+              "unit": "classify",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "return dict(status='complete_boundary', first=first, cut=single)"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_implications.py",
+              "unit": "check",
+              "line_start": 147,
+              "line_end": 147,
+              "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_retained.py",
+              "unit": "observe",
+              "line_start": 222,
+              "line_end": 222,
+              "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_datetime.py",
+              "unit": "field_profile",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_entailments.py",
+              "unit": "run_spec",
+              "line_start": 185,
+              "line_end": 185,
+              "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_cases.py",
+              "unit": "wizard.blocked",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "yield witness('B015', 'wizard.blocked', None, base('wizard.blocked'), trailing_space, 'identifier_whitespace', 'append')"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_cases.py",
+              "unit": "wizard.blocked",
+              "line_start": 120,
+              "line_end": 120,
+              "quote": "yield witness('B022', 'wizard.blocked', None, base('wizard.blocked'), foreign_source_ref, 'source_ref', 'append')"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_cases.py",
+              "unit": "wizard.blocked",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "yield witness('B023', 'wizard.blocked', None, base('wizard.blocked'), rekeyed_source_ref, 'source_ref', 'append')"
             }
           ],
           "prior": {
-            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
-            "status": "ABSENT"
+            "source": "sweep part 2B self-grade at 6bd3b82b1a (reports/event-authority-20261104/DCW.self-grade.json)",
+            "status": "PASS",
+            "finding": "PASS (C12-DCW): all 219 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 5, complete_boundary_reclassified 11, cut_accepts 167, entailed 17, precondition 19). The whole-definition OE001 schema ledger has 20160 exact kills and 8428 INVALID proposals over 15 real check_schema sites, plus 3756 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1353, witnessed_by_shared_site 13, witnessed_supplement 43); keyword independence is not claimed. Every two-copy join row has a single-copy witness; its other copy is witnessed too, located and pinned by named earlier joins, or derived/configuration (lane-wide 193 rows: 91 both, 76 pinned, 24 written, 2 by construction). Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN."
           },
           "change": "upgraded",
-          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
+          "change_reason": "C12-DCW closure: complete-boundary witnesses or checked implications for every reached row, whole-definition schema clause ledger, sealed-store retained reads, date-time corpus, O234."
         }
       },
       "prepared_pass": false,
@@ -2690,15 +2702,15 @@
             {
               "path": "Plans/Planning_Wizard.md",
               "unit": "PWIZ-098",
-              "line_start": 4207,
-              "line_end": 4214,
+              "line_start": 4909,
+              "line_end": 4916,
               "quote": "wizard.deferred_payload.loaded Observation\n\n```yaml\nplan_unit_id: PWIZ-098\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: wizard.deferred_pa"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24990,
-              "line_end": 24997,
+              "line_start": 39453,
+              "line_end": 39460,
               "quote": "wizard.deferred_payload.loaded Payload And Identity\n\n```yaml\nplan_unit_id: CV-595\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.deferr"
             }
           ],
@@ -2717,50 +2729,50 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 25033,
-              "line_end": 25033,
+              "line_start": 39496,
+              "line_end": 39496,
               "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30263,
-              "line_end": 30263,
+              "line_start": 44603,
+              "line_end": 44603,
               "quote": "Observe the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun intake child. The original successful open event and its exact first receip"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30242,
-              "line_end": 30242,
+              "line_start": 44599,
+              "line_end": 44599,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema "
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 25033,
-              "line_end": 25033,
+              "line_start": 39496,
+              "line_end": 39496,
               "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 25033,
-              "line_end": 25033,
+              "line_start": 39496,
+              "line_end": 39496,
               "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 787,
-              "line_end": 792,
+              "line_start": 788,
+              "line_end": 793,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 843,
-              "line_end": 843,
+              "line_start": 844,
+              "line_end": 844,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             }
           ],
@@ -2820,15 +2832,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 25008,
-              "line_end": 25009,
+              "line_start": 39471,
+              "line_end": 39472,
               "quote": "NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON [\"wizard.deferred_payload.loaded\",project_id,planning_run_id,thread_id,request_id]\n  with en"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 25000,
-              "line_end": 25001,
+              "line_start": 39463,
+              "line_end": 39464,
               "quote": "scope_kind=project; envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id\n  and requested/effective account refs are null because this obser"
             }
           ],
@@ -2847,15 +2859,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 25033,
-              "line_end": 25033,
+              "line_start": 39496,
+              "line_end": 39496,
               "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 25015,
-              "line_end": 25017,
+              "line_start": 39478,
+              "line_end": 39480,
               "quote": "replay_only_not_appendable. Passive readers cannot emit. Observe\n  the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun\n "
             }
           ],
@@ -2874,8 +2886,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30248,
-              "line_end": 30248,
+              "line_start": 44605,
+              "line_end": 44605,
               "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified"
             }
           ],
@@ -2894,8 +2906,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30248,
-              "line_end": 30248,
+              "line_start": 44605,
+              "line_end": 44605,
               "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified"
             },
             {
@@ -2908,22 +2920,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30242,
-              "line_end": 30242,
+              "line_start": 44599,
+              "line_end": 44599,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 531,
-              "line_end": 531,
+              "line_start": 532,
+              "line_end": 532,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 843,
-              "line_end": 843,
+              "line_start": 844,
+              "line_end": 844,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             }
           ],
@@ -2942,8 +2954,8 @@
             {
               "path": "Plans/Planning_Wizard.md",
               "unit": "PWIZ-098",
-              "line_start": 4221,
-              "line_end": 4222,
+              "line_start": 4923,
+              "line_end": 4924,
               "quote": "predecessor_event_id is that wizard.opened event for the same original request, child, Project, Named\n  Plan, seed and context. Loading is distinct from opening; route-open, a stale see"
             }
           ],
@@ -2962,22 +2974,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30267,
-              "line_end": 30267,
+              "line_start": 44607,
+              "line_end": 44607,
               "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30267,
-              "line_end": 30267,
+              "line_start": 44607,
+              "line_end": 44607,
               "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 1004,
-              "line_end": 1004,
+              "line_start": 1005,
+              "line_end": 1005,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -2996,36 +3008,36 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30269,
-              "line_end": 30269,
+              "line_start": 44609,
+              "line_end": 44609,
               "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_deferred_payload_loaded_"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30269,
-              "line_end": 30269,
+              "line_start": 44609,
+              "line_end": 44609,
               "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_deferred_payload_loaded_history@1.0.0` "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 615,
-              "line_end": 616,
+              "line_start": 616,
+              "line_end": 617,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 16017,
-              "line_end": 16017,
+              "line_start": 20820,
+              "line_end": 20820,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "require_storage_timestamps",
-              "line_start": 852,
-              "line_end": 852,
+              "line_start": 853,
+              "line_end": 853,
               "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
             },
             {
@@ -3051,108 +3063,88 @@
           "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
+          "finding": "PASS (C12-DCW): all 218 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 8, complete_boundary_reclassified 12, cut_accepts 165, entailed 16, precondition 17). The whole-definition OE001 schema ledger has 26513 exact kills and 11176 INVALID proposals over 23 real check_schema sites, plus 17834 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 21, witnessed 2790, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "source_storage",
-              "line_start": 519,
-              "line_end": 519,
-              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
+              "unit": "index_read",
+              "line_start": 482,
+              "line_end": 482,
+              "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "full checker",
-              "line_start": 729,
-              "line_end": 729,
-              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 395,
+              "line_end": 395,
+              "quote": "EXPECTED = ['refused', 'OE001', 'schema']"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "verify",
-              "line_start": 598,
-              "line_end": 598,
-              "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 439,
+              "line_end": 439,
+              "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "run",
-              "line_start": 699,
-              "line_end": 699,
-              "quote": "schema_references(schema)"
+              "path": "scripts/pm_dcw_c12_boundary.py",
+              "unit": "classify",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "return dict(status='complete_boundary', first=first, cut=single)"
             },
             {
-              "path": "scripts/pm_dcw_event_regressions.py",
-              "unit": "audit",
-              "line_start": 154,
-              "line_end": 154,
-              "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+              "path": "scripts/pm_dcw_c12_implications.py",
+              "unit": "check",
+              "line_start": 147,
+              "line_end": 147,
+              "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
+              "path": "scripts/pm_dcw_c12_retained.py",
+              "unit": "observe",
+              "line_start": 222,
+              "line_end": 222,
+              "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_datetime.py",
+              "unit": "field_profile",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_entailments.py",
+              "unit": "run_spec",
+              "line_start": 185,
+              "line_end": 185,
+              "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_cases.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 6746,
-              "line_end": 6751,
-              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
+              "line_start": 140,
+              "line_end": 140,
+              "quote": "yield witness('O083', 'wizard.deferred_payload.loaded', loaded, control(loaded, 'append'),"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
+              "path": "scripts/pm_dcw_c12_cases.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 7124,
-              "line_end": 7129,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
-            },
-            {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "wizard.deferred_payload.loaded",
-              "line_start": 7589,
-              "line_end": 7594,
-              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
-            },
-            {
-              "path": "scripts/pm_dcw_guard_suites.py",
-              "unit": "bounded phase suite and complete-path diagnostic",
-              "line_start": 3,
-              "line_end": 4,
-              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
-            },
-            {
-              "path": "scripts/pm_dcw_event_numeric_cases.py",
-              "unit": "wizard.deferred_payload.loaded",
-              "line_start": 1,
-              "line_end": 4,
-              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
-            },
-            {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "opened_source_custody",
-              "line_start": 843,
-              "line_end": 843,
-              "quote": "verify(opened_row, predecessor, 'read', None)"
-            },
-            {
-              "path": "scripts/pm_dcw_opened_custody_cases.py",
-              "unit": "wizard.deferred_payload.loaded",
-              "line_start": 2,
-              "line_end": 2,
-              "quote": "\"\"\"Full loaded-operation witnesses for separately owned opened-source custody.\"\"\""
-            },
-            {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "wizard.deferred_payload.loaded",
-              "line_start": 1004,
-              "line_end": 1004,
-              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
+              "line_start": 270,
+              "line_end": 270,
+              "quote": "yield witness('O113', 'wizard.deferred_payload.loaded', loaded, control(loaded, 'append'), opened_other_seed,"
             }
           ],
           "prior": {
-            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
-            "status": "PARTIAL"
+            "source": "sweep part 2B self-grade at 6bd3b82b1a (reports/event-authority-20261104/DCW.self-grade.json)",
+            "status": "PASS",
+            "finding": "PASS (C12-DCW): all 218 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 8, complete_boundary_reclassified 12, cut_accepts 165, entailed 16, precondition 17). The whole-definition OE001 schema ledger has 26513 exact kills and 11176 INVALID proposals over 23 real check_schema sites, plus 17834 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 21, witnessed 2790, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Every two-copy join row has a single-copy witness; its other copy is witnessed too, located and pinned by named earlier joins, or derived/configuration (lane-wide 193 rows: 91 both, 76 pinned, 24 written, 2 by construction). Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN."
           },
-          "change": "carried",
-          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
+          "change": "upgraded",
+          "change_reason": "C12-DCW closure: complete-boundary witnesses or checked implications for every reached row, whole-definition schema clause ledger, sealed-store retained reads, date-time corpus, O234."
         }
       },
       "remaining_gaps": [
@@ -3289,15 +3281,15 @@
             {
               "path": "Plans/Planning_Wizard.md",
               "unit": "PWIZ-097",
-              "line_start": 4150,
-              "line_end": 4157,
+              "line_start": 4852,
+              "line_end": 4859,
               "quote": "wizard.opened Observation\n\n```yaml\nplan_unit_id: PWIZ-097\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: wizard.opened is a newly authored t"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24917,
-              "line_end": 24924,
+              "line_start": 39380,
+              "line_end": 39387,
               "quote": "wizard.opened Payload And Identity\n\n```yaml\nplan_unit_id: CV-594\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.opened has the closed p"
             }
           ],
@@ -3316,43 +3308,43 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24958,
-              "line_end": 24958,
+              "line_start": 39421,
+              "line_end": 39421,
               "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JS"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30246,
-              "line_end": 30246,
+              "line_start": 44586,
+              "line_end": 44586,
               "quote": "SP-286/CV-339 full-value v2 receipt resolution, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. Order is exact-family admission/current owner guards, original s"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30242,
-              "line_end": 30242,
+              "line_start": 44582,
+              "line_end": 44582,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24958,
-              "line_end": 24958,
+              "line_start": 39421,
+              "line_end": 39421,
               "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JS"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24958,
-              "line_end": 24958,
+              "line_start": 39421,
+              "line_end": 39421,
               "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON charac"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 787,
-              "line_end": 792,
+              "line_start": 788,
+              "line_end": 793,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -3412,15 +3404,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24935,
-              "line_end": 24936,
+              "line_start": 39398,
+              "line_end": 39399,
               "quote": "NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON [\"wizard.opened\",project_id,planning_run_id,thread_id,request_id]\n  with ensure_ascii=false "
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24926,
-              "line_end": 24928,
+              "line_start": 39389,
+              "line_end": 39391,
               "quote": "scope_kind=project;\n  envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id and requested/effective\n  account refs are null because this obs"
             }
           ],
@@ -3439,15 +3431,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24958,
-              "line_end": 24958,
+              "line_start": 39421,
+              "line_end": 39421,
               "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JS"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24942,
-              "line_end": 24943,
+              "line_start": 39405,
+              "line_end": 39406,
               "quote": "replay_only_not_appendable. Passive readers cannot emit. Observe the existing successful open result for\n  the real Project and actual current PlanningRun intake child, after owner rout"
             }
           ],
@@ -3466,8 +3458,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30248,
-              "line_end": 30250,
+              "line_start": 44588,
+              "line_end": 44590,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION, with Case L-3 receipt/audit/source-lineage versus planning/chat-content candidates.\n\nThe independent passive consumer is `reader.wizard_"
             }
           ],
@@ -3486,8 +3478,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30248,
-              "line_end": 30248,
+              "line_start": 44588,
+              "line_end": 44588,
               "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody "
             },
             {
@@ -3500,15 +3492,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30242,
-              "line_end": 30242,
+              "line_start": 44582,
+              "line_end": 44582,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 531,
-              "line_end": 531,
+              "line_start": 532,
+              "line_end": 532,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -3527,8 +3519,8 @@
             {
               "path": "Plans/Planning_Wizard.md",
               "unit": "PWIZ-097",
-              "line_start": 4164,
-              "line_end": 4165,
+              "line_start": 4866,
+              "line_end": 4867,
               "quote": "predecessor_event_id is null. This event never creates or selects a child on replay.\n  The exact producer is emitter.wizard_opened@1.0.0, the current Planning Wizard deferred-intake own"
             }
           ],
@@ -3547,22 +3539,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30250,
-              "line_end": 30250,
+              "line_start": 44590,
+              "line_end": 44590,
               "quote": "SP-278, `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_rec"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30250,
-              "line_end": 30250,
+              "line_start": 44590,
+              "line_end": 44590,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`. The generic projector atomically commits index rows and its prior-"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 1004,
-              "line_end": 1004,
+              "line_start": 1005,
+              "line_end": 1005,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -3581,36 +3573,36 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30252,
-              "line_end": 30252,
+              "line_start": 44592,
+              "line_end": 44592,
               "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_opened_history@1.0.0` fr"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30252,
-              "line_end": 30252,
+              "line_start": 44592,
+              "line_end": 44592,
               "quote": "replacement reader explicitly supports retained schemas and authenticates complete SP-278 coverage/current root/generation/frontier before publication; gaps, stale CAS/tokens, unsupport"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 615,
-              "line_end": 616,
+              "line_start": 616,
+              "line_end": 617,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 16017,
-              "line_end": 16017,
+              "line_start": 20820,
+              "line_end": 20820,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "require_storage_timestamps",
-              "line_start": 852,
-              "line_end": 852,
+              "line_start": 853,
+              "line_end": 853,
               "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
             },
             {
@@ -3636,94 +3628,95 @@
           "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
+          "finding": "PASS (C12-DCW): all 213 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 7, complete_boundary_reclassified 12, cut_accepts 164, entailed 14, precondition 16). The whole-definition OE001 schema ledger has 21671 exact kills and 8464 INVALID proposals over 19 real check_schema sites, plus 15642 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 12, witnessed 1933, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "source_storage",
-              "line_start": 519,
-              "line_end": 519,
-              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
+              "unit": "index_read",
+              "line_start": 482,
+              "line_end": 482,
+              "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "full checker",
-              "line_start": 729,
-              "line_end": 729,
-              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 395,
+              "line_end": 395,
+              "quote": "EXPECTED = ['refused', 'OE001', 'schema']"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "verify",
-              "line_start": 598,
-              "line_end": 598,
-              "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 439,
+              "line_end": 439,
+              "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)"
             },
             {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "run",
-              "line_start": 699,
-              "line_end": 699,
-              "quote": "schema_references(schema)"
+              "path": "scripts/pm_dcw_c12_boundary.py",
+              "unit": "classify",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "return dict(status='complete_boundary', first=first, cut=single)"
             },
             {
-              "path": "scripts/pm_dcw_event_regressions.py",
-              "unit": "audit",
-              "line_start": 154,
-              "line_end": 154,
-              "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+              "path": "scripts/pm_dcw_c12_implications.py",
+              "unit": "check",
+              "line_start": 147,
+              "line_end": 147,
+              "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
+              "path": "scripts/pm_dcw_c12_retained.py",
+              "unit": "observe",
+              "line_start": 222,
+              "line_end": 222,
+              "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_datetime.py",
+              "unit": "field_profile",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_entailments.py",
+              "unit": "run_spec",
+              "line_start": 185,
+              "line_end": 185,
+              "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_cases.py",
               "unit": "wizard.opened",
-              "line_start": 6746,
-              "line_end": 6751,
-              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/even"
+              "line_start": 150,
+              "line_end": 150,
+              "quote": "yield witness('O085', 'wizard.opened', opened, control(opened, 'append'), child_join, 'current_child_join', 'append')"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
+              "path": "scripts/pm_dcw_c12_cases.py",
               "unit": "wizard.opened",
-              "line_start": 7124,
-              "line_end": 7129,
-              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\",\n          \"mutat"
+              "line_start": 153,
+              "line_end": 153,
+              "quote": "yield witness('O013', 'wizard.opened', opened, control(opened, 'append'),"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
+              "path": "scripts/pm_dcw_c12_cases.py",
               "unit": "wizard.opened",
-              "line_start": 7589,
-              "line_end": 7594,
-              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
-            },
-            {
-              "path": "scripts/pm_dcw_guard_suites.py",
-              "unit": "bounded phase suite and complete-path diagnostic",
-              "line_start": 3,
-              "line_end": 4,
-              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
-            },
-            {
-              "path": "scripts/pm_dcw_event_numeric_cases.py",
-              "unit": "wizard.opened",
-              "line_start": 1,
-              "line_end": 4,
-              "quote": "#!/usr/bin/env python3\n\"\"\"Single-invariant numeric/type witnesses for the six DCW compositions.\"\"\"\nimport copy\nimport json"
-            },
-            {
-              "path": "scripts/pm_dcw_event_oracles.py",
-              "unit": "wizard.opened",
-              "line_start": 1004,
-              "line_end": 1004,
-              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
+              "line_start": 158,
+              "line_end": 158,
+              "quote": "yield witness('O020', 'wizard.opened', opened, control(opened, 'append'),"
             }
           ],
           "prior": {
-            "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
-            "status": "PARTIAL"
+            "source": "sweep part 2B self-grade at 6bd3b82b1a (reports/event-authority-20261104/DCW.self-grade.json)",
+            "status": "PASS",
+            "finding": "PASS (C12-DCW): all 213 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 7, complete_boundary_reclassified 12, cut_accepts 164, entailed 14, precondition 16). The whole-definition OE001 schema ledger has 21671 exact kills and 8464 INVALID proposals over 19 real check_schema sites, plus 15642 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 12, witnessed 1933, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Every two-copy join row has a single-copy witness; its other copy is witnessed too, located and pinned by named earlier joins, or derived/configuration (lane-wide 193 rows: 91 both, 76 pinned, 24 written, 2 by construction). Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN."
           },
-          "change": "carried",
-          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
+          "change": "upgraded",
+          "change_reason": "C12-DCW closure: complete-boundary witnesses or checked implications for every reached row, whole-definition schema clause ledger, sealed-store retained reads, date-time corpus, O234."
         }
       },
       "remaining_gaps": [
@@ -3815,8 +3808,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25297,
-              "line_end": 25297,
+              "line_start": 39760,
+              "line_end": 39760,
               "quote": "prepared without admission."
             },
             {
@@ -3842,8 +3835,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25299,
-              "line_end": 25299,
+              "line_start": 39762,
+              "line_end": 39762,
               "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,"
             }
           ],
@@ -3862,8 +3855,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25326,
-              "line_end": 25326,
+              "line_start": 39789,
+              "line_end": 39789,
               "quote": "Producer emitter.wizard_unblocked@1.0.0 is the responsible Planning Wizard component''s observer of its original"
             }
           ],
@@ -3882,8 +3875,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25317,
-              "line_end": 25317,
+              "line_start": 39780,
+              "line_end": 39780,
               "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root"
             },
             {
@@ -3909,8 +3902,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25343,
-              "line_end": 25343,
+              "line_start": 39806,
+              "line_end": 39806,
               "quote": "NEW identity recipe"
             }
           ],
@@ -3929,8 +3922,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25351,
-              "line_end": 25351,
+              "line_start": 39814,
+              "line_end": 39814,
               "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,"
             }
           ],
@@ -3949,15 +3942,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25436,
-              "line_end": 25436,
+              "line_start": 39899,
+              "line_end": 39899,
               "quote": "Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_unblocked_evidence"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25440,
-              "line_end": 25440,
+              "line_start": 39903,
+              "line_end": 39903,
               "quote": "Exact question: For wizard.unblocked event history, which Case L-3 class/lifetime applies: planning/chat"
             }
           ],
@@ -3976,8 +3969,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25385,
-              "line_end": 25385,
+              "line_start": 39848,
+              "line_end": 39848,
               "quote": "NEW original custody source wizard_unblocked_evidence is materialized in Plans/storage_value_registry.json under"
             }
           ],
@@ -3996,8 +3989,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25367,
-              "line_end": 25367,
+              "line_start": 39830,
+              "line_end": 39830,
               "quote": "The planning component''s immutable conditions_cleared observation identifies the complete required conditions"
             }
           ],
@@ -4016,8 +4009,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25422,
-              "line_end": 25422,
+              "line_start": 39885,
+              "line_end": 39885,
               "quote": "NEW passive operating consumer reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact"
             }
           ],
@@ -4036,15 +4029,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25449,
-              "line_end": 25449,
+              "line_start": 39912,
+              "line_end": 39912,
               "quote": "Compatibility/withdrawal for wizard.unblocked alone: dispatch only explicitly supported exact family/schema/version;"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25416,
-              "line_end": 25416,
+              "line_start": 39879,
+              "line_end": 39879,
               "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,"
             },
             {
@@ -4057,8 +4050,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "require_storage_timestamps",
-              "line_start": 852,
-              "line_end": 852,
+              "line_start": 853,
+              "line_end": 853,
               "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
             }
           ],
@@ -4070,31 +4063,95 @@
           "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
+          "finding": "PASS (C12-DCW): all 234 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 6, complete_boundary_reclassified 11, cut_accepts 180, entailed 17, precondition 20). The whole-definition OE001 schema ledger has 24007 exact kills and 10368 INVALID proposals over 19 real check_schema sites, plus 5022 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1729, witnessed_by_shared_site 13, witnessed_supplement 66); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-597",
-              "line_start": 25460,
-              "line_end": 25460,
-              "quote": "Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py,"
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "index_read",
+              "line_start": 482,
+              "line_end": 482,
+              "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})"
             },
             {
-              "path": "scripts/pm_dcw_blockage_events.py",
-              "unit": "main",
-              "line_start": 300,
-              "line_end": 300,
-              "quote": "guard_isolation='PARTIAL_PHASE_TABLES',"
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 395,
+              "line_end": 395,
+              "quote": "EXPECTED = ['refused', 'OE001', 'schema']"
+            },
+            {
+              "path": "scripts/pm_dcw_c12.py",
+              "unit": "schema ledger",
+              "line_start": 439,
+              "line_end": 439,
+              "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_boundary.py",
+              "unit": "classify",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "return dict(status='complete_boundary', first=first, cut=single)"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_implications.py",
+              "unit": "check",
+              "line_start": 147,
+              "line_end": 147,
+              "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_retained.py",
+              "unit": "observe",
+              "line_start": 222,
+              "line_end": 222,
+              "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_datetime.py",
+              "unit": "field_profile",
+              "line_start": 50,
+              "line_end": 50,
+              "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_entailments.py",
+              "unit": "run_spec",
+              "line_start": 185,
+              "line_end": 185,
+              "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_cases.py",
+              "unit": "wizard.unblocked",
+              "line_start": 115,
+              "line_end": 115,
+              "quote": "yield witness('B063', 'wizard.unblocked', None, base('wizard.unblocked'), subclass_items,"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_cases.py",
+              "unit": "wizard.unblocked",
+              "line_start": 135,
+              "line_end": 135,
+              "quote": "yield witness('B093', 'wizard.unblocked', None, base('wizard.unblocked'), newer_dependency, 'restore_older_only', 'publish')"
+            },
+            {
+              "path": "scripts/pm_dcw_c12_cases.py",
+              "unit": "wizard.unblocked",
+              "line_start": 362,
+              "line_end": 362,
+              "quote": "yield witness('B019', 'wizard.unblocked', None, base('wizard.unblocked'), second_unblock, 'blocked_original', 'append')"
             }
           ],
           "prior": {
-            "source": "DCW round9 at 21717728039303d923e82b9499c8b700167b3044",
-            "status": "ABSENT"
+            "source": "sweep part 2B self-grade at 6bd3b82b1a (reports/event-authority-20261104/DCW.self-grade.json)",
+            "status": "PASS",
+            "finding": "PASS (C12-DCW): all 234 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 6, complete_boundary_reclassified 11, cut_accepts 180, entailed 17, precondition 20). The whole-definition OE001 schema ledger has 24007 exact kills and 10368 INVALID proposals over 19 real check_schema sites, plus 5022 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1729, witnessed_by_shared_site 13, witnessed_supplement 66); keyword independence is not claimed. Every two-copy join row has a single-copy witness; its other copy is witnessed too, located and pinned by named earlier joins, or derived/configuration (lane-wide 193 rows: 91 both, 76 pinned, 24 written, 2 by construction). Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN."
           },
           "change": "upgraded",
-          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
+          "change_reason": "C12-DCW closure: complete-boundary witnesses or checked implications for every reached row, whole-definition schema clause ledger, sealed-store retained reads, date-time corpus, O234."
         }
       },
       "prepared_pass": false,
@@ -4157,7 +4214,7 @@
     "native_execution": "NOT_RUN",
     "current_evidence_quotes": 302,
     "sweep_items": [],
-    "complete_check11": "PARTIAL_PHASE_TABLES; schema keywords and complete boundary unproved",
+    "complete_check11": "C12-DCW: gated phase rows 380/394 proved (14 by construction); every reached row complete-boundary isolated or checked-implied; whole-definition schema clause ledger",
     "total_static_family_cases": 5951,
     "new_family_contract_cases": 477,
     "new_family_repair_controls": 433,
@@ -5155,5 +5212,26 @@
     "cell_evidence_quotes": 302,
     "quote_check": "every cell quote matches at its lines inside its declared unit (quotes.py)",
     "native": "NOT_RUN"
+  },
+  "c12_verification": {
+    "implementation": "7f12fdbc02e612d73b3cd8f7c640c7a5015e9d60",
+    "base": "104c6c82b5ea0b5bf154806712496777c48c675b",
+    "lane": "C12-DCW (PNC-019 S4, lane 5)",
+    "gated_tool": "004bdedd632d9463f3535190a6ed5772338cdce1",
+    "guards": 394,
+    "proved": 380,
+    "unproved_by_construction": 14,
+    "implications": {
+      "entailed": 25,
+      "precondition": 26
+    },
+    "boundary": {
+      "chain": 15,
+      "complete_boundary": 18,
+      "exception": 36
+    },
+    "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dcw/",
+    "native_execution": "NOT_RUN",
+    "admission": "ABSENT"
   }
 }
