@@ -1063,7 +1063,9 @@ def fixture_witness(s, probe_key, instances, by_template, validator, edition, fi
     owner fixture's value at the same relative location, carried the same way. A witness must leave exactly one error
     whose error tree holds this clause (for an inner replacement) and must be accepted by the row with the clause cut."""
     attempts = 0
-    for depth in range(len(s.template) - 1, 0, -1):
+    # the clause's own location first when an unconditional object node sits there (a then-branch required member of
+    # the record itself), then each enclosing location
+    for depth in range(len(s.template), 0, -1):
         anc_t = s.template[:depth]
         anc = [a for a in by_template.get(anc_t, []) if a.keyword == "type" and a.node.get("type") == "object"
                and tuple(a.context) == tuple(s.context)[:len(a.context)] and not ({"if", "then", "else", "not"} & set(a.context))]
@@ -1087,6 +1089,16 @@ def fixture_witness(s, probe_key, instances, by_template, validator, edition, fi
                         # the base replaced by another owner fixture's value at the same relative location, carried
                         # into this node's edition the same way; either must leave exactly this clause failing
                         trials = [(path, cand, "candidate") for path, value in locations(base, s.template) for cand in candidates(s, value, base, path)]
+                        if not locations(base, s.template) and s.template:
+                            # the clause's member is absent from the base: insert a value valid at the member's own
+                            # unconditional node (a then-branch const or bound on an optional member)
+                            for o in by_template.get(tuple(s.template), []):
+                                if o.keyword == "type" and not ({"if", "then", "else", "not"} & set(o.context)) \
+                                        and tuple(o.context) == tuple(s.context)[:len(o.context)]:
+                                    for v_ in generated_values(o, cap=4):
+                                        cand = insert_at(base, s.template, v_)
+                                        if cand is not None:
+                                            trials.append((tuple(s.template), cand, "absent_member:" + json.dumps(v_, default=str)))
                         for depth2 in range(len(anc_t) + 1, len(s.template) + 1):
                             t2 = s.template[:depth2]
                             rel = t2[len(anc_t):]
