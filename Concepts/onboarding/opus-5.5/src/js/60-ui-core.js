@@ -886,9 +886,11 @@
     const c = layer.querySelector('.o55-scroll > .o55-content'), sc = c && c.parentElement;
     if (!c || !sc) return;
     const top = Math.max(0, Math.round(c.offsetTop - sc.offsetTop)); /* (layout offsets: the window's opening scale does not count) */
-    /* (on the column itself, as a registered property that does not inherit, 10-window.css: set on the layer it was inherited
-       by the screen's every element, and restyled them all, 459 on the Look screen, FO-206) */
-    c.style.setProperty('--o55-col-top', top + 'px'); layer.setAttribute('data-col-held', '');
+    /* (on the layer, outside what a same-screen refresh redraws: the column is morphed from paneHtml, which carries no
+       style, and the top written on it was lost, R46-1. A registered property that does not inherit, 10-window.css: only the
+       layer's scroller and its column take it, so writing it restyles those three, not the screen's every element, 459 on
+       the Look screen, as an inherited one did, FO-206) */
+    layer.style.setProperty('--o55-col-top', top + 'px'); layer.setAttribute('data-col-held', '');
     /* the held top is also an attribute: a new one moves the column, and the tab strips in it, inside a scroller whose size
        did not change, so Liquid Glass (glass.js, its page observer) syncs their chips after this frame's layout, in the
        frame they move; a resize that centres a column held off-centre (a device card's note came in since, or a look
