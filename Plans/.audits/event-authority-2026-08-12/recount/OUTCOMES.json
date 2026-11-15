@@ -370,6 +370,10 @@
   {
    "event_type": "scheduled_dispatch.held",
    "outcome": "registered"
+  },
+  {
+   "event_type": "scheduled_dispatch.updated",
+   "outcome": "registered"
   }
  ]
 }
