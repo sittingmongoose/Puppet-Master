@@ -1790,6 +1790,19 @@
     const now = storedLook();
     return now != null && left.stored != null && now !== left.stored;
   }
+  /* FO-219: a run the page left with its window open (a reload, the tab closed) was still 'active' at the next load, and
+     nothing offered it again: no window, no Resume chip, no bell entry. At load (95-boot.js) it is now what a run closed
+     unfinished is: 'closed', noting the look the page shows then (lookLeft, so a look chosen before it is resumed wins, as
+     FO-216 has it), offered by the Resume chip and the bell's entry, resumed on its step; it never opens by itself. The
+     smaller change than reopening it: a reload brings no window up over the app, and the closed run's path (chip, bell,
+     resume, the look's rules, Run Onboarding Again starting over) is the one already there. */
+  function parkStale() {
+    const saved = O55.store.get(KEY, null);
+    if (S.open || !saved || saved.v !== 1 || saved.status !== 'active') return false;
+    saved.status = 'closed';
+    saved.lookLeft = { page: PAGE_LOAD, painted: paintedLook(), stored: storedLook() };
+    return O55.store.set(KEY, saved);
+  }
   function adoptLook() {
     const th = O55.theme(), n = window.PM_NIER, nier = !!(n && (n.wanted ? n.wanted() : n.on()));
     const family = nier ? 'nier' : askedFamily(th), mode = th.selectedMode;
@@ -1925,5 +1938,5 @@
     return true;
   }
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill, prewarm });
+  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill, prewarm, parkStale });
 })();

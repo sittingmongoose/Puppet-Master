@@ -107,6 +107,9 @@
     const saved = O55.store.get('onboarding', null);
     tourChip();
     if (!saved) return O55.ui.open({ install: true });
+    /* a run the page left with its window open (a reload, the tab closed) is offered again as one closed unfinished: the
+       Resume chip and the bell's entry, on its step; it does not open by itself (FO-219, 60-ui-core.js parkStale) */
+    if (saved.status === 'active' && O55.ui.parkStale && O55.ui.parkStale()) saved.status = 'closed';
     if (saved.status === 'closed') chip();
   }
   const kick = () => O55.motion.real.setTimeout(start, 140);
