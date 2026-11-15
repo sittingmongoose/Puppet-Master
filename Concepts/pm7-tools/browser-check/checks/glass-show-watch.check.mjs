@@ -21,11 +21,11 @@
 //      from the show write either way; the branch has no 400 ms timer, so its show is never delayed.
 //   2  inline visibility: style.visibility='hidden' then '': lens back within 2200 ms. By design no observer sees
 //      this (edit 1 of the spec was not done): the safety net answers it. The design guarantee is one 2000 ms
-//      interval plus one layout; wall time adds the loaded host's scheduling: the slowest of the 80 queue/self
-//      repetitions was 2110 ms (sandbox, Glass Dark) = 2000 + a callback 60 ms late (dt2060) + 43 ms to the
-//      queued check + 14 ms rAF sampling, one tick and one look, no race. Branch measured 1357-2110 ms over 100
-//      reps (the short reps are phase luck: the pending tick was already part-way through its interval); main
-//      72-446 ms (its poll is faster). Passes on main too.
+//      interval plus one layout; wall time adds the loaded host's scheduling: the slowest of the 180 repetitions
+//      (the lead's queue 80, QW6's own 80, the full runs' 20) was 2110 ms (sandbox, Glass Dark) = 2000 + a
+//      callback 60 ms late (dt2060) + 43 ms to the queued check + 14 ms rAF sampling, one tick and one look, no
+//      race. Branch measured 1357-2110 ms (the short reps are phase luck: the pending tick was already part-way
+//      through its interval); main 72-446 ms (its poll is faster). Passes on main too.
 //   3  stylesheet visibility (case C): a temporary <style> nav.page-tabs { visibility: hidden } in <head>, then
 //      removed: lens back within 2200 ms (the same net; branch measured 856-2025 ms, main 181-350 ms). Documents
 //      the fallback; if the net is ever deleted by audit, remove this row on purpose, not leave it failing.
