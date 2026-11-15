@@ -359,15 +359,20 @@ async function heldSelectedCheck(t, f, x, tag) {
    reaching the page (the window's blur, the document turning hidden), the button still down: from the abandonment the
    lens comes back to the item the app has chosen (it never chose the pressed one) and rests unbent; the button is then
    released off the item, so nothing is chosen.
-   The frames' verdict is exported for tools/glass-abandon.selftest.mjs. */
+   The frames' verdict is exported for tools/glass-abandon.selftest.mjs.
+   PM7PERF-GLASSLENS-ABANDON-DEAD (R45 T2): the abandoned tail alone is not a hold. At least ABANDON_HELD_MIN held
+   frames must have the bend on and the lens off its original box before that return is judged. */
 const boxNear = (a, b) => a && b && Math.abs(a.x - b.x) <= 1.5 && Math.abs(a.y - b.y) <= 1.5;
+export const ABANDON_HELD_MIN = 3;
 export function abandonVerdict(frames, box) {
+	const held = frames.filter((z) => z.ph === 'held');
+	const heldLive = held.filter((z) => z.bend && !boxNear(z.b, box));
 	const ab = frames.filter((z) => z.ph === 'abandoned');
 	const lastMv = ab.reduce((k, z, n) => (z.mv ? n : k), -1), rest = ab.slice(lastMv + 1);
 	const end = ab.length ? ab[ab.length - 1].b : null;
-	const row = { abandoned: ab.length, movedAfter: ab.filter((z) => z.mv).length, movingFlat: ab.filter((z) => z.mv && !z.bend).length, restMs: rest.length > 1 ? rest[rest.length - 1].t - rest[0].t : 0,
+	const row = { held: held.length, heldLive: heldLive.length, abandoned: ab.length, movedAfter: ab.filter((z) => z.mv).length, movingFlat: ab.filter((z) => z.mv && !z.bend).length, restMs: rest.length > 1 ? rest[rest.length - 1].t - rest[0].t : 0,
 		restBent: rest.filter((z) => z.bend).length, backOnChosen: boxNear(end, box), end, start: box };
-	const ok = row.restMs >= 400 && row.restBent === 0 && row.movingFlat === 0 && row.backOnChosen;
+	const ok = heldLive.length >= ABANDON_HELD_MIN && row.restMs >= 400 && row.restBent === 0 && row.movingFlat === 0 && row.backOnChosen;
 	return { ok, row };
 }
 async function abandonCheck(t, f, x, tag, how) {
