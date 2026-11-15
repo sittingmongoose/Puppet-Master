@@ -13441,7 +13441,8 @@ owner_doc: Plans/Tools.md
 canonical_text: >-
   Puppet Master offers the script tool through whichever channel carries Puppet Master tools on that route, and the
   directly callable tools named in T-190 travel on every route by the same channel as the script tool. Under
-  Host Tool Execution on a direct API route it is a tool in the provider's tool-call API; on a bridged CLI under the HTE strategy it, and the directly callable tools named in T-190, travel through the
+  Host Tool Execution on a direct API route whose Models_System tool_use capability is true it is a tool in
+  the provider's tool-call API, and where it is false the owned in-band path below is used; on a bridged CLI under the HTE strategy it, and the directly callable tools named in T-190, travel through the
   Run_Modes hosted action loop as structured tool intents where its capability entry reports structured_tool_intents
   supported, otherwise as in-band tool calls, never as a provider tool_use; under
   the DAE strategy, where the CLI accepts Puppet Master tools through provider-native feature projection, it is a projected Puppet Master tool beside the CLI's own
@@ -13465,7 +13466,7 @@ unblocks: []
 acceptance_criteria:
   - Under Host Tool Execution a Code Mode request carries the script tool and does not also carry one provider tool schema per registry tool the script can call.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect, and a tool result the model wrote itself never reaches replayable history.
-  - A bridged CLI under the HTE strategy runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy with the Puppet Master script tool offered, the run is recorded as mixed.
+  - A bridged CLI under the HTE strategy runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy with the Puppet Master script tool offered, the run is recorded as mixed. The exception changes only the effective tool-calling mode label; under HTE, RM-021 still terminates the run on a provider-originated tool_use.
   - On a route that accepts the Puppet Master script tool, a run on a provider that keeps native tools Puppet Master could not disable is recorded as mixed, never as Code Mode.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
