@@ -24,9 +24,9 @@
     ]
   },
   "status_counts": {
-    "PASS": 108,
-    "PARTIAL": 24,
-    "ABSENT": 12
+    "ABSENT": 12,
+    "PASS": 120,
+    "PARTIAL": 12
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -54,7 +54,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -377,9 +377,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (186 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -419,15 +419,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-150",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-150",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -454,41 +454,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-150",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-150",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-150",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-150",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-150",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-150",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-150",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family file.copied: PASS / exit 0, 1134 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "file.created",
@@ -514,7 +547,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -837,9 +870,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (189 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -879,15 +912,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-151",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-151",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -914,41 +947,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-151",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-151",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-151",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-151",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-151",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-151",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-151",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family file.created: PASS / exit 0, 549 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "file.deleted",
@@ -974,7 +1040,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -1297,9 +1363,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (180 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -1339,15 +1405,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-152",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-152",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -1374,41 +1440,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-152",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-152",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-152",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-152",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-152",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-152",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-152",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family file.deleted: PASS / exit 0, 540 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "file.exported",
@@ -1434,7 +1533,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -1757,9 +1856,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (181 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -1799,15 +1898,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-153",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-153",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -1834,41 +1933,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-153",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-153",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-153",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-153",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-153",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-153",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-153",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family file.exported: PASS / exit 0, 554 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "file.moved",
@@ -1894,7 +2026,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -2217,9 +2349,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (181 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -2259,15 +2391,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-154",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-154",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -2294,41 +2426,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-154",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-154",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-154",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-154",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-154",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-154",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-154",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family file.moved: PASS / exit 0, 557 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "file.renamed",
@@ -2354,7 +2519,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -2677,9 +2842,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (183 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -2719,15 +2884,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-155",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-155",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -2754,41 +2919,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-155",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-155",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-155",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-155",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-155",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-155",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-155",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family file.renamed: PASS / exit 0, 549 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "folder.copied",
@@ -2814,7 +3012,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -3137,9 +3335,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (182 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -3179,15 +3377,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-156",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-156",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -3214,41 +3412,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-156",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-156",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-156",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-156",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-156",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-156",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-156",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family folder.copied: PASS / exit 0, 562 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "folder.created",
@@ -3274,7 +3505,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -3597,9 +3828,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (189 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -3639,15 +3870,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-157",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-157",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -3674,41 +3905,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-157",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-157",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-157",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-157",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-157",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-157",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-157",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family folder.created: PASS / exit 0, 548 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "folder.deleted",
@@ -3734,7 +3998,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -4057,9 +4321,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (181 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -4099,15 +4363,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-158",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-158",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -4134,41 +4398,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-158",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-158",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-158",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-158",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-158",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-158",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-158",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family folder.deleted: PASS / exit 0, 555 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "folder.exported",
@@ -4194,7 +4491,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -4517,9 +4814,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (182 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -4559,15 +4856,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-159",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-159",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -4594,41 +4891,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-159",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-159",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-159",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-159",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-159",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-159",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-159",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family folder.exported: PASS / exit 0, 569 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "folder.moved",
@@ -4654,7 +4984,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -4977,9 +5307,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (181 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -5019,15 +5349,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-160",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-160",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -5054,41 +5384,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-160",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-160",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-160",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-160",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-160",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-160",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-160",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family folder.moved: PASS / exit 0, 569 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     },
     {
       "event_type": "folder.renamed",
@@ -5114,7 +5477,7 @@
         "CV-339",
         "SP-278"
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "cells": {
@@ -5437,9 +5800,9 @@
           "change_reason": "Current normative source support remains unchanged; the reviewed owner units are byte-identical after rebase."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (184 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
+          "finding": "C12-DFM whole-definition Method B closure: complete owner schemas retained; 1782 scalar clauses are covered:1747 by cut proofs and35 by checked implications;564 routing entries are inventoried, and no applicable scalar obligation remains unresolved. Fresh gated proof:234/237 rows, with IS02/QJ03/OD03 isolated and justified. Exact mutation and invalid ledgers, full original exact-family replay, 6888 number routes, shared580/580, 81840 current/retained timestamp runs, 12276 declaration probes, 72 non-mutating retained-store observations and 192 distinct-copy joins are delivered. Global date-time admission remains refused on the known exclusion citation; no shared-suite or native PASS is claimed.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
@@ -5479,15 +5842,15 @@
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-161",
-              "line_start": 7257,
-              "line_end": 7257,
+              "line_start": 10979,
+              "line_end": 10979,
               "quote": "Every product refusal of the checker is one named row of a Method B guard table"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-161",
-              "line_start": 24650,
-              "line_end": 24650,
+              "line_start": 37891,
+              "line_end": 37891,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             },
             {
@@ -5514,41 +5877,74 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "F-161",
-              "line_start": 24662,
-              "line_end": 24662,
+              "line_start": 37903,
+              "line_end": 37903,
               "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "F-161",
-              "line_start": 7267,
-              "line_end": 7267,
+              "line_start": 10989,
+              "line_end": 10989,
               "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-161",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def credited_trial(control, negative, cut, restored, expected):"
+            },
+            {
+              "path": "scripts/pm-filemanager-c12-closure.py",
+              "unit": "F-161",
+              "line_start": 283,
+              "line_end": 283,
+              "quote": "def clause_entailment(projector, doc, ptr, node, keyword, member):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-161",
+              "line_start": 123,
+              "line_end": 123,
+              "quote": "def retained(fixtures):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_runtime.py",
+              "unit": "F-161",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "def time_refusal(name,field,value,profile):"
+            },
+            {
+              "path": "scripts/pm_filemanager_c12_verify.py",
+              "unit": "F-161",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "def verify(evidence,schema_only=False):"
             }
           ],
           "prior": {
-            "source": "DFM-sol/REVIEW-cycle8.md at 68fe8e3479b376d0165a67c18eded0b9e02d7d15",
+            "source": "104c6c82b5ea0b5bf154806712496777c48c675b:reports/event-authority-20261104/DFM.self-grade.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
+          "change": "upgraded",
+          "change_reason": "C12-RUN common B completed using the permitted whole-definition Method B route; independent acceptance remains with the lead."
         }
       },
       "remaining_gaps": [
         "Central registry membership and separate family admission remain absent.",
-        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION.",
-        "SWEEP-NUM: shared numeric recipes and authenticated history dispatch.",
-        "SWEEP-12: effective date-time validation and supported historical editions.",
-        "SWEEP-GUARD: shared guard tables/tool, including restored EventRecord schema_id assertions."
+        "PRODUCT/RT CC-L5-1: exact family retention assignment remains PENDING_RETENTION_DECISION."
       ],
       "static_checks_seen": [
         "scripts/pm-filemanager-event-contracts.py --family folder.renamed: PASS / exit 0, 560 cases; unfiltered shared registry checks enabled.",
         "scripts/pm-filemanager-registry-regression.py: valid complete checker accepts; exact B4 byte mutation yields 28 failures and full checker refuses all; restoration has zero registry failures.",
         "Cycle-8 B1-B3 driver: 478 witnesses, zero failures across the twelve families.",
         "Readiness self-tests, shard generation/check and plan-index generation/validation: PASS / exit 0.",
-        "Prior guard-removal table is historical; current shared-tool accounting remains part 2."
+        "Prior guard-removal table is historical; current shared-tool accounting remains part 2.",
+        "C12-DFM: current source-bound clause/cut/restoration, gated proof, exact-family replay, number and local date-time corpora, retained snapshots and copy joins pass; global shared date-time admission is refused."
       ],
-      "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
+      "notes": "C12 implementation self-grade PASS. Every other criterion cell is preserved from the baseline assessment. Native execution and native authentication remain NOT_RUN; admission and retention are not regraded here."
     }
   ],
   "review_round": "sweep-p2b",
@@ -5562,10 +5958,18 @@
   "guard_table_ref": "reports/event-authority-20261104/DFM.guard-tables.json",
   "limitations": [
     "Membership ABSENT; event-history retention PENDING_RETENTION_DECISION; native execution and native filesystem alias authentication NOT_RUN.",
-    "Guard tables: the gated tool proves 234 of 237 rows; IS02_integer_range, QJ03_jcs_other and OD03_dispatch_other are unprovable by construction (named reasons and lane evidence) and earn no credit.",
-    "Each JSON Schema occurrence is one verdict row; schema keywords are not cut one by one in the shared tool.",
-    "Timestamps: every format: date-time runs the shared CV-1101 date_time predicate (event_record profile) and EventRecord observed_at_utc/persisted_at_utc add CV-253 storage_utc_z; the shared datetime_validator and the date-time inventory gate refuse in this lane tree on hash drift from Plans edits and run at batch-2 integration.",
+    "Gated proof234/237; IS02/QJ03/OD03 singleton implications earn no gated kill credit.",
+    "Whole-definition Method B is used. Clause cuts are lane evidence; no claim of independently gated per-keyword predicates.",
+    "The global date-time inventory/13626-case suite refuses admission on the known exclusion citation; local DFM profile/corpus evidence is separate.",
     "SP-1101: the custody model is the finite fixture's sealed lookup; owner and reader read the same original, so the binding equality is structural; native custody authentication NOT_RUN.",
     "Plan-index validation compares against live origin/main; node readiness remains blocked_runtime_certification_incomplete. No landing, governance, Event admission or reseal is claimed."
-  ]
+  ],
+  "c12_assessment": {
+    "branch": "plans/ea-pnc-c12-dfm-20261114",
+    "base": "104c6c82b5ea0b5bf154806712496777c48c675b",
+    "report": "reports/event-authority-20261114/C12-DFM.md",
+    "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dfm",
+    "scope": "Only criterion12 regraded; other cells retain their historical assessment and citations.",
+    "independent_acceptance_review": "NOT_RUN_BY_IMPLEMENTATION_SUBAGENT"
+  }
 }
