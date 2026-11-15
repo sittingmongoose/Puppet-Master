@@ -2,6 +2,8 @@
 // by checks/perf-warm-watch.check.mjs and its node test tools/warm-watch-replay.selftest.mjs. What it replays and what it
 // fails on is written in the check's header.
 export const KEEP = 16, STEADY_MS = 25;
+// the least the queue's slow bar can be (lateMs() in 11-motion-start.js: Math.max(40, 3 * median()))
+export const SLOW_FLOOR_MS = 40;
 
 // steps: PM_WARM.log rows, oldest first. A row that records slow1/steady1/slow2/steady2/resetAt (the bars its two
 // intervals were judged against, and which of them reset the count) is judged from those. An older row, which has only
@@ -59,7 +61,15 @@ export function replayWatch(steps, hz) {
 				if (reset) { hi = 0; lo = 0; }
 				// steadyMs is the bar watched() used after the watch's later frames. steady1 and steady2 are the bars
 				// at d1 and d2, which are not that bar.
-				if (worst <= steady - 1) { hi++; lo++; }
+				// PM7PERF-WARMWATCH-WATCH-RESET-LOST (R60-T3-C1): a watch interval after d2 that was over the slow bar
+				// of its moment set the product's count back to zero before watched() counted the step, and no field
+				// records it (the median can rise afterwards, so the final steady bar hides it). No bar the row logs
+				// bounds the bar of that moment: the median can dip and recover between them (R62-C1: every logged bar
+				// 90, the reset against 40). Only the product's own floor does, max(40 ms, 3 x median): when the watch's
+				// worst frame reaches it, the count may be 1, so the lower bound starts again from this step. The upper
+				// bound keeps counting: only what is certain fails.
+				const watchMayReset = fm[2] >= SLOW_FLOOR_MS - 1;
+				if (worst <= steady - 1) { hi++; lo = watchMayReset ? 1 : lo + 1; }
 				else if (worst <= steady + 1) { hi++; lo = 0; }
 				else { hi = 0; lo = 0; }
 			} else if (fm.length === 2) {

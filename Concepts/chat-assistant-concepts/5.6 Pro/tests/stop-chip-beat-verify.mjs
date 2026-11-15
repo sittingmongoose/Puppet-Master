@@ -311,11 +311,12 @@ function smooth(W, i0 = 0, what = 'g', allow = []) {
 	}
 	assert.ok(worst <= 1, `${what === 'g' ? 'the glyph' : 'the backlight'}'s loop moved more than one frame at the faster pace in one frame: ${JSON.stringify(where)}`);
 	// Frames call the backlight `b`; its hand-over records say `bl`. Every record of both loops is judged,
-	// whichever loop the frame step named. `allow` is a record a case has already checked on its own
-	// (a catch-up the case puts in by hand, or NieR Mode coming back).
-	const skip = new Set(allow);
+	// whichever loop the frame step named. `allow` is a frame index a case has already checked for the
+	// backlight catch-up (catchUp, or NieR Mode coming back). Only the bl record at that index is excused.
+	// A glyph record in the same frame is still judged (PM7PERF-STOPCHIP-NODE-CATCHUP-BOTH-LAYERS).
+	const skipBl = new Set(allow);
 	for (const layer of ['g', 'bl']) {
-		const hand = W.jumps.filter((j) => j.i >= i0 && j.layer === layer && !skip.has(j.i)).map((j) => ({ ...j, over: Math.abs(j.after - j.before) / (FRAME / Math.min(fast, j.d) + 1e-9) }));
+		const hand = W.jumps.filter((j) => j.i >= i0 && j.layer === layer && !(layer === 'bl' && skipBl.has(j.i))).map((j) => ({ ...j, over: Math.abs(j.after - j.before) / (FRAME / Math.min(fast, j.d) + 1e-9) }));
 		const bad = hand.sort((x, y) => y.over - x.over)[0];
 		assert.ok(!bad || bad.over <= 1, `${layer === 'g' ? 'the glyph' : 'the backlight'} jumped when a frame handed it to the compositor: ${bad && JSON.stringify({ t: Math.round(bad.t), before: +bad.before.toFixed(4), after: +bad.after.toFixed(4) })}`);
 	}
@@ -802,6 +803,24 @@ const CASES = {
 		};
 		assert.throws(() => smooth(W, 0, 'b'), /backlight/);
 		return 'the 0.1 backlight hand-over is rejected';
+	},
+	// Same long gap (1 s, place 1 to 1.4125, inside one frame at the faster pace). A hand-over on both
+	// loops at the index smooth is told to allow. The glyph's step is 0.1 of a loop, past one frame.
+	// The allowance is the backlight catch-up's frame, so the glyph record must still be rejected.
+	'a glyph hand-over in the backlight catch-up\'s frame is still judged (constructed)': () => {
+		const W = {
+			k: 1,
+			frames: [
+				{ t: 0, g: { a: 1, place: 1, dur: 3200 }, b: { a: 2, place: 1, dur: 3200 } },
+				{ t: 1000, g: { a: 1, place: 1.4125, dur: 3200 }, b: { a: 2, place: 1.4125, dur: 3200 } },
+			],
+			jumps: [
+				{ i: 1, t: 1000, layer: 'bl', before: 1.3125, after: 1.4125, d: 3200 },
+				{ i: 1, t: 1000, layer: 'g', before: 1.3125, after: 1.4125, d: 3200 },
+			],
+		};
+		assert.throws(() => smooth(W, 0, 'g', [1]), /glyph/);
+		return 'the glyph hand-over in the catch-up frame is rejected';
 	}
 };
 
