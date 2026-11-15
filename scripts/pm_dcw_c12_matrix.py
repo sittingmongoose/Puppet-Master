@@ -92,8 +92,25 @@ def reached_rows(family):
     return found
 
 
+def coverage_file(evidence, family):
+    # pm_dcw_c12.py names the file from the family stem (for example bundle.schema-coverage.json).
+    return next((evidence / 'schema' / family).glob('*.schema-coverage.json'))
+
+
+def supplement(evidence, family):
+    path = evidence / 'schema-supplement' / (family + '.supplement.json')
+    out = {}
+    if path.exists():
+        for site in load(path):
+            for clause in site.get('witnessed_clauses', []):
+                out[((site['schema'], site['definition'], site['historical']),
+                     (clause['source'], clause['schema_pointer'], clause['keyword']))] = dict(clause, schema_sha256=site['schema_sha256'])
+    return out
+
+
 def schema_family(evidence, family, shared):
-    sites = load(evidence / 'schema' / family / (family + '.schema-coverage.json'))
+    sites = load(coverage_file(evidence, family))
+    extra = supplement(evidence, family)
     out, counts = [], Counter()
     for site in sites:
         key = (site['schema'], site['definition'], site['historical'])
@@ -102,7 +119,10 @@ def schema_family(evidence, family, shared):
             ident = (clause['source'], clause['schema_pointer'], clause['keyword'])
             status = clause['status']
             entry = dict(clause)
-            if status == 'unwitnessed':
+            if status == 'unwitnessed' and (key, ident) in extra:
+                hit = extra[(key, ident)]
+                entry.update(status='witnessed_supplement', witnesses=hit['witnesses'], clause_cut=hit['clause_cut'])
+            elif status == 'unwitnessed':
                 other = shared.get((key, ident))
                 if other:
                     entry.update(status='witnessed_by_shared_site', shared_family=other['family'],
@@ -140,12 +160,14 @@ def main():
 
     shared = {}
     for family in c12.FAMILIES:
-        for site in load(ev / 'schema' / family / (family + '.schema-coverage.json')):
+        for site in load(coverage_file(ev, family)):
             key = (site['schema'], site['definition'], site['historical'])
             for clause in site['clauses']:
                 if clause['status'] == 'witnessed':
                     shared.setdefault((key, (clause['source'], clause['schema_pointer'], clause['keyword'])),
                                       dict(family=family, witnesses=clause['witnesses'], schema_sha256=site['schema_sha256']))
+        for (key, ident), hit in supplement(ev, family).items():
+            shared.setdefault((key, ident), dict(family=family, witnesses=hit['witnesses'], schema_sha256=hit['schema_sha256']))
 
     matrix, problems, totals = [], [], Counter()
     for family in c12.FAMILIES:

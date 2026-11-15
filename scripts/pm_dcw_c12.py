@@ -114,11 +114,19 @@ def capture_sites():
 
 
 def accepting_witnesses(family):
-    """Authored complete-path controls only: the lane's accepting cases and repairs."""
+    """Authored complete-path inputs: the lane's accepting cases and repairs, plus C12 witnesses.
+
+    A site control is a value the real check_schema accepted at that site; a C12
+    witness refused later (for example O234's translated generation) still
+    supplies an accepted checkpoint value. Configured or sealed witnesses that
+    replace owner documents or store state are not used.
+    """
     from itertools import chain
     for w in chain(suites.witnesses(family), suites.p2a_witnesses(family)):
-        # Configured witnesses replace owner documents; they are not authored controls here.
         if w['expected'] == 'accept' and w.get('kind') is None:
+            yield w
+    for w in suites.c12_witnesses(family):
+        if w.get('kind') is None and w.get('row') is not None or w['family'] in ('wizard.blocked', 'wizard.unblocked') and w.get('kind') is None:
             yield w
 
 
@@ -152,7 +160,7 @@ def controls_for(family):
                 outcome = suites.invoke(w)
             except m.Refusal as exc:
                 outcome = str(exc)
-        assert outcome == 'accept', (w['id'], outcome)
+        assert outcome == w['expected'], (w['id'], outcome)
         count += 1
         for path, definition, historical, value in captured:
             key = (path, definition, historical)
@@ -491,11 +499,10 @@ def targeted_values(node, keyword):
     elif keyword in ('maximum', 'exclusiveMaximum'):
         yield value + 1
         yield value
-    elif keyword == 'required':
-        return
-    elif keyword in ('additionalProperties', 'minProperties', 'maxProperties'):
-        return
-    for item in ('x', 7, None, {}):
+    elif keyword in ('required', 'additionalProperties', 'minProperties', 'maxProperties'):
+        yield {}
+        yield {'__c12_unknown__': True}
+    for item in ('x', 7, None, {}, {'__c12_unknown__': True}):
         yield [item]
 
 
@@ -519,15 +526,56 @@ def arm_controls(site, clause, control):
             yield replaced(control, parts, {**original, **consts})
 
 
-def targeted_mutations(control, node, keyword):
-    """Each targeted value at each location, plus as the sole item of empty/nullable slots."""
+def instance_suffix(pointer_text):
+    """The instance key path a schema pointer validates, from its last $defs entry onward.
+
+    properties/<name> -> name, items/additionalProperties/patternProperties -> any
+    key; applicators (allOf, anyOf, oneOf, then, else, $ref targets) add nothing.
+    """
+    parts = [x.replace('~1', '/').replace('~0', '~') for x in pointer_text.split('/')[1:]]
+    if '$defs' in parts:
+        last = len(parts) - 1 - parts[::-1].index('$defs')
+        parts = parts[last + 2:]
+    suffix, i = [], 0
+    while i < len(parts):
+        part = parts[i]
+        if part == 'properties' and i + 1 < len(parts):
+            suffix.append(parts[i + 1]); i += 2
+        elif part in ('patternProperties',) and i + 1 < len(parts):
+            suffix.append(None); i += 2
+        elif part in ('items', 'additionalProperties', 'contains', 'prefixItems'):
+            suffix.append(None); i += 2 if part == 'prefixItems' else 1
+        elif part in ('allOf', 'anyOf', 'oneOf'):
+            i += 2
+        else:
+            i += 1
+    return suffix
+
+
+def matches(parts, suffix):
+    if len(parts) < len(suffix):
+        return False
+    tail = parts[len(parts) - len(suffix):] if suffix else ()
+    return all(want is None or want == got for want, got in zip(suffix, tail))
+
+
+def targeted_mutations(control, node, keyword, suffix=None):
+    """Each targeted value at each location the clause can govern, plus as the sole item of empty slots."""
     yield (), 'targeted/arm-control', control
     values = list(targeted_values(node, keyword))
     for parts, original in locations(control):
+        if suffix is not None and not (matches(parts, suffix) or matches(parts, suffix[:-1]) and suffix):
+            continue
         for value in values:
             yield parts, 'targeted/' + keyword, replaced(control, parts, value)
             if isinstance(original, list) and not original and not isinstance(value, list):
                 yield parts, 'targeted-item/' + keyword, replaced(control, parts, [value])
+        if keyword == 'maxProperties' and isinstance(original, dict) and original:
+            first = next(iter(original))
+            grown = dict(original)
+            for i in range(node.get('maxProperties', 0) + 1 - len(original)):
+                grown[(first[:-6] if len(first) > 6 else first) + '%06x' % (i + 1)] = copy.deepcopy(original[first])
+            yield parts, 'targeted/maxProperties', replaced(control, parts, grown)
         if keyword == 'required' and isinstance(original, dict):
             for key in node.get('required', ()):
                 if key in original:
@@ -543,10 +591,11 @@ def targeted_pass(family, key, site, controls, inventory, witnessed, credited, i
         if clause in witnessed or clause == STORAGE_CLAUSE:
             continue
         node = clause_node(site, clause)
+        suffix = instance_suffix(clause[1])
         scanned = 0
         for control, armed in ((c, a) for c in controls for a in arm_controls(site, clause, c['value'])):
             cid = sha([key, control['value']])
-            for parts, label, changed in targeted_mutations(armed, node, clause[2]):
+            for parts, label, changed in targeted_mutations(armed, node, clause[2], suffix):
                 scanned += 1
                 if scanned > TARGETED_SCAN or clause in witnessed:
                     break
