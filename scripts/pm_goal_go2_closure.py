@@ -1207,7 +1207,7 @@ def greedy_repair(cl, v, value, protect, donors, rounds=14, tries=10, budget=600
                     if word in node:
                         pool.append(node[word])
                 pool += list(node.get('enum', []))[:8]
-                pool += [None] + donors.candidates(where[-1], tries)
+                pool += [None, [], {}] + donors.candidates(where[-1], tries)
                 for variant in (0, 1):
                     try:
                         pool.append(cl.gen(node, resolver, 0, variant))
@@ -1408,7 +1408,7 @@ def member_schemas(cl, by_ipath, ipath):
     return out
 
 
-def _fill_branch(cl, v, target, branch, bres, selectors, at, donors):
+def _fill_branch(cl, v, target, branch, bres, selectors, at, donors, own=None):
     """The taken branch's own members that refuse their current value: a nested pin in place, else const/enum, null,
     a donor or a generated value the member's branch subschema accepts."""
     for q, sub in (branch.get('properties', {}) if isinstance(branch, dict) else {}).items():
@@ -1422,12 +1422,14 @@ def _fill_branch(cl, v, target, branch, bres, selectors, at, donors):
             if _force(cl, v, trial, sub, sres, True, donors, at + (q,)) is not None and cl.holds(v, sub, trial, sres):
                 target[q] = trial
                 continue
-        pool = ([sub['const']] if 'const' in sub else []) + list(sub.get('enum', []))[:4] + [None]
+        pool = ([sub['const']] if 'const' in sub else []) + list(sub.get('enum', []))[:4] + [[], {}, None]
         pool += [d for d in donors.candidates(q, 8)]
         try:
             pool.append(cl.gen(sub, sres, 0, 0))
         except Exception:  # noqa: BLE001
             pass
+        mine = (own or {}).get(q, [])  # values the member's own property schemas accept come first
+        pool.sort(key=lambda x: not all(cl.holds(v, n, x, r) for n, r in mine))
         pick = next((x for x in pool if cl.holds(v, sub, x, sres)), NONE)
         if pick is not NONE:
             target[q] = copy.deepcopy(pick)
@@ -1543,7 +1545,7 @@ def _steer(cl, v, parent, member, parent_ipath, parent_at, donors, by_ipath, pro
     for node, nres in conds:
         branch, bres = branch_of(node, nres, parent)
         if isinstance(branch, dict):
-            _fill_branch(cl, v, parent, branch, bres, selectors | {parent_at + (member,)}, parent_at, donors)
+            _fill_branch(cl, v, parent, branch, bres, selectors | {parent_at + (member,)}, parent_at, donors, own)
 
 
 def enter_light(cl, v, control, reach, donors, by_ipath=None):
@@ -1611,27 +1613,9 @@ def enter_light(cl, v, control, reach, donors, by_ipath=None):
                 selectors |= taken
             # the taken branch's own members that refuse their current value: const/enum, null, a donor, a generated value
             branch, bres = cl.deref(owner.get(kind, {}), resolver)
-            for q, sub in (branch.get('properties', {}) if isinstance(branch, dict) else {}).items():
-                if q not in target or at + (q,) in selectors:
-                    continue
-                sub, sres = cl.deref(sub, bres)
-                if cl.holds(v, sub, target[q], sres):
-                    continue
-                if isinstance(target[q], dict) and isinstance(sub.get('properties'), dict) and 'type' not in sub:
-                    # a nested pin on an existing object: pin its members in place, never replace the object
-                    trial = copy.deepcopy(target[q])
-                    if _force(cl, v, trial, sub, sres, True, donors, at + (q,)) is not None and cl.holds(v, sub, trial, sres):
-                        target[q] = trial
-                        continue
-                pool = ([sub['const']] if 'const' in sub else []) + list(sub.get('enum', []))[:4] + [None]
-                pool += [d for d in donors.candidates(q, 8)]
-                try:
-                    pool.append(cl.gen(sub, sres, 0, 0))
-                except Exception:  # noqa: BLE001
-                    pass
-                pick = next((x for x in pool if cl.holds(v, sub, x, sres)), NONE)
-                if pick is not NONE:
-                    target[q] = copy.deepcopy(pick)
+            if isinstance(branch, dict):
+                _fill_branch(cl, v, target, branch, bres, selectors, at, donors,
+                             member_schemas(cl, by_ipath, tuple(reach['ipath'][:depth])) if by_ipath is not None else None)
     return value, protect
 
 
