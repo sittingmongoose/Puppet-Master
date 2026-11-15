@@ -1,8 +1,22 @@
 // Reach every shipped rail view/detail. The review bundle comes from rail_layer's real review profile.
 // Two test-only references expose existing A/C instances; no DOM/marker writer is replaced.
 // The bundle's shared rail modules that the page under test does not carry verbatim (R27 F5): [] when they match;
-// a bundle made before the modules were recorded reads as unproven.
-export const bundleMismatch=(bundle,pageText)=>!bundle.shared||!Object.keys(bundle.shared).length?['the bundle records no shared modules (rebuild it with rail_expanded_prep.py)']:Object.entries(bundle.shared).filter(([,text])=>!pageText.includes(text.trim())).map(([name])=>name+' differs from the page');
+// a bundle made before the modules were recorded reads as unproven. All four modules rail_expanded_prep.py records
+// (its SHARED) must be there, each with text, and nothing else (R54 F3): a bundle carrying only 00-core, or a blank
+// entry (every page includes ''), proved nothing about the other modules and passed.
+export const SHARED_MODULES=['00-core.js','20-menu.js','30-host.js','90-boot.js'];
+export const bundleMismatch=(bundle,pageText)=>{
+ const shared=bundle&&bundle.shared;
+ if(!shared||typeof shared!=='object'||!Object.keys(shared).length)return['the bundle records no shared modules (rebuild it with rail_expanded_prep.py)'];
+ const out=[];
+ for(const name of SHARED_MODULES){
+  const text=shared[name];
+  if(typeof text!=='string'||!text.trim())out.push(name+' is not recorded in the bundle (rebuild it with rail_expanded_prep.py)');
+  else if(!pageText.includes(text.trim()))out.push(name+' differs from the page');
+ }
+ for(const name of Object.keys(shared))if(!SHARED_MODULES.includes(name))out.push(name+' is not one of the shared rail modules');
+ return out;
+};
 export async function installRailReview(page,bundle){
  await page.addStyleTag({content:bundle.css});await page.addScriptTag({content:bundle.js});
  await page.evaluate(()=>{window.__pmrExpandedAudit={queue:[],seen:new Set()};});await page.evaluate(installOriginalSelectorProbe);
