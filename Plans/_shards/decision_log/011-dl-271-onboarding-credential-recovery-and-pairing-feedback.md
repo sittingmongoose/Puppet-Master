@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L32562
+Source lines: L28747-L32627
 
-Source SHA256: `4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca`
+Source SHA256: `2bd7295f3b6abcb321057fb875e885b8feac2fb3447bf3ee25c66e54ec8e6908`
 
 ---
 
@@ -3823,4 +3823,69 @@ source_lineage:
 preserved_exact_tokens: ["Same as the history", "RP-AUTHORITY-INDEFINITE@1.0.0", "RP-TELEMETRY-90D@1.0.0", "RP-OPERATIONAL-2555D@1.0.0", "source_control_backend_selected_fact", "source_control_checkpoint_created_fact", "source_control_checkpoint_restored_fact", "source_control_repository_bound_fact", "source_control_repository_unbound_fact", "source_control_workspace_created_fact", "source_control_workspace_removed_fact", "source_control_writer_lease_granted_fact", "source_control_writer_lease_lost_fact", "source_control_backend_detected_fact", "source_control_status_refreshed_fact", "source_control_workspace_opened_fact", "source_control_workspace_switched_fact", "source_control_remote_fetch_completed_fact", "source_control_remote_fetch_started_fact", "source_control_remote_publish_completed_fact", "source_control_remote_publish_started_fact", "source_control_remote_sync_completed_fact", "source_control_remote_sync_started_fact"]
 negative_constraints:
 - No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-511 - A Supplemental Closure Row May Replace The Frozen Matrix Row It Names
+
+```yaml
+plan_unit_id: DL-511
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-511 records Jared's answer of 2026-11-14 at 3:39 PM EST (20:39:58Z) to stream C's card C-A006: option A,
+  "Change the rule so a correction can replace a frozen record", given with no added words. The signed answer is
+  /mnt/Cursor/agent-reports/v1/answers/vm.pm-closure-lead--C-A006.json (SHA-256
+  ebbc55c2ed72504b9e9d2145ac92855629d9bc7e2a4553f2a594aecc0d493218). The card asked about audit-20260617-006, whose
+  frozen closure-matrix lines 22 and 23 still declare the support files scripts/pm-audit-closure.py and
+  Plans/.audits/_semantic_closure_registry.jsonl as owners while the registry closures they name were corrected to
+  PDS-014 and PLS-012, so neither registry link holds. PLS-026 kept such a link an error, and an appended correction
+  changed nothing, because the per-audit check judged every frozen row on its own. Option A promised that the finding
+  is properly repaired and closed, that registry rows 25, 35 and 1203 all get final outcomes, and that later audits can
+  fix a wrong link the same way. It changes three things. First, Plans/Planning_Ledger_System.md#PLS-026 lets a
+  supplemental closure pass append one corrected closure row that names, in replaces_matrix_line, the one frozen row it
+  replaces, with replaces_row_sha256 and a replacement_reason; the frozen row stays byte-identical as history, the
+  per-audit check judges the replacing row's registry link instead of the frozen row's, and a registry link that does
+  not hold stays an error for every frozen row that no valid replacement names. Second, validate_audit_dir in
+  scripts/pm-audit-closure.py honors only a valid replacement; it refuses an unknown line, a target that is not a
+  frozen row, duplicate and chained replacements, and a replacing row whose own registry link does not hold, and a
+  replacing row adds no coverage of its own. Third, audit-20260617-006's supplemental_closure_pass-20261114.json
+  replaces lines 22 and 23 with appended rows that link two new registry closures under the corrected owners. They get
+  new closure ids, so the existing anchors on closure ids -022 and -023 keep naming exactly one row each. The
+  re-audits of registry rows 1203, 25 and 35 follow at the landed commit with fresh reviews; this entry claims no
+  re-audit outcome.
+gui_related: false
+gui_classification_reason: Records a governance decision about audit-closure validation; no GUI contract changes.
+split_recommended: false
+depends_on: [PLS-026, DL-334]
+unblocks: []
+acceptance_criteria:
+  - "Plans/Planning_Ledger_System.md#PLS-026 states when an appended row replaces a frozen row and that a registry link that does not hold stays an error for every frozen row that no valid replacement names."
+  - "audit-20260617-006's lines 22 and 23 are replaced by appended rows linking new registry closures; no existing matrix or registry row changes."
+validation_surfaces:
+  - python3 -m unittest tests/test_pm_audit_closure.py
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity --require-closure-matrix
+  - python3 scripts/pm-plan-index.py validate
+risk_class: governance_integrity
+reasoning_tier: high
+context_scope: semantic_audit_closure
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Planning_Ledger_System.md
+  - scripts/pm-audit-closure.py
+  - Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/supplemental_closure_pass-20261114.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/agent-reports/v1/answers/vm.pm-closure-lead--C-A006.json; SHA-256 ebbc55c2ed72504b9e9d2145ac92855629d9bc7e2a4553f2a594aecc0d493218; Jared's signed answer A to card C-A006, 2026-11-14T20:39:58Z"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/rows-25-35-49/card-r253549.json; SHA-256 4126f89b0c4552870b04ac3eac8308f3b5456ec3a63705d0fffd253e73f868ff; card C-A006"
+  - Plans/Decision_Log.md#DL-334
+preserved_exact_tokens:
+  - "DL-511"
+  - "Change the rule so a correction can replace a frozen record"
+  - "replaces_matrix_line"
+owner_hints:
+  - Plans/Planning_Ledger_System.md
 ```
