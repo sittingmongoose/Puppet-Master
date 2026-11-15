@@ -12418,15 +12418,15 @@
     "build_order_available": false,
     "build_order_blocked_node_count": 1758,
     "cycle_blocker_count": 4,
-    "depends_on_edge_count": 25500,
+    "depends_on_edge_count": 25502,
     "downstream_blocked_node_count": 1754,
-    "edge_count": 28722,
-    "node_count": 9156,
+    "edge_count": 28724,
+    "node_count": 9157,
     "true_cycle_component_count": 1,
     "unblocks_edge_count": 3222,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-15T22:21:32Z",
+  "generated_at_utc": "2026-11-15T23:01:36Z",
   "gui_related_units": {
     "count": 3935,
     "units": [
@@ -55723,10 +55723,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9156,
+  "plan_unit_count": 9157,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4470,
+      "high": 4471,
       "low": 10,
       "medium": 36,
       "standard": 4640
@@ -58056,7 +58056,7 @@
       "owner_consumer_map_loss": 1,
       "owner_contract_bridge": 1,
       "owner_decision_drift": 1,
-      "owner_decision_fidelity": 64,
+      "owner_decision_fidelity": 65,
       "owner_demotion_drift": 1,
       "owner_drift": 157,
       "owner_first_consumer_drift_blocking": 1,
@@ -59979,7 +59979,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 8876,
+      "accepted": 8877,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -60013,7 +60013,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 450,
+      "decision": 451,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,

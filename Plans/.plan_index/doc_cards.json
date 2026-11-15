@@ -7039,10 +7039,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 308,
+        "False": 309,
         "True": 235
       },
-      "heading_count": 783,
+      "heading_count": 784,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -7183,9 +7183,9 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 40321,
+      "line_count": 40377,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 543,
+      "plan_unit_count": 544,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -7729,6 +7729,7 @@
         "DL-691",
         "DL-692",
         "DL-693",
+        "DL-694",
         "DL-695"
       ],
       "reasoning_tiers": [
@@ -7929,15 +7930,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "af6e51c71efe8b240e08fd4d661e890663633428bacf277ad03ebdfa0ad8407c",
+      "sha256": "28484e523618998ea545975ef64eeab5626d22e25bd7b7e51227fe459277796f",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 543
+        "accepted": 544
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 427,
+        "decision": 428,
         "decision_record": 24,
         "requirement": 91
       },
@@ -7972,6 +7973,7 @@
         "exact supplemental three-packet set-equality check",
         "future native Settings/owner search, Details, Reset and readiness evidence; not_run",
         "future placement gate/ranking/pin/recovery fixtures",
+        "git check-ignore --no-index",
         "python3 -m unittest discover -s tests -p test_pm_settings_draft_transfer.py",
         "python3 -m unittest tests.test_event_authority_holding_bucket",
         "python3 -m unittest tests.test_pm_jujutsu_closure_semantics",
@@ -24763,7 +24765,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-15T22:21:32Z",
+  "generated_at_utc": "2026-11-15T23:01:35Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -24771,13 +24773,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5221,
+      "False": 5222,
       "True": 3935
     },
-    "plan_unit_count": 9156,
+    "plan_unit_count": 9157,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 8876,
+      "accepted": 8877,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -24811,7 +24813,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 450,
+      "decision": 451,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,

@@ -64021,6 +64021,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "DL-694",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-694",
+      "to": "DL-413"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "DL-695",
       "to": "DL-045"
     },
@@ -168435,7 +168445,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-15T22:21:31Z",
+  "generated_at_utc": "2026-11-15T23:01:35Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -219268,6 +219278,23 @@
       "unit_type": "decision"
     },
     {
+      "context_scope": "event_authority_admission_merge_2",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-694",
+      "reasoning_tier": "high",
+      "risk_class": "owner_decision_fidelity",
+      "source_location": {
+        "heading": "DL-694 - Merge 2 May Carry These Event Authority Test Files, And Later Lanes May Add The Same Kind (E10-2)",
+        "heading_level": 3,
+        "heading_line": 40281,
+        "line": 40283,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
       "context_scope": "event_authority_pnc019_c12_sl",
       "gui_related": false,
       "owner_doc": "Plans/Decision_Log.md",
@@ -219277,8 +219304,8 @@
       "source_location": {
         "heading": "DL-695 - A Retried Failed Deletion Stays Hidden And Re-Checks Before Carrying On (E11-1)",
         "heading_level": 3,
-        "heading_line": 40281,
-        "line": 40283,
+        "heading_line": 40337,
+        "line": 40339,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -324096,10 +324123,10 @@
     "build_order_available": false,
     "build_order_blocked_node_count": 1758,
     "cycle_blocker_count": 4,
-    "depends_on_edge_count": 25500,
+    "depends_on_edge_count": 25502,
     "downstream_blocked_node_count": 1754,
-    "edge_count": 28722,
-    "node_count": 9156,
+    "edge_count": 28724,
+    "node_count": 9157,
     "true_cycle_component_count": 1,
     "unblocks_edge_count": 3222,
     "unresolved_reference_count": 0
