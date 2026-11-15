@@ -144,6 +144,85 @@ REGISTRY = Registry().with_resources(_plans_resources()).with_resources([
 DATETIME_FORMATS = format_checker(profile=EVENT_RECORD)
 
 
+# SP-278 nine-field durable read token (DL-076), exactly as the shared readiness read-token exemption derives it
+# (scripts/pm-implementation-readiness.py storage_value_durable_read_token_schema): the canonical read_token with
+# redb_snapshot_id removed from its properties and required list, every other member unchanged. The checkpoint
+# schema's durable_read_token must be exactly this schema and every checkpoint and retired generation must name it by
+# one local $ref (s4b-tokfix, lead decision A, as W3A's INT3 repair): no lane copy, so the exemption applies to the
+# 51 registry rows. This lane's trailing-LF rule lives in token_full_match, never in the token schema.
+INDEX_CHECKPOINT_SCHEMA = _load('event_record_index_checkpoint.schema.json')
+DURABLE_REF = {'$ref': '#/$defs/durable_read_token'}
+
+
+def _durable_read_token():
+    token = copy.deepcopy(INDEX_CHECKPOINT_SCHEMA['$defs']['read_token'])
+    token['properties'].pop('redb_snapshot_id')
+    token['required'] = [k for k in token['required'] if k != 'redb_snapshot_id']
+    return token
+
+
+DURABLE_READ_TOKEN = _durable_read_token()
+
+
+def durable_token_problems(checkpoints):
+    """Why the checkpoint schema's durable token is not SP-278's, or []."""
+    defs = checkpoints.get('$defs') if isinstance(checkpoints, dict) else None
+    defs = defs if isinstance(defs, dict) else {}
+    problems = [] if defs.get('durable_read_token') == DURABLE_READ_TOKEN else ['durable_read_token_not_sp278']
+    for f in FAMILIES:
+        for name in (FAM[f]['slug'] + '_index_checkpoint', FAM[f]['slug'] + '_retired_generation'):
+            node = defs.get(name)
+            props = node.get('properties') if isinstance(node, dict) else None
+            if not isinstance(props, dict) or props.get('index_read_token') != DURABLE_REF:
+                problems.append((name, 'index_read_token_not_durable_ref'))
+    return problems
+
+
+if durable_token_problems(CHECKPOINTS):
+    raise SystemExit('browser_program_event_contracts durable_read_token is not the shared SP-278 nine-field durable read '
+                     'token: %s' % durable_token_problems(CHECKPOINTS)[:5])
+
+
+def _token_patterns(node, path=()):
+    """(path, pattern) of every pattern-bearing string member of the durable token, nested objects included."""
+    out = []
+    for name, sub in node.get('properties', {}).items():
+        if type(sub.get('pattern')) is str:
+            out.append((path + (name,), sub['pattern']))
+        if sub.get('type') == 'object':
+            out += _token_patterns(sub, path + (name,))
+    return out
+
+
+TOKEN_PATTERNS = tuple(_token_patterns(DURABLE_READ_TOKEN))
+
+
+def token_full_match(token):
+    """Every pattern-bearing string of one durable token full-matches its SP-278 pattern. Draft 2020-12 `pattern` is a
+    search and Python's '$' also matches before one final LF, so '^...$' alone accepts a trailing LF (standing check 5).
+    Non-strings, absent members and a non-object token stay with the schema row."""
+    if type(token) is not dict:
+        return True
+    for path, pattern in TOKEN_PATTERNS:
+        value = token
+        for part in path:
+            value = value.get(part) if type(value) is dict else None
+        if type(value) is str and re.fullmatch(pattern, value) is None:
+            return False
+    return True
+
+
+def checkpoint_tokens_full_match(value):
+    """token_full_match for the value's current token and every retired generation's token."""
+    if type(value) is not dict:
+        return True
+    tokens = [value.get('index_read_token')]
+    retired = value.get('retired_generations')
+    if type(retired) is list:
+        tokens += [r.get('index_read_token') for r in retired if type(r) is dict]
+    return all(token_full_match(t) for t in tokens)
+
+
 @functools.lru_cache(maxsize=None)
 def _validator(root_id, pointer):
     ref = root_id + (('#' + pointer) if pointer else '')
@@ -1944,7 +2023,8 @@ def slot_reason(value, path):
 def checkpoint_ok(value, family):
     return (type(value) is dict and all(slot_reason(value, p) is None for _n, p in CK_SLOTS)
             and physical_reason(value) is None
-            and schema_errors(CHECKPOINTS_ID, '/$defs/' + FAM[family]['slug'] + '_index_checkpoint', value) == [])
+            and schema_errors(CHECKPOINTS_ID, '/$defs/' + FAM[family]['slug'] + '_index_checkpoint', value) == []
+            and checkpoint_tokens_full_match(value))
 
 
 @derived
@@ -1963,9 +2043,14 @@ def d_phys(w, m):
 
 
 @derived
-def d_ok(w, m):
+def d_schema(w, m):
     return m.get('d_phys') and schema_errors(CHECKPOINTS_ID, '/$defs/' + FAM[w['family']]['slug'] + '_index_checkpoint',
                                              PV(w)) == []
+
+
+@derived
+def d_ok(w, m):
+    return m.get('d_schema') and checkpoint_tokens_full_match(PV(w))
 
 
 @derived
@@ -2010,6 +2095,14 @@ row(D, 'derived_shape', 'derived_value_schema', 'checkpoint_schema', '/proposed'
         W('current with an incomplete filter (state allOf)', proposed=lambda v, c: dict(v, filter_complete=False)),
         W('revision 0 naming a predecessor (CAS allOf)', variant='empty', proposed=lambda v, c: dict(v, previous_checkpoint_sha256=_hex('p'))),
         W('empty cursor with a count (cursor allOf)', variant='empty', proposed=lambda v, c: dict(v, matched_count=1))])
+row(D, 'derived_shape', 'derived_token_full_match', 'checkpoint_schema', '/proposed/index_read_token',
+    'every pattern-bearing string of the current and each retired durable token full-matches its SP-278 pattern (the '
+    'shared schema pattern is a search and accepts one trailing LF; standing check 5)', 'true',
+    lambda w, m: V(checkpoint_tokens_full_match(PV(w))), gates=('d_schema',),
+    witnesses=[(lambda p: W('trailing LF on token ' + '/'.join(p), proposed=_set(('index_read_token',) + p, lambda s: s + '\n')))(_p)
+               for _p, _pattern in TOKEN_PATTERNS] + [
+        W('trailing LF on a retired generation token generation_id', variant='retired',
+          proposed=_set(('retired_generations', 0, 'index_read_token', 'generation_id'), lambda s: s + '\n'))])
 D_JOINS = (
     ('key', 'checkpoint_key_join', ('checkpoint_key',), lambda w: checkpoint_key(w['family'], w['store']['storage_instance_id'], w['project_id'])),
     ('storage_instance', 'storage_instance_join', ('storage_instance_id',), lambda w: w['store']['storage_instance_id']),
@@ -2101,10 +2194,11 @@ def _log_entry(w):
 
 
 row(RD, 'read', 'read_checkpoint_valid', 'checkpoint_unavailable', '/checkpoint',
-    'the stored checkpoint passes its slots, physical encoding and full owner schema', 'true',
+    'the stored checkpoint passes its slots, physical encoding, full owner schema and durable-token full match', 'true',
     lambda w, m: V(checkpoint_ok(CP(w), w['family'])),
     witnesses=[W('checkpoint absent', checkpoint=lambda v, c: []),
-               W('checkpoint unknown member', checkpoint=lambda v, c: dict(v, extra='x'))])
+               W('checkpoint unknown member', checkpoint=lambda v, c: dict(v, extra='x')),
+               W('stored token frontier hash trailing LF', checkpoint=_set(('index_read_token', 'frontier_sha256'), lambda s: s + '\n'))])
 row(RD, 'read', 'read_state_current', 'checkpoint_withdrawn', '/checkpoint/state',
     'only a current checkpoint discloses', 'eq', lambda w, m: EQ(CP(w)['state'], 'current'), gates=('rd_ok',),
     witnesses=[W('withdrawn checkpoint', checkpoint=lambda v, c: withdraw(v, checkpoint_store(c['family'])))])
@@ -2149,11 +2243,13 @@ def wd_ok(w, m):
 
 
 row(WD, 'withdrawal', 'withdrawal_value_valid', 'checkpoint_schema', '/proposed',
-    'the withdrawn value passes its slots, physical encoding and full owner schema (state allOf kept)', 'true',
+    'the withdrawn value passes its slots, physical encoding, full owner schema (state allOf kept) and durable-token full '
+    'match', 'true',
     lambda w, m: V(checkpoint_ok(PV(w), w['family'])),
     witnesses=[W('withdrawn without time', proposed=lambda v, c: dict(v, withdrawn_at_utc=None)),
                W('withdrawal time malformed', proposed=lambda v, c: dict(v, withdrawn_at_utc='2026-11-14T12:00:00')),
-               W('withdrawn without receipt', proposed=lambda v, c: dict(v, withdrawal_receipt_ref=None))])
+               W('withdrawn without receipt', proposed=lambda v, c: dict(v, withdrawal_receipt_ref=None)),
+               W('withdrawn token anchor trailing LF', proposed=_set(('index_read_token', 'generation_anchor_sha256'), lambda s: s + '\n'))])
 row(WD, 'withdrawal', 'withdrawal_writer_cutoff', 'withdrawal_order', '/store/withdrawn',
     'writers are cut off before the consumer is withdrawn', 'member',
     lambda w, m: {'presented': w['family'], 'collection': w['store']['withdrawn']}, gates=('wd_ok',),
@@ -2189,11 +2285,12 @@ def rb_ok(w, m):
 
 
 row(RB, 'rebuild', 'rebuild_value_valid', 'checkpoint_schema', '/proposed',
-    'the rebuilt value passes its slots, physical encoding and full owner schema (at most two retired generations)',
-    'true', lambda w, m: V(checkpoint_ok(PV(w), w['family'])),
+    'the rebuilt value passes its slots, physical encoding, full owner schema (at most two retired generations) and '
+    'durable-token full match', 'true', lambda w, m: V(checkpoint_ok(PV(w), w['family'])),
     witnesses=[W('no lawful slot: third retired generation', prior=lambda v, c: dict(v, retired_generations=[
         dict(retired_core(withdraw(v, checkpoint_store(c['family']))), publication_id='pub-old-a', state='withdrawn'),
-        dict(retired_core(withdraw(v, checkpoint_store(c['family']))), publication_id='pub-old-b', state='withdrawn')]))])
+        dict(retired_core(withdraw(v, checkpoint_store(c['family']))), publication_id='pub-old-b', state='withdrawn')])),
+               W('retired token generation id trailing LF', proposed=_set(('retired_generations', 0, 'index_read_token', 'generation_id'), lambda s: s + '\n'))])
 RB_JOINS = (
     ('state', 'checkpoint_state', lambda w: PV(w)['state'], lambda w: 'current'),
     ('retired_head', 'retired_join', lambda w: PV(w)['retired_generations'][:1], lambda w: [retired_core(w['prior'])]),
@@ -2245,9 +2342,11 @@ def cl_times(w, m):
 
 
 row(CL, 'cleanup', 'cleanup_values_valid', 'checkpoint_schema', '/prior',
-    'the predecessor and the cleaned value pass their slots, encoding and full owner schema', 'true',
-    lambda w, m: V(m.get('cl_ok')),
-    witnesses=[W('cleaned value malformed', proposed=lambda v, c: dict(v, extra='x'))])
+    'the predecessor and the cleaned value pass their slots, encoding, full owner schema and durable-token full match',
+    'true', lambda w, m: V(m.get('cl_ok')),
+    witnesses=[W('cleaned value malformed', proposed=lambda v, c: dict(v, extra='x')),
+               W('cleaned token selection hash trailing LF',
+                 proposed=_set(('index_read_token', 'source_selection', 'retired_inputs_sha256'), lambda s: s + '\n'))])
 row(CL, 'cleanup', 'cleanup_target_retired', 'cleanup_target', '/target',
     'only one retired generation is removed, never the current value', 'true',
     lambda w, m: V(m.get('cl_target') is not None), gates=('cl_ok',),
@@ -2913,6 +3012,48 @@ def timestamp_inventory():
     return sorted(found), sorted(documented ^ found)
 
 
+def _local_closure(defs, name):
+    """Every $defs entry the definition reaches through local '#/$defs/...' references, itself excluded."""
+    seen, stack = set(), [name]
+    while stack:
+        current = stack.pop()
+        if current in seen or current not in defs:
+            continue
+        seen.add(current)
+        nodes = [defs[current]]
+        while nodes:
+            node = nodes.pop()
+            if isinstance(node, dict):
+                ref = node.get('$ref')
+                if isinstance(ref, str) and ref.startswith('#/$defs/'):
+                    stack.append(ref[len('#/$defs/'):])
+                nodes.extend(node.values())
+            elif isinstance(node, list):
+                nodes.extend(node)
+    return seen - {name}
+
+
+def registry_row_problems(family, row_, checkpoints=None):
+    """The family's registry row carries the schema file's checkpoint definition by value (its own $defs exactly the
+    closure the definition references), and that copy's durable token is SP-278's, named by one local $ref."""
+    name = FAM[family]['slug'] + '_index_checkpoint'
+    defs = (CHECKPOINTS if checkpoints is None else checkpoints)['$defs']
+    vs = row_.get('value_schema') if isinstance(row_, dict) else None
+    if not isinstance(vs, dict) or not isinstance(vs.get('$defs'), dict):
+        return ['storage_registry_value_schema']
+    problems = []
+    if ({k: v for k, v in vs.items() if k != '$defs'} != defs[name]
+            or set(vs['$defs']) != _local_closure(defs, name)
+            or any(vs['$defs'][k] != defs.get(k) for k in vs['$defs'])):
+        problems.append('storage_registry_value_schema')
+    retired = vs['$defs'].get(FAM[family]['slug'] + '_retired_generation')
+    if (vs['$defs'].get('durable_read_token') != DURABLE_READ_TOKEN
+            or vs.get('properties', {}).get('index_read_token') != DURABLE_REF
+            or not isinstance(retired, dict) or retired.get('properties', {}).get('index_read_token') != DURABLE_REF):
+        problems.append('storage_registry_durable_read_token')
+    return problems
+
+
 def spec_consistency():
     """Each family's authored identifiers appear in its own owner text, registry row and admission row."""
     problems = []
@@ -2952,6 +3093,8 @@ def spec_consistency():
                 or row_['producer'] != [spec['index_writer_id']] or row_['value_schema_ref'] != spec['checkpoint_schema_ref']
                 or row_['retention_policy_ref'] != 'RP-PROJECTION-3GEN'):
             problems.append((f, 'storage_registry_row'))
+        else:
+            problems.extend((f, p) for p in registry_row_problems(f, row_))
         arow = ADMISSION['rows'][spec['admission_row_index']]
         if (arow['event_type'] != f or arow['admission_status'] != 'prepared_not_admitted'
                 or arow['semantic_owner_ref'] != 'Plans/Section15_MVP_Promoted_Features_Spec.md#' + spec['semantic_anchor']
@@ -3268,6 +3411,8 @@ def main(argv=None):
         'row_family_pairs': len(coverage), 'row_family_pairs_witnessed': len(coverage) - len(uncovered),
         'row_family_pairs_entailed': [list(k) + [PER_FAMILY_ENTAILED_PAIRS().get(k)] for k in uncovered],
         'agreement_checks': agree, 'eager_refs': eager, 'json_budget_bounds_max': max(bounds.values()),
+        'durable_read_token': {'sp278_exact': durable_token_problems(CHECKPOINTS) == [],
+                               'full_match_patterns': ['/'.join(p) for p, _x in TOKEN_PATTERNS]},
         'timestamp_fields': [list(x) for x in TIMESTAMP_FIELDS], 'timestamp_locations': [list(x) for x in ts_found],
         'number_corpus': corpus, 'oracle_self_check': oracle_self_check(), 'known_answer_checks': 'pass' if not kats else kats,
         'native_execution': 'NOT_RUN',

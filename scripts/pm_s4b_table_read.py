@@ -69,7 +69,7 @@ def read_coverage(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard("read_checkpoint_valid", g.Invariant("/checkpoint", "the stored checkpoint passes its slots, physical encoding and full owner schema"), "checkpoint_unavailable", read_checkpoint_valid),
+        g.Guard("read_checkpoint_valid", g.Invariant("/checkpoint", "the stored checkpoint passes its slots, physical encoding, full owner schema and durable-token full match"), "checkpoint_unavailable", read_checkpoint_valid),
         g.Guard("read_state_current", g.Invariant("/checkpoint/state", "only a current checkpoint discloses"), "checkpoint_withdrawn", read_state_current),
         g.Guard("read_token_generation_id", g.Invariant("/checkpoint/index_read_token/generation_id", "the stored token's generation_id is the current SP-278 selection's"), "token_stale", read_token_generation_id),
         g.Guard("read_token_frontier_revision", g.Invariant("/checkpoint/index_read_token/frontier_revision", "the stored token's frontier_revision is the current SP-278 selection's"), "token_stale", read_token_frontier_revision),

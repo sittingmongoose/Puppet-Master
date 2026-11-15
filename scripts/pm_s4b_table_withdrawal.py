@@ -69,7 +69,7 @@ def withdrawal_previous_checkpoint(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard("withdrawal_value_valid", g.Invariant("/proposed", "the withdrawn value passes its slots, physical encoding and full owner schema (state allOf kept)"), "checkpoint_schema", withdrawal_value_valid),
+        g.Guard("withdrawal_value_valid", g.Invariant("/proposed", "the withdrawn value passes its slots, physical encoding, full owner schema (state allOf kept) and durable-token full match"), "checkpoint_schema", withdrawal_value_valid),
         g.Guard("withdrawal_writer_cutoff", g.Invariant("/store/withdrawn", "writers are cut off before the consumer is withdrawn"), "withdrawal_order", withdrawal_writer_cutoff),
         g.Guard("withdrawal_withdrawn", g.Invariant("/proposed/withdrawn_at_utc", "the withdrawal withdrawn_at_utc equals its authority"), "withdrawal_time_join", withdrawal_withdrawn),
         g.Guard("withdrawal_withdrawal_receipt", g.Invariant("/proposed/withdrawal_receipt_ref", "the withdrawal withdrawal_receipt_ref equals its authority"), "withdrawal_receipt_join", withdrawal_withdrawal_receipt),

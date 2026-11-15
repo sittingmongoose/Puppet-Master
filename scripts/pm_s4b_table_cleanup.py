@@ -60,7 +60,7 @@ def cleanup_window(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard("cleanup_values_valid", g.Invariant("/prior", "the predecessor and the cleaned value pass their slots, encoding and full owner schema"), "checkpoint_schema", cleanup_values_valid),
+        g.Guard("cleanup_values_valid", g.Invariant("/prior", "the predecessor and the cleaned value pass their slots, encoding, full owner schema and durable-token full match"), "checkpoint_schema", cleanup_values_valid),
         g.Guard("cleanup_target_retired", g.Invariant("/target", "only one retired generation is removed, never the current value"), "cleanup_target", cleanup_target_retired),
         g.Guard("cleanup_not_held", g.Invariant("/target/hold_refs", "a held retired generation is never removed"), "hold_active", cleanup_not_held),
         g.Guard("cleanup_now_time", g.Invariant("/now", "the cleanup time passes the shared date_time predicate"), "timestamp_invalid", cleanup_now_time),
