@@ -60,14 +60,22 @@ class Editor:
             if type(value)is str and re.fullmatch('[0-9a-f]{64}',value):self.hash_fields[value].append(path)
 
     def edit(self,path,mode):
-        value=copy.deepcopy(self.base);old=at(self.base,path);new=replacement(old,mode.endswith('backward'))
+        value=copy.deepcopy(self.base);old=at(self.base,path);remove=mode.endswith('remove');rename=mode.endswith('rename');new=None if remove or rename else replacement(old,mode.endswith('backward'))
         edits={path}
         if mode.startswith('coherent'):
             for depth in range(1,len(path)):
                 ancestor=at(self.base,path[:depth])
                 if isinstance(ancestor,(dict,list)) and ancestor:
                     for other in self.matches[typed_hash(ancestor)]:edits.add(other+path[depth:])
-        for edit in edits:put(value,edit,copy.deepcopy(new))
+        for edit in edits:
+            if remove:del at(value,edit[:-1])[edit[-1]]
+            elif rename:
+                parent=at(value,edit[:-1]);key=edit[-1]
+                if not isinstance(parent,dict)or not isinstance(key,str):raise TypeError('rename requires object member')
+                changed_key=key+'-other'
+                if changed_key in parent:raise ValueError('rename collision')
+                parent[changed_key]=parent.pop(key)
+            else:put(value,edit,copy.deepcopy(new))
         if mode.startswith('coherent'):
             affected={p[:depth]for p in edits for depth in range(1,len(p))}
             for _ in range(4):

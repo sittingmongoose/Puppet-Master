@@ -238,8 +238,17 @@ CurrentValidator = jsonschema.validators.extend(StrictValidator,
         ('minimum','maximum','exclusiveMinimum','exclusiveMaximum')}})
 
 
+SOURCE_BINDINGS = {}
+
+
 def load(path):
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+    path=Path(path);raw=path.read_bytes()
+    key=str(path.relative_to(ROOT))if path.is_relative_to(ROOT)else str(path)
+    sha256=hashlib.sha256(raw).hexdigest()
+    if key in SOURCE_BINDINGS and SOURCE_BINDINGS[key]!=sha256:
+        raise ValueError('source changed during oracle run: '+key)
+    SOURCE_BINDINGS[key]=sha256
+    return json.loads(raw.decode('utf-8'))
 
 
 def canonical(value):
@@ -249,16 +258,32 @@ def canonical(value):
     return numbers.qualified_jcs(value)
 
 
-def revision_text(value):
+def current_revision_text(value):
     return str(Decimal(numbers.current_integer(value)))
 
 
-def integer_number(value):
+def revision_text(value):
+    """Compatibility fixture formatter; current producers use current_revision_text.
+
+    Keep the untouched ATS-212/213 identity fixture constructors usable while
+    their independent current-write numeric sweep is still pending.
+    """
+    if not retained_integer_number(value):
+        raise ValueError('revision must be an integer JSON number')
+    return str(Decimal(int(value)))
+
+
+def current_integer_number(value):
     try:
         numbers.current_integer(value)
         return True
     except numbers.Refusal:
         return False
+
+
+def integer_number(value):
+    """Compatibility alias for existing unswept fixture suites, not new writes."""
+    return retained_integer_number(value)
 
 
 def retained_integer_number(value):
@@ -286,7 +311,7 @@ def number_codec_checks():
         if canonical({'nested': [value]}) != b'{"nested":[' + expected + b']}':
             failures.append('numeric nested digest bytes: ' + spelling)
         try:
-            text = revision_text(value)
+            text = current_revision_text(value)
         except numbers.Refusal as error:
             if type(value) is int or error.reason != 'integer_type':
                 failures.append('numeric identity text: ' + spelling)

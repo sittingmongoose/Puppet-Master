@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = 'pm_goal_table_'
 COLLECTOR = None
+ACTIVE = False
 DISCOVERY = False
 CUT = frozenset()
 _ROWS = None
@@ -31,6 +32,10 @@ def rows():
 
 def decide(name, condition, *, site=None):
     holds = bool(condition)
+    if not ACTIVE and COLLECTOR is None:
+        # Standalone legacy suites retain their real predicate decisions.
+        # Only the explicit shared runner earns gated-table credit.
+        return None if holds else name
     if site is None:
         frame = inspect.currentframe().f_back.f_back
         key = (frame.f_code.co_filename, frame.f_lineno)
@@ -52,7 +57,7 @@ def decide(name, condition, *, site=None):
 
 
 def schema(names, errors):
-    key = (frozenset(names), frozenset(errors), CUT, DISCOVERY)
+    key = (frozenset(names), frozenset(errors), CUT, DISCOVERY, ACTIVE)
     if key not in _SCHEMAS:
         _SCHEMAS[key] = frozenset(name for name in sorted(names | errors)
             if decide(name, name not in errors) is not None)

@@ -8,6 +8,9 @@ import base64
 import copy
 import datetime
 import hashlib
+import inspect
+import os
+import pickle
 import json
 from pathlib import Path
 from types import SimpleNamespace
@@ -49,6 +52,47 @@ def run_domain(bundle):
     return g.errors
 
 
+def domain_witnesses(collector,base):
+    def payload_hash(b):
+        b['index']['payload_sha256']=hashlib.sha256(numbers.storage_value_bytes(b['event']['payload'])).hexdigest()
+        b['index']['producer_semantic_digest']=numbers.producer_semantic_digest(b['event'])
+    def refs(b):
+        ss=b['snapshot'];scope='project~'+base64.urlsafe_b64encode(b['event']['project_id'].encode()).decode().rstrip('=')
+        ss['snapshot_ref']=f"requested_effective_runtime.v1:{scope}:{ss['snapshot_id']}:{ss['snapshot_sha256']}"
+        b['event']['payload']['requested_effective_snapshot_ref']=ss['snapshot_ref'];payload_hash(b)
+    def snapshot_hash(b):
+        ss=b['snapshot'];ss['snapshot_sha256']=hashlib.sha256(numbers.qualified_jcs({k:v for k,v in ss.items()if k not in ('snapshot_ref','snapshot_sha256')})).hexdigest();refs(b)
+    def emit(label,fn):
+        value=copy.deepcopy(base);fn(value)
+        result=collector.invoke('run.started/adoption/single-defect/'+label,run_domain,value,False)
+        expected={'run.started/adoption/domain/'+label}
+        if result!=expected:collector.failures.append(dict(case=label,expected=sorted(expected),actual=sorted(result)))
+    collector.invoke('run.started/adoption/domain/control',run_domain,base,True)
+    for label,root,key in [('project_join','lookup','requested_project_id'),('scope_encoding','index','scope_partition'),('run_lookup_join','lookup','requested_run_id'),('event_identity','index','event_id'),('source_payload_hash','index','payload_sha256'),('producer_semantic_digest','index','producer_semantic_digest'),('index_key','lookup','index_key'),('checkpoint_key','lookup','checkpoint_key'),('global_checkpoint_ref','checkpoint','index_checkpoint_ref')]:
+        emit(label,lambda b,r=root,k=key:b[r].__setitem__(k,b[r][k][:-1]+('1'if b[r][k][-1:]!='1'else'2')))
+    def thread(b):b['snapshot']['thread_id']='other-thread';snapshot_hash(b)
+    emit('thread_join',thread)
+    emit('sequence_join',lambda b:b['index']['source_locator'].__setitem__('sequence_id',b['event']['sequence_id']+1))
+    emit('coverage_order',lambda b:b['checkpoint'].__setitem__('first_retained_sequence_id',b['checkpoint']['index_through_sequence_id']+1))
+    def bad_hash(b):b['snapshot']['snapshot_sha256']='0'*64;refs(b)
+    emit('immutable_snapshot_hash',bad_hash)
+    def bad_ref(b):b['snapshot']['snapshot_ref']=b['snapshot']['snapshot_ref'][:-64]+'0'*64;b['event']['payload']['requested_effective_snapshot_ref']=b['snapshot']['snapshot_ref'];payload_hash(b)
+    emit('immutable_snapshot_ref',bad_ref)
+    fields=('requested_runtime_mode','runtime_mode','requested_mode_overlay','effective_mode_overlay','requested_strategy','strategy','strategy_resolution_reason','requested_platform','effective_platform','requested_model','effective_model','requested_account_id','effective_account_id','requested_persona','effective_persona')
+    specs=c.load(ROOT/'Plans/requested_effective_runtime.schema.json')['properties']
+    for field in fields:
+        spec=specs[field];old=base['snapshot'][field]
+        choices=spec.get('enum')or next((x['enum']for x in spec.get('anyOf',[])if 'enum'in x),None)
+        replacement=next((x for x in choices if x!=old),None)if choices else 'other'
+        def change(b,k=field,v=replacement):b['snapshot'][k]=v;snapshot_hash(b)
+        emit('snapshot_join_'+field,change)
+    def start_key(b):b['event']['idempotency_key']+=':other';payload_hash(b)
+    emit('new_start_key',start_key)
+    def start_id(b):
+        e=b['event'];e['event_id']+=':other';b['index']['event_id']=e['event_id'];scope=b['index']['scope_partition'];b['lookup']['index_key']=f"event_record_index.v2:{scope}:{e['sequence_id']:020d}:{e['event_id']}"
+    emit('new_start_id',start_id)
+
+
 def main():
     import pm_goal_deleted_external_oracles as frozen
     collector=tables.COLLECTOR
@@ -69,7 +113,10 @@ def main():
     registry=resources({ROOT/'Plans/event_index_consumer_adoption.schema.json',ROOT/'Plans/event_record.schema.json',ROOT/'Plans/requested_effective_runtime.schema.json',ROOT/'Plans/event_payload_run_started.schema.json'})
     def validator(schema,**kwargs):
         return c.StrictValidator(c.runtime_schema(schema),registry=registry,format_checker=c.FORMATS)
-    ns.update(successor=c.load(ROOT/'Plans/event_index_consumer_adoption.schema.json')['$defs'],
+    def require_domain(value):
+        errors=run_domain(value)
+        if errors:raise frozen.ExpectedRefusal(errors)
+    ns.update(require_domain=require_domain,successor=c.load(ROOT/'Plans/event_index_consumer_adoption.schema.json')['$defs'],
         contracts=c.load(ROOT/'Plans/event_record_index_checkpoint.schema.json'),
         Draft202012Validator=validator,FormatChecker=lambda:c.FORMATS,
         PL=ROOT/'Plans',ns=dep.G,cns=dep.C,created_domain=dep.created_domain,
@@ -81,11 +128,32 @@ def main():
         'checkpoint':ns['successor']['run_started_checkpoint_v2'],
         'index':dep.G['iv'].original.schema if hasattr(dep.G['iv'],'original')else dep.G['iv'].schema}.items()}
     names={'current','selection','token','token_check','cursor','birth_binding','shape','checkpoint_core','check_created_generation_admission','parse_time','run_core','run_retired_entry','check_run_history_shape','check_run_generation_admission','run_retention_eligible','cleanup_run_history','can_reserve_run_successor','validate'}
-    tree=ast.parse(source.read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name in names]
+    tree=ast.parse(source.read_text())
+    class DomainBoundary(ast.NodeTransformer):
+        def visit_Expr(self,node):
+            call=node.value
+            if isinstance(call,ast.Call) and isinstance(call.func,ast.Name) and call.func.id=='expect' and len(call.args)>1 and isinstance(call.args[1],ast.BinOp) and 'run immutable snapshot/domain join' in ast.unparse(call.args[1]):
+                return ast.copy_location(ast.Expr(value=ast.Call(func=ast.Name(id='require_domain',ctx=ast.Load()),args=[ast.Name(id='run',ctx=ast.Load())],keywords=[])),node)
+            return self.generic_visit(node)
+    tree=ast.fix_missing_locations(DomainBoundary().visit(tree))
+    nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef)and n.name in names]
     exec(compile(ast.Module(body=nodes,type_ignores=[]),str(source),'exec'),ns)
     ns['parse_time']=instant
     # The original aggregate domain predicate returns labels. Its rows above
     # also run as complete boundaries, so failures retain stable identities.
+    helper_seeds=[];seed_counts={};seen=set();capturing=[True]
+    for key,fn in list(ns.items()):
+        if not inspect.isfunction(fn)or fn.__code__.co_filename!=str(source)or 'expect'not in fn.__code__.co_names:continue
+        label=str(source)+':'+str(fn.__code__.co_firstlineno)
+        def wrapper(*args,__fn=fn,__label=label,**kwargs):
+            result=__fn(*args,**kwargs)
+            if capturing[0]and seed_counts.get(__label,0)<8:
+                value=dict(args=list(args),kwargs=kwargs);fingerprint=hashlib.sha256(pickle.dumps((__label,value),protocol=5)).hexdigest()
+                if fingerprint not in seen:
+                    seen.add(fingerprint);seed_counts[__label]=seed_counts.get(__label,0)+1
+                    helper_seeds.append((__fn,copy.deepcopy(value),__label+'/'+str(seed_counts[__label])))
+            return result
+        ns[key]=wrapper
     def evaluate(value):
         try:ns['validate'](value)
         except frozen.ExpectedRefusal as e:return e.errors
@@ -95,6 +163,20 @@ def main():
         collector.invoke('run.started/adoption/'+label,evaluate,value,True)
     for case in packet['negative']:
         collector.invoke('run.started/adoption/'+case['case_id'],evaluate,case['value'],False)
+    capturing[0]=False
+    domain_witnesses(collector,packet['positive']['both_full_owner_joins']['run_started'])
+    def shape(value):
+        try:ns['shape'](value)
+        except frozen.ExpectedRefusal as e:return e.errors
+        return set()
+    base=packet['positive']['both_full_owner_joins']
+    collector.invoke('run.started/adoption/shapes/control',shape,base,True)
+    paths=[('successor_handoff','run_generation_admission'),('successor_handoff','created_generation_admission'),('original_creation_publication',),('original_creation_commit_transaction',)]+[('run_started',k)for k in ns['runvals']]+[('run_started','event','payload')]+[('restore_created',k)for k in ('event','index','checkpoint','record','companion')]+[('restore_created','event','payload'),('generic','checkpoint')]
+    for path in paths:
+        value=copy.deepcopy(base);parent=value
+        for key in path[:-1]:parent=parent[key]
+        parent[path[-1]]=None
+        collector.invoke('run.started/adoption/shapes/root-type/'+str(path),shape,value,False)
     retention=c.load(ROOT/'Plans/run_started_checkpoint_retention_fixtures.json')
     def eligible(value):
         try:
@@ -105,5 +187,29 @@ def main():
     for case in retention['cases']:
         collector.invoke('run.started/retention/'+case['case_id'],eligible,
                          {k:case[k]for k in ('root','selection')},case['expected_eligible'])
+    files=[(Path(r['path'])if Path(r['path']).is_absolute()else directory/r['path']).resolve()for r in manifest['files']]
+    bank_path=ROOT/'tests/fixtures/pnc019_goal_adoption_helper_witnesses.json'
+    if bank_path.exists():
+        bank=json.loads(bank_path.read_text());available={json.dumps(frozen.seed_ref(fn,label,files),sort_keys=True):(fn,base,label)for fn,base,label in helper_seeds};editors={}
+        for number,case in enumerate(bank['cases']):
+            key=json.dumps(case['seed'],sort_keys=True)
+            if key not in available:
+                collector.failures.append(dict(case='adoption-bank/'+str(number),kind='seed_missing'));continue
+            fn,base,label=available[key]
+            def check(value,fn=fn):
+                try:fn(*value['args'],**value['kwargs'])
+                except frozen.ExpectedRefusal as refusal:return refusal.errors
+                return set()
+            collector.invoke('adoption-bank/control/'+str(number),check,base,True)
+            from pm_goal_deleted_case_ops import Editor
+            if key not in editors:editors[key]=Editor(base,frozen.HELPER_HASH_FUNCTIONS)
+            value=editors[key].edit(tuple(case['path']),case['operation'])
+            if hashlib.sha256(pickle.dumps(value,protocol=5)).hexdigest()!=case['input_sha256']:
+                collector.failures.append(dict(case='adoption-bank/'+str(number),kind='input_sha256'));continue
+            result=collector.invoke('adoption-bank/single-defect/'+str(number),check,value,False)
+            if set(result)!={case['expected_refusal']}:
+                collector.failures.append(dict(case='adoption-bank/'+str(number),kind='refusal',expected=case['expected_refusal'],actual=sorted(result)))
+    if os.environ.get('PNC019_ADOPTION_EXPLORE')=='1':
+        frozen.helper_witnesses(collector,helper_seeds,files)
     globals()['ADOPTION_CONTEXT']=(ns,evaluate,eligible)
     return int(len(collector.failures)>start)

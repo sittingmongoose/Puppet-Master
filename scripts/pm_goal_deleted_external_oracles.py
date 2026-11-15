@@ -26,6 +26,7 @@ CREATED_DIGEST = None
 SCHEMA_SEEDS = {}
 SCHEMA_RESULTS = {}
 HASH_FUNCTIONS = {}
+HELPER_HASH_FUNCTIONS = {}
 SOURCE_BUILDER = None
 FINGERPRINTS = OrderedDict()
 
@@ -180,7 +181,7 @@ def replay_witnesses(collector,seeds,files):
         try:ref=seed_ref(fn,label,files)
         except (ValueError,TypeError):continue
         available[json.dumps(ref,sort_keys=True)]=(fn,base,label)
-    found=set()
+    found=set();editors={}
     for number,case in enumerate(bank['cases']):
         slot=available.get(json.dumps(case['seed'],sort_keys=True))
         if slot is None:
@@ -200,7 +201,9 @@ def replay_witnesses(collector,seeds,files):
             value=source_edit(base,case['operation'],SOURCE_BUILDER,HASH_FUNCTIONS)
         else:
             from pm_goal_deleted_case_ops import Editor
-            value=Editor(base,HASH_FUNCTIONS).edit(tuple(case['path']),case['operation'])
+            key=(json.dumps(case['seed'],sort_keys=True),case.get('hash_recipe_version',1))
+            if key not in editors:editors[key]=Editor(base,HELPER_HASH_FUNCTIONS if case.get('hash_recipe_version')==2 else HASH_FUNCTIONS)
+            value=editors[key].edit(tuple(case['path']),case['operation'])
         if hashlib.sha256(pickle.dumps(value,protocol=5)).hexdigest()!=case['input_sha256']:
             collector.failures.append(dict(case='frozen-fixture/'+str(number),kind='input_sha256'));continue
         source='frozen-fixture/single-defect/'+str(number)
@@ -219,6 +222,7 @@ def helper_witnesses(collector,seeds,files):
     import copy,os,pickle
     from pm_goal_deleted_case_ops import Editor,nodes
     found=set(collector.candidates);attempted=0;skipped={};selected=[]
+    limit=int(os.environ.get('PNC019_FROZEN_ATTEMPTS_PER_SEED','500'))
     part,total=map(int,os.environ.get('PNC019_FROZEN_PART','0/1').split('/'))
     def checkpoint():
         collector.checkpoint()
@@ -237,17 +241,26 @@ def helper_witnesses(collector,seeds,files):
         if inspect.ismethod(function) and isinstance(function.__self__,Schema):
             wanted={'restore_point.deleted/original/schema/'+frozen_fingerprint(function.__self__.original.schema)}-found
         if not wanted:continue
-        editor=Editor(base,HASH_FUNCTIONS)
-        for path,original in nodes(base):
-            if not path:continue
-            modes=['simple','coherent']
-            simple_first=None
+        editor=Editor(base,HELPER_HASH_FUNCTIONS)
+        seed_attempts=0
+        constants=set(x for x in code.co_consts if type(x)is str)
+        paths=list(nodes(base))
+        paths.sort(key=lambda item:(item[0][-1] not in constants if item[0] else True,len(item[0]),repr(item[0])))
+        for path,original in paths:
+            if not path or path[0]=='args'and len(path)<=2 or path==('kwargs',):continue
+            if seed_attempts>=limit:break
+            large=isinstance(original,(dict,list))and len(pickle.dumps(original,protocol=5))>20000
+            modes=['simple','coherent','remove','coherent_remove','rename','coherent_rename']
+            first_by_operation={}
             if isinstance(original,str) and 'T' in original and original.endswith('Z'):modes.append('coherent_backward')
             for mode in modes:
-                if mode!='simple' and simple_first and ('schema' in simple_first.lower() or (type(original)is str and __import__('re').fullmatch('[0-9a-f]{64}',original))):continue
+                if large and mode not in ('remove','rename'):continue
+                operation='remove'if mode.endswith('remove')else'rename'if mode.endswith('rename')else'replace'
+                prior=first_by_operation.get(operation)
+                if mode.startswith('coherent')and prior and ('schema'in prior.lower()or(type(original)is str and __import__('re').fullmatch('[0-9a-f]{64}',original))):continue
                 try:changed=editor.edit(path,mode)
-                except (TypeError,KeyError,IndexError):continue
-                attempted+=1
+                except (TypeError,ValueError,KeyError,IndexError):continue
+                attempted+=1;seed_attempts+=1
                 if attempted%250==0:
                     print('frozen attempts',attempted,'new witnesses',len(selected),'helper',label,file=sys.stderr,flush=True);checkpoint()
                 previous=collector.active;collector.active=[]
@@ -257,13 +270,13 @@ def helper_witnesses(collector,seeds,files):
                 finally:observed=collector.active;collector.active=previous
                 if len(result)!=1:continue
                 target=next(iter(result));first=next((name for name,holds in observed if not holds),None)
-                if mode=='simple':simple_first=first
+                if not mode.startswith('coherent'):first_by_operation[operation]=first
                 if first!=target or target in found:continue
                 source='frozen-helper/'+mode+'/'+label+'/'+repr(path)
                 collector.invoke(source,evaluate,changed,False)
                 collector.candidates[target]=(evaluate,copy.deepcopy(changed),source)
                 collector.snapshots[target]=copy.deepcopy(changed)
-                record=dict(expected_refusal=target,seed=seed_ref(function,label,files),path=list(path),operation=mode,input_sha256=hashlib.sha256(pickle.dumps(changed,protocol=5)).hexdigest())
+                record=dict(expected_refusal=target,seed=seed_ref(function,label,files),path=list(path),operation=mode,hash_recipe_version=2,input_sha256=hashlib.sha256(pickle.dumps(changed,protocol=5)).hexdigest())
                 selected.append(record);found.add(target);wanted.discard(target)
                 if not wanted:break
             if not wanted:break
@@ -273,7 +286,7 @@ def helper_witnesses(collector,seeds,files):
 
 
 def main():
-    global CREATED_DIGEST,HASH_FUNCTIONS,SOURCE_BUILDER
+    global CREATED_DIGEST,HASH_FUNCTIONS,HELPER_HASH_FUNCTIONS,SOURCE_BUILDER
     collector = tables.COLLECTOR
     if collector is None:
         raise RuntimeError('Run with pm_goal_guard_sweep.py --source pm_goal_deleted_external_oracles')
@@ -318,7 +331,7 @@ def main():
             if key not in seen:
                 saved.append((namespace,name,namespace[name]))
                 seen.add(key)
-                namespace[name] = value
+            namespace[name] = value
         for namespace in namespaces:
             if 'expect' in namespace:
                 patch(namespace,'expect',expect)
@@ -334,6 +347,7 @@ def main():
                     patch(namespace,name,instant)
         CREATED_DIGEST = dependency.R['digest']
         HASH_FUNCTIONS={name:dependency.G[name] for name in ('dig','mpdig','bdig')}
+        HELPER_HASH_FUNCTIONS={**HASH_FUNCTIONS,**{name:dependency.G[name]for name in ('rows_hash','prefix_hash','sem')}}
         SOURCE_BUILDER=dependency.G['source']
         patch(vars(subject),'created_result_check',created_result)
         original_validator = subject.validator
@@ -379,6 +393,13 @@ def main():
             value = case.get('fixture',case.get('value'))
             collector.invoke('restore_point.deleted/frozen/'+case['id'],evaluate,value,False)
         capturing[0]=False
+        for name,(fn,base,label) in list(SCHEMA_SEEDS.items()):
+            def schema_boundary(value,fn=fn):
+                try:fn(value)
+                except ExpectedRefusal as refusal:return refusal.errors
+                return set()
+            collector.invoke('frozen-schema/control/'+name,schema_boundary,base['args'][0],True)
+            collector.invoke('frozen-schema/root-type/'+name,schema_boundary,None,False)
         all_seeds=list(SCHEMA_SEEDS.values())+helper_seeds
         globals()['FIXTURE_CONTEXT']=(dependency,subject,all_seeds)
         files=[(Path(r['path']) if Path(r['path']).is_absolute() else directory/r['path']).resolve() for r in manifest['files']]

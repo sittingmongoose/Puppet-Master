@@ -14,6 +14,7 @@ import gzip
 import hashlib
 import importlib
 import io
+import inspect
 import json
 from pathlib import Path
 import pickle
@@ -222,13 +223,18 @@ class Collector:
 
 
 def collect(sources, *, fuzz=True):
+    tables.ACTIVE = True
     collector = Collector()
     tables.COLLECTOR = collector
     try:
         for source in sources:
             module = importlib.import_module(source)
+            before=collector.calls
+            entry=getattr(module,'main',None)or getattr(module,'run')
             with contextlib.redirect_stdout(io.StringIO()) as captured:
-                code = module.main() if source != 'pm_goal_own_d_oracles' else module.run()
+                code=entry([])if 'argv'in inspect.signature(entry).parameters else entry()
+            if collector.calls==before:
+                collector.failures.append(dict(kind='source_registered_no_complete_calls',source=source))
             if code:
                 collector.failures.append(dict(kind='source_failed', source=source, exit=code, details=captured.getvalue()[-16000:]))
             collector.checkpoint()
@@ -481,9 +487,12 @@ def main():
         result=judge_self_test();args.out.mkdir(parents=True,exist_ok=True)
         (args.out/'judge-self-test.json').write_text(json.dumps(result,indent=1)+'\n')
         print(json.dumps(result));return int(result['status']!='pass')
+    source_paths=sorted((ROOT/'scripts').glob('pm_goal*.py'))+[ROOT/'scripts'/name for name in
+        ('pm_guard_isolation.py','pm_event_numbers.py','pm_event_datetime.py','pm_event_numbers_corpus.py')]
+    code_bindings={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()for p in source_paths}
     sources = args.source or ['pm_goal_history_reader_fixtures', 'pm_goal_own_d_oracles',
                              'pm_goal_own_d_supplement','pm_goal_complete_oracles','pm_goal_shared_oracles']
-    tables.DISCOVERY = args.generate or args.collect_only
+    tables.DISCOVERY = True  # Identical witness collection for generation and replay.
     collector = collect(sources,fuzz=not args.no_fuzz)
     args.out.mkdir(parents=True, exist_ok=True)
     import pm_goal_oracle_common as common
@@ -498,7 +507,19 @@ def main():
         tables.DISCOVERY = False
         tables._ROWS = None
         tables._PREDICATES.clear()
+    used_scripts={str(Path(module.__file__).resolve().relative_to(ROOT))for module in tuple(sys.modules.values())
+        if getattr(module,'__file__',None)and Path(module.__file__).resolve().is_relative_to(ROOT)
+        and Path(module.__file__).name.startswith('pm_goal')and Path(module.__file__).suffix=='.py'}
+    code_bindings={path:sha for path,sha in code_bindings.items()if path in used_scripts or not Path(path).name.startswith('pm_goal')}
+    if not args.collect_only:
+        tables.DISCOVERY=False
+    for name in ('pm_goal_guard_rows.json','pm_goal_guard_witnesses.json'):
+        path=ROOT/'scripts'/name
+        code_bindings[str(path.relative_to(ROOT))]=hashlib.sha256(path.read_bytes()).hexdigest()
     if (not args.generate or args.prove_generated) and not args.collect_only:
+        for name in collector.rows:
+            spec=tables.rows()[name];path=ROOT/'scripts'/(tables.PREFIX+spec['table']+'.py')
+            code_bindings[str(path.relative_to(ROOT))]=hashlib.sha256(path.read_bytes()).hexdigest()
         report = prove(collector, args.out / 'tables', args.table)
         mutation = mutations(collector)
         (args.out / 'mutations.json').write_text(json.dumps(mutation, indent=1)+'\n')
@@ -509,7 +530,11 @@ def main():
     if (not args.generate or args.prove_generated) and not args.collect_only:
         proved_names={r['guard'] for r in report if r['status']=='PASS'}
         failed = failed or any(r['status'] != 'PASS' and not r.get('proof') for r in report) or any(not r['killed'] for r in mutation if r['guard'] in proved_names)
-    return int(failed)
+    source_bindings={**code_bindings,**common.SOURCE_BINDINGS}
+    drift=[path for path,sha in source_bindings.items()if not (ROOT/path).exists()or hashlib.sha256((ROOT/path).read_bytes()).hexdigest()!=sha]
+    (args.out/'source-bindings.json').write_text(json.dumps(dict(files=source_bindings,changed_during_run=drift),indent=1,sort_keys=True)+'\n')
+    if drift:print('Source changed during run: '+', '.join(drift),file=sys.stderr)
+    return int(failed or bool(drift))
 
 
 if __name__ == '__main__':
