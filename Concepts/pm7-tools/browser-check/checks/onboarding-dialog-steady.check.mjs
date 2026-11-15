@@ -106,6 +106,7 @@ function judge(F) {
 
 export default async function (t) {
 	const keep = [];
+	let precedingContext = null;
 	for (const size of sizes(t)) {
 		for (const look of looksFor(t, size)) {
 			const [fam, mode] = look.split('-');
@@ -114,7 +115,10 @@ export default async function (t) {
 			   a page load on a loaded host that never answered held a whole run for 20 minutes) */
 			let guard = null;
 			await t.step(label, () => Promise.race([new Promise((_, no) => { guard = setTimeout(() => no(new Error(`${label}: the walk did not end in 240 s`)), 240000); }), (async () => {
-				await t.newContext({ viewport: { width: size.w, height: size.h }, deviceScaleFactor: size.dpr });
+				/* A completed walk no longer needs its page: retire its sampler before starting the next. */
+				if (precedingContext) await precedingContext.close();
+				const opened = await t.newContext({ viewport: { width: size.w, height: size.h }, deviceScaleFactor: size.dpr });
+				precedingContext = opened.context;
 				await t.context.addInitScript(sampler);
 				await t.emulate({ reducedMotion: 'no-preference' });
 				const f = await t.app.open({ onboarding: true, query: 'o55=fresh', settleMs: 0 });
