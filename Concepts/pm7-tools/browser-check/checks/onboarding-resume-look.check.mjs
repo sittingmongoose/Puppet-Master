@@ -28,6 +28,11 @@
 // open: the page shows Basic Dark and the run's saved drafts are Basic Dark; and the reverse, Glass Light set, NieR Dark
 // picked, then Back to Welcome (a pick and no close); and with nothing picked (a new install's Basic Dark only shown), a
 // reload writes nothing: Settings' look stays.
+// FO-219 (stream F's batch 12; pre-existing): an unfinished setup stays resumable after a reload (normal surface): setup
+// two steps in (Glass Light picked, on "Where should Puppet Master do the work?"), the page reloaded with the window open:
+// the Resume chip or the bell's entry shows (the window does not open by itself); resumed, it is on the same step with its
+// drafts and look; closed unfinished and reloaded, the chip is still there; finished (Ready's Enter) and reloaded, nothing
+// shows. --set only=fo219.
 // No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish, Reduced
 // Motion, reload, pick, R55 and open-reload cases; --set only=r55 runs the R55 cases alone, --set only=openreload the
 // open-reload ones.
@@ -333,9 +338,66 @@ async function openReloadNoPick(t) {
 	await t.check(`${tag}: Settings' saved look is unchanged (${s0.family} ${s0.mode}; the window showed ${shown.slug})`, s1.family === s0.family && s1.mode === s0.mode, JSON.stringify({ before: s0, after: s1, shown: shown.slug }));
 }
 
+/* FO-219: setup left open by a reload stays resumable, on its step, with its look; a finished one shows nothing */
+const offer = (f) => f.evaluate(() => {
+	const s = window.O55 && O55.store ? O55.store.get('onboarding', null) : null;
+	return { open: document.documentElement.hasAttribute('data-o55-open'), chip: !!document.querySelector('#o55-resume [data-o55-chip="resume"]'),
+		bell: !!(window.O55 && O55.notify && O55.notify.list && O55.notify.list().some((x) => x.id === 'pin-o55-resume')), status: s ? s.status : null, screen: s ? s.screen : null };
+});
+/* the page loaded again as a person reloads it: the app's own address, without the fresh-install switch the first load
+   carried (a reload of that address would start a new install), which still ends the old page (pagehide) */
+async function freshLoad(t) {
+	const nf = await t.app.open({ onboarding: true, query: 'o55scenario=fresh', sandbox: false, settleMs: 1500 });
+	await nf.waitForFunction(() => !!(window.O55 && O55.store && O55.ui) && !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()), null, { timeout: 30000 }).catch(() => {});
+	await sleep(3000);
+	return { f: nf, A: app(t, nf) };
+}
+async function finishFromWhere(f, A) {
+	await A.click('pick', 'this'); await A.click('next', null, 'begin'); await A.click('pick', 'new'); await A.click('next', null, 'name');
+	await f.locator('#o55f-name').fill('Kept after a reload'); await sleep(200); await A.click('next');
+	for (let i = 0; i < 30; i++) {
+		const sc = await f.evaluate(() => O55.S.sess.screen);
+		if (sc === 'ready') break;
+		if (sc === 'ai' && (await f.locator(`${LAYER} [data-o55-do="skip"]`).filter({ visible: true }).count())) { await A.click('skip'); continue; }
+		if (sc === 'review') { await A.click('commit', null, 'creating'); continue; }
+		if (sc === 'protect' && (await f.locator(`${LAYER} [data-o55-do="later"]`).filter({ visible: true }).count())) { await A.click('later'); continue; }
+		await A.settled();
+		await f.waitForFunction(() => { const b = [...document.querySelectorAll('#pm-o55-onboarding .o55-foot .o55-primary')].pop(); return !!b && !b.disabled && b.getAttribute('aria-disabled') !== 'true'; }, null, { timeout: 30000 }).catch(() => {});
+		await f.locator('#pm-o55-onboarding .o55-foot .o55-primary').filter({ visible: true }).last().click({ timeout: 15000 }); await sleep(1500);
+	}
+	await A.screen('ready'); await A.click('enter');
+	await f.waitForFunction(() => !document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 30000 }).catch(() => {});
+	await sleep(2500);
+}
+async function fo219(t) {
+	const tag = 'normal: FO-219, setup two steps in, the page reloaded with the window open';
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox: false, settleMs: 1500 });
+	const A = app(t, f);
+	await A.screen('welcome'); await A.click('start', null, 'look');
+	await pickIn(f, A, 'glass', 'light');
+	await A.click('next', null, 'where');
+	let r = await freshLoad(t);
+	const o1 = await offer(r.f);
+	await t.check(`${tag}: it is offered again (the Resume chip or the bell's entry), the window not opened by itself`, !o1.open && (o1.chip || o1.bell), JSON.stringify(o1));
+	if (o1.open || !(o1.chip || o1.bell)) return;
+	const way = await r.A.resume(), w = await r.A.windowLook(), p = await r.A.page();
+	await t.check(`${tag}: resumed (by ${way}), it is on the same step with its drafts and look (Glass Light)`, w.screen === 'where' && w.draft === 'glass-light' && w.chosen === 'glass' && w.mode === 'light' && held('glass-light', p), JSON.stringify({ window: w, page: p }));
+	await r.A.close();
+	r = await freshLoad(t);
+	const o2 = await offer(r.f);
+	await t.check(`${tag}: closed unfinished and reloaded, the chip is still there`, !o2.open && (o2.chip || o2.bell) && o2.status === 'closed', JSON.stringify(o2));
+	await r.A.resume();
+	await finishFromWhere(r.f, r.A);
+	r = await freshLoad(t);
+	const o3 = await offer(r.f);
+	await t.check(`${tag}: finished and reloaded, nothing shows (no window, chip or bell entry)`, !o3.open && !o3.chip && !o3.bell, JSON.stringify(o3));
+}
+
 export default async function (t) {
 	await t.viewport(1440, 960);
 	const looks = t.args.looks ? String(t.args.looks).split(',') : ALL;
+	if (t.args.only === 'fo219') { if (t.app.surfaces().includes('normal')) await fo219(t); return; }
 	if (t.args.only === 'openreload') { if (t.app.surfaces().includes('normal')) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); } return; }
 	if (t.args.only === 'r55') { for (const s of t.app.surfaces()) { await again(t, s === 'sandbox'); await nierBackground(t, s === 'sandbox'); } await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	for (const s of t.app.surfaces()) {
@@ -349,6 +411,7 @@ export default async function (t) {
 			await picked(t, sandbox, 'glass-dark', 'nier-dark');
 			await again(t, sandbox);
 			await nierBackground(t, sandbox);
+			if (!sandbox) await fo219(t);
 			if (!sandbox) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); }
 		}
 	}
