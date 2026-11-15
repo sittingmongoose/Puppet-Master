@@ -26,6 +26,12 @@ const descendants=n=>n.children.flatMap(c=>[c,...descendants(c)]);
 const doc={createElement:t=>new DomNode(t),createTextNode:t=>new DomNode('#text',t),addEventListener(){},documentElement:{getAttribute:k=>k==='data-motion'?'reduced':null}};
 const ctx=vm.createContext({document:doc,Node:DomNode,window:{},addEventListener(){},localStorage:{getItem:()=>null,setItem(){}},MutationObserver:class{observe(){}},setTimeout:()=>0,clearTimeout(){},console});
 ctx.window=ctx;
+// R23 T3: the real glyphs (5.6 Pro's neon renderer and PMG's registry and families), so PMR.icon draws each icon's svg
+// parts and they are judged like any other descendant (without them it returned an empty span.pmr-ico)
+{const gs='../../../glyph-system/opus-5.5/src/registry/';const {readdirSync}=await import('node:fs');
+ vm.runInContext(read('../../../chat-assistant-concepts/5.6 Pro/neon-icons.js'),ctx);
+ for(const f of ['00-loader.js','10-status.js',...readdirSync(new URL(gs+'families/',import.meta.url)).sort().map(f=>'families/'+f)])vm.runInContext(read(gs+f),ctx);
+ assert(ctx.PMG&&ctx.PMG.has('branch'),'the glyph registry loads in the vm');}
 vm.runInContext(read(base+'js/00-core.js')+'\n'+read(base+'js/10-glyphs.js')+'\n'+read(base+'js/20-menu.js')+'\n'+['05-data-files.js','06-data-source.js','07-data-docker.js','08-data.js'].map(p=>read(base+'js/'+p)).join('\n'),ctx);
 const evaluate=s=>vm.runInContext(s,ctx);
 evaluate(read(base+'js/12-rules.js'));
@@ -108,7 +114,7 @@ const result={cases:cases.length,shippedPanels:panels.map(p=>p.id),branches,open
 const output=process.argv.find(x=>x.startsWith('--out='))?.slice(6);if(output)writeFileSync(output,JSON.stringify(result,null,2)+'\n');
 console.log(JSON.stringify(result,null,2));
 // PM7PERF-NODE-RAIL-COVERAGE (R27 F3): each rule must still reach at least half the descendants it reached on
-// 2026-11-15 (main 83d1c6128b: 0:1032 2:156 6:1032 13:22750 14:22750), so a shrinking sample fails instead of passing
-for(const [id,floor] of Object.entries({0:516,2:78,6:516,13:11375,14:11375}))assert((counts[id]||0)>=floor,'rule '+id+' reached '+(counts[id]||0)+' descendants, under its floor '+floor);
+// 2026-11-15 with the glyphs drawn (0:2682 2:422 6:2598 13:49769 14:49769), so a shrinking sample fails instead of passing
+for(const [id,floor] of Object.entries({0:1341,2:211,6:1299,13:24884,14:24884}))assert((counts[id]||0)>=floor,'rule '+id+' reached '+(counts[id]||0)+' descendants, under its floor '+floor);
 assert.equal(failures.size,0,'real shipped expanded builders lost descendant features');
 console.log('PASS shipped A/B/C expanded rows, drill pages, Lens documents and shared kit variants');
