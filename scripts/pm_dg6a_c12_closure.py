@@ -1282,12 +1282,12 @@ def distinct(value):
         return value + 1 if value < 2 ** 63 - 2 else value - 1
     if type(value) is str and value:
         chars = list(value)
+        if re.fullmatch(r'\d{4}-\d\d-\d\d[Tt].*', value):
+            chars[3] = str((int(chars[3]) + 1) % 10)  # another year keeps every timestamp form valid
+            return ''.join(chars)
         for i in range(len(chars) - 1, -1, -1):
             c = chars[i]
             if c.isdigit():
-                if re.fullmatch(r'\d{4}-\d\d-\d\dT.*', value) and i > 3:
-                    i = 3
-                    c = chars[3]
                 chars[i] = str((int(c) + 1) % 10)
                 return ''.join(chars)
             if 'a' <= c <= 'z':
@@ -1357,7 +1357,10 @@ def recorded(function, args):
 JOIN_COPIES = {
     'historical_refusals': (('request', 0, ('event',), None), ('request', 0, ('checkpoint',), None),
                             ('request', 0, ('disclosure',), None), ('expected', 1, ('event',), None),
-                            ('expected', 1, ('checkpoint',), None)),
+                            # The expected checkpoint is compared as its publication, without `state`
+                            # (pm-alert-event-contracts-check.py historical_observation); the request's own state
+                            # must be current (history_checkpoint checkpoint_current).
+                            ('expected', 1, ('checkpoint',), ('-state',))),
     'append_result_errors': (('operation', 0, (), ('event_id', 'storage_instance_id', 'project_id', 'payload',
                                                    'scope_partition', 'original_append_result_ref')),
                              ('resolved', 1, (), None), ('expected', 2, (), None)),
@@ -1382,7 +1385,8 @@ def join_cases(family, capture, out_rows):
                 for path, leaf in walk(base):
                     if isinstance(leaf, (dict, list)) or leaf is None or not path:
                         continue
-                    if members is not None and path[0] not in members:
+                    if members is not None and ('-' + str(path[0]) in members if members[0].startswith('-')
+                                                else path[0] not in members):
                         continue
                     changed = distinct(leaf)
                     if changed is None or changed == leaf:
@@ -1513,6 +1517,13 @@ def sealed_invalid_history(family, capture, out_rows, limit=24):
                     holder['payload'][key] = value
             if custody.record_bytes(args[1]['event']) is None:
                 continue
+            original = args[1]['event']
+            edition = custody.EDITIONS.get((original['event_type'], original['payload'].get('schema_id'),
+                                            original['payload'].get('schema_version')))
+            if edition is not None and not list(edition.validator.iter_errors(original['payload'])):
+                ledger.append(dict(family=family, case=name, status='NOT_A_VIOLATION',
+                                   reason='the frozen edition accepts it (an optional member); not owner-invalid'))
+                continue
             with custody.written([args[1]['event']]):
                 before = store_snapshot(custody)
                 outcome, result, rows = recorded(call['function'], args)
@@ -1600,8 +1611,8 @@ def copies_mode(family, out):
                    mirror=tally(mirror), joins=tally(joins), retained=tally(retained),
                    sealed_invalid_history=tally(invalid_history), retained_timestamps=tally(timestamps),
                    retained_timestamp_fields=sorted({(t['field'], t['profile']) for t in timestamps}),
-                   retained_store_observations=len(retained) + len(invalid_history) + len(timestamps),
-                   retained_store_changed=sum(not x['store_unchanged'] for x in retained + invalid_history + timestamps))
+                   retained_store_observations=len(retained) + sum('store_unchanged' in x for x in invalid_history) + len(timestamps),
+                   retained_store_changed=sum(not x.get('store_unchanged', True) for x in retained + invalid_history + timestamps))
     summary['failures'] = (summary['mirror'].get('INVALID', 0) + summary['retained'].get('INVALID', 0)
                            + summary['sealed_invalid_history'].get('INVALID', 0) + summary['retained_store_changed']
                            + summary['joins'].get('ACCEPTED', 0) + summary['joins'].get('INVALID', 0)
@@ -1610,16 +1621,109 @@ def copies_mode(family, out):
     return summary
 
 
+def bigint_mode(family, out):
+    """A valid 4,400-digit integer (CV-1100 sets no global cap) at every evaluated integer slot: the complete
+    definition and the unchanged consuming checker function must refuse or accept it without an exception
+    (the crash DX, DS15, DF, DM and DCO each found)."""
+    module, trace, run = observe(family)
+    big = 10 ** 4399
+    ledger, seen = [], set()
+    for record in trace.records:
+        esv = trace.roots[record['root']]
+        root = esv._inner.schema
+        for binding in record['bindings']:
+            for schema_path, keyword, path, count in record['events']:
+                if keyword != 'type' or count:
+                    continue
+                node = at(root, schema_path)
+                kinds = node['type'] if isinstance(node['type'], list) else [node['type']]
+                value = at(record['instance'], path)
+                if 'integer' not in kinds or type(value) is not int:
+                    continue
+                key = (binding['phase'], record['root'], schema_path, path)
+                if key in seen:
+                    continue
+                seen.add(key)
+                for sign in (1, -1):
+                    mutant = replaced(record['instance'], path, sign * big)
+                    entry = dict(family=family, phase=binding['phase'], schema_pointer=pointer(schema_path),
+                                 instance_pointer=pointer(path), digits=4400, sign=sign)
+                    try:
+                        found = list(esv.iter_errors(mutant))
+                        entry['schema_keywords'] = sorted({str(e.validator) for e in leaves(found)})
+                        entry['schema_accepts'] = not found
+                    except Exception as error:
+                        entry['schema_exception'] = type(error).__name__
+                    caller = binding['caller'] or {}
+                    if caller.get('replayable') and binding['fact'] == 'schema_errors':
+                        outcome, first = replay(caller, mutant)
+                        entry['boundary'] = dict(function=caller['function'], outcome=outcome,
+                                                 first=list(first) if first else None)
+                    entry['status'] = 'FAILURE' if ('schema_exception' in entry or
+                                                    entry.get('boundary', {}).get('outcome', 'returned') != 'returned') else 'OK'
+                    ledger.append(entry)
+    stem = family.replace('.', '_')
+    write(out / f'{stem}.bigint.json', ledger)
+    summary = dict(family=family, slots=len(seen), checks=len(ledger),
+                   replayed=sum('boundary' in x for x in ledger),
+                   accepted_by_schema=sum(x.get('schema_accepts') is True for x in ledger),
+                   failures=sum(x['status'] == 'FAILURE' for x in ledger))
+    write(out / f'{stem}.bigint-summary.json', summary)
+    return summary
+
+
+def self_test(out):
+    """Adversarial checks of the adapter's own accounting (no family checker is needed)."""
+    spec = importlib.util.spec_from_file_location('dg6a_c12_selftest_domain', ROOT / 'scripts/pm-dg6a-domain.py')
+    domain = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(domain)
+    schema = {'type': 'object', 'additionalProperties': False, 'required': ['a', 't'],
+              'properties': {'a': {'type': 'string', 'pattern': '^x+$', 'maxLength': 3},
+                             't': {'type': 'string', 'format': 'date-time'}}}
+    esv = domain.validator(schema)
+    root = esv._inner.schema
+    node_a, node_t = root['properties']['a'], root['properties']['t']
+    control = {'a': 'xx', 't': '2026-11-04T12:00:00Z'}
+    checks = {}
+    found = list(esv.iter_errors({'a': 1, 't': control['t']}))
+    checks['other_clause_not_credited'] = (expected_error(found, node_a, 'type', ('a',))
+                                           and not expected_error(found, node_a, 'pattern', ('a',)))
+    found = list(esv.iter_errors({'a': 'xx', 't': '2026-11-04T12:00:00Z', 'b': 1}))
+    checks['wrong_location_not_credited'] = not expected_error(found, node_a, 'pattern', ('a',))
+    found = list(esv.iter_errors({'a': 'xx', 't': '2026-02-30T12:00:00Z'}))
+    checks['format_is_the_shared_predicate'] = expected_error(found, node_t, 'format', ('t',))
+    saved = node_a.pop('pattern')
+    try:
+        checks['clause_cut_accepts'] = not list(esv.iter_errors({'a': 'yy', 't': control['t']}))
+    finally:
+        node_a['pattern'] = saved
+    checks['restoration_refuses'] = bool(list(esv.iter_errors({'a': 'yy', 't': control['t']})))
+    checks['distinct_keeps_types'] = all(type(distinct(v)) is type(v) and distinct(v) != v
+                                         for v in ('abc', 'A1', 'f0', 7, True))
+    checks['distinct_keeps_timestamps'] = accepts(distinct('2026-11-04T12:00:00Z'), EVENT_RECORD)
+    mutants = dict(proposals(esv, 'pattern', node_a, 'xx'))
+    checks['pattern_proposals_violate'] = bool(mutants) and all(not re.search('^x+$', v) for v in mutants.values())
+    checks['bool_is_not_integer'] = bool(list(domain.validator({'type': 'integer'}).iter_errors(True)))
+    checks['huge_integer_no_exception'] = not list(domain.validator({'type': 'integer'}).iter_errors(10 ** 4399))
+    write(out / 'selftest.json', checks)
+    return dict(family='selftest', checks=len(checks), failures=sum(not v for v in checks.values()),
+                failed=[k for k, v in checks.items() if not v])
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--family', choices=FAMILIES, action='append')
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--mode', choices=('schema', 'copies'), default='schema')
+    parser.add_argument('--mode', choices=('schema', 'copies', 'bigint', 'selftest'), default='schema')
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     result = []
+    if args.mode == 'selftest':
+        row = self_test(args.out)
+        print(json.dumps(row))
+        return int(bool(row['failures']))
     for family in args.family or FAMILIES:
-        row = {'schema': schema_coverage, 'copies': copies_mode}[args.mode](family, args.out)
+        row = {'schema': schema_coverage, 'copies': copies_mode, 'bigint': bigint_mode}[args.mode](family, args.out)
         result.append(row)
         print(json.dumps(row, default=_default), flush=True)
     write(args.out / f'{args.mode}-summary.json', result)
