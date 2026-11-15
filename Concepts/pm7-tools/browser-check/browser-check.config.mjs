@@ -11,10 +11,19 @@ import { pathToFileURL } from 'node:url';
 export const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-dark`, `${f}-light`]);
 export const WIDTHS = [860, 1024, 1280, 1390, 1920];
 
-// How look() paints. Today it never writes Settings (persist:false), even when an onboarding preview is lingering.
-// Exported for tools/chat-look-visit.selftest.mjs (PM7PERF-CHATRUN-NIER-AFTER-VISIT).
+// How look() paints (PM7PERF-CHATRUN-NIER-AFTER-VISIT). persist:false is not a Settings write, so a lingering
+// onboarding preview (PM_NIER.previewing().loose) stays painted. A loose preview, or an explicit save, goes through
+// Settings. Exported for tools/chat-look-visit.selftest.mjs.
 export function lookRoute(name, preview, opts = {}) {
-	return { save: false, note: null, name, loose: !!(preview && preview.loose), asked: !!(opts && opts.save) };
+	const loose = !!(preview && preview.loose);
+	const save = loose || !!(opts && opts.save);
+	return { save, note: loose ? 'PM_NIER.previewing() is loose: the lingering onboarding preview is ended by a Settings write' : null, name };
+}
+// The same rule as look()'s "applied" row: NieR is on and the mode matches, otherwise data-theme is the name and NieR is off.
+export function paintedLookHeld(name, got) {
+	if (!got) return false;
+	const [family, mode] = String(name || '').split('-');
+	return family === 'nier' ? !!(got.nier && String(got.theme || '').endsWith('-' + mode)) : !got.nier && got.theme === name;
 }
 
 export default (ctx) => {
@@ -100,25 +109,40 @@ export default (ctx) => {
 				await t.until('page ready', () => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM_THEME, null, { timeout: 60000, hard: true });
 				return t.root === t.page ? t.page.mainFrame() : t.root;
 			},
-			// One of the ten looks, not persisted. NieR is a theme family where PM_THEME knows it (canon after Q22),
-			// else the PM_NIER switch over a light or dark mode; either way "on" is PM_NIER.on() or data-theme nier-*.
-			async look(t, name) {
+			// One of the ten looks. Not persisted, unless a lingering onboarding preview would ignore that paint, or the
+			// caller passes { save: true } (perf-chat-run re-applies the look under test after the window closes).
+			// NieR is a theme family where PM_THEME knows it (canon after Q22), else the PM_NIER switch over a light or
+			// dark mode; either way "on" is PM_NIER.on() or data-theme nier-*.
+			async look(t, name, opts) {
 				const [family, mode] = name.split('-');
 				const f0 = t.root;
-				await f0.evaluate(async ([f, m]) => {
+				const preview = await f0.evaluate(() => {
+					const pv = window.PM_NIER && typeof PM_NIER.previewing === 'function' ? PM_NIER.previewing() : null;
+					return pv ? { loose: !!pv.loose, on: !!pv.on } : null;
+				}).catch(() => null);
+				const route = lookRoute(name, preview, opts || {});
+				if (route.note) t.log('NOTE look ' + name + ': ' + route.note);
+				const via = await f0.evaluate(async ([f, m, save]) => {
+					if (save && window.PM12_KIMI && typeof PM12_KIMI.setSettingFromHost === 'function') {
+						PM12_KIMI.setSettingFromHost('general.visual.theme', f === 'nier' ? 'NieR' : f[0].toUpperCase() + f.slice(1));
+						PM12_KIMI.setSettingFromHost('general.visual.theme-mode', m === 'light' ? 'Light' : 'Dark');
+						return 'settings';
+					}
 					const nier = f === 'nier';
 					PM_THEME.setMode(m, { persist: false });
 					if (!nier && window.PM_NIER && PM_NIER.on()) await PM_NIER.set(false, { persist: false });
 					try { PM_THEME.setFamily(f, { persist: false }); } catch (e) { if (!nier) throw e; }
 					if (nier && !(document.documentElement.getAttribute('data-theme') || '').startsWith('nier') && window.PM_NIER) await PM_NIER.set(true, { persist: false });
 					PM_THEME.setMode(m, { persist: false });
-				}, [family, mode]);
+					return 'persist';
+				}, [family, mode, route.save]);
+				if (route.save && via !== 'settings') t.log('NOTE look ' + name + ': Settings host missing, painted with persist:false');
 				const state = () => { const theme = document.documentElement.getAttribute('data-theme') || ''; return { theme, nier: !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier') }; };
 				// NieR's switch-on plays a transition first; wait for the painted state rather than a fixed time
 				await f0.waitForFunction(([want, m]) => { const theme = document.documentElement.getAttribute('data-theme') || ''; const nier = !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier'); return nier === want && theme.endsWith('-' + m); }, [family === 'nier', mode], { timeout: 20000 }).catch(() => {});
 				await t.page.waitForTimeout(500);
 				const got = await f0.evaluate(state);
-				const ok = family === 'nier' ? got.nier && got.theme.endsWith('-' + mode) : !got.nier && got.theme === name;
+				const ok = paintedLookHeld(name, got);
 				return t.check(`look ${name} applied`, ok, `data-theme ${got.theme}, NieR ${got.nier ? 'on' : 'off'}`);
 			},
 			// Home panels write localStorage as the page goes away (pagehide, which fires once the document is already
