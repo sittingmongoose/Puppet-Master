@@ -69,7 +69,7 @@ const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'gl
 // In the page: every animation, endless or not, with what it is; the endless ones that run are kept for (c)
 export const CENSUS = () => {
 	const desc = (el) => { if (!el) return 'none'; const c = typeof el.className === 'string' ? el.className : (el.className && el.className.baseVal) || ''; return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (c.trim() ? '.' + c.trim().split(/\s+/).slice(0, 3).join('.') : ''); };
-	const out = { still: document.documentElement.hasAttribute('data-pm-still'), hasScript: !!window.PM_STILL, marks: document.querySelectorAll('[data-pm-held]').length, marked: [], run: [], held: 0, exempt: [], finPaused: [], finRun: 0, finList: [], stray: [] };
+	const out = { still: document.documentElement.hasAttribute('data-pm-still'), hasScript: !!window.PM_STILL, marks: document.querySelectorAll('[data-pm-held]').length, marked: [], run: [], runAt: [], held: 0, exempt: [], finPaused: [], finRun: 0, finList: [], stray: [], now: performance.now(), stillAt: window.__stillOnAt ?? null };
 	const keep = [];
 	const catalog = new Map();
 	for (const a of document.getAnimations()) {
@@ -83,7 +83,9 @@ export const CENSUS = () => {
 			// held by the still state: paused on an element marked for the part it runs on (the page holds some loops of
 			// its own, NieR's motes on Usage for one: those stay held after the wake)
 			const markedPart = !!(el && el.getAttribute && (el.getAttribute('data-pm-held') || '').split(' ').includes(a.effect.pseudoElement ? a.effect.pseudoElement.replace(/^::?/, '') : 'self'));
-			if (a.playState === 'running') { if (caret) out.exempt.push(what); else { out.run.push(what); keep.push(a); } }
+			// each running loop's start (document timeline time, performance.now()'s clock), its mark and whether a finite
+			// animation runs on the same element (the page waits for that to end before it holds the loop)
+			if (a.playState === 'running') { if (caret) out.exempt.push(what); else { out.run.push(what); keep.push(a); out.runAt.push({ what, start: a.startTime, held: (el && el.getAttribute && el.getAttribute('data-pm-held')) || '', finite: !!(el && el.getAnimations && el.getAnimations().some((x) => { try { return x !== a && x.effect && x.effect.target === el && x.playState === 'running' && x.effect.getTiming().iterations !== Infinity; } catch (e) { return false; } })) }); } }
 			else if (a.playState === 'paused' && markedPart) { out.held++; keep.push(a); }
 		} else if (a.playState === 'paused') out.finPaused.push(what);
 		else if (a.playState === 'running') { out.finRun++; if (out.finList.length < 6) { let d = 0; try { d = Math.round(a.effect.getComputedTiming().activeDuration); } catch (e) { /* none */ } out.finList.push(`${what} (${d} ms)`); } }
@@ -216,6 +218,10 @@ export default async function (t) {
 	// ---- the real wait: one cell without the hook ----
 	if (String(t.args.real ?? '1') !== '0') {
 		const f0 = await t.app.open({ query: 'pm-warm=0' });
+		// when the page went still (PM7PERF-STILL-OBS-ENDLESS-ONCE: one Alexis run read five loops running at 23 s and
+		// kept neither that time nor their starts, so loops that began after the still mark, which the page marks as
+		// they start or at its next look 4 s on, could not be told from loops it never held)
+		await f0.evaluate(() => { window.__stillOnAt = null; new MutationObserver(() => { if (window.__stillOnAt == null && document.documentElement.hasAttribute('data-pm-still')) window.__stillOnAt = performance.now(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-pm-still'] }); });
 		await t.app.look('basic-dark');
 		await f0.evaluate(() => PM_PAGES.go('dashboard'));
 		await move();
@@ -223,8 +229,17 @@ export default async function (t) {
 		const at18 = await f0.evaluate(CENSUS);
 		await t.page.waitForTimeout(5000);
 		const at23 = await f0.evaluate(CENSUS);
+		// judged: a loop running at 23 s that began before the still mark (held at the toggle) or more than LOOK_AGAIN
+		// (4 s) + 1 s before the census (its next look would have held it); logged: one that began since, with its age
+		const lookAgain = 5000;
+		const age = (r) => r.start == null ? null : Math.round(at23.now - r.start);
+		const due = at23.runAt.filter((r) => at23.stillAt == null || r.start == null || r.start < at23.stillAt || at23.now - r.start > lookAgain);
+		const young = at23.runAt.filter((r) => !due.includes(r));
+		const fmt = (rs) => rs.slice(0, 4).map((r) => `${r.what} (started ${age(r) == null ? '?' : age(r) + ' ms'} before the census${r.held ? ', marked ' + r.held : ''}${r.finite ? ', a finite animation on it' : ''})`).join('; ');
+		const stillFor = at23.stillAt == null ? null : Math.round(at23.now - at23.stillAt);
+		if (young.length) t.log(`basic-dark Home, no hook: NOTE ${young.length} loops began after the page went still and less than ${lookAgain} ms before the 23 s census, logged, not judged: ${fmt(young)}`);
 		await t.check('basic-dark Home, no hook: not still 18 s after the last input', !at18.still && at18.run.length > 0, `still ${at18.still}, ${at18.run.length} endless running`);
-		await t.check('basic-dark Home, no hook: still 23 s after the last input, nothing endless running', at23.still && at23.run.length === 0, `still ${at23.still}${at23.hasScript ? '' : ' (no still-page script in this page)'}, ${at23.run.length} endless running${at23.run.length ? ': ' + at23.run.slice(0, 4).join('; ') : ''}`);
+		await t.check('basic-dark Home, no hook: still 23 s after the last input, nothing endless running', at23.still && due.length === 0, `still ${at23.still}${at23.hasScript ? '' : ' (no still-page script in this page)'}${stillFor == null ? '' : ` (for ${stillFor} ms)`}, ${due.length} endless running that the page should hold by now${due.length ? ': ' + fmt(due) : ''}${young.length ? `; ${young.length} younger logged` : ''}`);
 	}
 
 	const f = await t.app.open({ query: `pm-warm=0&pm-still=${after}` });
