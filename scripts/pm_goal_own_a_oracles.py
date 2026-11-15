@@ -33,7 +33,10 @@ from referencing import Registry, Resource
 import referencing.jsonschema as rjs
 
 from pm_goal_run_stop_block_oracles import recipe, LEGAL, EDGES, NON_EMITTING_NATIVE_STEPS
-from pm_goal_oracle_common import integer_number, same_json_value, semantic_digest, SEMANTIC_FIELDS
+from pm_goal_oracle_common import current_integer_number, same_json_value, semantic_digest, SEMANTIC_FIELDS
+import pm_goal_oracle_common as common
+import pm_goal_gc_adapter as adapter
+import pm_event_numbers as numbers
 
 ROOT = Path(__file__).resolve().parents[1]
 PKG = ROOT / 'Plans/goal_run_stop_block_contracts'
@@ -52,6 +55,8 @@ ROUTES = {'goal_run.stopped': ('cmd.orchestrator.pause', 'cmd.runtime.abort_run'
 RULE = {'goal_run.stopped': 'original_run_stop', 'goal_run.blocked': 'original_run_block'}
 PAYLOAD = {f: 'pm.goal_runtime_event.' + f.replace('.', '_') + '.schema.v3' for f in ('goal_run.stopped', 'goal_run.blocked', 'goal_run.started')}
 INLINE_LIMIT = 16384
+PAYLOAD_RESOURCES = {f: f'Plans/executor_cancellation_contracts/schemas/{f.replace("_", "-").replace(".", "-")}.v3.schema.json'
+                     for f in ('goal_run.stopped', 'goal_run.blocked', 'goal_run.started')}
 GUARDS: dict[str, list[str]] = {}
 
 
@@ -60,8 +65,14 @@ class Refusal(Exception):
 
 
 def require(code, value):
-    if not value:
+    """One named owner predicate; under the Goal sweep only its gated table decides (pm_goal_gc_adapter)."""
+    if adapter.gated(code, value) is not None:
         raise Refusal(code)
+
+
+def refuses(code, condition):
+    """A consumer halt_before predicate, gated exactly like require."""
+    return adapter.gated(code, condition) is not None
 
 
 # ---------------------------------------------------------------- codecs and schema roots
@@ -92,27 +103,8 @@ def hexc(value):
     return value.encode().hex()
 
 
-def utc(value):
-    if type(value) is not str or not re.fullmatch(r'\d{4}-\d{2}-\d{2}T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?Z', value):
-        return False
-    try:
-        datetime.datetime.fromisoformat(value)
-        return True
-    except ValueError:
-        return False
-
-
-def uuid_text(value):
-    return type(value) is str and re.fullmatch(r'[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}', value) is not None
-
-
-FORMATS = jsonschema.FormatChecker(formats=())
-FORMATS.checks('date-time')(utc)
-FORMATS.checks('uuid')(uuid_text)
-
-
 def load(rel):
-    return json.loads((ROOT / rel).read_text())
+    return common.load(ROOT / rel)  # source-bound: a file changed during a run refuses the run
 
 
 def build_registry():
@@ -123,7 +115,7 @@ def build_registry():
                 'Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json',
                 'Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json']:
         doc = load(rel)
-        registry = registry.with_resource(doc['$id'], Resource.from_contents(doc, default_specification=rjs.DRAFT202012))
+        registry = registry.with_resource(doc['$id'], Resource.from_contents(common.runtime_schema(doc), default_specification=rjs.DRAFT202012))
     return registry.crawl()
 
 
@@ -132,9 +124,12 @@ _VALIDATORS: dict[str, jsonschema.Draft202012Validator] = {}
 
 
 def valid(ref, value):
+    """The whole owner definition through the shared Goal validator: every keyword, ECMA patterns, owner
+    formats, the shared date-time profiles (EventRecord; Storage UTC-Z for stored observed/persisted) and the
+    CV-1100 current integer grammar of these current v3 writes."""
     if ref not in _VALIDATORS:
-        _VALIDATORS[ref] = jsonschema.Draft202012Validator({'$ref': ref}, registry=REGISTRY, format_checker=FORMATS)
-    return not any(True for _ in _VALIDATORS[ref].iter_errors(value))
+        _VALIDATORS[ref] = adapter.validator({'$ref': ref}, REGISTRY)
+    return adapter.check_schema(_VALIDATORS[ref], value, ref)
 
 
 def selection_table():
@@ -277,6 +272,10 @@ def storage_append(w, event):
                    durability_state='synced', manifest_generation=st['manifest_generation'], acknowledged_at_utc=stamp)
     frame = dict(sequence_id=stored['sequence_id'], event_id=stored['event_id'], event=stored, commitment=commitment, receipt=receipt)
     st['log'].append(frame)
+    sealed, installed = adapter.issue(stored, SID, receipt, PAYLOAD_RESOURCES.get(stored['event_type']))
+    st.setdefault('sealed_receipts', []).append(sealed)
+    if installed not in st.setdefault('installed_recipes', []):
+        st['installed_recipes'].append(installed)
     st['first'][stored['event_id']] = copy.deepcopy(dict(commitment=commitment, receipt=receipt,
                                                          full_value=dict(first_append_receipt=receipt, original_segment_ref='segment-1',
                                                                          original_event_value_commitment=commitment)))
@@ -368,8 +367,8 @@ def admit(c):
     native, cause, goal = w['native'], w['causes'][op], w['goal']
     require('native/scope', same_json_value(native['scope'], SCOPE))
     require('goal/scope', goal['project_id'] == SCOPE['project_id'] and goal['goal_id'] == SCOPE['goal_id'])
-    require('native/value_revision_type', integer_number(native['revision']))
-    require('goal/revision_type', integer_number(goal['revision']))
+    require('native/value_revision_type', current_integer_number(native['revision']))
+    require('goal/revision_type', current_integer_number(goal['revision']))
     require('native/revision', r['expected_goal_run_revision'] == native['revision'])
     require('native/d01_head', bool(w['d01']) and w['d01'][-1]['after_revision'] == native['revision'])
     require('native/status', native['status'] in LEGAL[family])
@@ -379,7 +378,7 @@ def admit(c):
         require('native/self_evidence', op in w['causes'] and (prior_cause is None or not same_json_value(w['causes'][op]['evidence'], prior_cause['evidence'])))
     require('cause/scope', same_json_value(cause['scope'], SCOPE))
     require('cause/operation', cause['operation_id'] == op)
-    require('cause/revision_type', integer_number(cause['native_revision']))
+    require('cause/revision_type', current_integer_number(cause['native_revision']))
     require('cause/revision', cause['native_revision'] == native['revision'])
     require('cause/kind', cause['kind'] == ('settlement' if family == 'goal_run.stopped' else 'block'))
     require('cause/issuer', cause['issuer'] == ('owner.bounded_safe_stop' if family == 'goal_run.stopped' else 'owner.permissions'))
@@ -415,6 +414,9 @@ def admit(c):
     require('event/inner_key', payload['idempotency_key'] == key)
     for label in ('requested_account_ref', 'effective_account_ref', 'actor_ref', 'correlation_id', 'occurred_at_utc'):
         require('event/join/' + label, event[label] == payload[label])
+    representable = adapter.representable(event)
+    require('event/producer_representable', representable != 'producer')
+    require('event/storage_representable', representable != 'storage')
     if r['supplied_digest'] is not None:
         require('event/digest', r['supplied_digest'] == semantic_digest(event))
     return native, cause, goal
@@ -613,6 +615,11 @@ def inspect(c, event_id, claim=None, current=False):
     require('reader/first_custody', same_json_value(frame['commitment'], first['commitment']) and same_json_value(frame['receipt'], first['receipt']))
     require('reader/receipt', first['receipt']['event_id'] == event_id and first['receipt']['sequence_id'] == frame['event']['sequence_id']
             and type(first['receipt']['sequence_id']) is int)
+    snapshot = dict(sealed_receipts=w['storage'].get('sealed_receipts', []), installed_recipes=w['storage'].get('installed_recipes', []),
+                    original_value=frame['event'], custody=first['receipt'], content_permitted=w['authority'].get('content_permitted', True) is True)
+    reason = adapter.retained_reason(snapshot, frame['event'], w['storage'].get('storage_instance_id', SID), recipe_override=w['authority'].get('recipe_override'))
+    for code in adapter.RETAINED_REASONS:
+        require('reader/retained/' + code, reason != code)
     if claim is not None:
         require('reader/claim', same_json_value(claim, first))
     if current:
@@ -673,14 +680,14 @@ def reduce(c, token):
         require('project/frame_envelope', valid(EVR, event))
         selection_key = (event['event_type'], event['scope_kind'], event['payload_schema_id'])
         coverage.append([frame['sequence_id'], frame['commitment']['sha256']])
-        if selection_key not in SELECTIONS:
+        if refuses('project/selection', selection_key in SELECTIONS):
             return dict(outcome='halt_before', sequence_id=frame['sequence_id'], event_id=frame['event_id'], reason='project/selection')
         if not (event['project_id'] == SCOPE['project_id'] and event['run_id'] == SCOPE['goal_run_id']):
             continue  # off-run: validated above, then a no-op
         family = event['event_type']
-        if family in ('goal_run.stopped', 'goal_run.blocked') and event['payload_schema_id'] != PAYLOAD[family]:
+        if family in ('goal_run.stopped', 'goal_run.blocked') and refuses('project/v2_row', event['payload_schema_id'] == PAYLOAD[family]):
             return dict(outcome='halt_before', sequence_id=frame['sequence_id'], event_id=frame['event_id'], reason='project/v2_row')
-        if family not in ('goal_run.started', 'goal_run.stopped', 'goal_run.blocked', 'goal_run.cancelled', 'goal_run.certified'):
+        if refuses('project/unsupported', family in ('goal_run.started', 'goal_run.stopped', 'goal_run.blocked', 'goal_run.cancelled', 'goal_run.certified')):
             return dict(outcome='halt_before', sequence_id=frame['sequence_id'], event_id=frame['event_id'], reason='project/unsupported')
         if family == 'goal_run.started':
             original = w['inherited'].get(frame['event_id'])
@@ -688,7 +695,7 @@ def reduce(c, token):
                     and original['commitment_sha256'] == frame['commitment']['sha256'])
             status, revision, last, row_meta, last_family = 'started', original['goal_run_revision'], frame['event_id'], None, family
             continue
-        if status is None or (status, family) not in EDGES:
+        if refuses('project/edge', status is not None and (status, family) in EDGES):
             return dict(outcome='halt_before', sequence_id=frame['sequence_id'], event_id=frame['event_id'], reason='project/edge')
         payload = event['payload']
         require('project/payload_schema', valid(PAYLOAD[family], payload))
@@ -701,7 +708,7 @@ def reduce(c, token):
         cause = w['causes'].get(op)
         require('project/cause', cause is not None and held['native_result']['record']['cause']['physical_sha256'] == sha(cause))
         expected, successor = payload['expected_goal_run_revision'], payload['goal_run_revision']
-        require('project/native_after', integer_number(expected) and integer_number(successor) and successor == expected + 1)
+        require('project/native_after', current_integer_number(expected) and current_integer_number(successor) and successor == expected + 1)
         step = [d for d in w['d01'] if d.get('operation_id') == op]
         require('project/native_d01', len(step) == 1 and step[0]['kind'] == RULE[family]
                 and step[0]['before_revision'] == expected and step[0]['after_revision'] == successor)
@@ -979,6 +986,7 @@ def main():
     results, failures = [], []
 
     def check(name, fn, expected=None):
+        adapter.begin_case(name)
         try:
             out = fn()
             got = None
@@ -990,6 +998,7 @@ def main():
             got = 'ERROR:' + repr(exc)
         if expected is not None:
             GUARDS.setdefault(expected, []).append(name)
+        adapter.end_case(name, expected, got)
         results.append({'id': name, 'expected': expected, 'actual': got})
         if got != expected:
             failures.append(results[-1])
@@ -1111,7 +1120,9 @@ def main():
             check(f'{family}/storage_metadata_retry/{name}', lambda retry=retry: require('same', run_writer(mutate(retry_base, ['request', 'retry_event'], retry))['outcome'] == 'published'))
         retry = copy.deepcopy(c['request']['event'])
         retry['payload']['expected_goal_run_revision'] = float(retry['payload']['expected_goal_run_revision'])
-        check(family + '/equivalent_integral_retry', lambda: run_writer(mutate(retry_base, ['request', 'retry_event'], retry)))
+        # CV-1100 (PNC-019 GC): a retry spelling the original integer 3 as the runtime float 3.0 is a different typed
+        # current input, so the typed semantic comparison refuses it (s3d accepted it under the retained grammar).
+        check(family + '/integral_float_retry_refused', lambda: run_writer(mutate(retry_base, ['request', 'retry_event'], retry)), 'retry/semantic')
         retry = copy.deepcopy(c['request']['event'])
         retry['correlation_id'] = 'different'
         retry['payload']['correlation_id'] = 'different'
@@ -1173,13 +1184,7 @@ def main():
         other = 'goal_run.blocked' if family == 'goal_run.stopped' else 'goal_run.stopped'
         check(family + '/projection_root_rejects_other_family_metadata', lambda: require('closed', not valid(OWN + 'Projection', {**project_prefix(copy.deepcopy(done))['projection']['record'],
                                                                                          'lifecycle_metadata': metadata(other, payload_for(other, 'op:x', 3, cause=cause_for(other, 'op:x', 3)))})))
-        def forge_metadata(cand, family=family):
-            meta = cand['projection']['record']['lifecycle_metadata']
-            if family == 'goal_run.stopped':
-                meta.update(resumable=False, safe_point_ref=None)
-            else:
-                meta.update(block_receipt_ref='permission_denial:forged')
-            cand['checkpoint']['record']['generations'][-1]['processed']['row_sha256'] = sha(cand['projection'])
+        forge_metadata = forge_stopped_metadata if family == 'goal_run.stopped' else forge_blocked_metadata
         check(family + '/project_metadata_edited_candidate', lambda: project_prefix(copy.deepcopy(done), edit=forge_metadata), 'publish/candidate')
         gap = copy.deepcopy(done)
         gap['world']['d01'] = [d for d in gap['world']['d01'] if d['before_revision'] != 2]
@@ -1285,6 +1290,13 @@ def main():
             then_stop = copy.deepcopy(done)
             run_writer(case_for(then_stop['world'], 'goal_run.stopped', 'op:pause:after-block', 3))
             check('goal_run.blocked/project_blocked_then_stopped', lambda: require('edge', project_prefix(copy.deepcopy(then_stop))['projection']['record']['lifecycle_status'] == 'stopped'))
+            # GRS-202 edge table: stopped -> blocked is not an edge. A coherent stored blocked row after the stop
+            # (frame and first custody agree) halts at the edge before any payload or original-result read.
+            illegal = copy.deepcopy(then_stop)
+            forged = copy.deepcopy(next(f for f in illegal['world']['storage']['log'] if f['event']['event_type'] == 'goal_run.blocked')['event'])
+            forged.update(event_id='goal_run.blocked.v1:' + '1' * 64, sequence_id=None, observed_at_utc=None, persisted_at_utc=None)
+            storage_append(illegal['world'], forged)
+            check('goal_run.blocked/project_stopped_then_blocked_edge', lambda: project_prefix(copy.deepcopy(illegal)), 'halt:project/edge')
             check('goal_run.blocked/writer_block_after_stop', lambda: run_writer(case_for(copy.deepcopy(then_stop)['world'], 'goal_run.blocked', 'op:block:after-stop', 4)), 'native/status')
         # -- readers, Storage and recovery boundaries without a negative before this round
         check(family + '/read_before_any_projection', lambda: read_projection(copy.deepcopy(done)), 'read/root')
@@ -1311,8 +1323,8 @@ def main():
         revoked['request']['fail_at'] = None
         revoked['world']['authority']['permission'] = False
         check(family + '/append_after_permission_revoked', lambda: recover(revoked, None), 'append/authority')
-        check(family + '/candidate_extra_member', lambda: project_prefix(copy.deepcopy(done), edit=lambda cand: cand.update(note='x')), 'publish/candidate_schema')
-        check(family + '/candidate_checkpoint_extra_member', lambda: project_prefix(copy.deepcopy(done), edit=lambda cand: cand['checkpoint']['record'].update(note='x')), 'candidate/schema')
+        check(family + '/candidate_extra_member', lambda: project_prefix(copy.deepcopy(done), edit=add_candidate_note), 'publish/candidate_schema')
+        check(family + '/candidate_checkpoint_extra_member', lambda: project_prefix(copy.deepcopy(done), edit=add_checkpoint_note), 'candidate/schema')
         malformed = mutate(c, ['request', 'fail_at'], 'native_committed')
         run_writer(malformed)
         malformed['request']['fail_at'] = None
@@ -1374,6 +1386,7 @@ def main():
         check(family + '/rebuild_stages_and_cuts_over', lambda: require('cutover', (lambda r, w: r['outcome'] == 'success'
               and [g['state'] for g in w['kv'][('checkpoints', keys()[0])]['record']['generations']] == ['retired', 'current'])(project_prefix(rebuilt, rebuild=True), rebuilt['world'])))
         check(family + '/cutover_requires_full_coverage', lambda: require('refused, prior selection kept', cutover_short(copy.deepcopy(after))))
+    gc_cases(check, mutate, published)
     # -- SP-337 parts (F4, F5)
     packs = {}
     for label, value in [('ascii', {'x': 'a' * 16000}), ('two_byte', {'x': 'é' * 8000}), ('four_byte', {'x': '\U0001f9f5' * 4000})]:
@@ -1454,6 +1467,166 @@ def main():
     return 1 if failures else 0
 
 
+def add_candidate_note(cand):
+    cand.update(note='x')
+
+
+def add_checkpoint_note(cand):
+    cand['checkpoint']['record'].update(note='x')
+
+
+def forge_stopped_metadata(cand):
+    cand['projection']['record']['lifecycle_metadata'].update(resumable=False, safe_point_ref=None)
+    cand['checkpoint']['record']['generations'][-1]['processed']['row_sha256'] = sha(cand['projection'])
+
+
+def forge_blocked_metadata(cand):
+    cand['projection']['record']['lifecycle_metadata'].update(block_receipt_ref='permission_denial:forged')
+    cand['checkpoint']['record']['generations'][-1]['processed']['row_sha256'] = sha(cand['projection'])
+
+
+def at_revision(family, revision, op=None):
+    """A coherent writer case whose native run revision is `revision` (D01 head, cause, payload and identity agree)."""
+    w = new_world()
+    w['native']['revision'] = revision
+    w['d01'].append(dict(before_revision=1, after_revision=revision, kind='original_execution_progress', d01_receipt_ref='d01:corpus'))
+    return case_for(w, family, op or ('op:pause:1' if family == 'goal_run.stopped' else 'op:block:1'))
+
+
+def gc_cases(check, mutate, published):
+    """PNC-019 lane GC additions: shared number and date-time corpus at the complete writer, reader and consumer
+    boundaries, sealed-receipt retained reads, and distinct-copy join witnesses. Every case is a complete call."""
+    import pm_event_numbers_corpus as corpus_codec
+    corpus = load('Plans/event_number_recipe_corpus.json')
+    integers = [x for x in corpus['cases'] if x['op'] == 'integer' and 'value' in x]
+    stamps = [x for x in corpus['cases'] if x['op'] == 'datetime' and x.get('profile') is None]
+    storage_ok = lambda x: x.get('error') is None and type(x['value']) is str and re.fullmatch(r'[0-9-]+T[0-9:.]+Z', x['value']) is not None
+    for family in WRITERS:
+        c = baseline(family)
+        op = c['request']['operation_id']
+        # -- CV-1100 current integer grammar at the request boundary (Request.expected_goal_run_revision >= 0): a
+        #    grammar refusal is request/schema; a lawful integer is admitted by grammar and then refused by the native CAS.
+        for x in integers:
+            value = corpus_codec._value(x['value'])
+            lawful = type(value) is int and value >= 0
+            check(f"{family}/numbers/request_expected/{x['id']}", lambda value=value: run_writer(mutate(c, ['request', 'expected_goal_run_revision'], value)),
+                  'native/revision' if lawful else 'request/schema')
+        # The integral float equals the native revision, so only the CV-1100 grammar row can refuse it.
+        same = c['request']['expected_goal_run_revision']
+        for label, value in [('float_integral', float(same)), ('exponent_spelling', json.loads(f'{same}e0'))]:
+            check(f'{family}/numbers/request_expected/{label}_equal', lambda value=value: run_writer(mutate(c, ['request', 'expected_goal_run_revision'], value)), 'request/schema')
+        for label, value in [('float_integral', 4.0), ('exponent_spelling', json.loads('4e0')), ('negative_zero', json.loads('-0.0'))]:
+            check(f'{family}/numbers/request_expected/{label}', lambda value=value: run_writer(mutate(c, ['request', 'expected_goal_run_revision'], value)), 'request/schema')
+            check(f'{family}/numbers/native_revision/{label}', lambda value=value: run_writer(mutate(c, ['world', 'native', 'revision'], value)), 'native/value_revision_type')
+            check(f'{family}/numbers/cause_revision/{label}', lambda value=value: run_writer(mutate(c, ['world', 'causes', op, 'native_revision'], value)), 'cause/revision_type')
+            check(f'{family}/numbers/goal_revision/{label}', lambda value=value: run_writer(mutate(c, ['world', 'goal', 'revision'], value)), 'goal/revision_type')
+        # -- coherent arbitrary-precision revisions: exact JCS through 2^53; past it the producer projection refuses
+        #    before any effect (no invented ceiling, no float narrowing); 4,400 digits never crash a conversion.
+        # The successor (revision + 1) is in the same payload, so 2^53 - 1 is the largest exact coherent revision.
+        for label, revision, expected in [('2^53-1', (1 << 53) - 1, None), ('2^53', 1 << 53, 'event/producer_representable'),
+                                          ('2^60', 1 << 60, 'event/producer_representable'),
+                                          ('4400_digits', numbers.current_integer_token('9' * 4400), 'event/producer_representable')]:
+            check(f'{family}/numbers/coherent_revision/{label}', lambda revision=revision: run_writer(at_revision(family, revision)), expected)
+        # -- shared date-time corpus, EventRecord profile, both producer copies coherent (envelope and payload)
+        for x in stamps:
+            bad = mutate(c, ['request', 'event', 'occurred_at_utc'], x['value'])
+            bad['request']['event']['payload']['occurred_at_utc'] = x['value']
+            check(f"{family}/datetime/occurred_at_utc/{x['id']}", lambda bad=bad: run_writer(bad), None if x.get('error') is None else 'event/envelope_schema')
+        done, out = published(c)
+        eid = out['event_id']
+        # -- Storage-assigned observed/persisted on a stored original take Storage UTC-Z; acknowledged_at_utc the
+        #    EventRecord profile (E5-2). Each stored copy is re-cohered so only the named clock differs.
+        for x in stamps:
+            for field in ('observed_at_utc', 'persisted_at_utc'):
+                forged = copy.deepcopy(done)
+                recohere(forged['world'], eid, lambda e, field=field, v=x['value']: e.update({field: v}))
+                check(f"{family}/datetime/stored_{field}/{x['id']}", lambda forged=forged: project_prefix(forged), None if storage_ok(x) else 'project/frame_envelope')
+            racing = mutate(c, ['request', 'fail_at'], 'native_committed')
+            run_writer(racing)
+            racing['request']['fail_at'] = None
+            storage_append(racing['world'], freeze(racing['request']['event']))
+            racing['world']['storage']['first'][racing['request']['event']['event_id']]['receipt']['acknowledged_at_utc'] = x['value']
+            check(f"{family}/datetime/acknowledged_at_utc/{x['id']}", lambda racing=racing: recover(racing, None), None if x.get('error') is None else 'receipt/schema')
+        # -- Storage-assigned sequence_id on a stored original: uint64 storage slot (SP-1100), never JCS. A value past
+        #    2^64 - 1 cannot be committed at rest (the physical codec refuses it), so it has no stored witness here.
+        for label, value, lawful in [('uint64_max', (1 << 64) - 1, True), ('negative', -1, False),
+                                     ('boolean', True, False), ('integral_float', 2.0, False)]:
+            forged = copy.deepcopy(done)
+            recohere(forged['world'], eid, lambda e, v=value: e.update(sequence_id=v))
+            check(f'{family}/numbers/stored_sequence_id/{label}', lambda forged=forged: project_prefix(forged), None if lawful else 'project/frame_envelope')
+        # -- sealed original receipt selection at the historical reader; every refused read keeps the whole store
+        def store_edit(fn):
+            changed = copy.deepcopy(done)
+            fn(changed)
+            return changed
+        def reseal_other(d):
+            st = d['world']['storage']
+            index = next(i for i, f in enumerate(st['log']) if f['event_id'] == eid)
+            row = st['sealed_receipts'][index]
+            foreign = copy.deepcopy(st['log'][index]['event'])
+            foreign['correlation_id'] = 'correlation:other-original'
+            row['original']['record_bytes'] = numbers.storage_value_bytes(foreign)
+            original = numbers.OriginalCustody(numbers.OriginalBinding(**row['original']['binding']), numbers.RecipeTuple(**row['original']['recipe']),
+                                               row['original']['record_bytes'], row['original']['result_bytes'], row['original']['receipt_bytes'])
+            row['seal'] = adapter.retained.seal(original)
+        retained_cases = [
+            ('missing', lambda d: d['world']['storage'].update(sealed_receipts=[]), 'original_receipt_missing'),
+            ('ambiguous', lambda d: d['world']['storage'].update(sealed_receipts=d['world']['storage']['sealed_receipts'] * 2), 'original_receipt_ambiguous'),
+            ('bad_seal', lambda d: [r.update(seal='0' * 64) for r in d['world']['storage']['sealed_receipts']], 'original_receipt_seal'),
+            ('bad_shape', lambda d: [r.update(original={'binding': {'event_id': r['original']['binding']['event_id']}}) for r in d['world']['storage']['sealed_receipts']], 'original_receipt_shape'),
+            ('foreign_storage', lambda d: d['world']['storage'].update(storage_instance_id='00000000-0000-4000-8000-000000000009'), 'original_binding'),
+            ('unknown_recipe', lambda d: d['world']['storage'].update(installed_recipes=[]), 'recipe_unknown'),
+            ('recipe_catalog_malformed', lambda d: d['world']['storage'].update(installed_recipes=[{'recipe': 'caller'}]), 'recipe_catalog'),
+            ('resealed_other_original', reseal_other, 'original_verification'),
+            ('caller_recipe_override', lambda d: d['world']['authority'].update(recipe_override='caller-selected'), 'caller_recipe_override'),
+            ('disclosure_denied', lambda d: d['world']['authority'].update(content_permitted=False), 'current_disclosure'),
+        ]
+        check(f'{family}/retained/receipt_selected_original', lambda: inspect(copy.deepcopy(done), eid))
+        for label, fn, reason in retained_cases:
+            check(f'{family}/retained/{label}', lambda changed=store_edit(fn): inspect(changed, eid), 'reader/retained/' + reason)
+        # -- coherent forgeries that isolate one predicate (every other copy re-cohered)
+        coherent = copy.deepcopy(c)
+        for holder in (coherent['world']['registration'], coherent['world']['birth']):
+            holder['profile_sha256'] = 'f' * 64
+        check(f'{family}/registration_profile_coherent_forgery', lambda: run_writer(copy.deepcopy(coherent)), 'registration/profile')
+        # Positives for rows that only optional inputs reach: a supplied digest, a current read, a stored checkpoint root.
+        check(f'{family}/supplied_digest_original', lambda: run_writer(mutate(c, ['request', 'supplied_digest'], semantic_digest(c['request']['event']))))
+        check(f'{family}/reader_current_original', lambda: inspect(copy.deepcopy(done), eid, current=True))
+        projected = copy.deepcopy(done)
+        project_prefix(projected)
+        stored_root = projected['world']['kv'][('checkpoints', keys()[0])]
+        check(f'{family}/root_valid/checkpoint', lambda: root_check('root/StorageCheckpoint', copy.deepcopy(stored_root)))
+        # -- distinct-copy joins: each independently held copy changed alone refuses at its own join row
+        envelope = c['request']['event']
+        for label in ('requested_account_ref', 'effective_account_ref', 'actor_ref', 'correlation_id', 'occurred_at_utc'):
+            other = '2026-11-05T00:00:01Z' if label == 'occurred_at_utc' else (envelope[label] or 'ref') + ':other-copy'
+            check(f'{family}/join/{label}/envelope_copy', lambda label=label, other=other: run_writer(mutate(c, ['request', 'event', label], other)), 'event/join/' + label)
+            check(f'{family}/join/{label}/payload_copy', lambda label=label, other=other: run_writer(mutate(c, ['request', 'event', 'payload', label], other)), 'event/join/' + label)
+        key = envelope['idempotency_key']
+        other_key = key[:-1] + ('0' if key[-1] != '0' else '1')
+        check(f'{family}/join/idempotency_key/envelope_copy', lambda: run_writer(mutate(c, ['request', 'event', 'idempotency_key'], other_key)), 'event/key')
+        check(f'{family}/join/idempotency_key/payload_copy', lambda: run_writer(mutate(c, ['request', 'event', 'payload', 'idempotency_key'], other_key)), 'event/inner_key')
+        cause_pairs = [('evidence', 'evidence_refs', ['evidence:other-copy'], 'cause/evidence', False)]
+        if family == 'goal_run.stopped':
+            cause_pairs.append(('settlement_refs', 'settlement_refs', ['safestop:settle:other-copy'], 'cause/settlements', True))
+        else:
+            cause_pairs += [('receipt_ref', 'block_receipt_ref', 'permission_denial:other-copy', 'cause/receipt', True),
+                            ('preserved_work_refs', 'preserved_work_refs', ['worknode:other-copy'], 'cause/preserved_work', True)]
+        for cause_field, payload_field, other, code, inner in cause_pairs:
+            check(f'{family}/join/{payload_field}/cause_copy', lambda f=cause_field, o=other: run_writer(mutate(c, ['world', 'causes', op, f], o)), code)
+            path = ['request', 'event', 'payload'] + (['payload'] if inner else []) + [payload_field]
+            check(f'{family}/join/{payload_field}/payload_copy', lambda path=path, o=other: run_writer(mutate(c, path, o)), code)
+        # -- the run-history projection reads each stored original's copies independently
+        def frame_copy(d, holder):
+            st = d['world']['storage']
+            if holder == 'frame_receipt':
+                st['log'][-1]['receipt']['byte_offset'] += 1
+            else:
+                st['first'][eid]['receipt']['byte_offset'] += 1
+        for holder in ('frame_receipt', 'first_receipt'):
+            check(f'{family}/join/first_custody/{holder}', lambda h=holder: project_prefix(store_edit(lambda d: frame_copy(d, h))), 'project/first_custody')
+
+
 def recohere(w, event_id, fn, rename=None):
     """TEST_ONLY at-rest forgery: change a stored row and re-cohere every Storage copy and its operation's result."""
     frame = next(f for f in w['storage']['log'] if f['event_id'] == event_id)
@@ -1528,6 +1701,23 @@ def cutover_short(c):
     except Refusal as exc:
         return str(exc) == 'cutover/coverage' and w['kv'] == before
     return False
+
+
+def _world_store(args):
+    return args[0]['world']
+
+
+def _halt(out):
+    return out['reason'] if isinstance(out, dict) and out.get('outcome') == 'halt_before' else None
+
+
+# PNC-019 GC: each top-level writer/consumer/reader call is one complete call of the Goal sweep. Reads also record
+# the whole owner store before and after; a read that changed it would fail the run (never a refusal or a kill).
+for _name in ('run_writer', 'recover', 'project_prefix', 'cutover_attempt', 'root_check'):
+    globals()[_name] = adapter.complete_entry(globals()[_name], 'own_a', Refusal, halt=_halt)
+for _name in ('inspect', 'read_projection'):
+    globals()[_name] = adapter.complete_entry(globals()[_name], 'own_a', Refusal, store=_world_store)
+resolve_part = adapter.complete_entry(resolve_part, 'own_a', Refusal, store=lambda args: args[1])
 
 
 if __name__ == '__main__':
