@@ -477,7 +477,8 @@ def main():
         check(admission_refusal(case) == 'unregistered', event + ': admission refusal')
         check(admission_refusal(case, admitted=True) == 'retention_unresolved', event + ': retention refusal')
         check(admission_refusal(case, admitted=True, retention='resolved', withdrawn=True) == 'withdrawn', event + ': withdrawal refusal')
-        outcome = {'prepared': 'prepared_without_admission', 'admitted': 'admitted_with_dl077_record'}.get(mode['mode'], 'refused_registration')
+        # A refused registration stays a prepared family; its refusal is the failure above.
+        outcome = 'admitted_with_dl077_record' if mode['mode'] == 'admitted' else 'prepared_without_admission'
         rows.append({'event_type':event,'schema_checks':checks,'outcome':outcome,'native_execution':'NOT_RUN'})
     corpus = corpus_checks(fixture['cases'], check) if only is None else None
     expected = 9 if only is None else 1

@@ -209,8 +209,10 @@ def registry_history_problem(record: dict, registry: dict, index: int, root: Pat
                 rebuilt_before, rebuilt_after = this_before, this_after
     history = _git_history(root)
     if history is None:
-        detail = {"route": "rebuild", "row_index": index, "rebuilt_before_sha256": rebuilt_before,
-                  "rebuilt_after_sha256": rebuilt_after}
+        # No git history here: a record whose pins predate a later registry-format change (such as one taken
+        # before admission merge 1) cannot be proved in this tree and stays refused (fail-closed).
+        detail = {"route": "rebuild", "git_history": "unavailable", "row_index": index,
+                  "rebuilt_before_sha256": rebuilt_before, "rebuilt_after_sha256": rebuilt_after}
         if rebuilt_before is not None and rebuilt_before != before["sha256"]:
             return "registry_before_mismatch", dict(detail, pinned=before)
         return "registry_after_mismatch", dict(detail, pinned=after)
