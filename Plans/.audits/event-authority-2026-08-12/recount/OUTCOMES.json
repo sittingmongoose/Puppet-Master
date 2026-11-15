@@ -290,6 +290,10 @@
   {
    "event_type": "named_plan.child_refs_changed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "named_plan.created",
+   "outcome": "registered"
   }
  ]
 }
