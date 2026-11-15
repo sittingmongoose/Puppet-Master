@@ -43,6 +43,7 @@ import re
 import re._constants as C
 import re._parser as P
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -992,9 +993,15 @@ def close_root(root, v, seeds, budget, carried=None):
     branch_controls = []
     spent = 0
     root0 = COUNT[0]
+    total = sum(len(clauses_of(info['node'])) for info in nodes.values())
+    done = [0, time.monotonic()]
     for location, info in nodes.items():
         node = info['node']
         for keyword in clauses_of(node):
+            done[0] += 1
+            if time.monotonic() - done[1] > 300:  # GO addition: progress line every five minutes
+                done[1] = time.monotonic()
+                print(f'  {root[:60]}: clause {done[0]}/{total}, validations {COUNT[0] - root0}', file=sys.stderr, flush=True)
             clause = location + '/' + name_of(keyword)
             if clause in carried:  # --carry: a clause the earlier report did not leave UNCOVERED
                 entries[clause] = carried[clause]
