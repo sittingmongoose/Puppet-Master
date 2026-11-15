@@ -725,3 +725,39 @@ def corpus_slots(control):
         ids = {r['result']['event_id'] for r in ss['runs'] if isinstance(r.get('result'), dict)}
         paths += [('ss', 'receipts', e, 'acknowledged_at_utc') for e in sorted(ids)]
         yield {'paths': paths, 'kind': 'datetime', 'row': 'ss_int_time', 'profile': w.EVENT_RECORD, 'type_rows': ['ss_int_time']}
+
+
+WIRE_PACKAGE = '/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-storage-integrity-wire-20260912/v1'
+WIRE_PINNED_PATH = '/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/manifest.json'
+WIRE_MANIFEST_SHA256 = 'd3692a22d5af8a1d611d7b53eb4f4065ef37d9e9b3a81e8089ab1ff70751078f'
+
+
+def evidence(out):
+    """Authenticate the SP-279 actual-wire package pinned by step-08-integrity-wire-validation.md and replay its suites."""
+    import hashlib
+    import json
+    import shutil
+    import subprocess
+    import sys
+    from pathlib import Path
+    package = Path(WIRE_PACKAGE)
+    result = {'package': WIRE_PACKAGE, 'pinned_path': WIRE_PINNED_PATH, 'pinned_manifest_sha256': WIRE_MANIFEST_SHA256}
+    report = (w.ROOT / 'reports/event-authority-20260911/step-08-integrity-wire-validation.md').read_text()
+    result['pin_in_validation_report'] = WIRE_PINNED_PATH in report and WIRE_MANIFEST_SHA256 in report
+    actual = hashlib.sha256((package / 'manifest.json').read_bytes()).hexdigest()
+    result['manifest_sha256'] = actual
+    if actual != WIRE_MANIFEST_SHA256 or not result['pin_in_validation_report']:
+        result['status'] = 'fail'; return result
+    manifest = json.loads((package / 'manifest.json').read_text())
+    bad = [f['path'] for f in manifest['files'] if hashlib.sha256((package / f['path']).read_bytes()).hexdigest() != f['sha256']]
+    result.update(verified_files=len(manifest['files']) - len(bad), changed_files=bad)
+    replay = Path(out) / 'integrity-wire-replay'
+    if replay.exists():
+        shutil.rmtree(replay)
+    shutil.copytree(package, replay, ignore=shutil.ignore_patterns('__pycache__'))
+    run = subprocess.run([sys.executable, '-B', 'run_new_checks.py'], cwd=replay, capture_output=True, text=True, timeout=1800)
+    after = [f['path'] for f in manifest['files'] if hashlib.sha256((replay / f['path']).read_bytes()).hexdigest() != f['sha256']]
+    result.update(returncode=run.returncode, tail=(run.stdout + run.stderr)[-600:], replay_byte_identical=not after, replay_changed=after)
+    shutil.rmtree(replay)
+    result['status'] = 'pass' if run.returncode == 0 and not bad and not after else 'fail'
+    return result

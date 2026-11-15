@@ -504,5 +504,5 @@ def corpus_slots(control):
     copies = receipt_copies(ss)
     if not copies:
         return
-    yield {'paths': [path + ('acknowledged_at_utc',) for path, _r in copies], 'kind': 'datetime', 'row': 'ss_rec_time',
+    yield {'paths': [('ss',) + path + ('acknowledged_at_utc',) for path, _r in copies], 'kind': 'datetime', 'row': 'ss_rec_time',
            'profile': w.EVENT_RECORD, 'type_rows': ['ss_rec_time']}
