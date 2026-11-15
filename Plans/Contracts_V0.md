@@ -40756,7 +40756,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). goal_run.stopped binds schema ID pm.goal_runtime_event.goal_run_stopped.schema.v3 at Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false), on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478 (the Workflow run's identity grammar, with no retired GoalRun build-flow obligation): expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision. The payload keeps goal_run_id, stop_reason_code, resumable and safe_point_ref (required when resumable is true); child_settlement_refs is an empty array (GRS-075); settlement_refs is required. The whole v2 schema stays unchanged as the historical reader. Prepared without admission: the registry row keeps v2 until its own admission landing.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). goal_run.stopped binds schema ID pm.goal_runtime_event.goal_run_stopped.schema.v3 at Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false), on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478 (the Workflow run's identity grammar, with no retired GoalRun build-flow obligation): expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision. The payload keeps goal_run_id, stop_reason_code, resumable and safe_point_ref (required when resumable is true); child_settlement_refs is an empty array (GRS-075); settlement_refs is required. The whole v2 schema stays unchanged as the historical reader. Prepared without admission: the registry row keeps v2 until its own admission landing; the prepared 3.0.0 successor row is in Plans/goal_run_stop_block_contracts/prepared-registry-rows.json, applied only at the S5b switch under EA-P3 A.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -40801,6 +40801,9 @@ Positive and negative payload cases are in `Plans/goal_run_stop_block_oracle_fix
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/storage-plan.md#SP-426, ContractName:Plans/Decision_Log.md#DL-080
 
+
+**DG-OWN-A adoption.** This exact stopped family adopts CV-1110 Stop source/method/result and complete resource banks; actual v3 selector adoption is held for O11.
+
 ### CV-421 - Current goal_run.blocked v3 payload contract
 
 ```yaml
@@ -40809,7 +40812,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). goal_run.blocked binds schema ID pm.goal_runtime_event.goal_run_blocked.schema.v3 at Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false), on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478 (the Workflow run's identity grammar, with no retired GoalRun build-flow obligation): expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision. The payload fields are those of v2: goal_run_id, blocked_reason_code, blocked_scope, allowed_action_ids, preserved_work_refs and block_receipt_ref. The whole v2 schema stays unchanged as the historical reader. Prepared without admission: the registry row keeps v2 until its own admission landing.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). goal_run.blocked binds schema ID pm.goal_runtime_event.goal_run_blocked.schema.v3 at Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false), on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478 (the Workflow run's identity grammar, with no retired GoalRun build-flow obligation): expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision. The payload fields are those of v2: goal_run_id, blocked_reason_code, blocked_scope, allowed_action_ids, preserved_work_refs and block_receipt_ref. The whole v2 schema stays unchanged as the historical reader. Prepared without admission: the registry row keeps v2 until its own admission landing; the prepared 3.0.0 successor row is in Plans/goal_run_stop_block_contracts/prepared-registry-rows.json, applied only at the S5b switch under EA-P3 A.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -40853,6 +40856,9 @@ owner_hints:
 Positive and negative payload cases are in `Plans/goal_run_stop_block_oracle_fixtures.json` (ATS-212).
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/storage-plan.md#SP-427, ContractName:Plans/Decision_Log.md#DL-080
+
+
+**DG-OWN-A adoption.** This exact blocked family adopts CV-1110 Block source/method/result and complete resource banks; actual v3 selector adoption is held for O11.
 
 ### CV-422 - Prepared goal.blocked Project v3 qualification
 
@@ -41077,6 +41083,68 @@ owner_hints:
 ```
 
 **Exact `goal.tool_check_recorded` qualification, newly authored under DL-045 applying DL-079/Card 3 A.** This family is historical-only in both scopes. The v2 root `pm.goal_runtime_event.goal_tool_check_recorded.schema.v2` is the unchanged whole historical reader resource, never a current writer selection. GRS-207 forbids append/retry/producer adoption before dedupe or any effect, and SP-433 supplies the sole historical consumer `storage.goal_tool_check_recorded_history_read.v1@1.0.0` with SP-420/SP-278 and individual none_required family checkpoint. Preserve original D-R13 row meaning, v1 compatibility and all original Project bytes/retention. This qualification overrides old Known-37/Goal/CV-287 matrix phrases selecting this exact family for new writes. The CV-366 row is historical_only, not pending future source admission. Card 3 A approves withdrawal of the unused app edition at integration's next registry checkpoint; registry/app source/schema edits are deliberately absent from this draft. ATS-211 and the exact family fixture define conditional historical acceptance and current refusal, not actual writer history or native proof.
+
+### CV-1110 - Whole fresh stop/block source and method resource bank
+
+```yaml
+plan_unit_id: CV-1110
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: "Newly authored DL-045 owner contract. CV-420 independently adopts the Stop roots and CV-421\
+  \ the Block roots in Plans/goal_run_stop_block_contracts/contracts.schema.json, exact fresh source/method\
+  \ tuples, physical-families.json, profile.json and SB0\u2013SB6 protocol. resource-bank.json preserves whole\
+  \ original resources and exact path/SHA-256/pointer provenance in isolated realms; resource-map.json gives\
+  \ the fresh literal retrieval namespace, never an old-ID replacement or schema slice. Every required $ref\
+  \ resolves eagerly, including inactive definitions; unknown/foreign roots and dangling references fail. Durable\
+  \ own wrapper records are closed, exact types are checked before semantics, identifiers require full-match/roundtrip\
+  \ and timestamps/UUIDs require enforced format checks. SP-337 references apply to every stored source/operation/Event\
+  \ part and complete wrapper size is measured. Original v2 payloads and old v7 banks remain byte-exact. The\
+  \ prepared Project v3 registry rows in prepared-registry-rows.json switch the selector only at the S5b step\
+  \ under EA-P3 A, so this bank grants no append admission. consumer-resource-bank.json holds the seven re-identified\
+  \ consumer realms of the fresh stop/block consumer (amended 2026-11-14, PNC-019 lane s3d). Shared number/retained-recipe and inherited-format/proof-isolation adoption remains the separately\
+  \ assigned sweep."
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- CV-420
+- CV-421
+- CV-339
+unblocks: []
+acceptance_criteria:
+- Fresh whole roots and method/result tuples resolve in their fixed isolated realm with no network or caller-selected
+  edition.
+- No registry selection, application Stop contract, old schema change or native capability follows from the
+  resource bank.
+- Type, closure, source/recipe/custody, complete size and entry/final predicate obligations are explicit.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-420, ContractName:Plans/Contracts_V0.md#CV-421, ContractName:Plans/Executor_Protocol.md#EP-1110, ContractName:Plans/storage-plan.md#SP-1110, ContractName:Plans/storage-plan.md#SP-1111, ContractName:Plans/storage-plan.md#SP-1112
 
 ### CV-1120 - Closed blocked lifecycle source methods and results
 

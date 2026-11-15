@@ -1,0 +1,2157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_run_stop_block.v1.schema.json",
+  "$comment": "Newly authored DL-045 owner contract; TEST_ONLY qualification does not install a source or admit an event. Whole native roots and all independently acquired source values in resource-bank.json are mandatory in addition to these closed durable joins. No SourceMember or hash is native authority.",
+  "$defs": {
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "scope_partition",
+        "project_id",
+        "goal_id",
+        "goal_run_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "PayloadRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blake3",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "blake3": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "media_type": {
+          "const": "application/msgpack"
+        }
+      }
+    },
+    "StoredPart": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "inline",
+            "payload_ref"
+          ],
+          "properties": {
+            "inline": {
+              "type": "object"
+            },
+            "payload_ref": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "inline",
+            "payload_ref"
+          ],
+          "properties": {
+            "inline": {
+              "type": "null"
+            },
+            "payload_ref": {
+              "$ref": "#/$defs/PayloadRef"
+            }
+          }
+        }
+      ]
+    },
+    "Selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "schema_id",
+        "schema_version",
+        "physical_sha256"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      }
+    },
+    "SourceMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "selection",
+        "value"
+      ],
+      "properties": {
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selection": {
+          "$ref": "#/$defs/Selection"
+        },
+        "value": {
+          "$ref": "#/$defs/StoredPart"
+        }
+      }
+    },
+    "Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "expected_goal_run_revision",
+        "route"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_goal_run_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "route": {
+          "enum": [
+            "cmd.orchestrator.pause",
+            "cmd.runtime.abort_run",
+            "scheduler.run_block"
+          ]
+        }
+      }
+    },
+    "Birth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "profile",
+        "profile_sha256",
+        "native_birth",
+        "original_registration",
+        "initial_control"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "profile": {
+          "const": "pm.executor.workflow_source.all_writers.stop_block.v1"
+        },
+        "profile_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "native_birth": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "original_registration": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "initial_control": {
+          "$ref": "#/$defs/SourceMember"
+        }
+      }
+    },
+    "Sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "birth",
+        "native",
+        "d01",
+        "goal",
+        "cause",
+        "current_authority"
+      ],
+      "properties": {
+        "birth": {
+          "$ref": "#/$defs/Birth"
+        },
+        "native": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "d01": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "goal": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "cause": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "current_authority": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/SourceMember"
+          }
+        }
+      }
+    },
+    "StopIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "writer",
+        "profile_sha256",
+        "request",
+        "sources",
+        "frozen_event",
+        "producer_semantic_digest",
+        "expected_native",
+        "next_goal_run_revision"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer": {
+          "const": "owner.executor.workflow_run.stop.v1"
+        },
+        "profile_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "request": {
+          "$ref": "#/$defs/Request"
+        },
+        "sources": {
+          "$ref": "#/$defs/OriginalSourceCommitment"
+        },
+        "frozen_event": {
+          "$ref": "#/$defs/StoredPart"
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "expected_native": {
+          "$ref": "#/$defs/Selection"
+        },
+        "next_goal_run_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "StopControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "revision",
+        "phase",
+        "intent",
+        "native_result",
+        "first_receipt",
+        "result"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "phase": {
+          "enum": [
+            "prepared",
+            "native_committed",
+            "event_issued",
+            "published",
+            "recovery_required"
+          ]
+        },
+        "intent": {
+          "$ref": "#/$defs/Selection"
+        },
+        "native_result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "StopNativeResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "rule",
+        "before",
+        "after",
+        "cause",
+        "intent",
+        "before_status",
+        "after_status",
+        "before_revision",
+        "after_revision"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule": {
+          "const": "original_run_stop"
+        },
+        "before": {
+          "$ref": "#/$defs/Selection"
+        },
+        "after": {
+          "$ref": "#/$defs/Selection"
+        },
+        "cause": {
+          "$ref": "#/$defs/Selection"
+        },
+        "intent": {
+          "$ref": "#/$defs/Selection"
+        },
+        "before_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "after_status": {
+          "const": "stopped"
+        },
+        "before_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "StopOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "writer",
+        "intent",
+        "native_result",
+        "source_argument_sha256"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer": {
+          "const": "owner.executor.workflow_run.stop.v1"
+        },
+        "intent": {
+          "$ref": "#/$defs/Selection"
+        },
+        "native_result": {
+          "$ref": "#/$defs/Selection"
+        },
+        "source_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      }
+    },
+    "StopPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "result",
+        "origin"
+      ],
+      "properties": {
+        "kind": {
+          "const": "run_stop_original"
+        },
+        "result": {
+          "$ref": "#/$defs/StopNativeResult"
+        },
+        "origin": {
+          "$ref": "#/$defs/StopOrigin"
+        }
+      }
+    },
+    "StopResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "native_result",
+        "d01_update",
+        "event",
+        "full_value_result",
+        "first_receipt_custody",
+        "terminal_result"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_result": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "d01_update": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "event": {
+          "$ref": "#/$defs/StoredPart"
+        },
+        "full_value_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        },
+        "first_receipt_custody": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "terminal_result": {
+          "$ref": "#/$defs/StoredPart"
+        }
+      }
+    },
+    "StorageStopIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_stop_intent.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/StopIntent"
+        }
+      }
+    },
+    "StorageStopControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_stop_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/StopControl"
+        }
+      }
+    },
+    "StorageStopNativeResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_stop_nativeresult.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/StopNativeResult"
+        }
+      }
+    },
+    "StorageStopOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_stop_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/StopOrigin"
+        }
+      }
+    },
+    "StorageStopResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_stop_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/StopResult"
+        }
+      }
+    },
+    "BlockIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "writer",
+        "profile_sha256",
+        "request",
+        "sources",
+        "frozen_event",
+        "producer_semantic_digest",
+        "expected_native",
+        "next_goal_run_revision"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer": {
+          "const": "owner.executor.workflow_run.block.v1"
+        },
+        "profile_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "request": {
+          "$ref": "#/$defs/Request"
+        },
+        "sources": {
+          "$ref": "#/$defs/OriginalSourceCommitment"
+        },
+        "frozen_event": {
+          "$ref": "#/$defs/StoredPart"
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "expected_native": {
+          "$ref": "#/$defs/Selection"
+        },
+        "next_goal_run_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "BlockControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "revision",
+        "phase",
+        "intent",
+        "native_result",
+        "first_receipt",
+        "result"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "phase": {
+          "enum": [
+            "prepared",
+            "native_committed",
+            "event_issued",
+            "published",
+            "recovery_required"
+          ]
+        },
+        "intent": {
+          "$ref": "#/$defs/Selection"
+        },
+        "native_result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "BlockNativeResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "rule",
+        "before",
+        "after",
+        "cause",
+        "intent",
+        "before_status",
+        "after_status",
+        "before_revision",
+        "after_revision"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule": {
+          "const": "original_run_block"
+        },
+        "before": {
+          "$ref": "#/$defs/Selection"
+        },
+        "after": {
+          "$ref": "#/$defs/Selection"
+        },
+        "cause": {
+          "$ref": "#/$defs/Selection"
+        },
+        "intent": {
+          "$ref": "#/$defs/Selection"
+        },
+        "before_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "after_status": {
+          "const": "blocked"
+        },
+        "before_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "BlockOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "writer",
+        "intent",
+        "native_result",
+        "source_argument_sha256"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer": {
+          "const": "owner.executor.workflow_run.block.v1"
+        },
+        "intent": {
+          "$ref": "#/$defs/Selection"
+        },
+        "native_result": {
+          "$ref": "#/$defs/Selection"
+        },
+        "source_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      }
+    },
+    "BlockPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "result",
+        "origin"
+      ],
+      "properties": {
+        "kind": {
+          "const": "run_block_original"
+        },
+        "result": {
+          "$ref": "#/$defs/BlockNativeResult"
+        },
+        "origin": {
+          "$ref": "#/$defs/BlockOrigin"
+        }
+      }
+    },
+    "BlockResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "native_result",
+        "d01_update",
+        "event",
+        "full_value_result",
+        "first_receipt_custody",
+        "terminal_result"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_result": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "d01_update": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "event": {
+          "$ref": "#/$defs/StoredPart"
+        },
+        "full_value_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        },
+        "first_receipt_custody": {
+          "$ref": "#/$defs/SourceMember"
+        },
+        "terminal_result": {
+          "$ref": "#/$defs/StoredPart"
+        }
+      }
+    },
+    "StorageBlockIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_block_intent.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/BlockIntent"
+        }
+      }
+    },
+    "StorageBlockControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_block_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/BlockControl"
+        }
+      }
+    },
+    "StorageBlockNativeResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_block_nativeresult.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/BlockNativeResult"
+        }
+      }
+    },
+    "StorageBlockOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_block_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/BlockOrigin"
+        }
+      }
+    },
+    "StorageBlockResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_block_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/BlockResult"
+        }
+      }
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "operation_id",
+        "reason"
+      ],
+      "properties": {
+        "outcome": {
+          "enum": [
+            "unavailable",
+            "recovery_required",
+            "immutable_conflict",
+            "not_admitted"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "DurableToken": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "checkpoint_key",
+        "checkpoint_ref",
+        "generation_id",
+        "generation_anchor_sha256",
+        "frontier_revision",
+        "frontier_sha256",
+        "index_dataset_name",
+        "source_selection"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "checkpoint_key": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f]"
+          }
+        },
+        "checkpoint_ref": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f]"
+          }
+        },
+        "generation_id": {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$",
+          "minLength": 68,
+          "maxLength": 68
+        },
+        "generation_anchor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "frontier_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "frontier_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "index_dataset_name": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\u0000-\\u001f]"
+          }
+        },
+        "source_selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storage_instance_id",
+            "current_ref",
+            "current_bytes_sha256",
+            "selected_segment_generation",
+            "manifest_ref",
+            "manifest_bytes_sha256",
+            "manifest_generation",
+            "recovery_epoch",
+            "manifest_survivor_prefix_sha256",
+            "retained_inventory_sha256",
+            "durable_watermarks_sha256",
+            "excluded_ranges_sha256",
+            "retired_inputs_sha256"
+          ],
+          "properties": {
+            "storage_instance_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "current_ref": {
+              "const": "storage/seglog/CURRENT"
+            },
+            "current_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "selected_segment_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_ref": {
+              "const": "storage/seglog/manifest.v1.msgpack"
+            },
+            "manifest_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "recovery_epoch": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_survivor_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "retained_inventory_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "durable_watermarks_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "excluded_ranges_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "retired_inputs_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          }
+        }
+      }
+    },
+    "Projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "generation_id",
+        "profile_sha256",
+        "lifecycle_status",
+        "projected_goal_run_revision",
+        "last_supported_event_id",
+        "last_original_result",
+        "event_commitment",
+        "lifecycle_metadata"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "generation_id": {
+          "type": "string",
+          "pattern": "^grsbg_[0-9a-f]{64}$",
+          "minLength": 70,
+          "maxLength": 70
+        },
+        "profile_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "lifecycle_status": {
+          "enum": [
+            "started",
+            "blocked",
+            "stopped",
+            "cancelled",
+            "certified"
+          ]
+        },
+        "projected_goal_run_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_supported_event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "last_original_result": {
+          "$ref": "#/$defs/Selection"
+        },
+        "event_commitment": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "lifecycle_metadata": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StoppedRowMetadata"
+            },
+            {
+              "$ref": "#/$defs/BlockedRowMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "lifecycle_status": {
+                "const": "stopped"
+              }
+            },
+            "required": [
+              "lifecycle_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "lifecycle_metadata": {
+                "$ref": "#/$defs/StoppedRowMetadata"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lifecycle_status": {
+                "const": "blocked"
+              }
+            },
+            "required": [
+              "lifecycle_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "lifecycle_metadata": {
+                "$ref": "#/$defs/BlockedRowMetadata"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lifecycle_status": {
+                "enum": [
+                  "started",
+                  "cancelled",
+                  "certified"
+                ]
+              }
+            },
+            "required": [
+              "lifecycle_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "lifecycle_metadata": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Processed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generic_token",
+        "through_sequence_id",
+        "record_count",
+        "coverage_sha256",
+        "retention_gap_sha256",
+        "row_key",
+        "row_sha256"
+      ],
+      "properties": {
+        "generic_token": {
+          "$ref": "#/$defs/DurableToken"
+        },
+        "through_sequence_id": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coverage_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "retention_gap_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "row_key": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "row_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generation_id",
+        "seed_hex",
+        "anchor_sha256",
+        "birth_token",
+        "profile_sha256",
+        "dataset_name",
+        "state",
+        "first_prepared_at_utc",
+        "first_activated_at_utc",
+        "retired_at_utc",
+        "successor_generation_id",
+        "frontier_revision",
+        "prior_frontier_sha256",
+        "frontier_sha256",
+        "last_transaction_id",
+        "processed"
+      ],
+      "properties": {
+        "generation_id": {
+          "type": "string",
+          "pattern": "^grsbg_[0-9a-f]{64}$",
+          "minLength": 70,
+          "maxLength": 70
+        },
+        "seed_hex": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "anchor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "birth_token": {
+          "$ref": "#/$defs/DurableToken"
+        },
+        "profile_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "dataset_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "enum": [
+            "staged",
+            "current",
+            "retired"
+          ]
+        },
+        "first_prepared_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "first_activated_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retired_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "successor_generation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^grsbg_[0-9a-f]{64}$",
+              "minLength": 70,
+              "maxLength": 70
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "frontier_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "prior_frontier_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "frontier_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "last_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "processed": {
+          "$ref": "#/$defs/Processed"
+        }
+      }
+    },
+    "Checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "root_revision",
+        "selected_generation_id",
+        "generations"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "root_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "selected_generation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^grsbg_[0-9a-f]{64}$",
+              "minLength": 70,
+              "maxLength": 70
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "generations": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/Generation"
+          }
+        }
+      }
+    },
+    "StorageProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_stop_block_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/Projection"
+        }
+      }
+    },
+    "StorageCheckpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_run_stop_block_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/Checkpoint"
+        }
+      }
+    },
+    "OriginalSourceCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_argument_sha256",
+        "original_selections"
+      ],
+      "properties": {
+        "source_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "original_selections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/Selection"
+          }
+        }
+      }
+    },
+    "StoppedRowMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "stop_reason_code",
+        "resumable",
+        "safe_point_ref"
+      ],
+      "$comment": "SP-428 value delta for a stopped row, copied from the verified original goal_run.stopped v3 row only; the enum is the v3 payload enum (checked equal by ATS-1112).",
+      "properties": {
+        "kind": {
+          "const": "stopped"
+        },
+        "stop_reason_code": {
+          "enum": [
+            "user_stopped",
+            "forbidden_action",
+            "missing_source_ledger",
+            "missing_plans_or_target",
+            "permission_or_filesystem_failure",
+            "unsafe_or_destructive_scope",
+            "contradictory_goal",
+            "infrastructure_blocker",
+            "budget_exhausted",
+            "verification_terminal_failure"
+          ],
+          "type": "string"
+        },
+        "resumable": {
+          "type": "boolean"
+        },
+        "safe_point_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "resumable": {
+                "const": true
+              }
+            },
+            "required": [
+              "resumable"
+            ]
+          },
+          "then": {
+            "properties": {
+              "safe_point_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "BlockedRowMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "blocked_reason_code",
+        "block_receipt_ref"
+      ],
+      "$comment": "SP-428 value delta for a blocked row, copied from the verified original goal_run.blocked v3 row only; the enum is the v3 payload enum (checked equal by ATS-1112).",
+      "properties": {
+        "kind": {
+          "const": "blocked"
+        },
+        "blocked_reason_code": {
+          "enum": [
+            "approval_required",
+            "permission_denied",
+            "missing_source_ledger",
+            "missing_plans_or_target",
+            "permission_or_filesystem_failure",
+            "unsafe_or_destructive_scope",
+            "contradictory_goal",
+            "infrastructure_blocker",
+            "budget_exhausted",
+            "usage_exhausted",
+            "verification_terminal_failure",
+            "verifier_unavailable",
+            "storage_viewer",
+            "storage_blocked",
+            "storage_root_unavailable",
+            "storage_root_mismatch",
+            "storage_integrity_unknown",
+            "storage_recovery_in_progress",
+            "storage_recovery_unavailable",
+            "restore_refused",
+            "restore_failed",
+            "restore_recovery_required",
+            "dedupe_unavailable",
+            "idempotency_conflict",
+            "revision_conflict",
+            "authority_boundary",
+            "child_settlement_incomplete",
+            "external_dependency_unavailable"
+          ],
+          "type": "string"
+        },
+        "block_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ConsumerRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "method"
+      ],
+      "$comment": "The only caller input of a fresh stop/block consumer method; every source below is owner-acquired.",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "method": {
+          "enum": [
+            "owner.goal_run.stop_block.project_prefix.v1",
+            "owner.storage.goal_run.stop_block.read_sources.v1",
+            "owner.storage.goal_run.stop_block.publish.v1",
+            "owner.goal_run.stop_block.read_historical.v1",
+            "owner.goal_run.stop_block.read_current.v1"
+          ]
+        }
+      }
+    },
+    "PrefixFrame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sequence_id",
+        "event_id",
+        "stored_event",
+        "original_event_value_commitment",
+        "first_append_receipt",
+        "frame"
+      ],
+      "$comment": "One frame of the actual global Event prefix, read whole from Storage custody (SP-278, SP-286); off-run frames are validated before they are treated as no-ops.",
+      "properties": {
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stored_event": {
+          "$ref": "#/$defs/StoredPart"
+        },
+        "original_event_value_commitment": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        },
+        "frame": {
+          "$ref": "#/$defs/Selection"
+        }
+      }
+    },
+    "RetentionGapDisposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from_sequence_id",
+        "through_sequence_id",
+        "disposition"
+      ],
+      "properties": {
+        "from_sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "through_sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "disposition": {
+          "$ref": "#/$defs/Selection"
+        }
+      }
+    },
+    "GlobalPrefix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generic_token",
+        "frames",
+        "gap_dispositions"
+      ],
+      "properties": {
+        "generic_token": {
+          "$ref": "#/$defs/DurableToken"
+        },
+        "frames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PrefixFrame"
+          }
+        },
+        "gap_dispositions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RetentionGapDisposition"
+          }
+        }
+      }
+    },
+    "NativeChronologyStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before_revision",
+        "after_revision",
+        "kind",
+        "d01_update"
+      ],
+      "$comment": "One authenticated D01 update of the run; GRS-202 accepts a gap between the projected and a row's expected revision only across original_execution_progress and original_provisional_success steps.",
+      "properties": {
+        "before_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "enum": [
+            "original_execution_progress",
+            "original_provisional_success",
+            "original_run_stop",
+            "original_run_block",
+            "original_start",
+            "original_cancel",
+            "original_certify"
+          ]
+        },
+        "d01_update": {
+          "$ref": "#/$defs/Selection"
+        }
+      }
+    },
+    "StopBlockOriginal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family",
+        "event_id",
+        "operation_id",
+        "intent",
+        "native_result",
+        "d01_update",
+        "cause",
+        "first_receipt_custody",
+        "result"
+      ],
+      "properties": {
+        "family": {
+          "enum": [
+            "goal_run.stopped",
+            "goal_run.blocked"
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intent": {
+          "$ref": "#/$defs/Selection"
+        },
+        "native_result": {
+          "$ref": "#/$defs/Selection"
+        },
+        "d01_update": {
+          "$ref": "#/$defs/Selection"
+        },
+        "cause": {
+          "$ref": "#/$defs/Selection"
+        },
+        "first_receipt_custody": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        },
+        "result": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/StorageStopResult"
+            },
+            {
+              "$ref": "#/$defs/StorageBlockResult"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "family": {
+                "const": "goal_run.stopped"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/StorageStopResult"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/StorageBlockResult"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "StopBlockSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "birth",
+        "prefix",
+        "originals",
+        "native_chronology",
+        "current_disclosure"
+      ],
+      "$comment": "Own stop/block source bundle returned by owner.storage.goal_run.stop_block.read_sources.v1; inherited started/cancelled/certified sources are separate arguments in the fresh consumer realms.",
+      "properties": {
+        "birth": {
+          "$ref": "#/$defs/Birth"
+        },
+        "prefix": {
+          "$ref": "#/$defs/GlobalPrefix"
+        },
+        "originals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StopBlockOriginal"
+          }
+        },
+        "native_chronology": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NativeChronologyStep"
+          }
+        },
+        "current_disclosure": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/SourceMember"
+          }
+        }
+      }
+    },
+    "ProjectionState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint_key",
+        "row_table",
+        "row_key",
+        "checkpoint",
+        "projection"
+      ],
+      "$comment": "Whole own preimages read in the publishing transaction (SB5 CAS); null only for a genuinely absent key.",
+      "properties": {
+        "checkpoint_key": {
+          "type": "string",
+          "pattern": "^goal_run_stop_block_checkpoint\\.v1:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+$"
+        },
+        "row_table": {
+          "type": "string",
+          "pattern": "^goal_run_stop_block_projection\\.v1@grsbg_[0-9a-f]{64}$",
+          "minLength": 104,
+          "maxLength": 104
+        },
+        "row_key": {
+          "type": "string",
+          "pattern": "^goal_run_stop_block_projection\\.v1:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+$"
+        },
+        "checkpoint": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StorageCheckpoint"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StorageProjection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ProjectionCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transaction_id",
+        "preimage",
+        "checkpoint",
+        "projection"
+      ],
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preimage": {
+          "$ref": "#/$defs/ProjectionState"
+        },
+        "checkpoint": {
+          "$ref": "#/$defs/StorageCheckpoint"
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StorageProjection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ConsumerResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "generation_id",
+        "processed",
+        "projection"
+      ],
+      "properties": {
+        "outcome": {
+          "const": "success"
+        },
+        "generation_id": {
+          "type": "string",
+          "pattern": "^grsbg_[0-9a-f]{64}$",
+          "minLength": 70,
+          "maxLength": 70
+        },
+        "processed": {
+          "$ref": "#/$defs/Processed"
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StorageProjection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Halt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "sequence_id",
+        "event_id",
+        "reason"
+      ],
+      "$comment": "A row the reducer does not support halts before it; nothing is committed for it.",
+      "properties": {
+        "outcome": {
+          "const": "halt_before"
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}
