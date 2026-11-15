@@ -445,15 +445,18 @@
        hang in), and a prop lowered from above went down behind its PIP tab and its box: each of Creating's blocks for about
        half a second at 740, the cloud on Safe's Add one. A prop whose place is under the box comes in from just below
        its lower edge instead, fading in there as it is lowered the rest of the way. (Elsewhere the bubble moves out of a
-       prop's way, so props come in from above.) */
-    enterUnder(pr, tgt) {
-      const sb = this.famName === 'nier' ? this.keepOff : null;
+       prop's way, so props come in from above; where it took its usual place over their ways instead, placeBubble's
+       bubbleOver, they come in under it as they do under NieR's box: FO-214) */
+    enterUnder(pr, tgt, still) {
+      const sb = this.famName === 'nier' ? this.keepOff : this.bubbleOver ? this.bubbleBox : null;
       if (!sb) return;
       const g = 4 / ((this.map && this.map.k) || 1), len0 = pr.len;
       pr.len = tgt.len; this.placeProp(pr);
       const b = pr.box;
       /* (a place under the box: across its span and below its middle; one that rests inside its margin appears in place) */
       pr.len = b && b[0] < sb[2] + g && b[2] > sb[0] - g && b[1] >= (sb[1] + sb[3]) / 2 ? Math.max(len0, tgt.len - Math.max(0, b[1] - (sb[3] + g))) : len0;
+      /* (still: its way starts there, at rest; FO-214's bubble) */
+      if (still && pr.len > len0) pr.lenv = 0;
       this.placeProp(pr);
     }
     /* the speech box a moving prop keeps out of, in scene units: NieR's fixed box with its tab, or the bubble where it is
@@ -1333,7 +1336,7 @@
       /* (a place the bubble already holds is kept against where the props are now, not the ways they take: one coming in
          keeps off the bubble on its way down (fit), one leaving is held under it (holdUnder); a way that moved as Pip
          swayed under a prop still coming in sent the held bubble off a place nothing came to, FO-191) */
-      const now = [], box = (q) => { const a = this.toScreen([q[0], q[1]]), c = this.toScreen([q[2], q[3]]); return [a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]; };
+      const now = [], rests = [], box = (q) => { const a = this.toScreen([q[0], q[1]]), c = this.toScreen([q[2], q[3]]); return [a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]; };
       this.props.forEach((pr) => {
         if (!pr.box) return;
         const coming = pr.state !== 'out' && !pr.settled;
@@ -1341,6 +1344,7 @@
         if (!coming && pr.op <= .05) return;
         let q = pr.box;
         const r = coming ? this.restBox(pr) : null;
+        if (r) rests.push(box(r));
         if (r) q = [Math.min(q[0], r[0]), Math.min(q[1], r[1]), Math.max(q[2], r[2]), Math.max(q[3], r[3])];
         /* (and one leaving, the way it is lifted out, up to the stage's top, while it shows: lifted into the place the
            bubble had taken beside it, it pushed the bubble away again) */
@@ -1372,7 +1376,8 @@
       const talking = this.bubble.classList.contains('on') && !!(this.bubble.textContent || '').trim();
       const fresh = !this.bubbleTalked || this.bubbleScreen !== this.lastScreen;
       this.bubbleTalked = talking; this.bubbleScreen = this.lastScreen;
-      let at = null;
+      if (fresh) this.bubbleOver = false;
+      let at = null, over0 = false;
       const sideOk = !(this.bubbleSide && sideOf(x) !== this.bubbleSide && y + bh > face[1]);
       if (prev && !fresh && holds(prev[0], prev[1])) at = prev; /* (the side it moved to, while it stays clear) */
       else if (sideOk && (!prev && !fresh ? holds(x, y) : clear(x, y))) at = [x, y]; /* (its usual place, kept the same way) */
@@ -1381,6 +1386,19 @@
         [face].concat(obs).forEach((o) => { cand.push([o[0] - bw, y], [o[2], y], [x, o[1] - bh], [x, o[3]], [o[0] - bw, o[1] - bh], [o[2], o[1] - bh], [o[0] - bw, o[3]], [o[2], o[3]]); });
         cand.push([X0, Y0], [X1, Y0], [X0, Y1], [X1, Y1]);
         at = near(cand.map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]));
+        /* FO-214: a new line whose usual place, over Pip, is taken only by the ways the props take (one lifted out, one
+           lowered in), not by anything there now or by where a prop will rest, keeps that place where the nearest clear one
+           is under Pip's face: there its tail pointed down, away from Pip. Retro Dark's tube, cropped to fill the pane at
+           1694x1290, left no room beside the laptop leaving Where and the palette coming to Look, so "Dress me up" went
+           under Pip's chin; the palette, not yet placed while the stage was held for the change (FO-206), was not counted,
+           and when it came to rest 0.6 s later on the bubble's place the bubble jumped 195 px up to its usual one. Here the
+           props make way instead: one leaving is held under the bubble (holdUnder), one coming in is lowered in from just
+           under it (enterUnder, bubbleOver); a prop the held stage has not placed yet is measured where it will rest now. */
+        if (fresh && tall && talking && at && at[1] + .5 >= face[3] && sideOk && fits(x, y) && !over(x, y, face) && !(bar && over(x, y, bar)) && !now.concat(rests).some((o) => over(x, y, o))) {
+          const late = [];
+          this.props.forEach((pr) => { if (!pr.box && pr.state !== 'out' && !pr.settled) { const r = this.restBox(pr); if (r) late.push(box(r)); } });
+          if (!late.some((o) => over(x, y, o))) { at = [x, y]; over0 = true; }
+        }
       }
       const claimed = this.bubbleClaim && talking && at && Math.abs(at[0] - this.bubbleClaim[0]) < 10 && Math.abs(at[1] - this.bubbleClaim[1]) < 10;
       if (!claimed) this.bubbleKeepOff = null;
@@ -1402,6 +1420,18 @@
       this.bubbleSide = talking ? sideOf(x) : null;
       /* where it is, with its tail, for the props that leave under it (holdUnder) */
       if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tall ? 0 : 10), y - gap), a1 = u(x + bw + gap, y + bh + gap + (tall ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
+      /* (FO-214: the props coming in move under it in this same frame, before it is painted, and are lowered the rest of
+         the way from there, as a prop added under NieR's box is; one the held stage has yet to place, measured above, is
+         placed now too, at no opacity yet: placed in the first frame after the hold, it had fallen from the top on the
+         stage's steps meanwhile and overshot its rest by 44 units) */
+      if (over0) {
+        this.bubbleOver = true;
+        this.props.forEach((pr) => {
+          if (pr.state === 'out' || pr.settled) return;
+          if (pr.enterTgt) { const tg = pr.enterTgt; pr.enterTgt = null; this.enterUnder(pr, tg, true); }
+          else if (pr.box) this.enterUnder(pr, this.propTarget(pr), true);
+        });
+      }
       /* (its place as `translate`: its pop's `scale` (30-art.css pstBubble) then grows it from its tail where it stands; a
          `transform` here was scaled with it, so the bubble flew in from the stage's corner, over Pip, FO-44) */
       this.bubble.style.translate = `${R(x)}px ${R(y)}px`;
