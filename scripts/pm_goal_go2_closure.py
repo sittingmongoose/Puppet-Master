@@ -1606,7 +1606,10 @@ def close(args):
     if args.donors:
         lists = []
         for path in args.donors:
-            lists += [e['seeds'] for e in load(path)['roots'].values()]
+            if str(path).endswith('.ckpt'):  # an earlier GO2 pass: its accepted controls (seeds and constructions)
+                lists.append(pickle.loads(Path(path).read_bytes())['controls'])
+            else:
+                lists += [e['seeds'] for e in load(path)['roots'].values()]
         DONORS[0] = Donors(lists)
     controls = state['controls']
     known = {sha(c) for c in controls}
@@ -1722,7 +1725,7 @@ def main():
     c.add_argument('--reference', action='store_true', help='run on the reference validator (no memo)')
     c.add_argument('--no-reorder', action='store_true')
     c.add_argument('--residual', type=Path, help='re-search only the clauses this earlier GO2 report left UNCOVERED')
-    c.add_argument('--donors', nargs='*', default=[], type=Path, help='root dumps whose seeds feed the donor construction')
+    c.add_argument('--donors', nargs='*', default=[], type=Path, help='root dumps (their seeds) and earlier GO2 checkpoints (their accepted controls) feeding the donor construction')
     c.add_argument('--research-elsewhere', action='store_true', help='residual pass: also search, in this root, the clauses '
                    'an earlier pass recorded SEARCHED_ELSEWHERE (no witness of another root is relied on)')
     c.add_argument('--sample-every', type=int, default=400, help='compare every Nth memo validation with the reference')
