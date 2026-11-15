@@ -69,9 +69,6 @@ def family_cases(m, row, schema):
         add('copy/issued_receipt/' + field, copy.deepcopy(base),
             lambda entry, body=body: entry.update(issued_receipt_bytes=body))
     changed = copy.deepcopy(base)
-    changed['original']['durable_read_token']['frontier_revision'] += 1
-    add('changed_query_receipt', changed)
-    changed = copy.deepcopy(base)
     changed['original']['payload']['subject_ref'] += '-foreign-result'
     add('changed_query_result', changed)
     return cases

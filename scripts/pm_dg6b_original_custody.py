@@ -126,8 +126,13 @@ class DG6BOriginalOwner:
         if len(receipts) != 1:
             raise Refusal('original_receipt_unavailable')
         if (self.record_bytes != entry['record_bytes'] or self.result_bytes != entry['result_bytes']
-                or self.read_token_bytes != entry['read_token_bytes']
                 or receipts[0] != entry['issued_receipt_bytes']):
+            raise Refusal('original_authority')
+        # A read token is selection context, not an immutable first receipt.
+        # Preserve the original source-storage join without pinning a reader
+        # to the exact frontier/checkpoint bytes used by a prior read.
+        token = decode_storage_value(self.read_token_bytes, profile=EVENT_VALUE)
+        if type(token) is not dict or token.get('storage_instance_id') != entry['binding'].storage_instance_id:
             raise Refusal('original_authority')
         return OriginalCustody(entry['binding'], entry['recipe'], entry['record_bytes'], entry['result_bytes'],
                                receipts[0])
