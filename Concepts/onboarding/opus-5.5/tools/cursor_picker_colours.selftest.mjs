@@ -5,7 +5,7 @@ import { createServer } from 'node:http';
 import { createHash } from 'node:crypto';
 import { writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import check, { pageDigest, expected } from './cursor_picker_colours.check.mjs';
 
@@ -51,7 +51,7 @@ async function withVaryingServer(run) {
 	try { await run(base, hits); }
 	finally { varying.close(); }
 }
-async function drive(base, startUrl, expectBody) {
+async function drive(base, startUrl, expectBody, bodyError) {
 	const navs = [];
 	let url = startUrl;
 	const page = {
@@ -61,7 +61,7 @@ async function drive(base, startUrl, expectBody) {
 			navs.push(u); url = u;
 			const r = await fetch(u);
 			const buf = Buffer.from(await r.arrayBuffer());
-			return { ok: () => r.ok, status: () => r.status, body: async () => buf };
+			return { ok: () => r.ok, status: () => r.status, body: async () => { if (bodyError) throw new Error(bodyError); return buf; } };
 		},
 		waitForFunction: async () => { throw new Error('STOP_AFTER_IDENTITY'); },
 	};
@@ -76,6 +76,7 @@ async function drive(base, startUrl, expectBody) {
 	let stopped = false;
 	try { await check(t); }
 	catch (e) { if (!/STOP_AFTER_IDENTITY/.test(String(e))) throw e; stopped = true; }
+	finally { rmSync(dirname(out), { recursive: true, force: true }); }
 	return { navs, checks, stopped, url: page.url() };
 }
 await withVaryingServer(async (base, hits) => {
@@ -103,4 +104,25 @@ await withVaryingServer(async (base, hits) => {
 	assert.equal(already.checks[0].details.sha256, sha(queried));
 	assert.equal(already.checks[0].details.url, intended);
 	console.log('PASS the default check navigates unless the full intended URL is already open, and hashes that document');
+});
+
+// The real page is 40 MB and Chrome drops so large a navigation body from its inspector cache: response.body() throws
+// "Request content was evicted from inspector cache" (Alexis, 2026-11-15, the integration page: the check stopped
+// before it judged anything). The digest is then a fetch of the page's own location, the full URL that was loaded.
+const EVICTED = 'response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache';
+await withVaryingServer(async (base, hits) => {
+	const intended = intendedUrl(base);
+	const big = await drive(base, 'http://wrong-server.invalid/main6.html', queried, EVICTED);
+	assert.equal(big.navs.length, 1);
+	assert.equal(big.url, intended);
+	assert.equal(big.checks.length, 1, 'an evicted body is not the end of the check');
+	assert.equal(big.checks[0].ok, true, 'the loaded document is hashed from its own location');
+	assert.equal(big.checks[0].details.sha256, sha(queried));
+	assert.equal(big.checks[0].details.url, intended);
+	assert.equal(hits.unqueried, 0, 'still not a fetch of --set server without the query');
+	const wrongBig = await drive(base, 'http://wrong-server.invalid/main6.html', unqueried, EVICTED);
+	assert.equal(wrongBig.checks[0].ok, false, 'the unqueried right-server hash still does not pass');
+	assert.equal(hits.unqueried, 0);
+	await assert.rejects(drive(base, 'http://wrong-server.invalid/main6.html', queried, 'response.body: something else broke'), /something else broke/, 'any other body error still stops the check');
+	console.log('PASS a navigation body the browser no longer holds is hashed from the page\'s own location; other body errors still stop the check');
 });
