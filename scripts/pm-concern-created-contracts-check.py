@@ -420,7 +420,8 @@ def main():
     for fid, schema in [('concern_record', record_schema), ('concern_created_operation', op_schema), ('concern_created_checkpoint', cp_schema)]:
         row = next(row for row in registry['families'] if row['family_id'] == fid)
         shared.check_schema(row['value_schema'])
-        assert row['value_schema'] == {k: v for k, v in schema.items() if k != '$schema'}
+        mirror = shared.registry_mirror_errors(registry, fid, f'Plans/concern_created_contracts/{fid}.schema.json')
+        assert not mirror, mirror
         assert row['retention_policy_ref'] == {'concern_record': 'RP-AUTHORITY-INDEFINITE', 'concern_created_operation': 'RP-OPERATIONAL-2555D', 'concern_created_checkpoint': 'RP-PROJECTION-3GEN'}[fid]
         group = 'event_log' if fid.endswith('checkpoint') else ('runs_and_goals' if fid == 'concern_record' else 'coordination_and_storage')
         assert not shared.profile_errors(registry, fid, row['storage_kind'], group)

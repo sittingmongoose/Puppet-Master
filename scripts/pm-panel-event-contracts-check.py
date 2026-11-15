@@ -287,7 +287,8 @@ def main():
             fid = family[key]
             row = next(row for row in registry['families'] if row['family_id'] == fid)
             shared.check_schema(row['value_schema'])
-            assert row['value_schema'] == {k: v for k, v in value_schema.items() if k != '$schema'}
+            mirror = shared.registry_mirror_errors(registry, fid, f'Plans/panel_event_contracts/{fid}.schema.json')
+            assert not mirror, mirror
             assert row['retention_policy_ref'] == ('RP-PROJECTION-3GEN' if key == 'checkpoint' else 'RP-OPERATIONAL-2555D')
             assert not shared.profile_errors(registry, fid, row['storage_kind'], 'settings_and_layout' if key == 'operation' else 'event_log')
             count += 1
