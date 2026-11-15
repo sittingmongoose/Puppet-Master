@@ -13451,8 +13451,8 @@ canonical_text: >-
   in-band, including where the selected model's Models_System tool_use capability is false, the script tool and the
   directly callable tools named in T-190 are carried as in-band tool calls in an owned dialect that Tools selects for the model family and records on the run; the T-169 admission gate
   applies, with Puppet Master-minted call IDs standing in for provider IDs, and text in which the model
-  writes a tool result itself is discarded and never enters replayable history. Where a provider keeps native tools
-  that Puppet Master cannot disable, the script tool is still offered, the provider's own tool calls stay outside Code
+  writes a tool result itself is discarded and never enters replayable history. On a route that accepts the Puppet Master script tool, where a provider keeps
+  native tools that Puppet Master cannot disable, the script tool is still offered, the provider's own tool calls stay outside Code
   Mode, and the run's effective mode is mixed. Where a provider accepts no Puppet Master tools at all, the effective
   mode is ordinary tool calls with a typed reason naming the execution shape, delegated or reasoning-only, and no
   Puppet Master tool call is counted for the run. A provider's own code mode, where it has one, is a provider-native feature handled
@@ -13464,8 +13464,8 @@ unblocks: []
 acceptance_criteria:
   - Under Host Tool Execution a Code Mode request carries the script tool and does not also carry one provider tool schema per registry tool the script can call.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect, and a tool result the model wrote itself never reaches replayable history.
-  - A bridged CLI under the HTE strategy runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy the run is recorded as mixed.
-  - A run on a provider that keeps native tools Puppet Master could not disable is recorded as mixed, never as Code Mode.
+  - A bridged CLI under the HTE strategy runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy with the Puppet Master script tool offered, the run is recorded as mixed.
+  - On a route that accepts the Puppet Master script tool, a run on a provider that keeps native tools Puppet Master could not disable is recorded as mixed, never as Code Mode.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
   - python3 scripts/pm-plan-index.py validate
@@ -13515,13 +13515,15 @@ canonical_text: >-
   available, the script receives that typed denial at once, and any denied call returns its typed denial to the script.
   Time spent waiting for an approval is approval_wait under the Contracts_V0 temporal taxonomy, attributed apart from
   local compute and external wait; it counts against the parent deadline, so an approval that outlasts the deadline
-  ends the script with typed timeout evidence. The open approval request is then closed as expired under its HITL
-  blocked episode, and whichever of the parent deadline and the HITL approval_wait timer ends first governs; if the HITL timer
-  ends first, the call returns its typed hitl_request_expired result to the script. The
+  ends the script with typed timeout evidence. The open approval request is closed as expired by its existing approval
+  owner, retaining its original identity: the HITL blocked episode for an Orchestrator node or the PS-145 application
+  tool request otherwise. The earlier of the parent deadline and that request's owner-governed approval expiry
+  applies; the existing typed expiry result is returned to the script when the approval timer ends first. The
   script can call only the tools selected for the request, reaches files, network and credentials only through those
   tools, and runs inside its parent deadline with bounded output; the deadline follows Tools deadline propagation, which is
   what bounds the script's nested calls, and the script's output bound and spill are the EvalSession's under Shared Integration Runtime; each nested tool's own
-  output spills under T-177. Each nested call emits the same
+  output spills under T-177. Crossing the inline-output threshold uses the existing spill path and does not itself
+  fail the script. Each nested call emits the same
   tool events, receipts and usage rollups as a direct call and also carries the script's operation identity, so the
   transcript shows the script and every tool call it made. Only question and task, whose
   contracts hand the turn to a person or to another agent, stay directly callable in Code Mode; they are not in the
@@ -13536,7 +13538,7 @@ acceptance_criteria:
   - A script cannot make a tool call that the same request could not make as a direct call, including when the argument values are computed while the script runs.
   - An approval asked for inside a script suspends that script and is answered through the ordinary approval path; a denial, including the immediate one when no person is available, reaches the script as a typed result.
   - Every nested call appears in the event log, receipts and usage rollups exactly as a direct call would, plus the script's operation identity.
-  - A script that passes its deadline or output bound ends with typed recovery evidence, not a success-shaped result.
+  - A script that passes its deadline or the EvalSession hard output-byte ceiling ends with typed recovery evidence, not a success-shaped result.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
   - python3 scripts/pm-plan-index.py validate
@@ -13571,4 +13573,4 @@ owner_hints:
   - Plans/Permissions_System.md
 ```
 
-ContractRef: ContractName:Plans/Tools.md#T-188, ContractName:Plans/Tools.md#T-176, ContractName:Plans/Tools.md#T-177, ContractName:Plans/Tools.md#T-178, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md
+ContractRef: ContractName:Plans/Tools.md#T-188, ContractName:Plans/Tools.md#T-176, ContractName:Plans/Tools.md#T-177, ContractName:Plans/Tools.md#T-178, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Permissions_System.md#PS-145, ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md
