@@ -6,68 +6,68 @@
     "july248"
   ],
   "working_bucket": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.agent_status_updated. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.agent_status_updated. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-15.12 in admission merge 1 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-531); DL-077 admission record reports/event-authority-20260911/admission-records/coordination.agent_status_updated.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261114/admission-merge-1/depth/coordination.agent_status_updated.json (sha256 b6798e6f7b9a32f312be0e32636ed2f853d94f81bd4bfb99e5369b4cc54b0249); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:514-548",
-      "note": "Storage expressly owns the durable coordination record/projection boundary containing this exact event family."
+      "citation": "Plans/storage-plan.md:28532",
+      "note": "SP-544 governs this exact family, reusing current OSI-438/CV-353/SP-320 and explicitly keeping application scope separate."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/storage_value_registry.json:5233-5244",
-      "note": "The registry names the exact coordination event family and explicitly assigns AgentCoordinator, platform hook/event adapters, and the coordination mirror exporter as producers."
+      "citation": "Plans/storage-plan.md:28534",
+      "note": "AgentCoordinator.update_status(AgentStatusUpdate) uses the sole coordinator admission, no separate owner body, first receipt before continuation and explicit SP-286/CV-339 lost-ack custody."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No cited authority admits this exact token to an active, versioned Event Authority registry membership."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:4069-4124",
+      "note": "Registered at registry revision 2026-11-15.12 as #/families/57 (canonical row SHA-256 9ebb6700e2b44e7caacf91c1bed278ffd2ddd74145a86d30f21c0afbf5438e5f); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No cited storage-owned schema closes every persisted payload field for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:28536; Plans/coordination_event_payloads.schema.json:186",
+      "note": "This family has its own closed CV-353 definition, 1.0.0, with bounded fields and exact EventRecord joins."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2917-2949",
-      "note": "The exact coordination event is bound to the PM lineage envelope and project/run/agent identity fields."
+      "citation": "Plans/storage-plan.md:28538",
+      "note": "Project scope only, actual captured epoch and instance, exact family in the identity recipe and registration lineage checks."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:535-539",
-      "note": "The PM append path requires an idempotency key and expected revision, with append/projection CAS and stale-write rejection."
+      "citation": "Plans/storage-plan.md:28538",
+      "note": "Exact scoped retry returns the original result; changed digest refuses. Inclusive replay rebuilds rows without effects."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage_value_registry.json:5318",
-      "note": "The exact coordination_event_records family binds to RP-COORDINATION-180D here; the checked policy definition at lines 302-315 fixes its 180-day TTL anchored at run completion."
+      "citation": "Plans/storage-plan.md:28544; Plans/storage-plan.md:17558",
+      "note": "Case L-3 explicitly names Coordination; SP-320 assigns RP-COORDINATION-180D and RP-PROJECTION-3GEN with anchors, holds and bounds. No pending retention cell."
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:508",
-      "note": "The storage-owned persisted-value boundary forbids raw secrets and restricts sensitive data to redacted or external-custody references."
+      "citation": "Plans/storage-plan.md:28544",
+      "note": "Canonical seglog and coherent mandatory backup custody, bounded no-secret/ref-only payloads and current access/tombstone checks before disclosure."
     },
     "transitions": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No cited contract closes the complete legal transition set for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:28540",
+      "note": "A registered, non-terminal agent only, at the agent's revision plus 1. status takes queued, running, awaiting_parent or blocked; complete, failed and cancelled arise only from the three terminal families, and a status update never stands in for a terminal event. An update that changes neither status nor status_reason returns coordination_unchanged; a skipped or repeated revision is stale_revision, a changed lineage lineage_mismatch, an event after the terminal event already_terminal."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:528-546",
-      "note": "Storage names the authoritative coordination projections/checkpoint and requires authority consumers to use them rather than mirrors."
+      "citation": "Plans/storage-plan.md:28542",
+      "note": "Exact versioned projector and readers, SP-278 adoption, closed checkpoint, atomic CAS and nine-field stored token; mirror_export is on-request only under SP-339."
     },
     "compatibility_withdrawal": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No cited authority defines compatibility acceptance and an explicit withdrawal or sunset condition for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:28546",
+      "note": "Closed version dispatch and explicit writer cutoff, checkpoint withdrawal, fenced readers and verified successor rebuild."
     },
     "positive_negative_oracles": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No cited complete positive-emission and negative-non-emission oracle pair exists for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:28548",
+      "note": "Own ATS-058 payload/EventRecord/identity/transition cases remain; both static checkers pass with unknown projection, Project-to-app reference and missing/empty heartbeat negative probes. Native NOT_RUN; only the two known helper-pin subtests fail."
     }
   },
   "citations_checked": [
