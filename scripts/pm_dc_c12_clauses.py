@@ -464,6 +464,9 @@ def candidates(site, value, control_instance, path):
         put(v + 1 if k == "maximum" else v)
     elif k == "minItems" and isinstance(value, list) and isinstance(v, int) and v > 0:
         put(value[: v - 1])
+    elif k == "maxItems" and isinstance(value, list) and isinstance(v, int) and not value:
+        for item in (SIBLING_VALUES.get(site.template + ("*",), []) + GEN_AT(site.template + ("*",)) + ["c12"])[:3]:
+            put([copy.deepcopy(item)] * (v + 1))
     elif k == "maxItems" and isinstance(value, list) and isinstance(v, int):
         if value:
             put(value + [copy.deepcopy(value[-1])] * (v + 1 - len(value)))
@@ -491,6 +494,7 @@ def candidates(site, value, control_instance, path):
         if k == "oneOf" and isinstance(v, list):
             pass
     elif k == "not" and isinstance(v, dict):
+        NOT_TEMPLATE[0] = tuple(site.template)
         out.extend(set_at(control_instance, path, c) for c in not_matches(v, value))
     elif k == "contains" and isinstance(value, list):
         put([])
@@ -504,6 +508,13 @@ def candidates(site, value, control_instance, path):
 
 
 SIBLING_VALUES = {}  # instance template -> values seen at that template in any slot's controls (set by run_slot)
+NOT_TEMPLATE = [()]  # the location of the not clause candidates() is building for
+_GEN_AT = {}
+
+
+def GEN_AT(template):
+    """Generated values valid at a node that applies at this location in the current slot (set by run_slot)."""
+    return _GEN_AT.get("fn", lambda t: [])(tuple(template))
 
 
 MEMBER_POOL = {}  # member name -> values other controls of the slot hold (set by run_slot for not-required witnesses)
@@ -541,6 +552,8 @@ def not_matches(schema, value):
             options = [{m: value.get(m, "c12") for m in b["required"]}]
             # a member's value as another control holds it (so the added member is valid at its own schema)
             for vals in zip(*[MEMBER_POOL.get(m, ["c12"]) for m in b["required"]]):
+                options.append(dict(zip(b["required"], vals)))
+            for vals in zip(*[(SIBLING_VALUES.get(NOT_TEMPLATE[0] + (m,), []) + GEN_AT(NOT_TEMPLATE[0] + (m,)))[:3] or ["c12"] for m in b["required"]]):
                 options.append(dict(zip(b["required"], vals)))
             for extra in options:
                 res.append(dict(value, **{m: copy.deepcopy(x) for m, x in extra.items() if m not in value}))
@@ -829,6 +842,22 @@ def repaired(node, resolver, loc, value, rounds=8, frozen=()):
                     break
             if changed:
                 break
+        if not changed and isinstance(node.get("properties"), dict):
+            # add a missing member the node's properties describe (an if branch may require it)
+            for e in errors:
+                for x in [e] + list(e.context or []):
+                    mm = re.match(r"^'((?:[^'\\]|\\.)*)' is a required property$", x.message) if x.validator == "required" else None
+                    if mm and mm.group(1) not in cur and mm.group(1) in node["properties"] and mm.group(1) not in frozen:
+                        key = mm.group(1)
+                        for cand in generate(node["properties"][key], resolver, (doc, ptr + "/properties/" + _esc(key)))[:3]:
+                            trial = dict(cur, **{key: copy.deepcopy(cand)})
+                            if len(list(v.iter_errors(trial))) < len(errors):
+                                cur, changed = trial, True
+                                break
+                    if changed:
+                        break
+                if changed:
+                    break
         if not changed:
             # drop a member the node does not require when that removes errors (a then branch may forbid it)
             required = set(node.get("required", [])) if isinstance(node, dict) else set()
@@ -945,6 +974,19 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
     instances = [(p, get_in(p, getter)) for p in probes]
     MEMBER_POOL.clear()
     MEMBER_POOL.update(_member_pool(instances))
+    _gen_at_cache = {}
+
+    def _gen_at(t):
+        if t not in _gen_at_cache:
+            vals = []
+            for s_ in sites:
+                if s_.template == t and s_.keyword in ("type", "enum", "const", "$ref") and len(vals) < 4:
+                    for v_ in generated_values(s_, cap=2):
+                        if all(digest(v_) != digest(x) for x in vals):
+                            vals.append(v_)
+            _gen_at_cache[t] = vals
+        return _gen_at_cache[t]
+    _GEN_AT["fn"] = _gen_at
     SIBLING_VALUES.clear()
     for s_ in sites:
         vals = SIBLING_VALUES.setdefault(s_.template, [])
@@ -1017,9 +1059,10 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
         if "then" in s.context or "else" in s.context:
             base_values += condition_bases(s, instances, by_template_all)
         else:
-            for o in by_template_all.get(s.template, []):
-                if o is not s and ("then" in o.context or "else" in o.context) and o.keyword in ("type", "const"):
-                    base_values += condition_bases(o, instances, by_template_all)[:4]
+            for t_ in (s.template, s.template[:-1]):
+                for o in by_template_all.get(t_, []):
+                    if o is not s and ("then" in o.context or "else" in o.context) and o.keyword in ("type", "const", "required"):
+                        base_values += condition_bases(o, instances, by_template_all)[:4]
         for depth in range(len(s.template) - 1, 0, -1):
             anc_t = s.template[:depth]
             for a in by_template_all.get(anc_t, []):
@@ -1033,7 +1076,8 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                 if base is None or not validator.is_valid(base):
                     continue
                 db = digest(base)
-                slot_b = bases_by_t.setdefault(tuple(at), [])
+                root = s.context[0] if s.context and s.context[0].startswith(("oneOf/", "anyOf/")) else ""
+                slot_b = bases_by_t.setdefault((tuple(at), root), [])
                 if db not in valid_base_keys and len(slot_b) < 12:
                     valid_base_keys.add(db)
                     slot_b.append((p["case_id"] + "@base:" + "/".join(map(str, at)), base))
@@ -1154,8 +1198,10 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
             ctrl_broken = [p["case_id"] for p, inst in instances if not validator.is_valid(inst)]
             # constructed valid bases (each valid at the row before the cut) refused under the cut detect it too
             # (bases built where this clause's location and the base's insertion location are nested in each other)
+            # nested in each other, or siblings under the same enclosing object (an if there reads its members)
             temps = {s_.template for s_ in group}
-            near = [b for at, lst in bases_by_t.items() if any(at == t[:len(at)] or t == at[:len(t)] for t in temps) for b in lst]
+            near = [b for (at, _root), lst in bases_by_t.items()
+                    if any(at == t[:len(at)] or t == at[:len(t)] or (t and at[:len(t) - 1] == t[:-1]) for t in temps) for b in lst]
             ctrl_broken += [name for name, base in near if not validator.is_valid(base)][:5]
             kills = []
             for w in sorted(flipped, key=lambda w: (not (w["target"] in entry["eval_sites"]), not w["exact"]))[:route_kills]:
@@ -1330,6 +1376,16 @@ def implication(site, slot_sites_by_node, boundary):
     node, k, v = site.node, site.keyword, site.node.get(site.keyword)
     src = site.src or {}
     where = f"{src.get('path')}:{src.get('line')}"
+    if k == "type" and "not" in site.context and slot_sites_by_node:
+        outer = tuple(site.context)[:list(site.context).index("not")]
+        same = [o for o in slot_sites_by_node.get(site.template, []) if o.keyword == "type" and o.node.get("type") == v
+                and "not" not in o.context and "if" not in o.context and tuple(o.context) == outer[:len(o.context)]]
+        if same:
+            o = same[0].src or {}
+            return dict(kind="negated_type_restates_unconditional_type", proof=f"{where} type {v!r} inside a negated subschema restates the "
+                        f"unconditional type {v!r} that {o.get('path')}:{o.get('line')} applies at the same location: cutting it only lets the "
+                        "negated branch also match values of other types, every one of which that unconditional type already refuses, so "
+                        "no accepted instance changes (an equivalent mutant); the negated branch itself is witnessed through its not")
     if k in ("minItems", "minLength", "minProperties") and v == 0:
         return dict(kind="vacuous_lower_bound", proof=f"{where} {k} 0 admits every value of its type, so no instance can violate it and "
                     "cutting it changes no result: a vacuous clause with nothing to witness")
