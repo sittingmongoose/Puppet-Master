@@ -1,10 +1,14 @@
 // Compares two folders written by diagnostics/stage-frames.check.mjs (a base build and a changed one): per capture,
 // whether the stage's pixels are the same and whether its DOM is the same, and where they differ.
-//   node tools/stage-frames-compare.mjs <base dir> <changed dir> [--json <file>]
+//   node tools/stage-frames-compare.mjs <base dir> <changed dir> [--also <second base dir>] [--json <file>]
 // Pixels: the PNGs decoded and compared exactly (RGB); a difference is reported with its pixel count, its largest
 // channel step and its bounding box. DOM: the .dom.txt files compared line by line; a difference is reported with its
-// first differing line from each side. Exit 0 when every capture of the base is in the changed folder and both are the
-// same in every one, 1 otherwise.
+// first differing line from each side. A changed pixel that equals the base's pixel in another of its pictures of the
+// same state (its .b.png, 20 frames later in the same run, and, with --also, a second run's two) is within the base's own
+// variation (the compositor's: two runs of one build
+// with the same DOM differ by a level or a few in places), and the capture is reported as within the base's variation
+// when every pixel is. Exit 0 when every capture of the base is in the changed folder and its DOM is the same and its
+// pixels are the same (or, with --also, within the base's variation), 1 otherwise.
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -35,18 +39,20 @@ function png(buf) {
 	return { w, h, px: out };
 }
 
-function pixels(a, b) {
+function pixels(a, b, refs) {
 	if (a.equals(b)) return { same: true, n: 0 };
-	const A = png(a), B = png(b);
+	const A = png(a), B = png(b), Rs = (refs || []).map(png).filter((r) => r.w === A.w && r.h === A.h);
 	if (A.w !== B.w || A.h !== B.h) return { same: false, size: `${A.w}x${A.h} vs ${B.w}x${B.h}` };
-	let n = 0, max = 0, x0 = Infinity, y0 = Infinity, x1 = -1, y1 = -1;
+	let n = 0, max = 0, x0 = Infinity, y0 = Infinity, x1 = -1, y1 = -1, out = 0, outMax = 0;
 	for (let i = 0; i < A.w * A.h; i++) {
 		const d = Math.max(Math.abs(A.px[i * 3] - B.px[i * 3]), Math.abs(A.px[i * 3 + 1] - B.px[i * 3 + 1]), Math.abs(A.px[i * 3 + 2] - B.px[i * 3 + 2]));
 		if (!d) continue;
 		n++; max = Math.max(max, d);
+		let d2 = d; for (const R of Rs) d2 = Math.min(d2, Math.max(Math.abs(R.px[i * 3] - B.px[i * 3]), Math.abs(R.px[i * 3 + 1] - B.px[i * 3 + 1]), Math.abs(R.px[i * 3 + 2] - B.px[i * 3 + 2])));
+		if (d2) { out++; outMax = Math.max(outMax, d2); }
 		const x = i % A.w, y = (i / A.w) | 0; x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y);
 	}
-	return n ? { same: false, n, max, box: [x0, y0, x1, y1] } : { same: true, n: 0, bytes: 'differ, pixels same' };
+	return n ? { same: false, n, max, box: [x0, y0, x1, y1], within: Rs.length ? out === 0 : false, outside: out, outsideMax: outMax, refs: Rs.length } : { same: true, n: 0, bytes: 'differ, pixels same' };
 }
 
 function dom(a, b) {
@@ -56,24 +62,28 @@ function dom(a, b) {
 	return { same: true };
 }
 
-const [baseDir, changedDir] = process.argv.slice(2).filter((x) => !x.startsWith('--'));
+const [baseDir, changedDir] = process.argv.slice(2).filter((x, i, all) => !x.startsWith('--') && !['--json', '--also'].includes(all[i - 1]));
 const jsonAt = process.argv.indexOf('--json'), jsonOut = jsonAt > 0 ? process.argv[jsonAt + 1] : null;
+const alsoAt = process.argv.indexOf('--also'), also = alsoAt > 0 ? process.argv[alsoAt + 1] : null;
 if (!baseDir || !changedDir) { console.error('usage: node tools/stage-frames-compare.mjs <base dir> <changed dir> [--json <file>]'); process.exit(2); }
 const index = JSON.parse(fs.readFileSync(path.join(baseDir, 'index.json'), 'utf8'));
-const rows = []; let px = 0, dm = 0, missing = 0;
+const rows = []; let px = 0, dm = 0, missing = 0, within = 0;
 for (const e of index) {
 	const a = path.join(baseDir, e.look, e.file), b = path.join(changedDir, e.look, e.file);
 	if (!fs.existsSync(b + '.png') || !fs.existsSync(b + '.dom.txt')) { missing++; rows.push({ ...e, missing: true }); continue; }
-	const p = pixels(fs.readFileSync(a + '.png'), fs.readFileSync(b + '.png'));
+	/* the base's other pictures of this state: its second picture in the same run (.b.png) and both of the --also run's */
+	const refs = [a + '.b.png'].concat(also ? [path.join(also, e.look, e.file) + '.png', path.join(also, e.look, e.file) + '.b.png'] : []).filter((f) => fs.existsSync(f)).map((f) => fs.readFileSync(f));
+	const p = pixels(fs.readFileSync(a + '.png'), fs.readFileSync(b + '.png'), refs);
+	if (!p.same && p.within) within++;
 	const d = dom(fs.readFileSync(a + '.dom.txt', 'utf8'), fs.readFileSync(b + '.dom.txt', 'utf8'));
 	if (p.same) px++; if (d.same) dm++;
 	rows.push({ look: e.look, file: e.file, props: e.props, target: e.target, pixels: p, dom: d });
 }
-const bad = rows.filter((r) => r.missing || !r.pixels.same || !r.dom.same);
-console.log(`${index.length} captures: pixels the same in ${px}, DOM the same in ${dm}, missing ${missing}`);
+const bad = rows.filter((r) => r.missing || (!r.pixels.same && !r.pixels.within) || !r.dom.same);
+console.log(`${index.length} captures: pixels the same in ${px}, within the base's own variation in ${within} more, DOM the same in ${dm}, missing ${missing}`);
 for (const r of bad) {
 	if (r.missing) { console.log(`MISSING ${r.look}/${r.file}`); continue; }
-	if (!r.pixels.same) console.log(`PIXELS ${r.look}/${r.file}: ${r.pixels.size || `${r.pixels.n} px differ, up to ${r.pixels.max} a channel, box ${r.pixels.box.join(',')}`}`);
+	if (!r.pixels.same && !r.pixels.within) console.log(`PIXELS ${r.look}/${r.file}: ${r.pixels.size || `${r.pixels.n} px differ, up to ${r.pixels.max} a channel, box ${r.pixels.box.join(',')}; outside the base's variation (${r.pixels.refs} more pictures of it) ${r.pixels.outside} px, up to ${r.pixels.outsideMax}`}`);
 	if (!r.dom.same) console.log(`DOM    ${r.look}/${r.file}: line ${r.dom.line} (${r.dom.lines})\n  base:    ${r.dom.base}\n  changed: ${r.dom.changed}`);
 }
 if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify(rows, null, 1));

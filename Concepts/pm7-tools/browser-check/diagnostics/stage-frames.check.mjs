@@ -4,6 +4,7 @@
 //   browser-check run diagnostics/stage-frames.check.mjs --set page=<build> --set out=<dir>
 //   --set looks=  (default all ten; `dark` the five Dark looks)   --set screens= (default welcome,ready,look,ai,name,where,welcome)
 //   --set variants= (default base,blink,tip,quiet)   --set frames= (frames drawn frozen before a capture, default 90)
+//   --set motion=reduce (the system's Reduced Motion, emulated) or motion=app (the app's own, data-motion="reduced")
 // How a state is frozen (the hooks the motion clock and the stage already have):
 //   - O55.motion.setTimeScale(0): the motion clock stops, so the stage's loop goes on drawing every frame with dt 0 (its
 //     time, Pip's physics, the typers and the faces stand still); Retro's stepped draw is let through every frame
@@ -19,7 +20,7 @@
 // show), quiet (the bubble put away). On the first Welcome Pip is asleep (no pointer has moved); a second Welcome capture after a real
 // pointer journey wakes it (welcome-awake). Screens are walked in an order that adds and removes props (0, 6, 1, 4, 1,
 // 1-2 then 0).
-// Writes <out>/<look>/<nn>-<screen>-<variant>.png (the stage's box), .dom.txt (the stage's DOM: elements with their
+// Writes <out>/<look>/<nn>-<screen>-<variant>.png (the stage's box; .b.png the same state 20 frames later), .dom.txt (the stage's DOM: elements with their
 // attributes sorted, text, ids renamed in order of appearance) and <out>/index.json. Headless; one browser.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -131,6 +132,8 @@ export default async function (t) {
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
+	const motion = String(t.args.motion || '');
+	if (motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
 	fs.mkdirSync(out, { recursive: true });
 	const index = [];
 	for (const look of looks) {
@@ -139,6 +142,7 @@ export default async function (t) {
 		const open = await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-win') && window.O55 && O55.ui && typeof O55.ui.applyLook === 'function', null, { timeout: 60000 }).then(() => true, () => false);
 		if (!open) { await t.check(`${look}: the onboarding window is open`, false, 'no window after 60 s'); continue; }
 		await f.evaluate(() => document.fonts.ready.then(() => true));
+		if (motion === 'app') await f.evaluate(() => document.documentElement.setAttribute('data-motion', 'reduced'));
 		const [fam, mode] = look.split('-');
 		await f.evaluate(([fm, m]) => window.O55.ui.applyLook(fm, m), [fam, mode]);
 		const ok = await f.waitForFunction(([fm, m]) => { const th = document.documentElement.getAttribute('data-theme') || '', nier = document.documentElement.getAttribute('data-o55-nier') === 'on'; return (fm === 'nier' ? nier : !nier && th.startsWith(fm + '-')) && th.endsWith('-' + m); }, [fam, mode], { timeout: 20000 }).then(() => true, () => false);
@@ -169,6 +173,10 @@ export default async function (t) {
 				const b = info.box;
 				const png = await t.page.screenshot({ clip: { x: Math.max(0, Math.floor(b.x)), y: Math.max(0, Math.floor(b.y)), width: Math.ceil(b.w), height: Math.ceil(b.h) }, animations: 'allow' });
 				fs.writeFileSync(path.join(out, look, file + '.png'), png);
+				/* (and a second picture of the same frozen state 20 frames later: the compositor's own variation, a level here
+				   and there with the same DOM, as tools/stage-frames-compare.mjs reads it) */
+				await f.evaluate(() => new Promise((r) => { let n = 0; const k = () => (++n < 20 ? requestAnimationFrame(k) : r()); requestAnimationFrame(k); }));
+				fs.writeFileSync(path.join(out, look, file + '.b.png'), await t.page.screenshot({ clip: { x: Math.max(0, Math.floor(b.x)), y: Math.max(0, Math.floor(b.y)), width: Math.ceil(b.w), height: Math.ceil(b.h) }, animations: 'allow' }));
 				fs.writeFileSync(path.join(out, look, file + '.dom.txt'), dom);
 				index.push({ look, file, screen: name, variant: v, ...info });
 				await f.evaluate(THAW);
@@ -176,7 +184,9 @@ export default async function (t) {
 			}
 			// the screen's own line back for the next screen (the quiet variant put it away)
 		}
-		t.log(`${look}: ${n} captures`);
+		const red = await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage; return { app: O55.motion.reduced(), stage: !!(st && st.reduced) }; });
+		t.log(`${look}: ${n} captures; Reduced Motion: app ${red.app}, stage ${red.stage}`);
+		if (motion) await t.check(`${look}: the stage ran under Reduced Motion (${motion})`, red.app && red.stage, JSON.stringify(red));
 	}
 	fs.writeFileSync(path.join(out, 'index.json'), JSON.stringify(index, null, 1));
 	await t.check('stage frames written', index.length > 0, `${index.length} captures in ${out}`);
