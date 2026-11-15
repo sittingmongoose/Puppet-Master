@@ -334,6 +334,10 @@
   {
    "event_type": "run.graph_canonical_locked",
    "outcome": "registered"
+  },
+  {
+   "event_type": "runtime.automation_pause_changed",
+   "outcome": "registered"
   }
  ]
 }
