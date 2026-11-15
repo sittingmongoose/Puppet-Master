@@ -816,27 +816,35 @@
     const els = Array.from(host.querySelectorAll('*')).filter((n) => !NONPAINT.test(n.localName.toLowerCase()));
     /* (an SVG element with a filter draws that filter even with everything in it hidden: the Glass tile's Pip, its head's
        drop shadow, linked five GPU programs in the frame after the host was built, one raster of 113-129 ms on Alexis, the
-       owner's PC's 117 ms, Welcome's Pip held for an eighth of a second. 20-motion.css keeps every filter in the host off
-       until it is given its turn here, after the last element, a slice each: a drop shadow first as its blur alone (three of
-       its five programs, which only come together), then whole (the other two); any other filter whole) */
-    const fx = [];
+       owner's PC's 117 ms, Welcome's Pip held for an eighth of a second. Start needs those programs (without them its
+       first raster linked seven: 199 ms on Alexis), and a filter drawn over its content does not link them. 20-motion.css
+       keeps every filter in the host off until it is given its turns here, just before its element is shown, a slice each
+       with all of it still hidden: a drop shadow first as its blur alone (three of its five programs, which only come
+       together: a one-way blur or an offset does not split them), then whole (the other two); any other filter whole. Its
+       element and what is in it are then shown through it, as before) */
+    const fx = [], seq = [];
     host.querySelectorAll('[filter]').forEach((el) => {
       const m = /url\(\s*["']?#([^"')\s]+)/.exec(el.getAttribute('filter') || '');
       const fl = m ? host.querySelector('#' + CSS.escape(m[1])) : null, ds = fl && fl.querySelector('feDropShadow');
       let st = null;
-      if (ds) fx.push([el, () => {
+      const turns = [];
+      if (ds) turns.push([el, () => {
         st = fl.cloneNode(false); st.id = fl.id + '-pdb';
         const b = st.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur'));
         b.setAttribute('stdDeviation', ds.getAttribute('stdDeviation') || '0');
         fl.after(st); el.style.filter = 'url(#' + st.id + ')'; el.setAttribute('data-pdf', '');
       }, 'as a blur']);
-      fx.push([el, () => { el.style.removeProperty('filter'); el.setAttribute('data-pdf', ''); if (st) st.remove(); }, 'whole']);
+      turns.push([el, () => { el.style.removeProperty('filter'); el.setAttribute('data-pdf', ''); if (st) st.remove(); }, 'whole']);
+      fx.push([el, turns]);
     });
+    const turnsOf = new Map(fx);
+    els.forEach((e) => { if (turnsOf.has(e)) { seq.push(...turnsOf.get(e)); turnsOf.delete(e); } seq.push(e); });
+    turnsOf.forEach((turns) => seq.unshift(...turns));
     const down = new Set(); let moved = 0, stop = false, cap = 0;
     const onMove = () => { moved = performance.now(); };
     const onDown = (e) => { down.add(e.code || e.key); }, onUp = (e) => { down.delete(e.code || e.key); }, onBlur = () => down.clear();
     document.addEventListener('pointermove', onMove, true); document.addEventListener('keydown', onDown, true); document.addEventListener('keyup', onUp, true); window.addEventListener('blur', onBlur);
-    Object.assign(pd, { phase: 'running', listeners: 4, pieces: els.length, filters: fx.length, slices: 0, worst: 0, startedAt: performance.now(), firstSliceAt: 0, endedAt: 0, why: '', long: [] });
+    Object.assign(pd, { phase: 'running', listeners: 4, pieces: els.length, filters: seq.length - els.length, slices: 0, worst: 0, startedAt: performance.now(), firstSliceAt: 0, endedAt: 0, why: '', long: [] });
     const desc = (e) => e.localName + (e.getAttribute('class') ? '.' + String(e.getAttribute('class')).trim().split(/\s+/)[0] : '') + (e.closest('[data-tile]') ? '@' + e.closest('[data-tile]').getAttribute('data-tile') : '');
     let batch = [], what = '';
     const tell = (type) => { try { window.dispatchEvent(new CustomEvent('o55:predraw', { detail: Object.assign({ type }, pd) })); } catch (_) { /* none */ } };
@@ -859,13 +867,10 @@
         /* (a batch is judged on the three frames after it: its raster comes in the frame after its paint) */
         gap = Math.max(gap, dt);
         if (--watch === 0) { pd.worst = Math.max(pd.worst, gap); if (gap > 34 && pd.long.length < 40) pd.long.push([Math.round(gap), batch.map(desc).join(' ') + what]); n = gap > 34 ? 1 : Math.min(2, n * 2); }
-      } else if (i >= els.length && !fx.length) { end('done'); return; }
+      } else if (i >= seq.length) { end('done'); return; }
       else if (settled() && performance.now() - moved > 300 && !down.size) {
-        if (i < els.length) {
-          const to = Math.min(els.length, i + n);
-          batch = els.slice(i, to); what = '';
-          for (; i < to; i++) els[i].setAttribute('data-pd', '');
-        } else { const [el, go, how] = fx.shift(); batch = [el]; what = ' (its filter, ' + how + ')'; go(); }
+        if (Array.isArray(seq[i])) { const [el, go, how] = seq[i++]; batch = [el]; what = ' (its filter, ' + how + ', hidden)'; go(); }
+        else { batch = []; what = ''; while (i < seq.length && batch.length < n && !Array.isArray(seq[i])) { seq[i].setAttribute('data-pd', ''); batch.push(seq[i++]); } }
         if (!pd.slices) pd.firstSliceAt = performance.now();
         pd.slices++; watch = 3; gap = 0;
       }
