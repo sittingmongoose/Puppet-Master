@@ -77,7 +77,7 @@ def cmd_clauses(a):
         if a.boundary and boundary not in a.boundary:
             continue
         t = time.monotonic()
-        r = clauses.run_slot(fam, boundary, slot, pool=pool)
+        r = clauses.run_slot(fam, boundary, slot, pool=pool, bounded=a.bounded)
         r["seconds"] = round(time.monotonic() - t, 1)
         r.update(tool_version())
         s = clauses.summarize(r)
@@ -151,6 +151,7 @@ def main(argv=None):
     ap.add_argument("--family", action="append")
     ap.add_argument("--boundary", action="append")
     ap.add_argument("--include-shared", action="store_true", help="clauses: also run the shared checkpoint boundary")
+    ap.add_argument("--bounded", action="store_true", help="clauses: bounded base search (pm_dc_c12_clauses.BOUNDED_MODE); every check unchanged")
     ap.add_argument("--collection", type=Path, help="joins: the pickle written by pm-collab-guard-tables.py --save-collection")
     ap.add_argument("--out", type=Path, required=True)
     a = ap.parse_args(argv)

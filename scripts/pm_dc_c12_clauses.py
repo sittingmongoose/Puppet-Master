@@ -1180,8 +1180,22 @@ def then_violating_bases(site, instances, validator, edition, cap=6):
 
 # --- per-slot driver ----------------------------------------------------------------------------------------
 
-def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool=None):
-    """Witnesses, baseline, clause cuts and restoration for one family boundary; returns the slot ledger."""
+BOUNDED_MODE = ("bounded search (C12-DC2): the donor-base step drops the if-branch condition bases and the two-step bases, "
+                "and the donor, coherent and owner-fixture steps seed from the first two controls only; witness candidates, "
+                "complete-route baselines, clause cuts, control and base detection, route kills and restoration are unchanged")
+
+
+def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool=None, bounded=False):
+    """Witnesses, baseline, clause cuts and restoration for one family boundary; returns the slot ledger.
+
+    bounded=True keeps every check and only narrows the base search (BOUNDED_MODE); per-phase timings go to stderr."""
+    import time as _time
+    _t0 = _time.monotonic()
+    timings = []
+
+    def _phase(name, **counts):
+        timings.append(dict(phase=name, seconds=round(_time.monotonic() - _t0, 1), **counts))
+        print(json.dumps(dict(slot=fam + "--" + boundary, **timings[-1])), file=sys.stderr, flush=True)
     uri, pointer, getter, probes = slot["uri"], slot["pointer"], slot["getter"], slot["probes"]
     validator = dc.validator(uri, pointer, dc.ROOT)
     phase, row = row_of(boundary.split(":")[0])
@@ -1218,6 +1232,8 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
     for p, inst in instances:
         res, first, exc = route(p)
         control_rows.append(dict(case_id=p["case_id"], result=res, exception=exc, row_valid=validator.is_valid(inst)))
+    seed_instances = instances[:2] if bounded else instances
+    _phase("controls", controls=len(instances))
     witnesses, seen = [], set()
     attempts = 0
     for s in sites:
@@ -1289,6 +1305,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                                           conditional=conditional, coherent=True, sole=(id(s.node), "required", s.member)))
                     done = True
                     break
+    _phase("control_witnesses", witnesses=len(witnesses))
     # Donor bases for clauses no control-derived witness reaches (neither targeted nor in any witness's error tree).
     by_template_all = {}
     for s in sites:
@@ -1315,7 +1332,9 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
         # Bases: a donor or generated value at the clause's own location, else at the nearest enclosing location
         # (an absent array item or member), each kept only when the whole instance stays valid at the row.
         base_values = [(s.template, v) for v in pool.get(id(s.node), []) + generated_values(s)]
-        if "then" in s.context or "else" in s.context:
+        if bounded:
+            pass
+        elif "then" in s.context or "else" in s.context:
             base_values += condition_bases(s, instances, by_template_all)
         else:
             for t_ in (s.template, s.template[:-1]):
@@ -1328,7 +1347,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                 if a.keyword == "type" and tuple(a.context) == tuple(s.context)[:len(a.context)]:
                     base_values += [(anc_t, v) for v in pool.get(id(a.node), [])[:2] + gen_cache(a)]
         leaf_values = (pool.get(id(s.node), []) + generated_values(s) + GEN_AT(s.template))[:6]
-        for depth_ in range(len(s.template) - 1, -1, -1):
+        for depth_ in range(len(s.template) - 1, -1, -1) if not bounded else ():
             for o in by_template_all.get(s.template[:depth_], []):
                 if ("then" in o.context or "else" in o.context) and o.keyword in ("type", "const", "required", "properties"):
                     if id(o) not in _cond_cache:
@@ -1336,7 +1355,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                     for at_c, v_c in _cond_cache[id(o)]:
                         for lv in leaf_values:
                             base_values.append(("two_step", (at_c, v_c, lv)))
-        for p, inst in instances:
+        for p, inst in seed_instances:
             if done:
                 break
             for at, donor in base_values:
@@ -1388,6 +1407,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                         break
                 if done:
                     break
+    _phase("donor_bases", witnesses=len(witnesses), reached=len(reached))
     # Coherent witnesses for clauses still unreached: replace an enclosing member with a value valid at its own node
     # (another control's value there, or a generated one), kept only when the row then reports exactly one error
     # whose error tree holds this clause.
@@ -1410,7 +1430,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                 if done:
                     break
                 values = (pool or {}).get(id(a.node), []) + gen_cache(a)
-                for p, inst in instances:
+                for p, inst in seed_instances:
                     if done:
                         break
                     for val in values:
@@ -1444,6 +1464,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                             reached.add(witnesses[-1]["sole"])
                         done = True
                         break
+    _phase("coherent", witnesses=len(witnesses), reached=len(reached))
     # Owner-fixture bases (C12-DC2) for clauses still unreached (fixture_witness).
     fixtures = owner_fixture_records()
     for s in sites:
@@ -1452,11 +1473,12 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
         probe_key = (id(s.node), s.keyword, s.member) if s.keyword == "required" else (id(s.node), s.keyword)
         if probe_key in reached:
             continue
-        w, n = fixture_witness(s, probe_key, instances, by_template, validator, edition, fixtures, seen, bases_by_t, valid_base_keys)
+        w, n = fixture_witness(s, probe_key, seed_instances, by_template, validator, edition, fixtures, seen, bases_by_t, valid_base_keys)
         attempts += n
         if w is not None:
             witnesses.append(w)
             reached.add(probe_key)
+    _phase("owner_fixtures", witnesses=len(witnesses), reached=len(reached))
     # Complete-route baseline for every witness: first refusal must be the schema row.
     for w in witnesses:
         wp = with_instance(w["probe"], getter, w["instance"], None)
@@ -1466,6 +1488,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
         if w["baseline_ok"]:
             code[row] = first[2]
     good = [w for w in witnesses if w["baseline_ok"]]
+    _phase("baselines", witnesses=len(witnesses), baseline_ok=len(good))
     # Clause cuts over literal clauses (one cut per source node keyword member), row-level flips for all witnesses,
     # complete-route kills for the flipped witnesses, controls under the cut, then restoration.
     literal = {}
@@ -1476,6 +1499,8 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
     for n, ((nid, kw, member), group) in enumerate(literal.items()):
         if progress and n % 100 == 0:
             progress(fam, boundary, n, len(literal))
+        if n % 25 == 0:
+            _phase("cut_progress", done=n, total=len(literal))
         s0 = group[0]
         entry = dict(clause=s0.src_key[1], path=s0.src_key[0], member=member, keyword=kw, line=(s0.src or {}).get("line"),
                      kind=kinds[s0.key], eval_sites=[s.key for s in group])
@@ -1546,7 +1571,9 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
         w["probe_case"] = w.pop("probe")["case_id"]
         w["instance_sha256"] = digest(w.pop("instance"))
         w.pop("attributed_node", None)
-    return dict(family=fam, boundary=boundary, uri=uri, pointer=pointer, phase=phase, row=row, code=code[row],
+    _phase("cuts", cuts=len(cuts))
+    return dict(search_mode=BOUNDED_MODE if bounded else "full", timings=timings,
+                family=fam, boundary=boundary, uri=uri, pointer=pointer, phase=phase, row=row, code=code[row],
                 sites=[dict(s.describe(), kind=kinds[s.key]) for s in sites], controls=control_rows, candidate_attempts=attempts,
                 witnesses=witnesses, cuts=cuts)
 
