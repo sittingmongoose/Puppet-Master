@@ -1460,6 +1460,54 @@ def implication(site, slot_sites_by_node, boundary):
                         f"unconditional type {v!r} that {o.get('path')}:{o.get('line')} applies at the same location: cutting it only lets the "
                         "negated branch also match values of other types, every one of which that unconditional type already refuses, so "
                         "no accepted instance changes (an equivalent mutant); the negated branch itself is witnessed through its not")
+    if k == "maxItems" and isinstance(v, int) and node.get("uniqueItems") is True and isinstance(node.get("items"), dict) \
+            and isinstance(node["items"].get("enum"), list) and len(node["items"]["enum"]) <= v:
+        return dict(kind="maxItems_by_unique_enum", proof=f"{where} maxItems {v} is implied by uniqueItems with an item enum of "
+                    f"{len(node['items']['enum'])} values at the same node: a longer array either repeats a value (uniqueItems refuses) "
+                    "or holds a value outside the enum (the item enum refuses), so maxItems is never the only failing clause")
+    if "if" in site.context and slot_sites_by_node:
+        # The if re-tests a member against a subschema identical to that member's own unconditional subschema: on every
+        # instance the row accepts, that part of the condition holds exactly when the unconditional subschema does, so
+        # cutting any keyword inside it changes no accepted instance (an equivalent mutant).
+        ptr = site.loc[1]
+        tail = ptr[ptr.rindex("/if") + 3:].split("/")
+        names = [tail[i + 1] for i, t in enumerate(tail[:-1]) if t == "properties"]
+        if not names and k == "properties" and isinstance(v, dict) and v:
+            outer = tuple(site.context)[:list(site.context).index("if")]
+            same = []
+            for prop, sub in v.items():
+                hit = [o for o in slot_sites_by_node.get(tuple(site.template) + (prop,), [])
+                       if not ({"if", "then", "else", "not"} & set(o.context)) and tuple(o.context)[:len(outer)] == outer
+                       and json.dumps(o.node, sort_keys=True, default=str) == json.dumps(sub, sort_keys=True, default=str)]
+                same.append(hit[0] if hit else None)
+            if all(same):
+                os_ = same[0].src or {}
+                return dict(kind="condition_restates_unconditional_subschema", proof=f"{where} the if tests {sorted(v)} against subschemas "
+                            f"identical to their own unconditional subschemas (first at {os_.get('path')}:{os_.get('line')}): on every "
+                            "accepted instance that test already holds or fails as the unconditional subschemas decide, so cutting it "
+                            "changes no accepted instance (an equivalent mutant)")
+        if names:
+            name = names[0]
+            cut_at = ptr.rindex("/if") + 3 + len("/".join(tail[:tail.index("properties") + 2]))
+            try:
+                p_if = _node_at((site.loc[0], ptr[:cut_at]))
+            except Exception:  # unresolvable: no proof
+                p_if = None
+            idx = [i for i, t in enumerate(site.template) if t == name]
+            t0 = tuple(site.template[: idx[0] + 1]) if idx else None
+            if p_if is not None and t0 is not None:
+                outer = tuple(site.context)[:list(site.context).index("if")]
+                for o in slot_sites_by_node.get(t0, []):
+                    if {"if", "then", "else", "not"} & set(o.context) or tuple(o.context)[:len(outer)] != outer:
+                        continue
+                    if json.dumps(o.node, sort_keys=True, default=str) == json.dumps(p_if, sort_keys=True, default=str):
+                        os_ = o.src or {}
+                        return dict(kind="condition_restates_unconditional_subschema", proof=f"{where} sits inside an if whose test of "
+                                    f"{name!r} is identical to {name!r}'s own unconditional subschema at {os_.get('path')}:{os_.get('line')}: "
+                                    "every instance the row accepts already satisfies or fails that test exactly as the unconditional "
+                                    "subschema decides, so cutting any keyword inside the test changes no accepted instance (an "
+                                    "equivalent mutant), and an instance the cut would newly admit to the test is refused by the "
+                                    "unconditional subschema, whose clauses are witnessed and cut on their own")
     if k in ("minItems", "minLength", "minProperties") and v == 0:
         return dict(kind="vacuous_lower_bound", proof=f"{where} {k} 0 admits every value of its type, so no instance can violate it and "
                     "cutting it changes no result: a vacuous clause with nothing to witness")
@@ -1508,6 +1556,36 @@ def implication(site, slot_sites_by_node, boundary):
                 m = re.search(r"^(.*)/" + br + r"/properties/[^/]+$", o.loc[1])
                 if m and o.keyword in ("$ref", "type", "const"):
                     by_holder.setdefault((o.loc[0], m.group(1)), {})[br] = o
+        # Several ifs on one required enum member whose const values cover that enum: each then constrains this member
+        # with one of this combinator's branches, so whichever applies refuses every value the combinator refuses.
+        parent = tuple(site.template[:-1])
+        ifs = {}
+        for o in slot_sites_by_node.get(site.template, []):
+            m = re.search(r"^(.*)/then/properties/[^/]+$", o.loc[1])
+            if m and o.keyword in ("$ref", "type", "const"):
+                try:
+                    holder = _node_at((o.loc[0], m.group(1)))
+                    then_node = _node_at((o.loc[0], o.loc[1]))
+                except Exception:  # unresolvable: skip
+                    continue
+                cond = holder.get("if") if isinstance(holder, dict) else None
+                if isinstance(cond, dict) and set(cond) <= {"properties", "required"} and len(cond.get("properties", {})) == 1:
+                    (key, sub), = cond["properties"].items()
+                    if isinstance(sub, dict) and set(sub) == {"const"} and cond.get("required") == [key]:
+                        ifs.setdefault(key, []).append((sub["const"], then_node, o))
+        for key, entries in ifs.items():
+            enums = [x.node.get("enum") for x in slot_sites_by_node.get(parent + (key,), [])
+                     if x.keyword == "enum" and not ({"if", "then", "else", "not"} & set(x.context))]
+            req = any(x.keyword == "required" and x.member == key and not ({"if", "then", "else"} & set(x.context))
+                      for x in slot_sites_by_node.get(parent, []))
+            consts = {e[0] for e in entries}
+            if req and enums and isinstance(enums[0], list) and set(enums[0]) <= consts and \
+                    all(any(json.dumps(e[1], sort_keys=True) == json.dumps(b, sort_keys=True) for b in v) for e in entries):
+                os_ = entries[0][2].src or {}
+                return dict(kind="combinator_entailed_by_enum_partition", proof=f"{where} {k} is entailed by the ifs on the required "
+                            f"{key!r} (values {sorted(consts)}, covering its enum) whose then branches (first at {os_.get('path')}:"
+                            f"{os_.get('line')}) each constrain this member with one of this {k}'s own branches: on every instance one of "
+                            f"them applies, so a value this {k} refuses also fails it; no single-defect witness fails it alone")
         for (doc, hptr), pair in by_holder.items():
             if set(pair) != {"then", "else"}:
                 continue
