@@ -805,6 +805,9 @@
      once done leaves nothing: the host, its listeners and its frames go. 'o55:predraw' on window says when it starts and
      how it ended; O55.ui.prewarm.state() is the kit check's view of it. */
   const prewarmed = new Set();
+  /* (a check can hold the pre-draw at its boundary, ?o55pdhold=1: the host in place and nothing drawn in it yet, so the screen
+     can be pictured settled before the first slice; O55.ui.prewarm.release() lets it go, R49-T3) */
+  let pdHold = (() => { try { return new URLSearchParams(location.search).get('o55pdhold') === '1'; } catch (_) { return false; } })();
   const NONPAINT = /^(defs|lineargradient|radialgradient|stop|clippath|mask|filter|pattern|symbol|title|desc|style|script|metadata|marker|fe[a-z]+)$/;
   const pd = { phase: 'none', listeners: 0, pieces: 0, slices: 0, worst: 0, startedAt: 0, endedAt: 0, why: '', long: [] };
   function predraw(host, from) {
@@ -826,7 +829,7 @@
       tell('end');
     };
     const live = () => S.open && S.sess.screen === from && host.isConnected && !O55.motion.lowResource;
-    const settled = () => { const l = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); return !S.root.classList.contains('o55-opening') && !!l && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold'); };
+    const settled = () => { const l = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); return !pdHold && !S.root.classList.contains('o55-opening') && !!l && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold'); };
     let i = 0, n = 1, last = 0, watch = 0, gap = 0;
     const frame = (now) => {
       if (stop) return;
@@ -879,7 +882,8 @@
     const idle = () => (window.requestIdleCallback ? window.requestIdleCallback(run, { timeout: 1500 }) : O55.motion.real.setTimeout(run, 0));
     O55.motion.real.setTimeout(idle, delay == null ? 1500 : delay);
   }
-  prewarm.state = () => Object.assign({}, pd);
+  prewarm.state = () => Object.assign({ held: pdHold }, pd);
+  prewarm.release = () => { pdHold = false; };
   function holdColumn(layer) {
     if (!layer) return;
     layer.removeAttribute('data-col-held');
