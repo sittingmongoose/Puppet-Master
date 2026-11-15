@@ -496,16 +496,18 @@
       const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
       pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
       const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
-      pr.el.setAttribute('transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
-      pr.el.setAttribute('opacity', R(pr.op));
+      /* (each value written only when it changes: a prop at rest is drawn where it was, and writing the same transform,
+         opacity and strings again restyled them in every frame; pm7-perf lane W) */
+      attr(pr.el, 'transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
+      attr(pr.el, 'opacity', R(pr.op));
       // once a block is set down its strings are unhooked: they go slack, lift away and fade
       const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
       const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
       pr.ties.forEach((t, i) => {
         const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
         const top = [pr.ax + (pr.dx || 0) + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
-        pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
-        pr.strs[i].setAttribute('opacity', R(strOp));
+        attr(pr.strs[i], 'd', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
+        attr(pr.strs[i], 'opacity', R(strOp));
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
@@ -1192,13 +1194,16 @@
       // breathing: Pip's head swells a touch, slower when it sleeps
       const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
       const sx = ps.sx * (1 - br * .4), sy = ps.sy * (1 + br), s = Lay.s;
-      this.gCtl.setAttribute('transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
-      this.gHead.setAttribute('transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
+      /* (here and below, each value written only when it changes: the eyes once they have turned, the blink between blinks
+         and a prop at rest were written in every frame with the values they already held, each write restyling its element
+         and waking every MutationObserver on the page; pm7-perf lane W) */
+      attr(this.gCtl, 'transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
+      attr(this.gHead, 'transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
       const ends = this.solveStrings({ C: ps.C, phi: ps.phi, H, ang, sx, sy });
       ends.forEach((e, i) => {
         const l = Math.hypot(e.E[0] - e.T[0], e.E[1] - e.T[1]), slack = Math.max(0, (this.restLen[i] || l) - l);
         const d = slack > 1 ? `M${R(e.T[0])} ${R(e.T[1])}Q${R((e.T[0] + e.E[0]) / 2 + (i ? 1 : -1) * slack * .25)} ${R((e.T[1] + e.E[1]) / 2 + slack * .55)} ${R(e.E[0])} ${R(e.E[1])}` : `M${R(e.T[0])} ${R(e.T[1])}L${R(e.E[0])} ${R(e.E[1])}`;
-        this.pstrs[i].setAttribute('d', d); this.pglow[i].setAttribute('d', d);
+        attr(this.pstrs[i], 'd', d); attr(this.pglow[i], 'd', d);
       });
       // where the eyes look: at the target prop, at an idle glance, or at the pointer
       const pip = this.spec.pip || {};
@@ -1219,12 +1224,12 @@
         look = [vx / l * 2.3 * k, vy / l * 1.6 * k];
       } else if (tgt && tgt.pos) look = atTarget(tgt.pos);
       ps.lookT = look;
-      if (this.eyesEl) this.eyesEl.setAttribute('transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
+      if (this.eyesEl) attr(this.eyesEl, 'transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
       // blink
       if (this.blinkEl && !this.reduced && PIP.h.part('blinks')) {
         if (this.t > ps.nextBlink) { ps.blinkAt = this.t; ps.nextBlink = this.t + 2.2 + Math.random() * 3.4; }
         const b = ps.blinkAt != null ? this.t - ps.blinkAt : 9, k = b < .16 ? Math.max(.1, Math.abs(1 - b / .08)) : 1;
-        this.blinkEl.setAttribute('transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
+        attr(this.blinkEl, 'transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
       }
       // props
       /* (NieR's box is fixed: its band is kept clear from when it is first seen, also while it is silent, so a stack
@@ -1239,11 +1244,11 @@
       // particles
       this.fx.forEach((p) => {
         const k = p.life / p.max;
-        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; p.e.setAttribute('rx', R(6 + e * 90 * m)); p.e.setAttribute('ry', R(1.5 + e * 12 * m)); p.e.setAttribute('stroke-opacity', R((1 - k) * .7)); return; }
+        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; attr(p.e, 'rx', R(6 + e * 90 * m)); attr(p.e, 'ry', R(1.5 + e * 12 * m)); attr(p.e, 'stroke-opacity', R((1 - k) * .7)); return; }
         const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : p.kind === 'check' ? (k < .75 ? 1 : (1 - k) / .25) : p.kind === 'ring' ? (1 - k) * .9 : 1 - k * k;
         const sc = p.kind === 'ring' ? Math.min(1 + ease(k) * 2.2, p.room || Infinity) : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
-        p.e.setAttribute('transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
-        p.e.setAttribute('opacity', R(Math.max(0, op)));
+        attr(p.e, 'transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
+        attr(p.e, 'opacity', R(Math.max(0, op)));
       });
       // sleeping z's
       if (this.sleepZ && !this.reduced && this.t - (this.lastZ || 0) > .9 && f !== 'nier') {
@@ -1303,7 +1308,7 @@
         const T = this.terrain, ph = (this.t * .55) % 1, D = T.H - T.vy;
         let d = '';
         for (let k = 1; k < 16; k++) { const z = k - ph + .6, y = T.vy + D / (z * z * .45 + .2); if (y > T.vy + 1 && y < T.H) d += `M-400 ${R(y)}H${Lay.w + 400}`; }
-        this.gTerrain.setAttribute('d', d); this.gTerrain.setAttribute('stroke-opacity', '.32');
+        attr(this.gTerrain, 'd', d); attr(this.gTerrain, 'stroke-opacity', '.32');
       }
       if (this.tube === 'phosphor') this.persist();
       // NieR: target brackets, a leader line and the lock; the glitch on a chapter change
