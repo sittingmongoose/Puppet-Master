@@ -362,17 +362,25 @@ class ReaderOracles:
         g.require('request/binding', presented['answer']['reader_binding'] == store['installed_binding'])
         if expected['kind'] != 'unavailable':
             g.require('request/family_dispatch', store['original_value']['event_type'] == FAMILIES[key][0])
-        if g.errors:return expected,g.errors
+        # C12-GH1: no early refusal return. Every row below is computed for every
+        # complete call, so each witness carries a complete observation vector and
+        # a row cut is judged against every later predicate (G3b).
         g.schema(self.answers[key], expected, key + '/independent_answer')
         if expected['kind'] == 'unavailable':
             return expected, g.errors
         g.require('request/family_dispatch', store['original_value']['event_type'] == FAMILIES[key][0])
         source = store['source']
         actual = store['original_value']
-        g.schema(self.payloads[key], actual['payload'], key + '/actual_original_payload')
+        payload_refused = g.schema(self.payloads[key], actual['payload'], key + '/actual_original_payload')
         g.require('references/complete_roles', set(store['references']) == self.roles[key])
-        if g.errors:
-            return expected,g.errors
+        if payload_refused:
+            # Structural precondition (justified, C12-GH1): the predicates below
+            # index members the owner payload schema guarantees. Only a decided
+            # schema refusal stops here; with that row cut the reader continues.
+            return expected, g.errors
+        # A missing role is refused above; later reads of a role are total and
+        # fail closed (None never equals an owner value), never an exception.
+        source_contract = store['references'].get('source_contract') or {}
         body = actual['payload']['payload']
         provenance = store['provenance']
         required_provenance = {
@@ -382,17 +390,18 @@ class ReaderOracles:
         }
         if key in required_provenance:
             g.require(key + '/provenance_members', set(provenance) == required_provenance[key])
-            if g.errors:
-                return expected, g.errors
         if key == 'evidence_captured':
-            g.require('evidence/content_hash', body['content_hash'] ==
-                      hashlib.sha256(provenance['bytes']).hexdigest())
+            # Total reads: a missing member is refused by provenance_members and
+            # compares as absent here; non-bytes evidence never hashes.
+            evidence = provenance.get('bytes')
+            g.require('evidence/content_hash', isinstance(evidence, bytes) and body['content_hash'] ==
+                      hashlib.sha256(evidence).hexdigest())
             for field in ('evidence_ref', 'source_spans', 'currentness_state', 'redaction_profile'):
-                g.require('evidence/original/' + field, exact(body[field], provenance[field]))
+                g.require('evidence/original/' + field, field in provenance and exact(body[field], provenance[field]))
             for span in body['source_spans']:
                 if span['locator_kind'] == 'line_range':
-                    g.require('evidence/source_line_bounds',
-                              span['end_line'] <= len(provenance['bytes'].splitlines()))
+                    g.require('evidence/source_line_bounds', isinstance(evidence, bytes) and
+                              span['end_line'] <= len(evidence.splitlines()))
         if key == 'progressed':
             g.require('progress/artifact_set', set(provenance) ==
                       {a['artifact_ref'] for a in body['artifact_hashes']})
@@ -409,7 +418,7 @@ class ReaderOracles:
             g.require('reference/declared',
                       ref in {r['requested_ref'] for r in store['references'].values()})
             g.require('reference/owner',
-                      body['owner_ref'] == store['references']['source_contract']['owner_ref'])
+                      body['owner_ref'] == source_contract.get('owner_ref', object()))
             g.require('reference/size', type(body['byte_size']) is int and body['byte_size'] == len(body['bytes']))
             g.require('reference/blake3', body['blake3'] == blake3.blake3(body['bytes']).hexdigest())
             g.require('reference/media_type', body['media_type'] == 'text/plain; charset=utf-8')
@@ -421,7 +430,6 @@ class ReaderOracles:
         for field in source:
             g.require('source/owner/' + field, same_json_value(presented['source'].get(field), source[field]))
         g.require('source/full_original', exact(source['event'], actual))
-        if g.errors:return expected,g.errors
         raw = store['frame']['value']
         g.require('frame/crc32', zlib.crc32(raw) == store['frame']['crc32'])
         decoded = wire.unpack(raw)
@@ -442,7 +450,11 @@ class ReaderOracles:
         g.require('frame/within_watermark', selected['cursor'][2] + len(raw) <= selected['durable_end_offset'])
         # Historical custody dispatch accepts exact retained v1 and v2. Never
         # fabricate a v2 commitment for v1. Physical bytes do not use semantic JCS.
-        g.schema(self.custody, store['custody'], key + '/actual_custody')
+        custody_refused = g.schema(self.custody, store['custody'], key + '/actual_custody')
+        if custody_refused:
+            # Structural precondition (justified, C12-GH1), as for the payload:
+            # receipt joins index members the retained custody schema requires.
+            return expected, g.errors
         custody = store['custody']
         for field, value in [('storage_instance_id', source['token']['storage_instance_id']),
                              ('event_id', actual['event_id']), ('event_type', actual['event_type']),
@@ -452,10 +464,19 @@ class ReaderOracles:
         for field in ('event_id', 'sequence_id'):
             g.require('receipt/first/' + field,
                       same_json_value(custody['first_append_receipt'][field], actual[field]))
-        g.require('receipt/semantic_digest', custody['producer_semantic_digest'] == semantic_digest(actual))
+        # Total digests (C12-GH1 G6): an unrepresentable original refuses, never raises.
+        try:
+            actual_digest = semantic_digest(actual)
+        except numbers.Refusal:
+            actual_digest = None
+        g.require('receipt/semantic_digest', actual_digest is not None and custody['producer_semantic_digest'] == actual_digest)
         if custody['schema_version'] == '2.0.0':
-            g.require('receipt/full_value_commitment',
-                      same_json_value(custody['original_event_value_commitment'], commitment(actual)))
+            try:
+                actual_commitment = commitment(actual)
+            except numbers.Refusal:
+                actual_commitment = None
+            g.require('receipt/full_value_commitment', actual_commitment is not None and
+                      same_json_value(custody['original_event_value_commitment'], actual_commitment))
         old = presented['original']
         g.require('original/owner/members', set(old) == set(store['protocol']['original']))
         for field in ('first_receipt', 'admission', 'predecessor', 'runtime', 'producer_digest'):
@@ -469,13 +490,12 @@ class ReaderOracles:
         if 'original_admission' not in expected['unresolved_obligations']:
             g.require('admission/accepted_edition', edition is not None)
             g.require('admission/approved_checkpoint', checkpoint is not None)
-            if g.errors:return expected,g.errors
             if edition is not None and checkpoint is not None:
                 for field, value in [('owner_unit', admission['owner_unit']),
                                      ('registry_checkpoint', admission['registry_checkpoint']),
                                      ('event_type', actual['event_type']),
                                      ('payload_schema_id', actual['payload_schema_id']),
-                                     ('source_contract', store['references']['source_contract'])]:
+                                     ('source_contract', source_contract)]:
                     g.require('admission/edition/' + field, same_json_value(edition[field], value))
                     g.require('admission/checkpoint/' + field, same_json_value(checkpoint[field], value))
                 g.require('admission/recipe_selection', edition['recipe_ref'] == checkpoint['recipe_ref'] ==
@@ -490,12 +510,14 @@ class ReaderOracles:
             actual_protocol['original']['resolved_records'] = clone(store['references'])
             g.errors.update(history_guards(actual_protocol, self.payloads[key], self.answers[key]))
         g.schema(self.answers[key], expected, key + '/independent_answer')
-        if not g.errors and expected['kind'] == 'verified_historical':
+        if expected['kind'] == 'verified_historical':
+            # Computed on every verified read, not only when earlier rows hold,
+            # so a receipt-row cut is judged against the sealed-receipt read.
             try:
                 issued = retained.Owner(store).authenticated_original(store['selector']['event_id'])
                 retained.resolve(store,numbers.decode_storage_value(issued.record_bytes),store['storage_instance_id'])
                 verified = True
-            except numbers.Refusal:
+            except (numbers.Refusal, KeyError, TypeError):
                 verified = False
             g.require('retained/verified_original',verified)
         return expected, g.errors
@@ -515,6 +537,8 @@ class ReaderOracles:
         # inputs, separately for every guard cut. Final live owner/output
         # comparisons below always execute after the helper.
         cache_key = (key, tables.CUT, hashlib.sha256(pickle.dumps((presented,before),protocol=5)).digest())
+        if tables.NO_CACHE:
+            self._established.pop(cache_key, None)
         if cache_key not in self._established:
             if len(self._established) >= 256:
                 self._established.clear()
@@ -569,6 +593,17 @@ class ReaderOracles:
         return getattr(self, stage)(key, presented, store, helper)
 
 
+def provenance_target(key, path):
+    """The row reading this provenance member (declared, C12-GH1)."""
+    if key == 'progressed':
+        return 'progress/artifact_bytes/' + str(path[0])
+    if key == 'evidence_captured':
+        return 'evidence/content_hash' if path[0] == 'bytes' else 'evidence/original/' + str(path[0])
+    if key in ('stopped', 'tool_check_recorded'):
+        return key + '/original/' + str(path[0])
+    return None
+
+
 def leaves(value, path=()):
     if isinstance(value, dict) and value:
         for key, item in value.items():
@@ -607,6 +642,10 @@ def run(output=None):
     observations = []
 
     def check(name, result, valid, guard=None):
+        # C12-GH1 (G4): the authored generator's guard is this call's declared
+        # target, fixed by the generator, never read back from the result.
+        if tables.COLLECTOR is not None:
+            tables.COLLECTOR.declare(result, valid, None if valid else guard)
         ok = not result['errors']
         if ok != valid:
             failures.append(dict(case=name, expected=valid, errors=result['errors']))
@@ -646,13 +685,13 @@ def run(output=None):
                 replace(changed['provenance'], path, item + b'x' if isinstance(item, bytes) else different(item))
                 label = '/'.join(map(str, path))
                 check(f'{key}/{stage}/original_provenance/{label}',
-                      suite.boundary(stage, key, clone(base), changed), False)
+                      suite.boundary(stage, key, clone(base), changed), False, provenance_target(key, path))
             if key in ('evidence_captured', 'stopped', 'tool_check_recorded'):
                 for field in store['provenance']:
                     changed = clone(store)
                     del changed['provenance'][field]
                     check(f'{key}/{stage}/missing_provenance_member/{field}',
-                          suite.boundary(stage, key, clone(base), changed), False)
+                          suite.boundary(stage, key, clone(base), changed), False, key + '/provenance_members')
             # Forged presented source/original observations never replace the
             # independently resolved actual originals, even at a direct helper.
             for top in ('source', 'original'):
@@ -740,7 +779,7 @@ def run(output=None):
             check(f'{key}/{stage}/actual_missing_source',
                   suite.boundary(stage, key, value, clone(absent)), True)
             check(f'{key}/{stage}/actual_missing_source_forged_verified',
-                  suite.boundary(stage, key, clone(base), clone(absent)), False)
+                  suite.boundary(stage, key, clone(base), clone(absent)), False, stage + '/final_candidate')
             # A coherent forged admission pair does not resolve a real edition.
             value = clone(base)
             value['original']['admission']['registry_checkpoint'] = 'forged.weaker.checkpoint'
