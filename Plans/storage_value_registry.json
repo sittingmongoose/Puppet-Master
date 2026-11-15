@@ -276718,6 +276718,732 @@
           }
         }
       }
+    },
+    {
+      "family_id": "ea_s2_settings_layer_changed_publication",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "ea_s2_settings_layer_changed.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.s2.settings_layer_changed.publication.v1",
+      "value_schema_ref": "Plans/event_payloads/s2/settings_layer_changed.schema.json#/$defs/publication",
+      "owner_doc": "Plans/storage-plan.md#SP-2300",
+      "producer": [
+        "storage.s2.settings_layer_changed.append.v1@1.0.0 via SettingsLevelWriter::commit_level_transaction"
+      ],
+      "consumers": [
+        "storage.s2.settings_layer_changed.recovery_read.v1@1.0.0",
+        "original Storage coherent backup/restore owner"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "scope_partition",
+        "physical_key",
+        "owner_operation_id",
+        "source_record_ref",
+        "source_receipt_ref",
+        "state",
+        "prepared_event",
+        "first_append_receipt",
+        "full_value_commitment"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "first_append_receipt",
+        "full_value_commitment"
+      ],
+      "replay_behavior": "SP-2300: resolve only the exact authentic original source/event/full-value receipt; same scoped identity and digest returns the first result, a different digest conflicts; no source effect, timer or command is replayed.",
+      "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
+      "retention_compaction": "SP-2300: canonical non-rebuildable original publication custody of settings.layer.changed under RP-AUTHORITY-INDEFINITE@1.0.0, the policy the DL-300 registry row assigns to the family, with the owning record's deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only an eligible settled original whose owning data was deleted may be removed; never disposable-index eviction/rebuild or body reconstruction. SP-286 receipt lifetime remains independently authoritative.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
+      "legacy_canonical_crosswalk_status": "Newly authored publication custody (DL-411) of the family registered by DL-300; no registry change, native installation, aliases or grandfathered writes.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "scope_partition",
+          "physical_key",
+          "owner_operation_id",
+          "source_record_ref",
+          "source_receipt_ref",
+          "state",
+          "prepared_event",
+          "first_append_receipt",
+          "full_value_commitment"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.s2.settings_layer_changed.publication.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "owner_operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "source_record_ref": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "source_receipt_ref": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "appended",
+              "settled"
+            ]
+          },
+          "prepared_event": {
+            "$ref": "https://puppetmaster.local/schemas/event_payloads/s2/settings_layer_changed/1.0.0/schema.json#/$defs/prepared_event"
+          },
+          "first_append_receipt": {
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "full_value_commitment": {
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "prepared"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "first_append_receipt": {
+                  "type": "null"
+                },
+                "full_value_commitment": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "first_append_receipt": {
+                  "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                },
+                "full_value_commitment": {
+                  "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2300",
+          "Plans/Settings_System.md#SSYS-060"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2300"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2300"
+        ]
+      }
+    },
+    {
+      "family_id": "ea_s2_approval_chat_tool_requested_publication",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "ea_s2_approval_chat_tool_requested.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.s2.approval_chat_tool_requested.publication.v1",
+      "value_schema_ref": "Plans/event_payloads/s2/approval_chat_tool_requested.schema.json#/$defs/publication",
+      "owner_doc": "Plans/storage-plan.md#SP-2301",
+      "producer": [
+        "storage.s2.approval_chat_tool_requested.append.v1@1.0.0 via ApprovalHost::open_chat_tool_request"
+      ],
+      "consumers": [
+        "storage.s2.approval_chat_tool_requested.recovery_read.v1@1.0.0",
+        "original Storage coherent backup/restore owner"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "scope_partition",
+        "physical_key",
+        "owner_operation_id",
+        "source_record_ref",
+        "source_receipt_ref",
+        "state",
+        "prepared_event",
+        "first_append_receipt",
+        "full_value_commitment"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "first_append_receipt",
+        "full_value_commitment"
+      ],
+      "replay_behavior": "SP-2301: resolve only the exact authentic original source/event/full-value receipt; same scoped identity and digest returns the first result, a different digest conflicts; no source effect, timer or command is replayed.",
+      "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
+      "retention_compaction": "SP-2301: canonical non-rebuildable original publication custody of approval.chat_tool_requested under RP-AUTHORITY-INDEFINITE@1.0.0, the policy the DL-300 registry row assigns to the family, with the owning record's deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only an eligible settled original whose owning data was deleted may be removed; never disposable-index eviction/rebuild or body reconstruction. SP-286 receipt lifetime remains independently authoritative.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
+      "legacy_canonical_crosswalk_status": "Newly authored publication custody (DL-411) of the family registered by DL-300; no registry change, native installation, aliases or grandfathered writes.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "scope_partition",
+          "physical_key",
+          "owner_operation_id",
+          "source_record_ref",
+          "source_receipt_ref",
+          "state",
+          "prepared_event",
+          "first_append_receipt",
+          "full_value_commitment"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.s2.approval_chat_tool_requested.publication.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "owner_operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "source_record_ref": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "source_receipt_ref": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "appended",
+              "settled"
+            ]
+          },
+          "prepared_event": {
+            "$ref": "https://puppetmaster.local/schemas/event_payloads/s2/approval_chat_tool_requested/1.0.0/schema.json#/$defs/prepared_event"
+          },
+          "first_append_receipt": {
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "full_value_commitment": {
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "prepared"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "first_append_receipt": {
+                  "type": "null"
+                },
+                "full_value_commitment": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "first_append_receipt": {
+                  "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                },
+                "full_value_commitment": {
+                  "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2301",
+          "Plans/Permissions_System.md#PS-145"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2301"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2301"
+        ]
+      }
+    },
+    {
+      "family_id": "ea_s2_approval_chat_tool_resolved_publication",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "ea_s2_approval_chat_tool_resolved.v1:{hex(storage_instance_id)}:{hex(scope_partition)}:{hex(owner_operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.s2.approval_chat_tool_resolved.publication.v1",
+      "value_schema_ref": "Plans/event_payloads/s2/approval_chat_tool_resolved.schema.json#/$defs/publication",
+      "owner_doc": "Plans/storage-plan.md#SP-2302",
+      "producer": [
+        "storage.s2.approval_chat_tool_resolved.append.v1@1.0.0 via ApprovalHost::resolve_chat_tool_request"
+      ],
+      "consumers": [
+        "storage.s2.approval_chat_tool_resolved.recovery_read.v1@1.0.0",
+        "original Storage coherent backup/restore owner"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "scope_partition",
+        "physical_key",
+        "owner_operation_id",
+        "source_record_ref",
+        "source_receipt_ref",
+        "state",
+        "prepared_event",
+        "first_append_receipt",
+        "full_value_commitment"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "first_append_receipt",
+        "full_value_commitment"
+      ],
+      "replay_behavior": "SP-2302: resolve only the exact authentic original source/event/full-value receipt; same scoped identity and digest returns the first result, a different digest conflicts; no source effect, timer or command is replayed.",
+      "migration": "No alias or backfill; only authentic original source issuance can enroll custody. Unknown editions fail closed.",
+      "retention_compaction": "SP-2302: canonical non-rebuildable original publication custody of approval.chat_tool_resolved under RP-AUTHORITY-INDEFINITE@1.0.0, the policy the DL-300 registry row assigns to the family, with the owning record's deletion visibility. Pending effects/results, unresolved append/acknowledgement, receipt/recovery/live-reference/legal-hold/backup dependencies fence cleanup. Only an eligible settled original whose owning data was deleted may be removed; never disposable-index eviction/rebuild or body reconstruction. SP-286 receipt lifetime remains independently authoritative.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Content-free exact original source/result refs and frozen event only. No secret/body copies; SP-337 externalizes body above 16 KiB; measure full journal and refuse oversize before source effects.",
+      "legacy_canonical_crosswalk_status": "Newly authored publication custody (DL-411) of the family registered by DL-300; no registry change, native installation, aliases or grandfathered writes.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "scope_partition",
+          "physical_key",
+          "owner_operation_id",
+          "source_record_ref",
+          "source_receipt_ref",
+          "state",
+          "prepared_event",
+          "first_append_receipt",
+          "full_value_commitment"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.s2.approval_chat_tool_resolved.publication.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "owner_operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "source_record_ref": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "source_receipt_ref": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "pattern": "[\\u0000-\\u001f\\u007f]"
+            }
+          },
+          "state": {
+            "enum": [
+              "prepared",
+              "appended",
+              "settled"
+            ]
+          },
+          "prepared_event": {
+            "$ref": "https://puppetmaster.local/schemas/event_payloads/s2/approval_chat_tool_resolved/1.0.0/schema.json#/$defs/prepared_event"
+          },
+          "first_append_receipt": {
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "full_value_commitment": {
+            "anyOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "prepared"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "first_append_receipt": {
+                  "type": "null"
+                },
+                "full_value_commitment": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "first_append_receipt": {
+                  "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                },
+                "full_value_commitment": {
+                  "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2302",
+          "Plans/Permissions_System.md#PS-145"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2302"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2302"
+        ]
+      }
+    },
+    {
+      "family_id": "chat_tool_approval_project",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "chat_tool_approval.project.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(thread_id)}:{hex(request_id)}",
+      "value_schema_id": "pm.storage_value.chat_tool_approval.project.v1",
+      "value_schema_ref": "Plans/event_payloads/s2/chat_tool_approval_project.schema.json#/$defs/ChatToolApprovalStorageProjectV1",
+      "owner_doc": "Plans/storage-plan.md#SP-2303",
+      "producer": [
+        "Plans/Permissions_System.md#PS-145 shared approval host (HITL-038) sole owner; native adoption unavailable"
+      ],
+      "consumers": [
+        "Plans/Permissions_System.md#PS-145",
+        "Plans/storage-plan.md#SP-2303",
+        "Plans/storage-plan.md#SP-2301",
+        "Plans/storage-plan.md#SP-2302"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "scope",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
+      "migration": "Newly authored Project counterpart (DL-411, SP-2303) of chat_tool_approval_application; no alias, backfill or reuse of the application key.",
+      "retention_compaction": "Canonical immutable Permissions audit under RP-AUTHORITY-INDEFINITE, as the application record (SP-353); independent source/Stop/recovery/backup/legal holds; chat Undo expiry has no effect.",
+      "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
+      "legacy_canonical_crosswalk_status": "Newly authored under DL-411 for PNC-019 S2; native unavailable until complete adoption.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "scope",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.chat_tool_approval.project.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "scope": {
+            "allOf": [
+              {
+                "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+              },
+              {
+                "properties": {
+                  "scope_kind": {
+                    "const": "project"
+                  }
+                }
+              }
+            ]
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/event_payloads/s2/chat_tool_approval_project/1.0.0/schema.json#/$defs/ChatToolApprovalProjectV1"
+          }
+        }
+      },
+      "compatibility_key_shapes": [],
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2303"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2303"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-2303"
+        ]
+      },
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE"
     }
   ],
   "storage_profile": {
@@ -280677,6 +281403,27 @@
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
         "encoding_note": "new W3E reference-only binding; native unavailable",
+        "max_value_bytes": 16384
+      },
+      "ea_s2_settings_layer_changed_publication": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored SP-2300 publication custody (DL-411) of the DL-300 family; SP-236 physical encoding and SP-337 external body references.",
+        "max_value_bytes": 16384
+      },
+      "ea_s2_approval_chat_tool_requested_publication": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored SP-2301 publication custody (DL-411) of the DL-300 family; SP-236 physical encoding and SP-337 external body references.",
+        "max_value_bytes": 16384
+      },
+      "ea_s2_approval_chat_tool_resolved_publication": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored SP-2302 publication custody (DL-411) of the DL-300 family; SP-236 physical encoding and SP-337 external body references.",
         "max_value_bytes": 16384
       }
     },

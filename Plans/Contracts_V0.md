@@ -51272,3 +51272,214 @@ negative_constraints:
 owner_hints:
 - Plans/Contracts_V0.md
 ```
+
+## PNC-019 S2: technical parts of the three DL-300 families (newly authored under DL-411, 2026-11-14)
+
+DL-300 registered `settings.layer.changed`, `approval.chat_tool_requested` and `approval.chat_tool_resolved` at 1.0.0 and admitted the families and selectors only. DL-411 (E-CARDS-1 4b A) lets their owners write the missing technical parts after a documented search, reusing existing definitions first. The three units below are those parts, labeled newly authored. They change no registry row, payload schema or payload byte, add no writer and choose no feature, retention or deletion rule: every payload version keeps `producer_admission` `requires_owner_adoption` until the native producer adopts exactly this contract. The search evidence is `reports/event-authority-20261114/s2-dl300-search-evidence.json`; the executable oracle is ATS-2301.
+
+## CV-2300 — `settings.layer.changed` producer, identity and replay (newly authored, DL-411)
+
+```yaml
+plan_unit_id: CV-2300
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly settings.layer.changed@1.0.0, registered by DL-300 with the application-only payload
+  pm.settings.layer_changed.v1, takes its producer, ordering, identity, replay and withdrawal from this unit and its
+  storage custody from SP-2300. The payload schema and registry row are unchanged; the native producer must adopt
+  this contract before any append (requires_owner_adoption).
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; Settings presentation owners
+  remain authoritative.
+depends_on:
+- SSYS-060
+- SP-348
+- CV-317
+- CV-339
+- CV-366
+- DL-300
+- DL-411
+unblocks: []
+acceptance_criteria:
+- Only a Server-side sole level writer produces the event, after its own rows commit, with the exact payload joins below.
+- Identity, replay and withdrawal follow the recipes below; retries return the original without a second effect.
+- ATS-2301's checker passes every positive and refuses every single-defect negative at its own guard row.
+validation_surfaces:
+- python3 scripts/pm-s2-dl300-event-contracts.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_pnc019_s2
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411) and DL-300; exact answers and deck SHA-256 in Plans/Decision_Log.md
+- reports/event-authority-20261114/s2-dl300-search-evidence.json
+preserved_exact_tokens:
+- settings.layer.changed
+- pm.settings.layer_changed.v1
+- SettingsLevelWriter::commit_level_transaction
+- application@1:{hex(server_id)}:{hex(owner_operation_id)}
+negative_constraints:
+- No registry change, admission, new writer, feature, retention or deletion rule.
+- No local number or timestamp codec; the shared CV-1100, CV-1101 and SP-1101 foundations apply.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+**Producer.** The producer is `SettingsLevelWriter::commit_level_transaction`, the sole writer that SSYS-060 and SP-348 name for the exact level, calling `storage.s2.settings_layer_changed.append.v1@1.0.0`: the explicit settings home Server for Everywhere, that Server for a Server Computer level, its dispatching Server for a tagged Execution Host Computer level, and the Project Home Server for Project own values (the event stays application-scoped; the Project is in `target` only). Current owner text names no Server-side sole writer for Device, provider or account levels, so this family has no producer there: such a change emits no `settings.layer.changed` (`producer_unavailable`), and no device route is invented. Follower mirrors, Everywhere copies, the differences index and client caches never produce it.
+
+**Ordering.** Admission comes first, before any effect: the family is registered at 1.0.0, the registry selects exactly the application edition with this payload schema id, the producer has adopted this contract, the writer edition is not withdrawn, the original permission is current, no Stop fences the effect and the authoritative dedupe owner is available. The writer then commits the per-setting own rows and level head (SP-348) together with the prepared SP-2300 journal in one body transaction; the prepared journal carries no receipt. SP-286 and CV-339 (`storage.first_append_receipt.resolve.v2`, full-value custody) append the frozen event and return the first receipt; the journal advances prepared, appended, settled by exact previous-value CAS. The Settings transaction result is acknowledged only after `settled`. A transaction that commits no own row, or leaves the level snapshot hash unchanged, emits nothing.
+
+**Payload joins.** `scope` is WorkflowScopeV2 application with `server_id` the sole writer Server. `target` is the committed level target. `changed_setting_ids` are exactly the committed own rows; `before_revisions` and `after_revisions` are keyed by exactly those ids and hold each row's prior and new `setting_revision`, each advanced by exactly one per-setting CAS (a theme pair commits both halves in one transaction and one event). `before_sha256` and `after_sha256` are the level snapshot hashes (`pm.settings_level_snapshot.v1` or `pm.project_settings_snapshot.v2`) before and after the commit. `home_generation` is the level head writer and role generation. `transaction_receipt_ref` is the transaction receipt and equals the journal `source_receipt_ref`. `redacted_summary_ref` names the transaction's redacted summary, redacted before persistence; no secret, key, profile, pairing, memory or notebook body enters the payload (SP-348).
+
+**Identity.** The writer allocates one lifetime-unique immutable effect id per committed level transaction from the accepted Settings transaction (`transaction_id` of `pm.settings_transaction_result.v1`), with the declared component `settings.layer.changed` and the exact `level_key` included before issuance; a multi-Computer batch allocates one per target writer. That frozen id is `owner_operation_id`; it survives retry and is never reminted from a timer or callback. The idempotency key is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`, with no suffix; `event_id` is `s2dl300@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`; the Storage partition is `app`. Hex is lowercase byte-preserving encoding. The envelope has `scope_kind` application, null `project_id`, `thread_id`, `run_id`, `node_id` and `attempt_id`, the transaction actor, the frozen accepted time and producer sequence, `redaction_profile` `secret_refs_only`, `replay_policy` `dedupe_by_idempotency_key` and null migration fields.
+
+**Replay.** The same scoped identity `(scope_partition, event_type, idempotency_key)` with the same CV-317 producer digest returns the original first receipt with no effect; a different digest is `identity_conflict`; a missing dedupe owner is `dedupe_unavailable` with zero effect; a lost acknowledgement or restart resolves the same original and never re-applies a setting; `projector_replay_only` is never appendable.
+
+**Compatibility and withdrawal.** 1.0.0 is the only edition, with no alias or extension. `settings.updated` and `settings.theme.updated` are retired by DL-408 and are never aliases; older dedicated DRY-guard records stay readable without rewrite. Writer withdrawal, under the append lock, refuses new preparation and lets pending originals drain or resolve; reader withdrawal is SP-2300's; a successor needs a new registry revision and the StorageMigrationCoordinator.
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-060, ContractName:Plans/storage-plan.md#SP-348, ContractName:Plans/storage-plan.md#SP-2300, ContractName:Plans/Contracts_V0.md#CV-366
+
+## CV-2301 — `approval.chat_tool_requested` producer, identity and replay (newly authored, DL-411)
+
+```yaml
+plan_unit_id: CV-2301
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly approval.chat_tool_requested@1.0.0, registered by DL-300 with application and project editions
+  of pm.chat_tool_approval_request.v1, takes its producer, ordering, identity, replay and withdrawal from this unit
+  and its storage custody from SP-2301 (source record SP-353 or SP-2303). Payload schema and registry row are
+  unchanged; the native producer must adopt this contract first (requires_owner_adoption).
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; the approval host owns presentation.
+depends_on:
+- PS-145
+- HITL-038
+- SP-353
+- CV-317
+- CV-339
+- CV-366
+- DL-300
+- DL-411
+unblocks: []
+acceptance_criteria:
+- Only the shared approval host opens the request, after the pending source record commits, with the exact joins below.
+- Identity, replay and withdrawal follow the recipes below for both editions.
+- ATS-2301's checker passes every positive and refuses every single-defect negative at its own guard row.
+validation_surfaces:
+- python3 scripts/pm-s2-dl300-event-contracts.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_pnc019_s2
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411) and DL-300; exact answers and deck SHA-256 in Plans/Decision_Log.md
+- reports/event-authority-20261114/s2-dl300-search-evidence.json
+preserved_exact_tokens:
+- approval.chat_tool_requested
+- pm.chat_tool_approval_request.v1
+- ApprovalHost::open_chat_tool_request
+- s2dl300@1:{hex(owner_operation_id)}
+negative_constraints:
+- No registry change, admission, new approval engine, feature, retention or deletion rule.
+- Never an Orchestrator node approval event, approval.requested, node.blocked or node.unblocked.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+**Producer.** The producer is the shared approval host (HITL-038), `ApprovalHost::open_chat_tool_request`, calling `storage.s2.approval_chat_tool_requested.append.v1@1.0.0` when a typed PS-145 tool ask needs an actual human decision. An action that task-scoped mode authority or a previously approved build grant covers opens no request (HITL-038: truthful provenance, no duplicate human prompt). This family is distinct from the Orchestrator node approval and from DT's `approval.requested` (SP-580).
+
+**Ordering.** Admission first, exactly as CV-2300 lists it, for the selected edition (application or project). The host then commits the canonical approval record with `decision` `pending` and null `resolution_ref` (application: `chat_tool_approval_application`, SP-353; project: `chat_tool_approval_project`, SP-2303) together with the prepared SP-2301 journal in one body transaction; SP-286 and CV-339 append and return the first receipt; the journal advances prepared, appended, settled by CAS. The host presents the ask only after `settled`.
+
+**Payload joins.** `approval_id` is the record `request_id`; `run_id`, `tool_id` and `target_sha256` are the record's; `normalized_target_ref` is the record `target_ref`. `context.scope` is exactly the record scope, and its `scope_kind` and `project_id` are the event's. `context.thread_id` is the record thread; `context.storage_instance_id` is the Storage instance that holds the record; `context.scope_stop_epoch` and `context.task_stop_epoch` are the record's; `context.permission_evidence.source_ref` names the record `permission_snapshot_ref`; `request_evidence.source_ref` names the record `request_source_ref`; `context.actor_ref` is the requesting actor and equals the envelope actor. `expires_at_utc` (CV-1101, event_record profile) is after the accepted request time.
+
+**Identity.** The host allocates one lifetime-unique immutable effect id from the accepted request, with the declared component `approval.chat_tool_requested` and the exact `request_id` included before issuance; that is `owner_operation_id`. The application idempotency key is exactly CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`; the Project key is `s2dl300@1:{hex(owner_operation_id)}`; `event_id` is `s2dl300@1:{hex(UTF8(storage_instance_id))}:{hex(UTF8(owner_operation_id))}:{hex(UTF8(event_type))}`; the partition is `app` or Storage's `project~{base64url_no_pad(UTF8(project_id))}`. The envelope `thread_id` and `run_id` are the record's, `project_id` follows the scope, and the actor is the requesting actor. The registry row's legacy identity pointer `/payload/scope/project_id` does not resolve in this payload; Case L-5 uses such pointers only to normalize EventEnvelopeV1, so this family's identity comes from the envelope and `context.scope`. The row is left unchanged. Redaction, replay policy and migration are as CV-2300.
+
+**Replay.** As CV-2300: the same scoped identity and producer digest returns the original receipt with no effect, a different digest is `identity_conflict`, a missing dedupe owner is `dedupe_unavailable`, and no retry opens a second ask or reprompts a person.
+
+**Compatibility and withdrawal.** 1.0.0 is the only edition in each scope, with no fallback between scope editions (`exact_scope_and_schema_id_no_fallback`), no alias and no extension. Withdrawal is as CV-2300; a withdrawn writer leaves pending asks to resolve through CV-2302.
+
+ContractRef: ContractName:Plans/Permissions_System.md#PS-145, ContractName:Plans/human-in-the-loop.md#HITL-038, ContractName:Plans/storage-plan.md#SP-2301, ContractName:Plans/storage-plan.md#SP-2303
+
+## CV-2302 — `approval.chat_tool_resolved` producer, pairing, identity and replay (newly authored, DL-411)
+
+```yaml
+plan_unit_id: CV-2302
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exactly approval.chat_tool_resolved@1.0.0, registered by DL-300 with application and project editions
+  of pm.chat_tool_approval_result.v1, takes its producer, request pairing, ordering, identity, replay and withdrawal
+  from this unit and its storage custody from SP-2302. request_sha256 is newly defined here. Payload schema and
+  registry row are unchanged; the native producer must adopt this contract first (requires_owner_adoption).
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; the approval host owns presentation.
+depends_on:
+- CV-2301
+- PS-145
+- HITL-038
+- SP-353
+- CV-317
+- CV-339
+- CV-366
+- CV-1100
+- DL-300
+- DL-411
+unblocks: []
+acceptance_criteria:
+- Exactly one resolution per approval, appended only after its request is settled, with the exact pairing joins below.
+- Approved and declined carry an actual human decision; expired and cancelled follow the time and Stop rules below.
+- ATS-2301's checker passes every positive and refuses every single-defect negative at its own guard row.
+validation_surfaces:
+- python3 scripts/pm-s2-dl300-event-contracts.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_pnc019_s2
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411) and DL-300; exact answers and deck SHA-256 in Plans/Decision_Log.md
+- reports/event-authority-20261114/s2-dl300-search-evidence.json
+preserved_exact_tokens:
+- approval.chat_tool_resolved
+- pm.chat_tool_approval_result.v1
+- ApprovalHost::resolve_chat_tool_request
+- request_sha256
+negative_constraints:
+- No registry change, admission, new approval engine, feature, retention or deletion rule.
+- Never node.unblocked; no agent, mode or grant answers a person's ask.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+**Producer.** The producer is the shared approval host, `ApprovalHost::resolve_chat_tool_request`, calling `storage.s2.approval_chat_tool_resolved.append.v1@1.0.0`: the chat_tool branch of `RuntimeApproveV3Request` and `RuntimeDeclineV3Request` (HITL-038) for `approved` and `declined`, the host's expiry for `expired`, and Stop or revoke through the existing owners for `cancelled`. Chat-tool decisions never emit `node.unblocked`.
+
+**Ordering and pairing.** Admission first, as CV-2300. The paired `approval.chat_tool_requested` original must exist and be `settled` (its first receipt resolved) before this append. The host commits the record's terminal `decision` and its `resolution_ref` together with the prepared SP-2302 journal in one body transaction; SP-286 and CV-339 append; the journal advances prepared, appended, settled; the result returns to `return_context_ref` only after `settled`.
+
+**Payload joins.** `approval_id` equals the paired request's `approval_id` and the record `request_id`. Newly defined here: `request_sha256` is the lowercase SHA-256 of the CV-1100 qualified RFC 8785 bytes (`qualified_jcs`) of the exact paired `approval.chat_tool_requested` payload. `decision` is the record's terminal decision, never `pending`, and the record carries this resolution's `resolution_ref`. The envelope `causation_event_id` is the paired request's `event_id`; partition, Project, thread and run equal the request's. `expired` is chosen exactly when the accepted resolution time is at or after the request's `expires_at_utc`; `approved`, `declined` and `cancelled` are accepted only before it (instants compared on the shared CV-1101 calendar). `approved` and `declined` carry an actual human decision in `person_evidence`; an agent never answers its own ask, and mode authority or a build grant never stands in for a person (HITL-038). `return_context_ref` is the request's `context.return_context_ref`. Exactly one resolution exists per approval.
+
+**Identity.** `owner_operation_id` is allocated from the resolution with the declared component `approval.chat_tool_resolved` and the exact `request_id`, so a second, different resolution of the same approval has the same scoped identity and a different producer digest and is refused as `identity_conflict`. Keys, `event_id`, partition, redaction, replay policy and migration follow CV-2301; the actor is the person for `approved` and `declined` and the approval host for `expired` and `cancelled`.
+
+**Replay, compatibility and withdrawal.** As CV-2301. A retry returns the original resolution; no retry re-dispatches the tool or re-answers the ask.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-2301, ContractName:Plans/human-in-the-loop.md#HITL-038, ContractName:Plans/storage-plan.md#SP-2302, ContractName:Plans/storage-plan.md#SP-2303

@@ -17,8 +17,8 @@
   },
   "registry_row_sha256": "0dd3d8d36cb59a099539137844cb9ea51567017c157e8b18e30903f7d2bb7409",
   "depth_assessment": {
-    "path": "reports/event-authority-20261104/depth-b1-seal-families.json",
-    "sha256": "535b9ea34754b03edb19e15e67650e13546fb8345ae5a8121f1646e87c9ff035"
+    "path": "reports/event-authority-20261114/s2-depth-post-august.json",
+    "sha256": "0a260712a116532a824b81dd497f0cc72f97b4fc1a5cd41ace8db8cdf7dd6c0a"
   },
   "admission_landing": {
     "commit": "b240dd93e2ebc44d4d7df468fb247cc0418082a8",
@@ -31,6 +31,7 @@
   "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
   "recorded_at_utc": "2026-09-24T23:39:35Z",
   "notes": [
-    "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
+    "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only.",
+    "PNC-019 S2 (2026-11-14): depth_assessment re-pointed from reports/event-authority-20261104/depth-b1-seal-families.json (535b9ea34754b03edb19e15e67650e13546fb8345ae5a8121f1646e87c9ff035) to the S2 lane regrade, twelve PASS cells; the record's registry step, decision entry, receipt pin and row hash are unchanged, and the two fields ending in _at_recording stay as recorded."
   ]
 }

@@ -1683,7 +1683,8 @@ canonical_text: >-
 
   The settings.layer.changed family (registered by DL-300) is application_only: changed setting IDs, level/key, redacted summaries,
   revision/hash and receipt refs only, with actual Project level in metadata where relevant. Native emission stays
-  disabled until its producer is adopted (requires_owner_adoption). Followers catch up by snapshot/cursor/deltas
+  disabled until its producer is adopted (requires_owner_adoption); its DL-411 producer, identity, replay, custody,
+  reader and withdrawal parts are CV-2300 and SP-2300 (newly authored, PNC-019 S2). Followers catch up by snapshot/cursor/deltas
   without duplicate apply. pm.settings_differences_index.v1 indexes which authorized Project/Computer/Device has
   an own value, redacted summary, revision and as-of time. It is never a write authority; stale/unreachable entries
   say May differ rather than Same everywhere. Routine Synced is absent; Doctor shows only exceptions.

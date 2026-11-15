@@ -17,8 +17,8 @@
   },
   "registry_row_sha256": "41a79eb9484860b8176893fca50173dab58f8cc068cb491b3fdc92db3e08cb06",
   "depth_assessment": {
-    "path": "reports/event-authority-20261104/depth-b1-seal-families.json",
-    "sha256": "535b9ea34754b03edb19e15e67650e13546fb8345ae5a8121f1646e87c9ff035"
+    "path": "reports/event-authority-20261114/s2-depth-post-august.json",
+    "sha256": "0a260712a116532a824b81dd497f0cc72f97b4fc1a5cd41ace8db8cdf7dd6c0a"
   },
   "admission_landing": {
     "commit": "69553720f1c55528ed423a8c723bc97ec9cc4281",
@@ -34,6 +34,7 @@
   "recorded_at_utc": "2026-09-24T23:39:35Z",
   "notes": [
     "Verification record: reports/packet-gap-closure-20260910/browser-workspace-created-verification-20260911.json (f359b6aed3).",
-    "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
+    "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only.",
+    "PNC-019 S2 (2026-11-14): depth_assessment re-pointed from reports/event-authority-20261104/depth-b1-seal-families.json (535b9ea34754b03edb19e15e67650e13546fb8345ae5a8121f1646e87c9ff035) to the S2 lane regrade, twelve PASS cells; the record's registry step, decision entry, receipt pin and row hash are unchanged, and the two fields ending in _at_recording stay as recorded."
   ]
 }
