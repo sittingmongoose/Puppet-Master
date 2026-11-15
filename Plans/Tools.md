@@ -13439,15 +13439,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  Puppet Master offers the script tool through whichever channel carries Puppet Master tools on that route, and the
-  directly callable tools named in T-190 travel on every route by the same channel as the script tool. Under
+  When T-188's availability and policy gates admit the script tool, Puppet Master offers it through whichever channel
+  carries Puppet Master tools on that route, and the directly callable tools named in T-190 travel on every route by
+  the same channel as the script tool. If the script tool is not offered, the existing ordinary tool-call path is
+  preserved, with T-188's effective-mode and typed-reason rules. Under
   Host Tool Execution on a direct API route whose Models_System tool_use capability is true it is a tool in
   the provider's tool-call API, and where it is false the owned in-band path below is used; on a bridged CLI under the HTE strategy it, and the directly callable tools named in T-190, travel through the
   Run_Modes hosted action loop as structured tool intents where its capability entry reports structured_tool_intents
   supported, otherwise as in-band tool calls, never as a provider tool_use; under
   the DAE strategy, where the CLI accepts Puppet Master tools through provider-native feature projection, it is a projected Puppet Master tool beside the CLI's own
-  tools, so the run is mixed. The request-selected registry tools other than the directly callable tools named
-  in T-190 are described to the model as the
+  tools, so the run is mixed. When the script tool is offered, the request-selected registry tools other than the directly
+  callable tools named in T-190 are described to the model as the
   script's callable catalog under T-176 materialization, rather than as one provider tool schema each. Wherever tool calls are carried
   in-band, including where the selected model's Models_System tool_use capability is false, the script tool and the
   directly callable tools named in T-190 are carried as in-band tool calls in an owned dialect that Tools selects for the model family and records on the run; the T-169 admission gate
@@ -13464,9 +13466,9 @@ gui_classification_reason: Provider request shaping and execution-shape behaviou
 depends_on: [T-169, T-176, T-188]
 unblocks: []
 acceptance_criteria:
-  - Under Host Tool Execution a Code Mode request carries the script tool and does not also carry one provider tool schema per registry tool the script can call.
+  - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect, and a tool result the model wrote itself never reaches replayable history.
-  - A bridged CLI under the HTE strategy runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy with the Puppet Master script tool offered, the run is recorded as mixed. The exception changes only the effective tool-calling mode label; under HTE, RM-021 still terminates the run on a provider-originated tool_use.
+  - A bridged CLI under the HTE strategy on which the script tool is offered runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy with the Puppet Master script tool offered, the run is recorded as mixed. The exception changes only the effective tool-calling mode label; under HTE, RM-021 still terminates the run on a provider-originated tool_use.
   - On a route that accepts the Puppet Master script tool, a run on a provider that keeps native tools Puppet Master could not disable is recorded as mixed, never as Code Mode.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
@@ -13518,8 +13520,9 @@ canonical_text: >-
   Time spent waiting for an approval is approval_wait under the Contracts_V0 temporal taxonomy, attributed apart from
   local compute and external wait; it counts against the parent deadline, so an approval that outlasts the deadline
   ends the script with typed timeout evidence. The open approval request is closed as expired by its existing approval
-  owner, retaining its original identity: the HITL blocked episode for an Orchestrator node or the PS-145 application
-  tool request otherwise. The earlier of the parent deadline and that request's owner-governed approval expiry
+  owner, retaining the pending request's original owner-selected identity and scope. Orchestrator-node requests
+  retain their HITL blocked episode; application-scoped requests retain their PS-145 tool-request identity; other
+  requests retain their existing approval contract. The earlier of the parent deadline and that request's owner-governed approval expiry
   applies; the existing typed expiry result is returned to the script when the approval timer ends first. The
   script can call only the tools selected for the request, reaches files, network and credentials only through those
   tools, and runs inside its parent deadline with bounded output; the deadline follows Tools deadline propagation, which is
