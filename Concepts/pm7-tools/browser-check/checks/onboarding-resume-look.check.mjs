@@ -13,8 +13,13 @@
 // Settings' saved Theme and "Light or dark" are that look. Once, Retro Dark, under Reduced Motion: rows (1) to (3). Once,
 // on the normal surface (the sandbox keeps nothing over a reload): no look chosen since, the page loaded again (which
 // drops the window's unsaved preview, and is no choice), the resumed run shows its own pick again, Friendly Dark.
-// No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish and
-// Reduced Motion cases.
+// pm-fo-lead's full rule (11:19Z): the look chosen last wins WHEREVER it was chosen. So also: (4) a look picked on the
+// resumed run's Look step is a choice: closed unfinished, the page keeps it (neither the Settings look nor the run's start
+// comes back); (5) a reload after any of these shows the look chosen last (normal surface: the sandbox keeps nothing over a
+// reload); (6) NieR both ways: NieR Light set in Settings, Basic Dark picked in the resumed window (no NieR preview left
+// on), and Glass Dark set in Settings, NieR Dark picked in the window.
+// No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish, Reduced
+// Motion, reload and pick cases.
 import { setLookBySetting, lookHeld } from '../helpers/settings-look.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
@@ -60,7 +65,7 @@ function app(t, f) {
 		return way;
 	};
 	/* the look as the page paints it, and as the window and the Look step show it */
-	const page = () => f.evaluate(() => { const theme = document.documentElement.getAttribute('data-theme') || ''; return { theme, nier: !!(window.PM_NIER && PM_NIER.on()) || document.documentElement.getAttribute('data-o55-nier') === 'on' }; });
+	const page = () => f.evaluate(() => { const theme = document.documentElement.getAttribute('data-theme') || '', pv = window.PM_NIER && PM_NIER.previewing ? PM_NIER.previewing() : null; return { theme, nier: !!(window.PM_NIER && PM_NIER.on()) || document.documentElement.getAttribute('data-o55-nier') === 'on', preview: pv ? (pv.on === true ? 'on' : pv.on === false ? 'off' : 'parts') : null }; });
 	const windowLook = () => f.evaluate(() => { const th = O55.theme(), d = O55.S.sess.drafts.main; return { chosen: th.chosen, mode: th.mode, selectedMode: th.selectedMode, nier: th.nier, slug: th.slug, draft: [d.theme_family, d.theme_mode].join('-'), screen: O55.S.sess.screen }; });
 	const lookStep = () => f.evaluate((L) => {
 		const tile = document.querySelector(L + ' .o55-tile[aria-checked="true"]'), mode = document.querySelector(L + ' [data-o55-do="pickMode"][aria-checked="true"], ' + L + ' [data-o55-do="pickMode"][aria-pressed="true"], ' + L + ' [data-o55-do="pickMode"].o55-on');
@@ -75,6 +80,15 @@ function app(t, f) {
 	return { settled, screen, click, open, close, resume, page, windowLook, lookStep, stored, toSettings };
 }
 
+/* the look held, and for a look without NieR no NieR preview left on */
+const held = (look, p) => lookHeld(look, p) && (look.startsWith('nier') || p.preview !== 'on');
+/* the page loaded again as a person reloads it (no fresh start): what it paints once settled */
+async function reloaded(t) {
+	const f = await t.app.open({ onboarding: true, query: 'o55scenario=fresh', sandbox: false, settleMs: 1500 });
+	await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !!(window.PM_NIER && (!PM_NIER.ready || PM_NIER.ready())), null, { timeout: 20000 }).catch(() => {});
+	await sleep(2000);
+	return { f, A: app(t, f) };
+}
 const startOf = (target) => (target.endsWith('-light') ? 'friendly-dark' : 'friendly-light');
 const want = (look) => { const [family, mode] = look.split('-'); return { family, mode }; };
 
@@ -99,7 +113,7 @@ async function run(t, sandbox, target, { reduced = false, finish = false } = {})
 	await setLookBySetting(t, f, target);
 	const p1 = await A.page();
 	await shot(`resume-look-${target}-0b-settings`, `${tag}: Settings set ${target}, the run closed`);
-	await t.check(`${tag}: Settings painted ${target}`, lookHeld(target, p1), JSON.stringify(p1));
+	await t.check(`${tag}: Settings painted ${target}`, held(target, p1), JSON.stringify(p1));
 	// back in
 	const way = await A.resume();
 	const w1 = await A.windowLook();
@@ -128,7 +142,8 @@ async function run(t, sandbox, target, { reduced = false, finish = false } = {})
 		await t.shot(`resume-look-${target}-${sandbox ? 'sandbox' : 'normal'}-finished`, `${tag}: finished: the page shows ${p3.theme}${p3.nier ? ' NieR' : ''}`);
 		/* (Settings saves the Theme as its label, the family and its mode: 'Glass Light'; the family is its first word) */
 		const stOk = String(st.theme || '').trim().split(/[\s-]+/)[0].toLowerCase() === W.family && String(st.mode || '').toLowerCase() === W.mode;
-		await t.check(`${tag}: setup finished, the page and Settings' saved look are ${target}`, lookHeld(target, p3) && stOk, JSON.stringify({ page: p3, saved: st }));
+		await t.check(`${tag}: setup finished, the page and Settings' saved look are ${target}`, held(target, p3) && stOk, JSON.stringify({ page: p3, saved: st }));
+		if (!sandbox) { const r = await reloaded(t), p4 = await r.A.page(); await t.check(`${tag}: reloaded, the page shows ${target}`, held(target, p4), JSON.stringify(p4)); }
 		return;
 	}
 	// its Look step starts on it
@@ -140,7 +155,44 @@ async function run(t, sandbox, target, { reduced = false, finish = false } = {})
 	await A.close();
 	const p2 = await A.page();
 	await shot(`resume-look-${target}-3-closed`, `${tag}: closed unfinished: the page shows ${p2.theme}${p2.nier ? ' NieR' : ''}`);
-	await t.check(`${tag}: closed unfinished, the page is left in ${target} (NieR ${W.family === 'nier' ? 'on' : 'off'})`, lookHeld(target, p2), JSON.stringify(p2));
+	await t.check(`${tag}: closed unfinished, the page is left in ${target} (NieR ${W.family === 'nier' ? 'on' : 'off'})`, held(target, p2), JSON.stringify(p2));
+	if (!sandbox) { const r = await reloaded(t), p4 = await r.A.page(); await t.check(`${tag}: reloaded, the page shows ${target}`, held(target, p4), JSON.stringify(p4)); }
+}
+
+/* (4)-(6): Settings sets one look, the resumed run's Look step picks another, closed unfinished: the pick stays, and over a
+   reload too (normal surface), and the run resumed again shows it */
+async function picked(t, sandbox, set, pick) {
+	const tag = `${sandbox ? 'sandbox' : 'normal'}: Settings ${set}, then ${pick} picked in the resumed window`;
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox, settleMs: 1500 });
+	const A = app(t, f), start = startOf(set), S0 = want(start), P = want(pick);
+	await A.screen('welcome');
+	await A.click('start', null, 'look'); await A.click('pickFamily', S0.family); await A.click('pickMode', S0.mode);
+	await A.click('next', null, 'where');
+	await A.close();
+	await A.toSettings();
+	await setLookBySetting(t, f, set);
+	await A.resume();
+	await A.click('back', null, 'look');
+	await A.click('pickFamily', P.family);
+	await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !document.documentElement.hasAttribute('data-o55-vt'), null, { timeout: 20000 }).catch(() => {});
+	await A.click('pickMode', P.mode);
+	await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !document.documentElement.hasAttribute('data-o55-vt'), null, { timeout: 20000 }).catch(() => {});
+	await sleep(1200);
+	const w = await A.windowLook(), s1 = await A.lookStep();
+	await t.check(`${tag}: the window and its Look step show ${pick}`, w.chosen === P.family && w.mode === P.mode && w.nier === (P.family === 'nier') && s1.tile === P.family && s1.mode === P.mode, JSON.stringify({ window: w, step: s1 }));
+	await A.close();
+	const p2 = await A.page();
+	await t.check(`${tag}: closed unfinished, the page keeps ${pick}${P.family === 'nier' ? '' : ' (no NieR preview left on)'}`, held(pick, p2), JSON.stringify(p2));
+	if (sandbox) return;
+	await sleep(800);   /* (the pick is saved once the close has played: flushLook, 400 ms) */
+	const r = await reloaded(t), p3 = await r.A.page();
+	await t.check(`${tag}: reloaded, the page shows ${pick}`, held(pick, p3), JSON.stringify(p3));
+	const way = await r.A.resume(), w2 = await r.A.windowLook();
+	await t.check(`${tag}: reloaded and resumed (by ${way}), the window shows ${pick}`, w2.chosen === P.family && w2.mode === P.mode && w2.nier === (P.family === 'nier'), JSON.stringify(w2));
+	await r.A.close();
+	const p4 = await r.A.page();
+	await t.check(`${tag}: closed again, the page keeps ${pick}`, held(pick, p4), JSON.stringify(p4));
 }
 
 /* a reload is no choice: the run's own pick (unsaved, so the reload painted the saved look) comes back when it resumes */
@@ -173,6 +225,8 @@ export default async function (t) {
 			await run(t, sandbox, 'glass-light', { finish: true });
 			await run(t, sandbox, 'retro-dark', { reduced: true });
 			if (!sandbox) await reload(t);
+			await picked(t, sandbox, 'nier-light', 'basic-dark');
+			await picked(t, sandbox, 'glass-dark', 'nier-dark');
 		}
 	}
 	await t.emulate({ reducedMotion: 'no-preference' });
