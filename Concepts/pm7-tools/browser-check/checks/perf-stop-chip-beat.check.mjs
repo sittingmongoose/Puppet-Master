@@ -418,7 +418,7 @@ const spanOf = (spans, i) => spans.find((x) => i >= x.from && i < x.to) || null;
 // Every frame from the first change to the end, not only the frames that hold a change: the loop is never made anew,
 // never jumps at a hand-over, and (outside the frames after a long task) its place never moves more than one frame at
 // the faster pace (a retime that something else did at a moment no mark names shows here).
-function everyFrame(R) {
+export function everyFrame(R) {
 	const out = { worst: 0, where: null, restarts: [], known: [] }, frame = medianFrame(R.rows), mr = rates(R), spans = windowSpans(R, frame);
 	out.spans = spans;
 	const first = Math.max(1, Math.min(...R.marks.map((m) => m.i).filter((i) => i > 0)));
