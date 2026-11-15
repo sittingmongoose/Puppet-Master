@@ -77,9 +77,16 @@ def main():
     parser.add_argument('proof', type=Path)
     parser.add_argument('--family', action='append', required=True)
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--extra-ledger', type=Path, action='append', default=[],
+                        help='ledger.json.gz of a supplement run on the same code and tables; its declared '
+                             'attempts and replays join the family columns (gated status stays the main run\'s)')
     args = parser.parse_args()
     proof = args.proof
     ledger = json.load(gzip.open(proof / 'ledger.json.gz', 'rt'))
+    for extra in args.extra_ledger:
+        for record in json.load(gzip.open(extra, 'rt')):
+            if record.get('target') is not None and record.get('valid') is not True:
+                ledger.append(dict(record, id=len(ledger), sig=None, label='supplement:' + record['label']))
     signatures = [set(x) for x in json.load(gzip.open(proof / 'signatures.json.gz', 'rt'))]
     family_rows = json.loads((proof / 'family-rows.json').read_text())
     collection = json.loads((proof / 'collection.json').read_text())
