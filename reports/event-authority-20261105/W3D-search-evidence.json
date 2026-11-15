@@ -1,0 +1,332 @@
+[
+  {
+    "name": "bsd.advice_emitted",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1439,
+        "text": "  bsd.finding_held, bsd.finding_reconfirmed, bsd.finding_cleared, bsd.advice_emitted, bsd.finding_suppressed,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.assignment_paused",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1438,
+        "text": "  bsd.assignment_started, bsd.assignment_paused, bsd.assignment_resumed, bsd.assignment_stopped, bsd.review_started,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.assignment_resumed",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1438,
+        "text": "  bsd.assignment_started, bsd.assignment_paused, bsd.assignment_resumed, bsd.assignment_stopped, bsd.review_started,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.assignment_started",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1438,
+        "text": "  bsd.assignment_started, bsd.assignment_paused, bsd.assignment_resumed, bsd.assignment_stopped, bsd.review_started,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.assignment_stopped",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1438,
+        "text": "  bsd.assignment_started, bsd.assignment_paused, bsd.assignment_resumed, bsd.assignment_stopped, bsd.review_started,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.finding_cleared",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1439,
+        "text": "  bsd.finding_held, bsd.finding_reconfirmed, bsd.finding_cleared, bsd.advice_emitted, bsd.finding_suppressed,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.finding_held",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1439,
+        "text": "  bsd.finding_held, bsd.finding_reconfirmed, bsd.finding_cleared, bsd.advice_emitted, bsd.finding_suppressed,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.finding_reconfirmed",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1439,
+        "text": "  bsd.finding_held, bsd.finding_reconfirmed, bsd.finding_cleared, bsd.advice_emitted, bsd.finding_suppressed,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.finding_suppressed",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1439,
+        "text": "  bsd.finding_held, bsd.finding_reconfirmed, bsd.finding_cleared, bsd.advice_emitted, bsd.finding_suppressed,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.output_quarantined",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1440,
+        "text": "  bsd.review_failed, bsd.review_timed_out, and bsd.output_quarantined. All ten command IDs now have central catalog"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.policy_changed",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1437,
+        "text": "  authority_granted false on every result path. Semantic events are bsd.policy_changed, bsd.workflow_binding_created,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.review_failed",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1440,
+        "text": "  bsd.review_failed, bsd.review_timed_out, and bsd.output_quarantined. All ten command IDs now have central catalog"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.review_started",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1438,
+        "text": "  bsd.assignment_started, bsd.assignment_paused, bsd.assignment_resumed, bsd.assignment_stopped, bsd.review_started,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.review_timed_out",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1440,
+        "text": "  bsd.review_failed, bsd.review_timed_out, and bsd.output_quarantined. All ten command IDs now have central catalog"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  },
+  {
+    "name": "bsd.workflow_binding_created",
+    "scope": "Every root Plans/*.md and Plans/*.json; ledgers/generated indices/shards excluded as non-owning source lineage. Exact fixed-string search.",
+    "hits": [
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 371,
+        "text": "The required semantic event names are `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, and `bsd.output_quarantined`."
+      },
+      {
+        "path": "Plans/Back_Seat_Driver.md",
+        "line": 1437,
+        "text": "  authority_granted false on every result path. Semantic events are bsd.policy_changed, bsd.workflow_binding_created,"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 6502,
+        "text": "| `Plans/Back_Seat_Driver.md` | `bsd.policy_changed`, `bsd.workflow_binding_created`, `bsd.assignment_started`, `bsd.assignment_paused`, `bsd.assignment_resumed`, `bsd.assignment_stopped`, `bsd.review_started`, `bsd.finding_held`, `bsd.finding_reconfirmed`, `bsd.finding_cleared`, `bsd.advice_emitted`, `bsd.finding_suppressed`, `bsd.review_failed`, `bsd.review_timed_out`, `bsd.output_quarantined` | `requires_central_adjudication` |"
+      }
+    ],
+    "negative_evidence": "No event registry membership, no closed event payload definition, no exact producer/identity/filtered consumer/checkpoint contract found. Existing BSD typed lifecycle shapes and completed-review summary are not event definitions."
+  }
+]

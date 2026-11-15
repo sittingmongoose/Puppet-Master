@@ -1,0 +1,334 @@
+{
+  "status": "NEWLY_AUTHORED_EXPLICIT_DERIVED_DEFINITIONS",
+  "original_whole_resource": {
+    "path": "Plans/goal_run_certified_consumer_contracts/schemas/consumer.v1.schema.json",
+    "sha256": "7231019585f5b0ad2d1453fc1df3b8525baaa1b979eb616757d6f7307a75936a"
+  },
+  "reference_substitutions": {
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Generation": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/Generation",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ProjectState": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ProjectionCandidate": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectionCandidate",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ProjectorResult": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectorResult",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalCertified": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalCertified",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCertified": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentCertified",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalLegacy": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalLegacy",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentLegacy": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentLegacy",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentStartedOriginal": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentStartedOriginal",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalStartedOriginal": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalStartedOriginal",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCancelledOriginal": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentCancelledOriginal",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalCancelledOriginal": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalCancelledOriginal",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentStartedV7": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentStartedV7",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalStartedV7": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalStartedV7",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCancelledV7": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentCancelledV7",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalCancelledV7": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalCancelledV7",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+    "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+  },
+  "whole_definitions": [
+    "Generation",
+    "ProjectState",
+    "ProjectionCandidate",
+    "ProjectorResult",
+    "HistoricalCertified",
+    "CurrentCertified",
+    "HistoricalLegacy",
+    "CurrentLegacy",
+    "CurrentStartedOriginal",
+    "HistoricalStartedOriginal",
+    "CurrentCancelledOriginal",
+    "HistoricalCancelledOriginal",
+    "CurrentStartedV7",
+    "HistoricalStartedV7",
+    "CurrentCancelledV7",
+    "HistoricalCancelledV7",
+    "LogicalCheckpoint"
+  ],
+  "other_changes": {
+    "Generation/properties/profile": "goal_run_started_cancelled_certified_projector.reference.v1",
+    "LogicalCheckpoint/properties/schema_id": "pm.goal_run_started_cancelled_certified_checkpoint.reference.v1"
+  },
+  "unchanged_source_definitions": true,
+  "exact_scalar_changes": [
+    {
+      "location": "/$defs/CurrentCancelledOriginal/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/CurrentCancelledOriginal/properties/current_native/$ref",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/CurrentSuccessfulReadback",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCancelledOriginal/properties/current_native"
+    },
+    {
+      "location": "/$defs/CurrentCancelledOriginal/properties/original/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/OriginalCancelled",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCancelledOriginal/properties/original"
+    },
+    {
+      "location": "/$defs/CurrentCancelledOriginal/properties/projection/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/CurrentCancelledV7/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/CurrentCancelledV7/properties/current_native/$ref",
+      "before": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json#/$defs/CurrentSuccessfulReadback",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCancelledV7/properties/current_native"
+    },
+    {
+      "location": "/$defs/CurrentCancelledV7/properties/original/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.native_v7.v1.schema.json#/$defs/OriginalCancelled",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCancelledV7/properties/original"
+    },
+    {
+      "location": "/$defs/CurrentCancelledV7/properties/projection/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/CurrentCertified/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/CurrentCertified/properties/original/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertified",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCertified/properties/original"
+    },
+    {
+      "location": "/$defs/CurrentCertified/properties/projection/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/CurrentCertified/properties/published_native/$ref",
+      "before": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/PublishedWorkflow",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCertified/properties/published_native"
+    },
+    {
+      "location": "/$defs/CurrentLegacy/anyOf/0/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentStartedOriginal",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentStartedOriginal"
+    },
+    {
+      "location": "/$defs/CurrentLegacy/anyOf/1/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentStartedV7",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentStartedV7"
+    },
+    {
+      "location": "/$defs/CurrentLegacy/anyOf/2/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCancelledOriginal",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentCancelledOriginal"
+    },
+    {
+      "location": "/$defs/CurrentLegacy/anyOf/3/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentCancelledV7",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentCancelledV7"
+    },
+    {
+      "location": "/$defs/CurrentStartedOriginal/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/CurrentStartedOriginal/properties/current_native/$ref",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/CurrentStartSource",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentStartedOriginal/properties/current_native"
+    },
+    {
+      "location": "/$defs/CurrentStartedOriginal/properties/original/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/OriginalStarted",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentStartedOriginal/properties/original"
+    },
+    {
+      "location": "/$defs/CurrentStartedOriginal/properties/projection/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/CurrentStartedV7/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/CurrentStartedV7/properties/current_native/$ref",
+      "before": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/CurrentStartSource",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentStartedV7/properties/current_native"
+    },
+    {
+      "location": "/$defs/CurrentStartedV7/properties/original/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.native_v7.v1.schema.json#/$defs/OriginalStarted",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CurrentStartedV7/properties/original"
+    },
+    {
+      "location": "/$defs/CurrentStartedV7/properties/projection/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/Generation/properties/processed/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ProcessedPrefix",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Generation/properties/processed"
+    },
+    {
+      "location": "/$defs/Generation/properties/profile/const",
+      "before": "goal_run_started_cancelled_certified_projector.v1",
+      "after": "goal_run_started_cancelled_certified_projector.reference.v1"
+    },
+    {
+      "location": "/$defs/Generation/properties/scope/$ref",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/RunScope",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Generation/properties/scope"
+    },
+    {
+      "location": "/$defs/Generation/properties/source_token_at_birth/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/DurableGenericToken",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Generation/properties/source_token_at_birth"
+    },
+    {
+      "location": "/$defs/HistoricalCancelledOriginal/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/HistoricalCancelledOriginal/properties/original/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/OriginalCancelled",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalCancelledOriginal/properties/original"
+    },
+    {
+      "location": "/$defs/HistoricalCancelledOriginal/properties/projection/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/HistoricalCancelledV7/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/HistoricalCancelledV7/properties/original/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.native_v7.v1.schema.json#/$defs/OriginalCancelled",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalCancelledV7/properties/original"
+    },
+    {
+      "location": "/$defs/HistoricalCancelledV7/properties/projection/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/HistoricalCertified/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/HistoricalCertified/properties/original/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertified",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalCertified/properties/original"
+    },
+    {
+      "location": "/$defs/HistoricalCertified/properties/projection/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/HistoricalLegacy/anyOf/0/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalStartedOriginal",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalStartedOriginal"
+    },
+    {
+      "location": "/$defs/HistoricalLegacy/anyOf/1/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalCancelledOriginal",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalCancelledOriginal"
+    },
+    {
+      "location": "/$defs/HistoricalLegacy/anyOf/2/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalStartedV7",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalStartedV7"
+    },
+    {
+      "location": "/$defs/HistoricalLegacy/anyOf/3/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalCancelledV7",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalCancelledV7"
+    },
+    {
+      "location": "/$defs/HistoricalStartedOriginal/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/HistoricalStartedOriginal/properties/original/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/OriginalStarted",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalStartedOriginal/properties/original"
+    },
+    {
+      "location": "/$defs/HistoricalStartedOriginal/properties/projection/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/HistoricalStartedV7/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/HistoricalStartedV7/properties/original/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.native_v7.v1.schema.json#/$defs/OriginalStarted",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/HistoricalStartedV7/properties/original"
+    },
+    {
+      "location": "/$defs/HistoricalStartedV7/properties/projection/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/LogicalCheckpoint/properties/generations/additionalProperties/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Generation",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/Generation"
+    },
+    {
+      "location": "/$defs/LogicalCheckpoint/properties/schema_id/const",
+      "before": "pm.goal_run_started_cancelled_certified_checkpoint.v1",
+      "after": "pm.goal_run_started_cancelled_certified_checkpoint.reference.v1"
+    },
+    {
+      "location": "/$defs/LogicalCheckpoint/properties/scope/$ref",
+      "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/RunScope",
+      "after": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint/properties/scope"
+    },
+    {
+      "location": "/$defs/ProjectState/properties/checkpoint/anyOf/0/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/ProjectState/properties/row/anyOf/0/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    },
+    {
+      "location": "/$defs/ProjectionCandidate/properties/after/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ProjectState",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+    },
+    {
+      "location": "/$defs/ProjectionCandidate/properties/before/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ProjectState",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+    },
+    {
+      "location": "/$defs/ProjectorResult/properties/checkpoint/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+    },
+    {
+      "location": "/$defs/ProjectorResult/properties/projection/anyOf/0/$ref",
+      "before": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/StorageProjection",
+      "after": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+    }
+  ],
+  "source_reference_indirection": "An unmodified source reference is selected by an exact pointer into the unchanged original whole schema; its nested evaluation keeps that original schema location and routing realm."
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L32522
+Source lines: L28747-L32627
 
-Source SHA256: `9607d7a9e313bdadcaa303bb0277166f503c7121ca63c29368b0d03957e1f04f`
+Source SHA256: `2bd7295f3b6abcb321057fb875e885b8feac2fb3447bf3ee25c66e54ec8e6908`
 
 ---
 
@@ -3783,4 +3783,109 @@ negative_constraints:
 - Do not offer nicknames per Computer or per Device, or apply a Computer-level legacy entry silently.
 - Do not treat a nickname as proof that its model is available.
 owner_hints: *id001
+```
+
+### DL-510: Source Control source records (retention deck 6, E6-1)
+
+```yaml
+plan_unit_id: DL-510
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered card E6-1 of retention deck 6 in chat on 2026-11-13 at 10:43 PM EST (03:43Z on 2026-11-14); pm7-build relayed it. His answer, verbatim: "Same as the history". That is option A.
+
+  The question, as the card asked it: "How long should Source Control's saved source records be kept?" Each of the 19 Source Control event types saves a history entry, which already has a keep-rule (DL-453, DL-454 and DL-455), and a separate source record of what actually happened, which the history entry points back to. Option A, "Same lifetime as each history entry", keeps every history entry able to show its source and repeats the rule DL-507 chose for the developer-tool source records.
+
+  That answer keeps each Source Control original source fact exactly as long as the history entry that points to it. The following 19 exact prepared stored values (Plans/source_control_event_storage_rows.json) receive their family's history policy:
+  - DL-453 history (kept permanently, no age or count expiry): RP-AUTHORITY-INDEFINITE@1.0.0: source_control_backend_selected_fact (SP-1251), source_control_checkpoint_created_fact (SP-1252), source_control_checkpoint_restored_fact (SP-1253), source_control_repository_bound_fact (SP-1260), source_control_repository_unbound_fact (SP-1261), source_control_workspace_created_fact (SP-1263), source_control_workspace_removed_fact (SP-1265), source_control_writer_lease_granted_fact (SP-1267), source_control_writer_lease_lost_fact (SP-1268).
+  - DL-454 history (90 days from the first successful save that survives a restart): RP-TELEMETRY-90D@1.0.0: source_control_backend_detected_fact (SP-1250), source_control_status_refreshed_fact (SP-1262), source_control_workspace_opened_fact (SP-1264), source_control_workspace_switched_fact (SP-1266).
+  - DL-455 history (seven years from the original saved change): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter: source_control_remote_fetch_completed_fact (SP-1254), source_control_remote_fetch_started_fact (SP-1255), source_control_remote_publish_completed_fact (SP-1256), source_control_remote_publish_started_fact (SP-1257), source_control_remote_sync_completed_fact (SP-1258), source_control_remote_sync_started_fact (SP-1259).
+  All 19 families are Project-only, so no application edition and no application allowance applies.
+
+  For these exact stored values this decision supersedes the earlier PENDING_RETENTION_DECISION statements in SCS-1250 through SCS-1268 (C7), SP-1250 through SP-1268, Plans/source_control_event_preparation.json and Plans/source_control_event_storage_rows.json. Existing policy definitions keep their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: [DL-453, DL-454, DL-455]
+unblocks: []
+acceptance_criteria:
+- Every named source-fact row uses exactly its family's history policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm_w3b_event_oracles.py, Plans/source_control_event_storage_rows.json]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck6
+implementation_surfaces: [Plans/source_control_event_storage_rows.json, Plans/source_control_event_preparation.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-6_20261114.md; SHA-256 980b44d2a58373758e20eb0cd376748a4146bffac774b265781521e0d9d3a2da; Jared answer relayed by pm7-build mail 1114034303-dce3"
+- "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-6.md"
+preserved_exact_tokens: ["Same as the history", "RP-AUTHORITY-INDEFINITE@1.0.0", "RP-TELEMETRY-90D@1.0.0", "RP-OPERATIONAL-2555D@1.0.0", "source_control_backend_selected_fact", "source_control_checkpoint_created_fact", "source_control_checkpoint_restored_fact", "source_control_repository_bound_fact", "source_control_repository_unbound_fact", "source_control_workspace_created_fact", "source_control_workspace_removed_fact", "source_control_writer_lease_granted_fact", "source_control_writer_lease_lost_fact", "source_control_backend_detected_fact", "source_control_status_refreshed_fact", "source_control_workspace_opened_fact", "source_control_workspace_switched_fact", "source_control_remote_fetch_completed_fact", "source_control_remote_fetch_started_fact", "source_control_remote_publish_completed_fact", "source_control_remote_publish_started_fact", "source_control_remote_sync_completed_fact", "source_control_remote_sync_started_fact"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
+```
+
+### DL-511 - A Supplemental Closure Row May Replace The Frozen Matrix Row It Names
+
+```yaml
+plan_unit_id: DL-511
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-511 records Jared's answer of 2026-11-14 at 3:39 PM EST (20:39:58Z) to stream C's card C-A006: option A,
+  "Change the rule so a correction can replace a frozen record", given with no added words. The signed answer is
+  /mnt/Cursor/agent-reports/v1/answers/vm.pm-closure-lead--C-A006.json (SHA-256
+  ebbc55c2ed72504b9e9d2145ac92855629d9bc7e2a4553f2a594aecc0d493218). The card asked about audit-20260617-006, whose
+  frozen closure-matrix lines 22 and 23 still declare the support files scripts/pm-audit-closure.py and
+  Plans/.audits/_semantic_closure_registry.jsonl as owners while the registry closures they name were corrected to
+  PDS-014 and PLS-012, so neither registry link holds. PLS-026 kept such a link an error, and an appended correction
+  changed nothing, because the per-audit check judged every frozen row on its own. Option A promised that the finding
+  is properly repaired and closed, that registry rows 25, 35 and 1203 all get final outcomes, and that later audits can
+  fix a wrong link the same way. It changes three things. First, Plans/Planning_Ledger_System.md#PLS-026 lets a
+  supplemental closure pass append one corrected closure row that names, in replaces_matrix_line, the one frozen row it
+  replaces, with replaces_row_sha256 and a replacement_reason; the frozen row stays byte-identical as history, the
+  per-audit check judges the replacing row's registry link instead of the frozen row's, and a registry link that does
+  not hold stays an error for every frozen row that no valid replacement names. Second, validate_audit_dir in
+  scripts/pm-audit-closure.py honors only a valid replacement; it refuses an unknown line, a target that is not a
+  frozen row, duplicate and chained replacements, and a replacing row whose own registry link does not hold, and a
+  replacing row adds no coverage of its own. Third, audit-20260617-006's supplemental_closure_pass-20261114.json
+  replaces lines 22 and 23 with appended rows that link two new registry closures under the corrected owners. They get
+  new closure ids, so the existing anchors on closure ids -022 and -023 keep naming exactly one row each. The
+  re-audits of registry rows 1203, 25 and 35 follow at the landed commit with fresh reviews; this entry claims no
+  re-audit outcome.
+gui_related: false
+gui_classification_reason: Records a governance decision about audit-closure validation; no GUI contract changes.
+split_recommended: false
+depends_on: [PLS-026, DL-334]
+unblocks: []
+acceptance_criteria:
+  - "Plans/Planning_Ledger_System.md#PLS-026 states when an appended row replaces a frozen row and that a registry link that does not hold stays an error for every frozen row that no valid replacement names."
+  - "audit-20260617-006's lines 22 and 23 are replaced by appended rows linking new registry closures; no existing matrix or registry row changes."
+validation_surfaces:
+  - python3 -m unittest tests/test_pm_audit_closure.py
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity --require-closure-matrix
+  - python3 scripts/pm-plan-index.py validate
+risk_class: governance_integrity
+reasoning_tier: high
+context_scope: semantic_audit_closure
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Planning_Ledger_System.md
+  - scripts/pm-audit-closure.py
+  - Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/supplemental_closure_pass-20261114.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/agent-reports/v1/answers/vm.pm-closure-lead--C-A006.json; SHA-256 ebbc55c2ed72504b9e9d2145ac92855629d9bc7e2a4553f2a594aecc0d493218; Jared's signed answer A to card C-A006, 2026-11-14T20:39:58Z"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/rows-25-35-49/card-r253549.json; SHA-256 4126f89b0c4552870b04ac3eac8308f3b5456ec3a63705d0fffd253e73f868ff; card C-A006"
+  - Plans/Decision_Log.md#DL-334
+preserved_exact_tokens:
+  - "DL-511"
+  - "Change the rule so a correction can replace a frozen record"
+  - "replaces_matrix_line"
+owner_hints:
+  - Plans/Planning_Ledger_System.md
 ```

@@ -15,6 +15,58 @@
    not held invisible through the GPU's first draw; other moves still wait for the second. */
 (function () {
   'use strict';
+  /* PM_LOOK_HOLD (FO-188): the app beneath the onboarding window holds still while a look is revealed over it (README
+     Performance rule 6). A look picked in the window plays one View Transition, a circular reveal of 760 ms (Retro 520 ms),
+     and the app's own work for the new look ran inside it: the chat redrew itself (515 ms on the VM), Home, the terminal
+     and the editor applied the look (98 ms in one frame), with the window's own work on top, so the reveal stuttered and
+     lurched (Jared's QA, 2026-11-13: tasks of 50 to 450 ms and frame gaps up to 880 ms on a fast PC). The colours still
+     change at once (CSS); what the app does in script for a look waits until the reveal has ended.
+       PM_LOOK_HOLD()         true while a reveal plays (60-ui-core.js applyLook holds it from the theme's write to the
+                              reveal's end)
+       PM_LOOK_HOLD.after(fn) while held: fn is kept (once) and run after it, and the answer is true; else false, and the
+                              caller runs fn itself as before
+       PM_LOOK_HOLD.begin()   holds; returns end(), which a reveal calls once
+     What was kept runs once the reveal has ended, in idle slices in the order asked: the frame after the reveal's last
+     one is the browser's own restyle of the whole page (the transition ending, about 4,800 elements), and one task doing
+     all of it after that was a long task of its own. A slice runs jobs until 6 ms have gone (at least one): a reveal
+     keeps dozens of after-layout callbacks, whose asking again costs nothing, and one job a slice left the chat's redraw
+     waiting behind them for 0.7 to 2 s after the reveal (Alexis, kit check perf-look-change), the dimmed app showing
+     the old family's glyphs all that time. A new reveal starting meanwhile holds the rest again. */
+  let lookHolds = 0, lookIdle = 0;
+  const lookLater = [];
+  const lookNext = () => {
+    lookIdle = 0;
+    const t0 = performance.now();
+    while (!lookHolds && lookLater.length) {
+      const fn = lookLater.shift();
+      try { fn(); } catch (e) { try { console.error('[PM_LOOK_HOLD]', e); } catch (_) { /* none */ } }
+      if (performance.now() - t0 >= 6) break;
+    }
+    if (lookLater.length) lookSlice();
+  };
+  const lookSlice = () => {
+    if (lookIdle || lookHolds) return;
+    lookIdle = 1;
+    if (window.requestIdleCallback) window.requestIdleCallback(lookNext, { timeout: 200 });
+    else setTimeout(lookNext, 16);
+  };
+  window.PM_LOOK_HOLD = function lookHold() { return lookHolds > 0; };
+  window.PM_LOOK_HOLD.after = function after(fn) {
+    if (!lookHolds || typeof fn !== 'function') return false;
+    if (lookLater.indexOf(fn) < 0) lookLater.push(fn);
+    return true;
+  };
+  window.PM_LOOK_HOLD.begin = function begin() {
+    lookHolds++;
+    let open = true;
+    return function end() {
+      if (!open) return;
+      open = false;
+      if (--lookHolds > 0) return;
+      /* past the frame of the transition's own end restyle, then the slices */
+      requestAnimationFrame(() => requestAnimationFrame(lookSlice));
+    };
+  };
   /* PM_AFTER_LAYOUT(fn): fn runs in the coming frame after its style and layout, before its paint (a ResizeObserver
      delivery), so what it reads is already computed. One observer, made as this script loads, serves every caller:
      ResizeObservers are told in the order they were made, and one made at the moment it was needed was told after the
@@ -24,13 +76,23 @@
      Never ask from inside another ResizeObserver's callback: that code already runs after layout, so do the work there.
      The root observed from inside a delivery cannot be delivered in that frame; the browser reports it as a
      'ResizeObserver loop' error and fn runs a frame late (the panels' bodyObserver asking for its resize flush, F4
-     settle bisect). Asked from inside this helper's own delivery, fn is moved to the next frame on purpose. */
-  const afterQ = [];
+     settle bisect). Asked from inside this helper's own delivery, fn is moved to the next frame on purpose.
+     While a look is revealed over the window (PM_LOOK_HOLD above) only the window's own callers run here (marked with
+     PM_AFTER_LAYOUT.own: the moves held for a frame on time, the hover tokens); every other one
+     is the app beneath applying the look (Home's render and tab bodies, the terminal's and editor's look, the rail's fit,
+     the wallpaper's reads), and is kept until the reveal has ended, then asked again, one per idle slice. */
+  const afterQ = [], afterOwn = new WeakSet(), afterHeld = new Set();
   let afterRo = null, observing = false, flushing = false, flushedAt = null;
   const watch = () => { if (!observing && afterQ.length) { observing = true; afterRo.observe(document.documentElement); } };
+  const afterHold = (fn) => {
+    if (afterHeld.has(fn)) return;
+    afterHeld.add(fn);
+    window.PM_LOOK_HOLD.after(() => { afterHeld.delete(fn); window.PM_AFTER_LAYOUT(fn); });
+  };
   const flushAfter = () => {
     if (afterRo && observing) { afterRo.unobserve(document.documentElement); observing = false; }
-    const q = afterQ.splice(0);
+    let q = afterQ.splice(0);
+    if (lookHolds) q = q.filter((fn) => { if (afterOwn.has(fn)) return true; afterHold(fn); return false; });
     flushing = true;
     flushedAt = document.timeline.currentTime;
     for (const fn of q) { try { fn(); } catch (e) { try { console.error('[PM_AFTER_LAYOUT]', e); } catch (_) { /* none */ } } }
@@ -50,6 +112,8 @@
     if (flushedAt != null && flushedAt === document.timeline.currentTime) { requestAnimationFrame(watch); return; }
     watch();
   };
+  /* the window's own callers: never held by a look's reveal (above) */
+  window.PM_AFTER_LAYOUT.own = function own(fn) { if (typeof fn === 'function') afterOwn.add(fn); return fn; };
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     /* o.wait: () => bool. While it says true the moves stay held, even when the frames are on time, for at most o.waitCap
@@ -112,7 +176,8 @@
     /* Each check runs in its frame after layout (PM_AFTER_LAYOUT, before paint), so reading
        the moves (getAnimations for CSS animations) finds style already computed: from an animation frame callback it
        forced that frame's style early (49.7 ms on the P1000 for the customizer's six panels, editor lane). What the
-       check changes is drawn in the same frame. */
+       check changes is drawn in the same frame. A look's reveal never holds it (PM_AFTER_LAYOUT.own). */
+    window.PM_AFTER_LAYOUT.own(tick);
     const next = () => requestAnimationFrame(() => window.PM_AFTER_LAYOUT(tick));
     next();
   };
@@ -335,6 +400,9 @@
   const animOn = (k) => (e) => {
     const el = e.target;
     if (!el || el.nodeType !== 1) return;
+    /* a View Transition's own pseudo-elements (a look's reveal) end with it and are no motion of the page's: counted, the
+       lookup asked <html> for every animation under it, 196 ms inside a Light reveal on the VM (FO-188, variant B) */
+    if (e.pseudoElement && e.pseudoElement.indexOf('::view-transition') === 0) return;
     let m = warmAnims.get(el);
     if (!m) warmAnims.set(el, (m = new Map()));
     const now = performance.now();
@@ -368,7 +436,10 @@
     return st;
   };
   /* in PM_AFTER_LAYOUT: style is computed, so reading an element's animations forces nothing. Only an element counted for
-     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review) */
+     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review). While a
+     look is revealed over the window this lookup waits for the reveal's end like the app's callers (PM_LOOK_HOLD): one
+     getAnimations per counted element, it was 112-115 ms inside a Light reveal on the VM (FO-188, variant B), and the
+     warm queue does nothing while the window is open anyway (PM_BUSY: 'onboarding'). */
   const classify = () => {
     warmClassing = false;
     const now = performance.now();

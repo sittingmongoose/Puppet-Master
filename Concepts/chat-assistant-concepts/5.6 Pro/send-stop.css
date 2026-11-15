@@ -1,5 +1,5 @@
 /* send-stop.css — the composer's Send / Stop control, "solid-living" (step SS, 2026-10-02; Jared's pick of three).
- * OWNER: Send/Stop (step SS). Markup, one-shots and the cadence switch: send-stop.js. Loaded in CSS_LAST right after
+ * OWNER: Send/Stop (step SS). Markup, one-shots and the pace change: send-stop.js. Loaded in CSS_LAST right after
  * neon-icons.css (build.py), so it settles ties with composer.css and the neon grammar; it replaces the composer.css
  * send block, the styles.css .send-button hover lift (that rule now skips .sendstop) and nier.css's send rules.
  *
@@ -19,10 +19,11 @@
  * Retro and NieR drain in one step 40 ms in, never at the drain's first instant: a run that ends and a queued message
  * that sends itself flip the chip Stop -> Send -> Stop inside one task (turn-stream.js renders, then flushes the
  * queue), and a step at the start would leave the chip on the accent until the flood's way back has run.
- * The run: the square breathes ~1 px (scale .88) at the activity bar's 2.2 s working cadence while words arrive, and
- * .92 at 3.2 s while the model thinks or a tool runs; the danger backlight breathes .30/.18 (.10/.06 on light themes),
- * .30/.20 (.10/.067) in the waiting cadence. Final review (2026-10-03): at .95 and .30/.24 the 69 s of waiting in a long
- * agent turn read as a still red button, not as running; the deeper slow pulse stays well under the flowing cadence.
+ * The run: the square breathes ~1 px (scale .88) and the danger backlight .30/.18 (.10/.06 on light themes), at the
+ * activity bar's 2.2 s working cadence while words arrive and at 3.2 s while the model thinks or a tool runs; the pace
+ * changes at once and smoothly (PERF-STOP2 = A, 2026-11-13; see the Stop section). Final review (2026-10-03): at .95
+ * and .30/.24 the 69 s of waiting in a long agent turn read as a still red button, not as running (the waiting pulse
+ * was then .92 and .30/.20 until 2026-11-13, when one pulse at two paces replaced the two pulses).
  * Both loops animate transform or opacity on a box (the svg root, the backlight's gradient), so they run on the
  * compositor.
  *
@@ -55,9 +56,10 @@ body {
   --ss-gle: cubic-bezier(.37, 0, .63, 1);
 }
 /* light themes: no bloom on the glyph (a white halo on a coloured chip reads as a smudge) and a faint, tighter
-   backlight, so no accent or danger haze lies on the light field (G1) */
+   backlight, so no accent or danger haze lies on the light field (G1); the danger backlight is a third as deep by
+   its wrapper's opacity (below), so its gradient keeps the dark themes' .3 */
 body[data-theme$="-light"] {
-  --ss-glow-a: .1; --ss-glow-stop-a: .1; --ss-glow-w: 200%;
+  --ss-glow-a: .1; --ss-glow-w: 200%;
   --ss-halo-a: 0;
   --ss-rim: rgb(255 255 255 / .26); --ss-drop: rgb(20 20 60 / .2); --ss-sheen: rgb(255 255 255 / .12);
   --ss-idle-ink: .76;
@@ -84,23 +86,34 @@ body[data-theme^="retro"] { --ss-out: steps(4, end); --ss-shake: steps(4, end); 
 }
 /* Two backlights behind the chip: ::before in the accent (Send, Queue) and .ss-bl in the danger tone (Stop). They
    cross-fade by opacity; hover swells them with `scale`. Centred a little low, so they also do the old accent drop
-   shadow's job. The danger one is a wrapper (its opacity fades with the state, after the flood) around ::before (the
+   shadow's job. The danger one is a wrapper (its opacity fades with the state, after the flood) around .ss-blg (the
    gradient, which the Stop loop breathes): a loop created while a transition of the SAME property runs on the same
    element starts on the main thread and stays there (VM trace: a main frame every frame), so the fade and the loop
-   live on two elements and multiply. */
+   live on two elements and multiply. The gradient is an element, not the wrapper's ::before, so whatever holds the
+   app's loops holds it with the glyph: the onboarding window's hold reaches elements only (R40 F1: under the window
+   the glyph stood still while a ::before went on breathing, and the two stayed apart for the rest of the run). */
 .sendstop::before, .ss-bl {
   content: ""; position: absolute; left: 50%; top: 58%; width: var(--ss-glow-w); height: var(--ss-glow-w); translate: -50% -50%;
   border-radius: 50%; pointer-events: none; z-index: -1; opacity: 0;
   transition: opacity 260ms ease-out, scale 260ms var(--ease);
 }
 .sendstop::before { background: radial-gradient(closest-side, var(--accent), transparent); }
-.ss-bl::before {
-  content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+.ss-blg {
+  position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
   background: radial-gradient(closest-side, var(--danger), transparent); opacity: var(--ss-glow-stop-a);
 }
 .sendstop[data-ss="ready"]::before, .sendstop[data-ss="queue"]::before { opacity: var(--ss-glow-a); }
 /* the red backlight comes up with the flood (its half-way point), never ahead of it; Retro steps on with it */
 .sendstop[data-ss="stop"] .ss-bl { opacity: 1; transition: opacity 300ms ease-out calc(var(--ss-md, 0ms) + 220ms), scale 260ms var(--ease); }
+body[data-theme$="-light"] .sendstop[data-ss="stop"] .ss-bl { opacity: calc(1 / 3); }
+/* Holds by marks (the onboarding window's, FO-181 14-window-hold.js: data-o55-loop; the still page's, 14-shell-still.js:
+   data-pm-held) take the element of each loop running when they begin, and a loop that starts later only when it
+   starts, once its delay has run out. A backlight made anew under one (the window over a NieR look brings its box back)
+   then waited out its delay unheld while its glyph was held, started on its own, and the first change after stepped it
+   (0.31-0.35 of a loop, dry merge with FO-181). So the backlight is held exactly while its glyph is marked, from its
+   start, in the same restyle. Nothing marked, nothing matched: inert under main's element rule; while the still page
+   holds, it repeats the still page's own hold of the backlight. */
+.sendstop:has(.ss-g[data-o55-loop]) .ss-blg, .sendstop:has(.ss-g[data-pm-held]) .ss-blg { animation-play-state: paused !important; }
 body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-bl { transition: opacity 300ms steps(1, start) calc(var(--ss-md, 0ms) + 300ms), scale 260ms var(--ease); }
 
 /* pointer-events none on the face (and so the glyph): the button is the one hit target, so a glyph moving under a still
@@ -253,23 +266,27 @@ body[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood { transition: scal
 
 /* ------------------------------------------------------------------ Stop: breathing with the stream */
 /* One loop on the glyph (transform on the svg root, a box, so the compositor runs it) and one on the danger
-   backlight's gradient (opacity, .ss-bl::before), same period. Flowing (words arriving): 2200 ms, the activity bar's working breathe, ~1 px;
-   waiting (thinking, a tool running): 3200 ms, the attention cadence, shallower. send-stop.js switches the mode only
-   at an iteration boundary (scale 1), and once it has switched the next loop starts at once (data-flowed). */
-.sendstop[data-ss="stop"] .ss-g { animation: ss-breathe 2200ms var(--ss-le) var(--ss-ld) infinite; }
-.sendstop[data-ss="stop"] .ss-bl::before { animation: ss-glow 2200ms var(--ss-gle) var(--ss-ld) infinite; }
-.sendstop[data-ss="stop"][data-flow="waiting"] .ss-g { animation-name: ss-breathe-w; animation-duration: 3200ms; }
-.sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before { animation-name: ss-glow-w; animation-duration: 3200ms; }
-.sendstop[data-ss="stop"][data-flowed] .ss-g, .sendstop[data-ss="stop"][data-flowed] .ss-bl::before { animation-delay: 0ms; }
+   backlight's gradient (opacity, .ss-blg), same period. ONE pulse at two paces (Jared's choice PERF-STOP2 = A,
+   2026-11-13): flowing (words arriving) 2200 ms, the activity bar's working breathe, ~1 px; waiting (thinking, a tool
+   running) 3200 ms, the attention cadence. The pace changes the moment the cadence does, and the loop keeps its place.
+   The loop's length is the chip's own: --ss-beat (from data-flow) times --ss-speed (Settings' Animation speed, which
+   the chip keeps itself, as Usage keeps --pmu-speed: a time that carries a *speed var is one the look scale sheet
+   leaves alone, 17-look.js). send-stop.js writes both data-flow and --ss-speed on the live chip itself, in one frame
+   callback, and puts the running loop at the same point of its new length there (apply()); the markup only repeats
+   what it has written. Never another keyframes name, which would start a new loop. Until 2026-11-13 the waiting
+   pulse was also shallower (scale .92, backlight .30/.20; .10/.067 on light themes) and the change waited for a loop's
+   end, learnt from an animationiteration listener that cost the whole page about 23 main frames a second. */
+.sendstop[data-ss="stop"] { --ss-beat: 2200ms; }
+.sendstop[data-ss="stop"][data-flow="waiting"] { --ss-beat: 3200ms; }
+.sendstop[data-ss="stop"] .ss-g { animation: ss-breathe calc(var(--ss-beat) * var(--ss-speed, 1)) var(--ss-le) calc(var(--ss-ld) * var(--ss-speed, 1)) infinite; }
+.sendstop[data-ss="stop"] .ss-blg { animation: ss-glow calc(var(--ss-beat) * var(--ss-speed, 1)) var(--ss-gle) calc(var(--ss-ld) * var(--ss-speed, 1)) infinite; }
+/* THE PULSE'S DEPTH, the one place it is set (both cadences): the square's scale at the loop's middle and the
+   backlight's opacity there. Literal values (no var() inside a loop's keyframes, so the compositor runs it), one set
+   for dark themes and light: a light theme's backlight is a third as deep by its wrapper's opacity (.ss-bl, above;
+   .1 and .06 as before), so a light/dark change never swaps the keyframes, which made the backlight's loop anew,
+   started again from its delay out of phase with the glyph (K3). */
 @keyframes ss-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(.88); } }
-@keyframes ss-breathe-w { 0%, 100% { transform: scale(1); } 50% { transform: scale(.92); } }
-/* literal values per theme brightness (no var() inside a loop's keyframes, so the compositor runs it) */
 @keyframes ss-glow { 0%, 100% { opacity: .3; } 50% { opacity: .18; } }
-@keyframes ss-glow-w { 0%, 100% { opacity: .3; } 50% { opacity: .2; } }
-@keyframes ss-glow-l { 0%, 100% { opacity: .1; } 50% { opacity: .06; } }
-@keyframes ss-glow-wl { 0%, 100% { opacity: .1; } 50% { opacity: .067; } }
-body[data-theme$="-light"] .sendstop[data-ss="stop"] .ss-bl::before { animation-name: ss-glow-l; }
-body[data-theme$="-light"] .sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before { animation-name: ss-glow-wl; }
 
 /* ------------------------------------------------------------------ the launch (Send or Queue click) */
 /* 0-320 ms the plane lifts off along its heading and fades as it crosses the chip edge (the face clips it); from
@@ -322,19 +339,19 @@ body[data-theme^="retro"] .sendstop.ss-fail .ss-face::after { animation: ss-flas
 .sendstop.ss-fail-static .ss-face { box-shadow: inset 0 0 0 1.5px var(--danger), 0 0 0 2px var(--danger); }
 
 /* a state change that must not animate (a thread switch): send-stop.js sets ss-snap, flushes style, removes it */
-.sendstop.ss-snap, .sendstop.ss-snap *, .sendstop.ss-snap::before, .sendstop.ss-snap .ss-bl::before,
+.sendstop.ss-snap, .sendstop.ss-snap *, .sendstop.ss-snap::before,
 .sendstop.ss-snap .ss-face::after { transition: none !important; animation: none !important; }
 
 /* ------------------------------------------------------------------ reduced motion */
 /* End states only: no transitions, no loops, no one-shots. The square, the stacked planes, the count and the colours
    carry every state. Every route: the media query, the concept's body.pm56-reduced, NieR's html[data-motion]. */
 @media (prefers-reduced-motion: reduce) {
-  .sendstop, .sendstop *, .sendstop::before, .sendstop .ss-bl::before, .sendstop .ss-face::after { animation: none !important; transition: none !important; }
+  .sendstop, .sendstop *, .sendstop::before, .sendstop .ss-face::after { animation: none !important; transition: none !important; }
 }
-body.pm56-reduced .sendstop, body.pm56-reduced .sendstop *, body.pm56-reduced .sendstop::before, body.pm56-reduced .sendstop .ss-bl::before,
+body.pm56-reduced .sendstop, body.pm56-reduced .sendstop *, body.pm56-reduced .sendstop::before,
 body.pm56-reduced .sendstop .ss-face::after { animation: none !important; transition: none !important; }
 html[data-motion="reduced"] .sendstop, html[data-motion="reduced"] .sendstop *, html[data-motion="reduced"] .sendstop::before,
-html[data-motion="reduced"] .sendstop .ss-bl::before, html[data-motion="reduced"] .sendstop .ss-face::after { animation: none !important; transition: none !important; }
+html[data-motion="reduced"] .sendstop .ss-face::after { animation: none !important; transition: none !important; }
 
 /* ------------------------------------------------------------------ NieR Mode (html[data-o55-nier="on"]) */
 /* Flat ink on parchment, nothing glows (NieR's own rule). The NieR palette repaints the tokens (accent = ink,

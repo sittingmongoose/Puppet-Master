@@ -1,0 +1,65 @@
+{
+  "schema_id": "pm.goal.updated.original_source_selection.v3",
+  "status": "NEWLY_AUTHORED_TEST_ONLY_PREPARED_WITHOUT_ADMISSION",
+  "event_type": "goal.updated",
+  "source_package_edition": "3.0",
+  "predecessor_manifest_sha256": "e22c3bee94c37a6853c61d1b18a0a2eb631174160ddbe38644ad2ada6dc53273",
+  "edits": [
+    {
+      "path": "goal_source.py",
+      "physical_call_sites": 14
+    },
+    {
+      "path": "goal_command.py",
+      "physical_call_sites": 4
+    },
+    {
+      "path": "shared_link.py",
+      "physical_call_sites": 12
+    },
+    {
+      "path": "runtime/physical/source/model.py",
+      "physical_call_sites": 23
+    },
+    {
+      "path": "runtime/physical/adapter.py",
+      "physical_call_sites": 12
+    }
+  ],
+  "semantic_recipes": "unchanged",
+  "native_execution": "NOT_RUN",
+  "candidate_path": "/home/sittingmongoose/PM-Experiments/c3-w12a-p2-20261105/physical-source.v3.11",
+  "manifest_sha256": "31447afd3644e469594bf9c493e788cbe5bc9254d53e53a97d9098838c31dd1b",
+  "members": 785,
+  "authoring_script": "scripts/pm_goal_own_c3_w12a_successor.py",
+  "source_template": "scripts/pm_goal_own_c3_w12a_physical.py",
+  "physical_schema": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+  "predecessor_selection": "Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json",
+  "selection_rule": "Every W12a p2 method verifies this whole manifest before imports. No ambient or predecessor fallback; fresh successor births only.",
+  "repository_support": [
+    {
+      "path": "scripts/pm_goal_own_c_oracles.py",
+      "sha256": "ec8daf13cf3814e3264be408c5861fdd7d51aff2ebe62c36d9042990c61136c4"
+    },
+    {
+      "path": "scripts/pm_goal_oracle_common.py",
+      "sha256": "eb809ea10fb260b980813272a7e4d73934927f878ce84e9d7ed361ea696a3cec"
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/contracts.schema.json",
+      "sha256": "6cfc3868f485286d9fadbbab293b0407583b30e88a02f6f5e1334f77fa0ad84a"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12a_successor.py",
+      "sha256": "f47e4369e0f76bf9d8ca3c573126b6da904fd0bf3f626b2f90a11838b7570419"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "sha256": "6a8ac49dce5eb04c8b9f166f72c2ec4605cd432934cd1e6a9ac2cb7d8b7bbc74"
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "sha256": "506add0794a1ae50d85fa3c45eb45d63a93eb2736e67005e83e4738c19d394a7"
+    }
+  ]
+}

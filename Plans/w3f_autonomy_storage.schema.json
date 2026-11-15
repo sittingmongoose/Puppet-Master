@@ -1,0 +1,680 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.w3f.autonomy_storage.v1",
+  "$defs": {
+    "projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "scope_partition",
+        "attempt_id",
+        "event_id",
+        "sequence_id",
+        "producer_semantic_digest",
+        "checkpoint_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string",
+          "const": "pm.storage_value.autonomy_ceiling_projection.v1"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "checkpoint_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "scope_partition",
+        "projector_id",
+        "projector_version",
+        "event_type",
+        "revision",
+        "index_read_token",
+        "source_cursor",
+        "index_through_sequence_id",
+        "state",
+        "publication_id",
+        "published_at_utc",
+        "retired_at_utc",
+        "hold_refs",
+        "retired_generations"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string",
+          "const": "pm.storage_value.autonomy_ceiling_checkpoint.v1"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projector_id": {
+          "type": "string",
+          "const": "projector.autonomy.ceiling_checked"
+        },
+        "projector_version": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "type": "string",
+          "const": "autonomy.ceiling_checked"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "index_read_token": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storage_instance_id",
+            "checkpoint_key",
+            "checkpoint_ref",
+            "generation_id",
+            "generation_anchor_sha256",
+            "frontier_revision",
+            "frontier_sha256",
+            "index_dataset_name",
+            "source_selection"
+          ],
+          "properties": {
+            "storage_instance_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "checkpoint_key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "checkpoint_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "generation_id": {
+              "type": "string",
+              "pattern": "^eig_[0-9a-f]{64}$"
+            },
+            "generation_anchor_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "frontier_revision": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "frontier_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "index_dataset_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_selection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storage_instance_id",
+                "current_ref",
+                "current_bytes_sha256",
+                "selected_segment_generation",
+                "manifest_ref",
+                "manifest_bytes_sha256",
+                "manifest_generation",
+                "recovery_epoch",
+                "manifest_survivor_prefix_sha256",
+                "retained_inventory_sha256",
+                "durable_watermarks_sha256",
+                "excluded_ranges_sha256",
+                "retired_inputs_sha256"
+              ],
+              "properties": {
+                "storage_instance_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "current_ref": {
+                  "const": "storage/seglog/CURRENT"
+                },
+                "current_bytes_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "selected_segment_generation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "manifest_ref": {
+                  "const": "storage/seglog/manifest.v1.msgpack"
+                },
+                "manifest_bytes_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "manifest_generation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "recovery_epoch": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "manifest_survivor_prefix_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "retained_inventory_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "durable_watermarks_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "excluded_ranges_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "retired_inputs_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          }
+        },
+        "source_cursor": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "segment_generation",
+                "segment_name",
+                "byte_offset",
+                "frame_end_offset",
+                "last_sequence_id",
+                "last_event_id"
+              ],
+              "properties": {
+                "segment_generation": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "segment_name": {
+                  "type": "string",
+                  "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                },
+                "byte_offset": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "frame_end_offset": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "last_sequence_id": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 18446744073709551615
+                },
+                "last_event_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_through_sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "state": {
+          "enum": [
+            "current",
+            "rebuilding",
+            "withdrawn"
+          ]
+        },
+        "publication_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "not": {
+            "pattern": "[\u0000\r\n]"
+          }
+        },
+        "published_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "retired_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hold_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048,
+            "not": {
+              "pattern": "[\u0000\r\n]"
+            }
+          },
+          "uniqueItems": true
+        },
+        "retired_generations": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "checkpoint",
+              "successor_publication_id"
+            ],
+            "properties": {
+              "checkpoint": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "storage_instance_id",
+                  "scope_partition",
+                  "projector_id",
+                  "projector_version",
+                  "event_type",
+                  "revision",
+                  "index_read_token",
+                  "source_cursor",
+                  "index_through_sequence_id",
+                  "state",
+                  "publication_id",
+                  "published_at_utc",
+                  "retired_at_utc",
+                  "hold_refs"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "type": "string",
+                    "const": "pm.storage_value.autonomy_ceiling_checkpoint.v1"
+                  },
+                  "schema_version": {
+                    "type": "string",
+                    "const": "1.0.0"
+                  },
+                  "storage_instance_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "scope_partition": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "projector_id": {
+                    "type": "string",
+                    "const": "projector.autonomy.ceiling_checked"
+                  },
+                  "projector_version": {
+                    "type": "string",
+                    "const": "1.0.0"
+                  },
+                  "event_type": {
+                    "type": "string",
+                    "const": "autonomy.ceiling_checked"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "index_read_token": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "storage_instance_id",
+                      "checkpoint_key",
+                      "checkpoint_ref",
+                      "generation_id",
+                      "generation_anchor_sha256",
+                      "frontier_revision",
+                      "frontier_sha256",
+                      "index_dataset_name",
+                      "source_selection"
+                    ],
+                    "properties": {
+                      "storage_instance_id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "checkpoint_key": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "checkpoint_ref": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "generation_id": {
+                        "type": "string",
+                        "pattern": "^eig_[0-9a-f]{64}$"
+                      },
+                      "generation_anchor_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      },
+                      "frontier_revision": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "frontier_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      },
+                      "index_dataset_name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "source_selection": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "storage_instance_id",
+                          "current_ref",
+                          "current_bytes_sha256",
+                          "selected_segment_generation",
+                          "manifest_ref",
+                          "manifest_bytes_sha256",
+                          "manifest_generation",
+                          "recovery_epoch",
+                          "manifest_survivor_prefix_sha256",
+                          "retained_inventory_sha256",
+                          "durable_watermarks_sha256",
+                          "excluded_ranges_sha256",
+                          "retired_inputs_sha256"
+                        ],
+                        "properties": {
+                          "storage_instance_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "current_ref": {
+                            "const": "storage/seglog/CURRENT"
+                          },
+                          "current_bytes_sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          },
+                          "selected_segment_generation": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "manifest_ref": {
+                            "const": "storage/seglog/manifest.v1.msgpack"
+                          },
+                          "manifest_bytes_sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          },
+                          "manifest_generation": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "recovery_epoch": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "manifest_survivor_prefix_sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          },
+                          "retained_inventory_sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          },
+                          "durable_watermarks_sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          },
+                          "excluded_ranges_sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          },
+                          "retired_inputs_sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "source_cursor": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "segment_generation",
+                          "segment_name",
+                          "byte_offset",
+                          "frame_end_offset",
+                          "last_sequence_id",
+                          "last_event_id"
+                        ],
+                        "properties": {
+                          "segment_generation": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "segment_name": {
+                            "type": "string",
+                            "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                          },
+                          "byte_offset": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "frame_end_offset": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "last_sequence_id": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 18446744073709551615
+                          },
+                          "last_event_id": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "index_through_sequence_id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "state": {
+                    "const": "withdrawn"
+                  },
+                  "publication_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096,
+                    "not": {
+                      "pattern": "[\u0000\r\n]"
+                    }
+                  },
+                  "published_at_utc": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "retired_at_utc": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "hold_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 2048,
+                      "not": {
+                        "pattern": "[\u0000\r\n]"
+                      }
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "state": {
+                          "const": "withdrawn"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "retired_at_utc": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    },
+                    "else": {
+                      "properties": {
+                        "retired_at_utc": {
+                          "type": "null"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "successor_publication_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096,
+                "not": {
+                  "pattern": "[\u0000\r\n]"
+                }
+              }
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "withdrawn"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "retired_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "retired_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -536,7 +536,7 @@
   function fitLater(body) {
     if (fitQueue.indexOf(body) < 0) fitQueue.push(body);
     if (fitAgain.indexOf(body) < 0) fitAgain.push(body);
-    if (!fitScheduled && !C.fitDefer) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; fitFlush(); }); }
+    if (!fitScheduled && !C.fitDefer) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(fitQueued)) return; fitFlush(); }); }
     /* once more in the next frame: meters and charts finish their own layout after the render, and wrapped text can then
        push a foot past the body (a one-off frame, never a loop) */
     /* (engine 21:26Z request: during an arrival or room change this frame is the next slice's frame and its read forced a
@@ -558,8 +558,12 @@
   });
   /* the settled pass runs in idle slices of about 8 ms (NOTES3-perf C1: never a whole-board pass in a moment); over every
      shown board (D10 7.1) */
+  /* FO-188: while a look is revealed over the onboarding window (PM_LOOK_HOLD, the onboarding's 11-motion-start.js) these
+     fits wait for the reveal's end */
+  function fitQueued() { if (fitQueue.length) fitFlush(); }
   function fitSettled() {
     fitSettleT = 0;
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(fitSettled)) return;
     var bodies = shownBodies();
     var idle = window.requestIdleCallback || function (f) { return setTimeout(function () { f({ timeRemaining: function () { return 8; } }); }, 16); };
     (function step(deadline) {

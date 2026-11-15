@@ -1,0 +1,567 @@
+{
+  "schema_id": "pm.goal.cancelled.dg_ca_corpus_coverage.v1",
+  "qualification": "TEST_ONLY",
+  "native": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+  "event_type": "goal.cancelled",
+  "lane": "DG-CA",
+  "groups": {
+    "C1": "COMPLETE",
+    "C2": "COMPLETE",
+    "C3": "COMPLETE",
+    "C4": "COMPLETE"
+  },
+  "source_selection": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json",
+  "source_selection_sha256": "0d721fcd3d9cdb54ef77b260b3122e7808fe51ea8d58fbf9570b58590719e029",
+  "adapters": "plans/ea-goal-adapter-20261111 at 62e61fe59a (scripts/pm_goal_test_*.py)",
+  "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py",
+  "crash_matrix": "python3 scripts/pm_goal_dg_ca_crash.py matrix",
+  "qualifying_unfixable_blocker": null,
+  "methods": [
+    {
+      "index": 0,
+      "method": "capture_source",
+      "closed_types": "SourceAudit",
+      "dg_ca_status": "C1_C2_EXECUTED",
+      "note": "no-association (C1) and bound-Plan (C2) editions executed; the Workflow (C3) edition is DG-CA3",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 1,
+      "method": "latch_and_reserve",
+      "closed_types": "StopIntent",
+      "dg_ca_status": "C1_C2_EXECUTED",
+      "note": "no-association (C1) and bound-Plan (C2) editions executed; the Workflow (C3) edition is DG-CA3",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 2,
+      "method": "commit_receipt",
+      "closed_types": "CancellationReceipt",
+      "dg_ca_status": "C1_C2_EXECUTED",
+      "note": "no-association (C1) and bound-Plan (C2) editions executed; the Workflow (C3) edition is DG-CA3",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 3,
+      "method": "settle_owner",
+      "closed_types": "OwnerSettlement",
+      "dg_ca_status": "C1_C2_EXECUTED",
+      "note": "none_required from authenticated empty inventories (C1); bound_plan_settled from the genuine joint Plan/Scheduler effects (C2)",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 4,
+      "method": "freeze_event",
+      "closed_types": "ProducerInput",
+      "dg_ca_status": "C1_C2_EXECUTED",
+      "note": "no-association (C1) and bound-Plan (C2) editions executed; the Workflow (C3) edition is DG-CA3",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 5,
+      "method": "append_original",
+      "closed_types": "OriginalPublication",
+      "dg_ca_status": "C1_C2_EXECUTED",
+      "note": "no-association (C1) and bound-Plan (C2) editions executed; the Workflow (C3) edition is DG-CA3",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 6,
+      "method": "publish_control",
+      "closed_types": "ControlPublication",
+      "dg_ca_status": "C1_C2_EXECUTED",
+      "note": "no-association (C1) and bound-Plan (C2) editions executed; the Workflow (C3) edition is DG-CA3",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 7,
+      "method": "terminal",
+      "closed_types": "TerminalInput / TerminalPrepared / Terminal",
+      "dg_ca_status": "C1_C2_EXECUTED",
+      "note": "succeeded/no_effect/unknown terminals (C1); bound succeeded terminal with BoundTerminalEntry and unknown terminal (C2)",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 8,
+      "method": "resolve_original",
+      "closed_types": "Progress",
+      "dg_ca_status": "C1_C2_EXECUTED",
+      "note": "no-association (C1) and bound-Plan (C2) editions executed; the Workflow (C3) edition is DG-CA3",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 9,
+      "method": "audit_read",
+      "closed_types": "AuditReadRequest / AuditReadResult",
+      "dg_ca_status": "C1_C2_EXECUTED",
+      "note": "no-association (C1) and bound-Plan (C2) editions executed; the Workflow (C3) edition is DG-CA3",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 10,
+      "method": "inspect_current",
+      "closed_types": "EventInspectRequest / EventInspectResult",
+      "dg_ca_status": "C4_EXECUTED",
+      "note": "DG-CA3: inspect_current for the C1/C2 editions over the lane-local SP-278 index read source (EventObservation; member_pending before append; permission_denied; stale token/key/sequence refused); passive",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C4I"
+    },
+    {
+      "index": 11,
+      "method": "backup_capture",
+      "closed_types": "all physical families/required source members",
+      "dg_ca_status": "REMAINING_UNASSIGNED",
+      "note": "backup capture/restore is not in the C1-C4 judge cases; open for the family",
+      "oracle": null
+    },
+    {
+      "index": 12,
+      "method": "backup_restore",
+      "closed_types": "all physical families/required source members",
+      "dg_ca_status": "REMAINING_UNASSIGNED",
+      "note": "backup capture/restore is not in the C1-C4 judge cases; open for the family",
+      "oracle": null
+    },
+    {
+      "index": 13,
+      "method": "enroll_stop_and_control",
+      "closed_types": "StopControl / BodyControlV2",
+      "dg_ca_status": "C1_EXECUTED",
+      "note": "fresh birth: StopControl and BodyControlV2 born jointly by birth_none (never migration)",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py --group C1"
+    },
+    {
+      "index": 14,
+      "method": "retained_terminal_replay",
+      "closed_types": null,
+      "dg_ca_status": "C1_EXECUTED",
+      "note": "exact duplicate after the succeeded terminal returns the original, no Storage generation change",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py --group C1"
+    },
+    {
+      "index": 15,
+      "method": "retained_no_effect_or_unknown_replay",
+      "closed_types": null,
+      "dg_ca_status": "C1_EXECUTED",
+      "note": "retained no_effect and unknown terminals replay unchanged",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py --group C1"
+    },
+    {
+      "index": 16,
+      "method": "install_writer_domain",
+      "closed_types": "WriterDomain / WriterDomainHead",
+      "dg_ca_status": "C1_EXECUTED",
+      "note": "install_writer_domain over seven issued native writer registrations",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py --group C1"
+    },
+    {
+      "index": 17,
+      "method": "birth_none",
+      "closed_types": "BindingRevision / BindingOrigin / BindingControl",
+      "dg_ca_status": "C1_EXECUTED",
+      "note": "birth_none: one transaction for body/revision/origin/control/Stop and binding revision0/origin0/control0",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py --group C1"
+    },
+    {
+      "index": 18,
+      "method": "reserve_binding",
+      "closed_types": "BindingPending",
+      "dg_ca_status": "C3_EXECUTED_WORKFLOW_EDITION",
+      "note": "DG-CA3: the Workflow attach BindingPending is written under binding-control CAS and resolved by commit_workflow_binding; the bound-Plan edition (C2 commit_plan_binding writes no pending) stays open for C2",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 19,
+      "method": "commit_plan_binding",
+      "closed_types": "GoalPlanBinding / PlanAssociation / BindingRevision",
+      "dg_ca_status": "C2_EXECUTED",
+      "note": "commit_plan_binding: GoalPlanBinding, PlanAssociation, binding revision1/origin1/control in one transaction",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 20,
+      "method": "commit_workflow_binding",
+      "closed_types": "WorkflowAssociation / BindingRevision",
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: commit_workflow_binding issues the original WorkflowAssociation (run source, execution owner/epoch) and binding revision1/origin1/control in one transaction",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 21,
+      "method": "transfer_binding_owner",
+      "closed_types": "BindingRevision",
+      "dg_ca_status": "REMAINING_C2_C3",
+      "note": "C1 exercises a genuine owner-epoch transfer only as a concurrent drift source; whole BindingRevision transfer tuple open",
+      "oracle": null
+    },
+    {
+      "index": 22,
+      "method": "adopt_existing_binding",
+      "closed_types": "BindingRevision / BindingOrigin / BindingControl",
+      "dg_ca_status": "DG_CB_C5_C6_EXECUTED",
+      "note": "executed by lane DG-CB inside owner.storage.goal_binding_migration.commit.v1 (C5 capture and C6 atomic installation); see Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json",
+      "oracle": "python3 scripts/pm_goal_dg_cb_oracles.py"
+    },
+    {
+      "index": 23,
+      "method": "resolve_stopped_pending",
+      "closed_types": "BindingPendingResolution",
+      "dg_ca_status": "REMAINING_C2_C3",
+      "note": "resolve_stopped_pending",
+      "oracle": null
+    },
+    {
+      "index": 24,
+      "method": "read_current_for_cancel",
+      "closed_types": "BindingReadRequest / BindingReadCurrent",
+      "dg_ca_status": "C1_EXECUTED",
+      "note": "BindingReadRequest/BindingReadCurrent whole roots over the stored members",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py --group C1"
+    },
+    {
+      "index": 25,
+      "method": "read_retained_selection",
+      "closed_types": "BindingReadAudit",
+      "dg_ca_status": "C1_EXECUTED",
+      "note": "BindingReadAudit over the stored selection and immutable revision0/origin0",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py --group C1"
+    },
+    {
+      "index": 26,
+      "method": "capture_cancel_selection",
+      "closed_types": "BindingSelection",
+      "dg_ca_status": "C1_EXECUTED",
+      "note": "BindingSelection stored with SourceAudit and progress0 in one transaction",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py --group C1"
+    },
+    {
+      "index": 27,
+      "method": "reserve_append_assignment",
+      "closed_types": "AppendSourceRead / AppendReservationSource",
+      "dg_ca_status": "C4A_EXECUTED",
+      "note": "SP-305/SP-310 assignment tuple (scripts/pm_goal_dg_ca_assignment.py), used by the C2 route; assignment audit stored through the newly authored SP-337 reference successor",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 28,
+      "method": "issue_assignment_audit",
+      "closed_types": "AssignmentInput / AssignmentAudit",
+      "dg_ca_status": "C4A_EXECUTED",
+      "note": "SP-305/SP-310 assignment tuple (scripts/pm_goal_dg_ca_assignment.py), used by the C2 route; assignment audit stored through the newly authored SP-337 reference successor",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 29,
+      "method": "admit_codec_domain",
+      "closed_types": "DomainCommitmentInput / AssignmentAdmission",
+      "dg_ca_status": "C4A_EXECUTED",
+      "note": "SP-305/SP-310 assignment tuple (scripts/pm_goal_dg_ca_assignment.py), used by the C2 route; assignment audit stored through the newly authored SP-337 reference successor",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 30,
+      "method": "append_reserved",
+      "closed_types": "unchanged ProducerInput / OriginalPublication",
+      "dg_ca_status": "C4A_EXECUTED",
+      "note": "SP-305/SP-310 assignment tuple (scripts/pm_goal_dg_ca_assignment.py), used by the C2 route; assignment audit stored through the newly authored SP-337 reference successor",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 31,
+      "method": "publish_cancel_terminal",
+      "closed_types": "unchanged TerminalInput / TerminalPrepared / Terminal",
+      "dg_ca_status": "C2_EXECUTED",
+      "note": "bound publish_cancel_terminal (BoundTerminalEntry) and BoundRetainedReplayEntry replay",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 32,
+      "method": "backup_capture",
+      "closed_types": "all original source families",
+      "dg_ca_status": "REMAINING_UNASSIGNED",
+      "note": "backup capture/restore is not in the C1-C4 judge cases; open for the family",
+      "oracle": null
+    },
+    {
+      "index": 33,
+      "method": "backup_restore",
+      "closed_types": "all original source families",
+      "dg_ca_status": "REMAINING_UNASSIGNED",
+      "note": "backup capture/restore is not in the C1-C4 judge cases; open for the family",
+      "oracle": null
+    },
+    {
+      "index": 34,
+      "method": "delete_binding_control",
+      "closed_types": "BindingControl",
+      "dg_ca_status": "REMAINING_UNASSIGNED",
+      "note": "delete_binding_control is not in the C1-C4 judge cases",
+      "oracle": null
+    },
+    {
+      "index": 35,
+      "method": "retained_terminal_replay",
+      "closed_types": null,
+      "dg_ca_status": "C1_EXECUTED",
+      "note": "same as row 14 for the execution-method map",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py --group C1"
+    },
+    {
+      "index": 36,
+      "method": "retained_no_effect_or_unknown_replay",
+      "closed_types": null,
+      "dg_ca_status": "C1_EXECUTED",
+      "note": "same as row 15 for the execution-method map",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py --group C1"
+    },
+    {
+      "index": 37,
+      "method": "owner.assistant_plan.cancel_bound_run.prepare.v3",
+      "closed_types": null,
+      "dg_ca_status": "C2_EXECUTED",
+      "note": "bound-Plan prepare/commit/participate and current/retained effect readers",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 38,
+      "method": "owner.assistant_plan.cancel_bound_run.commit.v3",
+      "closed_types": null,
+      "dg_ca_status": "C2_EXECUTED",
+      "note": "bound-Plan prepare/commit/participate and current/retained effect readers",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 39,
+      "method": "owner.scheduling.invalidate_cancelled_execution.participate.v3",
+      "closed_types": null,
+      "dg_ca_status": "C2_EXECUTED",
+      "note": "bound-Plan prepare/commit/participate and current/retained effect readers",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 40,
+      "method": "owner.goal.cancel.read_current_plan_effects.v3",
+      "closed_types": null,
+      "dg_ca_status": "C2_EXECUTED",
+      "note": "bound-Plan prepare/commit/participate and current/retained effect readers",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 41,
+      "method": "owner.storage.plan_effects.verify_current_custody.v3",
+      "closed_types": null,
+      "dg_ca_status": "C2_EXECUTED",
+      "note": "bound-Plan prepare/commit/participate and current/retained effect readers",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 42,
+      "method": "owner.goal.cancel.read_retained_plan_effects.v3",
+      "closed_types": null,
+      "dg_ca_status": "C2_EXECUTED",
+      "note": "bound-Plan prepare/commit/participate and current/retained effect readers",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 43,
+      "method": "owner.storage.plan_effects.read_original_custody.v3",
+      "closed_types": null,
+      "dg_ca_status": "C2_EXECUTED",
+      "note": "bound-Plan prepare/commit/participate and current/retained effect readers",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 44,
+      "method": "owner.storage.assistant_plan_run.compact_expired.v3",
+      "closed_types": null,
+      "dg_ca_status": "REMAINING_OUTSIDE_JUDGED_C2",
+      "note": "run retirement/compaction is in the bound method map but not in the judge's C2 complete case; open for the family",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 45,
+      "method": "owner.storage.assistant_plan_run.compact_expired_native.v3",
+      "closed_types": null,
+      "dg_ca_status": "REMAINING_OUTSIDE_JUDGED_C2",
+      "note": "run retirement/compaction is in the bound method map but not in the judge's C2 complete case; open for the family",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 46,
+      "method": "owner.storage.assistant_plan_run.read_retirement.v3",
+      "closed_types": null,
+      "dg_ca_status": "REMAINING_OUTSIDE_JUDGED_C2",
+      "note": "run retirement/compaction is in the bound method map but not in the judge's C2 complete case; open for the family",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 47,
+      "method": "owner.storage.assistant_plan_run.verify_retirement_read.v3",
+      "closed_types": null,
+      "dg_ca_status": "REMAINING_OUTSIDE_JUDGED_C2",
+      "note": "run retirement/compaction is in the bound method map but not in the judge's C2 complete case; open for the family",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 48,
+      "method": "owner.storage.assistant_plan_run.read_completion_anchor.v3",
+      "closed_types": null,
+      "dg_ca_status": "REMAINING_OUTSIDE_JUDGED_C2",
+      "note": "run retirement/compaction is in the bound method map but not in the judge's C2 complete case; open for the family",
+      "oracle": "python3 scripts/pm_goal_dg_ca_oracles.py"
+    },
+    {
+      "index": 49,
+      "method": "owner.goal.workflow_cancel.capture_source.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 50,
+      "method": "owner.goal.workflow_cancel.prepare.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 51,
+      "method": "owner.goal.workflow_cancel.latch_and_reserve.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 52,
+      "method": "owner.goal.workflow_cancel.commit_receipt.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 53,
+      "method": "owner.goal.workflow_cancel.settle_owner.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 54,
+      "method": "owner.goal.workflow_cancel.freeze_event.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 55,
+      "method": "owner.storage.goal_workflow_cancel.reserve_assignment.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_C4_EXECUTED",
+      "note": "DG-CA3: late assignment on the same LeasedStorage lineage: one exclusive fence and reserved sequence after event_ready, Storage-assigned EventRecord (sequence and times from Storage custody), compact audit, reserved append; OriginalGoalAppendReadback with the lane-local SP-278 index rows/token",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 56,
+      "method": "owner.storage.goal_workflow_cancel.issue_assignment_audit.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_C4_EXECUTED",
+      "note": "DG-CA3: late assignment on the same LeasedStorage lineage: one exclusive fence and reserved sequence after event_ready, Storage-assigned EventRecord (sequence and times from Storage custody), compact audit, reserved append; OriginalGoalAppendReadback with the lane-local SP-278 index rows/token",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 57,
+      "method": "owner.goal.workflow_cancel.append_original.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_C4_EXECUTED",
+      "note": "DG-CA3: late assignment on the same LeasedStorage lineage: one exclusive fence and reserved sequence after event_ready, Storage-assigned EventRecord (sequence and times from Storage custody), compact audit, reserved append; OriginalGoalAppendReadback with the lane-local SP-278 index rows/token",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 58,
+      "method": "owner.goal.workflow_cancel.publish_control.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 59,
+      "method": "owner.goal.workflow_cancel.terminal_succeeded.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 60,
+      "method": "owner.goal.workflow_cancel.terminal_unsettled.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 61,
+      "method": "owner.goal.workflow_cancel.read_retained_success.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 62,
+      "method": "owner.goal.workflow_cancel.read_retained_unsettled.v1",
+      "closed_types": null,
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
+    },
+    {
+      "index": 63,
+      "method": "owner.goal.workflow_cancel.inspect_current_event.v1",
+      "closed_types": null,
+      "dg_ca_status": "C4_EXECUTED",
+      "note": "DG-CA3: the frozen v1 Workflow inspector lineage is not installed for the V3 profile; a typed UnavailableRead installation_unavailable, passive (GRS-078)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C4I"
+    },
+    {
+      "index": 64,
+      "method": "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+      "closed_types": null,
+      "dg_ca_status": "C4_EXECUTED",
+      "note": "DG-CA3: read_original_inspection_custody.v1 with every lower source route independently callable; one-source substitution at each boundary",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C4I"
+    },
+    {
+      "index": 65,
+      "method": "owner.goal.workflow_cancel.inspect_current_event.v2",
+      "closed_types": null,
+      "dg_ca_status": "C4_EXECUTED",
+      "note": "DG-CA3: inspect_current_event.v2 (InspectCurrentEventEntryV2, outer final disclosure); pending/unavailable/current refusal; retained audit survives lawful drift and withdrawal",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C4I"
+    }
+  ],
+  "c4_assignment": "COMPLETE: scripts/pm_goal_dg_ca_assignment.py, corpus group C4 (C4A cases)",
+  "assignment_successor": "Plans/goal_own_c_contracts/dg-ca-assignment-successor-v1/selection.v1.json",
+  "dg_ca3": {
+    "lane": "DG-CA3",
+    "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py",
+    "native": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+    "qualification": "TEST_ONLY",
+    "files": [
+      "scripts/pm_goal_dg_ca3_native.py",
+      "scripts/pm_goal_dg_ca3_route.py",
+      "scripts/pm_goal_dg_ca3_index.py",
+      "scripts/pm_goal_dg_ca3_inspection.py",
+      "scripts/pm_goal_dg_ca3_cases.py",
+      "scripts/pm_goal_dg_ca3_inspection_cases.py",
+      "scripts/pm_goal_dg_ca3_oracles.py"
+    ],
+    "filler": "members no Goal-route or native-reader predicate reads come from the family specimen factory; every selector among them resolves to a stored TEST_ONLY ancillary provenance original with no semantic authority"
+  }
+}

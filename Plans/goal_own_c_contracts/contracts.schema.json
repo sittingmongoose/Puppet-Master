@@ -1,0 +1,746 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json",
+  "$comment": "Newly authored DL-045 owner contracts. Project scope only; no registry admission, source capability or retention grant. Raw source image transport is validated against its complete original schema in its original resource realm; hashes and transport alone never authenticate it.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/GoalUpdateProposalRequest"
+    },
+    {
+      "$ref": "#/$defs/ApprovalRequest"
+    },
+    {
+      "$ref": "#/$defs/ApprovalResolution"
+    },
+    {
+      "$ref": "#/$defs/MigrationRequest"
+    },
+    {
+      "$ref": "#/$defs/MigrationResult"
+    },
+    {
+      "$ref": "#/$defs/MigrationSelector"
+    },
+    {
+      "$ref": "#/$defs/MigrationWithdrawalRequest"
+    },
+    {
+      "$ref": "#/$defs/MigrationWithdrawalResult"
+    }
+  ],
+  "$defs": {
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "expected_revision",
+        "expected_currentness_hash",
+        "objective_text"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "objective_text": {
+          "type": "string",
+          "maxLength": 4000,
+          "pattern": "^[^\\ud800-\\udfff]*$"
+        }
+      }
+    },
+    "GoalUpdateProposalRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "target",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "source_message_id",
+        "instruction_message_id",
+        "return_route_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.update.proposal_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.propose_update"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_message_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instruction_message_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "return_route_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ApprovalRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "approval_id",
+        "proposal_request_ref",
+        "proposal_request_sha256",
+        "target",
+        "source_message_id",
+        "instruction_message_id",
+        "created_at_utc",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.update.approval_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "approval_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "proposal_request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "proposal_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        },
+        "source_message_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instruction_message_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at_utc": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ApprovalResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_id",
+        "request_sha256",
+        "decision",
+        "approver_ref",
+        "decided_at_utc",
+        "approval_owner_epoch",
+        "protected_person_decision_ref"
+      ],
+      "properties": {
+        "approval_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "decision": {
+          "enum": [
+            "approved",
+            "denied",
+            "expired",
+            "revoked"
+          ]
+        },
+        "approver_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decided_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "approval_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "protected_person_decision_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "physical_key",
+        "schema_ref",
+        "sha256"
+      ],
+      "properties": {
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      }
+    },
+    "SourceImage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selection",
+        "codec_id",
+        "bytes_hex",
+        "origin"
+      ],
+      "properties": {
+        "selection": {
+          "$ref": "#/$defs/Selection"
+        },
+        "codec_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bytes_hex": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{2})+$",
+          "minLength": 2
+        },
+        "origin": {
+          "$ref": "#/$defs/Selection"
+        }
+      }
+    },
+    "OwnerMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "sources",
+        "pending_operations",
+        "prior_receipts"
+      ],
+      "properties": {
+        "role": {
+          "enum": [
+            "goal",
+            "host_stop",
+            "plan",
+            "workflow",
+            "scheduler",
+            "sir"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceImage"
+          }
+        },
+        "pending_operations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "prior_receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Selection"
+          }
+        }
+      }
+    },
+    "MigrationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "migration_id",
+        "expected_writer_domain",
+        "owner_mappings"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "migration_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_writer_domain": {
+          "$ref": "#/$defs/Selection"
+        },
+        "owner_mappings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OwnerMapping"
+          }
+        }
+      }
+    },
+    "MigrationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "migration_id",
+        "disposition",
+        "capture_sha256",
+        "original_stop",
+        "original_association_refs",
+        "pending_operation_ids",
+        "prior_receipts",
+        "published_members",
+        "writer_domain"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "migration_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "disposition": {
+          "enum": [
+            "enrolled",
+            "blocked_unresolved"
+          ]
+        },
+        "capture_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "original_stop": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "user_stop_epoch",
+            "continuation_epoch",
+            "stop_latched"
+          ],
+          "properties": {
+            "user_stop_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "continuation_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "stop_latched": {
+              "type": "boolean"
+            }
+          }
+        },
+        "original_association_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Selection"
+          }
+        },
+        "pending_operation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "prior_receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Selection"
+          }
+        },
+        "published_members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Selection"
+          }
+        },
+        "writer_domain": {
+          "$ref": "#/$defs/Selection"
+        }
+      }
+    },
+    "ManifestPart": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "migration_id",
+        "ordinal",
+        "part_count",
+        "whole_manifest_sha256",
+        "members"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "migration_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordinal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "part_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "whole_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Selection"
+          }
+        }
+      }
+    },
+    "PayloadReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blake3",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "blake3": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ProposalContent": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "request"
+          ],
+          "properties": {
+            "kind": {
+              "const": "inline"
+            },
+            "request": {
+              "$ref": "#/$defs/GoalUpdateProposalRequest"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "reference"
+          ],
+          "properties": {
+            "kind": {
+              "const": "payload_ref"
+            },
+            "reference": {
+              "$ref": "#/$defs/PayloadReference"
+            }
+          }
+        }
+      ]
+    },
+    "StorageProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "physical_key",
+        "proposal_command_instance_id",
+        "original_request_sha256",
+        "content"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_update_proposal.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "proposal_command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "content": {
+          "$ref": "#/$defs/ProposalContent"
+        }
+      }
+    },
+    "StorageApprovalResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "physical_key",
+        "resolution"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_update_approval_resolution.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resolution": {
+          "$ref": "#/$defs/ApprovalResolution"
+        }
+      }
+    },
+    "MigrationSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "migration_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "migration_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "MigrationWithdrawalRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "migration_id",
+        "withdrawal_id",
+        "expected_original_result",
+        "expected_writer_domain"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "migration_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "withdrawal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_original_result": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Selection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_writer_domain": {
+          "$ref": "#/$defs/Selection"
+        }
+      }
+    },
+    "MigrationWithdrawalResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "migration_id",
+        "withdrawal_id",
+        "disposition",
+        "original_result",
+        "fenced_writer_domain",
+        "preserved_pending_operation_ids"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "migration_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "withdrawal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "disposition": {
+          "const": "withdrawn"
+        },
+        "original_result": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Selection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fenced_writer_domain": {
+          "$ref": "#/$defs/Selection"
+        },
+        "preserved_pending_operation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

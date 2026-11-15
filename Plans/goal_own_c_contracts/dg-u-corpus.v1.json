@@ -1,0 +1,97 @@
+{
+  "schema_id": "pm.goal.updated.dg_u.corpus_selection.v1",
+  "status": "NEWLY_AUTHORED_TEST_ONLY_PREPARED_WITHOUT_ADMISSION",
+  "event_type": "goal.updated",
+  "suite": "W1",
+  "native_execution": "NOT_RUN",
+  "native_line": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+  "selected_source": "Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json",
+  "runner": "python3 scripts/pm_goal_dg_u_oracles.py --output <result.json> --guards <guards.json>",
+  "completion_exit": 0,
+  "failure_exit": 1,
+  "totals": {
+    "positives": 21,
+    "negatives": 480,
+    "matrix_rows": 29
+  },
+  "groups": [
+    {
+      "id": "U1",
+      "judge_group": "Physical successor, complete stored wrappers and references",
+      "w1_obligations": [
+        "W1-01",
+        "W1-08"
+      ],
+      "positives": 3,
+      "negatives": 19,
+      "matrix_rows": 0,
+      "failures": 0,
+      "closure": "COMPLETE"
+    },
+    {
+      "id": "U2",
+      "judge_group": "Metadata predecessors, editable states and Plan conflicts",
+      "w1_obligations": [
+        "W1-03",
+        "W1-04"
+      ],
+      "positives": 6,
+      "negatives": 13,
+      "matrix_rows": 0,
+      "failures": 0,
+      "closure": "COMPLETE"
+    },
+    {
+      "id": "U3",
+      "judge_group": "No-effect, unknown results, crash cuts and recovery",
+      "w1_obligations": [
+        "W1-05",
+        "W1-06",
+        "W1-07"
+      ],
+      "positives": 1,
+      "negatives": 15,
+      "matrix_rows": 29,
+      "failures": 0,
+      "closure": "COMPLETE"
+    },
+    {
+      "id": "U4",
+      "judge_group": "Whole passive/current consumers and Event inspection",
+      "w1_obligations": [
+        "W1-09"
+      ],
+      "positives": 6,
+      "negatives": 34,
+      "matrix_rows": 0,
+      "failures": 0,
+      "closure": "COMPLETE"
+    },
+    {
+      "id": "U5",
+      "judge_group": "All independent fences, retained history, provider guards and exact forms",
+      "w1_obligations": [
+        "W1-01",
+        "W1-02",
+        "W1-09",
+        "W1-10",
+        "W1-11",
+        "W1-12"
+      ],
+      "positives": 5,
+      "negatives": 399,
+      "matrix_rows": 0,
+      "failures": 0,
+      "closure": "COMPLETE"
+    }
+  ],
+  "sweep_dependencies": [
+    "shared guard-isolation proof (scripts/pm_guard_isolation.py) over the DG-U guard inventory",
+    "shared number/format/retained-recipe adoption"
+  ],
+  "predecessor_corpora": [
+    "Plans/goal_own_c_contracts/w12a-corpus.v2.json",
+    "Plans/goal_own_c_contracts/w12a-corpus.v1.json"
+  ],
+  "stopped_question": null
+}

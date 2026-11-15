@@ -806,6 +806,58 @@ class AnchorResolver:
         return sha256_text(self.content(ref)[0])
 
 
+REGISTRY_SELF_ANCHOR_SCOPE = "exclude_self.v1"
+
+
+class _RegistryAnchorResolver(AnchorResolver):
+    """Read a registry candidate at its real ref; optionally omit one re-audit row.
+
+    Exclusion is explicit on new rows only. Historical snapshots and unmarked rows
+    keep the original anchor.v1 semantics. Every other registry row still counts.
+    """
+
+    def __init__(
+        self, source: AnchorResolver, registry_ref: str, *,
+        registry_bytes: bytes | None = None, exclude_closure_id: str | None = None,
+    ) -> None:
+        super().__init__(source.root)
+        self.source = source
+        self.registry_ref = registry_ref
+        self.registry_bytes = registry_bytes
+        self.exclude_closure_id = exclude_closure_id
+
+    def read_bytes(self, rel_path: str) -> bytes:
+        if rel_path == self.registry_ref and self.registry_bytes is not None:
+            return self.registry_bytes
+        return self.source.read_bytes(rel_path)
+
+    def jsonl_rows(self, rel_path: str) -> list[dict[str, Any]]:
+        rows = super().jsonl_rows(rel_path)
+        if rel_path == self.registry_ref and self.exclude_closure_id is not None:
+            return [row for row in rows if row.get("closure_id") != self.exclude_closure_id]
+        return rows
+
+    def is_dir(self, rel_path: str) -> bool:
+        return self.source.is_dir(rel_path)
+
+
+def registry_row_resolver(
+    row: dict[str, Any], resolver: AnchorResolver, registry_ref: str | None = None,
+) -> AnchorResolver:
+    """Apply a row's explicit self-exclusion to currentness checks, never its review snapshot."""
+    hashes = row.get("hashes") if isinstance(row.get("hashes"), dict) else {}
+    if "registry_self_anchor" not in hashes:
+        return resolver
+    marker = hashes["registry_self_anchor"]
+    path = marker.get("path") if isinstance(marker, dict) else None
+    if not isinstance(path, str) or marker != {"path": path, "scope": REGISTRY_SELF_ANCHOR_SCOPE} \
+            or (registry_ref is not None and path != registry_ref) or hashes.get("hash_scope") != ANCHOR_SCOPE \
+            or not isinstance(row.get("reaudit"), dict):
+        raise AnchorError(f"registry_self_anchor must name this registry with scope {REGISTRY_SELF_ANCHOR_SCOPE} on a re-audit row")
+    canonical_rel_path(path)
+    return _RegistryAnchorResolver(resolver, path, exclude_closure_id=row.get("closure_id"))
+
+
 class CommitResolver(AnchorResolver):
     """Resolves anchored refs against the files of one git commit of the repository at root.
 
@@ -1395,6 +1447,10 @@ def _target_stale_refs(target: dict[str, Any], resolver: AnchorResolver) -> set[
     check never hashes (no repository path, or a directory) are left out, as it leaves them."""
     hashes = target.get("hashes") if isinstance(target.get("hashes"), dict) else {}
     anchored = hashes.get("hash_scope") == ANCHOR_SCOPE
+    try:
+        resolver = registry_row_resolver(target, resolver)
+    except AnchorError:
+        pass  # The registry validator reports malformed metadata as a structural error.
     out: set[tuple[str, str, str]] = set()
     for group in ("owner_evidence_hashes", "closure_evidence_hashes"):
         group_hashes = hashes.get(group)
@@ -1955,16 +2011,34 @@ def validate_reaudit_row(
             errors.append(f"{label}: a not_supported re-audit appends a reopened row")
     if len(errors) != before or record is None:
         return None
+    if "registry_self_anchor" in hashes:
+        # Self-exclusion cannot authenticate this row's own claim or identity.
+        # Rebuild them from the bound record and predecessor instead. The append
+        # timestamp is an input; both generated timestamps must agree with it.
+        try:
+            expected = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, row["created_at"])
+        except (AnchorError, KeyError, TypeError) as exc:
+            errors.append(f"{label}: cannot rebuild self-excluding re-audit row: {exc}")
+            return None
+        # The marker is checked separately against this registry by registry_row_resolver.
+        expected["hashes"]["registry_self_anchor"] = hashes["registry_self_anchor"]
+        differing = sorted(field for field, value in expected.items() if row.get(field) != value)
+        if differing:
+            errors.append(f"{label}: self-excluding re-audit generated fields differ from bound record and predecessor: {differing}")
+            return None
     return {"target": line, "verdict": record.get("verdict"), "later_closure_id": record.get("later_closure_id")}
 
 
-def validate_registry(registry_path: Path) -> dict[str, Any]:
+def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None = None) -> dict[str, Any]:
     errors: list[str] = []
     warnings: list[str] = []
     rows = read_jsonl(registry_path, errors, required=True)
     raw_lines = raw_registry_lines(registry_path)
     rows_by_line = {row["_line_no"]: row for row in rows}
     resolver = AnchorResolver()
+    registry_ref = rel(anchor_registry_path or registry_path)
+    if anchor_registry_path is not None:
+        resolver = _RegistryAnchorResolver(resolver, registry_ref, registry_bytes=registry_path.read_bytes())
     record_cache: dict[str, dict[str, Any]] = {}
     closure_ids: set[str] = set()
     closed_by_key: dict[str, list[dict[str, Any]]] = {}
@@ -2017,7 +2091,13 @@ def validate_registry(registry_path: Path) -> dict[str, Any]:
 
         validate_evidence_refs(row.get("closure_evidence"), label, errors)
         stale: list[str] = []
-        validate_hashes(row.get("hashes"), label, errors, stale, resolver)
+        row_resolver = resolver
+        hashes = row.get("hashes")
+        try:
+            row_resolver = registry_row_resolver(row, resolver, registry_ref)
+        except AnchorError as exc:
+            errors.append(f"{label}: {exc}")
+        validate_hashes(hashes, label, errors, stale, row_resolver)
         if stale:
             stale_by_line[row["_line_no"]] = stale
 
@@ -3606,6 +3686,188 @@ def validate_audit_correction(
     }
 
 
+SUPPLEMENTAL_PASS_SCHEMA = "pm.audit_supplemental_closure_pass.v1"
+SUPPLEMENTAL_PASS_RECORD_RE = re.compile(r"^supplemental_closure_pass-\d{8}\.json$")
+# PLS-026 / DL-511: the fields with which an appended matrix row replaces one frozen row.
+MATRIX_REPLACEMENT_FIELDS = ("replaces_matrix_line", "replaces_row_sha256", "replacement_reason")
+
+
+def matrix_registry_link_problems(
+    row: dict[str, Any], label: str, registry_by_id: dict[str, dict[str, Any]], audit_name: str,
+) -> tuple[list[str], bool]:
+    """The registry-link errors of one closure-matrix row, and whether its identity fields give
+    the same deterministic key as those of the registry closure it names."""
+    problems: list[str] = []
+    registry_closure_id = row.get("registry_closure_id")
+    if not isinstance(registry_closure_id, str) or not registry_closure_id.strip():
+        return [f"{label}: registry_closure_id must be non-empty"], False
+    if registry_closure_id not in registry_by_id:
+        return [f"{label}: registry_closure_id {registry_closure_id} is not present in registry"], False
+    registry_row = registry_by_id[registry_closure_id]
+    identity_agrees = compute_finding_key(row) == compute_finding_key(registry_row)
+    if registry_row.get("finding_key") != row.get("finding_key"):
+        problems.append(f"{label}: registry row finding_key does not match matrix finding_key")
+    if registry_row.get("closure_status") != str(row.get("closure_status", "")):
+        problems.append(f"{label}: registry row closure_status does not match matrix closure_status")
+    if audit_name not in registry_row.get("audit_ids", []):
+        problems.append(f"{label}: registry row audit_ids does not include {audit_name}")
+    if registry_row.get("closed_by_audit_id") != audit_name:
+        problems.append(f"{label}: registry row closed_by_audit_id does not match {audit_name}")
+    return problems, identity_agrees
+
+
+def _supplemental_pass_record(
+    audit_dir: Path, row: dict[str, Any], cache: dict[str, Any],
+) -> tuple[dict[str, Any] | None, str | None]:
+    """The supplemental_closure_pass record a replacing row names, or the reason it cannot be used."""
+    provenance = row.get("supplemental_pass")
+    if not isinstance(provenance, dict):
+        return None, "a replacing row needs a supplemental_pass object that names its supplemental_closure_pass record"
+    name = provenance.get("record")
+    prefix = f"Plans/.audits/{audit_dir.name}/"
+    if isinstance(name, str) and name.startswith(prefix):
+        name = name[len(prefix):]
+    if not isinstance(name, str) or not SUPPLEMENTAL_PASS_RECORD_RE.fullmatch(name):
+        return None, "supplemental_pass.record must name a supplemental_closure_pass-<YYYYMMDD>.json file of this audit directory"
+    if name not in cache:
+        path = audit_dir / name
+        record: Any = None
+        problem = None
+        if path_has_symlink(path) or not path.is_file():
+            problem = f"supplemental pass record {name} is missing or reached through a symbolic link"
+        else:
+            try:
+                record = strict_json_loads(path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeDecodeError, json.JSONDecodeError, AnchorError) as exc:
+                problem = f"supplemental pass record {name} is not strict JSON: {exc}"
+        if problem is None:
+            matrix = record.get("matrix") if isinstance(record, dict) else None
+            if not isinstance(record, dict) or record.get("schema_id") != SUPPLEMENTAL_PASS_SCHEMA:
+                problem = f"supplemental pass record {name} is not a {SUPPLEMENTAL_PASS_SCHEMA} object"
+            elif record.get("audit_id") != audit_dir.name:
+                problem = f"supplemental pass record {name} names another audit"
+            elif not isinstance(record.get("closures"), list):
+                problem = f"supplemental pass record {name} has no closures list"
+            elif not isinstance(matrix, dict) or matrix.get("path") != "repair_closure_matrix.jsonl" \
+                    or not _is_int(matrix.get("original_rows")) or matrix["original_rows"] < 1 \
+                    or not _is_sha256(matrix.get("original_sha256")):
+                problem = (f"supplemental pass record {name} must pin the frozen matrix rows "
+                           "(matrix.path, matrix.original_rows, matrix.original_sha256)")
+        cache[name] = (record if problem is None else None, problem)
+    record, problem = cache[name]
+    if problem is None and provenance.get("pass_id") != record.get("pass_id"):
+        problem = f"supplemental_pass.pass_id does not match the pass_id of {name}"
+    return (record if problem is None else None), problem
+
+
+def matrix_replacement_candidates(
+    audit_dir: Path,
+    matrix_path: Path,
+    rows: list[dict[str, Any]],
+    legacy_state: dict[str, Any] | None,
+    errors: list[str],
+) -> dict[int, int]:
+    """The structurally valid PLS-026 replacements of one closure matrix: {frozen line: replacing line}.
+
+    A supplemental closure pass may append a corrected row that names, in replaces_matrix_line, the
+    one frozen row it replaces, with replaces_row_sha256 (the SHA-256 of that row's exact line) and
+    a replacement_reason. A frozen row lies inside the matrix prefix that the replacing row's own
+    supplemental_closure_pass record pins (matrix.original_rows and matrix.original_sha256), inside
+    the historical rows when the legacy format rule applies, and carries neither supplemental_pass
+    nor a replacement field. The replacing row is appended after that prefix, closes the same source
+    row with the same closure_status, and the record lists it once (replaces_matrix_line,
+    appended_line, appended_row_sha256). A frozen row is replaced at most once, and a replacing or
+    appended row is never replaced, so there are no chains. Every refusal is an error and changes
+    nothing: both rows are then judged as they stand. The caller honors a candidate only when the
+    replacing row's own registry link holds.
+    """
+    claims = [row for row in rows if any(field in row for field in MATRIX_REPLACEMENT_FIELDS)]
+    if not claims:
+        return {}
+    # Bind exact bytes: split on LF only and keep any CR, so a CRLF rewrite of a pinned line
+    # changes its digest instead of being normalized away (review r1 finding 1, T220).
+    try:
+        raw_lines = matrix_path.read_bytes().split(b"\n")
+    except OSError:
+        raw_lines = []
+    if raw_lines and raw_lines[-1] == b"":
+        raw_lines.pop()
+
+    def line_digest(data: bytes) -> str:
+        return hashlib.sha256(data).hexdigest()
+
+    rows_by_line = {row["_line_no"]: row for row in rows}
+    historical = (legacy_state or {}).get("historical_matrix_lines")
+    records: dict[str, Any] = {}
+    by_target: dict[int, list[int]] = {}
+    for row in claims:
+        line = row["_line_no"]
+        label = f"{rel(matrix_path)}:{line}"
+        target = row.get("replaces_matrix_line")
+        digest = row.get("replaces_row_sha256")
+        reason = row.get("replacement_reason")
+        problems: list[str] = []
+        if not _is_int(target) or target < 1:
+            problems.append("replaces_matrix_line must be a positive integer line number")
+            target = None
+        if not _is_sha256(digest):
+            problems.append("replaces_row_sha256 must be the SHA-256 of the replaced line")
+        if not isinstance(reason, str) or not reason.strip():
+            problems.append("replacement_reason must be non-empty")
+        record, record_problem = _supplemental_pass_record(audit_dir, row, records)
+        if record_problem:
+            problems.append(record_problem)
+        if record is not None:
+            frozen_rows = record["matrix"]["original_rows"]
+            prefix = b"".join(data + b"\n" for data in raw_lines[:frozen_rows])
+            if frozen_rows > len(raw_lines) or line_digest(prefix) != record["matrix"]["original_sha256"]:
+                problems.append(f"the first {frozen_rows} matrix rows are not the bytes its supplemental pass record pinned")
+            if line <= frozen_rows:
+                problems.append(f"a replacing row must be appended after the {frozen_rows} frozen rows its supplemental pass record pins")
+            if target is not None and target > frozen_rows:
+                problems.append(f"line {target} is not one of the {frozen_rows} frozen rows its supplemental pass record pins")
+            entries = [
+                entry for entry in record["closures"]
+                if isinstance(entry, dict) and entry.get("replaces_matrix_line") == target and entry.get("appended_line") == line
+            ]
+            if target is not None and (len(entries) != 1 or entries[0].get("appended_row_sha256") != line_digest(raw_lines[line - 1])):
+                problems.append("its supplemental pass record must list this replacement once "
+                                "(replaces_matrix_line, appended_line and appended_row_sha256 of this exact line)")
+        if target is not None:
+            frozen = rows_by_line.get(target)
+            if isinstance(historical, int) and target > historical:
+                problems.append(f"line {target} is not one of the {historical} historical rows of this legacy directory")
+            if frozen is None:
+                problems.append(f"line {target} is not a matrix row")
+            elif "supplemental_pass" in frozen or any(field in frozen for field in MATRIX_REPLACEMENT_FIELDS):
+                problems.append(f"line {target} is an appended or replacing row, not a frozen row; a replacement is never itself replaced")
+            else:
+                if target > len(raw_lines) or line_digest(raw_lines[target - 1]) != digest:
+                    problems.append(f"replaces_row_sha256 does not match the exact bytes of line {target}")
+                artifact = frozen.get("source_artifact")
+                frozen_key = source_row_key(artifact, frozen.get("source_row")) if isinstance(artifact, str) else None
+                artifact = row.get("source_artifact")
+                own_key = source_row_key(artifact, row.get("source_row")) if isinstance(artifact, str) else None
+                if frozen_key is None or own_key != frozen_key:
+                    problems.append(f"a replacing row must close the same source row as line {target}")
+                if str(row.get("closure_status", "")) != str(frozen.get("closure_status", "")):
+                    problems.append(f"a replacing row must keep the closure_status of line {target}")
+        if problems:
+            errors.append(f"{label}: does not replace a frozen row (PLS-026): " + "; ".join(problems))
+            continue
+        by_target.setdefault(target, []).append(line)
+    candidates: dict[int, int] = {}
+    for target, lines in sorted(by_target.items()):
+        if len(lines) > 1:
+            errors.append(
+                f"{rel(matrix_path)}:{target}: is named by more than one replacing row (lines {', '.join(map(str, lines))}); "
+                "a frozen row is replaced at most once, so none of them replaces it"
+            )
+            continue
+        candidates[target] = lines[0]
+    return candidates
+
+
 def validate_audit_dir(
     audit_dir: Path,
     *,
@@ -3748,6 +4010,23 @@ def validate_audit_dir(
     status_counts: dict[str, int] = {}
     open_matrix_rows: list[dict[str, Any]] = []
 
+    # PLS-026 (DL-511): an appended row may replace one frozen row. It is honored only when its own
+    # registry link holds with an identity that gives the registry closure's deterministic key; the
+    # frozen row's registry link is then judged through it, and the replacing row, which closes the
+    # same source row with the same status, adds no coverage line or status count of its own.
+    rows_by_line = {row["_line_no"]: row for row in rows}
+    replaced_by: dict[int, int] = {}
+    for target, line in sorted(matrix_replacement_candidates(audit_dir, matrix_path, rows, legacy_state, errors).items()):
+        replacing = rows_by_line[line]
+        problems, identity_agrees = matrix_registry_link_problems(
+            replacing, f"{rel(matrix_path)}:{line}", registry_by_id, audit_dir.name)
+        if problems or not identity_agrees or replacing.get("finding_key") != compute_finding_key(replacing):
+            errors.append(f"{rel(matrix_path)}:{line}: does not replace line {target} (PLS-026): its own registry link "
+                          f"does not hold, so line {target} is judged as it stands")
+        else:
+            replaced_by[target] = line
+    replacing_lines = set(replaced_by.values())
+
     for row in rows:
         label = f"{rel(matrix_path)}:{row.get('_line_no')}"
         line_no = row.get("_line_no")
@@ -3758,12 +4037,13 @@ def validate_audit_dir(
         validate_ref_fields(row, audit_refs, label, errors, require=True, allow_row_scoped_refs=True,
                             origin=matrix_path, row_key=line_no)
         status = str(row.get("closure_status", ""))
-        status_counts[status] = status_counts.get(status, 0) + 1
+        if line_no not in replacing_lines:
+            status_counts[status] = status_counts.get(status, 0) + 1
         if status not in ALLOWED_STATUSES:
             errors.append(f"{label}: invalid closure_status {status}")
         if status == "reopened":
             errors.append(f"{label}: repair_closure_matrix rows must close the item, not use reopened")
-        if status in OPEN_STATUSES:
+        if status in OPEN_STATUSES and line_no not in replacing_lines:
             open_matrix_rows.append(
                 {
                     "source_artifact": row.get("source_artifact"),
@@ -3786,23 +4066,12 @@ def validate_audit_dir(
         closure_reason = row.get("closure_reason")
         if not isinstance(closure_reason, str) or not closure_reason.strip():
             errors.append(f"{label}: closure_reason must be non-empty")
-        registry_closure_id = row.get("registry_closure_id")
-        if not isinstance(registry_closure_id, str) or not registry_closure_id.strip():
-            errors.append(f"{label}: registry_closure_id must be non-empty")
-        elif registry_closure_id not in registry_by_id:
-            errors.append(f"{label}: registry_closure_id {registry_closure_id} is not present in registry")
-        else:
-            registry_row = registry_by_id[registry_closure_id]
-            if compute_finding_key(row) == compute_finding_key(registry_row):
+        if line_no not in replaced_by:
+            # A replaced frozen row's registry link is judged through its replacing row (above).
+            problems, identity_agrees = matrix_registry_link_problems(row, label, registry_by_id, audit_dir.name)
+            if identity_agrees:
                 legacy_context["matrix_identity_agrees"].add(line_no)
-            if registry_row.get("finding_key") != finding_key:
-                errors.append(f"{label}: registry row finding_key does not match matrix finding_key")
-            if registry_row.get("closure_status") != status:
-                errors.append(f"{label}: registry row closure_status does not match matrix closure_status")
-            if audit_dir.name not in registry_row.get("audit_ids", []):
-                errors.append(f"{label}: registry row audit_ids does not include {audit_dir.name}")
-            if registry_row.get("closed_by_audit_id") != audit_dir.name:
-                errors.append(f"{label}: registry row closed_by_audit_id does not match {audit_dir.name}")
+            errors.extend(problems)
         artifact = row.get("source_artifact")
         if artifact is not None and not isinstance(artifact, str):
             errors.append(f"{label}: source_artifact must be a string")
@@ -3814,7 +4083,8 @@ def validate_audit_dir(
             key = source_row_key(artifact, row.get("source_row"))
             if key:
                 covered.add(key)
-                cover_lines.setdefault(key, []).append(int(row.get("_line_no") or 0))
+                if line_no not in replacing_lines:
+                    cover_lines.setdefault(key, []).append(int(row.get("_line_no") or 0))
             else:
                 errors.append(f"{label}: source_row must be a non-empty string or integer")
 
@@ -3899,6 +4169,10 @@ def validate_audit_dir(
         report["effective_status_projection"] = effective_status_report
     if correction is not None:
         report["audit_correction"] = correction
+    if replaced_by:
+        report["matrix_replacements"] = [
+            {"replaced_line": target, "replacing_line": line} for target, line in sorted(replaced_by.items())
+        ]
     return apply_legacy_format_rule(audit_dir, report, legacy_context)
 
 
@@ -4018,7 +4292,12 @@ def cmd_refresh_hashes(args: argparse.Namespace) -> int:
         if hashes.get("hash_scope") == ANCHOR_SCOPE:
             stale_now: list[str] = []
             structural: list[str] = []
-            validate_hashes(hashes, f"line {row.get('_line_no')}", structural, stale_now, AnchorResolver())
+            resolver = AnchorResolver()
+            try:
+                resolver = registry_row_resolver(row, resolver, rel(registry_path))
+            except AnchorError as exc:
+                structural.append(f"line {row.get('_line_no')}: {exc}")
+            validate_hashes(hashes, f"line {row.get('_line_no')}", structural, stale_now, resolver)
             errors.extend(structural)
             for group in ("owner_evidence_hashes", "closure_evidence_hashes"):
                 for ref in sorted(hashes.get(group) or {}) if isinstance(hashes.get(group), dict) else []:
@@ -4219,6 +4498,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
     now = utc_now()
     new_rows: list[dict[str, Any]] = []
     moved: list[dict[str, Any]] = []
+    already_stale_moved: list[dict[str, Any]] = []
     skipped: list[str] = []
     for closure_id, record in records.items():
         if only and closure_id not in only:
@@ -4265,7 +4545,12 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         if changed:
             moved.append({"closure_id": closure_id, "line": line, "changed_anchors": changed})
             continue
-        new_rows.append(build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, now))
+        row = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, now)
+        if any(parse_anchor_ref(ref)[:2] == (rel(registry_path), "jsonlset") for ref in record["dependencies"]):
+            # A row cannot hash itself recursively. Keep the reviewed pre-append
+            # snapshot, excluding just this row from its own registry row-set hash.
+            row["hashes"]["registry_self_anchor"] = {"path": rel(registry_path), "scope": REGISTRY_SELF_ANCHOR_SCOPE}
+        new_rows.append(row)
     if not errors and new_rows:
         raw = registry_path.read_bytes()
         if raw and not raw.endswith(b"\n"):
@@ -4273,8 +4558,30 @@ def _reaudit_append(args: argparse.Namespace) -> int:
     if not errors and new_rows:
         # Validate the registry as it would be after the append, before writing anything. Every
         # error the candidate has that the registry does not have now blocks the append, whether
-        # it names a new line, an existing line or no line at all.
+        # it names a new line, an existing line or no line at all. A stale hash on the same
+        # row, group and ref is pre-existing when only its current hash has changed.
         baseline = set(validate_registry(registry_path)["errors"])
+        stale_pattern = re.compile(
+            rf"{re.escape(rel(registry_path))}:(?P<line>[1-9][0-9]*): "
+            r"(?P<group>owner_evidence_hashes|closure_evidence_hashes) for (?P<ref>.+) "
+            r"is stale \(stored (?P<stored>[0-9a-f]{64}), current (?P<current>[0-9a-f]{64})\)"
+        )
+
+        def stale_identity(error: str) -> tuple[tuple[int, str, str, str, str], str] | None:
+            match = stale_pattern.fullmatch(error)
+            if match is None:
+                return None
+            line = int(match["line"])
+            row = rows_by_line.get(line)
+            if row is None:
+                return None
+            return (line, str(row.get("closure_id", "")), match["group"], match["ref"], match["stored"]), match["current"]
+
+        stale_before = {}
+        for error in baseline:
+            stale = stale_identity(error)
+            if stale is not None:
+                stale_before[stale[0]] = stale[1]
         import tempfile  # noqa: PLC0415
 
         # A unique candidate created exclusively next to the registry: it can never be the input
@@ -4286,13 +4593,23 @@ def _reaudit_append(args: argparse.Namespace) -> int:
                 handle.write(registry_path.read_bytes() + "".join(
                     json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in new_rows
                 ).encode("utf-8"))
-            report = validate_registry(candidate)
+            report = validate_registry(candidate, anchor_registry_path=registry_path)
         finally:
             candidate.unlink(missing_ok=True)
         for error in report["errors"]:
             as_registry = error.replace(rel(candidate), rel(registry_path))
-            if as_registry not in baseline:
-                errors.append(f"candidate registry would not validate: {as_registry}")
+            if as_registry in baseline:
+                continue
+            stale = stale_identity(as_registry)
+            if stale is not None and stale[0] in stale_before:
+                (line, closure_id, group, ref, stored), current = stale
+                already_stale_moved.append({
+                    "status": "already stale, current hash moved", "line": line,
+                    "closure_id": closure_id, "group": group, "ref": ref, "stored": stored,
+                    "before_append_current": stale_before[stale[0]], "candidate_current": current,
+                })
+                continue
+            errors.append(f"candidate registry would not validate: {as_registry}")
         superseded_now = set(report.get("superseded_lines", []))
         for row in new_rows:
             if row["supersedes"]["line"] not in superseded_now:
@@ -4312,6 +4629,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         "would_append": len(new_rows) if not errors else 0,
         "already_appended": len(skipped),
         "moved_since_recheck": moved,
+        "already_stale_current_hash_moved": already_stale_moved,
         "errors": errors,
     }, indent=2, ensure_ascii=False))
     return 1 if errors else 0

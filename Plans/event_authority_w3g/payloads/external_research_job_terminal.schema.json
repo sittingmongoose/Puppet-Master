@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event-authority-w3g/external_research_job_terminal/1.0.0/schema.json",
+  "title": "external_research.job_terminal prepared payload selectors; no admission",
+  "$defs": {
+    "ProjectPayloadV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "owner_operation_id",
+        "scope",
+        "source_record_ref",
+        "source_record_sha256",
+        "source_schema_id",
+        "source_schema_version",
+        "source_receipt_ref",
+        "topic_id",
+        "research_job_id",
+        "stage",
+        "terminal_state",
+        "bound_by",
+        "responses_admitted",
+        "job_record_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.external_research.job_terminal.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "external_research.job_terminal"
+        },
+        "owner_operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "project"
+                }
+              }
+            }
+          ]
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_record_sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_schema_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_schema_version": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "source_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "topic_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "research_job_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "discovery",
+            "implementation",
+            "history",
+            "reconcile",
+            "compare"
+          ]
+        },
+        "terminal_state": {
+          "type": "string",
+          "enum": [
+            "finished",
+            "responses",
+            "time",
+            "budget",
+            "other"
+          ]
+        },
+        "bound_by": {
+          "type": "string",
+          "enum": [
+            "designed_stop",
+            "response_ceiling",
+            "job_time_limit",
+            "budget_cap",
+            "other"
+          ]
+        },
+        "responses_admitted": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "job_record_ref": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+(?![\\s\\S])"
+        }
+      }
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/ProjectPayloadV1"
+    }
+  ]
+}

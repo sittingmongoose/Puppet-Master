@@ -1,0 +1,1571 @@
+{
+ "lane": "DG-CF3",
+ "qualification": "TEST_ONLY",
+ "native": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+ "oracle": "scripts/pm_goal_dg_cf3_oracles.py",
+ "guard_sites": 128,
+ "with_negative": 102,
+ "without_negative": 26,
+ "note": "Each negative refuses with exactly the listed code; advance-time refusals carry the prefix advance/halt/. No local removal engine or check-11 claim; proof belongs to scripts/pm_guard_isolation.py in the sweep.",
+ "refusal_codes_to_negatives": {
+  "advance/generation_state": [
+   "P6-N15"
+  ],
+  "advance/halt/cancel/causal_order": [
+   "CF10-N25"
+  ],
+  "advance/halt/cancel/d01_join": [
+   "CF10-N54"
+  ],
+  "advance/halt/cancel/d05_origin": [
+   "CF10-N53"
+  ],
+  "advance/halt/cancel/d05_outcome": [
+   "CF10-N29"
+  ],
+  "advance/halt/cancel/d06_candidate_join": [
+   "CF10-N52"
+  ],
+  "advance/halt/cancel/d06_event": [
+   "CF10-N51"
+  ],
+  "advance/halt/cancel/d06_intent_join": [
+   "CF10-N62"
+  ],
+  "advance/halt/cancel/d06_prepare_origin_join": [
+   "CF10-N63"
+  ],
+  "advance/halt/cancel/d06_publish_origin_join": [
+   "CF10-N64"
+  ],
+  "advance/halt/cancel/d06_unavailable": [
+   "CF10-N28"
+  ],
+  "advance/halt/cancel/initialized_no_start": [
+   "CF10-N57"
+  ],
+  "advance/halt/cancel/native_transition": [
+   "CF10-N55"
+  ],
+  "advance/halt/cancel/revisions": [
+   "CF10-N56"
+  ],
+  "advance/halt/certified/causal_order": [
+   "CF10-N24"
+  ],
+  "advance/halt/certified/commit_event": [
+   "CF10-N32"
+  ],
+  "advance/halt/certified/commit_first_receipt": [
+   "CF10-N21"
+  ],
+  "advance/halt/certified/commit_producer_digest": [
+   "CF10-N34"
+  ],
+  "advance/halt/certified/commit_unavailable": [
+   "CF10-N31"
+  ],
+  "advance/halt/certified/commit_value_commitment": [
+   "CF10-N33"
+  ],
+  "advance/halt/certified/coordinator_origin": [
+   "CF10-N37"
+  ],
+  "advance/halt/certified/d01_join": [
+   "CF10-N18"
+  ],
+  "advance/halt/certified/d01_same_transaction": [
+   "CF10-N19"
+  ],
+  "advance/halt/certified/native_origin_join": [
+   "CF10-N38"
+  ],
+  "advance/halt/certified/native_protected": [
+   "CF10-N39"
+  ],
+  "advance/halt/certified/native_result_event": [
+   "CF10-N22"
+  ],
+  "advance/halt/certified/native_transition": [
+   "CF10-N17"
+  ],
+  "advance/halt/certified/release_after_commit": [
+   "CF10-N36"
+  ],
+  "advance/halt/certified/release_missing": [
+   "CF10-N15"
+  ],
+  "advance/halt/certified/release_readback": [
+   "CF10-N23"
+  ],
+  "advance/halt/certified/release_selects_commit": [
+   "CF10-N35"
+  ],
+  "advance/halt/certified/revisions": [
+   "CF10-N40"
+  ],
+  "advance/halt/certified/standard_capture_join": [
+   "CF10-N41"
+  ],
+  "advance/halt/certified/standard_receipt_ref": [
+   "CF10-N42"
+  ],
+  "advance/halt/certified/standard_semantics": [
+   "CF10-N20"
+  ],
+  "advance/halt/certified/start_lineage_missing": [
+   "CF10-N12"
+  ],
+  "advance/halt/certified/without_start_proof": [
+   "CF10-N14"
+  ],
+  "advance/halt/reducer/duplicate_start": [
+   "CF10-N11"
+  ],
+  "advance/halt/reducer/first_receipt_barrier": [
+   "CF10-N16"
+  ],
+  "advance/halt/reducer/pending_custody": [
+   "CF10-N07"
+  ],
+  "advance/halt/reducer/second_terminal": [
+   "CF10-N08",
+   "CF10-N09"
+  ],
+  "advance/halt/reducer/start_after_terminal": [
+   "CF10-N10"
+  ],
+  "advance/halt/reducer/unregistered_record": [
+   "CF10-N04",
+   "CF10-N05"
+  ],
+  "advance/halt/reducer/unsupported_same_run": [
+   "CF10-N01",
+   "CF10-N02",
+   "CF10-N03"
+  ],
+  "advance/halt/source/frame/payload_crc": [
+   "CF10-N06"
+  ],
+  "advance/halt/start/candidate_event": [
+   "CF10-N45"
+  ],
+  "advance/halt/start/commit_event": [
+   "CF10-N43"
+  ],
+  "advance/halt/start/commit_unavailable": [
+   "CF10-N26"
+  ],
+  "advance/halt/start/d01_join": [
+   "CF10-N46"
+  ],
+  "advance/halt/start/first_receipt": [
+   "CF10-N44"
+  ],
+  "advance/halt/start/goal_revision": [
+   "CF10-N27"
+  ],
+  "advance/halt/start/native_transition": [
+   "CF10-N47"
+  ],
+  "advance/halt/start/origin_join": [
+   "CF10-N50"
+  ],
+  "advance/halt/start/origin_unavailable": [
+   "CF10-N49"
+  ],
+  "advance/halt/start/revisions": [
+   "CF10-N48"
+  ],
+  "advance/no_progress": [
+   "P6-N17"
+  ],
+  "advance/prior_prefix_mismatch": [
+   "P6-N10"
+  ],
+  "advance/profile": [
+   "P5-N20"
+  ],
+  "advance/unknown_generation": [
+   "P6-N16"
+  ],
+  "append/candidate/replay_policy/numrule/replay_only_not_appendable": [
+   "CF10-N30"
+  ],
+  "cancel/state": [
+   "CF10-N60"
+  ],
+  "certify/native_state": [
+   "CF10-N61"
+  ],
+  "collect/checkpoint": [
+   "P8-N14"
+  ],
+  "collect/final/checkpoint": [
+   "P8-N16"
+  ],
+  "collect/final/held": [
+   "P8-N15"
+  ],
+  "collect/held": [
+   "P8-N04"
+  ],
+  "collect/not_retired_or_abandoned": [
+   "P8-N06"
+  ],
+  "collect/retention_window": [
+   "P8-N05"
+  ],
+  "collect/unknown_generation": [
+   "P8-N13"
+  ],
+  "cutover/incomplete_coverage": [
+   "P6-N08"
+  ],
+  "cutover/not_staged": [
+   "P6-N18"
+  ],
+  "cutover/row_binding": [
+   "P6-N20"
+  ],
+  "cutover/seglog_frontier": [
+   "P6-N21"
+  ],
+  "cutover/unknown_generation": [
+   "P6-N19"
+  ],
+  "cutover/unsupported_or_malformed_row": [
+   "P6-N09"
+  ],
+  "join/complete_original_record": [
+   "F0-N09"
+  ],
+  "native/unborn": [
+   "CF10-N58"
+  ],
+  "pack/access": [
+   "F0-N03"
+  ],
+  "pack/canonical_decode": [
+   "F0-N08"
+  ],
+  "pack/unavailable": [
+   "F0-N02",
+   "F0-N04",
+   "F0-N10"
+  ],
+  "payload/numrule/payload_digest": [
+   "F0-N01"
+  ],
+  "payload/numrule/payload_size": [
+   "F0-N06"
+  ],
+  "publish/candidate_mismatch": [
+   "P5-N01",
+   "P5-N02",
+   "P5-N03",
+   "P5-N04",
+   "P5-N05",
+   "P5-N06",
+   "P5-N07",
+   "P5-N08",
+   "P5-N09",
+   "P5-N10",
+   "P5-N11",
+   "P8-N01",
+   "P5-N13",
+   "P5-N16",
+   "P5-N17",
+   "P5-N18",
+   "P8-N02",
+   "P8-N12",
+   "P5-N19",
+   "P6-N01"
+  ],
+  "publish/candidate_type": [
+   "P6-N22"
+  ],
+  "publish/final/authority": [
+   "P6-N04"
+  ],
+  "publish/final/checkpoint_version": [
+   "P6-N06"
+  ],
+  "publish/final/controls": [
+   "P6-N05"
+  ],
+  "publish/final/seglog": [
+   "P6-N03"
+  ],
+  "publish/operation": [
+   "P6-N23"
+  ],
+  "publish/replay_conflict": [
+   "P6-N12"
+  ],
+  "publish/stale_before": [
+   "P6-N02"
+  ],
+  "publish/withdrawn": [
+   "P6-N11"
+  ],
+  "read/checkpoint_key": [
+   "F0-N14"
+  ],
+  "read/checkpoint_unavailable": [
+   "P8-N07"
+  ],
+  "read/current_state": [
+   "F0-N15"
+  ],
+  "read/disclosure_revoked": [
+   "P8-N08"
+  ],
+  "read/final/checkpoint": [
+   "P8-N17"
+  ],
+  "read/final/controls": [
+   "P8-N11"
+  ],
+  "read/final/seglog": [
+   "P8-N18"
+  ],
+  "read/no_current": [
+   "F0-N11"
+  ],
+  "read/reader_withdrawn": [
+   "P8-N09"
+  ],
+  "read/row_binding": [
+   "P6-N13"
+  ],
+  "read/selection": [
+   "F0-N12"
+  ],
+  "read/source_unavailable": [
+   "P8-N10"
+  ],
+  "read/unbound_row": [
+   "P6-N14"
+  ],
+  "read/unknown_generation": [
+   "F0-N13"
+  ],
+  "representation/first_fitting_form": [
+   "F0-N05"
+  ],
+  "restore/derived_as_authority": [
+   "CF12-N04"
+  ],
+  "restore/member_digest": [
+   "CF12-N02"
+  ],
+  "restore/seal": [
+   "CF12-N05"
+  ],
+  "restore/tombstone_authority": [
+   "CF12-N06"
+  ],
+  "restore/unexpected_member": [
+   "CF12-N03"
+  ],
+  "restore/unit_incomplete": [
+   "CF12-N01"
+  ],
+  "restore/unit_present": [
+   "CF12-N07"
+  ],
+  "schema/ProjectionCandidate": [
+   "P5-N12"
+  ],
+  "schema/StorageProjection": [
+   "F0-N07"
+  ],
+  "source/gap_proof": [
+   "CF10-N13"
+  ],
+  "stage/fourth_generation": [
+   "P8-N03"
+  ],
+  "stage/seed_reused": [
+   "P5-N15"
+  ],
+  "stage/seed_type": [
+   "P5-N21"
+  ],
+  "stage/seed_unissued": [
+   "P5-N14"
+  ],
+  "start/state": [
+   "CF10-N59"
+  ],
+  "tx/handle_issuer": [
+   "P6-N24"
+  ],
+  "tx/handle_type": [
+   "P6-N25"
+  ],
+  "tx/reservation_stale": [
+   "P6-N07"
+  ]
+ },
+ "guards": [
+  {
+   "code": "advance/expected_frontier",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:686"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "duplicate of publish/replay_conflict: the replay resolver classifies every frontier mismatch before derive runs (P6-N12 refuses with replay_conflict); prove as a pair"
+  },
+  {
+   "code": "advance/generation_state",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:685"
+   ],
+   "negatives": [
+    "P6-N15"
+   ]
+  },
+  {
+   "code": "advance/no_progress",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:704"
+   ],
+   "negatives": [
+    "P6-N17"
+   ]
+  },
+  {
+   "code": "advance/prior_prefix_mismatch",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:696"
+   ],
+   "negatives": [
+    "P6-N10"
+   ]
+  },
+  {
+   "code": "advance/profile",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:687"
+   ],
+   "negatives": [
+    "P5-N20"
+   ]
+  },
+  {
+   "code": "advance/row_removed",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:709"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "unreachable: the bounded reducer's record is monotone over a growing validated prefix; losing a source first trips advance/prior_prefix_mismatch"
+  },
+  {
+   "code": "advance/source_selection_changed",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:689"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "unreachable on the adapter Storage: the index generation id/anchor are fixed per Storage instance (index_seed_hex never changes); a source-selection change on this Storage trips advance/prior_prefix_mismatch (P6-N10)"
+  },
+  {
+   "code": "advance/unknown_generation",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:683"
+   ],
+   "negatives": [
+    "P6-N16"
+   ]
+  },
+  {
+   "code": "backup/coherent_generation",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:72"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "driver self-check on Storage's own CURRENT/manifest at capture"
+  },
+  {
+   "code": "backup/dest_empty",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:64"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "driver API precondition"
+  },
+  {
+   "code": "cancel/%s_join",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:423",
+    "pm_goal_dg_cf3_projector.py:426"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "formatted once per D06 member (candidate, intent, prepare origin, publish origin); each instance has its own negative (CF10-N52, N62, N63, N64)"
+  },
+  {
+   "code": "cancel/causal_order",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:444"
+   ],
+   "negatives": [
+    "CF10-N25"
+   ]
+  },
+  {
+   "code": "cancel/d01_join",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:435"
+   ],
+   "negatives": [
+    "CF10-N54"
+   ]
+  },
+  {
+   "code": "cancel/d05_origin",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:431"
+   ],
+   "negatives": [
+    "CF10-N53"
+   ]
+  },
+  {
+   "code": "cancel/d05_outcome",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:429"
+   ],
+   "negatives": [
+    "CF10-N29"
+   ]
+  },
+  {
+   "code": "cancel/d06_event",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:417"
+   ],
+   "negatives": [
+    "CF10-N51"
+   ]
+  },
+  {
+   "code": "cancel/d06_unavailable",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:415"
+   ],
+   "negatives": [
+    "CF10-N28"
+   ]
+  },
+  {
+   "code": "cancel/initialized_no_start",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:457"
+   ],
+   "negatives": [
+    "CF10-N57"
+   ]
+  },
+  {
+   "code": "cancel/native_transition",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:437"
+   ],
+   "negatives": [
+    "CF10-N55"
+   ]
+  },
+  {
+   "code": "cancel/revisions",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:440"
+   ],
+   "negatives": [
+    "CF10-N56"
+   ]
+  },
+  {
+   "code": "cancel/state",
+   "sites": [
+    "pm_goal_dg_cf3_world.py:475"
+   ],
+   "negatives": [
+    "CF10-N60"
+   ]
+  },
+  {
+   "code": "certified/causal_order",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:554"
+   ],
+   "negatives": [
+    "CF10-N24"
+   ]
+  },
+  {
+   "code": "certified/commit_event",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:505"
+   ],
+   "negatives": [
+    "CF10-N32"
+   ]
+  },
+  {
+   "code": "certified/commit_first_receipt",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:506"
+   ],
+   "negatives": [
+    "CF10-N21"
+   ]
+  },
+  {
+   "code": "certified/commit_producer_digest",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:509"
+   ],
+   "negatives": [
+    "CF10-N34"
+   ]
+  },
+  {
+   "code": "certified/commit_unavailable",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:503"
+   ],
+   "negatives": [
+    "CF10-N31"
+   ]
+  },
+  {
+   "code": "certified/commit_value_commitment",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:507"
+   ],
+   "negatives": [
+    "CF10-N33"
+   ]
+  },
+  {
+   "code": "certified/coordinator_origin",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:519"
+   ],
+   "negatives": [
+    "CF10-N37"
+   ]
+  },
+  {
+   "code": "certified/d01_join",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:535"
+   ],
+   "negatives": [
+    "CF10-N18"
+   ]
+  },
+  {
+   "code": "certified/d01_same_transaction",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:538"
+   ],
+   "negatives": [
+    "CF10-N19"
+   ]
+  },
+  {
+   "code": "certified/native_origin_join",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:522"
+   ],
+   "negatives": [
+    "CF10-N38"
+   ]
+  },
+  {
+   "code": "certified/native_protected",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:528"
+   ],
+   "negatives": [
+    "CF10-N39"
+   ]
+  },
+  {
+   "code": "certified/native_result_event",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:523"
+   ],
+   "negatives": [
+    "CF10-N22"
+   ]
+  },
+  {
+   "code": "certified/native_transition",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:525"
+   ],
+   "negatives": [
+    "CF10-N17"
+   ]
+  },
+  {
+   "code": "certified/release_after_commit",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:517"
+   ],
+   "negatives": [
+    "CF10-N36"
+   ]
+  },
+  {
+   "code": "certified/release_missing",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:512"
+   ],
+   "negatives": [
+    "CF10-N15"
+   ]
+  },
+  {
+   "code": "certified/release_readback",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:515"
+   ],
+   "negatives": [
+    "CF10-N23"
+   ]
+  },
+  {
+   "code": "certified/release_selects_commit",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:514"
+   ],
+   "negatives": [
+    "CF10-N35"
+   ]
+  },
+  {
+   "code": "certified/revisions",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:550"
+   ],
+   "negatives": [
+    "CF10-N40"
+   ]
+  },
+  {
+   "code": "certified/standard_capture_join",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:544"
+   ],
+   "negatives": [
+    "CF10-N41"
+   ]
+  },
+  {
+   "code": "certified/standard_receipt_ref",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:548"
+   ],
+   "negatives": [
+    "CF10-N42"
+   ]
+  },
+  {
+   "code": "certified/standard_semantics",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:541"
+   ],
+   "negatives": [
+    "CF10-N20"
+   ]
+  },
+  {
+   "code": "certify/native_state",
+   "sites": [
+    "pm_goal_dg_cf3_world.py:700"
+   ],
+   "negatives": [
+    "CF10-N61"
+   ]
+  },
+  {
+   "code": "checkpoint/size",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:189"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "unreachable from genuine originals: the checkpoint form is chosen by first fit and the compact reference always fits; the W5 component control covers the oversize refusal"
+  },
+  {
+   "code": "collect/checkpoint",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:878"
+   ],
+   "negatives": [
+    "P8-N14"
+   ]
+  },
+  {
+   "code": "collect/final/checkpoint",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:886"
+   ],
+   "negatives": [
+    "P8-N16"
+   ]
+  },
+  {
+   "code": "collect/final/held",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:885"
+   ],
+   "negatives": [
+    "P8-N15"
+   ]
+  },
+  {
+   "code": "collect/held",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:751"
+   ],
+   "negatives": [
+    "P8-N04"
+   ]
+  },
+  {
+   "code": "collect/not_retired_or_abandoned",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:749"
+   ],
+   "negatives": [
+    "P8-N06"
+   ]
+  },
+  {
+   "code": "collect/retention_window",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:747"
+   ],
+   "negatives": [
+    "P8-N05"
+   ]
+  },
+  {
+   "code": "collect/unknown_generation",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:743"
+   ],
+   "negatives": [
+    "P8-N13"
+   ]
+  },
+  {
+   "code": "cutover/expected_frontier",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:720"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "duplicate of publish/replay_conflict, as above"
+  },
+  {
+   "code": "cutover/incomplete_coverage",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:726"
+   ],
+   "negatives": [
+    "P6-N08"
+   ]
+  },
+  {
+   "code": "cutover/not_staged",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:719"
+   ],
+   "negatives": [
+    "P6-N18"
+   ]
+  },
+  {
+   "code": "cutover/row_binding",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:732",
+    "pm_goal_dg_cf3_projector.py:734"
+   ],
+   "negatives": [
+    "P6-N20"
+   ]
+  },
+  {
+   "code": "cutover/seglog_frontier",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:729"
+   ],
+   "negatives": [
+    "P6-N21"
+   ]
+  },
+  {
+   "code": "cutover/source_defect",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:723"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "duplicate of cutover/unsupported_or_malformed_row: reduce_prefix reports the generic source defect as its halt (CF10-N06 path); prove as a pair"
+  },
+  {
+   "code": "cutover/unknown_generation",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:717"
+   ],
+   "negatives": [
+    "P6-N19"
+   ]
+  },
+  {
+   "code": "cutover/unsupported_or_malformed_row",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:722"
+   ],
+   "negatives": [
+    "P6-N09"
+   ]
+  },
+  {
+   "code": "native/unborn",
+   "sites": [
+    "pm_goal_dg_cf3_world.py:265"
+   ],
+   "negatives": [
+    "CF10-N58"
+   ]
+  },
+  {
+   "code": "pack/access",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:156"
+   ],
+   "negatives": [
+    "F0-N03"
+   ]
+  },
+  {
+   "code": "pack/noncanonical",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:162"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "duplicate of the pinned original decoder's canonical refusal (pack/canonical_decode, F0-N08): unsorted maps and non-minimal integers are refused by the decoder before re-encoding"
+  },
+  {
+   "code": "pack/reference_fields",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:154"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "duplicate of the PayloadRef schema (additionalProperties false, exact required set) validated with StorageProjection/StorageCheckpoint before any pack read"
+  },
+  {
+   "code": "profile/file_sha256",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:128"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "static integrity of the selected profile file; no lane input reaches it; covered by the W5 component profile_integrity (profile/member_hash)"
+  },
+  {
+   "code": "profile/logical_digest",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:131"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "static integrity, as above (W5 profile/logical_digest)"
+  },
+  {
+   "code": "publish/candidate_mismatch",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:836"
+   ],
+   "negatives": [
+    "P5-N01",
+    "P5-N02",
+    "P5-N03",
+    "P5-N04",
+    "P5-N05",
+    "P5-N06",
+    "P5-N07",
+    "P5-N08",
+    "P5-N09",
+    "P5-N10",
+    "P5-N11",
+    "P5-N13",
+    "P5-N16",
+    "P5-N17",
+    "P5-N18",
+    "P5-N19",
+    "P6-N01",
+    "P8-N01",
+    "P8-N02",
+    "P8-N12"
+   ]
+  },
+  {
+   "code": "publish/candidate_type",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:815"
+   ],
+   "negatives": [
+    "P6-N22"
+   ]
+  },
+  {
+   "code": "publish/final/",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:847"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "loop over seven fence members; seglog, authority, controls and checkpoint_version have negatives (P6-N03..N06); coverage, defect and rows only change together with the seglog token, so they are duplicates of publish/final/seglog"
+  },
+  {
+   "code": "publish/final/withdrawn",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:848"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "duplicate of publish/final/controls (the controls epoch and projector_withdrawn change together); prove as a pair"
+  },
+  {
+   "code": "publish/operation",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:817"
+   ],
+   "negatives": [
+    "P6-N23"
+   ]
+  },
+  {
+   "code": "publish/stale_before",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:830"
+   ],
+   "negatives": [
+    "P6-N02"
+   ]
+  },
+  {
+   "code": "publish/withdrawn",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:814"
+   ],
+   "negatives": [
+    "P6-N11"
+   ]
+  },
+  {
+   "code": "read/checkpoint_key",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:982"
+   ],
+   "negatives": [
+    "F0-N14"
+   ]
+  },
+  {
+   "code": "read/checkpoint_unavailable",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:980"
+   ],
+   "negatives": [
+    "P8-N07"
+   ]
+  },
+  {
+   "code": "read/current_state",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:992"
+   ],
+   "negatives": [
+    "F0-N15"
+   ]
+  },
+  {
+   "code": "read/disclosure_revoked",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:979"
+   ],
+   "negatives": [
+    "P8-N08"
+   ]
+  },
+  {
+   "code": "read/final/checkpoint",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:1010"
+   ],
+   "negatives": [
+    "P8-N17"
+   ]
+  },
+  {
+   "code": "read/final/controls",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:1009"
+   ],
+   "negatives": [
+    "P8-N11"
+   ]
+  },
+  {
+   "code": "read/final/seglog",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:1011"
+   ],
+   "negatives": [
+    "P8-N18"
+   ]
+  },
+  {
+   "code": "read/no_current",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:985"
+   ],
+   "negatives": [
+    "F0-N11"
+   ]
+  },
+  {
+   "code": "read/reader_withdrawn",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:978"
+   ],
+   "negatives": [
+    "P8-N09"
+   ]
+  },
+  {
+   "code": "read/row_binding",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:998",
+    "pm_goal_dg_cf3_projector.py:1002"
+   ],
+   "negatives": [
+    "P6-N13"
+   ]
+  },
+  {
+   "code": "read/selection",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:986"
+   ],
+   "negatives": [
+    "F0-N12"
+   ]
+  },
+  {
+   "code": "read/source_unavailable",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:1004"
+   ],
+   "negatives": [
+    "P8-N10"
+   ]
+  },
+  {
+   "code": "read/unbound_row",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:995"
+   ],
+   "negatives": [
+    "P6-N14"
+   ]
+  },
+  {
+   "code": "read/unknown_generation",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:989"
+   ],
+   "negatives": [
+    "F0-N13"
+   ]
+  },
+  {
+   "code": "reduce/snapshot_type",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:584"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "internal API type guard; only owner-internal callers"
+  },
+  {
+   "code": "reduce/storage",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:586"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "internal API identity guard; Sources always binds the same Storage"
+  },
+  {
+   "code": "reducer/custody_receipt",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:346"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "duplicate of the adapter GenericSource source/custody_receipt comparison, which runs first; prove as a pair"
+  },
+  {
+   "code": "reducer/duplicate_start",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:353"
+   ],
+   "negatives": [
+    "CF10-N11"
+   ]
+  },
+  {
+   "code": "reducer/first_receipt_barrier",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:345"
+   ],
+   "negatives": [
+    "CF10-N16"
+   ]
+  },
+  {
+   "code": "reducer/pending_custody",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:596"
+   ],
+   "negatives": [
+    "CF10-N07"
+   ]
+  },
+  {
+   "code": "reducer/second_terminal",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:412",
+    "pm_goal_dg_cf3_projector.py:499"
+   ],
+   "negatives": [
+    "CF10-N08",
+    "CF10-N09"
+   ]
+  },
+  {
+   "code": "reducer/start_after_terminal",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:352"
+   ],
+   "negatives": [
+    "CF10-N10"
+   ]
+  },
+  {
+   "code": "reducer/unregistered_record",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:598"
+   ],
+   "negatives": [
+    "CF10-N04",
+    "CF10-N05"
+   ]
+  },
+  {
+   "code": "reducer/unsupported_same_run",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:601"
+   ],
+   "negatives": [
+    "CF10-N01",
+    "CF10-N02",
+    "CF10-N03"
+   ]
+  },
+  {
+   "code": "release/readback",
+   "sites": [
+    "pm_goal_dg_cf3_world.py:601"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "coordinator owner self-check on Storage readback before Release"
+  },
+  {
+   "code": "restore/derived_as_authority",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:146"
+   ],
+   "negatives": [
+    "CF12-N04"
+   ]
+  },
+  {
+   "code": "restore/manifest_generation",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:162"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "behind the seal: a different manifest generation needs a re-sealed unit (restore/seal, CF12-N05)"
+  },
+  {
+   "code": "restore/member_digest",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:152"
+   ],
+   "negatives": [
+    "CF12-N02"
+   ]
+  },
+  {
+   "code": "restore/no_authority_effect",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:192",
+    "pm_goal_dg_cf3_restore.py:199"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "driver self-check that restore issued no Event or custody"
+  },
+  {
+   "code": "restore/seal",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:105"
+   ],
+   "negatives": [
+    "CF12-N05"
+   ]
+  },
+  {
+   "code": "restore/storage_instance",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:161"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "behind the seal, as above"
+  },
+  {
+   "code": "restore/target_empty",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:153"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "driver API precondition"
+  },
+  {
+   "code": "restore/unexpected_member",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:147",
+    "pm_goal_dg_cf3_restore.py:148"
+   ],
+   "negatives": [
+    "CF12-N03"
+   ]
+  },
+  {
+   "code": "restore/unit_incomplete",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:149"
+   ],
+   "negatives": [
+    "CF12-N01"
+   ]
+  },
+  {
+   "code": "restore/unit_present",
+   "sites": [
+    "pm_goal_dg_cf3_restore.py:141"
+   ],
+   "negatives": [
+    "CF12-N07"
+   ]
+  },
+  {
+   "code": "sources/coordinated_snapshot",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:294"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "internal consistency of two back-to-back reads in one process; reachable only with a concurrent writer between them (native concurrency NOT_RUN)"
+  },
+  {
+   "code": "stage/anchor_collision",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:670"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "duplicate of stage/seed_reused: an equal anchor needs the same Storage seed and birth token (P5-N15)"
+  },
+  {
+   "code": "stage/fourth_generation",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:665"
+   ],
+   "negatives": [
+    "P8-N03"
+   ]
+  },
+  {
+   "code": "stage/seed_reused",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:824"
+   ],
+   "negatives": [
+    "P5-N15"
+   ]
+  },
+  {
+   "code": "stage/seed_type",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:667"
+   ],
+   "negatives": [
+    "P5-N21"
+   ]
+  },
+  {
+   "code": "stage/seed_unissued",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:819"
+   ],
+   "negatives": [
+    "P5-N14"
+   ]
+  },
+  {
+   "code": "start/candidate_event",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:361"
+   ],
+   "negatives": [
+    "CF10-N45"
+   ]
+  },
+  {
+   "code": "start/commit_event",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:358"
+   ],
+   "negatives": [
+    "CF10-N43"
+   ]
+  },
+  {
+   "code": "start/commit_unavailable",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:356"
+   ],
+   "negatives": [
+    "CF10-N26"
+   ]
+  },
+  {
+   "code": "start/d01_join",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:366"
+   ],
+   "negatives": [
+    "CF10-N46"
+   ]
+  },
+  {
+   "code": "start/first_receipt",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:359"
+   ],
+   "negatives": [
+    "CF10-N44"
+   ]
+  },
+  {
+   "code": "start/goal_revision",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:374"
+   ],
+   "negatives": [
+    "CF10-N27"
+   ]
+  },
+  {
+   "code": "start/native_transition",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:369"
+   ],
+   "negatives": [
+    "CF10-N47"
+   ]
+  },
+  {
+   "code": "start/origin_join",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:379"
+   ],
+   "negatives": [
+    "CF10-N50"
+   ]
+  },
+  {
+   "code": "start/origin_unavailable",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:378"
+   ],
+   "negatives": [
+    "CF10-N49"
+   ]
+  },
+  {
+   "code": "start/revisions",
+   "sites": [
+    "pm_goal_dg_cf3_projector.py:372"
+   ],
+   "negatives": [
+    "CF10-N48"
+   ]
+  },
+  {
+   "code": "start/state",
+   "sites": [
+    "pm_goal_dg_cf3_world.py:407"
+   ],
+   "negatives": [
+    "CF10-N59"
+   ]
+  },
+  {
+   "code": "tx/handle_issuer",
+   "sites": [
+    "pm_goal_dg_cf3_world.py:184",
+    "pm_goal_dg_cf3_world.py:190"
+   ],
+   "negatives": [
+    "P6-N24"
+   ]
+  },
+  {
+   "code": "tx/handle_type",
+   "sites": [
+    "pm_goal_dg_cf3_world.py:183",
+    "pm_goal_dg_cf3_world.py:189"
+   ],
+   "negatives": [
+    "P6-N25"
+   ]
+  },
+  {
+   "code": "tx/identifier",
+   "sites": [
+    "pm_goal_dg_cf3_world.py:194"
+   ],
+   "negatives": [],
+   "no_dedicated_negative_reason": "Storage self-check on its own transaction id"
+  },
+  {
+   "code": "tx/reservation_stale",
+   "sites": [
+    "pm_goal_dg_cf3_world.py:192"
+   ],
+   "negatives": [
+    "P6-N07"
+   ]
+  }
+ ]
+}

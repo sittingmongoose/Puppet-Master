@@ -102,6 +102,32 @@
 /* ---- look reveal (View Transitions): the new world opens from the chosen tile; clicks keep working meanwhile ---- */
 html[data-o55-vt]::view-transition { pointer-events: none; }
 html[data-o55-vt]::view-transition-old(root), html[data-o55-vt]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+/* FO-188 variant B: the app beneath keeps its old picture through the reveal and takes the new look when the reveal
+   ends. Each part of it is captured on its own (match-element names, class o55-held), shown as it was, unmoved, for the
+   whole transition, and its new picture is not shown; the window is captured on its own too, so it stays above them,
+   and the circle reveals it as it reveals the page's ground (60-ui-core.js applyLook). In the update the parts are not
+   rendered (data-o55-vt-still: content-visibility hidden, at their last size), so the new look restyles and lays out
+   the window and the ground only, and the app's own observers have nothing to report until the reveal has ended. */
+html[data-o55-vt-b] body > [data-o55-held] { view-transition-name: match-element; view-transition-class: o55-held; }
+html[data-o55-vt-b] #pm-o55-onboarding { view-transition-name: o55-win; }
+html[data-o55-vt-b]::view-transition-group(*.o55-held), html[data-o55-vt-b]::view-transition-old(*.o55-held) { animation: none; }
+html[data-o55-vt-b]::view-transition-new(*.o55-held) { animation: none; opacity: 0; }
+html[data-o55-vt-b]::view-transition-group(o55-win) { animation: none; }
+html[data-o55-vt-b]::view-transition-old(o55-win), html[data-o55-vt-b]::view-transition-new(o55-win) { animation: none; mix-blend-mode: normal; }
+/* the window is see-through (its scrim dims the app at 74%): its old picture is shown outside the circle only, as the
+   circle grows (--o55-vt-r, animated with the circle; 60-ui-core.js). Left whole under the new one, the two scrims
+   dimmed the app's old picture to about 7% inside the circle (VM screenshot, t-b4). */
+@property --o55-vt-r { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@property --o55-vt-x { syntax: '<length-percentage>'; inherits: false; initial-value: 50%; }
+@property --o55-vt-y { syntax: '<length-percentage>'; inherits: false; initial-value: 50%; }
+html[data-o55-vt-b]::view-transition-old(o55-win) {
+  -webkit-mask-image: radial-gradient(circle at var(--o55-vt-x) var(--o55-vt-y), transparent var(--o55-vt-r), #000 calc(var(--o55-vt-r) + 0.5px));
+  mask-image: radial-gradient(circle at var(--o55-vt-x) var(--o55-vt-y), transparent var(--o55-vt-r), #000 calc(var(--o55-vt-r) + 0.5px)); }
+html[data-o55-open] body > [data-o55-held] { contain-intrinsic-size: auto 0px auto 0px; }
+/* (in the new state the parts have no name, so each picture is the old one alone, at the old part's box: named in the
+   new state too, a group took the hidden part's new box, which is empty under content-visibility, and the old picture
+   was drawn into it: the dimmed app vanished for the whole reveal, Alexis film t-b3) */
+html[data-o55-vt-still] body > [data-o55-held] { content-visibility: hidden; view-transition-name: none; }
 
 /* ---- Reduced Motion: order and cause/effect kept, movement removed ---------------------------------------------- */
 html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st,

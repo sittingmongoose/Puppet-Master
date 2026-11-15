@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1617-L1791
+Source lines: L1617-L1825
 
-Source SHA256: `b11c900e665baa56ec201528b5d624d2a1c767f933a466d7ef39126fea3fac1a`
+Source SHA256: `79bb8150dae732fc3f557fa5cfb7fc5af401ab0b2b519654e142d0d2f7639fde`
 
 ---
 
@@ -57,6 +57,21 @@ canonical_text: The per-audit closure check of scripts/pm-audit-closure.py appli
   the full current matrix-row schema, names a registry closure whose finding covers that source row or appends a new
   registry row, cites anchored evidence at a named commit, and records the pass, its decision and its blind reviews
   in a supplemental_closure_pass record in the audit directory. No existing matrix or registry row is edited.
+  A supplemental closure pass may also correct a frozen closure row whose registry link does not hold (DL-511). It
+  appends one row that meets the full current matrix-row schema, closes the same source row with the same
+  closure_status, links a registry closure whose finding identity it shares, and names the one frozen row it replaces
+  in replaces_matrix_line, with replaces_row_sha256 (the SHA-256 of that row's exact line) and a replacement_reason.
+  Its supplemental_closure_pass record pins the rows that were frozen when the pass began (matrix.original_rows and
+  matrix.original_sha256) and lists the replacement once (replaces_matrix_line, appended_line and
+  appended_row_sha256). The frozen row stays byte-identical as history, and the per-audit check judges the replacing
+  row's registry link instead of the frozen row's; every other check of the frozen row and its coverage of its source
+  row stand, and the replacing row adds no coverage, status count or over-coverage of its own. A replacement holds
+  only when the named line is a frozen row inside the pinned prefix (and, in a directory under the legacy rule, one of
+  its historical rows) rather than a missing line, an appended row or another replacement, its bytes still match, no
+  other row names the same line, and the replacing row's own registry link holds with an identity that gives the
+  registry closure's deterministic key. Otherwise the replacement is an error and both rows are judged as they stand.
+  A replacement is never itself replaced, and a registry link that does not hold stays an error for every frozen row
+  that no valid replacement names and for every replacing row.
 gui_related: false
 gui_classification_reason: Governs audit-closure validation of historical audit directories; no GUI surface.
 depends_on:
@@ -76,6 +91,14 @@ acceptance_criteria:
   before the rule, and in each listed directory the kept and the demoted errors together equal the errors before.
 - audit-20260619-002-prd-planning-wizard-head-semantic-fidelity validates with --require-closure-matrix and
   --require-effective-status after its supplemental closure pass.
+- python3 -m unittest tests/test_pm_audit_closure.py covers a valid replacement, a frozen row whose registry link does
+  not hold and that nothing replaces, an unknown line, a line outside the pinned prefix, a non-frozen target, duplicate
+  and chained replacements, a replacing row whose own registry link or identity does not hold, unbound frozen bytes,
+  a missing pass record or one that does not list the replacement, a changed source row or closure_status, and that a
+  replacing row adds no over-coverage.
+- In audit-20260617-006-semantic-closure-registry-fidelity, appended rows replace closure-matrix lines 22 and 23 and
+  link new registry closures under the corrected owners, and validate --require-closure-matrix no longer reports
+  those two registry links.
 validation_surfaces:
 - python3 scripts/pm-audit-closure.py self-test
 - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix
@@ -88,6 +111,9 @@ implementation_surfaces:
 - Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/repair_closure_matrix.jsonl
 - Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/supplemental_closure_pass-20261105.json
 - Plans/.audits/_legacy_format_inventory.json
+- Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_closure_matrix.jsonl
+- Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/supplemental_closure_pass-20261114.json
+- tests/test_pm_audit_closure.py
 node_compile_hint:
   mode: contract_specification
   create_worknodes: false
@@ -96,21 +122,29 @@ source_lineage:
 - 'Jared, 2026-11-05, "approve all" (T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z), answering
   stream C question 7 in share/puppet-master/2026-11-04-program/streams/C-REPORT.md'
 - Plans/Decision_Log.md#DL-334
+- 'Jared, 2026-11-14 3:39 PM EST, card C-A006 answer A, "Change the rule so a correction can replace a frozen record"
+  (signed answer /mnt/Cursor/agent-reports/v1/answers/vm.pm-closure-lead--C-A006.json)'
+- Plans/Decision_Log.md#DL-511
 preserved_exact_tokens:
 - pm.audit_closure.legacy_format.v1
 - LEGACY_AUDIT_DIRS
 - _legacy_format_inventory.json
 - supplemental_closure_pass
 - never excuses a missing closure row or any other substantive gap
+- replaces_matrix_line
+- replaces_row_sha256
+- replacement_reason
 negative_constraints:
 - The legacy format rule never excuses a missing closure row or any other substantive gap.
 - No audit directory joins LEGACY_AUDIT_DIRS after 2026-11-05.
 - A supplemental closure pass never edits or removes an existing matrix or registry row.
+- A replacement never edits the frozen row it replaces, and a replacement is never itself replaced.
+- A registry link that does not hold stays an error for every frozen row that no valid replacement names.
 owner_hints:
 - Plans/Planning_Ledger_System.md
 ```
 
-ContractRef: ContractName:Plans/Planning_Ledger_System.md#PLS-026, ContractName:Plans/Plan_Document_System.md#PDS-014, ContractName:Plans/Planning_Ledger_System.md#PLS-025, ContractName:Plans/Decision_Log.md#DL-334
+ContractRef: ContractName:Plans/Planning_Ledger_System.md#PLS-026, ContractName:Plans/Plan_Document_System.md#PDS-014, ContractName:Plans/Planning_Ledger_System.md#PLS-025, ContractName:Plans/Decision_Log.md#DL-334, ContractName:Plans/Decision_Log.md#DL-511
 
 ### PLS-027 - Append-Only Audit Correction Records
 

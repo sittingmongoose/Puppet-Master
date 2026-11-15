@@ -29985,6 +29985,32 @@ html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-lookmenu .o55-opt-me
 /* ---- look reveal (View Transitions): the new world opens from the chosen tile; clicks keep working meanwhile ---- */
 html[data-o55-vt]::view-transition { pointer-events: none; }
 html[data-o55-vt]::view-transition-old(root), html[data-o55-vt]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+/* FO-188 variant B: the app beneath keeps its old picture through the reveal and takes the new look when the reveal
+   ends. Each part of it is captured on its own (match-element names, class o55-held), shown as it was, unmoved, for the
+   whole transition, and its new picture is not shown; the window is captured on its own too, so it stays above them,
+   and the circle reveals it as it reveals the page's ground (60-ui-core.js applyLook). In the update the parts are not
+   rendered (data-o55-vt-still: content-visibility hidden, at their last size), so the new look restyles and lays out
+   the window and the ground only, and the app's own observers have nothing to report until the reveal has ended. */
+html[data-o55-vt-b] body > [data-o55-held] { view-transition-name: match-element; view-transition-class: o55-held; }
+html[data-o55-vt-b] #pm-o55-onboarding { view-transition-name: o55-win; }
+html[data-o55-vt-b]::view-transition-group(*.o55-held), html[data-o55-vt-b]::view-transition-old(*.o55-held) { animation: none; }
+html[data-o55-vt-b]::view-transition-new(*.o55-held) { animation: none; opacity: 0; }
+html[data-o55-vt-b]::view-transition-group(o55-win) { animation: none; }
+html[data-o55-vt-b]::view-transition-old(o55-win), html[data-o55-vt-b]::view-transition-new(o55-win) { animation: none; mix-blend-mode: normal; }
+/* the window is see-through (its scrim dims the app at 74%): its old picture is shown outside the circle only, as the
+   circle grows (--o55-vt-r, animated with the circle; 60-ui-core.js). Left whole under the new one, the two scrims
+   dimmed the app's old picture to about 7% inside the circle (VM screenshot, t-b4). */
+@property --o55-vt-r { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@property --o55-vt-x { syntax: '<length-percentage>'; inherits: false; initial-value: 50%; }
+@property --o55-vt-y { syntax: '<length-percentage>'; inherits: false; initial-value: 50%; }
+html[data-o55-vt-b]::view-transition-old(o55-win) {
+  -webkit-mask-image: radial-gradient(circle at var(--o55-vt-x) var(--o55-vt-y), transparent var(--o55-vt-r), #000 calc(var(--o55-vt-r) + 0.5px));
+  mask-image: radial-gradient(circle at var(--o55-vt-x) var(--o55-vt-y), transparent var(--o55-vt-r), #000 calc(var(--o55-vt-r) + 0.5px)); }
+html[data-o55-open] body > [data-o55-held] { contain-intrinsic-size: auto 0px auto 0px; }
+/* (in the new state the parts have no name, so each picture is the old one alone, at the old part's box: named in the
+   new state too, a group took the hidden part's new box, which is empty under content-visibility, and the old picture
+   was drawn into it: the dimmed app vanished for the whole reveal, Alexis film t-b3) */
+html[data-o55-vt-still] body > [data-o55-held] { content-visibility: hidden; view-transition-name: none; }
 
 /* ---- Reduced Motion: order and cause/effect kept, movement removed ---------------------------------------------- */
 html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st,
@@ -70070,7 +70096,7 @@ div.pm56-host{
   --ss-gle: cubic-bezier(.37, 0, .63, 1);
 }
 div.pm56-host[data-theme$="-light"]{
-  --ss-glow-a: .1; --ss-glow-stop-a: .1; --ss-glow-w: 200%;
+  --ss-glow-a: .1; --ss-glow-w: 200%;
   --ss-halo-a: 0;
   --ss-rim: rgb(255 255 255 / .26); --ss-drop: rgb(20 20 60 / .2); --ss-sheen: rgb(255 255 255 / .12);
   --ss-idle-ink: .76;
@@ -70095,12 +70121,14 @@ div.pm56-host[data-theme^="retro"]{ --ss-out: steps(4, end); --ss-shake: steps(4
   transition: opacity 260ms ease-out, scale 260ms var(--ease);
 }
 .pm56-host .sendstop::before{ background: radial-gradient(closest-side, var(--accent), transparent); }
-.pm56-host .ss-bl::before{
-  content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+.pm56-host .ss-blg{
+  position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
   background: radial-gradient(closest-side, var(--danger), transparent); opacity: var(--ss-glow-stop-a);
 }
 .pm56-host .sendstop[data-ss="ready"]::before, .pm56-host .sendstop[data-ss="queue"]::before{ opacity: var(--ss-glow-a); }
 .pm56-host .sendstop[data-ss="stop"] .ss-bl{ opacity: 1; transition: opacity 300ms ease-out calc(var(--ss-md, 0ms) + 220ms), scale 260ms var(--ease); }
+div.pm56-host[data-theme$="-light"] .sendstop[data-ss="stop"] .ss-bl{ opacity: calc(1 / 3); }
+.pm56-host .sendstop:has(.ss-g[data-o55-loop]) .ss-blg, .pm56-host .sendstop:has(.ss-g[data-pm-held]) .ss-blg{ animation-play-state: paused !important; }
 div.pm56-host[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-bl{ transition: opacity 300ms steps(1, start) calc(var(--ss-md, 0ms) + 300ms), scale 260ms var(--ease); }
 .pm56-host .ss-face{
   position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none;
@@ -70214,19 +70242,12 @@ div.pm56-host[data-theme^="retro"] .sendstop[data-ss="stop"] .ss-flood{ transiti
 .pm56-host .sendstop[data-ss="ready"]:active .ss-hov, .pm56-host .sendstop[data-ss="queue"]:active .ss-hov{ translate: -.49px .49px; transition-duration: 90ms; }
 .pm56-host .sendstop[data-ss="stop"]:hover .ss-hov{ scale: 1.09; }
 .pm56-host .sendstop[data-ss="stop"]:active .ss-hov{ scale: .84; transition-duration: 90ms; }
-.pm56-host .sendstop[data-ss="stop"] .ss-g{ animation: ss-breathe 2200ms var(--ss-le) var(--ss-ld) infinite; }
-.pm56-host .sendstop[data-ss="stop"] .ss-bl::before{ animation: ss-glow 2200ms var(--ss-gle) var(--ss-ld) infinite; }
-.pm56-host .sendstop[data-ss="stop"][data-flow="waiting"] .ss-g{ animation-name: ss-breathe-w; animation-duration: 3200ms; }
-.pm56-host .sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before{ animation-name: ss-glow-w; animation-duration: 3200ms; }
-.pm56-host .sendstop[data-ss="stop"][data-flowed] .ss-g, .pm56-host .sendstop[data-ss="stop"][data-flowed] .ss-bl::before{ animation-delay: 0ms; }
+.pm56-host .sendstop[data-ss="stop"]{ --ss-beat: 2200ms; }
+.pm56-host .sendstop[data-ss="stop"][data-flow="waiting"]{ --ss-beat: 3200ms; }
+.pm56-host .sendstop[data-ss="stop"] .ss-g{ animation: ss-breathe calc(var(--ss-beat) * var(--ss-speed, 1)) var(--ss-le) calc(var(--ss-ld) * var(--ss-speed, 1)) infinite; }
+.pm56-host .sendstop[data-ss="stop"] .ss-blg{ animation: ss-glow calc(var(--ss-beat) * var(--ss-speed, 1)) var(--ss-gle) calc(var(--ss-ld) * var(--ss-speed, 1)) infinite; }
 @keyframes ss-breathe{ 0%, 100% { transform: scale(1); } 50% { transform: scale(.88); } }
-@keyframes ss-breathe-w{ 0%, 100% { transform: scale(1); } 50% { transform: scale(.92); } }
 @keyframes ss-glow{ 0%, 100% { opacity: .3; } 50% { opacity: .18; } }
-@keyframes ss-glow-w{ 0%, 100% { opacity: .3; } 50% { opacity: .2; } }
-@keyframes ss-glow-l{ 0%, 100% { opacity: .1; } 50% { opacity: .06; } }
-@keyframes ss-glow-wl{ 0%, 100% { opacity: .1; } 50% { opacity: .067; } }
-div.pm56-host[data-theme$="-light"] .sendstop[data-ss="stop"] .ss-bl::before{ animation-name: ss-glow-l; }
-div.pm56-host[data-theme$="-light"] .sendstop[data-ss="stop"][data-flow="waiting"] .ss-bl::before{ animation-name: ss-glow-wl; }
 .pm56-host .sendstop.ss-launch .ss-ghost{ animation: ss-lift 320ms var(--ss-out) both; }
 .pm56-host .sendstop.ss-launch .ss-main{ animation: ss-fresh 340ms var(--ss-ease) 140ms both; }
 .pm56-host .sendstop.ss-launch .ss-trail{ animation: ss-trail 320ms linear both; }
@@ -70255,10 +70276,10 @@ div.pm56-host[data-theme^="retro"] .sendstop.ss-fail .ss-face::after{ animation:
 @keyframes ss-flash-r{ 0%, 52% { opacity: 1; } 53%, 100% { opacity: 0; } }
 @keyframes ss-bonk{ 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-16deg) translate(-1px, 1px); } }
 .pm56-host .sendstop.ss-fail-static .ss-face{ box-shadow: inset 0 0 0 1.5px var(--danger), 0 0 0 2px var(--danger); }
-.pm56-host .sendstop.ss-snap, .pm56-host .sendstop.ss-snap *, .pm56-host .sendstop.ss-snap::before, .pm56-host .sendstop.ss-snap .ss-bl::before, .pm56-host .sendstop.ss-snap .ss-face::after{ transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce){.pm56-host .sendstop, .pm56-host .sendstop *, .pm56-host .sendstop::before, .pm56-host .sendstop .ss-bl::before, .pm56-host .sendstop .ss-face::after{ animation: none !important; transition: none !important; }}
-div.pm56-host.pm56-reduced .sendstop, div.pm56-host.pm56-reduced .sendstop *, div.pm56-host.pm56-reduced .sendstop::before, div.pm56-host.pm56-reduced .sendstop .ss-bl::before, div.pm56-host.pm56-reduced .sendstop .ss-face::after{ animation: none !important; transition: none !important; }
-html[data-motion="reduced"] .pm56-host .sendstop, html[data-motion="reduced"] .pm56-host .sendstop *, html[data-motion="reduced"] .pm56-host .sendstop::before, html[data-motion="reduced"] .pm56-host .sendstop .ss-bl::before, html[data-motion="reduced"] .pm56-host .sendstop .ss-face::after{ animation: none !important; transition: none !important; }
+.pm56-host .sendstop.ss-snap, .pm56-host .sendstop.ss-snap *, .pm56-host .sendstop.ss-snap::before, .pm56-host .sendstop.ss-snap .ss-face::after{ transition: none !important; animation: none !important; }
+@media (prefers-reduced-motion: reduce){.pm56-host .sendstop, .pm56-host .sendstop *, .pm56-host .sendstop::before, .pm56-host .sendstop .ss-face::after{ animation: none !important; transition: none !important; }}
+div.pm56-host.pm56-reduced .sendstop, div.pm56-host.pm56-reduced .sendstop *, div.pm56-host.pm56-reduced .sendstop::before, div.pm56-host.pm56-reduced .sendstop .ss-face::after{ animation: none !important; transition: none !important; }
+html[data-motion="reduced"] .pm56-host .sendstop, html[data-motion="reduced"] .pm56-host .sendstop *, html[data-motion="reduced"] .pm56-host .sendstop::before, html[data-motion="reduced"] .pm56-host .sendstop .ss-face::after{ animation: none !important; transition: none !important; }
 html[data-o55-nier="on"] .pm56-host .sendstop{
   --ss-r: 0px; --ss-halo-a: 0; --ss-rim: transparent; --ss-drop: transparent; --ss-sheen: transparent;
   --ss-out: steps(3, end); --ss-shake: steps(4, end); --ss-drain: steps(1, end); --ss-drain-t: 40ms; --ss-flood-e: steps(1, start);
@@ -73838,6 +73859,13 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-cur
 /* the hover bead: lighter than a lens, gone the moment a press lands or a menu opens */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead { opacity: 0; box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), 0 3px 8px -3px var(--lg-shadow); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.on { opacity: 1; }
+/* PERF-4, the bead's share of the resting tint (2026-11-13; every other lens kind keeps its saturate inline, glass.js
+   KINDS restSat): a resting bead bends nothing (glass.js lensBend) but keeps its saturate(1.1) (KINDS.bead.sat) while it
+   shows, a plain backdrop pass only then: a flow ending over the Activity bar's blue stepped the whole bead's tint when
+   its filter came off (Glass Dark: the median pixel inside it 5 levels of blue, 81% of them 5 or more; lane G). The
+   flow's and the lift's inline filter wins over this while they run. The tier test is glass.js's own
+   (gpu(): any tier but cpu), so the bead and the icon lens keep or drop their tint together (round 2, R30 Finding 6) */
+html[data-lg="on"][data-theme^="glass"]:not([data-lg-tier="cpu"]):not(#lgz) .lg-bead.on { -webkit-backdrop-filter: saturate(1.1); backdrop-filter: saturate(1.1); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.lg-under { opacity: 0 !important; }
 /* the bead is Glass's alone: a look that adopts the switcher would paint it as its chip (glass.js drops it on leaving
    Glass; this keeps any bead from showing outside Glass) */
@@ -99554,7 +99582,7 @@ var PMU_SERIES = {
   function fitLater(body) {
     if (fitQueue.indexOf(body) < 0) fitQueue.push(body);
     if (fitAgain.indexOf(body) < 0) fitAgain.push(body);
-    if (!fitScheduled && !C.fitDefer) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; fitFlush(); }); }
+    if (!fitScheduled && !C.fitDefer) { fitScheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(function () { fitScheduled = false; if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(fitQueued)) return; fitFlush(); }); }
     /* once more in the next frame: meters and charts finish their own layout after the render, and wrapped text can then
        push a foot past the body (a one-off frame, never a loop) */
     /* (engine 21:26Z request: during an arrival or room change this frame is the next slice's frame and its read forced a
@@ -99576,8 +99604,12 @@ var PMU_SERIES = {
   });
   /* the settled pass runs in idle slices of about 8 ms (NOTES3-perf C1: never a whole-board pass in a moment); over every
      shown board (D10 7.1) */
+  /* FO-188: while a look is revealed over the onboarding window (PM_LOOK_HOLD, the onboarding's 11-motion-start.js) these
+     fits wait for the reveal's end */
+  function fitQueued() { if (fitQueue.length) fitFlush(); }
   function fitSettled() {
     fitSettleT = 0;
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(fitSettled)) return;
     var bodies = shownBodies();
     var idle = window.requestIdleCallback || function (f) { return setTimeout(function () { f({ timeRemaining: function () { return 8; } }); }, 16); };
     (function step(deadline) {
@@ -166176,6 +166208,58 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    not held invisible through the GPU's first draw; other moves still wait for the second. */
 (function () {
   'use strict';
+  /* PM_LOOK_HOLD (FO-188): the app beneath the onboarding window holds still while a look is revealed over it (README
+     Performance rule 6). A look picked in the window plays one View Transition, a circular reveal of 760 ms (Retro 520 ms),
+     and the app's own work for the new look ran inside it: the chat redrew itself (515 ms on the VM), Home, the terminal
+     and the editor applied the look (98 ms in one frame), with the window's own work on top, so the reveal stuttered and
+     lurched (Jared's QA, 2026-11-13: tasks of 50 to 450 ms and frame gaps up to 880 ms on a fast PC). The colours still
+     change at once (CSS); what the app does in script for a look waits until the reveal has ended.
+       PM_LOOK_HOLD()         true while a reveal plays (60-ui-core.js applyLook holds it from the theme's write to the
+                              reveal's end)
+       PM_LOOK_HOLD.after(fn) while held: fn is kept (once) and run after it, and the answer is true; else false, and the
+                              caller runs fn itself as before
+       PM_LOOK_HOLD.begin()   holds; returns end(), which a reveal calls once
+     What was kept runs once the reveal has ended, in idle slices in the order asked: the frame after the reveal's last
+     one is the browser's own restyle of the whole page (the transition ending, about 4,800 elements), and one task doing
+     all of it after that was a long task of its own. A slice runs jobs until 6 ms have gone (at least one): a reveal
+     keeps dozens of after-layout callbacks, whose asking again costs nothing, and one job a slice left the chat's redraw
+     waiting behind them for 0.7 to 2 s after the reveal (Alexis, kit check perf-look-change), the dimmed app showing
+     the old family's glyphs all that time. A new reveal starting meanwhile holds the rest again. */
+  let lookHolds = 0, lookIdle = 0;
+  const lookLater = [];
+  const lookNext = () => {
+    lookIdle = 0;
+    const t0 = performance.now();
+    while (!lookHolds && lookLater.length) {
+      const fn = lookLater.shift();
+      try { fn(); } catch (e) { try { console.error('[PM_LOOK_HOLD]', e); } catch (_) { /* none */ } }
+      if (performance.now() - t0 >= 6) break;
+    }
+    if (lookLater.length) lookSlice();
+  };
+  const lookSlice = () => {
+    if (lookIdle || lookHolds) return;
+    lookIdle = 1;
+    if (window.requestIdleCallback) window.requestIdleCallback(lookNext, { timeout: 200 });
+    else setTimeout(lookNext, 16);
+  };
+  window.PM_LOOK_HOLD = function lookHold() { return lookHolds > 0; };
+  window.PM_LOOK_HOLD.after = function after(fn) {
+    if (!lookHolds || typeof fn !== 'function') return false;
+    if (lookLater.indexOf(fn) < 0) lookLater.push(fn);
+    return true;
+  };
+  window.PM_LOOK_HOLD.begin = function begin() {
+    lookHolds++;
+    let open = true;
+    return function end() {
+      if (!open) return;
+      open = false;
+      if (--lookHolds > 0) return;
+      /* past the frame of the transition's own end restyle, then the slices */
+      requestAnimationFrame(() => requestAnimationFrame(lookSlice));
+    };
+  };
   /* PM_AFTER_LAYOUT(fn): fn runs in the coming frame after its style and layout, before its paint (a ResizeObserver
      delivery), so what it reads is already computed. One observer, made as this script loads, serves every caller:
      ResizeObservers are told in the order they were made, and one made at the moment it was needed was told after the
@@ -166185,13 +166269,23 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      Never ask from inside another ResizeObserver's callback: that code already runs after layout, so do the work there.
      The root observed from inside a delivery cannot be delivered in that frame; the browser reports it as a
      'ResizeObserver loop' error and fn runs a frame late (the panels' bodyObserver asking for its resize flush, F4
-     settle bisect). Asked from inside this helper's own delivery, fn is moved to the next frame on purpose. */
-  const afterQ = [];
+     settle bisect). Asked from inside this helper's own delivery, fn is moved to the next frame on purpose.
+     While a look is revealed over the window (PM_LOOK_HOLD above) only the window's own callers run here (marked with
+     PM_AFTER_LAYOUT.own: the moves held for a frame on time, the hover tokens); every other one
+     is the app beneath applying the look (Home's render and tab bodies, the terminal's and editor's look, the rail's fit,
+     the wallpaper's reads), and is kept until the reveal has ended, then asked again, one per idle slice. */
+  const afterQ = [], afterOwn = new WeakSet(), afterHeld = new Set();
   let afterRo = null, observing = false, flushing = false, flushedAt = null;
   const watch = () => { if (!observing && afterQ.length) { observing = true; afterRo.observe(document.documentElement); } };
+  const afterHold = (fn) => {
+    if (afterHeld.has(fn)) return;
+    afterHeld.add(fn);
+    window.PM_LOOK_HOLD.after(() => { afterHeld.delete(fn); window.PM_AFTER_LAYOUT(fn); });
+  };
   const flushAfter = () => {
     if (afterRo && observing) { afterRo.unobserve(document.documentElement); observing = false; }
-    const q = afterQ.splice(0);
+    let q = afterQ.splice(0);
+    if (lookHolds) q = q.filter((fn) => { if (afterOwn.has(fn)) return true; afterHold(fn); return false; });
     flushing = true;
     flushedAt = document.timeline.currentTime;
     for (const fn of q) { try { fn(); } catch (e) { try { console.error('[PM_AFTER_LAYOUT]', e); } catch (_) { /* none */ } } }
@@ -166211,6 +166305,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (flushedAt != null && flushedAt === document.timeline.currentTime) { requestAnimationFrame(watch); return; }
     watch();
   };
+  /* the window's own callers: never held by a look's reveal (above) */
+  window.PM_AFTER_LAYOUT.own = function own(fn) { if (typeof fn === 'function') afterOwn.add(fn); return fn; };
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     /* o.wait: () => bool. While it says true the moves stay held, even when the frames are on time, for at most o.waitCap
@@ -166273,7 +166369,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* Each check runs in its frame after layout (PM_AFTER_LAYOUT, before paint), so reading
        the moves (getAnimations for CSS animations) finds style already computed: from an animation frame callback it
        forced that frame's style early (49.7 ms on the P1000 for the customizer's six panels, editor lane). What the
-       check changes is drawn in the same frame. */
+       check changes is drawn in the same frame. A look's reveal never holds it (PM_AFTER_LAYOUT.own). */
+    window.PM_AFTER_LAYOUT.own(tick);
     const next = () => requestAnimationFrame(() => window.PM_AFTER_LAYOUT(tick));
     next();
   };
@@ -166496,6 +166593,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const animOn = (k) => (e) => {
     const el = e.target;
     if (!el || el.nodeType !== 1) return;
+    /* a View Transition's own pseudo-elements (a look's reveal) end with it and are no motion of the page's: counted, the
+       lookup asked <html> for every animation under it, 196 ms inside a Light reveal on the VM (FO-188, variant B) */
+    if (e.pseudoElement && e.pseudoElement.indexOf('::view-transition') === 0) return;
     let m = warmAnims.get(el);
     if (!m) warmAnims.set(el, (m = new Map()));
     const now = performance.now();
@@ -166529,7 +166629,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return st;
   };
   /* in PM_AFTER_LAYOUT: style is computed, so reading an element's animations forces nothing. Only an element counted for
-     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review) */
+     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review). While a
+     look is revealed over the window this lookup waits for the reveal's end like the app's callers (PM_LOOK_HOLD): one
+     getAnimations per counted element, it was 112-115 ms inside a Light reveal on the VM (FO-188, variant B), and the
+     warm queue does nothing while the window is open anyway (PM_BUSY: 'onboarding'). */
   const classify = () => {
     warmClassing = false;
     const now = performance.now();
@@ -168440,10 +168543,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     };
     const it = roomSteps(c, kitName);
     if (typeof OfflineAudioContext !== 'undefined' && c instanceof OfflineAudioContext) { let r; while (!(r = it.next()).done); wire(r.value); return input; }
+    /* (FO-188: the room's convolver takes its impulse in one go, 32-39 ms on the VM for a look's first sound, so while a
+       look is revealed over the window it is wired once the reveal has ended, PM_LOOK_HOLD; a sound that starts in
+       the reveal plays without that room's tail, as every sound did until the room's steps were done) */
     const step = () => {
       const t0 = performance.now(); let r;
       while (!(r = it.next()).done) if (performance.now() - t0 > 5) break;
-      if (r.done) wire(r.value); else setTimeout(step, 0);
+      if (!r.done) { setTimeout(step, 0); return; }
+      const L = window.PM_LOOK_HOLD, b = r.value;
+      if (L && L.after && L.after(() => wire(b))) return;
+      wire(b);
     };
     setTimeout(step, 0);
     return input;
@@ -173903,7 +174012,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         stampSoon(300);
         if (hover || springs.size || lit.size) { moved = true; start(); }
       };
-      if (typeof window.PM_AFTER_LAYOUT === 'function') { tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
+      /* (the window shows the hover: a look's reveal over it never holds this read, PM_AFTER_LAYOUT.own) */
+      if (typeof window.PM_AFTER_LAYOUT === 'function') { if (window.PM_AFTER_LAYOUT.own) window.PM_AFTER_LAYOUT.own(retokenFrame); tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
       else tokenFrame = raf(retokenFrame);
     }
 
@@ -182395,18 +182505,119 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* into or out of NieR (the fifth theme, Q22), also while its moment still plays: NieR's own moment plays inside the
        window (O55.nierLook.pick) */
     if ((family === 'nier') !== (asked === 'nier') && O55.nierLook && O55.nierLook.pick) { O55.nierLook.pick(family, mode, originEl); return; }
-    if (!document.startViewTransition || O55.motion.reduced() || O55.motion.lowResource) { apply(); return; }
-    if (S.vt) { try { S.vt.skipTransition(); } catch (_) {} }
+    const motionOff = () => O55.motion.reduced() || O55.motion.lowResource;
+    if (!document.startViewTransition || motionOff()) { apply(); return; }
+    skipLook();
     const r = originEl ? originEl.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
     const x = r.left + r.width / 2, y = r.top + r.height / 2, end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     document.documentElement.setAttribute('data-o55-vt', family);
-    const vt = S.vt = document.startViewTransition(apply);
+    /* FO-188: the app beneath holds still from the theme's write to the reveal's end (PM_LOOK_HOLD, 11-motion-start.js):
+       its after-layout work and the chat's redraw wait (variant B, below: it is not drawn in the new look until the reveal
+       ends, so it starts no colour transitions inside the reveal either) */
+    const release = window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.begin ? window.PM_LOOK_HOLD.begin() : () => {};
+    /* A look's fonts (123 embedded faces) load the first time the page uses them, and each one that arrived during the
+       reveal laid the whole page out again: two passes of 3,895 objects inside a Friendly reveal (62 and 70 ms on the VM,
+       layout invalidation "Fonts changed"). The update waits for the faces the new look asked for (its first layout runs
+       in the window's own look observer, just before this), at most 300 ms, so that layout is done before the reveal's
+       first frame. A look whose fonts are already in pays nothing. document.fonts is read only after that observer:
+       its ready and status flush the page's style and layout, and read at once they took the new look's whole restyle
+       ahead of the window's own attributes, which then restyled the window a second time (491 + 225 ms on the VM). */
+    /* FO-188 variant B: the app beneath keeps its old picture through the reveal (20-motion.css data-o55-vt-b) and is
+       not rendered while it plays (data-o55-vt-still, set in the update just after the theme's write, before anything
+       reads the page): the new look styles and lays out the window and the ground only. When the reveal ends the app
+       takes the new look in one go, and its held work follows (PM_LOOK_HOLD). Where the browser cannot give each part
+       of the app its own picture (view-transition-name: match-element), the reveal runs as before. */
+    const still = !!(window.CSS && CSS.supports && CSS.supports('view-transition-name', 'match-element') && CSS.supports('view-transition-class', 'o55-held'));
+    /* (the app is shown for the new reveal's picture of it: skipLook, above, has ended a reveal still playing) */
+    document.documentElement.removeAttribute('data-o55-vt-still');
+    if (still) document.documentElement.setAttribute('data-o55-vt-b', '');
+    /* The whole wait belongs to its transition (R33). One end, whatever ends it: finished, the next pick, a press, a key,
+       close() (skipLook, below), or Reduced Motion or low-resource found on at ready. Its 900 ms cap and its frame chain
+       stop, its circles and corner clips are cancelled, play() does nothing any more, the app is shown in the new look
+       and the held work is released. An obsolete reveal's cap had played its old circles inside the next pick's reveal,
+       and Escape closed the window beneath the old window's picture, which stayed on top until the reveal played out. */
+    let vt, over = false, cap = 0;
+    const made = [];
+    const endWait = () => {
+      if (over) return;
+      over = true; clearTimeout(cap);
+      made.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } });
+      if (S.vtEnd === endWait) S.vtEnd = null;
+      if (still && S.vt === vt) { document.documentElement.removeAttribute('data-o55-vt-still'); document.documentElement.removeAttribute('data-o55-vt-b'); }
+      release();
+    };
+    const update = () => {
+      apply();
+      if (still && !over) document.documentElement.setAttribute('data-o55-vt-still', '');
+      if (!document.fonts) return undefined;
+      return Promise.resolve().then(() => {
+        const F = document.fonts;
+        if (F.status !== 'loading') return undefined;
+        return Promise.race([F.ready, new Promise((res) => setTimeout(res, 300))]);
+      });
+    };
+    try { vt = S.vt = document.startViewTransition(update); S.vtEnd = endWait; }
+    catch (_) { release(); S.vt = null; ['data-o55-vt', 'data-o55-vt-b', 'data-o55-vt-still'].forEach((a) => document.documentElement.removeAttribute(a)); apply(); return; }
     vt.ready.then(() => {
+      if (over) return;
+      /* Reduced Motion or low-resource switched on between the press and ready: the look shows at once, as it would
+         have had either been on at the press */
+      if (motionOff()) { try { vt.skipTransition(); } catch (_) { /* done */ } endWait(); return; }
       const retro = family === 'retro';
-      document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
-        { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)', pseudoElement: '::view-transition-new(root)' });
+      /* (variant B: the window is a picture of its own, revealed by the same circle as the ground) */
+      const timing = { duration: retro ? 520 : 760, easing: retro ? 'steps(8, end)' : O55.motion.familyCss[family] === 'steps(6, end)' ? 'ease' : 'cubic-bezier(0.2,0,0,1)' };
+      const anims = ['root'].concat(still ? ['o55-win'] : []).map((name) => document.documentElement.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        Object.assign({ pseudoElement: `::view-transition-new(${name})` }, timing)));
+      /* (variant B: the window's old picture gives way where the circle has passed, 20-motion.css --o55-vt-r) */
+      if (still) anims.push(document.documentElement.animate({ '--o55-vt-r': ['0px', end + 'px'], '--o55-vt-x': [x + 'px', x + 'px'], '--o55-vt-y': [y + 'px', y + 'px'] },
+        Object.assign({ pseudoElement: '::view-transition-old(o55-win)', fill: 'forwards' }, timing)));
+      /* FO-188 (c): the circle starts once the new look's frames flow. The first frame in a new look is a one-off cost: a
+         task at the first frame, and on a look's first use a GPU pause of 165-592 ms while the new look is rastered
+         (Alexis, t-b14); started at ready, the circle's fast first part was spent inside them, the part Jared misses. So the
+         animations wait at their first keyframe (the circle at 0: the old picture stays on screen) and start together on
+         the third of three frames on time in a row, or 900 ms after ready at the latest; at once on a hidden page (a
+         low-resource computer, or Reduced Motion, found on at ready or at the start, skips the reveal). 'o55:reveal' is
+         sent on window as they start (the kit check times the circle from it). */
+      anims.forEach((a) => { try { a.pause(); } catch (_) { /* gone */ } });
+      /* While it waits, the new picture is clipped to a path whose box is the whole viewport but which shows only two
+         1-pixel squares in opposite corners: a picture closed to nothing is not drawn at all, and a look's first raster
+         (the GPU pause) then came on the circle's first frame, 244-255 ms on a first Glass pick (Alexis, t-b16), however
+         long it had waited; clipped this way the whole new look is drawn while the old picture still shows. Made after the
+         circles, so it is the clip that applies until play() takes it away. Frames flow when three come on time in a row. */
+      const W = innerWidth, H = innerHeight, corners = `path('M0 0h1v1h-1z M${W - 1} ${H - 1}h1v1h-1z')`;
+      const holds = ['root'].concat(still ? ['o55-win'] : []).map((name) => document.documentElement.animate({ clipPath: [corners, corners] },
+        { pseudoElement: `::view-transition-new(${name})`, duration: 60000 }));
+      made.push(...anims, ...holds);
+      let go = false, last = null, onTime = 0;
+      const play = () => {
+        if (go || over) return;
+        if (motionOff()) { try { vt.skipTransition(); } catch (_) { /* done */ } endWait(); return; }
+        go = true; clearTimeout(cap);
+        holds.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } });
+        anims.forEach((a) => { try { a.play(); } catch (_) { /* gone */ } });
+        try { window.dispatchEvent(new Event('o55:reveal')); } catch (_) { /* none */ }
+      };
+      const flowing = (now) => {
+        if (go || over) return;
+        onTime = last != null && now - last < 34 ? onTime + 1 : 0;
+        if (onTime >= 2) { play(); return; }
+        last = now; O55.motion.real.raf(flowing);
+      };
+      if (document.hidden) play();
+      else { cap = setTimeout(play, 900); O55.motion.real.raf(flowing); }
+      /* the window's own colour transitions end here too, as NieR's path ends them (syncTheme): about 500 of its elements
+         eased from the old colours inside the circle and were restyled in every frame of the reveal (the rig's frames,
+         25 ms each on the VM). At ready the new look's style is computed, so asking forces nothing. */
+      try { S.root.getAnimations({ subtree: true }).forEach((a) => { if (a.transitionProperty && a.playState === 'running' && /color|background|border|shadow|fill|stroke|outline/.test(a.transitionProperty)) a.finish(); }); } catch (_) { /* decoration only */ }
     }).catch(() => {});
-    vt.finished.finally(() => { if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); } });
+    /* what waited is still the look's repaint: it never counts toward low-resource mode either (it ran past the click's
+       quiet and switched the VM to the instant path after two changes) */
+    vt.finished.finally(() => {
+      O55.motion.quiet(2500);
+      /* (variant B: the app takes the new look now, in the frame of the transition's own end restyle: endWait(), above) */
+      endWait();
+      if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); }
+    });
   }
   /* The app beneath holds still while the window is open (README Performance rule 6). A theme written under the window
      (a Project's settings loading as it is selected, the look saved into it) has the app's own listeners announce a
@@ -182423,12 +182634,38 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
   /* Input never waits for the look reveal. While a view transition plays, the browser hands every click to the page
      root, and on a heavy page on a slow computer the reveal outlasted a second: an early Continue was lost. A press
-     during the reveal ends it at once, and the click goes to whatever was under the pointer. */
+     during the reveal ends it at once, and the click goes to whatever was under the pointer. A key ends it the same way
+     wherever focus is (a deliberate key, below; a key-up never does: Space picks a look on its key-up), and so does
+     close(): Escape, or the Close button by keyboard, closed the window beneath the old window's picture (R33).
+     skipLook() is the one interruption: the transition is skipped and its wait's end (applyLook's endWait()) runs at
+     once, in the same task. */
+  function skipLook() {
+    const vt = S.vt, endWait = S.vtEnd;
+    if (!vt) return;
+    try { vt.skipTransition(); } catch (_) { /* done */ }
+    if (endWait) endWait();
+  }
   document.addEventListener('pointerdown', (e) => {
     if (!S.vt) return;
-    try { S.vt.skipTransition(); } catch (_) {}
+    skipLook();
     S.vtPress = { x: e.clientX, y: e.clientY, t: performance.now() };
   }, true);
+  /* Only a deliberate key ends it (R35). A key held down is not pressed again: a look picked by keyboard (Enter on its
+     row) began its reveal with that key, and its auto-repeat (flagged or not) is not new input; a key counts again once
+     it has come up. Nor is a key that says nothing to the page: an IME's composition (isComposing, 'Process', keyCode
+     229, the Enter that commits it), a dead key's accent, a modifier or lock (AltGr among them), the system's own keys
+     (media, volume, brightness, launch, browser, power, PrintScreen) or one the browser cannot name. */
+  const keysDown = new Set(), keyOf = (e) => e.code || e.key;
+  const notInput = (e) => e.isComposing || e.keyCode === 229
+    || /^(Process|Dead|Unidentified|Shift|Control|Alt|AltGraph|Meta|OS|Super|Hyper|CapsLock|NumLock|ScrollLock|Fn|FnLock|Symbol|SymbolLock|PrintScreen)$/.test(e.key)
+    || /^(Audio|Media|Volume|Launch|Browser|Brightness|Mic|Power|WakeUp|Sleep|Standby|Eject|Hibernate|LogOff)/.test(e.key);
+  document.addEventListener('keydown', (e) => {
+    const k = keyOf(e), again = e.repeat || keysDown.has(k);
+    keysDown.add(k);
+    if (S.vt && !again && !notInput(e)) skipLook();
+  }, true);
+  document.addEventListener('keyup', (e) => { keysDown.delete(keyOf(e)); }, true);
+  window.addEventListener('blur', () => keysDown.clear());
   document.addEventListener('click', (e) => {
     const k = S.vtPress; if (!k) return;
     S.vtPress = null;
@@ -183595,6 +183832,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* close(reason, {handoff}) — with handoff the window gives way at once, because the Guided Tour's first callout
      grows out of the same rectangle in the same frame (see O55.tour.start({from})) */
   function close(reason, o) {
+    skipLook(); /* a look's reveal ends with the window (R33) */
     if (pendingMount) { pendingMount = null; openGen++; clearOpenScrim(); }
     if (!S.open) return;
     const handoff = !!(o && o.handoff);
@@ -184271,9 +184509,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const n = N(); if (!n) return false;
     const on = family === 'nier';
     if (!inWindow()) { const tome = window.PM7_SETTINGS_TOME; try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(family); tome.setChromeThemeMode(mode); } } catch (_) {} return true; }
+    /* FO-188: the app beneath holds still from the pick until the cover's first frame (PM_LOOK_HOLD, 11-motion-start.js),
+       so its work for the new look (the chat's redraw: 704 ms on the VM, inside the click's own task with the window's)
+       is done under the cover, which is there to hide the repaint, and no longer holds the cover back. The instant path
+       (Reduced Motion, a low-resource computer) has no cover, and is unchanged. */
+    const L = window.PM_LOOK_HOLD, release = L && L.begin && !instant() ? L.begin() : null;
     try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); } catch (_) { /* the moment repaints it */ }
-    if (state().on === on) return true;
-    return flip(on, el);
+    if (state().on === on) { if (release) release(); return true; }
+    const flipped = flip(on, el, release);
+    if (!flipped && release) release();
+    return flipped;
   }
   /* after setup (the tour's look menu): Settings' page-wide moment, grown from the row pressed, with the sounds played
      here in O55's voice (they follow the tour's own sound control): the hum on the cover's first frame (its growth
@@ -184320,7 +184565,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
   /* the stage's moment, until the cover has lifted: the window re-renders the stage with its cast held in the wings */
   const busy = () => !!(flight && !flight.revealed);
-  function flip(next, el) {
+  function flip(next, el, release) {
     const n = N(); if (!n || !inWindow()) return false;
     const S = O55.S, A = O55.art, tr = troupe(), NW = O55.nierWindow, FX = O55.nierFx;
     heavy(4500);
@@ -184330,8 +184575,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!next) O55.sound.play('nierOff');
     look(S);
     /* a second toggle: the first one's beats end where they stand */
-    if (flight) { snap(); flight.timers.forEach((t) => t.cancel()); }
-    const F = flight = { id: ++flights, on: next, timers: [], revealed: false, entered: false, spoke: false, snapped: false, humAt: next ? null : O55.motion.now() };
+    if (flight) { snap(); flight.timers.forEach((t) => t.cancel()); held(flight); }
+    const F = flight = { id: ++flights, on: next, timers: [], revealed: false, entered: false, spoke: false, snapped: false, humAt: next ? null : O55.motion.now(), release };
+    /* (a cover that never reports its first frame lets the app go at its reveal, or after 1.5 s, also once the window
+       has closed) */
+    if (release) setTimeout(() => held(F), 1500);
     const st = stageEl();
     if (next) {
       /* T0: the thumbnail's units peek with joy as the brackets lock on; the resting Pod waits off stage */
@@ -184359,9 +184607,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     F.humAt = O55.motion.now();
     if (flight === F && inWindow()) O55.sound.play('nierOn');
   }
+  /* the app beneath goes on (the pick's hold, above) */
+  function held(F) { const r = F && F.release; if (r) { F.release = null; r(); } }
   function reveal(F, phase) {
-    if (phase === 'start') { hum(F); return; }
-    if (phase === 'gone') { F.gone = true; return; }
+    if (phase === 'start') { hum(F); held(F); return; }
+    if (phase === 'gone') { F.gone = true; held(F); return; }
+    held(F);
     if (phase !== 'reveal' || F.revealed) return;
     hum(F); /* a moment that never reported its first frame */
     F.revealed = true; F.revealAt = O55.motion.now();
@@ -202663,6 +202914,8 @@ function srchReveal(panel, tog) {
 let dsrWired = false, dsrTimer = 0, dsrLate = 0;
 function dsrFitAll() {
   if (!D.on) return;
+  /* FO-188: while a look is revealed over the onboarding window (PM_LOOK_HOLD, the onboarding's 11-motion-start.js) the fit waits for the reveal's end */
+  if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(dsrFitAll)) return;
   srchFit(document.getElementById('panel-search'));
   const run = document.getElementById('panel-run');
   if (run && typeof rdpFit === 'function') rdpFit(run);
@@ -205922,6 +206175,7 @@ render.schedule = function (opts) {
   paintQueued = true;
   var run = function () {
     if (!paintQueued) return;   // a synchronous paint already consumed this request
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(run)) return;   // FO-188: a look's reveal over the onboarding window holds it to the reveal's end (paintQueued stays set, so later schedules fold into it)
     paintQueued = false;
     var anim = paintAnimate; paintAnimate = false;
     try { render.paint({ animate: anim }); } catch (err) { try { console.error('[pm-home] paint failed', err); } catch (_) {} }
@@ -219216,7 +219470,8 @@ function setup() {
 
   /* re-measure every open editor when a font arrives (JetBrains Mono loads on first use) */
   try {
-    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function () { primedFontWidths.clear(); EDITORS.forEach(function (v) { v.relayout(); }); });
+    /* (FO-188: while a look is revealed over the onboarding window, PM_LOOK_HOLD, the re-measure waits for the reveal's end) */
+    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function fontsArrived() { if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(fontsArrived)) return; primedFontWidths.clear(); EDITORS.forEach(function (v) { v.relayout(); }); });
   } catch (_) {}
   /* PMW.editorPreview(host, { text, base, language, problems, view, caret }): a live editor that draws the given text the
      way an editor tab with that view's look would, as the Customize screen's preview; it takes no input */
@@ -253171,11 +253426,24 @@ window.PM56_CLASS_MAP={"activity-bar": "pm56-activity-bar"};
     if (!cp || typeof MutationObserver !== 'function') return;
     new MutationObserver(function () { if (frame.parentNode !== cp) mount(); }).observe(cp, { childList: true });
   })();
+  /* FO-188: a look picked in the onboarding window is revealed over the app (PM_LOOK_HOLD, the onboarding's
+     11-motion-start.js). The hosts take the new data-theme at once, so the chat's colours change with the page's by CSS;
+     its hooks (app.js redraws the whole chat for a look: 515 ms on the VM, most of it the first read of the page's new
+     layout) wait until the reveal has ended, and then run once for the look the page has then. */
+  var toldTheme = null;
+  function tellTheme() {
+    var t = root.getAttribute('data-theme');
+    if (t === toldTheme) return;
+    toldTheme = t;
+    themeFns.forEach(function (fn) { try { fn(t); } catch (err) { console.error('[pm56] theme hook failed', err); } });
+  }
   if (typeof MutationObserver === 'function') {
+    toldTheme = root.getAttribute('data-theme');
     new MutationObserver(function () {
-      var before = root.getAttribute('data-theme');
-      var t = syncTheme();
-      if (t !== before) themeFns.forEach(function (fn) { try { fn(t); } catch (err) { console.error('[pm56] theme hook failed', err); } });
+      syncTheme();
+      var L = window.PM_LOOK_HOLD;
+      if (L && L.after && L.after(tellTheme)) return;
+      tellTheme();
     }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
@@ -311043,7 +311311,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
  *                                                     text -> ready; else idle)
  *   data-q      0 | 1 | 2                           messages already waiting in the follow-up queue
  *   data-flow   flowing | waiting                   Stop only: words arriving, or the model thinking / a tool running
- *   data-flowed                                     the cadence has switched once (the next loop starts at once)
+ *   style       --ss-speed: <factor>               Settings' Animation speed as the chip shows it (the loop length is the chip's own)
  *   data-launch send | queue                        with ss-launch: what the click did
  *   data-hold                                       a pointer that just sent is still on the chip (NieR's rust hover
  *                                                   waits until it leaves and comes back)
@@ -311057,8 +311325,12 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
  *   ss-fail-static      under reduced motion, a danger ring for 1.4 s instead
  *   ss-snap             a thread switch: the control jumps to the new thread's state (two frames, then dropped);
  *                       a one-shot still pending from the thread left behind is dropped with it
- * The breathe's cadence changes only at a loop boundary, where the square is at full size, so it never jumps: an
- * animationiteration listener reads how long ago the last word arrived (under 900 ms -> flowing, else waiting).
+ * The breathe's pace (Jared's choice PERF-STOP2 = A, 2026-11-13): one pulse, faster while words arrive (a word in the
+ * last 900 ms -> flowing) and slower while the run waits. It changes the moment the wanted cadence changes, keeping its
+ * place in the loop, so the square speeds up or slows down without a jump. It used to change only at a loop's end,
+ * learnt from an animationiteration listener on the document: one such listener makes Chrome wake the main thread at
+ * every loop end of every CSS animation on the page for the rest of its life (Windows, 120 Hz, at rest: about 35 main
+ * frames a second with it, 12 without, every look). See apply() below.
  * Glyph geometry (chip pixels, viewBox 0 0 24 24): the registry's `send` drawing scaled .58 about the centre for the
  * plane, .5 for the queue's two planes; every shape that morphs is M + 4x(L Q) + Z so CSS `d` interpolates point by
  * point (the same strings are in send-stop.css, which drives the morph; these d attributes are the static fallback).
@@ -311088,8 +311360,13 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   function live() { return document.querySelector(SEL); }
 
   var fx = null, fxT = 0;          // the one-shot riding in the markup: {cls, until, only, launch}
-  var flow = 'flowing', flowed = false, lastTok = -1e9;
+  var flow = 'flowing', lastTok = -1e9;
   var tid0, snap = false, hold = false, lastSs = null, shownQ = 0;
+  /* the pace (below): the loops' names and how recent a word must be for "flowing"; what the chip shows (flow, its
+     cadence, and k, its Animation speed: written on the live chip by apply() alone, repeated by the markup) and what
+     is wanted (want, kWant); the quiet timer, the speed listener and the pending frame callback */
+  var LOOPS = ['ss-breathe', 'ss-glow'], QUIET = 900;
+  var want = 'flowing', k = 1, kWant = 1, quietH = null, listening = false, pend = 0;
 
   function stateOf(o) {
     var text = String(o.text || '').trim();
@@ -311108,8 +311385,13 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     /* a thread switch: the new thread's state as a jump, and a one-shot still pending (a launch, halt or ignite armed
        on the thread we left) is dropped, so it never replays on a chip where nothing happened */
     if (o.tid !== tid0) { if (tid0 !== undefined) { armSnap(); fx = null; clearTimeout(fxT); } tid0 = o.tid; }
-    if (s === 'stop' && lastSs !== 'stop') { flow = (now() - lastTok < 900 || streaming(o.tid)) ? 'flowing' : 'waiting'; flowed = false; }
-    if (s !== 'stop') flowed = false;
+    /* Stop starts: the cadence and the speed it should run at. The markup keeps what the chip shows (flow, k), so a
+       loop that survived a Stop -> Send -> Stop flip inside one task keeps its length; apply() moves it, and fresh loops
+       (still in their delay then), in the next frame. The pace is watched only while Stop shows (paceOn), and nothing is
+       left armed once it has gone (paceOff). */
+    if (s === 'stop' && lastSs !== 'stop') { want = (now() - lastTok < QUIET || streaming(o.tid)) ? 'flowing' : 'waiting'; paceOn(); }
+    else if (s === 'stop') paceKeep();   // a chip that went missing for a moment switched the quiet timer and the listener off
+    if (s !== 'stop') paceOff();
     if (s === 'queue' || s === 'full') { if (q) shownQ = q; }
     lastSs = s;
     var cls = '', t = now();
@@ -311119,11 +311401,11 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     if (s === 'stop') cls += ' is-stop';
     var label = LABEL[s];
     return '<button class="send-button sendstop' + cls + '" data-k="send-btn" data-action="' + (s === 'stop' ? 'stop-run' : 'send') + '"' +
-      ' data-ss="' + s + '" data-q="' + q + '" data-flow="' + flow + '"' + (flowed && s === 'stop' ? ' data-flowed=""' : '') +
+      ' data-ss="' + s + '" data-q="' + q + '" data-flow="' + flow + '" style="--ss-speed:' + k + '"' +
       (fx && fx.launch && cls.indexOf('ss-launch') >= 0 ? ' data-launch="' + fx.launch + '"' : '') +
       (hold ? ' data-hold=""' : '') + (s === 'full' ? ' aria-disabled="true"' : '') +
       (hover ? hover('send-btn', label) : ' aria-label="' + label + '"') + '>' +
-      '<span class="ss-bl"></span><span class="ss-face"><span class="ss-flood"></span><svg class="nx nx-self ss-g" viewBox="0 0 24 24" aria-hidden="true"><g class="ss-all">' +
+      '<span class="ss-bl"><span class="ss-blg"></span></span><span class="ss-face"><span class="ss-flood"></span><svg class="nx nx-self ss-g" viewBox="0 0 24 24" aria-hidden="true"><g class="ss-all">' +
       '<g class="ss-back"><path d="' + G.QBACK + '"/><path d="' + G.QBACK_FOLD + '"/></g>' +
       '<g class="ss-ghost"><path class="ss-trail" d="' + G.TRAIL + '"/><path class="ss-gb" d="' + G.PLANE + '"/><path class="ss-gf" d="' + G.FOLD_P + '"/></g>' +
       '<g class="ss-main"><g class="ss-hov"><g class="ss-breath">' +
@@ -311165,17 +311447,145 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     });
   }
 
-  /* The breathe's depth and pace change only at an iteration boundary (the square at full size). */
-  document.addEventListener('animationiteration', function (e) {
-    if (e.animationName !== 'ss-breathe' && e.animationName !== 'ss-breathe-w') return;
-    var b = e.target && e.target.closest ? e.target.closest('.sendstop') : null;
-    if (!b || b.getAttribute('data-ss') !== 'stop') return;
-    var want = now() - lastTok < 900 ? 'flowing' : 'waiting';
-    if (want === flow) return;
-    flow = want; flowed = true;
-    b.setAttribute('data-flow', want);
-    b.setAttribute('data-flowed', '');
-  });
+  /* ------------------------------------------------------------------ the pace (PERF-STOP2 = A)
+     One loop on the glyph (ss-breathe) and one on the danger backlight's gradient (ss-glow, light and dark). Their
+     length is the chip's own (send-stop.css): --ss-beat from data-flow (2200 ms flowing, 3200 ms waiting) times
+     --ss-speed, Settings' Animation speed, which the chip keeps itself as Usage keeps --pmu-speed, so Settings' look
+     scale sheet never retimes a running loop. Both are written on the live chip by apply() ALONE: the markup repeats
+     what apply() wrote, so every loop the browser makes afresh (Stop shown again, a rebuilt chip, a thread switch's
+     snap, Reduced Motion off, NieR Mode off, a light/dark change that swaps the backlight's keyframes) starts at the
+     length the chip shows, and a loop that survives a re-render keeps its length.
+     A change is wanted (want, kWant) by a word (token: flowing), by 900 ms without one (quiet: a timer on the last
+     word's age, armed only while words reach a Stop chip), by Settings' Animation speed ('pm-animation-speed', the
+     event Settings sends owners that keep the speed themselves; heard only while Stop shows), or by Stop starting.
+     It is made in the chip's next frame callback (schedule, apply), which reads each loop's timing from the loop itself
+     (nothing stored), writes the new length and puts the glyph's loop at the same point of it by the compositor's
+     clock, and the backlight's at the glyph's point (one pulse: a difference between the two never outlives a
+     change, R40 F1), in that one callback: Chrome hands a retimed loop to the compositor only with the frame, and until then the compositor
+     keeps moving the square on the old timing by the wall clock, also through a long task. So the old timing read there
+     is what the square shows at that moment, and the frame that follows hands over the new length and the place
+     together. Words arrive from turn-stream's and thought-stream's own frame callbacks; a change wanted there is made
+     in the frame after (R32 F2: making it at once and again a frame later stepped the square back after a long task).
+     No listener for any animation event, nothing per frame, no timer that guesses where a loop is, nothing armed once
+     Stop has gone (paceOff), nor while the chip has no box (away: the Guided Tour hides the chat, R41 F1).
+     Why not Animation.updatePlaybackRate: a rate lives in one Animation object, so every loop the browser rebuilds
+     would come back at rate 1, and nothing tells the page that it did without the kind of listener this replaces. */
+  function stopChip() { var b = live(); return b && b.getAttribute('data-ss') === 'stop' ? b : null; }
+  /* A chip in the document with no box (display: none above it: the Guided Tour hides the chat while a reply goes on
+     streaming) is not shown: it has no loops, and nothing is armed for it (R41 F1). A style read, made only where
+     something would be armed, never for a word that finds all armed already. */
+  function shown(b) {
+    try { return b.checkVisibility ? b.checkVisibility() : b.getClientRects().length > 0; } catch (e) { return true; }
+  }
+  /* switch everything off for a chip with no box. Its loops are made anew when it is shown again, from what it carries
+     then: the waiting cadence (the next word turns it to flowing by the next frame, while the new loops still wait
+     out their delay) at the last speed heard (a speed change made while it was hidden is read with that word) */
+  function away(b) {
+    paceOff();
+    want = flow = 'waiting'; k = kWant;
+    if (b.getAttribute('data-flow') !== flow) b.setAttribute('data-flow', flow);
+    if (b.getAttribute('style') !== '--ss-speed:' + k) b.setAttribute('style', '--ss-speed:' + k);
+  }
+  /* the chip's loops; Element.getAnimations brings style up to date first, so a length just written is in their timing */
+  function loops(b) {
+    try { return b.getAnimations({ subtree: true }).filter(function (a) { return LOOPS.indexOf(a.animationName) >= 0; }); } catch (e) { return []; }
+  }
+  /* Settings' Animation speed as Element.animate has it (17-look.js scales what a script plays, as Usage reads it);
+     1 in the chat alone */
+  function speedNow() {
+    try { var p = document.createElement('i').animate(null, { duration: 1000 }), d = +p.effect.getTiming().duration; p.cancel(); return d > 0 ? d / 1000 : 1; } catch (e) { return 1; }
+  }
+  /* The compositor's clock: the wall clock. A film tool that slows the page's timeline (CDP Animation.setPlaybackRate)
+     slows PM56_CLOCK by the same factor (motion.js); the compositor then runs by the timeline's time. (R32 F6: the
+     choice used to switch to the timeline after any task of 2 s or more.) */
+  function clockNow() {
+    var C = window.PM56_CLOCK, t = document.timeline ? document.timeline.currentTime : null;
+    return C && C.scale !== 1 && t != null ? t : performance.now();
+  }
+  function schedule() { if (!pend) pend = requestAnimationFrame(apply); }
+  function apply() {
+    pend = 0;
+    var b = stopChip();
+    if (!b || (want === flow && kWant === k)) return;
+    if (!shown(b)) { away(b); return; }
+    /* each loop's timing as it runs now, read from the loop: start time, length, delay; its current time if held (the
+       onboarding window) or not yet started */
+    var olds = loops(b).map(function (a) { var t = a.effect.getTiming(); return { a: a, s: a.startTime, c: a.currentTime, held: a.playState === 'paused' || a.startTime == null, d: +t.duration, l: +t.delay || 0 }; });
+    flow = want; k = kWant;
+    b.setAttribute('data-flow', flow);
+    b.setAttribute('style', '--ss-speed:' + k);
+    var runs = loops(b), w = clockNow(), lead = null, at;
+    olds.forEach(function (o) { if (o.a.animationName === 'ss-breathe' && runs.indexOf(o.a) >= 0) lead = o; });
+    at = lead && pointNow(lead, w);
+    olds.forEach(function (o) {
+      if (runs.indexOf(o.a) < 0) return;
+      var t = o.a.effect.getTiming(), d = +t.duration, l = +t.delay || 0, rate = o.a.playbackRate || 1, n;
+      if (!(d > 0) || !(o.d > 0)) return;
+      /* the backlight at the glyph's point (in its own timing, which CSS makes the glyph's); without a glyph's loop,
+         each at its own. A backlight still waiting out its delay behind a glyph that breathes (a loop made anew: NieR
+         Mode off, its box back under the onboarding window) is not moved into the loop, which would step it: it stays
+         at rest, which is its loop's first frame, and its delay ends at the glyph's next loop end, so it starts with
+         the glyph from there. A breathing backlight goes to the glyph's point in the loop by the nearest way and keeps
+         its own count of loops run (only the point in the loop shows). */
+      var own = at && o !== lead ? pointNow(o, w) : null;
+      if (at && o !== lead && own && own.n < l && at.n >= at.l) { var q = (at.n - at.l) / at.d, f = q - Math.floor(q); n = l - (f > 0 ? (1 - f) * d : 0); }
+      else if (at && o !== lead) {
+        n = at.n < at.l ? (at.l > 0 ? at.n * l / at.l : at.n) : l + (at.n - at.l) * d / at.d;
+        if (own && own.n >= l && n >= l) { var x = (n - own.n) % d; if (x > d / 2) x -= d; else if (x < -d / 2) x += d; n = own.n + x; }
+      } else { var p = pointNow(o, w); if (!p) return; n = p.n; }
+      if (o.held) o.a.currentTime = n; else o.a.startTime = w - n / rate;
+    });
+  }
+  /* where a loop's old timing has it now (its held time under the window), and the same point of its new timing */
+  function pointNow(o, w) {
+    var t = o.a.effect.getTiming(), d = +t.duration, l = +t.delay || 0, rate = o.a.playbackRate || 1;
+    if (!(d > 0) || !(o.d > 0)) return null;
+    var c = o.held ? o.c : (w - o.s) * rate;
+    if (c == null) return null;
+    return { n: c < o.l ? (o.l > 0 ? c * l / o.l : c) : l + (c - o.l) * d / o.d, d: d, l: l };
+  }
+  function onSpeed(e) {
+    var f = e && e.detail ? +e.detail.factor : NaN, b = stopChip();
+    kWant = f > 0 ? f : speedNow();
+    if (!b) paceOff(); else if (!shown(b)) away(b); else schedule();
+  }
+  function armQuiet() {
+    if (quietH) return;
+    var C = window.PM56_CLOCK, left = Math.max(0, QUIET - (now() - lastTok)) + 1;
+    quietH = C && C.after ? C.after(left, quiet) : setTimeout(quiet, left);
+  }
+  function quiet() {
+    quietH = null;
+    var b = stopChip();
+    if (!b) { paceOff(); return; }
+    if (!shown(b)) { away(b); return; }
+    if (want !== 'flowing') return;
+    if (now() - lastTok < QUIET) { armQuiet(); return; }
+    want = 'waiting'; schedule();
+  }
+  /* Stop has started: hear Settings' speed, start the quiet timer if words are arriving, and make the wanted pace in
+     the next frame */
+  function paceOn() { paceKeep(); if (listening) schedule(); }
+  /* Stop starting, Stop rendered again, or a word reaching a Stop chip */
+  function paceKeep() {
+    /* a word that came while the chip was missing or hidden: the cadence it asks for (R40 F2) */
+    if (want !== 'flowing' && now() - lastTok < QUIET) want = 'flowing';
+    /* all in hand already: listening, the quiet timer armed for words, the wanted pace made or on its way (every word
+       while words flow takes this path: no style read) */
+    if (listening && (want !== 'flowing' || quietH) && (pend || (want === flow && kWant === k))) return;
+    var b = live();
+    if (b && !shown(b)) { away(b); return; }
+    /* (re)attached: Stop starting, or Stop shown again after the chip went missing or had no box and the listener was
+       switched off; a speed change made while nobody listened is read here (R34 F1) */
+    if (!listening) { listening = true; window.addEventListener('pm-animation-speed', onSpeed); kWant = speedNow(); }
+    if (want === 'flowing') armQuiet();
+    if (want !== flow || kWant !== k) schedule();
+  }
+  function paceOff() {
+    if (quietH) { var C = window.PM56_CLOCK; if (typeof quietH === 'object' && C && C.cancel) C.cancel(quietH); else clearTimeout(quietH); quietH = null; }
+    if (listening) { listening = false; window.removeEventListener('pm-animation-speed', onSpeed); }
+    if (pend) { cancelAnimationFrame(pend); pend = 0; }
+  }
 
   /* A pointer that sends stays over the chip as it turns into Stop; NieR's rust hover waits until that pointer has
      left once (a keyboard send leaves it armed, so the next pointer over Stop shows it at once). */
@@ -311200,9 +311610,14 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     ignite: function () { fire('ss-ignite', ['ready']); },
     sputter: function () { fire('ss-sputter', ['idle', 'full']); },
     fail: function () { fire(reduced() ? 'ss-fail-static' : 'ss-fail'); },
-    /* turn-stream: a word was released into the reply of thread tid */
-    token: function (tid) { if (tid === undefined || tid === tid0) lastTok = now(); },
-    debug: function () { return { fx: fx && fx.cls, flow: flow, flowed: flowed, snap: snap, hold: hold, lastTokAgo: Math.round(now() - lastTok) }; }
+    /* turn-stream and thought-stream: a word was released into the reply of thread tid (from their frame callbacks);
+       on a Stop chip that was waiting the pace turns to flowing by the next frame */
+    token: function (tid) {
+      if (tid !== undefined && tid !== tid0) return;
+      lastTok = now();
+      if (stopChip()) paceKeep();
+    },
+    debug: function () { return { fx: fx && fx.cls, flow: flow, want: want, speed: k, speedWant: kWant, snap: snap, hold: hold, lastTokAgo: Math.round(now() - lastTok), quiet: !!quietH, watching: listening, pending: !!pend }; }
   };
 })();
 </script>
@@ -319619,9 +320034,9 @@ try {
     bar:     { bezel: 14, thick: 34, frost: 'light', sat: 1.6,  ca: 0.04, mag: 1,    light: 0.95, bake: true, ring: [2, 5] },
     /* lenses: no colour split and no magnifying map (the labels magnify themselves); magRest is the chosen label's
        size under the lens at rest, magLift its size while the lens is lifted and moving */
-    lens:    { bezel: 4,  thick: 10, sat: 1.1,  mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.04, magLift: 1.13 },
-    lensRow: { bezel: 5,  thick: 11, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true, magRest: 1,    magLift: 1.03 },
-    lensIcon:{ bezel: 5,  thick: 12, sat: 1.12, mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.08, magLift: 1.2 },
+    lens:    { bezel: 4,  thick: 10, sat: 1.1,  mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.04, magLift: 1.13, restSat: true },
+    lensRow: { bezel: 5,  thick: 11, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true, magRest: 1,    magLift: 1.03, restSat: true },
+    lensIcon:{ bezel: 5,  thick: 12, sat: 1.12, mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.08, magLift: 1.2, restSat: true },
     bead:    { bezel: 5,  thick: 12, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true },
     menu:    { bezel: 18, thick: 56, blur: 30, sat: 1.5, ca: 0,    mag: 1,    light: 0.95, css: true },
   };
@@ -320465,6 +320880,8 @@ try {
     var bf = null;
     if (gpu() && k.css) bf = 'blur(' + k.blur + 'px) saturate(' + k.sat + ')';
     else if (gpu() && k.lens) { var f = lf.f; e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
+    /* a lens keeps its filter here and wears it only while it moves or is pressed (lensBend, PERF-4); restSat: its tint at rest */
+    if (k.lens) { e.__lgBf = bf; e.__lgRest = bf && k.restSat ? 'saturate(' + k.sat + ')' : null; lensBend(e); return e.__lgF; }
     if (bf) { e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important'); }
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
@@ -321039,7 +321456,7 @@ try {
         kf.push(o);
       });
       if (!any || kf.length < 2) return;
-      out.push({ kf: kf, opts: { duration: t.duration, delay: t.delay, easing: t.easing, fill: 'backwards', iterations: 1, composite: composite }, startTime: a.startTime, currentTime: a.currentTime });
+      out.push({ kf: kf, opts: { duration: t.duration, delay: t.delay, easing: t.easing, fill: 'backwards', iterations: 1, composite: composite }, startTime: a.startTime, currentTime: a.currentTime, moves: props === RIDE_MOVE });
     }
     for (var n = target; n && n !== stop && n !== document.documentElement; n = n.parentElement) {
       n.getAnimations().forEach(function (a) {
@@ -321057,10 +321474,15 @@ try {
       var m;
       try { m = L.lens.animate(sp.kf, sp.opts); } catch (e) { return; }
       if (sp.startTime != null) m.startTime = sp.startTime; else if (sp.currentTime != null) m.currentTime = sp.currentTime;
+      /* PERF-4 round 2 (R31 F3, R30 Finding 2): a ride that moves the lens (a mirrored transform, not the opacity one)
+         bends it while it runs; its own finish or cancel asks again */
+      if (sp.moves) { m.__lgMoves = true; m.onfinish = m.oncancel = function () { lensLive(L); }; }
       out.push(m);
     });
     L.ride = out.length ? out : null;
+    lensLive(L);
   }
+  function rideMoves(L) { return !!(L.ride && L.ride.some(function (m) { return m.__lgMoves && m.playState !== 'finished' && m.playState !== 'idle'; })); }
   /* a lens first shown in a page or window is measured while that page is still coming in, and content above a strip can
      still grow by a layout animation (a Settings manager page eases its height as its tab changes, moving every strip
      below it; no mutation or event says so). It is measured once more when entrances are over, and follows if its
@@ -321095,6 +321517,43 @@ try {
     stopMagnify(L); stopRide(L); stopHop(L);
     if (L.glintAnim) { var g = L.glintAnim; L.glintAnim = null; g.cancel(); }
     if (L.anim) { var an = L.anim; L.anim = null; an.onfinish = null; an.cancel(); } L.reducedAnim = false;
+    lensLive(L);
+  }
+  /* PERF-4 (Jared, 2026-11-12, choice B after before/after pictures): a lens bends what is under it only while it moves
+     or is pressed. Its live SVG backdrop filter was kept while it rested, and Chrome runs that filter again for every
+     frame anything under the lens draws: the largest single cost of the Glass look (lane E, 2026-11-11). At rest a lens
+     draws the rim and tint it bakes (--lg-spec) with no backdrop filter; its bend there is at most 1.4 px
+     (buildLensMaps). Live while it moves or is pressed (Jared's words, held literally since round 2): while its travel
+     runs (not the Reduce Motion fade), while it rides its strip's entrance (a mirrored transform, not the opacity
+     mirror or the arrival fade), while it is scrubbed, and while a pointer is down on its strip; each moment that
+     changes one of those asks here, so nothing runs at rest. Measured (lane G,
+     A-B-B-A against main, Windows RTX 3090, 2026-11-13): the GPU thread 64 to 77 ms a second less at rest in Glass Dark
+     and Light (Home 85 / 81, Usage 124 / 73, Settings 84 / 72), 99 to 115 less under a pointer sweep, 95 to 108 less
+     scrolling; Basic Dark unchanged. */
+  function lensLive(L) {
+    L.lens.__lgLive = !!((L.anim && !L.reducedAnim && L.anim !== L.hopHide) || L.dragging || (L.held && L.held.size) || rideMoves(L));
+    lensBend(L.lens);
+  }
+  /* At rest every lens kind keeps the plain saturate() its live filter carries (KINDS restSat: 1.1, the icon lens 1.12), a
+     plain CSS backdrop pass with no SVG filter, and drops only the url() bend; the bead keeps its tint in CSS while it
+     shows. Over a coloured ground the saturate is most of what the filter changes: taking it off when a lens came to
+     rest stepped the whole lens's tint in one frame (the icon lens over the Activity bar's blue, Glass Dark median
+     (29,48,115) to (30,47,108); Settings' section tabs 97% of the lens interior 5 levels or more; over Prism at the 0.35
+     transparency floor the rail tabs, Usage's nav, Settings' left bar and the onboarding segments too; lane G pixels,
+     2026-11-13), and which lens steps depends on the wallpaper and the transparency (stream F's reviewer: atrium, orbs,
+     facets, bloom, channels), so the rule is uniform (the lead's ruling, round 2). At rest a lens then differs from
+     the moving lens only at its rim, by the bend: at most 3 levels in lane G's pairs, up to 7 in stream F's (the bead
+     8). The icon lens's resting pass cost 5.5 / 4.5 ms a second of the GPU thread on Home (Glass Dark / Light, paired
+     medians of 6 rounds that swing by 20 to 30). */
+  function lensBend(e) {
+    /* the filter mount() keeps (__lgBf), worn while live in a mounted Glass lens, else its resting tint (__lgRest);
+       unmount and unmountAll take an inline filter off by themselves, so one found gone is forgotten here */
+    var want = (e.__lgSig && isGlass() && (e.__lgLive && e.__lgBf || e.__lgRest)) || null;
+    if (e.__lgBfOn && !e.style.getPropertyValue('backdrop-filter')) e.__lgBfOn = null;
+    if (want === (e.__lgBfOn || null)) return;
+    e.__lgBfOn = want;
+    if (want) { e.style.setProperty('backdrop-filter', want, 'important'); e.style.setProperty('-webkit-backdrop-filter', want, 'important'); }
+    else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
   }
   function removeLensElement(e) {
     if (typeof unmount === 'function') unmount(e);
@@ -321103,6 +321562,7 @@ try {
   }
   function disposeLens(L, keepMark) {
     var carried = false;
+    L.held = null;
     if (L.under && L.rect && L.strip.isConnected && !L.lens.isConnected) {
       carried = true;
       var carry = L.strip.__lgLast = { rect: visualRect(L) || L.rect, pending: L.pending, t: performance.now() }, cs = L.strip, mark = !!(L.cfg && L.cfg.mark);
@@ -321137,6 +321597,8 @@ try {
      shown again when its mode comes back, so a NieR or Retro toggle inserts and removes nothing once both modes have run. */
   var parkedLenses = { over: new Map(), under: new Map() };
   function parkLens(L) {
+    /* a parked lens abandons its hold (R43 F2): a release while it is parked never reaches it, and it would come back bent */
+    L.held = null;
     if (L.pending) pressMark(L.pending, false);
     L.pending = null;
     forgetAncestors(L.strip, scrollStrips, stripAncestors);
@@ -321153,7 +321615,7 @@ try {
     var home = P.lens.isConnected && P.layer.isConnected && (P.under ? P.layer.parentElement === strip : P.layer === lensLayer(strip));
     if (!home) { disposeLens(P, true); return null; }
     if (P.under && strip.__lgPos) strip.style.position = 'relative';
-    P.lens.style.removeProperty('visibility'); P.warm = '';
+    P.lens.style.removeProperty('visibility'); P.warm = ''; P.held = null;
     return P;
   }
   function relayerLenses() {
@@ -321182,7 +321644,7 @@ try {
     pruneLensFilters();
   }
   function suspendLensMotion() {
-    lenses.forEach(function (L) { if (L.pending) pressMark(L.pending, false); L.pending = null; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
+    lenses.forEach(function (L) { L.held = null; if (L.pending) pressMark(L.pending, false); L.pending = null; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
     if (isGlass() && beadOn && beadOn.isConnected) { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); } else resetBead();
     menuMotions.forEach(function (M, menu) { resetMenuMorph(menu); });
   }
@@ -321262,7 +321724,8 @@ try {
     var an = L.lens.animate(frames, { duration: dur, easing: 'linear' }); L.anim = an; L.path = { t0: performance.now(), dur: dur, rects: rects };
     try { L.glintAnim = L.lens.animate(glint, { duration: dur, easing: 'linear', pseudoElement: '::after' }); } catch (e) { L.glintAnim = null; }
     magnifyAlong(L, track, dur, o);
-    an.onfinish = function () { if (L.anim === an) L.anim = null; ownRest(L); };
+    lensLive(L);
+    an.onfinish = function () { if (L.anim === an) L.anim = null; ownRest(L); lensLive(L); };
   }
   /* A strip that is still arriving (its rows sliding in, its bar fading in: Usage's first arrival, a page's entrance)
      shows its lens as it lands, never ahead of it over a blank bar (Jared #2, 2026-10-14). The arrival is whatever
@@ -321346,6 +321809,8 @@ try {
   function syncStrip(cfg, strip, m) {
     syncStripNow(cfg, strip, m);
     if (cfg.under) { var L = lenses.get(strip); if (L) ownRest(L); }
+    /* PERF-4: a sync can end a press (the app chose, or it was abandoned) with nothing else moving the lens */
+    var LL = lenses.get(strip); if (LL && LL.lens.__lgLive) lensLive(LL);
   }
   /* B6 packet 1 (2026-10-16): a sync of many strips read each one after the previous one's lens writes (a new lens, its
      strip's mark, its box, its optics), so every strip paid a style and a layout pass of its own: 23 style + 22 layout
@@ -321757,8 +322222,13 @@ try {
   }
   document.addEventListener('pointerdown', function (e) {
     if (!switchOn() || e.button !== 0 || reduced()) return;
-    var hit = stripAt(e.target); if (!hit || !choosable(hit.item, hit.cfg)) return;
-    var L = lenses.get(hit.strip); if (!L || !L.rect || L.dragging) return;
+    var hit = stripAt(e.target); if (!hit) return;
+    var L = lenses.get(hit.strip); if (!L || !L.rect) return;
+    /* PERF-4 round 2 (R31 F1): PRESSED is a pointer down on any item of the strip, the chosen one included: the lens
+       bends from here until the press ends (pressOver) or is abandoned (pressAbandon), whatever the app chooses, and when.
+       Holds are kept by pointer (R43 F1): with two pointers down, the lens bends until the last one holding it ends */
+    (L.held || (L.held = new Set())).add(e.pointerId); lensLive(L);
+    if (!choosable(hit.item, hit.cfg) || L.dragging) return;
     var cur = hit.cfg.pick ? hit.cfg.pick(hit.strip) : hit.strip.querySelector(hit.cfg.items + (hit.cfg.active || '.active'));
     if (hit.item === cur) return;
     if (L.pending) pressMark(L.pending, false);
@@ -321773,6 +322243,36 @@ try {
     });
   }, true);
   document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { pressMark(L.pending, false); L.pending = null; queueSync(L.strip); } }); }, true);
+  /* PERF-4: the press is over (after the two listeners above), or the pointer's capture went with it: no lens is held. A
+     lens resting where it was sent stops bending. One released off its item (away) stays live into the sync queued
+     above, which sends it back (dropping the bend here would leave it unbent for the frame or two between the two
+     moves); that sync re-reads it (syncStrip) */
+  function pressOver(e) {
+    /* only this pointer's hold ends (R43 F1): another pointer's release, or its lost capture, leaves a lens it holds bent */
+    var id = e && e.pointerId;
+    lenses.forEach(function (L) {
+      if (L.held) { L.held.delete(id); if (!L.held.size) L.held = null; }
+      if (L.lens.__lgLive && !(L.pending && L.pending.away)) lensLive(L);
+    });
+  }
+  document.addEventListener('pointerup', pressOver, true);
+  document.addEventListener('pointercancel', pressOver, true);
+  document.addEventListener('lostpointercapture', pressOver, true);
+  /* PERF-4 round 2 (R31 F2, R30 Finding 3): a press whose release never reaches the page (the window loses focus, the page
+     is hidden or left with the button down) ends here: every held press and scrub is abandoned, the app's own choice
+     stands, and a sync brings each lens back to it, where it rests. No lens stays bent after a release the page missed */
+  function pressAbandon() {
+    lenses.forEach(function (L) {
+      var P = L.pending, was = !!L.held || L.dragging || (P && !P.up);
+      L.held = null;
+      if (L.scrubCleanup) L.scrubCleanup();
+      if (P && !P.up) { pressMark(P, false); L.pending = null; }
+      if (was) { queueSync(L.strip); lensLive(L); }
+    });
+  }
+  window.addEventListener('blur', pressAbandon);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) pressAbandon(); });
+  window.addEventListener('pagehide', pressAbandon);
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
      each tab it passes, and drops into the nearest tab on release (which then becomes the chosen one) */
   function scrubbing(e) {
@@ -321800,7 +322300,7 @@ try {
         if (L.scrubCleanup === cleanup) L.scrubCleanup = null;
       };
       var cleanup = function () {
-        removeListeners(); L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false;
+        removeListeners(); L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false; lensLive(L);
         if (labs) labs.forEach(function (lab) { lab.el.style.removeProperty('scale'); lab.el.style.removeProperty('translate'); });
       };
       var onUp = function (ev) {
@@ -321900,7 +322400,11 @@ try {
      further fades out and lifts in at the new place. In the films a quick pointer crossing the side panel sent it flying
      across the panel and diving past the rail's edge on the old spring's overshoot. */
   var bead = null, beadOn = null, beadAt = null, beadRect = null, beadAnim = null, beadHide = 0;
-  function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } }
+  function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } beadBend(false); }
+  /* PERF-4: the bead bends what is under it only while it moves (lensBend): flowing to a neighbour, or lifting in (its
+     240 ms swell; round 2, R31 F4, R30 Finding 1); resting or fading out in place it draws its baked rim, and while it
+     shows its plain saturate (glass.css .lg-bead.on, the lead's R2) */
+  function beadBend(on) { if (bead) { bead.__lgLive = on; lensBend(bead); } }
   function resetBead() { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); if (bead) bead.classList.remove('on'); beadRect = null; beadOn = null; beadAt = null; }
   function beadEl() { if (bead && bead.isConnected) return bead; if (bead) { resetBead(); removeLensElement(bead); } bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
   function beadTo(t) {
@@ -321916,12 +322420,12 @@ try {
       for (var i = 0; i < S.length; i++) { var p = S[i].x, over = (p - 1) * dist; if (over > 0) p = 1 + 2 * Math.tanh(over / 2) / Math.max(1, dist);
         var sp = Math.min(1, Math.abs(S[i].v) * dist / 2400);
         fr.push({ offset: S[i].t / S[S.length - 1].t, transform: 'translate3d(' + (dx * (1 - p)).toFixed(2) + 'px,' + (dy * (1 - p)).toFixed(2) + 'px,0) scale(' + (vert ? 1 - sp * 0.1 : 1 + sp * 0.25).toFixed(3) + ',' + (vert ? 1 + sp * 0.25 : 1 - sp * 0.1).toFixed(3) + ')' }); }
-      beadAnim = b.animate(fr, { duration: S[S.length - 1].t, easing: 'linear' });
+      beadAnim = b.animate(fr, { duration: S[S.length - 1].t, easing: 'linear' }); beadBend(true);
     } else {
       b.classList.add('on');
-      beadAnim = b.animate([{ transform: 'scale(.82)', opacity: 0 }, { transform: 'scale(1.02)', opacity: 1, offset: 0.65 }, { transform: 'scale(1)', opacity: 1 }], { duration: 240, easing: 'cubic-bezier(.3,1.1,.5,1)' });
+      beadAnim = b.animate([{ transform: 'scale(.82)', opacity: 0 }, { transform: 'scale(1.02)', opacity: 1, offset: 0.65 }, { transform: 'scale(1)', opacity: 1 }], { duration: 240, easing: 'cubic-bezier(.3,1.1,.5,1)' }); beadBend(true);
     }
-    var an = beadAnim; an.onfinish = function () { if (beadAnim === an) beadAnim = null; };
+    var an = beadAnim; an.onfinish = function () { if (beadAnim === an) { beadAnim = null; beadBend(false); } };
     beadRect = R; beadAt = t;
   }
   function beadFade(ms) {
@@ -323419,7 +323923,11 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   /* ---- keeping up ---------------------------------------------------------------------------------------------- */
   /* the look changes (theme, NieR Mode): repaint the choice; another writer (glass.js's concept control) changes the
      wallpaper: only the gallery follows, nothing is written back, so no two writers can answer each other */
+  /* FO-188: while a look is revealed over the onboarding window (PM_LOOK_HOLD, the onboarding's 11-motion-start.js) the
+     repaint waits for the reveal's end */
+  function relookHeld() { choice(); apply(); resetWarm(); sync(); }
   new MutationObserver(function (recs) {
+    if (window.PM_LOOK_HOLD && window.PM_LOOK_HOLD.after && window.PM_LOOK_HOLD.after(relookHeld)) return;
     var relook = false, was = stale; recs.forEach(function (r) { if (r.attributeName !== 'data-lg-wall') relook = true; });
     choice();
     /* the other writer showed a saved id this build lacks (choice() has just set it back to 'look'): paint the default
