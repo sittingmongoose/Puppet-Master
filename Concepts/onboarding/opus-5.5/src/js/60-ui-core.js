@@ -1481,7 +1481,9 @@
   function trapTab(e) {
     const win = S.root.querySelector('.o55-win');
     const f = Array.from(win.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
-      .filter((n) => !n.closest('.o55-out') && !n.hasAttribute('disabled') && n.getClientRects().length);
+      /* (nothing under [inert] either: the pre-draw's host, a laid-out copy of the next screen, made its last button the
+         window's last stop while it was up, and Shift+Tab from the first control went nowhere, R49-1) */
+      .filter((n) => !n.closest('.o55-out') && !n.closest('[inert]') && !n.hasAttribute('disabled') && n.getClientRects().length);
     if (!f.length) return;
     const first = f[0], last = f[f.length - 1];
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
