@@ -1053,15 +1053,30 @@ def merge_shards(args):
     if len(roots) != 1:
         raise SystemExit(f'reports name {len(roots)} roots')
     root = roots.pop()
-    total = {r['clauses_in_root'] for r in reports}
-    clauses = {}
-    for r in reports:
+    # The walk order of a root can differ between processes, so shard ranges are not a partition: the reports are joined
+    # by clause id, a clause found in several reports keeps its best class, and the union must equal the root's clause
+    # set exactly (walked again here).
+    import pm_goal_go_schema_closure as cl
+    data = load(args.dump, [root])
+    (_, entry_dump), = data['roots'].items()
+    v = rebuild(entry_dump)
+    install_fixes(cl)
+    cl.CURRENT[0] = v
+    nodes = cl.walk(v)
+    root_set = {l + '/' + cl.name_of(k) for l, i in nodes.items() for k in cl.clauses_of(i['node'])}
+    rank = {'KILLED': 0, 'COVERED_LATER': 1, 'COVERED_BY_CONST': 2, 'UNREACHABLE': 3, 'VACUOUS': 4, 'SELECTOR_OR_NEGATED': 5,
+            'SEARCHED_ELSEWHERE': 6, 'UNCOVERED': 7}
+    clauses, overlaps = {}, 0
+    for name, r in zip(args.reports, reports):
         for c, x in r['clauses'].items():
             if c in clauses:
-                raise SystemExit(f'clause in two shards: {c}')
-            clauses[c] = dict(x, go2_report=Path(args.reports[reports.index(r)]).name)
-    if len(total) != 1 or len(clauses) != total.pop():
-        raise SystemExit(f'shards cover {len(clauses)} clauses, root has {reports[0]["clauses_in_root"]}')
+                overlaps += 1
+                if rank[x['cls']] >= rank[clauses[c]['cls']]:
+                    continue
+            clauses[c] = dict(x, go2_report=Path(name).name)
+    outside, gaps = set(clauses) - root_set, root_set - set(clauses)
+    if outside or gaps:
+        raise SystemExit(f'reports cover {len(clauses)} clauses: {len(gaps)} of the root missing, {len(outside)} not in the root')
     store = {}
     for x in args.reports:
         path = Path(str(x) + '.controls.pkl.gz')
@@ -1078,7 +1093,8 @@ def merge_shards(args):
                                     note='GO2: no wall-clock bound; GC per-clause cap'),
                  budget_args=dict(per_clause=first['args']['clause_cap'], clause_cap=first['args']['clause_cap'], root_seconds=0,
                                   seed_cap=first['dump_meta']['seed_cap']),
-                 go2=dict(reports=[dict(file=Path(x).name, sha256=hashlib.sha256(Path(x).read_bytes()).hexdigest(), shard=r['clause_shard'],
+                 clause_set_sha256=hashlib.sha256('\n'.join(sorted(root_set)).encode()).hexdigest(), clauses_in_root=len(root_set),
+                 go2=dict(overlapping_entries=overlaps, reports=[dict(file=Path(x).name, sha256=hashlib.sha256(Path(x).read_bytes()).hexdigest(), shard=r['clause_shard'],
                                         tool_history=r.get('tool_history'), validator=r['validator'], seconds=r['seconds'],
                                         sampled_agreement=r.get('sampled_agreement'), memo_stats=r.get('memo_stats'), ordering=r.get('ordering'),
                                         args=r['args']) for x, r in zip(args.reports, reports)],
@@ -1722,7 +1738,10 @@ def close(args):
             if not any(c[0] in cl.APART for c in reach['ctx']):
                 by_ipath[reach['ipath']].append((location, info['node'], info['resolver']))
     work = [(location, keyword) for location, info in nodes.items() for keyword in cl.clauses_of(info['node'])]
-    if ':' in args.clause_shard:  # an explicit clause range a:b of the walk order (splits a slow block without overlap)
+    if args.only:  # GO2: exactly these clause ids (the walk order can differ between processes; ids never do)
+        wanted = set(json.loads(Path(args.only).read_text()))
+        mine = [(location, keyword) for location, keyword in work if location + '/' + cl.name_of(keyword) in wanted]
+    elif ':' in args.clause_shard:  # an explicit clause range a:b of the walk order (splits a slow block without overlap)
         lo, hi = map(int, args.clause_shard.split(':'))
         mine = work[lo:hi]
     else:
@@ -1844,7 +1863,9 @@ def close(args):
     tmp.replace(checkpoint)
     counts = collections.Counter(e['cls'] for e in state['entries'].values())
     report = dict(tool='scripts/pm_goal_go2_closure.py', tool_sha256=TOOL_SHA256,
-                  go_closure_sha256=cl.TOOL_SHA256, root=root, clause_shard=args.clause_shard, clauses_in_root=len(work),
+                  go_closure_sha256=cl.TOOL_SHA256, root=root, clause_shard=args.clause_shard if not args.only else 'only:' + Path(args.only).name,
+                  clauses_in_root=len(work), clause_set_sha256=hashlib.sha256('\n'.join(sorted(l + '/' + cl.name_of(k) for l, k in work)).encode()).hexdigest(),
+                  walk_order_sha256=hashlib.sha256('\n'.join(l + '/' + cl.name_of(k) for l, k in work).encode()).hexdigest(),
                   clauses_in_shard=len(mine), validator='reference' if args.reference else 'memo',
                   args=dict(clause_cap=args.clause_cap, carry=args.carry, distinct_from=[str(x) for x in args.distinct_from],
                             residual=str(args.residual) if args.residual else None, donors=[str(x) for x in args.donors],
@@ -1895,6 +1916,7 @@ def main():
     c.add_argument('--no-reorder', action='store_true')
     c.add_argument('--residual', type=Path, help='re-search only the clauses this earlier GO2 report left UNCOVERED')
     c.add_argument('--donors', nargs='*', default=[], type=Path, help='root dumps (their seeds) and earlier GO2 checkpoints (their accepted controls) feeding the donor construction')
+    c.add_argument('--only', type=Path, help='a JSON list of clause ids: search exactly these (overrides --clause-shard)')
     c.add_argument('--research-elsewhere', action='store_true', help='residual pass: also search, in this root, the clauses '
                    'an earlier pass recorded SEARCHED_ELSEWHERE (no witness of another root is relied on)')
     c.add_argument('--sample-every', type=int, default=400, help='compare every Nth memo validation with the reference')
@@ -1905,6 +1927,7 @@ def main():
     w.add_argument('--shard', default='0/1')
     m = sub.add_parser('merge-shards')
     m.add_argument('--reports', nargs='+', required=True)
+    m.add_argument('--dump', type=Path, required=True)
     m.add_argument('--base', required=True, help="GO's merged closure (method, all_roots)")
     m.add_argument('--out', type=Path, required=True)
     t = sub.add_parser('self-test')
