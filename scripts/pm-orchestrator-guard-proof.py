@@ -137,6 +137,15 @@ def checkpoint_inputs(fixtures):
                             else token[field] + '-foreign')
             negatives.append((base['case_id'] + ':token:' + field, bad, None, base['case_id'], TOKEN_LOOP))
     view = lambda case: oracles.checkpoint_full_view(case, root, formats)
+    for base in bases:
+        bad = copy.deepcopy(base)
+        bad['read']['row'] = None
+        negatives.append((base['case_id'] + ':C12:index_row_root_null', bad,
+                          ['index_row_schema'], base['case_id'], None))
+        bad = copy.deepcopy(base)
+        bad['event'] = None
+        negatives.append((base['case_id'] + ':C12:retained_event_root_null', bad,
+                          ['historical_original_recipe'], base['case_id'], None))
     return controls, negatives, view
 
 
@@ -222,6 +231,7 @@ def append_inputs(fixtures):
         neg('type:' + str(test.get('name', test['field'])), by_id[test['case_id']],
             lambda c, f=test['field'], v=test['value']: c['logical_payload'].update({f: copy.deepcopy(v)}), ['logical_payload_schema'])
     for base in family_cases(fixtures):
+        neg('C12:event_root_null', base, lambda c: c.update(event=None), ['event_schema'])
         sibling = next(c['definition'] for c in fixtures['contracts'] if c['definition'] != base['definition'])
         neg('P2A:event_id', base, lambda c: c['event'].update(event_id='evt_do_' + oracles.foreign_hex(c['event']['event_id'])))
         neg('P2A:thread_id', base, lambda c: c['event'].update(thread_id=c['event']['thread_id'] + '-foreign'))
@@ -620,6 +630,12 @@ def board_inputs(fixtures):
     extra_controls, extra_negatives = additional_board_inputs(fixtures)
     controls += extra_controls
     negatives += extra_negatives
+    for i, base in enumerate(boards):
+        if base['payload']['scope'] == 'application':
+            bad = copy.deepcopy(base)
+            bad['source'] = None
+            negatives.append(('board:' + str(i) + ':C12:source_root_null', bad,
+                ['application_source_schema'], 'board:' + str(i), None))
     view = lambda case: board_full_view(case, root, formats)
     return controls, negatives, view
 

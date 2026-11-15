@@ -606,6 +606,11 @@ def wait_capacity(guard=False):
             for proc in Path('/proc').glob('[0-9]*/cmdline'):
                 try:
                     args = proc.read_bytes().split(b'\0')
+                    # This lane owns a serial guard runner. Other lanes and
+                    # unrelated tools have their own budgets; VM-wide memory
+                    # availability is still sampled above before every run.
+                    if (proc.parent / 'cwd').resolve() != ROOT:
+                        continue
                 except OSError:
                     continue
                 if len(args) > 1 and b'python' in args[0] and any(b'guard' in x and x.endswith(b'.py') for x in args[1:3]):

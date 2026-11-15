@@ -53,6 +53,39 @@ class OrchestratorC12(unittest.TestCase):
         self.assertTrue(any(x['keyword'] == 'type' and '/allOf/1/then/properties/activated_at_utc/type' in x['schema'] for x in errors))
         self.assertFalse(any(x['keyword'] == 'type' and '/allOf/0/then/properties/activated_at_utc/type' in x['schema'] for x in errors))
 
+    def test_malformed_schema_roots_return_named_refusals(self):
+        base = self.fixtures['event_cases'][0]
+        for value in (None, False, 0, 1.0, 'unresolved-original', [], [None]):
+            case = copy.deepcopy(base)
+            case['event'] = value
+            with self.subTest(root='event', value=repr(value)):
+                self.assertEqual(closure.o.event_errors(case, self.schema, closure.c.identity, closure.c.retry_allowed,
+                                                      ROOT, closure.c.UTC_FORMAT), ['event_schema'])
+                self.assertEqual(closure.o.historical_read_errors(case, self.schema, closure.c), ['historical_original_recipe'])
+            case = copy.deepcopy(base)
+            case['read']['row'] = value
+            with self.subTest(root='index_row', value=repr(value)):
+                self.assertEqual(closure.o.checkpoint_errors(case, ROOT, closure.c.UTC_FORMAT), ['index_row_schema'])
+            for i, board in enumerate(self.fixtures['board_storage_cases']):
+                if board['payload']['scope'] != 'application':
+                    continue
+                case = copy.deepcopy(board)
+                case['source'] = value
+                with self.subTest(root='source', path=i, value=repr(value)):
+                    self.assertEqual(closure.c.board_join_errors(case), ['application_source_schema'])
+
+    def test_object_subclasses_cannot_skip_replay_or_copy_checks(self):
+        class DecodedObject(dict):
+            pass
+        case = copy.deepcopy(self.fixtures['event_cases'][0])
+        case['event'] = DecodedObject(case['event'], replay_policy='append_once')
+        errors = closure.o.event_errors(case, self.schema, closure.c.identity, closure.c.retry_allowed,
+                                       ROOT, closure.c.UTC_FORMAT)
+        self.assertIn('family_current_replay_policy', errors)
+        case = copy.deepcopy(self.fixtures['event_cases'][0])
+        case['read']['row'] = DecodedObject(case['read']['row'], event_id='evt_do_' + 'a' * 64)
+        self.assertIn('index_row_event_id', closure.o.checkpoint_errors(case, ROOT, closure.c.UTC_FORMAT))
+
     def test_copy_tree_covers_all_equality_partitions(self):
         with tempfile.TemporaryDirectory(prefix='copy-tree-', dir=Path.home() / 'pm-scratch/ea-c12-do') as tmp:
             closure.copy_tree_evidence(Path(tmp))

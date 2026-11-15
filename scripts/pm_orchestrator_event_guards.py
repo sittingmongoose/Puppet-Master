@@ -22,6 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent / 'do-guards'))
 
 import do_recipe_1  # noqa: E402
 import do_checkpoint_schema_1  # noqa: E402
+import do_c12_index_row_schema  # noqa: E402
 import do_checkpoint_identity_1  # noqa: E402
 import do_checkpoint_current_1  # noqa: E402
 import do_checkpoint_join_1  # noqa: E402
@@ -158,6 +159,7 @@ SUITES = (
     ('CHECKPOINT_SCHEMA_ROWS', 'checkpoint_schema_1', do_checkpoint_schema_1),
     ('CHECKPOINT_IDENTITY_ROWS', 'checkpoint_identity_1', do_checkpoint_identity_1),
     ('CHECKPOINT_CURRENT_ROWS', 'checkpoint_current_1', do_checkpoint_current_1),
+    ('CHECKPOINT_JOIN_ROWS', 'c12_index_row_schema', do_c12_index_row_schema),
     ('CHECKPOINT_JOIN_ROWS', 'checkpoint_join_1', do_checkpoint_join_1),
     ('CHECKPOINT_JOIN_ROWS', 'checkpoint_join_2', do_checkpoint_join_2),
     ('CHECKPOINT_JOIN_ROWS', 'checkpoint_join_3', do_checkpoint_join_3),
@@ -291,7 +293,7 @@ RECIPE_ROWS = do_recipe_1.ROWS
 CHECKPOINT_SCHEMA_ROWS = do_checkpoint_schema_1.ROWS
 CHECKPOINT_IDENTITY_ROWS = do_checkpoint_identity_1.ROWS
 CHECKPOINT_CURRENT_ROWS = do_checkpoint_current_1.ROWS
-CHECKPOINT_JOIN_ROWS = do_checkpoint_join_1.ROWS + do_checkpoint_join_2.ROWS + do_checkpoint_join_3.ROWS + do_checkpoint_join_4.ROWS + do_checkpoint_join_5.ROWS + do_checkpoint_join_6.ROWS + do_checkpoint_join_7.ROWS + do_checkpoint_join_8.ROWS + do_checkpoint_join_9.ROWS
+CHECKPOINT_JOIN_ROWS = do_c12_index_row_schema.ROWS + do_checkpoint_join_1.ROWS + do_checkpoint_join_2.ROWS + do_checkpoint_join_3.ROWS + do_checkpoint_join_4.ROWS + do_checkpoint_join_5.ROWS + do_checkpoint_join_6.ROWS + do_checkpoint_join_7.ROWS + do_checkpoint_join_8.ROWS + do_checkpoint_join_9.ROWS
 CHECKPOINT_FRAME_ROWS = do_checkpoint_frame_1.ROWS
 CHECKPOINT_COVERAGE_ROWS = do_checkpoint_coverage_1.ROWS + do_checkpoint_coverage_2.ROWS + do_checkpoint_coverage_3.ROWS + do_checkpoint_coverage_4.ROWS + do_checkpoint_coverage_5.ROWS + do_checkpoint_coverage_6.ROWS + do_checkpoint_coverage_7.ROWS + do_checkpoint_coverage_8.ROWS + do_checkpoint_coverage_9.ROWS + do_checkpoint_coverage_10.ROWS
 APPEND_NUMBER_ROWS = do_append_number_1.ROWS

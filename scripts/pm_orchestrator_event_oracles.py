@@ -677,6 +677,10 @@ def event_errors(case, schema, identity, retry_allowed, root, formats, *, histor
     if refs:
         return refs
     view.update(append_shape_view(case, schema, root, formats, historical))
+    if not isinstance(event, dict):
+        # The schema owns the root type; no field/join adapter may inspect it
+        # before that actual production predicate has refused it.
+        return run_rows(rows_named(guards.APPEND_SHAPE_ROWS, ('event_record_schema',)), view)
     errors = run_rows(rows_named(guards.APPEND_SHAPE_ROWS, APPEND_ENVELOPE_ROWS), view)
     payload_errors = run_rows(rows_named(guards.APPEND_SHAPE_ROWS, ('logical_payload_schema',)), view)
     if payload_errors:
@@ -691,7 +695,10 @@ def event_errors(case, schema, identity, retry_allowed, root, formats, *, histor
 
 def application_shape_errors(case, root, formats):
     """Closed original input/source/wrapper preconditions, before relational joins (BOARD_APPLICATION_SHAPE_ROWS)."""
-    return run_rows(guards.BOARD_APPLICATION_SHAPE_ROWS, application_shape_view(case, root, formats))
+    view = application_shape_view(case, root, formats)
+    rows = guards.BOARD_APPLICATION_SHAPE_ROWS if 'input_schema_valid' in view else rows_named(
+        guards.BOARD_APPLICATION_SHAPE_ROWS, ('application_source_schema',))
+    return run_rows(rows, view)
 
 
 def board_source_errors(case, root, formats):
@@ -1059,17 +1066,19 @@ def recipe_view(case):
     custody, refusal = resolve_original(case)
     recipe = custody.recipe.identity_recipe if custody is not None else None
     expected = recipe_witness_value(case, recipe) if custody is not None else None
+    event = case['event']
+    event_id = event.get('event_id') if isinstance(event, dict) else None
     return {'custody_refusal': refusal, 'recipe': recipe, 'disclosed_recipe': state['original_identity_recipe'],
             'recipe_evidence': state['original_recipe_evidence'], 'recipe_expected_value': expected,
-            'recipe_expected_source_ref': 'writer-recipe:' + case['event']['event_id'],
+            'recipe_expected_source_ref': 'writer-recipe:' + event_id if type(event_id) is str else None,
             'recipe_expected_source_sha256': hashlib.sha256(packed(expected)).hexdigest() if expected is not None else None}
 
 
 def checkpoint_schema_view(case, root, formats):
     v = selected_validators(root, formats)
-    read = case['read']
-    return {'checkpoint_schema_valid': not list(v['checkpoint'].iter_errors(read['checkpoint'])),
-            'read_token_schema_valid': not list(v['read_token'].iter_errors(read['read_token']))}
+    read = case['read'] if isinstance(case['read'], dict) else {}
+    return {'checkpoint_schema_valid': not list(v['checkpoint'].iter_errors(read.get('checkpoint'))),
+            'read_token_schema_valid': not list(v['read_token'].iter_errors(read.get('read_token')))}
 
 
 def checkpoint_identity_view(case):
@@ -1173,10 +1182,14 @@ def checkpoint_full_view(case, root, formats):
     the checker stops."""
     view = recipe_view(case)
     for build in (lambda: checkpoint_schema_view(case, root, formats), lambda: checkpoint_identity_view(case),
-                  lambda: checkpoint_current_view(case), lambda: checkpoint_join_view(case, root, formats),
+                  lambda: checkpoint_current_view(case),
+                  lambda: {'index_row_schema_valid': index_row_validator(root, formats).is_valid(case['read']['row'])},
+                  lambda: checkpoint_join_view(case, root, formats),
                   lambda: checkpoint_coverage_view(case)):
         try:
             view.update(build())
+            if 'index_row_schema_valid' in view and not isinstance(case['read']['row'], dict):
+                break
         except (KeyError, TypeError, AttributeError, IndexError):
             break
     return view
@@ -1373,10 +1386,17 @@ def successor_errors_from(inputs):
 
 def application_shape_view(case, root, formats):
     v = selected_validators(root, formats)
+    source = case['source']
+    source_fields = source if isinstance(source, dict) else {}
     edition = '_v2' if (case['event_type'] == 'crew.board_message_posted' or
-                         case['source'].get('schema_id') == 'pm.application_source.coordination_append.v2') else ''
-    return {'board_branch': 'application', 'source_schema_valid': not list(v['source' + edition].iter_errors(case['source'])),
-            'input_schema_valid': not list(v['input' + edition].iter_errors(case['source'].get('original_input'))),
+                         source_fields.get('schema_id') == 'pm.application_source.coordination_append.v2') else ''
+    source_valid = not list(v['source' + edition].iter_errors(source))
+    if not isinstance(source, dict):
+        # There is no original edition or nested input to select. The actual
+        # source schema refuses this root before another record is inspected.
+        return {'board_branch': 'application', 'source_schema_valid': source_valid}
+    return {'board_branch': 'application', 'source_schema_valid': source_valid,
+            'input_schema_valid': not list(v['input' + edition].iter_errors(source_fields.get('original_input'))),
             'wrapper_schema_valid': not list(v['wrapper' + edition].iter_errors(case['wrapper']))}
 
 
@@ -1451,6 +1471,9 @@ def checkpoint_errors(case, root, formats):
     current = run_rows(guards.CHECKPOINT_CURRENT_ROWS, view)
     if current:
         return errors + current
+    if not isinstance(case['read']['row'], dict):
+        view['index_row_schema_valid'] = index_row_validator(root, formats).is_valid(case['read']['row'])
+        return errors + run_rows(rows_named(guards.CHECKPOINT_JOIN_ROWS, ('index_row_value_schema',)), view)
     view.update(checkpoint_join_view(case, root, formats))
     errors += run_rows(guards.CHECKPOINT_JOIN_ROWS, view)
     frame = run_rows(guards.CHECKPOINT_FRAME_ROWS, view)
