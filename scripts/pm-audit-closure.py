@@ -806,6 +806,58 @@ class AnchorResolver:
         return sha256_text(self.content(ref)[0])
 
 
+REGISTRY_SELF_ANCHOR_SCOPE = "exclude_self.v1"
+
+
+class _RegistryAnchorResolver(AnchorResolver):
+    """Read a registry candidate at its real ref; optionally omit one re-audit row.
+
+    Exclusion is explicit on new rows only. Historical snapshots and unmarked rows
+    keep the original anchor.v1 semantics. Every other registry row still counts.
+    """
+
+    def __init__(
+        self, source: AnchorResolver, registry_ref: str, *,
+        registry_bytes: bytes | None = None, exclude_closure_id: str | None = None,
+    ) -> None:
+        super().__init__(source.root)
+        self.source = source
+        self.registry_ref = registry_ref
+        self.registry_bytes = registry_bytes
+        self.exclude_closure_id = exclude_closure_id
+
+    def read_bytes(self, rel_path: str) -> bytes:
+        if rel_path == self.registry_ref and self.registry_bytes is not None:
+            return self.registry_bytes
+        return self.source.read_bytes(rel_path)
+
+    def jsonl_rows(self, rel_path: str) -> list[dict[str, Any]]:
+        rows = super().jsonl_rows(rel_path)
+        if rel_path == self.registry_ref and self.exclude_closure_id is not None:
+            return [row for row in rows if row.get("closure_id") != self.exclude_closure_id]
+        return rows
+
+    def is_dir(self, rel_path: str) -> bool:
+        return self.source.is_dir(rel_path)
+
+
+def registry_row_resolver(
+    row: dict[str, Any], resolver: AnchorResolver, registry_ref: str | None = None,
+) -> AnchorResolver:
+    """Apply a row's explicit self-exclusion to currentness checks, never its review snapshot."""
+    hashes = row.get("hashes") if isinstance(row.get("hashes"), dict) else {}
+    if "registry_self_anchor" not in hashes:
+        return resolver
+    marker = hashes["registry_self_anchor"]
+    path = marker.get("path") if isinstance(marker, dict) else None
+    if not isinstance(path, str) or marker != {"path": path, "scope": REGISTRY_SELF_ANCHOR_SCOPE} \
+            or (registry_ref is not None and path != registry_ref) or hashes.get("hash_scope") != ANCHOR_SCOPE \
+            or not isinstance(row.get("reaudit"), dict):
+        raise AnchorError(f"registry_self_anchor must name this registry with scope {REGISTRY_SELF_ANCHOR_SCOPE} on a re-audit row")
+    canonical_rel_path(path)
+    return _RegistryAnchorResolver(resolver, path, exclude_closure_id=row.get("closure_id"))
+
+
 class CommitResolver(AnchorResolver):
     """Resolves anchored refs against the files of one git commit of the repository at root.
 
@@ -1395,6 +1447,10 @@ def _target_stale_refs(target: dict[str, Any], resolver: AnchorResolver) -> set[
     check never hashes (no repository path, or a directory) are left out, as it leaves them."""
     hashes = target.get("hashes") if isinstance(target.get("hashes"), dict) else {}
     anchored = hashes.get("hash_scope") == ANCHOR_SCOPE
+    try:
+        resolver = registry_row_resolver(target, resolver)
+    except AnchorError:
+        pass  # The registry validator reports malformed metadata as a structural error.
     out: set[tuple[str, str, str]] = set()
     for group in ("owner_evidence_hashes", "closure_evidence_hashes"):
         group_hashes = hashes.get(group)
@@ -1955,16 +2011,34 @@ def validate_reaudit_row(
             errors.append(f"{label}: a not_supported re-audit appends a reopened row")
     if len(errors) != before or record is None:
         return None
+    if "registry_self_anchor" in hashes:
+        # Self-exclusion cannot authenticate this row's own claim or identity.
+        # Rebuild them from the bound record and predecessor instead. The append
+        # timestamp is an input; both generated timestamps must agree with it.
+        try:
+            expected = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, row["created_at"])
+        except (AnchorError, KeyError, TypeError) as exc:
+            errors.append(f"{label}: cannot rebuild self-excluding re-audit row: {exc}")
+            return None
+        # The marker is checked separately against this registry by registry_row_resolver.
+        expected["hashes"]["registry_self_anchor"] = hashes["registry_self_anchor"]
+        differing = sorted(field for field, value in expected.items() if row.get(field) != value)
+        if differing:
+            errors.append(f"{label}: self-excluding re-audit generated fields differ from bound record and predecessor: {differing}")
+            return None
     return {"target": line, "verdict": record.get("verdict"), "later_closure_id": record.get("later_closure_id")}
 
 
-def validate_registry(registry_path: Path) -> dict[str, Any]:
+def validate_registry(registry_path: Path, *, anchor_registry_path: Path | None = None) -> dict[str, Any]:
     errors: list[str] = []
     warnings: list[str] = []
     rows = read_jsonl(registry_path, errors, required=True)
     raw_lines = raw_registry_lines(registry_path)
     rows_by_line = {row["_line_no"]: row for row in rows}
     resolver = AnchorResolver()
+    registry_ref = rel(anchor_registry_path or registry_path)
+    if anchor_registry_path is not None:
+        resolver = _RegistryAnchorResolver(resolver, registry_ref, registry_bytes=registry_path.read_bytes())
     record_cache: dict[str, dict[str, Any]] = {}
     closure_ids: set[str] = set()
     closed_by_key: dict[str, list[dict[str, Any]]] = {}
@@ -2017,7 +2091,13 @@ def validate_registry(registry_path: Path) -> dict[str, Any]:
 
         validate_evidence_refs(row.get("closure_evidence"), label, errors)
         stale: list[str] = []
-        validate_hashes(row.get("hashes"), label, errors, stale, resolver)
+        row_resolver = resolver
+        hashes = row.get("hashes")
+        try:
+            row_resolver = registry_row_resolver(row, resolver, registry_ref)
+        except AnchorError as exc:
+            errors.append(f"{label}: {exc}")
+        validate_hashes(hashes, label, errors, stale, row_resolver)
         if stale:
             stale_by_line[row["_line_no"]] = stale
 
@@ -4018,7 +4098,12 @@ def cmd_refresh_hashes(args: argparse.Namespace) -> int:
         if hashes.get("hash_scope") == ANCHOR_SCOPE:
             stale_now: list[str] = []
             structural: list[str] = []
-            validate_hashes(hashes, f"line {row.get('_line_no')}", structural, stale_now, AnchorResolver())
+            resolver = AnchorResolver()
+            try:
+                resolver = registry_row_resolver(row, resolver, rel(registry_path))
+            except AnchorError as exc:
+                structural.append(f"line {row.get('_line_no')}: {exc}")
+            validate_hashes(hashes, f"line {row.get('_line_no')}", structural, stale_now, resolver)
             errors.extend(structural)
             for group in ("owner_evidence_hashes", "closure_evidence_hashes"):
                 for ref in sorted(hashes.get(group) or {}) if isinstance(hashes.get(group), dict) else []:
@@ -4219,6 +4304,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
     now = utc_now()
     new_rows: list[dict[str, Any]] = []
     moved: list[dict[str, Any]] = []
+    already_stale_moved: list[dict[str, Any]] = []
     skipped: list[str] = []
     for closure_id, record in records.items():
         if only and closure_id not in only:
@@ -4265,7 +4351,12 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         if changed:
             moved.append({"closure_id": closure_id, "line": line, "changed_anchors": changed})
             continue
-        new_rows.append(build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, now))
+        row = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, now)
+        if any(parse_anchor_ref(ref)[:2] == (rel(registry_path), "jsonlset") for ref in record["dependencies"]):
+            # A row cannot hash itself recursively. Keep the reviewed pre-append
+            # snapshot, excluding just this row from its own registry row-set hash.
+            row["hashes"]["registry_self_anchor"] = {"path": rel(registry_path), "scope": REGISTRY_SELF_ANCHOR_SCOPE}
+        new_rows.append(row)
     if not errors and new_rows:
         raw = registry_path.read_bytes()
         if raw and not raw.endswith(b"\n"):
@@ -4273,8 +4364,30 @@ def _reaudit_append(args: argparse.Namespace) -> int:
     if not errors and new_rows:
         # Validate the registry as it would be after the append, before writing anything. Every
         # error the candidate has that the registry does not have now blocks the append, whether
-        # it names a new line, an existing line or no line at all.
+        # it names a new line, an existing line or no line at all. A stale hash on the same
+        # row, group and ref is pre-existing when only its current hash has changed.
         baseline = set(validate_registry(registry_path)["errors"])
+        stale_pattern = re.compile(
+            rf"{re.escape(rel(registry_path))}:(?P<line>[1-9][0-9]*): "
+            r"(?P<group>owner_evidence_hashes|closure_evidence_hashes) for (?P<ref>.+) "
+            r"is stale \(stored (?P<stored>[0-9a-f]{64}), current (?P<current>[0-9a-f]{64})\)"
+        )
+
+        def stale_identity(error: str) -> tuple[tuple[int, str, str, str, str], str] | None:
+            match = stale_pattern.fullmatch(error)
+            if match is None:
+                return None
+            line = int(match["line"])
+            row = rows_by_line.get(line)
+            if row is None:
+                return None
+            return (line, str(row.get("closure_id", "")), match["group"], match["ref"], match["stored"]), match["current"]
+
+        stale_before = {}
+        for error in baseline:
+            stale = stale_identity(error)
+            if stale is not None:
+                stale_before[stale[0]] = stale[1]
         import tempfile  # noqa: PLC0415
 
         # A unique candidate created exclusively next to the registry: it can never be the input
@@ -4286,13 +4399,23 @@ def _reaudit_append(args: argparse.Namespace) -> int:
                 handle.write(registry_path.read_bytes() + "".join(
                     json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in new_rows
                 ).encode("utf-8"))
-            report = validate_registry(candidate)
+            report = validate_registry(candidate, anchor_registry_path=registry_path)
         finally:
             candidate.unlink(missing_ok=True)
         for error in report["errors"]:
             as_registry = error.replace(rel(candidate), rel(registry_path))
-            if as_registry not in baseline:
-                errors.append(f"candidate registry would not validate: {as_registry}")
+            if as_registry in baseline:
+                continue
+            stale = stale_identity(as_registry)
+            if stale is not None and stale[0] in stale_before:
+                (line, closure_id, group, ref, stored), current = stale
+                already_stale_moved.append({
+                    "status": "already stale, current hash moved", "line": line,
+                    "closure_id": closure_id, "group": group, "ref": ref, "stored": stored,
+                    "before_append_current": stale_before[stale[0]], "candidate_current": current,
+                })
+                continue
+            errors.append(f"candidate registry would not validate: {as_registry}")
         superseded_now = set(report.get("superseded_lines", []))
         for row in new_rows:
             if row["supersedes"]["line"] not in superseded_now:
@@ -4312,6 +4435,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         "would_append": len(new_rows) if not errors else 0,
         "already_appended": len(skipped),
         "moved_since_recheck": moved,
+        "already_stale_current_hash_moved": already_stale_moved,
         "errors": errors,
     }, indent=2, ensure_ascii=False))
     return 1 if errors else 0

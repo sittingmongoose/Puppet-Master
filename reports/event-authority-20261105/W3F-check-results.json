@@ -1,0 +1,152 @@
+{
+  "reviewed_head": "e397921e858f9b2195c4c7e8f785525495b256d9",
+  "fix_commit": "d3d5f4e163d0a1c52054a373c08c90e78e8e093d",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit_code": 0,
+      "status": "pass",
+      "elapsed_seconds": 188.26,
+      "starting_available_GiB": 12,
+      "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/index-generate.log",
+      "log_sha256": "eb587333ecf2392a4a88c830cab1d05df3014f96ff134954fb2d643d4d7adb70",
+      "label": "index-generate"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "status": "pass",
+      "elapsed_seconds": 139.16,
+      "starting_available_GiB": 7,
+      "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/index-validate.log",
+      "log_sha256": "7872ff112e62d4ce9908879a67b51ee38b026f07045bc5e9de537b74ff816981",
+      "label": "index-validate"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "status": "pass",
+      "elapsed_seconds": 80.67,
+      "starting_available_GiB": 6,
+      "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/shard-check.log",
+      "log_sha256": "25e03937700c17eaf1c5af802b6ea0730d0222ae7ca02f62e39577442c305420",
+      "label": "shard-check"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "status": "pass",
+      "elapsed_seconds": 4.34,
+      "starting_available_GiB": 12,
+      "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/shard-generate.log",
+      "log_sha256": "5b172afd4a3f3b16555cb621d9a7bcf34e977907ff0d123a82802db037768e51",
+      "label": "shard-generate"
+    },
+    {
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/profile-baseline-check.py"
+      ],
+      "exit_code": 0,
+      "status": "pass",
+      "elapsed_seconds": 2.11,
+      "starting_available_GiB": 8,
+      "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/storage-profile-baseline.log",
+      "log_sha256": "50b470332598f9fdce9be3e91696ffaabd4af137f666fea2a2f310d9229aab28",
+      "label": "storage-profile-baseline"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-storage-profile-check.py"
+      ],
+      "exit_code": 1,
+      "status": "fail",
+      "elapsed_seconds": 0.81,
+      "starting_available_GiB": 8,
+      "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/storage-profile.log",
+      "log_sha256": "1f358c8eb2b26dd7f869c8a24784c64ea0e16b0d9c18b23d52a0ec9e69426a0d",
+      "label": "storage-profile"
+    },
+    {
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/check-structure.py"
+      ],
+      "exit_code": 0,
+      "status": "pass",
+      "elapsed_seconds": 18.93,
+      "starting_available_GiB": 8,
+      "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/structure-final.log",
+      "log_sha256": "b17be72b55af6b1b99d3ec3306feb3852cf41df75901089074b56ff9ed0681de",
+      "label": "structure-final"
+    },
+    {
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/check-structure.py"
+      ],
+      "exit_code": 0,
+      "status": "pass",
+      "elapsed_seconds": 19.01,
+      "starting_available_GiB": 6,
+      "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/structure.log",
+      "log_sha256": "18dad79d2ebe449605435f130e962ce5f8ceba567330d6fec76d5fc7d1cbbdee",
+      "label": "structure"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "status": "see_log",
+      "elapsed_seconds": 5.92,
+      "starting_available_GiB": 7,
+      "log_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/whitespace.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "label": "whitespace"
+    }
+  ],
+  "id_allocation": {
+    "exit_code": 0,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/allocation-check.json",
+    "sha256": "b9abd4cd5620fbacb44a4571598f8877f8c5c749ab4003ef3b513cb729554bc7",
+    "result": "565 origin refs, 238 distinct owner blobs, SP-1459 free"
+  },
+  "memory_pause": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/memory-pause.json",
+    "sha256": "549fe0215bbb166b21ecba45eef0b33d1ac917aaf229ac2aee28b6911d09a768",
+    "wrapper_exit_code": 75,
+    "checker_not_started": true,
+    "resumed_at_GiB": 7
+  },
+  "original_phase1_results": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3F/p1fix1/original-check-results.json",
+    "sha256": "cbf29c4e5ec9bc2cbe4e4c2ceb77d6993b22bc4ec517089f52f7a49c0cb89fc7"
+  },
+  "native_execution": "NOT_RUN",
+  "product_oracles": "NOT_RUN_PHASE1",
+  "guard_isolation": "NOT_RUN_PHASE1"
+}

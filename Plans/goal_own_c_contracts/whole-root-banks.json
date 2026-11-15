@@ -1,0 +1,15 @@
+{
+  "schema_id": "pm.goal_own_c.whole_root_banks.v1",
+  "qualification": "TEST_ONLY whole original Goal update schema custody; not a merged bank, native issuance or semantic-path closure",
+  "banks": [
+    {
+      "manifest": "Plans/goal_update_schema_resources.json",
+      "realm": "default"
+    }
+  ],
+  "whole_resource_locations": {
+    "Plans/full_thread_runtime_contracts.schema.json@5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea": "Plans/workflow_standard_source_contracts/inputs/Plans/full_thread_runtime_contracts.schema.json",
+    "Plans/shared_runtime_command_contracts.schema.json@7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b": "Plans/workflow_standard_source_contracts/inputs/Plans/shared_runtime_command_contracts.schema.json",
+    "Plans/shared_runtime_contracts.schema.json@680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59": "Plans/workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/Plans/shared_runtime_contracts.schema.json"
+  }
+}

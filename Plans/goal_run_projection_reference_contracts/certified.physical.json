@@ -1,0 +1,41 @@
+{
+  "status": "NEWLY_AUTHORED_UNINSTALLED",
+  "family": "goal_run.certified",
+  "edition": "pm.goal_run_certified.projection.reference.v1",
+  "old_whole_schema": {
+    "path": "Plans/goal_run_certified_consumer_contracts/schemas/consumer.v1.schema.json",
+    "sha256": "7231019585f5b0ad2d1453fc1df3b8525baaa1b979eb616757d6f7307a75936a"
+  },
+  "new_whole_schema": {
+    "path": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+    "sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+    "retrieval_uri": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0"
+  },
+  "projection": {
+    "family_id": "goal_run_certified_projection_reference_v1",
+    "schema_id": "pm.goal_run_projection.started_cancelled_certified.reference.v1",
+    "table": "goal_run_projection.started_cancelled_certified.reference.v1@<generation_id>",
+    "key": "goal_run_projection.started_cancelled_certified.reference.v1:K(project_id):K(goal_run_id)",
+    "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection"
+  },
+  "checkpoint": {
+    "family_id": "goal_run_certified_checkpoint_reference_v1",
+    "schema_id": "pm.goal_run_started_cancelled_certified_checkpoint.reference.v1.storage",
+    "table": "checkpoints",
+    "key": "goal_run_started_cancelled_certified_checkpoint.reference.v1:K(storage_instance_id):K(project_id):K(goal_id):K(goal_run_id)",
+    "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint"
+  },
+  "profile": "goal_run_started_cancelled_certified_projector.reference.v1",
+  "generation_prefix": "grsccg_",
+  "key_component_codec": "unpadded base64url of exact nonempty UTF-8; SP-317/P5",
+  "projection_method": "owner.goal_run.started_cancelled_certified.project_prefix.reference.v1",
+  "storage_publish_method": "owner.storage.goal_run.started_cancelled_certified.publish.reference.v1",
+  "source_selection": "Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json",
+  "resources": "Plans/goal_run_projection_reference_contracts/certified.resources.json",
+  "methods": "Plans/goal_run_projection_reference_contracts/certified.methods.json",
+  "protocol": "Plans/goal_run_projection_reference_contracts/certified.md",
+  "original_root": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Projection",
+  "original_checkpoint_root": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Checkpoint",
+  "max_stored_part_bytes": 16384,
+  "rebuild": "Fresh empty generation; full authentic original prefix/custody replay; exact source and full root CAS; atomic cutover. Never rewrite predecessor bytes."
+}

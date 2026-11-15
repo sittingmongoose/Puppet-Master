@@ -2629,28 +2629,28 @@ For exactly `EA-UND-0005-GOAL`, the following source-dated pair and common-v2 st
 - `EA-UND-0001-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject unknown blocker/reason/action, missing cause/scope, action set not containing next action, generic `try_anyway`, or block from a terminal state.
 - `EA-UND-0002-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Cancel a running mutated Goal only after referenced settlements are durable; projection becomes terminal `cancelled`.
 - `EA-UND-0002-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject `mutation_started=false` with rollback refs, true with empty settlement refs, missing cancellation scope, or cancellation of terminal Goal.
-- `EA-UND-0003-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Record a child `running->completed` edge with receipt ref; parent revision advances while parent status remains unchanged.
-- `EA-UND-0003-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject equal/unknown child states, completed child without receipt, illegal child edge, or any attempt to set parent completion in this payload.
+- `EA-UND-0003-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R03 oracle only under GRS-060/CV-334; current emission is prohibited: Record a child `running->completed` edge with receipt ref; parent revision advances while parent status remains unchanged.
+- `EA-UND-0003-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R03 oracle only under GRS-060/CV-334; current emission is prohibited: Reject equal/unknown child states, completed child without receipt, illegal child edge, or any attempt to set parent completion in this payload.
 - `EA-UND-0004-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — From `verifying`, validate canonical completion receipt, exhaustive satisfied/not-applicable criteria, passing/waived validators, then commit `completed`.
 - `EA-UND-0004-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject missing/corrupt receipt, unsatisfied/deferred criterion, failed/blocked/unwaived skipped validator, worker claim, projection substitute, or wrong source state.
 - `EA-UND-0005-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Create previously absent Goal at revision 1 with verified control-envelope hash, non-empty criteria, exact scope/budget/model policy; projection is `created`.
 - `EA-UND-0005-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject expected revision, revision other than 1, duplicate Goal ID, hash mismatch, null optional, unknown enum, or write scope without authority evidence.
-- `EA-UND-0006-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Record a standard-tier no-mutation optional-check degradation with risks/actions and exception evidence; projection is `degraded`, not success.
-- `EA-UND-0006-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject empty risks/actions, strong-tier required-check degradation, missing exception/approval proof, degradation from a fenced/terminal state, or any completion claim.
-- `EA-UND-0007-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Capture current source evidence with valid span/hash and matching outer/inner redaction; evidence index advances while state is preserved.
-- `EA-UND-0007-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject wrong hash syntax, invalid locator branch, artifact snapshot without snapshot ref, raw secret, redaction mismatch, unknown currentness used as proof, or any retention value invented by fallback.
+- `EA-UND-0006-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R06 oracle only under GRS-061/CV-335; current emission is prohibited: Record a standard-tier no-mutation optional-check degradation with risks/actions and exception evidence; projection is `degraded`, not success.
+- `EA-UND-0006-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R06 oracle only under GRS-061/CV-335; current emission is prohibited: Reject empty risks/actions, strong-tier required-check degradation, missing exception/approval proof, degradation from a fenced/terminal state, or any completion claim.
+- `EA-UND-0007-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical conditional oracle only (GRS-205/SP-431/CV-424); current writes in both scopes refuse before dedupe. Capture current source evidence with valid span/hash and matching outer/inner redaction; evidence index advances while state is preserved.
+- `EA-UND-0007-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical conditional oracle only (GRS-205/SP-431/CV-424); current writes in both scopes refuse before dedupe. Reject wrong hash syntax, invalid locator branch, artifact snapshot without snapshot ref, raw secret, redaction mismatch, unknown currentness used as proof, or any retention value invented by fallback.
 - `EA-UND-0008-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R08 oracle only under GRS-069/CV-343; current emission is prohibited: Append `scheduled->running` with a non-empty task delta and artifact hashes; second identical fingerprint includes repeat count/marker and remains visible.
 - `EA-UND-0008-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R08 oracle only under GRS-069/CV-343; current emission is prohibited: Reject disallowed state pair, empty task delta, repeat>=2 without marker, marker with repeat<2, stale status_before, or use of progressed to claim blocked/completed.
-- `EA-UND-0009-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Record a validated verification or completion receipt with complete child/WorkNode refs and passing outputs; state remains unchanged.
-- `EA-UND-0009-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject missing receipt, invalid certifier enum, certified decision with failed output, exception without approval, incomplete declared dependency receipts, or treating receipt-recorded as Goal completion.
+- `EA-UND-0009-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical conditional oracle only (GRS-206/SP-432/CV-425); current writes in both scopes refuse before dedupe. Record a validated verification or completion receipt with complete child/WorkNode refs and passing outputs; state remains unchanged.
+- `EA-UND-0009-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical conditional oracle only (GRS-206/SP-432/CV-425); current writes in both scopes refuse before dedupe. Reject missing receipt, invalid certifier enum, certified decision with failed output, exception without approval, incomplete declared dependency receipts, or treating receipt-recorded as Goal completion.
 - `EA-UND-0010-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R10 oracle only under GRS-070/CV-344; current emission is prohibited: Replan running Goal for scope reduction, decide every affected child, preserve only revalidated evidence, and commit `running` at the new revision.
 - `EA-UND-0010-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R10 oracle only under GRS-070/CV-344; current emission is prohibited: Reject new revision mismatch, missing/extra child decision, unknown interruption/action, stale evidence, terminal/limit source, or child steering without referenced disposition.
-- `EA-UND-0011-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Schedule a created Goal with `dispatch`, due eligibility, queue, budget snapshot, writer storage, current permission, and resolved recovery truth.
-- `EA-UND-0011-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject dispatch without queue/due time/admission evidence, unknown priority/reason/action, stale CAS, viewer/blocked storage, unknown recovery, or scheduling a terminal Goal.
+- `EA-UND-0011-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R11 oracle only under GRS-062/CV-336; current emission is prohibited: Schedule a created Goal with `dispatch`, due eligibility, queue, budget snapshot, writer storage, current permission, and resolved recovery truth.
+- `EA-UND-0011-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R11 oracle only under GRS-062/CV-336; current emission is prohibited: Reject dispatch without queue/due time/admission evidence, unknown priority/reason/action, stale CAS, viewer/blocked storage, unknown recovery, or scheduling a terminal Goal.
 - `EA-UND-0012-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R12 oracle only under GRS-071/CV-345; current emission is prohibited: Stop a running Goal at a validated safe point after durable child/tool settlement, with `resumable=true`; projection is fenced `stopped`.
 - `EA-UND-0012-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R12 oracle only under GRS-071/CV-345; current emission is prohibited: Reject resumable without safe point, before-mutation with settlements, unsettled after-mutation as resumable, unknown stop reason/boundary, or treating stop as cancellation/completion.
-- `EA-UND-0013-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Record a permission check `blocked/approval_required` by output/log refs and block evidence; state is preserved pending named block event.
-- `EA-UND-0013-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject embedded tool output/secret, failed/unknown without log, approval-required without evidence, deny+passed, unknown check enum, or direct state mutation.
+- `EA-UND-0013-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical conditional oracle only (GRS-207/SP-433/CV-426); current writes in both scopes refuse before dedupe. Record a permission check `blocked/approval_required` by output/log refs and block evidence; state is preserved pending named block event.
+- `EA-UND-0013-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical conditional oracle only (GRS-207/SP-433/CV-426); current writes in both scopes refuse before dedupe. Reject embedded tool output/secret, failed/unknown without log, approval-required without evidence, deny+passed, unknown check enum, or direct state mutation.
 - `EA-UND-0014-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Whole-v2 historical interpretation only under CV-342; no active-v3 write oracle.  Apply one exact scope delta with previous/new revision relation, mark affected child stale, and fence dispatch pending replan.
 - `EA-UND-0014-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Whole-v2 historical interpretation only under CV-342; no active-v3 write oracle.  Reject zero deltas, revision mismatch, child in active and stale sets, malformed delta branch, update during verifying/terminal, or implicit child re-steer.
 - `EA-UND-0015-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Historical D-R15 oracle only under GRS-072/CV-346; current emission is prohibited: Record passed verification with cycle ID, verifier, closures, no findings/risks; projection is `verifying` and still awaits completion event.
@@ -5413,6 +5413,9 @@ node_compile_hint:
 gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
   no new visual presentation.
 ```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal_run.certified adopts W5/ATS-1118 each CF-01..12 and P4-P8 complete original tuple and boundary requirement. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-057, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
 
@@ -11707,3 +11710,2440 @@ negative_constraints:
 **Sweep part 1 regressions (R7-B1/R7-B2/S6).** Both FileSafe checker entry points enforce the selected date-time format with an explicit full-string grammar and calendar/range checks, independent of optional format packages. Own payload, materialization, retained-issued and coherently rehashed original-source negatives cover missing zones, wrong separators, invalid calendar/time/offset fields, trailing LF, leap seconds and invalid fractional syntax; valid fractional precision and offset spellings remain unchanged. The exact cycle-7 accepted malformed-source witnesses must refuse. This enforces the declared schema format and does not restamp authentic original bytes or claim the part-2 original-recipe dispatcher. The three seven-year Project suites independently exercise count-only and disk-only refusal and eligible-expiry paths with the peer condition false. Each safe-point suite applies DL-401 G28 Run year with a real run, completion anchor, existing protections and independent run/Project successor controls; application safe points use no fabricated Project count. Application-scope FileSafe security-event retention remains pending and unchanged. Whole-lane guard-table certification and NUMRULE adoption remain part 2.
 
 **Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables.py --out DIR` replays every witness of both CLIs under the observation recorder, checks the uncapped lane matrix, and runs the gated shared guard tool once per table; rows no input can refuse first stay as checks in tables of their own and earn no credit. `Plans/filesafe_event_p2a_cases.json` holds the coherent one-defect witnesses for rows the earlier fixtures left without one (`python3 scripts/pm-filesafe-p2a-cases.py --check`); both CLIs check them. `python3 scripts/pm-filesafe-number-corpus.py` runs the shared NUMRULE number corpus and 4,400-digit integers through the complete checkers, and `python3 scripts/pm_event_numbers.py --self-test --scope numbers` must report pass. Limits are unchanged in kind: each schema occurrence is one structural verdict row (individual JSON Schema keywords are not cut one by one), date-time formats remain the interim lane grammar pending CV-1101, and native execution stays NOT_RUN.
+
+### ATS-210 - Current Goal writer and run projector oracles
+
+```yaml
+plan_unit_id: ATS-210
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04). It names the static oracles of five current Goal writers, each with its own cases in Plans/goal_current_writer_oracle_fixtures.json, checked by python3 scripts/pm_goal_current_writer_oracles.py. goal.updated: v3 payload cases for direct Save and the approved-proposal shape, SP-421 identity vectors, SP-299 progress edges with lost-acknowledgement paths, Storage dedupe and the active-only reader. goal.cancelled: v3 payload cases, SP-422 identity vectors, payload-to-identity joins, the SP-310 late-assignment rule (only sequence_id is assigned late), dedupe and the current inspection. goal_run.started: the SP-311 started-only projector rule table. goal_run.cancelled: the SP-312 combined projector rule table. goal_run.certified: the GRS-085 mandatory prefix projection rule table. A pass shows static consistency of owner text, schemas and rule tables; no producer, projector, durability or recovery is proven, and every native obligation stays NOT_RUN.
+gui_related: false
+gui_classification_reason: Names static oracles for event contracts; no visual surface.
+split_recommended: false
+depends_on:
+- GRS-068
+- GRS-073
+- GRS-078
+- GRS-079
+- GRS-080
+- GRS-085
+- SP-299
+- SP-304
+- SP-310
+- SP-311
+- SP-312
+- SP-421
+- SP-422
+- ATS-057
+- DL-045
+unblocks: []
+acceptance_criteria:
+- python3 scripts/pm_goal_current_writer_oracles.py exits 0 with every case of the five families matching.
+- Each family's cases name only its own owner units; no case of one family is evidence for another.
+- Cases the fixture lists as not_covered stay open and are not reported as passing.
+validation_surfaces:
+- Plans/goal_current_writer_oracle_fixtures.json
+- python3 scripts/pm_goal_current_writer_oracles.py
+risk_class: current_goal_writer_oracle_drift
+reasoning_tier: high
+context_scope: goal_current_writer_oracles
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_current_writer_oracle_fixtures.json
+- scripts/pm_goal_current_writer_oracles.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 10)
+preserved_exact_tokens:
+- goal_current_writer_oracle_fixtures.json
+- NOT_RUN
+negative_constraints:
+- No native, durability, recovery or readiness claim from a static pass.
+- No admission, registry change or checkpoint move.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+Amended 2026-11-05 (DG-OWN-C, DL-045): Exactly goal.updated, goal.cancelled, goal_run.started, goal_run.cancelled and goal_run.certified separately adopt W1, W2, W3, W4 and W5 respectively through ATS-1116/1117/1118. Each retains its own complete original roots and source/custody/final-boundary cases. The complete new contract is `Plans/goal_own_c_contracts/protocol.md`; full inherited-root executable coverage remains required. Native execution stays NOT_RUN.
+
+
+**Per family.** Each family's fixture section lists its owner units and its cases.
+
+| Family | Cases | Still open |
+|---|---|---|
+| `goal.updated` | 9 payload (2 positive), 6 identity, 10 progress sequences, 4 dedupe, 3 reader | The agent-proposed producer route, until the approval-owner provider exists (GRS-068) |
+| `goal.cancelled` | 4 payload (1 positive), 3 identity, 3 payload joins, 5 late-assignment, 4 dedupe, 2 inspection | Native Stop, D05/D06 and inspection evidence |
+| `goal_run.started` | 8 projector sequences | Native projector, crash and cutover evidence |
+| `goal_run.cancelled` | 7 projector sequences | Native projector, crash and cutover evidence |
+| `goal_run.certified` | 6 projector sequences | ATS-057's coordinator identity, append, commit and release cases for the v7/prepare.v2 edition, and consumer P4-P8 cases |
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/Goal_Runtime_System.md#GRS-079, ContractName:Plans/Goal_Runtime_System.md#GRS-080, ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/storage-plan.md#SP-421, ContractName:Plans/storage-plan.md#SP-422, ContractName:Plans/Decision_Log.md#DL-045
+
+### ATS-211 - Historical Goal reader oracles
+
+```yaml
+plan_unit_id: ATS-211
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04), expanded for DL-079 and E-CARDS-1 Card 3 A. Ten exact historical families have independent closed answers and Plans/goal_<family>_history_contract_fixtures.json, checked by python3 scripts/pm_goal_history_reader_fixtures.py: child_status, degraded, scheduled, progressed, replanned, stopped, verification_decided, evidence_captured, receipt_recorded and tool_check_recorded. Payload/schema-boundary cases, full disclosure/source/identity joins, original SP-420 receipt plus accepted-at-issue owner/checkpoint custody, original row/revision/runtime/reference predicates, lawful-retained with a retired writer/changed live state, forged/withdrawn source and both-scope new/equal-retry refusal are distinct test inputs. Current absence of demonstrated original admission keeps SP-271/277/280/431/432/433 unavailable and SP-300..303 unresolved with original_admission; an authentic conditional original-lawful pair is not invalidated by writer retirement. Strict full-match and UTC guards preserve pinned historical schema bytes. Every reference, even unused definitions, resolves eagerly; an injected dangling ref must fail. Guard-removal tables rerun the complete negative corpus, disabling actual predicates without changing expected results. Static owner/source-model coverage is not a native reader or historical-instance claim; full original helper/provenance integration remains a separate incomplete oracle obligation.
+gui_related: false
+gui_classification_reason: Names static oracles for historical event readers; no visual surface.
+split_recommended: false
+depends_on:
+- SP-271
+- SP-277
+- SP-280
+- SP-300
+- SP-301
+- SP-302
+- SP-303
+- SP-420
+- DL-045
+unblocks: []
+acceptance_criteria:
+- python3 scripts/pm_goal_history_reader_fixtures.py exits 0 with all ten exact-family cases and guard-removal sensitivity matching.
+- Missing original admission never verifies; authentic original-lawful conditional fixtures verify independently of current live state or writer retirement and claim no actual instance.
+- The EA-UND-0003, 0006, 0007, 0008, 0009, 0010, 0011, 0012, 0013 and 0015 Goal pairs stay historical conditional oracles.
+validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+risk_class: historical_goal_oracle_drift
+reasoning_tier: high
+context_scope: historical_goal_reader_oracles
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- scripts/pm_goal_history_reader_fixtures.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 7)
+preserved_exact_tokens:
+- goal_history_reader_outputs.schema.json
+- verified_historical
+negative_constraints:
+- No native reader, durability or historical-instance claim from a static pass.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-420, ContractName:Plans/storage-plan.md#SP-271, ContractName:Plans/storage-plan.md#SP-300, ContractName:Plans/Decision_Log.md#DL-045
+
+### ATS-212 - Current goal_run.stopped and goal_run.blocked oracles
+
+```yaml
+plan_unit_id: ATS-212
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It names the static oracles of goal_run.stopped and goal_run.blocked v3, each with its own section in Plans/goal_run_stop_block_oracle_fixtures.json, checked by python3 scripts/pm_goal_run_stop_block_oracles.py: v3 payload cases (including rejected v2-only members), the SP-426 and SP-427 identity vectors, the D-R21 and D-R16 source-status tables, the GRS-202 projection rule table, and the wiring expectations (cmd.orchestrator.pause and cmd.runtime.abort_run reach the stop writer; the block writer has no command). A pass shows static consistency only; the writers are not installable on any existing birth (EP-200), and every native obligation stays NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- EP-200
+- GRS-200
+- GRS-201
+- GRS-202
+- SP-426
+- SP-427
+- SP-428
+- CV-420
+- CV-421
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- python3 scripts/pm_goal_run_stop_block_oracles.py exits 0.
+- Each family has its own cases; no case of one family is evidence for the other.
+- EA-UND-0016-GOAL and EA-UND-0021-GOAL stay the v2 historical oracles.
+validation_surfaces:
+- Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json
+- Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json
+- Plans/goal_run_stop_block_oracle_fixtures.json
+- python3 scripts/pm_goal_run_stop_block_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_run_stop_block_oracle_drift
+reasoning_tier: high
+context_scope: goal_run_stop_block_oracles
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_run_stop_block_oracle_fixtures.json
+- scripts/pm_goal_run_stop_block_oracles.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 3)
+preserved_exact_tokens:
+- "goal_run_stop_block_oracle_fixtures.json"
+- "NOT_RUN"
+negative_constraints:
+- No native, installation or readiness claim from a static pass.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+The fixture lists, per family, what stays open: the fresh Workflow source edition that installs EP-200's writers, and native settlement, append and projector evidence.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Decision_Log.md#DL-080
+
+### ATS-213 - Project Goal blocked and ordinary completed successor oracles
+
+```yaml
+plan_unit_id: ATS-213
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Static v3 shape, identity, body CAS, four-state host/evidence/Stop and completion-barrier oracles;
+  original source and native activation remain incomplete.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-203
+- GRS-204
+- SP-429
+- SP-430
+- CV-422
+- CV-423
+unblocks: []
+acceptance_criteria:
+- Every static negative is isolated and removed-guard sensitivity is reported.
+- No exception route, paused/blocked completion or unavailable source is admitted.
+validation_surfaces:
+- Plans/goal_lifecycle_successor_fixtures.json
+- python3 scripts/pm_goal_lifecycle_successor_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: ats-213_event_authority
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+The independent exact families goal.blocked (GRS-203/SP-429/CV-422) and goal.completed (GRS-204/SP-430/CV-423) use Plans/goal_lifecycle_successor_fixtures.json and python3 scripts/pm_goal_lifecycle_successor_oracles.py. Each has its own cases for schema closure, full-string digest/time/ID boundaries, original identity, current body CAS and revision, metadata-only history preservation, authenticated host/evidence and Stop epochs, same semantic retry with Storage-only changes, replay_only refusal before retry, and writer/reader withdrawal. goal.blocked additionally tests its resolved blocked_reason_ref and active/blocked edges; goal.completed tests owning-caller evidence, current exact To-Do list and accepted skip disposition, admitted/bound/background/recovery work, internal owner predicate, host-only completion and unavailable approved-exception route. Whole-v2 remains a separate historical reader and never becomes current by fixture validation.
+
+No native execution is claimed. The physical original host source/pending-result edition and native method installation remain unbound in GRS-203/204 and SP-429/430; these oracle cells stay PARTIAL. A missing ordinary contract is not a new Jared product question. DL-081 exception-route integration is separately refused until Goal/Workflow/HITL owns its actual original authority.
+
+Round 1 oracle qualification (ATS-210/212): replay-only normal append and equal retry refuse before dedupe; semantic-body comparison is computed from CV-339 caller fields, with Storage-only sequence/observed/persisted changes returning the original receipt. Cancellation late assignment compares the complete key set and all immutable members. Stop/block projection tests verified original rows, original admitted source/installed writers/profile, authentic-birth descriptor binding, exact expected and successor revisions, new repeated evidence and matching Storage/checkpoint identities. Positive fresh-source fixtures are explicitly conditional and do not install a Workflow edition. goal.updated, goal_run.stopped and goal_run.blocked retain PARTIAL oracle cells alongside the already acknowledged producer/coordinator/current-inspection gaps.
+
+## DG-OWN-C original source and boundary contracts (2026-11-05)
+
+### ATS-1116 - Goal update approval and complete original route oracles
+
+```yaml
+plan_unit_id: ATS-1116
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.updated, U1-U7 and W1 define independent
+  original provider capture/decision resolution, direct Save and approved agent mutation, full source/body/first-event/terminal
+  recovery, current body/history versus retained event/input/audit/replay and every private helper/final fence.
+  The executable scripts/pm_goal_own_c_oracles.py has bounded new-provider and five-family custody cases and
+  lists every new guard/negative; full original inherited-root cases remain mandatory before claiming PASS.
+  No local guard-removal engine is added.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- ATS-210
+- CV-1130
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- python3 scripts/pm_goal_dg_u_oracles.py --output <result.json> --guards <guards.json>
+- Plans/goal_own_c_contracts/dg-u-corpus.v1.json
+- Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json
+- python3 scripts/pm_goal_own_c3_w12a_p2_oracles.py --captures <raw-evidence-directory> --output <result.json>
+- Plans/goal_own_c_contracts/w12a-corpus.v2.json
+- Plans/goal_own_c_contracts/w12a-successor-v3/protocol.md
+- python3 scripts/pm_goal_own_c3_w12a_oracles.py --captures <raw-evidence-directory> --output <result.json>
+- Plans/goal_own_c_contracts/w12a-corpus.v1.json
+- python3 scripts/pm_goal_own_c3_w12_successor_oracles.py
+- Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json
+- python3 scripts/pm_goal_own_c_source_oracles.py
+- Plans/goal_own_c_contracts/source-witness-inputs.json
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal update approval and complete original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. C3-W12a part 2 selects its newly authored current physical/source edition and exact remaining obligations through `Plans/goal_own_c_contracts/w12a-corpus.v2.json` and `Plans/goal_own_c_contracts/w12a-successor-v3/protocol.md`; the v1 corpus and its JSON selection remain history. A bounded whole-corpus assertion pass returns exit 2 while W1 closure is incomplete. No full W1 PASS follows from these captures. DG-U (2026-11-11) explicitly selects the newly authored TEST_ONLY composition `pm.goal.updated.dg_u.composition.v4` through `Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json` and its corpus `Plans/goal_own_c_contracts/dg-u-corpus.v1.json`, built on the shared TEST_ONLY owner adapters; `scripts/pm_goal_dg_u_oracles.py` runs the complete U1-U5 cases, the U3 child-process fault matrix and the per-boundary fence matrix, exits 0 only when every case passes and 1 on any failure or accepted negative, and writes the guard-to-negative inventory for the shared guard-isolation sweep. The earlier corpora and packages stay history. Native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### ATS-1117 - Goal cancellation migration and three original route oracles
+
+```yaml
+plan_unit_id: ATS-1117
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored owner contract under DL-045. For exactly goal.cancelled, M1-M9 and W2 define
+  complete old Stop/association/pending/effect/receipt mapping, atomic enrollment/recovery/withdrawal and separate
+  no-association, bound Plan and Workflow whole-value producer/current-inspection/immutable replay cases. Every
+  missing, foreign, forged, stale, contradictory, unknown or changed-after-helper source is refused for its
+  own defect; all dependent copies/hashes/keys stay coherent. Preserve earlier genuine effects. New adapter
+  evidence is bounded; full inherited-root instantiation stays required.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- ATS-210
+- CV-1131
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- python3 scripts/pm_goal_own_c3_w12b_oracles.py
+- Plans/goal_own_c_contracts/w12b-corpus-v1/coverage.json
+- python3 scripts/pm_goal_dg_ca_oracles.py
+- Plans/goal_own_c_contracts/dg-ca-corpus-v1/coverage.json
+- python3 scripts/pm_goal_dg_ca3_oracles.py
+- python3 scripts/pm_goal_own_c3_w12_successor_oracles.py
+- Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json
+- python3 scripts/pm_goal_own_c_source_oracles.py
+- Plans/goal_own_c_contracts/source-witness-inputs.json
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+- python3 scripts/pm_goal_dg_cb_oracles.py
+- Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation migration and three original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. C3-W12b adds explicitly bounded no-association migration/cancellation witnesses and a per-method remaining inventory. Its complete inherited W2 tuple coverage remains NOT_COMPLETE. DG-CA (2026-11-11) executes the C1 authenticated no-association route as a complete TEST_ONLY original path on the shared owner adapters, with child-process crash cuts of its Event protocol, and maps every inherited method row in `Plans/goal_own_c_contracts/dg-ca-corpus-v1/coverage.json`; on 2026-11-12 it adds the complete bound-Plan route (C2) and the SP-305/SP-310 assignment admission with a newly authored SP-337 reference successor for the over-cap assignment audit; DG-CA3 (2026-11-12) executes the Workflow route (C3: Workflow Stop, D05 aggregation derived from the effect owners' complete inventory, positive D06 with its own `goal_run.cancelled` or terminal preservation, `workflow_settled` settlement, late Storage assignment and the original Goal append, control and terminal) and the C4 SP-313 v2 private inspection with every lower source route independently callable, over a lane-local TEST_ONLY SP-278 index read source. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+
+DG-CB (2026-11-12) executes C5 and C6 of M1-M9 as complete TEST_ONLY original paths on the shared owner adapters: the six pre-enrollment owners' issued source images are captured under an all-writer exclusion and authenticated byte for byte, every derived join is checked field by field (unavailable for missing or unsupported data, `blocked_unresolved` for unknown or contradictory effects), and enrollment, recovery, replay, withdrawal and reinstall run as single test-owner Storage transactions with child-process crash cuts. Its per-method map is `Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json`. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### ATS-1118 - Three exact GoalRun producer and projector oracle suites
+
+```yaml
+plan_unit_id: ATS-1118
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored owner contract under DL-045. Separate W3 goal_run.started, W4 goal_run.cancelled
+  and W5 goal_run.certified suites adopt original Start, positive D06 and v7/prepare.v2 coordinator identity/append/commit/release
+  respectively. Each owns its full schema-realm tuple, actual original source and first receipt, global prefix,
+  full row/checkpoint/token/CAS/stage/cutover, retained/current and withdrawal tests. Certified includes every
+  ATS-057 CF-01..12 and passive P4-P8 obligation. The executable adapter reports bounded dispatch/custody/final-fence
+  coverage separately from full original native-root specimens; native remains NOT_RUN and no full oracle grade
+  follows from table-only checks.
+gui_related: false
+gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
+  changing visual presentation.
+depends_on:
+- ATS-210
+- ATS-057
+- EP-1130
+- EP-1131
+- EP-1132
+unblocks: []
+acceptance_criteria:
+- Independently acquire complete original owner sources before helpers and recheck complete sources and entire
+  candidate after the last helper at each own effect or disclosure.
+- Preserve genuine earlier effects, original receipts and immutable replay; missing or unknown authority stays
+  unavailable.
+- Use exact own-family source, scope, selected schema realm and existing retention; no registry admission,
+  native runtime or governance proof.
+validation_surfaces:
+- scripts/pm_goal_own_c_oracles.py
+- Plans/goal_own_c_contracts/protocol.md
+risk_class: forged_original_authority_or_lost_pending_effect
+reasoning_tier: high
+context_scope: dg_own_c_20261105
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_own_c_contracts/contracts.schema.json
+- Plans/goal_own_c_contracts/protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No new approval policy, cancellation lifecycle, retention/deletion policy or application goal_run.stopped
+  edition.
+- No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
+```
+
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Three exact GoalRun producer and projector oracle suites). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
+
+ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### ATS-1120 - W3 and W4 original-path reference successor qualification
+
+```yaml
+plan_unit_id: ATS-1120
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-045 and C3-W34 part-2 technical ruling. The started and cancelled contracts are separately authored and independently selected; no family borrows a sibling source. SP-311/SP-312 whole Event identity, original whole-value commitment and SP-337 payload references are joined to actual original custody. Every complete stored row, checkpoint and operation is measured at 16 KiB; oversized metadata and checkpoint contents use separately verified pack references. Original banks, schemas, URIs, hashes, Event selectors, producer editions and historical bytes remain unchanged. Rebuild into a fresh isolated successor generation with full original sources and atomic fenced row/checkpoint publication and cutover; never rewrite old rows in place. Pack durability, access and source lifetime are independently rechecked at every helper and final boundary. Native remains NOT_RUN. ATS-1120 requires complete original-path W3/W4 or an exact technical blocker, never closure from schema specimens.
+gui_related: false
+gui_classification_reason: Internal source custody and stored representation; no visual presentation.
+split_recommended: false
+depends_on: [ATS-1118]
+unblocks: []
+acceptance_criteria:
+- Full original value reconstruction and original source predicates apply before every effect or disclosure.
+- Old whole bytes remain unchanged and all new stored parts and operations respect 16 KiB.
+- An incomplete original-root corpus remains explicitly blocked; native execution is NOT_RUN.
+validation_surfaces:
+- Plans/goal_run_projection_reference_contracts/started.md
+- Plans/goal_run_projection_reference_contracts/started.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/started.physical.json
+- Plans/goal_run_projection_reference_contracts/started.resources.json
+- Plans/goal_run_projection_reference_contracts/started.methods.json
+- Plans/goal_run_projection_reference_contracts/cancelled.md
+- Plans/goal_run_projection_reference_contracts/cancelled.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/cancelled.physical.json
+- Plans/goal_run_projection_reference_contracts/cancelled.resources.json
+- Plans/goal_run_projection_reference_contracts/cancelled.methods.json
+- scripts/pm_goal_own_c3_w34_reference_oracles.py
+risk_class: projection_reference_or_original_source_substitution
+reasoning_tier: high
+context_scope: c3_w34_reference_successor
+implementation_surfaces:
+- Plans/goal_run_projection_reference_contracts/started.md
+- Plans/goal_run_projection_reference_contracts/started.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/started.physical.json
+- Plans/goal_run_projection_reference_contracts/started.resources.json
+- Plans/goal_run_projection_reference_contracts/started.methods.json
+- Plans/goal_run_projection_reference_contracts/cancelled.md
+- Plans/goal_run_projection_reference_contracts/cancelled.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/cancelled.physical.json
+- Plans/goal_run_projection_reference_contracts/cancelled.resources.json
+- Plans/goal_run_projection_reference_contracts/cancelled.methods.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-311
+- Plans/storage-plan.md#SP-312
+- Plans/storage-plan.md#SP-337
+negative_constraints:
+- No event registry change, admission, original-source hash restamping or new retention policy.
+- No in-place rewrite, source-lifetime extension, action authority or native proof from a projection.
+```
+
+
+### ATS-1121 - Certified reference successor and full original tuple acceptance
+
+```yaml
+plan_unit_id: ATS-1121
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'Newly authored acceptance contract for exactly goal_run.certified, selecting Plans/goal_run_projection_reference_contracts/certified.md
+  and scripts/pm_goal_own_c3_w5_projection_oracles.py for the derived representation prerequisite. Measure
+  and round-trip complete inline, event_reference, record_reference, inline checkpoint and referenced checkpoint
+  using the pinned original codec and isolated original banks. Reject wrong identity/commitment, physical key/dataset/Storage,
+  byte-size/media/hash/corrupt/trailing/missing/inaccessible/undurable/foreign pack and over-limit whole operations.
+  Export each new guard and one-defect negative for the shared isolation sweep; no local proof engine. Component
+  success does not close W5: ATS-057 CF-01..12 and P4..P8 still require complete original v7/prepare.v2 coordinator,
+  producer, native, Standard, D01, generic-prefix, private source/guard, row/checkpoint/CAS/crash/cutover/lifetime
+  tuples against this explicit successor. Retained lawful history and current disclosure stay separate. Keep
+  native execution NOT_RUN and whole-suite closure NOT_COMPLETE until the entire original-path corpus passes.'
+gui_related: false
+gui_classification_reason: Defines original source custody, derived physical representation and acceptance,
+  without visual presentation.
+depends_on:
+- ATS-057
+- GRS-1138
+- SP-1139
+- CV-1137
+unblocks: []
+acceptance_criteria:
+- Preserve all complete original source, scope, custody, phase and lifetime predicates through explicit successor
+  selection.
+- Measure complete stored values and operations; rebuild and atomically cut over without rewriting predecessors.
+- Report representation components separately from complete original semantic tuples and native NOT_RUN.
+validation_surfaces:
+- scripts/pm_goal_own_c3_w5_projection_oracles.py
+- Plans/goal_run_projection_reference_contracts/certified.md
+risk_class: original_source_custody_or_reference_representation_drift
+reasoning_tier: high
+context_scope: dg_own_c3_w5_part3_20261105
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/goal_run_projection_reference_contracts/certified.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/certified.methods.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/DG-OWN-C3.md#part-3-for-c3-w34-split-and-c3-w5
+negative_constraints:
+- No Event registry admission, changed original bank/hash/header, retention/deletion policy, native installation
+  or governance seal.
+- No full oracle PASS from schema, size or source-shaped component controls.
+```
+
+Amended 2026-11-11 (DG-CF1, DL-045; newly authored TEST_ONLY selection for exactly goal_run.certified CF-01, CF-02, CF-03, CF-04 and CF-05): these five groups select `scripts/pm_goal_dg_cf1_oracles.py`, its owners `scripts/pm_goal_dg_cf1_world.py` and its whole-root composer `scripts/pm_goal_dg_cf1_compose.py`, on the shared TEST_ONLY owner adapters of `Plans/goal_own_c_contracts/protocol.md` (Shared TEST_ONLY owner adapters), and adopt the adapter's CF-01 demonstration `scripts/pm_goal_test_demo_cf01.py` unchanged. One ordered original path runs per case and registered test owners perform every modeled issuance from their own execution; Storage assigns sequences, times and transaction identifiers. CF-04 reads the actual all_writers.v7 descriptor bytes, verifies every member's whole bytes and size, the producer_source.v2 subprofile digest, the v6 predecessor bytes, the acyclic digest DAG and the sorted-key compact descriptor digest, refuses merged or network-fallback realms and eagerly resolves every realm including the scoped historical Handoff route, before any birth; each method argument is validated in the exact realm `methods.json` declares. CF-05 derives the whole OriginalBirthArgument and the native birth first, the compact Birth selecting it second and the epoch-zero empty Control selecting Birth third, and coissues them in one Storage transaction under key absence with a final Goal, Stop and binding guard after every helper; the WorkflowBirthPublication result is validated whole. CF-03 executes Start, each required WorkNode's attempt lifecycle and progress, provisional success (optionally verifying), each with its D01 update, head and origin; the final decision owner evaluates G1-G8 and Document Packaging from the native store, the Standard owner captures the whole DurableStandardRead in its own transaction, the native owner acquires the whole OriginalCertificationSource and CurrentWorkflowSource, and prepare_certified returns the whole CertificationCandidateResult (provisional_success or verifying to certified, revision +1, Goal unchanged). CF-02 assignment, invocation, resolver, reference, causal and Storage partition/route owners issue their whole producer-realm roots; every structured original inside them is bytes the registered issuer holds, recorded by a Storage issuance transaction, and identity and producer preparation recheck live assignment, native, Goal and Standard sources after every returning helper and before return. CF-01 derives IdentityInput and IdentityResult by I0/I1 over those whole roots with an independent LP, K and E recomputation, then prepares WholeProducerSource (P9 equal to the issued identity), the whole 25-field producer, the v3 payload and the producer submission, appends through Storage and checks lost-acknowledgement and equal retries. Every negative starts from the valid path and changes one invariant with dependent copies coherent. These whole roots are the inputs the CF-06..CF-09 and P7 selection consumes at the DG merge. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+
+Amended 2026-11-11 (DG-CF2, DL-045; newly authored TEST_ONLY selection for exactly goal_run.certified CF-06, CF-07, CF-08, CF-09 and P7): these five groups select `scripts/pm_goal_dg_cf2_oracles.py`, its coordinator world `scripts/pm_goal_dg_cf2_world.py`, native participants `scripts/pm_goal_dg_cf2_native.py` and readers `scripts/pm_goal_dg_cf2_consumer.py`, on the shared TEST_ONLY owner adapters of `Plans/goal_own_c_contracts/protocol.md` (Shared TEST_ONLY owner adapters). Registered test owners perform every modeled issuance from their own execution; Storage assigns sequences, times, transaction identifiers and seeds; each compact coordinator record, Event, first custody, full-value result, durable group, Standard receipt and capture origin, native Standard result and origin, and D01 update, head, lineage origin and current pointer is validated against its whole root in its original isolated realm. CF-06 runs F5a pre-append admission against the actual complete pre-append Storage source, F5b frame then CURRENT/manifest barriers, F5c original first custody for every member of the actual durable group (including an unrelated scope's member) and F5d EventPhase plus the held return, with exact same-operation retry, Storage dedupe of an equal retry, altered-retry conflict, replay-only refusal and a real child-process interruption matrix (fresh-process classification, refused re-entry). CF-07 publishes the native and D01 afterimages and compact Commit/Origin/Control in one Storage transaction, keeps current certification fenced until readback and Release, and classifies every cut passively without completing it. CF-08 acquires `owner.storage.certified_event.read_guard.v1` at each participant entry and final boundary and applies the Q3 supplement at every declared participant-method occurrence. CF-09 keeps retained metadata, full Event inspection, historical and current reads separate. P7 requires the fresh coordinator read_current tuple, the released guard, exact equality with the complete current generic prefix and a final fence after the last helper. Every negative starts from the valid path and changes one invariant with dependent copies coherent. The whole native current-source roots (OriginalCertificationSource, the current member of PublishedWorkflow, CertificationCandidateResult), CurrentGoalArgument and WholeProducerSource stay inputs composed by their own owners (CF-02/CF-03, S1, the Goal binding owners); this selection does not author them. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+
+DG-CF3 amendment (2026-11-11, newly authored, TEST_ONLY): for exactly F0, CF-10, CF-11, CF-12, P4, P5, P6 and P8 this unit also selects `scripts/pm_goal_dg_cf3_oracles.py` with its owner world `scripts/pm_goal_dg_cf3_world.py`, combined consumer and lower Storage publisher `scripts/pm_goal_dg_cf3_projector.py` and backup/restore driver `scripts/pm_goal_dg_cf3_restore.py`, on the shared TEST_ONLY adapters and this explicit successor. Registered test owners issue the started, positive cancelled and certified originals (certified identity and producer through the adapter CF-01 owners, barrier first custody, joint native/D01/coordinator commit, later Release); Storage assigns sequences, times, seeds, transaction ids and first custody. The bounded reducer validates every frame, custody row and registered family of the whole global prefix before any off-run no-op, applies the started/cancelled/certified branch predicates against the exact stored originals of the same snapshot, halts before unsupported same-run rows, second terminals, Start after terminal and certification without a scanned Start or an authenticated expired-Start survivor gap. The lower publisher alone rederives every row form, key (K(s) unpadded base64url), anchor, frontier, coverage and lifecycle change with the Storage-issued transaction id and time, verifies every pack, reruns its final predicate after the last helper and commits row plus checkpoint in one Storage transaction; real child-process cuts and fresh-process re-entry cover stage, advance, pack ordering and cutover. RP-PROJECTION-3GEN is enforced with actual hold authority, and restore authenticates one coherent original-authority unit, enforces current tombstones and rebuilds derived state from retained source under BRS-031. Each negative changes one thing with coherent copies and refuses with its own code; guards and their negatives are exported for the shared isolation sweep. Native, D01, Standard and coordinator records here are compact TEST_ONLY owner records whose whole roots are composed by the sibling CF-02/CF-03/CF-07 owners at the DG merge. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+
+ContractRef: ContractName:Plans/goal_run_projection_reference_contracts/certified.md
+
+
+## W3A Forge event oracle planning, phase 1
+
+### ATS-1200 - Forge W3A oracle plan prepared contract
+
+```yaml
+plan_unit_id: ATS-1200
+unit_type: validation_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'Newly authored W3A criterion-12 oracle PLAN for the 35 separately defined Forge families
+  FGI-1200..FGI-1234, CV-1200..CV-1234 and SP-1200..SP-1234. reports/event-authority-20261105/W3A-oracle-plan.json
+  records each exact family, schema, positive bases and guard-level negative construction. Each negative has exactly
+  one primitive predicate defect; regenerate all unrelated derived keys, mirrors, digests, full-value receipt and
+  checkpoint/source commitments. Inventory every schema/prose assertion and each enforcement site independently;
+  repeated sites are duplicates only for the same field AND predicate. Do not merge distinct predicates because they
+  share a keyword, site or refusal. Phase 2 waits for reviewed NUMRULE and GUARDTOOL foundations, then adopts their
+  helpers and proves each guard with the shared guard-isolation tool. Include current-writer replay_only refusal;
+  exact CV-366 app key and project~ partition; SP-337 whole-value sizing; native source/receipt/storage-metadata
+  joins; historical originals after live-state changes; compatibility/recipe dispatch; all wrong types/number forms
+  and enforced timestamp profiles; failure result versus success status; complete global coverage, nine-field durable
+  token, cursor/CAS and withdrawal. No local number/timestamp or proof machinery is authorized by this plan. Native
+  execution NOT_RUN; criterion 12 PARTIAL, no fixture/test/depth/runtime PASS or readiness. Existing event-silent
+  Forge command expected_event_types=[] and handler_unavailable remain unchanged.
+
+  Phase 2 (W3-P2, 2026-11-13): scripts/pm_w3a_forge_events.py executes this plan for all 35 families in both scopes
+  on the append, settlement, retry, publication, slot, retained-read, replay and withdrawal paths, including the
+  current-writer projector_replay_only refusal, SP-286 first-receipt custody and SP-278 checkpoint generations,
+  tokens, cursor and CAS. It refuses only through generated Method B guard tables (scripts/pm_w3a_forge_table_*.py
+  from scripts/pm_w3a_forge_rows.py) that the gated tool 004bdedd63 checks in per-table runs
+  (scripts/pm-w3a-guard-tables.py). Every reachable row has a single-defect witness in every family; a row no
+  single-defect input can reach sits alone in its own table with its proof. Integer slots use the CV-1100/SP-1100
+  shared calls, timestamps the CV-1101 date_time predicate with the event_record or storage_utc_z owner profile, and
+  retained reads select their recipe only from the one SP-1101 receipt sealed for that exact original. Native
+  execution NOT_RUN; results and limits are in reports/event-authority-20261105/W3A.md (Wave 3 phase 2).'
+gui_related: false
+gui_classification_reason: Planning-document and test-oracle requirements, not GUI work.
+depends_on:
+- FGI-1200
+- SP-1200
+unblocks: []
+acceptance_criteria:
+- Each of the 35 families has its own positive/negative oracle plan and independently expanded primitive guard inventory
+  before phase-2 PASS.
+- Phase 1 adds no oracle implementation; required shared number/format and guard-isolation foundations must pass
+  review before phase 2.
+validation_surfaces:
+- reports/event-authority-20261105/W3A-oracle-plan.json
+risk_class: masked_negative_or_overclaimed_phase1_grade
+reasoning_tier: high
+context_scope: forge_wave3_phase1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1 and BRIEF-DRAFT.md standing checks 1..12/10a
+preserved_exact_tokens:
+- criterion 12 PARTIAL
+- projector_replay_only
+- SP-286
+- SP-278
+- CV-366
+- SP-337
+negative_constraints:
+- Do not write oracle code or a lane-specific proof tool in phase 1.
+```
+
+## W3B phase-1 Source Control oracle plans — 2026-11-05
+
+Phase 1 authored no oracle code; phase 2 (2026-11-13, ATS-1210..ATS-1219 below) implements the plans as executable synthetic oracles. The per-family plans below and `reports/event-authority-20261105/W3B-oracle-plan.json` define controls and single-defect negative constructions. Criterion 12 is PARTIAL for every row. Phase 2 requires the reviewed shared number/date-time helper and `scripts/pm_guard_isolation.py`, with predicate-by-predicate inventory of inherited schemas, exact duplicate-site proofs and Sol/Astra review. None of these plans proves native behavior or admission.
+
+### ATS-1210 — Source Control phase-1 oracle plans 1
+
+```yaml
+plan_unit_id: ATS-1210
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: This is an oracle plan only. Each family below has its own independent guard inventory, controls
+  and single-defect negatives; no sibling fixture is evidence. source_control.backend.detected uses SCS-1250, 133
+  explicitly enumerated local schema/semantic guard-plan rows in reports/event-authority-20261105/W3B-oracle-plan.json.
+  source_control.backend.selected uses SCS-1251, 129 explicitly enumerated local schema/semantic guard-plan rows
+  in reports/event-authority-20261105/W3B-oracle-plan.json. All inherited request/native/envelope/receipt/token
+  schema assertions must be expanded by the reviewed shared tool in phase 2. Raw-number and timestamp profiles come
+  from the shared foundation; no lane codec or timestamp routine. Negatives start from a valid case, repair dependent
+  copies/hashes/keys/post-state and leave exactly one predicate invalid. Only identical field/predicate guards form
+  duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
+  and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
+  and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
+gui_related: false
+gui_classification_reason: Plans verification of saved-history behavior.
+depends_on:
+- SCS-1250
+- SCS-1251
+unblocks: []
+acceptance_criteria:
+- Every listed family remains criterion-12 PARTIAL until phase-2 executable proof.
+- Single-defect negative per guard; inherited predicates expanded before coverage can close.
+validation_surfaces:
+- reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
+risk_class: masked_negative_or_unproved_contract
+reasoning_tier: high
+context_scope: w3b_phase_1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1, deck 2 item 9.a A
+preserved_exact_tokens:
+- source_control.backend.detected
+- source_control.backend.selected
+- PARTIAL
+- NOT_RUN
+```
+
+### ATS-1211 — Source Control phase-1 oracle plans 2
+
+```yaml
+plan_unit_id: ATS-1211
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: This is an oracle plan only. Each family below has its own independent guard inventory, controls
+  and single-defect negatives; no sibling fixture is evidence. source_control.checkpoint.created uses SCS-1252,
+  136 explicitly enumerated local schema/semantic guard-plan rows in reports/event-authority-20261105/W3B-oracle-plan.json.
+  source_control.checkpoint.restored uses SCS-1253, 140 explicitly enumerated local schema/semantic guard-plan rows
+  in reports/event-authority-20261105/W3B-oracle-plan.json. All inherited request/native/envelope/receipt/token
+  schema assertions must be expanded by the reviewed shared tool in phase 2. Raw-number and timestamp profiles come
+  from the shared foundation; no lane codec or timestamp routine. Negatives start from a valid case, repair dependent
+  copies/hashes/keys/post-state and leave exactly one predicate invalid. Only identical field/predicate guards form
+  duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
+  and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
+  and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
+gui_related: false
+gui_classification_reason: Plans verification of saved-history behavior.
+depends_on:
+- SCS-1252
+- SCS-1253
+unblocks: []
+acceptance_criteria:
+- Every listed family remains criterion-12 PARTIAL until phase-2 executable proof.
+- Single-defect negative per guard; inherited predicates expanded before coverage can close.
+validation_surfaces:
+- reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
+risk_class: masked_negative_or_unproved_contract
+reasoning_tier: high
+context_scope: w3b_phase_1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1, deck 2 item 9.a A
+preserved_exact_tokens:
+- source_control.checkpoint.created
+- source_control.checkpoint.restored
+- PARTIAL
+- NOT_RUN
+```
+
+### ATS-1212 — Source Control phase-1 oracle plans 3
+
+```yaml
+plan_unit_id: ATS-1212
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: This is an oracle plan only. Each family below has its own independent guard inventory, controls
+  and single-defect negatives; no sibling fixture is evidence. source_control.remote.fetch_completed uses SCS-1254,
+  140 explicitly enumerated local schema/semantic guard-plan rows in reports/event-authority-20261105/W3B-oracle-plan.json.
+  source_control.remote.fetch_started uses SCS-1255, 136 explicitly enumerated local schema/semantic guard-plan
+  rows in reports/event-authority-20261105/W3B-oracle-plan.json. All inherited request/native/envelope/receipt/token
+  schema assertions must be expanded by the reviewed shared tool in phase 2. Raw-number and timestamp profiles come
+  from the shared foundation; no lane codec or timestamp routine. Negatives start from a valid case, repair dependent
+  copies/hashes/keys/post-state and leave exactly one predicate invalid. Only identical field/predicate guards form
+  duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
+  and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
+  and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
+gui_related: false
+gui_classification_reason: Plans verification of saved-history behavior.
+depends_on:
+- SCS-1254
+- SCS-1255
+unblocks: []
+acceptance_criteria:
+- Every listed family remains criterion-12 PARTIAL until phase-2 executable proof.
+- Single-defect negative per guard; inherited predicates expanded before coverage can close.
+validation_surfaces:
+- reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
+risk_class: masked_negative_or_unproved_contract
+reasoning_tier: high
+context_scope: w3b_phase_1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1, deck 2 item 9.a A
+preserved_exact_tokens:
+- source_control.remote.fetch_completed
+- source_control.remote.fetch_started
+- PARTIAL
+- NOT_RUN
+```
+
+### ATS-1213 — Source Control phase-1 oracle plans 4
+
+```yaml
+plan_unit_id: ATS-1213
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: This is an oracle plan only. Each family below has its own independent guard inventory, controls
+  and single-defect negatives; no sibling fixture is evidence. source_control.remote.publish_completed uses SCS-1256,
+  141 explicitly enumerated local schema/semantic guard-plan rows in reports/event-authority-20261105/W3B-oracle-plan.json.
+  source_control.remote.publish_started uses SCS-1257, 137 explicitly enumerated local schema/semantic guard-plan
+  rows in reports/event-authority-20261105/W3B-oracle-plan.json. All inherited request/native/envelope/receipt/token
+  schema assertions must be expanded by the reviewed shared tool in phase 2. Raw-number and timestamp profiles come
+  from the shared foundation; no lane codec or timestamp routine. Negatives start from a valid case, repair dependent
+  copies/hashes/keys/post-state and leave exactly one predicate invalid. Only identical field/predicate guards form
+  duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
+  and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
+  and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
+gui_related: false
+gui_classification_reason: Plans verification of saved-history behavior.
+depends_on:
+- SCS-1256
+- SCS-1257
+unblocks: []
+acceptance_criteria:
+- Every listed family remains criterion-12 PARTIAL until phase-2 executable proof.
+- Single-defect negative per guard; inherited predicates expanded before coverage can close.
+validation_surfaces:
+- reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
+risk_class: masked_negative_or_unproved_contract
+reasoning_tier: high
+context_scope: w3b_phase_1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1, deck 2 item 9.a A
+preserved_exact_tokens:
+- source_control.remote.publish_completed
+- source_control.remote.publish_started
+- PARTIAL
+- NOT_RUN
+```
+
+### ATS-1214 — Source Control phase-1 oracle plans 5
+
+```yaml
+plan_unit_id: ATS-1214
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: This is an oracle plan only. Each family below has its own independent guard inventory, controls
+  and single-defect negatives; no sibling fixture is evidence. source_control.remote.sync_completed uses SCS-1258,
+  145 explicitly enumerated local schema/semantic guard-plan rows in reports/event-authority-20261105/W3B-oracle-plan.json.
+  source_control.remote.sync_started uses SCS-1259, 141 explicitly enumerated local schema/semantic guard-plan rows
+  in reports/event-authority-20261105/W3B-oracle-plan.json. All inherited request/native/envelope/receipt/token
+  schema assertions must be expanded by the reviewed shared tool in phase 2. Raw-number and timestamp profiles come
+  from the shared foundation; no lane codec or timestamp routine. Negatives start from a valid case, repair dependent
+  copies/hashes/keys/post-state and leave exactly one predicate invalid. Only identical field/predicate guards form
+  duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
+  and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
+  and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
+gui_related: false
+gui_classification_reason: Plans verification of saved-history behavior.
+depends_on:
+- SCS-1258
+- SCS-1259
+unblocks: []
+acceptance_criteria:
+- Every listed family remains criterion-12 PARTIAL until phase-2 executable proof.
+- Single-defect negative per guard; inherited predicates expanded before coverage can close.
+validation_surfaces:
+- reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
+risk_class: masked_negative_or_unproved_contract
+reasoning_tier: high
+context_scope: w3b_phase_1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1, deck 2 item 9.a A
+preserved_exact_tokens:
+- source_control.remote.sync_completed
+- source_control.remote.sync_started
+- PARTIAL
+- NOT_RUN
+```
+
+### ATS-1215 — Source Control phase-1 oracle plans 6
+
+```yaml
+plan_unit_id: ATS-1215
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: This is an oracle plan only. Each family below has its own independent guard inventory, controls
+  and single-defect negatives; no sibling fixture is evidence. source_control.repository.bound uses SCS-1260, 136
+  explicitly enumerated local schema/semantic guard-plan rows in reports/event-authority-20261105/W3B-oracle-plan.json.
+  source_control.repository.unbound uses SCS-1261, 136 explicitly enumerated local schema/semantic guard-plan rows
+  in reports/event-authority-20261105/W3B-oracle-plan.json. All inherited request/native/envelope/receipt/token
+  schema assertions must be expanded by the reviewed shared tool in phase 2. Raw-number and timestamp profiles come
+  from the shared foundation; no lane codec or timestamp routine. Negatives start from a valid case, repair dependent
+  copies/hashes/keys/post-state and leave exactly one predicate invalid. Only identical field/predicate guards form
+  duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
+  and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
+  and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
+gui_related: false
+gui_classification_reason: Plans verification of saved-history behavior.
+depends_on:
+- SCS-1260
+- SCS-1261
+unblocks: []
+acceptance_criteria:
+- Every listed family remains criterion-12 PARTIAL until phase-2 executable proof.
+- Single-defect negative per guard; inherited predicates expanded before coverage can close.
+validation_surfaces:
+- reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
+risk_class: masked_negative_or_unproved_contract
+reasoning_tier: high
+context_scope: w3b_phase_1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1, deck 2 item 9.a A
+preserved_exact_tokens:
+- source_control.repository.bound
+- source_control.repository.unbound
+- PARTIAL
+- NOT_RUN
+```
+
+### ATS-1216 — Source Control phase-1 oracle plans 7
+
+```yaml
+plan_unit_id: ATS-1216
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: This is an oracle plan only. Each family below has its own independent guard inventory, controls
+  and single-defect negatives; no sibling fixture is evidence. source_control.status.refreshed uses SCS-1262, 137
+  explicitly enumerated local schema/semantic guard-plan rows in reports/event-authority-20261105/W3B-oracle-plan.json.
+  source_control.workspace.created uses SCS-1263, 136 explicitly enumerated local schema/semantic guard-plan rows
+  in reports/event-authority-20261105/W3B-oracle-plan.json. All inherited request/native/envelope/receipt/token
+  schema assertions must be expanded by the reviewed shared tool in phase 2. Raw-number and timestamp profiles come
+  from the shared foundation; no lane codec or timestamp routine. Negatives start from a valid case, repair dependent
+  copies/hashes/keys/post-state and leave exactly one predicate invalid. Only identical field/predicate guards form
+  duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
+  and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
+  and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
+gui_related: false
+gui_classification_reason: Plans verification of saved-history behavior.
+depends_on:
+- SCS-1262
+- SCS-1263
+unblocks: []
+acceptance_criteria:
+- Every listed family remains criterion-12 PARTIAL until phase-2 executable proof.
+- Single-defect negative per guard; inherited predicates expanded before coverage can close.
+validation_surfaces:
+- reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
+risk_class: masked_negative_or_unproved_contract
+reasoning_tier: high
+context_scope: w3b_phase_1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1, deck 2 item 9.a A
+preserved_exact_tokens:
+- source_control.status.refreshed
+- source_control.workspace.created
+- PARTIAL
+- NOT_RUN
+```
+
+### ATS-1217 — Source Control phase-1 oracle plans 8
+
+```yaml
+plan_unit_id: ATS-1217
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: This is an oracle plan only. Each family below has its own independent guard inventory, controls
+  and single-defect negatives; no sibling fixture is evidence. source_control.workspace.opened uses SCS-1264, 136
+  explicitly enumerated local schema/semantic guard-plan rows in reports/event-authority-20261105/W3B-oracle-plan.json.
+  source_control.workspace.removed uses SCS-1265, 138 explicitly enumerated local schema/semantic guard-plan rows
+  in reports/event-authority-20261105/W3B-oracle-plan.json. All inherited request/native/envelope/receipt/token
+  schema assertions must be expanded by the reviewed shared tool in phase 2. Raw-number and timestamp profiles come
+  from the shared foundation; no lane codec or timestamp routine. Negatives start from a valid case, repair dependent
+  copies/hashes/keys/post-state and leave exactly one predicate invalid. Only identical field/predicate guards form
+  duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
+  and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
+  and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
+gui_related: false
+gui_classification_reason: Plans verification of saved-history behavior.
+depends_on:
+- SCS-1264
+- SCS-1265
+unblocks: []
+acceptance_criteria:
+- Every listed family remains criterion-12 PARTIAL until phase-2 executable proof.
+- Single-defect negative per guard; inherited predicates expanded before coverage can close.
+validation_surfaces:
+- reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
+risk_class: masked_negative_or_unproved_contract
+reasoning_tier: high
+context_scope: w3b_phase_1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1, deck 2 item 9.a A
+preserved_exact_tokens:
+- source_control.workspace.opened
+- source_control.workspace.removed
+- PARTIAL
+- NOT_RUN
+```
+
+### ATS-1218 — Source Control phase-1 oracle plans 9
+
+```yaml
+plan_unit_id: ATS-1218
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: This is an oracle plan only. Each family below has its own independent guard inventory, controls
+  and single-defect negatives; no sibling fixture is evidence. source_control.workspace.switched uses SCS-1266,
+  140 explicitly enumerated local schema/semantic guard-plan rows in reports/event-authority-20261105/W3B-oracle-plan.json.
+  source_control.writer_lease.granted uses SCS-1267, 145 explicitly enumerated local schema/semantic guard-plan
+  rows in reports/event-authority-20261105/W3B-oracle-plan.json. All inherited request/native/envelope/receipt/token
+  schema assertions must be expanded by the reviewed shared tool in phase 2. Raw-number and timestamp profiles come
+  from the shared foundation; no lane codec or timestamp routine. Negatives start from a valid case, repair dependent
+  copies/hashes/keys/post-state and leave exactly one predicate invalid. Only identical field/predicate guards form
+  duplicate sets; weakening one duplicate site leaves its peer, weakening all admits its negative. Compound rules
+  and shared enforcement sites are cut per predicate. Include current replay-only refusal, valid retained replay-only
+  and original-recipe history, 16 KiB wrapper/payload boundaries, malformed types/formats/LF, source authentication,
+  full original receipts, global checkpoint coverage and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
+gui_related: false
+gui_classification_reason: Plans verification of saved-history behavior.
+depends_on:
+- SCS-1266
+- SCS-1267
+unblocks: []
+acceptance_criteria:
+- Every listed family remains criterion-12 PARTIAL until phase-2 executable proof.
+- Single-defect negative per guard; inherited predicates expanded before coverage can close.
+validation_surfaces:
+- reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
+risk_class: masked_negative_or_unproved_contract
+reasoning_tier: high
+context_scope: w3b_phase_1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1, deck 2 item 9.a A
+preserved_exact_tokens:
+- source_control.workspace.switched
+- source_control.writer_lease.granted
+- PARTIAL
+- NOT_RUN
+```
+
+### ATS-1219 — Source Control phase-1 oracle plans 10
+
+```yaml
+plan_unit_id: ATS-1219
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: This is an oracle plan only. Each family below has its own independent guard inventory, controls
+  and single-defect negatives; no sibling fixture is evidence. source_control.writer_lease.lost uses SCS-1268, 147
+  explicitly enumerated local schema/semantic guard-plan rows in reports/event-authority-20261105/W3B-oracle-plan.json.
+  All inherited request/native/envelope/receipt/token schema assertions must be expanded by the reviewed shared
+  tool in phase 2. Raw-number and timestamp profiles come from the shared foundation; no lane codec or timestamp
+  routine. Negatives start from a valid case, repair dependent copies/hashes/keys/post-state and leave exactly one
+  predicate invalid. Only identical field/predicate guards form duplicate sets; weakening one duplicate site leaves
+  its peer, weakening all admits its negative. Compound rules and shared enforcement sites are cut per predicate.
+  Include current replay-only refusal, valid retained replay-only and original-recipe history, 16 KiB wrapper/payload
+  boundaries, malformed types/formats/LF, source authentication, full original receipts, global checkpoint coverage
+  and every effect counter. The plan itself executes nothing; phase 2 below implements it, and criterion 12 is graded in the lane report from that evidence. Native NOT_RUN. Registration, the pending source-fact retention decision and independent Sol/Astra review of phase 2 remain
+  separate. Phase 2 (2026-11-13) implements these plans as executable synthetic oracles
+  (scripts/pm_w3b_event_oracles.py) that refuse only through generated Method B guard tables
+  (scripts/pm_w3b_table_*.py) whose predicates are the refusal tests, with fixtures Plans/w3b_event_fixtures.json,
+  sealed SP-1101 custody Plans/w3b_original_custody.json and plan coverage
+  reports/event-authority-20261105/W3B-phase2-plan-coverage.json; the gated shared scripts/pm_guard_isolation.py
+  proves the rows through scripts/pm-w3b-guard-tables.py, and scripts/pm-w3b-mutation-proof.py records single-guard
+  mutations.
+gui_related: false
+gui_classification_reason: Plans verification of saved-history behavior.
+depends_on:
+- SCS-1268
+unblocks: []
+acceptance_criteria:
+- Every listed family remains criterion-12 PARTIAL until phase-2 executable proof.
+- Single-defect negative per guard; inherited predicates expanded before coverage can close.
+validation_surfaces:
+- reports/event-authority-20261105/W3B-oracle-plan.json
+- python3 scripts/pm_w3b_event_oracles.py
+- python3 scripts/pm-w3b-cases.py --check --coverage
+- python3 scripts/pm-w3b-table-generate.py --check
+- python3 scripts/pm-w3b-guard-tables.py --out <dir>
+- python3 scripts/pm-w3b-number-corpus.py
+- python3 scripts/pm-w3b-mutation-proof.py --scratch <dir>
+risk_class: masked_negative_or_unproved_contract
+reasoning_tier: high
+context_scope: w3b_phase_1_oracle_plan
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- WAVE3.md phase 1, deck 2 item 9.a A
+preserved_exact_tokens:
+- source_control.writer_lease.lost
+- PARTIAL
+- NOT_RUN
+```
+
+
+## W3C Event Authority phase-1 prepared contracts - 2026-11-05
+
+These new per-family units are proposals prepared without admission. Existing event and storage family registries remain unchanged.
+
+
+### ATS-1220 - testing.runtime_enabled_for_adapter prepared owner contract
+
+```yaml
+plan_unit_id: ATS-1220
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'NEWLY AUTHORED owner contract for `testing.runtime_enabled_for_adapter@1.0.0`, prepared without
+  admission under deck-2 item 9.a A (DL-450 reference; answer bytes and premise evidence in the W3C report).
+  The current exact-name search found only the registration requirement, no full event definition or alias.
+  This contract reuses sections 1-9 and the exact `adapter_readiness_source` record definition, not another
+  event family''s bindings. Saved fact: The Project-bound testing adapter changed from runtime-disabled to
+  runtime-enabled after all five existing owner prerequisites were proven.
+
+
+  Producer: `AutomatedTestingService.commit_adapter_readiness` under the existing TestCaptureService or Testing
+  owner; no dispatcher/handler exists by virtue of this binding. Scope is `project_only`. Capture adopts TCME-008''s
+  real No project Server/Host/Environment/thread/session context. Project source schemas stay exact. New application
+  source siblings are in Plans/test_capture_application_records.schema.json, with `.application.v1` identities,
+  null project_id and actual optional run binding; no old Project resource is relaxed. Readiness stays Project-only
+  as its existing project_id field requires. Missing native source capture or physical admission is unavailable,
+  never a synthetic all-true receipt.
+
+
+  The closed payload and all fields are defined by CV-1320; its source_record resolves the immutable actual
+  `adapter_readiness_source` record (the new application sibling only for application capture), except supplemental
+  bookmark/pause/stop/interruption/redaction/failure receipts which are original typed command/owner outcomes
+  and do not invent a second capture service. Before-record is required for a state/quality/target change and
+  null only where no predecessor exists. The payload''s explicit subject fields equal the dereferenced source/request,
+  and its permission ref equals the captured operation. The original request and prior snapshots are captured
+  before the effect; post-state and result snapshots are captured only when the genuine outcome is committed,
+  preserving the original owner currentness and writer-generation joins. Exact original schema IDs, record_kind,
+  subject, actor, target, Server, Host, Environment, source location and scope must agree field by field. Verify
+  hashes from actual immutable bytes, not a caller digest. A missing source record or late effect is not reconstructed
+  from focus, a newest artifact or user claims.
+
+
+  Family-specific predicates: (1) The exact adapter is configured and its current exact-target capability probe
+  is available. (2) The permission snapshot is current for the same Project/actor/adapter/target. (3) Every
+  required fixture in the owner-selected requirement set exists with its exact hash; the caller cannot shrink
+  that set. (4) A real adapter probe/invocation proves it can produce the complete current merged TestRunReceipt,
+  not a partial prior view. (5) The prior readiness state is runtime-disabled and the committed successor is
+  runtime-enabled; this is not PNC-019 certification.
+
+
+  Producer ordering: validate admission, physical schema, scope, permission, resource, currentness and authoritative
+  dedupe; CAS the immutable original request intent/operation row in SP-1320 before any effect.
+
+  The request captures the original adapter-readiness evaluation input, exact adapter/target, owner-selected
+  prerequisite refs and prior disabled state before enablement. Its selected closed request schema is distinct
+  from the completed payload.
+
+  Pending stores null outcome_record, producer_semantics, original_event and first_append; no video hash, failure
+  record or completed result is needed.
+
+  The existing owner performs the authorized action once. On genuine source-outcome commitment, CAS pending
+  -> outcome_committed, binding and freezing both outcome_record and the complete EventRecord producer-semantic
+  input from that outcome and the original request.
+
+  Outcome-backed snapshots are captured at this boundary, with original request/pre-state/permission custody
+  preserved; outcome fields are never predicted before the effect.
+
+  No cross-store transaction is asserted. Append only the frozen outcome_committed input with durability_class=barrier.
+  Resolve original full-value custody, CAS event_committed, then terminal before publication. Explicitly adopt
+  SP-286 and CV-339 strict stored v2, `storage.first_append_receipt.resolve_full_value.v1` as the full-value
+  resolver role (use the CV-339-defined actual interface name and shapes, never a local receipt format), and
+  SP-336/SP-347 full-flush commit-frame issuance. First original receipt/custody precedes terminal operation
+  publication and every dependent visible result. Pending crash reconciliation reads actual original action/source/receipt
+  evidence; it never repeats an uncertain external action. A missing or contradictory original fences retry
+  and exposes recovery/unavailable rather than minting completion.
+
+
+  Identity and replay: adopt Contracts_V0.md#EventRecord, CV-317, CV-339 and CV-366 by name. Capture one owner_operation_id
+  and one family effect component in the immutable intent. Event ID is `w3c@1:` + hex(exact UTF-8 original
+  storage_instance_id) + `:` + hex(exact UTF-8 owner_operation_id) + `:` + hex(exact UTF-8 event_type), globally
+  checked by Storage. Project idempotency key is `testing.runtime_enabled_for_adapter@1:` + hex(exact UTF-8
+  owner_operation_id); app key is exactly `application@1:{hex(server_id)}:{hex(owner_operation_id)}` using
+  CV-366''s actual Server and original effect-specific operation identity. Distinct effects reserve distinct
+  operation components before commitment. Scope partition remains app or Storage''s reversible project~ encoding.
+  Copy occurred_at_utc and producer_sequence_id from the immutable original owner input; all Storage-assigned
+  sequence/timestamps/receipt terms come only from authenticated Storage custody. Producer-semantic comparison
+  is exactly EventRecord''s caller-owned preimage and excludes Storage metadata. Shared owner number/time editions
+  govern; this lane defines no number, timestamp or physical-codec algorithm. Same identity/same digest returns
+  the original full value/result without a second capture, encode, bookmark, read audit, notification or event.
+  Different digest conflicts; dedupe_unavailable refuses. Current append/retry refuses projector_replay_only
+  as replay_only_not_appendable. Historical compatibility-only reads never pass through current-writer admission.
+
+
+  Retention: `RP-AUTHORITY-INDEFINITE`. This exact saved fact is approval/receipt authority or raw/derived
+  source lineage under Storage Case L-3, not the census analogy. This assignment retains only these ref-only
+  history facts and canonical original operation/receipt custody; media, privacy, Project deletion and source
+  policies remain their own owners. Canonical original operation/receipt authority uses RP-AUTHORITY-INDEFINITE;
+  the derived family uses RP-PROJECTION-3GEN and never holds expired source history alive. Unknown history
+  policy retains indefinitely/no-count-eviction as materially incomplete, without authorizing admission. Legal/recovery/user-preserve/live-source/backup/derived-lineage
+  holds remain unioned. Artifact deletion can restrict/unlink media under its existing owner without rewriting
+  a retained event or disclosing the linked body.
+
+
+  Custody: exact media bytes stay immutable under SP-343 and SP-337; metadata contains only bounded safe refs/IDs,
+  never media/base64, raw labels/content, credentials or protected-auth content. Restore preserves original
+  intent/source snapshots, raw/derived lineage, referenced packs and Storage receipt custody at one BRS-031
+  boundary; source/current writer mismatch fences mutation. Raw and derived identities prune independently;
+  missing originals, gaps, corrupt segments and failures remain truthful. Present access/deletion/restriction
+  and redaction checks run on every read/advance/replay/recovery path. Valid retained history survives a later
+  live-state or permission-generation change, while present content access is still checked.
+
+
+  Consumer/checkpoint: operating consumer `view.testing.testing_runtime_enabled_for_adapter@1.0.0` and `view.runtime_artifacts.testing_runtime_enabled_for_adapter@1.0.0`
+  read only `reader.testing.runtime_enabled_for_adapter@1.0.0`''s verified ref-only projection. Neither certifies
+  a test, native runtime or provenance beyond this exact saved result. Explicitly adopt SP-278 and DL-076''s
+  nine-field DurableGenericToken in SP-1320; use that family''s exact checkpoint key/schema, source-currentness
+  coverage, atomic projection/cursor predecessor CAS, retention/translation/rebuild and read-time identity
+  checks. A mismatch or lag returns unavailable/lag, not authoritative absence. Replay is passive and cannot
+  execute tools, encoders, commands, network calls, notifications, usage charges or new canonical events.
+
+
+  Compatibility and withdrawal: current proposed schema/reader version is 1.0.0 and no historical capture event
+  admission is claimed. Legacy aggregate capture IDs migrate only by TCME-006''s explicit exact record-kind
+  selection; no missing source is invented. Future readers dispatch by authenticated original schema/recipe
+  edition (SP-286/CV-339 custody), preserve valid retained originals under the write-time recipe and refuse
+  substituted editions or unknown selectors. Before withdrawal, disable writer admission under the original
+  generation, settle/fence pending operations, record the exact cutoff under existing governance, and prohibit
+  new effects or re-minting. Invalidate this reader and checkpoint generation; a reviewed compatible successor
+  must rebuild from retained exact source/custody before disclosure. Withdrawn or invalid originals are unavailable.
+  No new event records the withdrawal here. Criterion 12 is the per-family oracle plan in ATS-1221,
+  executable in phase 2 (scripts/pm_w3c_event_oracles.py over Plans/w3c_event_fixtures.json, every guard row
+  proved by the gated shared tool); native execution is NOT_RUN.
+
+
+  Phase-aware recovery: compare a retry with the complete original request and pre-effect inputs first, excluding
+  Storage-assigned metadata; do not require or compute a future event-payload digest. Same request while pending
+  returns pending/recovery and never repeats an uncertain action. A proved never-started action may run once
+  under the original admission and action fence. An action already performed but not yet bound reconciles only
+  its genuine original result, CAS-binds outcome_committed once, and never re-encodes or synthesizes success/failure.
+  Unknown or contradictory action evidence remains fenced. After binding, EventRecord caller-preimage equality
+  governs append retries; the request, identity, outcome and preimage remain immutable. A crash after append
+  uses original receipt resolution before publication. Competing attempts use complete-row/head CAS. For demonstration
+  created/failed, both potential family components refer to the same original encoder command/action fence;
+  reservation of a possible outcome is not permission for a second encoding. Only the genuinely committed selected
+  outcome can append its family event.
+
+
+  Empty-history checkpoint: use only the explicit {mode: empty} projection and paired null last-event cursors
+  after authenticated complete same-Storage coverage at the SP-278 token boundary. Missing, lagging or unverifiable
+  source coverage returns unavailable, never absence. Nonempty inline/external projections resolve the genuine
+  completed payload and match the last original EventRecord identity/sequence and full-value custody in this
+  scope. Verify that relation on every reader path; projection and cursor commit by predecessor CAS as one
+  transaction.'
+gui_related: false
+gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
+  existing projections.
+depends_on:
+- ATS-026
+- ATS-027
+- CV-1320
+- SP-1320
+unblocks: []
+acceptance_criteria:
+- The exact family uses its own newly authored prepared contract without event admission.
+- All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
+  is inferred.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
+validation_surfaces:
+- Plans/w3c_test_capture_event_contracts.schema.json
+- Plans/w3c_test_capture_event_oracle_plan.json
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody_and_false_evidence
+reasoning_tier: high
+context_scope: event_authority_wave3_w3c_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/w3c_test_capture_event_contracts.schema.json
+- Plans/w3c_test_capture_event_storage_rows.json
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Test_Capture_and_Motion_Evidence.md#8-observablework-receipts-events-and-projections
+- Plans/Automated_Testing_System.md#runtime-disabled-to-enabled-trigger
+- reports/event-authority-20261105/W3C.md
+preserved_exact_tokens:
+- testing.runtime_enabled_for_adapter
+negative_constraints:
+- Do not append an unregistered event, claim execution, or infer an undecided retention rule.
+```
+
+
+### ATS-1221 - W3C phase-1 per-family oracle plan
+
+```yaml
+plan_unit_id: ATS-1221
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'NEWLY AUTHORED per-family criterion-12 oracle PLAN for the exact 21 names in Plans/w3c_test_capture_event_oracle_plan.json.
+  Each named family owns an independent guard inventory, source-backed positives, one-defect negative plans,
+  passive retained-history positives, oversized-part custody cases and native NOT_RUN obligations. Phase 1
+  wrote it as a plan; phase 2 makes it executable (below).
+
+
+  After reviewed plans/ea-numrule-20261105 and plans/ea-guardtool-20261105 foundation adoption, phase 2 materializes
+  the corpus using their shared number/time helper and pm_guard_isolation. Expand each compound source or schema
+  guard into individual field/predicate assertions. A schema required/enum/const/pattern/length/type/additionalProperties/ref/format
+  constraint is a separate predicate; every active predicate gets positive and negative coverage. Construct
+  each negative from a valid complete source world with exactly one defect; recompute all dependent snapshots,
+  source copies, commitments, keys, CAS heads and receipt terms to preserve unrelated invariants. Removing
+  only its guard must make that case pass. A duplicate set is the same field and same predicate at several
+  sites: removing any single site still rejects for that predicate, removing all permits the case. Shared refusal
+  codes, enforcement sites or compound keywords never justify merging distinct predicates. Machine proof inventories
+  every enforcement site and reports uncovered guards and masked fixtures. No lane proof implementation is
+  authored in phase 1.
+
+
+  Check every standing BRIEF-DRAFT item: source/digest/identity verification; Storage-owned metadata; retained-read/current-write
+  separation and authenticated edition selection; exact types/string representations; eager ref resolution;
+  every stored-part size; custody on advance/retry/replay/recovery; one-defect isolation; honest grades; shared
+  numeric domains and timestamp grammars; present disclosure/withdrawal fences. No passing schema or planning
+  check demonstrates media, real adapter readiness, native execution, PNC-019 or release certification.
+
+
+  Phase-1 review round 1 plans a valid pending request without any output, real outcome commitment, action-before-outcome
+  crash reconciliation, outcome-before-append recovery, and receipt-before-publication recovery in each scope.
+  Pending request comparison is separate from the later frozen EventRecord producer preimage. Each missing
+  phase obligation, changed original request, premature publication, uncertain repeated action and altered
+  frozen outcome is a separate one-defect negative; preserve all peer copies and proofs. Phase 2 executes
+  each of these cases.
+
+
+  Phase-1 review round 1 also plans empty, nonempty inline and nonempty external checkpoints in each applicable
+  scope. Empty uses only {mode: empty} and paired null cursors with independently authenticated complete coverage.
+  Each cursor/projection shape mismatch, omitted source range, mismatched token identity and otherwise valid
+  foreign last-event body is a separate one-defect negative. Keep source worlds, hashes, copied fields and
+  keys coherent apart from that one relation; isolate cursor predicates separately and never weaken the entire
+  conditional. Phase 2 executes read/advance/replay/rebuild coverage verification.
+
+
+  Phase 2 (2026-11-13, executable synthetic oracles). scripts/pm_w3c_event_oracles.py is the complete
+  checker for the 21 families over six paths: install (eager schema reference closure through the unchanged
+  Corpus registry), append (current writer, CV-339/SP-286 first-receipt custody, publication order), retry
+  (phase-aware request and frozen-preimage comparison, original result), history (SP-1101 retained read),
+  operation (each canonical operation CAS step: pending, outcome binding with the uncertain-action fence,
+  commit custody, terminal, withdrawal, restore) and checkpoint (SP-278 token, empty and nonempty coverage,
+  cursors, last-event joins, predecessor CAS, RP-PROJECTION-3GEN generations). Every refusal is one named
+  guard row with one predicate and one code in a generated table of at most eight rows
+  (scripts/pm_w3c_table_*.py, generator scripts/pm-w3c-table-generate.py); the row compares the raw facts
+  the checker observed for it, and the gated shared tool proves each row (scripts/pm-w3c-guard-tables.py).
+  Validation keeps every owner schema keyword except the operation phase oneOf and the checkpoint cursor
+  if/then pairs, which named rows restore predicate by predicate; format uuid and pattern-only fields
+  without a line guard have explicit full-match rows. Plans/w3c_event_fixtures.json (builder
+  scripts/pm-w3c-cases.py) holds complete positives per family, scope edition and path, and one-defect
+  negatives each built from a named positive by changing one owner value at the stage that owns it, so every
+  copy, hash, key and commitment follows it. Numbers use the shared NUMRULE calls (current_integer,
+  storage_uint64, producer_semantic_bytes/_digest, full_value_commitment, storage_value_bytes,
+  verify_payload_bytes, RetainedDispatcher); timestamps use the shared pm_event_datetime checks with each
+  owner profile. A retained read selects its recipe only from the sealed receipt for that exact original in
+  Plans/w3c_original_custody.json and the scenario''s Store, and the checker compares the sealed store before
+  and after every read. Native execution stays NOT_RUN and membership ABSENT.'
+gui_related: false
+gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume
+  existing projections.
+depends_on:
+- ATS-1220
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- The exact family uses its own newly authored prepared contract without event admission.
+- All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof
+  is inferred.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
+validation_surfaces:
+- Plans/w3c_test_capture_event_contracts.schema.json
+- Plans/w3c_test_capture_event_oracle_plan.json
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody_and_false_evidence
+reasoning_tier: high
+context_scope: event_authority_wave3_w3c_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/w3c_test_capture_event_contracts.schema.json
+- Plans/w3c_test_capture_event_storage_rows.json
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Test_Capture_and_Motion_Evidence.md#8-observablework-receipts-events-and-projections
+- Plans/Automated_Testing_System.md#runtime-disabled-to-enabled-trigger
+- reports/event-authority-20261105/W3C.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not append an unregistered event, claim execution, or infer an undecided retention rule.
+```
+
+
+### ATS-1222 - testing.receipt.recorded owner investigation boundary
+
+```yaml
+plan_unit_id: ATS-1222
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'The W3C owner investigation finds testing.receipt.recorded only in Plans/.implementation_readiness/non_executable_closure_evidence.json#/event_payload_contract_registry,
+  with source scope spec_schema_validator_fixture_only_no_runtime_artifact_emission. Its payload points to the existing
+  test_run_receipt, while ATS-026 owns the complete merged TestRunReceipt and ATS-025 prohibits quarantine/release
+  from editing old receipts. No current Testing/Storage semantic owner sentence declares this dotted spelling an
+  alias, delivery-only label, or separately required EventRecord. The readiness row''s event_type key alone proves
+  none of those outcomes. No contract, alias/exclusion application, event admission or new saved-history type is
+  authored for it here. Keep existing TestRunReceipt persistence, commands and projections intact. Owner classification
+  remains OPEN pending exact authority: Does testing.receipt.recorded name only the existing saved TestRunReceipt
+  result/notification, an alias of an admitted family (which exact one), or an additional durable EventRecord? A
+  demonstrated new-history requirement or conflicting-owner choice goes to Jared; mere missing proof is not an exclusion.'
+gui_related: false
+gui_classification_reason: Owns persisted event/receipt and validation semantics; visible surfaces consume existing
+  projections.
+depends_on:
+- ATS-026
+- ATS-025
+- CV-317
+unblocks: []
+acceptance_criteria:
+- The exact family uses its own newly authored prepared contract without event admission.
+- All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof is inferred.
+- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
+  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
+validation_surfaces:
+- Plans/w3c_test_capture_event_contracts.schema.json
+- Plans/w3c_test_capture_event_oracle_plan.json
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody_and_false_evidence
+reasoning_tier: high
+context_scope: event_authority_wave3_w3c_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/w3c_test_capture_event_contracts.schema.json
+- Plans/w3c_test_capture_event_storage_rows.json
+node_compile_hint:
+  mode: prepared_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Test_Capture_and_Motion_Evidence.md#8-observablework-receipts-events-and-projections
+- Plans/Automated_Testing_System.md#runtime-disabled-to-enabled-trigger
+- reports/event-authority-20261105/W3C.md
+preserved_exact_tokens: []
+negative_constraints:
+- Do not append an unregistered event, claim execution, or infer an undecided retention rule.
+```
+
+## W3E event authority drafts - phase 1 (2026-11-05)
+
+Each unit below is a newly authored per-family contract. All current writer gates remain closed pending separate admission.
+
+### ATS-1240 - W3E phase-1 per-family oracle plan
+
+```yaml
+plan_unit_id: ATS-1240
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored oracle plan for the exact twenty W3E families listed in Plans/event_authority_w3e_oracle_plan.json.
+  Each family has its own guard inventory, positives, single-defect negatives, source schema, owner method and retention
+  question. prepared without admission; membership ABSENT. Retention is decided per family by DL-453, DL-454 and DL-455 (bound in the CV, SP and owner unit of each family); phase 2 (2026-11-13) executes this plan as scripts/pm_w3e_event_oracles.py.
+  This plan is not executed oracle code. Eagerly resolve every payload/source/token reference, including unvisited
+  branches; exact type/full-string and all encoded-part 16384-byte checks remain required. SP-278 actual all-partition
+  read proof and SP-286/CV-339 original first/full-value receipt proof are independent prerequisites; SP-337 supplies
+  large-body custody. Existing owner suites validate inherited shape only and do not discharge these family oracles.
+  Native execution NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: ats-1240_w3e_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- DL-455
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
+### ATS-1241 - W3E phase-2 guard isolation and shared profile gate
+
+```yaml
+plan_unit_id: ATS-1241
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'For every W3E family use its own plan in Plans/event_authority_w3e_oracle_plan.json, prepared without
+  admission. Phase 2 begins only after the lead rebases onto the reviewed shared number/timestamp and scripts/pm_guard_isolation.py
+  foundation. Invent no number/timestamp or proof implementation here. One negative violates one field/predicate;
+  keep hashes, copies, keys and post-state coherent except the targeted join. Cut a compound guard per predicate.
+  Duplicates mean the same field and same predicate at several sites: removing each site alone still rejects for
+  that exact defect, removing all makes it pass. Shared refusal code, shared allOf/if/runtime site or several related
+  fields never combines invariants. Cover every real schema and semantic guard and every actual enforcement site,
+  history/current-writer separation, authentic old recipe, storage uint64 domain, RFC8785 qualification, SP-236
+  physical numeric types and owner timestamp profiles. No oracle/proof PASS until executed coverage and shared-tool proof exist. Phase 2 (2026-11-13) adopts the gated NUMRULE head 58c2816ff3 and guard tool 004bdedd63: the complete checker scripts/pm_w3e_event_oracles.py, its generated tables scripts/pm_w3e_table_*.py, the tool runner scripts/pm-w3e-guard-proof.py and the mutation runner scripts/pm-w3e-mutations.py, with SP-286/CV-339 first-receipt custody checked on every append; retention is decided by DL-453, DL-454 and DL-455; adopt SP-278, SP-286 and SP-337
+  unchanged.'
+gui_related: false
+gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
+  only.
+depends_on:
+- ATS-1240
+- CV-317
+- CV-339
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
+- Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
+validation_surfaces:
+- Plans/event_authority_w3e_oracle_plan.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_identity_custody_or_replay
+reasoning_tier: high
+context_scope: ats-1241_w3e_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- source_ref:decision:E-CARDS-2:9.a:A:2026-11-05
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/wave3/W3E-rows.jsonl
+preserved_exact_tokens:
+- prepared without admission
+- DL-454
+- SP-278
+- SP-286
+- CV-339
+- SP-337
+negative_constraints:
+- No admission, registry family append, Decision Log entry or native execution claim.
+- No independent number/timestamp implementation or retention decision.
+```
+
+
+## Event Authority W3F Phase 1 — Prepared Without Admission (2026-11-05)
+
+Newly authored owner contracts under deck 2 item 9.a A. This section adds no admitted family and enables no native writer. The per-family base search is recorded in `reports/event-authority-20261105/W3F-search.json`. Criterion 12 remains PARTIAL until the shared number/time rules and guard-isolation tool pass review and phase 2 runs.
+
+### ATS-1250 - W3F Per-Family Oracle Plan And Phase Boundary
+
+```yaml
+plan_unit_id: ATS-1250
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  The exact fifteen prepared W3F families each own a separate predicate inventory in Plans/w3f_event_oracle_plan.json. The plan itself is not fixtures or executable evidence; phase 2 below implements it. Every record names its positive baseline, one-defect negative construction and future shared proof obligation. Criterion 1 stays ABSENT; criterion 12 is graded in the lane report from the executable phase-2 evidence below. The four session-prompt retention cells are bound by DL-456 and the question-budget cell by DL-457 (CV-1459 and CV-1461..CV-1464 paragraph 7). Planning question-budget now has its own CV-1459/SP-1459 contract and oracle plan: the existing saved-result equivalence was not proved, so the exclusion is reversed. The three readiness spellings remain investigation questions; no new contracts or oracles admit them.
+
+  Phase 2 starts only after the lead rebases onto both reviewed shared foundations. Adopt the shared number/time helper for every identity/preimage/schema/ref/physical-byte route, including uint64 above 2^53, signed zero and historical authenticated recipe dispatch. Use shared pm_guard_isolation.py for each field/predicate/site inventory, including all branches and outputs. Schema/runtime duplicate sites prove the same field and predicate; one site removed still rejects, all exact duplicates removed accepts. Sharing a refusal code or allOf does not merge predicates. Every compound rule is cut per field/clause with peers enabled. Recompute dependencies for each single-defect fixture and compare independently captured actual originals at the last pure guard. Missing guards, unisolated negatives, unresolved refs, failure oracles accepting exit zero and misleading PASS grades block review. No mutation of checker machinery, fixtures or phase-2 code is performed in phase 1. Static structural checks do not establish contract execution, native behavior, event admission, readiness, governance or PNC-019 certification.
+
+  Phase 2 (2026-11-13). `scripts/pm_w3f_event_oracles.py` is the executable synthetic checker for all fifteen families over the append, retry, retained-history, schema-install and SP-1450 checkpoint paths. Every refusal is one named single-predicate row of a generated Method B table (`scripts/pm_w3f_table_*.py`, generator `scripts/pm-w3f-table-generate.py`); derivation computes one boolean per row and decides nothing. Rows no input can refuse first stay alone in their own `entailed_*` table with the proof naming the rows that refuse first. `Plans/w3f_event_fixtures.json` (builder `scripts/pm-w3f-cases.py`, `--check`) holds complete positives and one-defect negatives, each refused first at exactly its row; `reports/event-authority-20261105/W3F-phase2-plan-coverage.json` maps every plan entry to its witnesses. Check 11 is proved by the gated shared `scripts/pm_guard_isolation.py` through `scripts/pm-w3f-guard-tables.py`. Retained reads resolve once through the shared RetainedDispatcher from Storage's sealed per-original receipt (`Plans/w3f_original_custody.json`); a missing, ambiguous or other-original receipt never selects a recipe and no receipt is created on read. `scripts/pm-w3f-number-corpus.py` runs the shared number corpus and the 4,400-digit integer routes through the complete checker. Native execution and admission stay NOT_RUN.
+gui_related: false
+gui_classification_reason: Event storage, identity and custody contract; visual presentation belongs to existing owners.
+depends_on:
+- CV-1450
+- SP-1450
+unblocks: []
+acceptance_criteria:
+- Only the exact named family/version and original owner facts can satisfy this contract.
+- Prepared without admission; no native append, runtime enablement or readiness claim.
+- Phase 2 must implement the per-guard oracle plan and shared isolation proof before review.
+validation_surfaces:
+- Plans/w3f_event_oracle_plan.json
+- python3 scripts/pm_w3f_event_oracles.py
+- python3 scripts/pm-w3f-cases.py --check
+- python3 scripts/pm-w3f-table-generate.py --check
+- python3 scripts/pm-w3f-guard-tables.py --out <dir>
+- python3 scripts/pm-w3f-number-corpus.py
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_original_custody_and_scope
+reasoning_tier: high
+context_scope: event_authority_w3f_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3F-search.json
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-2.as-presented-6db25be3.md#9.a
+preserved_exact_tokens: []
+negative_constraints:
+- No registry family append, admission record, Decision Log change, governance reseal or native execution.
+- Never infer a binding, policy, source authority or migration from a sibling family.
+```
+
+
+## W3G phase 1 per-family oracle plans (2026-11-05)
+
+### ATS-1260 - W3G APR per-family oracle plans
+
+```yaml
+plan_unit_id: ATS-1260
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored phase-1 oracle plans for assistant_plan.build_started, assistant_plan.cancelled,
+  assistant_plan.completed, assistant_plan.created, assistant_plan.exported, assistant_plan.version_created, assistant_plan.wizard_handoff_created.
+  Each exact family has its own positives and predicate-specific single-defect negatives in Plans/event_authority_w3g/oracle_plan.json;
+  no sibling fixture, common refusal code or compound-rule cut proves another predicate. Phase 2 starts only after
+  the reviewed NUMRULE and GUARDTOOL foundation rebase, uses the shared numeric/date-time helper and scripts/pm_guard_isolation.py,
+  resolves every schema ref eagerly and requires every failure oracle to fail with a nonzero exit. Prove each guard
+  and each same-predicate duplicate site independently; retain all other predicates. Historical originals use authenticated
+  original recipe/edition and never a current-writer check. Phase 2 (2026-11-13) implements these plans as the
+  complete checker scripts/pm_w3g_events.py on Method B guard tables scripts/pm_w3g_table_*.py (generated by
+  scripts/pm-w3g-table-generate.py); scripts/pm-w3g-event-contracts.py runs every positive and single-defect negative
+  and requires each first refusal at its exact row, and scripts/pm-w3g-guard-tables.py proves the rows with the gated
+  scripts/pm_guard_isolation.py. Native owner facts are synthetic; no native result is claimed.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- APR-1500
+- APR-1501
+- APR-1502
+- APR-1503
+- APR-1504
+- APR-1505
+- APR-1506
+unblocks: []
+acceptance_criteria:
+- Every normative predicate has a planned positive and one-defect negative, including each allowed branch.
+- Phase-2 fixtures exercise exact types, bytes, original custody, historical reads, current access, SP-337, receipt
+  and checkpoint source identity.
+- No guard-isolation PASS or native execution is reported in phase 1; phase 2 credits exactly what the gated tool reports.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-w3g-event-contracts.py
+- python3 scripts/pm-w3g-guard-tables.py --out <dir>
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- assistant_plan.build_started
+- assistant_plan.cancelled
+- assistant_plan.completed
+- assistant_plan.created
+- assistant_plan.exported
+- assistant_plan.version_created
+- assistant_plan.wizard_handoff_created
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+### ATS-1261 - W3G ERS per-family oracle plans
+
+```yaml
+plan_unit_id: ATS-1261
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored phase-1 oracle plans for external_research.budget_denied, external_research.finding_classified,
+  external_research.job_terminal, external_research.packet_delivered, external_research.topic_started. Each exact
+  family has its own positives and predicate-specific single-defect negatives in Plans/event_authority_w3g/oracle_plan.json;
+  no sibling fixture, common refusal code or compound-rule cut proves another predicate. Phase 2 starts only after
+  the reviewed NUMRULE and GUARDTOOL foundation rebase, uses the shared numeric/date-time helper and scripts/pm_guard_isolation.py,
+  resolves every schema ref eagerly and requires every failure oracle to fail with a nonzero exit. Prove each guard
+  and each same-predicate duplicate site independently; retain all other predicates. Historical originals use authenticated
+  original recipe/edition and never a current-writer check. Phase 2 (2026-11-13) implements these plans as the
+  complete checker scripts/pm_w3g_events.py on Method B guard tables scripts/pm_w3g_table_*.py (generated by
+  scripts/pm-w3g-table-generate.py); scripts/pm-w3g-event-contracts.py runs every positive and single-defect negative
+  and requires each first refusal at its exact row, and scripts/pm-w3g-guard-tables.py proves the rows with the gated
+  scripts/pm_guard_isolation.py. Native owner facts are synthetic; no native result is claimed.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- ERS-1507
+- ERS-1508
+- ERS-1509
+- ERS-1510
+- ERS-1511
+unblocks: []
+acceptance_criteria:
+- Every normative predicate has a planned positive and one-defect negative, including each allowed branch.
+- Phase-2 fixtures exercise exact types, bytes, original custody, historical reads, current access, SP-337, receipt
+  and checkpoint source identity.
+- No guard-isolation PASS or native execution is reported in phase 1; phase 2 credits exactly what the gated tool reports.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-w3g-event-contracts.py
+- python3 scripts/pm-w3g-guard-tables.py --out <dir>
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- external_research.budget_denied
+- external_research.finding_classified
+- external_research.job_terminal
+- external_research.packet_delivered
+- external_research.topic_started
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+### ATS-1262 - W3G GRS per-family oracle plans
+
+```yaml
+plan_unit_id: ATS-1262
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored phase-1 oracle plans for goal.paused, goal.resumed. Each exact family has its own
+  positives and predicate-specific single-defect negatives in Plans/event_authority_w3g/oracle_plan.json; no sibling
+  fixture, common refusal code or compound-rule cut proves another predicate. Phase 2 starts only after the reviewed
+  NUMRULE and GUARDTOOL foundation rebase, uses the shared numeric/date-time helper and scripts/pm_guard_isolation.py,
+  resolves every schema ref eagerly and requires every failure oracle to fail with a nonzero exit. Prove each guard
+  and each same-predicate duplicate site independently; retain all other predicates. Historical originals use authenticated
+  original recipe/edition and never a current-writer check. Phase 2 (2026-11-13) implements these plans as the
+  complete checker scripts/pm_w3g_events.py on Method B guard tables scripts/pm_w3g_table_*.py (generated by
+  scripts/pm-w3g-table-generate.py); scripts/pm-w3g-event-contracts.py runs every positive and single-defect negative
+  and requires each first refusal at its exact row, and scripts/pm-w3g-guard-tables.py proves the rows with the gated
+  scripts/pm_guard_isolation.py. Native owner facts are synthetic; no native result is claimed.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- GRS-1512
+- GRS-1513
+unblocks: []
+acceptance_criteria:
+- Every normative predicate has a planned positive and one-defect negative, including each allowed branch.
+- Phase-2 fixtures exercise exact types, bytes, original custody, historical reads, current access, SP-337, receipt
+  and checkpoint source identity.
+- No guard-isolation PASS or native execution is reported in phase 1; phase 2 credits exactly what the gated tool reports.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-w3g-event-contracts.py
+- python3 scripts/pm-w3g-guard-tables.py --out <dir>
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- goal.paused
+- goal.resumed
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+### ATS-1263 - W3G WN per-family oracle plans
+
+```yaml
+plan_unit_id: ATS-1263
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored phase-1 oracle plans for notebook.checkpoint_committed, notebook.checkpoint_failed,
+  notebook.entry_committed, notebook.entry_superseded, notebook.transition_state_changed. Each exact family has
+  its own positives and predicate-specific single-defect negatives in Plans/event_authority_w3g/oracle_plan.json;
+  no sibling fixture, common refusal code or compound-rule cut proves another predicate. Phase 2 starts only after
+  the reviewed NUMRULE and GUARDTOOL foundation rebase, uses the shared numeric/date-time helper and scripts/pm_guard_isolation.py,
+  resolves every schema ref eagerly and requires every failure oracle to fail with a nonzero exit. Prove each guard
+  and each same-predicate duplicate site independently; retain all other predicates. Historical originals use authenticated
+  original recipe/edition and never a current-writer check. Phase 2 (2026-11-13) implements these plans as the
+  complete checker scripts/pm_w3g_events.py on Method B guard tables scripts/pm_w3g_table_*.py (generated by
+  scripts/pm-w3g-table-generate.py); scripts/pm-w3g-event-contracts.py runs every positive and single-defect negative
+  and requires each first refusal at its exact row, and scripts/pm-w3g-guard-tables.py proves the rows with the gated
+  scripts/pm_guard_isolation.py. Native owner facts are synthetic; no native result is claimed.
+gui_related: false
+gui_classification_reason: Defines event data, custody and passive reads; existing visual owners retain presentation.
+depends_on:
+- WN-1514
+- WN-1515
+- WN-1516
+- WN-1517
+- WN-1518
+unblocks: []
+acceptance_criteria:
+- Every normative predicate has a planned positive and one-defect negative, including each allowed branch.
+- Phase-2 fixtures exercise exact types, bytes, original custody, historical reads, current access, SP-337, receipt
+  and checkpoint source identity.
+- No guard-isolation PASS or native execution is reported in phase 1; phase 2 credits exactly what the gated tool reports.
+validation_surfaces:
+- Plans/event_authority_w3g/oracle_plan.json
+- python3 scripts/pm-w3g-event-contracts.py
+- python3 scripts/pm-w3g-guard-tables.py --out <dir>
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_original_authority_or_replay_loss
+reasoning_tier: high
+context_scope: event_authority_w3g_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/event_authority_w3g
+node_compile_hint:
+  mode: oracle_plan_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- W3G phase 1; deck-2 answer 9.a A (DL-450), 2026-11-05
+- reports/event-authority-20261105/W3G.md
+preserved_exact_tokens:
+- notebook.checkpoint_committed
+- notebook.checkpoint_failed
+- notebook.entry_committed
+- notebook.entry_superseded
+- notebook.transition_state_changed
+negative_constraints:
+- No admission, current writer enablement, registry family append, Decision Log entry or governance seal.
+- No native proof, WorkNode, NodeSeed, new product behavior or chosen pending retention rule.
+```
+
+## ATS-1270 — W3H per-family phase-1 oracle plans (newly authored, no execution)
+
+```yaml
+plan_unit_id: ATS-1270
+unit_type: interface_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of the 32 exact W3H families has a separate oracle plan in reports/event-authority-20261105/W3H-oracle-plan.json.
+  Every positive names its original owner fact; each negative isolates one predicate and keeps unrelated commitments
+  coherent. Shared numerical/time recipe and guard-isolation machinery are adopted only after reviewed phase-2 foundations.
+  All criterion-12 grades are PARTIAL; native execution is NOT_RUN.
+gui_related: false
+gui_classification_reason: Persisted semantic facts and source/recovery contracts only; existing presentation owners
+  remain authoritative.
+depends_on:
+- CV-317
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- This exact family stays prepared without admission and retains each original owner boundary.
+- Closed payload, authentic original source joins, receipt custody and read-only recovery satisfy the adjacent family-specific
+  contract.
+- Phase 2 must implement and prove every planned guard before criterion 12 can pass.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- reports/event-authority-20261105/W3H-oracle-plan.json
+risk_class: event_source_identity_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3h_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-1 4b A (DL-411); exact original answer and deck SHA-256 in reports/event-authority-20261105/W3H.md
+- reports/event-authority-20261105/W3H-search-evidence.json
+preserved_exact_tokens:
+- assistant_plan.schedule_invalidated
+- docker.compose.scenario.deleted
+- docker.compose.scenario.edited
+- docker.compose.scenario.run
+- docker.compose.scenario.saved
+- execution_window.created
+- execution_window.invalidated
+- execution_window.updated
+- goal.continuation_evaluated
+- named_plan.archived
+- named_plan.child_refs_changed
+- named_plan.created
+- named_plan.priority_changed
+- named_plan.renamed
+- named_plan.restored
+- runtime.automation_pause_changed
+- runtime.quota_resume_attempted
+- runtime.quota_resume_consent_changed
+- runtime.quota_wait_started
+- scheduled_dispatch.cancelled
+- scheduled_dispatch.created
+- scheduled_dispatch.dispatched
+- scheduled_dispatch.failed
+- scheduled_dispatch.held
+- scheduled_dispatch.updated
+- todo.created
+- todo.dependency_changed
+- todo.removed_from_current_list
+- todo.reordered
+- todo.status_changed
+- todo.updated
+- todo.work_bound
+negative_constraints:
+- No event admission, registry family append, Decision Log mutation, new feature or changed deletion rule.
+- No local numeric/timestamp codec or proof machinery; adopt reviewed shared foundations in phase 2.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
+
+| Exact family | Owner | Payload | Positive plan | Planned negative predicates |
+|---|---|---|---|---|
+| `assistant_plan.schedule_invalidated` | `APR-1550` / `CV-1550` / `SP-1550` | `Plans/event_payloads/w3h/assistant_plan_schedule_invalidated.schema.json#/$defs/payload` | Commit V3 after scheduling V2; retain the V2 binding, record V3 and the reason, with no build. | 617 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `docker.compose.scenario.deleted` | `CRAU-1551` / `CV-1551` / `SP-1551` | `Plans/event_payloads/w3h/docker_compose_scenario_deleted.schema.json#/$defs/payload` | Use one valid Project scenario with resolved config, validated service/profile/env references and the original deleted result; no other scenario changes. | 582 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `docker.compose.scenario.edited` | `CRAU-1552` / `CV-1552` / `SP-1552` | `Plans/event_payloads/w3h/docker_compose_scenario_edited.schema.json#/$defs/payload` | Use one valid Project scenario with resolved config, validated service/profile/env references and the original edited result; no other scenario changes. | 591 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `docker.compose.scenario.run` | `CRAU-1553` / `CV-1553` / `SP-1553` | `Plans/event_payloads/w3h/docker_compose_scenario_run.schema.json#/$defs/payload` | Use one valid Project scenario with resolved config, validated service/profile/env references and the original run result; no other scenario changes. | 591 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `docker.compose.scenario.saved` | `CRAU-1554` / `CV-1554` / `SP-1554` | `Plans/event_payloads/w3h/docker_compose_scenario_saved.schema.json#/$defs/payload` | Use one valid Project scenario with resolved config, validated service/profile/env references and the original saved result; no other scenario changes. | 582 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `execution_window.created` | `SQR-1555` / `CV-1555` / `SP-1555` | `Plans/event_payloads/w3h/execution_window_created.schema.json#/$defs/payload` | Read one genuine created schedule result with the exact target and original source edition, preserving grace and occurrence identity. | 602 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `execution_window.invalidated` | `SQR-1556` / `CV-1556` / `SP-1556` | `Plans/event_payloads/w3h/execution_window_invalidated.schema.json#/$defs/payload` | Read one genuine invalidated schedule result with the exact target and original source edition, preserving grace and occurrence identity. | 610 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `execution_window.updated` | `SQR-1557` / `CV-1557` / `SP-1557` | `Plans/event_payloads/w3h/execution_window_updated.schema.json#/$defs/payload` | Read one genuine updated schedule result with the exact target and original source edition, preserving grace and occurrence identity. | 602 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `goal.continuation_evaluated` | `GRS-1558` / `CV-1558` / `SP-1558` | `Plans/event_payloads/w3h/goal_continuation_evaluated.schema.json#/$defs/payload` | A host evaluates an unfinished Goal with a genuine next attempt and unchanged epoch; also plan an independently valid complete case backed by caller evidence. | 637 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `named_plan.archived` | `NPLAN-1559` / `CV-1559` / `SP-1559` | `Plans/event_payloads/w3h/named_plan_archived.schema.json#/$defs/payload` | One exact Project+NamedPlan original archived result with unchanged child runtime; duplicate display names in the Project are independently valid. | 605 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `named_plan.child_refs_changed` | `NPLAN-1560` / `CV-1560` / `SP-1560` | `Plans/event_payloads/w3h/named_plan_child_refs_changed.schema.json#/$defs/payload` | One exact Project+NamedPlan original child_refs_changed result with unchanged child runtime; duplicate display names in the Project are independently valid. | 614 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `named_plan.created` | `NPLAN-1561` / `CV-1561` / `SP-1561` | `Plans/event_payloads/w3h/named_plan_created.schema.json#/$defs/payload` | One exact Project+NamedPlan original created result with unchanged child runtime; duplicate display names in the Project are independently valid. | 607 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `named_plan.priority_changed` | `NPLAN-1562` / `CV-1562` / `SP-1562` | `Plans/event_payloads/w3h/named_plan_priority_changed.schema.json#/$defs/payload` | One exact Project+NamedPlan original priority_changed result with unchanged child runtime; duplicate display names in the Project are independently valid. | 605 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `named_plan.renamed` | `NPLAN-1563` / `CV-1563` / `SP-1563` | `Plans/event_payloads/w3h/named_plan_renamed.schema.json#/$defs/payload` | One exact Project+NamedPlan original renamed result with unchanged child runtime; duplicate display names in the Project are independently valid. | 607 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `named_plan.restored` | `NPLAN-1564` / `CV-1564` / `SP-1564` | `Plans/event_payloads/w3h/named_plan_restored.schema.json#/$defs/payload` | One exact Project+NamedPlan original restored result with unchanged child runtime; duplicate display names in the Project are independently valid. | 605 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `runtime.automation_pause_changed` | `SQR-1565` / `CV-1565` / `SP-1565` | `Plans/event_payloads/w3h/runtime_automation_pause_changed.schema.json#/$defs/payload` | User changes the selected Project latch off to on; separately use genuine application Server source with null Project and no fake thread/Computer request fields. | 592 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `runtime.quota_resume_attempted` | `SQR-1566` / `CV-1566` / `SP-1566` | `Plans/event_payloads/w3h/runtime_quota_resume_attempted.schema.json#/$defs/payload` | Use a genuine quota_resume_attempted original source with exact route; separately cover unknown reset truth with no fabricated reset time. | 631 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `runtime.quota_resume_consent_changed` | `SQR-1567` / `CV-1567` / `SP-1567` | `Plans/event_payloads/w3h/runtime_quota_resume_consent_changed.schema.json#/$defs/payload` | Use a genuine quota_resume_consent_changed original source with exact route; separately cover unknown reset truth with no fabricated reset time. | 623 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `runtime.quota_wait_started` | `SQR-1568` / `CV-1568` / `SP-1568` | `Plans/event_payloads/w3h/runtime_quota_wait_started.schema.json#/$defs/payload` | Use a genuine quota_wait_started original source with exact route; separately cover unknown reset truth with no fabricated reset time. | 615 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `scheduled_dispatch.cancelled` | `SQR-1569` / `CV-1569` / `SP-1569` | `Plans/event_payloads/w3h/scheduled_dispatch_cancelled.schema.json#/$defs/payload` | Use one exact frozen message snapshot and genuine cancelled result; no client timer or focused-chat substitution. | 582 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `scheduled_dispatch.created` | `SQR-1570` / `CV-1570` / `SP-1570` | `Plans/event_payloads/w3h/scheduled_dispatch_created.schema.json#/$defs/payload` | Use one exact frozen message snapshot and genuine created result; no client timer or focused-chat substitution. | 582 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `scheduled_dispatch.dispatched` | `SQR-1571` / `CV-1571` / `SP-1571` | `Plans/event_payloads/w3h/scheduled_dispatch_dispatched.schema.json#/$defs/payload` | Use one exact frozen message snapshot and genuine dispatched result; no client timer or focused-chat substitution. | 618 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `scheduled_dispatch.failed` | `SQR-1572` / `CV-1572` / `SP-1572` | `Plans/event_payloads/w3h/scheduled_dispatch_failed.schema.json#/$defs/payload` | Use one exact frozen message snapshot and genuine failed result; no client timer or focused-chat substitution. | 599 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `scheduled_dispatch.held` | `SQR-1573` / `CV-1573` / `SP-1573` | `Plans/event_payloads/w3h/scheduled_dispatch_held.schema.json#/$defs/payload` | Use one exact frozen message snapshot and genuine held result; no client timer or focused-chat substitution. | 599 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `scheduled_dispatch.updated` | `SQR-1574` / `CV-1574` / `SP-1574` | `Plans/event_payloads/w3h/scheduled_dispatch_updated.schema.json#/$defs/payload` | Use one exact frozen message snapshot and genuine updated result; no client timer or focused-chat substitution. | 582 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `todo.created` | `TDR-1575` / `CV-1575` / `SP-1575` | `Plans/event_payloads/w3h/todo_created.schema.json#/$defs/payload` | A validated created result in one current thread, preserving exact item identity and all unaffected edges/work; a separate valid application thread uses null Project. | 594 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `todo.dependency_changed` | `TDR-1576` / `CV-1576` / `SP-1576` | `Plans/event_payloads/w3h/todo_dependency_changed.schema.json#/$defs/payload` | A validated dependency_changed result in one current thread, preserving exact item identity and all unaffected edges/work; a separate valid application thread uses null Project. | 604 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `todo.removed_from_current_list` | `TDR-1577` / `CV-1577` / `SP-1577` | `Plans/event_payloads/w3h/todo_removed_from_current_list.schema.json#/$defs/payload` | A validated removed_from_current_list result in one current thread, preserving exact item identity and all unaffected edges/work; a separate valid application thread uses null Project. | 603 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `todo.reordered` | `TDR-1578` / `CV-1578` / `SP-1578` | `Plans/event_payloads/w3h/todo_reordered.schema.json#/$defs/payload` | A validated reordered result in one current thread, preserving exact item identity and all unaffected edges/work; a separate valid application thread uses null Project. | 604 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `todo.status_changed` | `TDR-1579` / `CV-1579` / `SP-1579` | `Plans/event_payloads/w3h/todo_status_changed.schema.json#/$defs/payload` | A validated status_changed result in one current thread, preserving exact item identity and all unaffected edges/work; a separate valid application thread uses null Project. | 640 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `todo.updated` | `TDR-1580` / `CV-1580` / `SP-1580` | `Plans/event_payloads/w3h/todo_updated.schema.json#/$defs/payload` | A validated updated result in one current thread, preserving exact item identity and all unaffected edges/work; a separate valid application thread uses null Project. | 603 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+| `todo.work_bound` | `TDR-1581` / `CV-1581` / `SP-1581` | `Plans/event_payloads/w3h/todo_work_bound.schema.json#/$defs/payload` | A validated work_bound result in one current thread, preserving exact item identity and all unaffected edges/work; a separate valid application thread uses null Project. | 631 field/predicate plans; 16 publication-state pairs; execute/prove in phase 2 |
+
+Check 11 proof is intentionally deferred: use the shared tool’s complete site inventory, never a lane proof implementation. A negative carrying stale hashes/copies/post-state is repaired as a fixture defect. Removing one site of a duplicate must retain refusal by its peers for the same field/predicate; removing all must admit it. Every distinct predicate has its own cut and exactly one-defect case. Types, formats, physical byte limits, authentic original-source joins, custody on retry/read/recovery and historical-recipe dispatch all require actual phase-2 cases. The plan does not claim a schema validator enforces unchecked formats.
+
+Phase-1 review round 1 adds each exact family’s explicit inline/SP-337 physical journal materializations, independently authenticated resolved logical EventRecord, route/BLAKE3/exact-size/media checks, complete publication/envelope/receipt guard inventory and all sixteen absent/prepared/appended/settled state pairs. Crash cuts, same-original retries, pending-writer withdrawal, reader withdrawal, retained history and canonical retention dependencies have separate positives. A missing appended first receipt is tested with its valid commitment intact, and vice versa. Runtime copied-key/instance/partition/source joins use independent actual originals; schema-only and byte-authentication cases stop before unrelated later layers. Every illegal edge keeps destination shape/receipt/commitment and expected prior CAS valid so only edge legality fails. This is the phase-2 oracle plan, with no oracle code or guard-removal proof.
+
+Phase 2 (wave 3 phase 2, 2026-11-13) implements these plans as a static reference oracle. `scripts/pm_w3h_events.py` derives one boolean observation per guard row from the complete boundary input (publication verification, exact retry, journal CAS, canonical cleanup, SP-1101 retained read, compound ToDo cohort and retention cell) and refuses only through the Method B guard tables `scripts/pm_w3h_table_<phase>.py`, which `scripts/pm-w3h-table-generate.py` renders from `pm_w3h_events.ROWS`. `scripts/pm_w3h_cases.py` holds every positive and single-defect negative, and `python3 scripts/pm-w3h-event-contracts.py` exits 0 only when each positive is accepted and each negative is refused first at its own row. The gated shared tool (`scripts/pm_guard_isolation.py`, gated at 004bdedd63) proves each reachable row through `python3 scripts/pm-w3h-guard-tables.py --out <dir>`; SJ01 and SJ16 are entailed rows with written proofs (`pm_w3h_events.ENTAILED`), each alone in its own table. Numbers use the shared CV-1100/SP-1100/SP-1101 calls, and the shared corpus runs through the complete routes at every integer slot (`scripts/pm_w3h_numbers.py`). The four timestamp fields use `pm_event_datetime.date_time` with their owner profile: `occurred_at_utc` event_record; `observed_at_utc`, `persisted_at_utc` and the receipt `acknowledged_at_utc` storage_utc_z. A retained read selects its recipe only from the one sealed write receipt for that exact original; a missing, ambiguous or foreign receipt returns unavailable or unsupported with the bytes unchanged, and no read creates a receipt. Results, tool credit and the crosswalk from the planned inventory to the implemented rows are in `reports/event-authority-20261105/W3H.md` ("Wave 3 phase 2: findings and responses"). Native execution remains NOT_RUN; nothing here admits a family.
+
+## W3I continuity oracle plans — phase 1 (2026-11-05)
+
+### ATS-1280 — `continuity.actor_identified` criterion-12 oracle plan
+
+**NEWLY AUTHORED plan**, not oracle code. Phase-1 grade is PARTIAL. Phase 2 adopts the reviewed shared number/timestamp helper and `scripts/pm_guard_isolation.py`; it implements and executes these cases for this family itself. Native execution is NOT_RUN.
+
+Positive base: genuine Project `p-w3i` (encoded partition `project~cC13M2k`), one authenticated already-issued original source, a complete `actor_identified` payload and exact matching EventRecord/source/receipt, successful append after admission, matching current projection and nine-field checkpoint. Include exact retry after a lost acknowledgement, original retained history after a live-source change, authentic supported compatibility/replay-only rebuild, actual SP-337 body above 16 KiB where an owner-valid payload permits one (otherwise the size-refusal boundary), source-frame relocation through authenticated translation, held retention/restore, CAS success, withdrawal plus verified successor, and this family's own fact predicate: actor_ref and actor_kind equal the independently resolved original source principal and principal kind. Non-admission is the current positive refusal case, not a success fixture.
+
+For each row in `W3I-oracle-plan.json`, create a valid base and exactly one defective input invariant for this family. Guards include separate checks for every required property/type/const/ref/length, unknown root/nested keys, every source fact join, family/schema/version/scope, recomputed event ID and key, each semantic-body field on retry, each original first-receipt field, each token/cursor/root/dataset/publication/coverage join, original recipe selection, body/reference byte size/hash/media type, access/deletion/holds, transition order/CAS, and writer/reader withdrawal. Wrong-type variants include string booleans/numbers, null, arrays and objects only where one is the isolated type defect. Every identifier gets a trailing-LF negative; every formatted time gets malformed and boundary negatives via the shared owner profile. Current-writer replay-only, same-key changed body, unsupported reference/version, missing original source/receipt, substituted original identity, and a failed outcome reported as success each have their own refusal case.
+
+Fixture construction must update derived dependent copies/hashes from the changed upstream value when those are not the invariant being tested; otherwise it has multiple defects. Recompute all remaining valid relationships, assert the intended single mismatch, and use shared predicate-level guard removal. Sites enforcing the same field/predicate are inventoried individually; cutting one leaves its true duplicate sites active, and cutting all and only that duplicate predicate must admit the negative. Distinct predicates sharing one rule/refusal are never merged. Record the target guard, exact defect, remaining valid guards, removal results and fixture provenance. No lane-local number/time/proof machinery is authored.
+
+```yaml
+plan_unit_id: ATS-1280
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: NEWLY AUTHORED phase-1 criterion-12 plan for continuity.actor_identified; execution and guard isolation
+  remain PARTIAL until the reviewed shared number/timestamp and predicate-level isolation tools are adopted in phase
+  2.
+gui_related: false
+gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
+depends_on:
+- OSI-1600
+- CV-1600
+- SP-1600
+unblocks: []
+acceptance_criteria:
+- Own positives and single-defect negatives cover every named guard.
+- No oracle PASS or native/runtime readiness claim in phase 1.
+validation_surfaces:
+- reports/event-authority-20261105/W3I-oracle-plan.json
+risk_class: continuity_source_custody_drift
+reasoning_tier: high
+context_scope: event_authority_w3i_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/continuity_event_contracts.schema.json
+node_compile_hint:
+  mode: prepared_without_admission
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-2 item 9.a A; answer i approve all of it; DL-450 on plans/ea-cards2-answers-20261105
+- reports/event-authority-20261105/W3I.md#ats-1280
+preserved_exact_tokens:
+- continuity.actor_identified
+- PARTIAL
+- NOT_RUN
+negative_constraints:
+- No event-family admission, native execution, registry append, or PNC-019 clearance.
+- No runtime_continuity alias or receipt reconstructed from current state.
+```
+
+### ATS-1281 — `continuity.provenance_recorded` criterion-12 oracle plan
+
+**NEWLY AUTHORED plan**, not oracle code. Phase-1 grade is PARTIAL. Phase 2 adopts the reviewed shared number/timestamp helper and `scripts/pm_guard_isolation.py`; it implements and executes these cases for this family itself. Native execution is NOT_RUN.
+
+Positive base: genuine Project `p-w3i` (encoded partition `project~cC13M2k`), one authenticated already-issued original source, a complete `provenance_recorded` payload and exact matching EventRecord/source/receipt, successful append after admission, matching current projection and nine-field checkpoint. Include exact retry after a lost acknowledgement, original retained history after a live-source change, authentic supported compatibility/replay-only rebuild, actual SP-337 body above 16 KiB where an owner-valid payload permits one (otherwise the size-refusal boundary), source-frame relocation through authenticated translation, held retention/restore, CAS success, withdrawal plus verified successor, and this family's own fact predicate: provenance_ref resolves the exact retained output or handoff version that names source_event_id; a route target is not provenance evidence. Non-admission is the current positive refusal case, not a success fixture.
+
+For each row in `W3I-oracle-plan.json`, create a valid base and exactly one defective input invariant for this family. Guards include separate checks for every required property/type/const/ref/length, unknown root/nested keys, every source fact join, family/schema/version/scope, recomputed event ID and key, each semantic-body field on retry, each original first-receipt field, each token/cursor/root/dataset/publication/coverage join, original recipe selection, body/reference byte size/hash/media type, access/deletion/holds, transition order/CAS, and writer/reader withdrawal. Wrong-type variants include string booleans/numbers, null, arrays and objects only where one is the isolated type defect. Every identifier gets a trailing-LF negative; every formatted time gets malformed and boundary negatives via the shared owner profile. Current-writer replay-only, same-key changed body, unsupported reference/version, missing original source/receipt, substituted original identity, and a failed outcome reported as success each have their own refusal case.
+
+Fixture construction must update derived dependent copies/hashes from the changed upstream value when those are not the invariant being tested; otherwise it has multiple defects. Recompute all remaining valid relationships, assert the intended single mismatch, and use shared predicate-level guard removal. Sites enforcing the same field/predicate are inventoried individually; cutting one leaves its true duplicate sites active, and cutting all and only that duplicate predicate must admit the negative. Distinct predicates sharing one rule/refusal are never merged. Record the target guard, exact defect, remaining valid guards, removal results and fixture provenance. No lane-local number/time/proof machinery is authored.
+
+```yaml
+plan_unit_id: ATS-1281
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: NEWLY AUTHORED phase-1 criterion-12 plan for continuity.provenance_recorded; execution and guard
+  isolation remain PARTIAL until the reviewed shared number/timestamp and predicate-level isolation tools are adopted
+  in phase 2.
+gui_related: false
+gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
+depends_on:
+- OSI-1601
+- CV-1601
+- SP-1601
+unblocks: []
+acceptance_criteria:
+- Own positives and single-defect negatives cover every named guard.
+- No oracle PASS or native/runtime readiness claim in phase 1.
+validation_surfaces:
+- reports/event-authority-20261105/W3I-oracle-plan.json
+risk_class: continuity_source_custody_drift
+reasoning_tier: high
+context_scope: event_authority_w3i_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/continuity_event_contracts.schema.json
+node_compile_hint:
+  mode: prepared_without_admission
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-2 item 9.a A; answer i approve all of it; DL-450 on plans/ea-cards2-answers-20261105
+- reports/event-authority-20261105/W3I.md#ats-1281
+preserved_exact_tokens:
+- continuity.provenance_recorded
+- PARTIAL
+- NOT_RUN
+negative_constraints:
+- No event-family admission, native execution, registry append, or PNC-019 clearance.
+- No runtime_continuity alias or receipt reconstructed from current state.
+```
+
+### ATS-1282 — `continuity.redaction_applied` criterion-12 oracle plan
+
+**NEWLY AUTHORED plan**, not oracle code. Phase-1 grade is PARTIAL. Phase 2 adopts the reviewed shared number/timestamp helper and `scripts/pm_guard_isolation.py`; it implements and executes these cases for this family itself. Native execution is NOT_RUN.
+
+Positive base: genuine Project `p-w3i` (encoded partition `project~cC13M2k`), one authenticated already-issued original source, a complete `redaction_applied` payload and exact matching EventRecord/source/receipt, successful append after admission, matching current projection and nine-field checkpoint. Include exact retry after a lost acknowledgement, original retained history after a live-source change, authentic supported compatibility/replay-only rebuild, actual SP-337 body above 16 KiB where an owner-valid payload permits one (otherwise the size-refusal boundary), source-frame relocation through authenticated translation, held retention/restore, CAS success, withdrawal plus verified successor, and this family's own fact predicate: redaction_profile_id and redaction_decision equal the actual original redaction owner result for provenance_ref, including its transform/version; a requested transform is not an applied result. Non-admission is the current positive refusal case, not a success fixture.
+
+For each row in `W3I-oracle-plan.json`, create a valid base and exactly one defective input invariant for this family. Guards include separate checks for every required property/type/const/ref/length, unknown root/nested keys, every source fact join, family/schema/version/scope, recomputed event ID and key, each semantic-body field on retry, each original first-receipt field, each token/cursor/root/dataset/publication/coverage join, original recipe selection, body/reference byte size/hash/media type, access/deletion/holds, transition order/CAS, and writer/reader withdrawal. Wrong-type variants include string booleans/numbers, null, arrays and objects only where one is the isolated type defect. Every identifier gets a trailing-LF negative; every formatted time gets malformed and boundary negatives via the shared owner profile. Current-writer replay-only, same-key changed body, unsupported reference/version, missing original source/receipt, substituted original identity, and a failed outcome reported as success each have their own refusal case.
+
+Fixture construction must update derived dependent copies/hashes from the changed upstream value when those are not the invariant being tested; otherwise it has multiple defects. Recompute all remaining valid relationships, assert the intended single mismatch, and use shared predicate-level guard removal. Sites enforcing the same field/predicate are inventoried individually; cutting one leaves its true duplicate sites active, and cutting all and only that duplicate predicate must admit the negative. Distinct predicates sharing one rule/refusal are never merged. Record the target guard, exact defect, remaining valid guards, removal results and fixture provenance. No lane-local number/time/proof machinery is authored.
+
+```yaml
+plan_unit_id: ATS-1282
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: NEWLY AUTHORED phase-1 criterion-12 plan for continuity.redaction_applied; execution and guard isolation
+  remain PARTIAL until the reviewed shared number/timestamp and predicate-level isolation tools are adopted in phase
+  2.
+gui_related: false
+gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
+depends_on:
+- OSI-1602
+- CV-1602
+- SP-1602
+unblocks: []
+acceptance_criteria:
+- Own positives and single-defect negatives cover every named guard.
+- No oracle PASS or native/runtime readiness claim in phase 1.
+validation_surfaces:
+- reports/event-authority-20261105/W3I-oracle-plan.json
+risk_class: continuity_source_custody_drift
+reasoning_tier: high
+context_scope: event_authority_w3i_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/continuity_event_contracts.schema.json
+node_compile_hint:
+  mode: prepared_without_admission
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-2 item 9.a A; answer i approve all of it; DL-450 on plans/ea-cards2-answers-20261105
+- reports/event-authority-20261105/W3I.md#ats-1282
+preserved_exact_tokens:
+- continuity.redaction_applied
+- PARTIAL
+- NOT_RUN
+negative_constraints:
+- No event-family admission, native execution, registry append, or PNC-019 clearance.
+- No runtime_continuity alias or receipt reconstructed from current state.
+```
+
+### ATS-1283 — `continuity.replay_checkpointed` criterion-12 oracle plan
+
+**NEWLY AUTHORED plan**, not oracle code. Phase-1 grade is PARTIAL. Phase 2 adopts the reviewed shared number/timestamp helper and `scripts/pm_guard_isolation.py`; it implements and executes these cases for this family itself. Native execution is NOT_RUN.
+
+Positive base: genuine Project `p-w3i` (encoded partition `project~cC13M2k`), one authenticated already-issued original source, a complete `replay_checkpointed` payload and exact matching EventRecord/source/receipt, successful append after admission, matching current projection and nine-field checkpoint. Include exact retry after a lost acknowledgement, original retained history after a live-source change, authentic supported compatibility/replay-only rebuild, actual SP-337 body above 16 KiB where an owner-valid payload permits one (otherwise the size-refusal boundary), source-frame relocation through authenticated translation, held retention/restore, CAS success, withdrawal plus verified successor, and this family's own fact predicate: replay_checkpoint_ref resolves the original source stream checkpoint, whose complete SP-278 durable token and examined prefix include source_event_id; it is an upstream checkpoint, never this event or its downstream continuity checkpoint. Non-admission is the current positive refusal case, not a success fixture.
+
+For each row in `W3I-oracle-plan.json`, create a valid base and exactly one defective input invariant for this family. Guards include separate checks for every required property/type/const/ref/length, unknown root/nested keys, every source fact join, family/schema/version/scope, recomputed event ID and key, each semantic-body field on retry, each original first-receipt field, each token/cursor/root/dataset/publication/coverage join, original recipe selection, body/reference byte size/hash/media type, access/deletion/holds, transition order/CAS, and writer/reader withdrawal. Wrong-type variants include string booleans/numbers, null, arrays and objects only where one is the isolated type defect. Every identifier gets a trailing-LF negative; every formatted time gets malformed and boundary negatives via the shared owner profile. Current-writer replay-only, same-key changed body, unsupported reference/version, missing original source/receipt, substituted original identity, and a failed outcome reported as success each have their own refusal case.
+
+Fixture construction must update derived dependent copies/hashes from the changed upstream value when those are not the invariant being tested; otherwise it has multiple defects. Recompute all remaining valid relationships, assert the intended single mismatch, and use shared predicate-level guard removal. Sites enforcing the same field/predicate are inventoried individually; cutting one leaves its true duplicate sites active, and cutting all and only that duplicate predicate must admit the negative. Distinct predicates sharing one rule/refusal are never merged. Record the target guard, exact defect, remaining valid guards, removal results and fixture provenance. No lane-local number/time/proof machinery is authored.
+
+```yaml
+plan_unit_id: ATS-1283
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: NEWLY AUTHORED phase-1 criterion-12 plan for continuity.replay_checkpointed; execution and guard
+  isolation remain PARTIAL until the reviewed shared number/timestamp and predicate-level isolation tools are adopted
+  in phase 2.
+gui_related: false
+gui_classification_reason: Audit lineage, storage, and test contracts; no new presentation behavior.
+depends_on:
+- OSI-1603
+- CV-1603
+- SP-1603
+unblocks: []
+acceptance_criteria:
+- Own positives and single-defect negatives cover every named guard.
+- No oracle PASS or native/runtime readiness claim in phase 1.
+validation_surfaces:
+- reports/event-authority-20261105/W3I-oracle-plan.json
+risk_class: continuity_source_custody_drift
+reasoning_tier: high
+context_scope: event_authority_w3i_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/continuity_event_contracts.schema.json
+node_compile_hint:
+  mode: prepared_without_admission
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- E-CARDS-2 item 9.a A; answer i approve all of it; DL-450 on plans/ea-cards2-answers-20261105
+- reports/event-authority-20261105/W3I.md#ats-1283
+preserved_exact_tokens:
+- continuity.replay_checkpointed
+- PARTIAL
+- NOT_RUN
+negative_constraints:
+- No event-family admission, native execution, registry append, or PNC-019 clearance.
+- No runtime_continuity alias or receipt reconstructed from current state.
+```
+
+
+### ATS-1230 - BSD W3D phase-1 oracle plan
+
+```yaml
+plan_unit_id: ATS-1230
+unit_type: validation_contract
+status: draft
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Newly authored criterion-12 oracle plan for exactly the fifteen W3D BSD families at proposed 1.0.0, prepared without admission. Plans/bsd_event_oracle_plan.json contains each exact name, its own positive paths and field/predicate-level negative inventory, including every required payload field, exact type/value, source identity/custody, transition, first receipt, storage metadata, 16 KiB value/reference path, retention, replay, checkpoint and withdrawal guard. Every planned negative has one semantic defect and valid unrelated identities/copies/digests/source/post-state. Split compound rules by field/predicate; only identical predicates on the same field at multiple sites form duplicate sets. In phase 2 use the reviewed scripts/pm_guard_isolation.py foundation and prove each site separately, then all duplicate sites together. No lane-local number/timestamp implementation or guard-proof engine is authored. Current integer/digest/physical domains and timestamp profiles come from the reviewed plans/ea-numrule-20261105 foundation; retained old recipes use authenticated original dispatch and cannot select a weaker recipe by assertion. Each family independently plans current write-permission refusal with read access valid, registered-owner and writer-generation fences, effective Stop, and every applicable current-epoch and source/envelope join. Each envelope thread/run/account/actor/causation/parent/correlation/node/attempt join changes only its target field; regenerate all unrelated commitments without changing the authentic source. The thirteen assignment-backed rows test envelope run_id against the actual assignment primary_run_id independently of the payload run join. Configuration rows explicitly keep assignment/run/epoch/generation null rather than inventing a live epoch. Current epoch tests preserve valid old-epoch historical originals; finding clearance retains its separate authenticated replacement-control positive and rejects a substituted current replacement control independently. Assignment-start positives preserve Auto and On exactly, with independent Off/lowercase/inherit negatives. Review-start positives have authentic immutable admission facts and no result yet; independent negatives cover invalid admission source, premature result and each terminal-to-start join. Writer negatives include projector_replay_only; historical positives include valid retained replay-only/original history after live state changes. Malformed/unvisited $ref branches fail eagerly; formatted strings require the shared fail-closed profile, never silent jsonschema format omission. Every reference/identifier has trailing-LF/CR negatives, every exact type has disallowed string boolean/number/null/container cases, and every guard has a positive plus a single-defect negative plan. File existence, schema validation and this inventory are not executed event-oracle, mutation, native or buildability proof. The exact per-family plans adopt SP-278 source/checkpoint guards and SP-286 first-receipt guards. Criterion 12 is PARTIAL for every family until actual phase-2 fixtures/checkers and shared guard-isolation evidence pass Sol and Astra review. No event registry membership or physical family admission is granted.
+gui_related: false
+gui_classification_reason: Defines internal event, identity, Storage custody or validation, without changing presentation.
+depends_on:
+- BSD-1350
+- BSD-1351
+- BSD-1352
+- BSD-1353
+- BSD-1354
+- BSD-1355
+- BSD-1356
+- BSD-1357
+- BSD-1358
+- BSD-1359
+- BSD-1360
+- BSD-1361
+- BSD-1362
+- BSD-1363
+- BSD-1364
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, payload, original-source identity and retry custody are bound.
+- No unregistered append, physical admission or native/runtime success is implied.
+- Phase-2 oracle and shared guard-isolation proof remain mandatory before review/admission.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/bsd_event_oracle_plan.json
+risk_class: advisory_history_identity_custody_or_replay_drift
+reasoning_tier: high
+context_scope: event_authority_w3d_phase1
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/bsd_event_payloads.schema.json
+- Plans/bsd_event_storage_contracts.schema.json
+- Plans/bsd_event_storage_candidates.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- reports/event-authority-20261105/W3D.md
+- Deck-2 item 9.a A (answer record 2026-11-05; DL-450 application pending)
+preserved_exact_tokens:
+- PARTIAL
+- projector_replay_only
+- SP-278
+- SP-286
+- pm_guard_isolation.py
+negative_constraints:
+- Do not append a registry family, admit an event, enable BSD commands or treat static definitions as runtime evidence.
+- Do not define a local number/timestamp implementation or guard-isolation proof engine.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```

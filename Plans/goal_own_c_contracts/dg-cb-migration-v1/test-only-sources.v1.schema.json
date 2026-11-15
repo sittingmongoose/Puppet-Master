@@ -1,0 +1,821 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json",
+ "title": "DG-CB TEST_ONLY migration owner records",
+ "description": "TEST_ONLY records kept by the DG-CB goal.cancelled C5/C6 test owners (newly authored, 2026-11-12). native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof. These are test-owner custody envelopes only: canonical members nested in them are validated in their own original realms, and no record here is a canonical Storage family, registry row, retention policy or native installation.",
+ "$defs": {
+  "Scope": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "storage_instance_id",
+    "project_id",
+    "thread_id",
+    "goal_id"
+   ],
+   "properties": {
+    "storage_instance_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "project_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "thread_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "goal_id": {
+     "type": "string",
+     "minLength": 1
+    }
+   }
+  },
+  "PhysicalCarrier": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "codec_id",
+    "bytes_hex"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.physical_carrier.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "codec_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "bytes_hex": {
+     "type": "string",
+     "pattern": "^(?:[0-9a-f]{2})+$"
+    }
+   }
+  },
+  "IssuanceOrigin": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "owner_role",
+    "owner_ref",
+    "issued_family_id",
+    "issued_physical_key",
+    "issued_physical_sha256",
+    "codec_id",
+    "schema_ref",
+    "issuer",
+    "canonical_origin"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.original_issuance_origin.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "owner_role": {
+     "enum": [
+      "goal",
+      "host_stop",
+      "plan",
+      "workflow",
+      "scheduler",
+      "sir"
+     ]
+    },
+    "owner_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "issued_family_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "issued_physical_key": {
+     "type": "string",
+     "minLength": 1
+    },
+    "issued_physical_sha256": {
+     "type": "string",
+     "pattern": "^[0-9a-f]{64}$"
+    },
+    "codec_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "schema_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "issuer": {
+     "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/OriginalTransaction"
+    },
+    "canonical_origin": {
+     "oneOf": [
+      {
+       "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    }
+   }
+  },
+  "HostStopReceipt": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "schema_version",
+    "qualification",
+    "receipt_ref",
+    "action",
+    "scope",
+    "before_sha256",
+    "user_stop_epoch",
+    "continuation_epoch",
+    "owner_epoch",
+    "at"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.host_stop_receipt.v1"
+    },
+    "schema_version": {
+     "const": "1.0.0"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "receipt_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "action": {
+     "enum": [
+      "stop",
+      "resume",
+      "birth"
+     ]
+    },
+    "scope": {
+     "$ref": "#/$defs/Scope"
+    },
+    "before_sha256": {
+     "oneOf": [
+      {
+       "type": "string",
+       "pattern": "^[0-9a-f]{64}$"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "user_stop_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "continuation_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "owner_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "SirAcceptedDispatch": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "schema_version",
+    "qualification",
+    "request",
+    "identity",
+    "nonterminal",
+    "dispatch_id",
+    "command_outcome_ref",
+    "acceptance_ref",
+    "source_authority_ref",
+    "owner_epoch",
+    "accepted_at"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.sir_accepted_dispatch.v1"
+    },
+    "schema_version": {
+     "const": "1.0.0"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "request": {
+     "type": "object"
+    },
+    "identity": {
+     "type": "object"
+    },
+    "nonterminal": {
+     "type": "object"
+    },
+    "dispatch_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "command_outcome_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "acceptance_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "source_authority_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "owner_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "accepted_at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "SirCommandOutcome": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "schema_version",
+    "record"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.sir_command_outcome.v1"
+    },
+    "schema_version": {
+     "const": "1.0.0"
+    },
+    "record": {
+     "type": "object"
+    }
+   }
+  },
+  "PlanPendingAttach": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "operation_id",
+    "operation",
+    "scope",
+    "plan_run_id",
+    "assistant_plan_id",
+    "owner_ref",
+    "owner_epoch",
+    "expected_goal_body_sha256",
+    "expected_goal_control_sha256",
+    "expected_stop_control_sha256",
+    "binding",
+    "disposition",
+    "created_at"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.plan_pending_attach.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "operation_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "operation": {
+     "const": "plan_goal_birth_or_attach"
+    },
+    "scope": {
+     "$ref": "#/$defs/Scope"
+    },
+    "plan_run_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "assistant_plan_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "owner_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "owner_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "expected_goal_body_sha256": {
+     "type": "string",
+     "pattern": "^[0-9a-f]{64}$"
+    },
+    "expected_goal_control_sha256": {
+     "type": "string",
+     "pattern": "^[0-9a-f]{64}$"
+    },
+    "expected_stop_control_sha256": {
+     "type": "string",
+     "pattern": "^[0-9a-f]{64}$"
+    },
+    "binding": {
+     "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding"
+    },
+    "disposition": {
+     "enum": [
+      "no_effect",
+      "unknown",
+      "partial"
+     ]
+    },
+    "created_at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "SchedulerCallbackAdmission": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "admission_id",
+    "scope",
+    "run_id",
+    "run_epoch",
+    "stop_epoch",
+    "state",
+    "effect_receipt_ref",
+    "owner_ref",
+    "owner_epoch",
+    "at"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.scheduler_callback_admission.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "admission_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "scope": {
+     "$ref": "#/$defs/Scope"
+    },
+    "run_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "run_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "stop_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "state": {
+     "enum": [
+      "admitted",
+      "settled"
+     ]
+    },
+    "effect_receipt_ref": {
+     "oneOf": [
+      {
+       "type": "string",
+       "minLength": 1
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "owner_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "owner_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "WorkflowActivationSource": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "kind",
+    "scope",
+    "goal_run_id",
+    "owner_ref",
+    "owner_epoch",
+    "at",
+    "detail"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.workflow_activation_source.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "kind": {
+     "enum": [
+      "activation_decision",
+      "goal_lineage",
+      "activation_origin",
+      "owner_result",
+      "owner_origin"
+     ]
+    },
+    "scope": {
+     "$ref": "#/$defs/Scope"
+    },
+    "goal_run_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "owner_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "owner_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "detail": {
+     "type": "object"
+    }
+   }
+  },
+  "WorkflowPendingOperation": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "operation_id",
+    "kind",
+    "scope",
+    "goal_run_id",
+    "disposition",
+    "owner_ref",
+    "owner_epoch",
+    "at"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.workflow_pending_operation.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "operation_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "kind": {
+     "enum": [
+      "d05_safe_stop",
+      "d06_cancel"
+     ]
+    },
+    "scope": {
+     "$ref": "#/$defs/Scope"
+    },
+    "goal_run_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "disposition": {
+     "enum": [
+      "unknown",
+      "partial",
+      "no_effect"
+     ]
+    },
+    "owner_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "owner_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "MigrationExclusion": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "scope",
+    "migration_id",
+    "holder_ref",
+    "exclusion_epoch",
+    "state",
+    "acquired_at"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.migration_exclusion.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "scope": {
+     "$ref": "#/$defs/Scope"
+    },
+    "migration_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "holder_ref": {
+     "type": "string",
+     "minLength": 1
+    },
+    "exclusion_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "state": {
+     "enum": [
+      "held",
+      "released"
+     ]
+    },
+    "acquired_at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "WorldRoster": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "owners",
+    "constants"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.world_roster.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "owners": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "owner_id",
+       "owner_epoch"
+      ],
+      "properties": {
+       "owner_id": {
+        "type": "string",
+        "minLength": 1
+       },
+       "owner_epoch": {
+        "type": "integer",
+        "minimum": 0
+       }
+      }
+     }
+    },
+    "constants": {
+     "type": "object"
+    }
+   }
+  },
+  "WriterDomainCutoff": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "storage_instance_id",
+    "domain_generation",
+    "withdrawal_id",
+    "migration_id",
+    "at"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.writer_domain_cutoff.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "storage_instance_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "domain_generation": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "withdrawal_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "migration_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "NativeDispatchState": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "root_identity",
+    "generation",
+    "registrations",
+    "implementations"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.native_dispatch_state.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "root_identity": {
+     "type": "string",
+     "minLength": 1
+    },
+    "generation": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "registrations": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "string",
+      "minLength": 1
+     }
+    },
+    "implementations": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "descriptor",
+       "implementation_kind",
+       "enrollment"
+      ],
+      "properties": {
+       "descriptor": {
+        "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NativeWriterDescriptor"
+       },
+       "implementation_kind": {
+        "enum": [
+         "primary",
+         "old_adapter",
+         "timer",
+         "restore",
+         "owner_transfer"
+        ]
+       },
+       "enrollment": {
+        "enum": [
+         "enrolled",
+         "unenrolled"
+        ]
+       }
+      }
+     }
+    }
+   }
+  },
+  "MaintenanceSource": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "qualification",
+    "storage_instance_id",
+    "root_identity",
+    "namespace",
+    "restore_epoch",
+    "maintenance_epoch",
+    "owner_epoch",
+    "scopes"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.test_only.storage_maintenance_source.v1"
+    },
+    "qualification": {
+     "const": "TEST_ONLY"
+    },
+    "storage_instance_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "root_identity": {
+     "type": "string",
+     "minLength": 1
+    },
+    "namespace": {
+     "type": "string",
+     "minLength": 1
+    },
+    "restore_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "maintenance_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "owner_epoch": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "scopes": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "holds",
+       "deletion_requested"
+      ],
+      "properties": {
+       "holds": {
+        "type": "array",
+        "items": {
+         "type": "string",
+         "minLength": 1
+        }
+       },
+       "deletion_requested": {
+        "type": "boolean"
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

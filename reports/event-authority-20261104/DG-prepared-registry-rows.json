@@ -1,0 +1,157 @@
+{
+  "schema_id": "pm.assurance.event_authority.prepared_registry_rows.v1",
+  "prepared_on": "2026-11-04",
+  "lane": "DG",
+  "status": "prepared_not_admitted",
+  "registry_revision_at_base": "2026-11-04.1",
+  "rule": "Not applied. Each row is admitted later in its own Storage admission landing, one family per commit (DL-045, brief). The application payload version of goal_run.blocked is copied unchanged.",
+  "rows": [
+    {
+      "registry_pointer": "#/families/5",
+      "event_type": "goal_run.stopped",
+      "current_row_sha256": "8acbc2495110aa3ee37fe7469603fe6240250f0a2a4bd756f8973dedc549e0a3",
+      "prepared_row": {
+        "family_id": "event-family-goal-run-stopped",
+        "family_revision": "3.0.0",
+        "event_type": "goal_run.stopped",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-200",
+        "payload_owner_doc": "Plans/storage-plan.md#SP-426",
+        "payload_schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+        "payload_schema_ref": {
+          "path": "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
+          "json_pointer": "#",
+          "schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v3"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json#",
+          "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+          "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration",
+          "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json#",
+          "Plans/Goal_Runtime_System.md#GRS-200",
+          "Plans/Executor_Protocol.md#EP-200",
+          "Plans/storage-plan.md#SP-426",
+          "Plans/Contracts_V0.md#CV-420"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-AUTHORITY-INDEFINITE",
+          "policy_version": "1.0.0"
+        }
+      },
+      "prepared_row_canonical_sha256": "19f9b38748f58ebb5710895458d4254ac691f02f043a3a74e54f15047a8a7ac2"
+    },
+    {
+      "registry_pointer": "#/families/0",
+      "event_type": "goal_run.blocked",
+      "current_row_sha256": "a710df0551c05462d647638f6efcd13bacb1538399238f3837f7b80ccc6ded0d",
+      "prepared_row": {
+        "family_id": "event-family-goal-run-blocked",
+        "family_revision": "3.0.0",
+        "event_type": "goal_run.blocked",
+        "scope_policy": "application_or_project",
+        "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-201",
+        "payload_owner_doc": "Plans/storage-plan.md#SP-427",
+        "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+        "payload_schema_ref": {
+          "path": "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+          "json_pointer": "#",
+          "schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v3"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json#",
+          "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
+          "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration",
+          "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json#",
+          "Plans/Goal_Runtime_System.md#GRS-201",
+          "Plans/Executor_Protocol.md#EP-200",
+          "Plans/storage-plan.md#SP-427",
+          "Plans/Contracts_V0.md#CV-421"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-AUTHORITY-INDEFINITE",
+          "policy_version": "1.0.0"
+        },
+        "payload_versions": [
+          {
+            "scope_kind": "project",
+            "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "payload_schema_ref": {
+              "path": "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+              "json_pointer": "#",
+              "schema_id": "pm.goal_runtime_event.goal_run_blocked.schema.v3"
+            },
+            "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+            "producer_admission": "existing_project_policy",
+            "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-201",
+            "read_owner_ref": "Plans/storage-plan.md#SP-427",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-AUTHORITY-INDEFINITE",
+              "policy_version": "1.0.0"
+            }
+          },
+          {
+            "scope_kind": "application",
+            "payload_schema_id": "pm.goal_runtime_event.goal_run_blocked.application.v1",
+            "payload_schema_ref": {
+              "path": "Plans/application_workflow_contracts.schema.json",
+              "json_pointer": "#/$defs/GoalRunBlockedEventApplicationV1",
+              "schema_id": "pm.goal_runtime_event.goal_run_blocked.application.v1"
+            },
+            "source_graph_ref": "Plans/application_workflow_source_graph.json",
+            "producer_admission": "requires_owner_adoption",
+            "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+            "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
+            "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+            "retention_policy_ref": {
+              "registry_schema_id": "pm.storage_value_registry.v2",
+              "policy_id": "RP-AUTHORITY-INDEFINITE",
+              "policy_version": "1.0.0"
+            }
+          }
+        ],
+        "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+      },
+      "prepared_row_canonical_sha256": "b29365019fd077e73aee4e32c97fecb4ccb353d63004d1d68413ee1530797054"
+    }
+  ]
+}

@@ -1,0 +1,3879 @@
+{
+ "note": "Static stand-in for Storage's sealed write custody (SP-286/SP-1101): the w3b@1 recipe (resource manifest over the W3B schema resources and the CV-1101 field profiles) and one sealed receipt per retained original Storage wrote. w3b@0 is a recorded but uninstalled edition (unknown editions quarantine). The checker only reads this.",
+ "recipes": {
+  "w3b@0": {
+   "envelope_schema_id": "pm.event.v0",
+   "envelope_schema_version": "2.0.0",
+   "full_value_profile": "cv339.original_event_value_commitment.v1",
+   "identity_recipe": "scs.event_id.hex_concat.v1+scs.idempotency_key.hex_concat.v1",
+   "installed": false,
+   "local_source_profile": "sp1250.source_fact.v1",
+   "owner_edition": "w3b-unreleased-draft",
+   "payload_profile": "sp337.inline_or_pack",
+   "payload_schema_version": "1.0.0",
+   "physical_profile": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+   "producer_recipe": "cv317.producer_semantic.cv1100",
+   "registry_revision": "w3b-prepared-1.0.0",
+   "resources": [
+    "Plans/event_append_receipt_contracts.schema.json",
+    "Plans/event_record.schema.json",
+    "Plans/event_record_index_checkpoint.schema.json",
+    "Plans/shared_integration_runtime.schema.json",
+    "Plans/source_control_contracts.schema.json",
+    "Plans/source_control_event_contracts.schema.json"
+   ],
+   "timestamp_profiles": {
+    "envelope/observed_at_utc": "storage_utc_z",
+    "envelope/occurred_at_utc": "event_record",
+    "envelope/persisted_at_utc": "storage_utc_z",
+    "receipt/acknowledged_at_utc": "event_record",
+    "source/preview_expires_at": "event_record",
+    "source/requested_at_utc": "event_record"
+   }
+  },
+  "w3b@1": {
+   "envelope_schema_id": "pm.event.v0",
+   "envelope_schema_version": "2.0.0",
+   "full_value_profile": "cv339.original_event_value_commitment.v1",
+   "identity_recipe": "scs.event_id.hex_concat.v1+scs.idempotency_key.hex_concat.v1",
+   "installed": true,
+   "local_source_profile": "sp1250.source_fact.v1",
+   "owner_edition": "w3b-phase2-2026-11-13",
+   "payload_profile": "sp337.inline_or_pack",
+   "payload_schema_version": "1.0.0",
+   "physical_profile": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+   "producer_recipe": "cv317.producer_semantic.cv1100",
+   "registry_revision": "w3b-prepared-1.0.0",
+   "resources": [
+    "Plans/event_append_receipt_contracts.schema.json",
+    "Plans/event_record.schema.json",
+    "Plans/event_record_index_checkpoint.schema.json",
+    "Plans/shared_integration_runtime.schema.json",
+    "Plans/source_control_contracts.schema.json",
+    "Plans/source_control_event_contracts.schema.json"
+   ],
+   "timestamp_profiles": {
+    "envelope/observed_at_utc": "storage_utc_z",
+    "envelope/occurred_at_utc": "event_record",
+    "envelope/persisted_at_utc": "storage_utc_z",
+    "receipt/acknowledged_at_utc": "event_record",
+    "source/preview_expires_at": "event_record",
+    "source/requested_at_utc": "event_record"
+   }
+  }
+ },
+ "schema_id": "pm.w3b.original_custody.v1",
+ "sealed_receipts": [
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e30303031",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "72d652de35e4843e7777baac5976e43c1996f4d86ad0f6600a9c6f3153f6cf5b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e30303031",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "a5df6ffc412b5e498f1211b15ca5c6fc59d13b31676a8453f7bf51bcae001e14",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e616d626967756f7573",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "80c08512567097ad2838e6c26a9a0638a9f7cb5c9e59b4a6957d62b2bdae061b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e616d626967756f7573",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "80c08512567097ad2838e6c26a9a0638a9f7cb5c9e59b4a6957d62b2bdae061b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e6c6567616379",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b0280071054764d16a874517fd56ea03f44c309a86a92da239ac809e77b8cc42",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e666f726569676e",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "82bd86ddc166a2658f6a5a8210ece33fda56cbb00dd23d5c59fa4b625130e46f",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e30303031",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "452b4a08c24f99c0aebdbe5d69c6196cf7bdfcaf45cd9149f49507f93b015c32",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e30303031",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2ac01601289e5d66a41f3aec8dfb6cd502230e74bb5ecb47f307e759609576f8",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e30303031",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "89f50eafaa0ec717c6d9fa1f495fcfda86ca5f0197d21218411e3a8d929dc5c1",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e30303031",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e7efe9c218ca1e3c50c34da0c32b5334c2b5cd3b93c6ec7093e43bd9d82c265f",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e30303031",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "69ce22379c8cb08dca252b8372d6ac5d410c53b88e1c8d231caf56b2c5815046",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e30303031",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "149b8aa94bcbdd27fa9735c477df3550d520e7c8499ba2086d49eae0f81df7ce",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_forged",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "57170e89dc90154de4b8dcf23364abbd53cccfa565cccc84c5182510f02bf770",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_detected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f64657465637465642e30303031",
+   "event_type": "source_control.backend.detected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "3935a0fef50008f4ac281382a1c7852c752cf17cf2fff8099d102bb221c9dc21",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e30303031",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6dca5777854742045ae8f27af5916ed580b04fe30926b239ec6ee18a8cb8921b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e30303031",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "88f33e9403842a814de8986737caec036c2f1212f230fea9549db7d976efcaae",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e616d626967756f7573",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e90fc296806313c925b388e5c4a7d8a8da2d5a0368cc5c13e4a242991061cdef",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e616d626967756f7573",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e90fc296806313c925b388e5c4a7d8a8da2d5a0368cc5c13e4a242991061cdef",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e6c6567616379",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "96830738bc6c5c68c6f1a598937a4d694f66ba3aa141db5efaf0d6b205b077f6",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e666f726569676e",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "3c6ae31431a60eabc995fb27addae41a2d8c4adef165cb5194a5c87fff2b7ac6",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e30303031",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "ea733314d81d851e19283d2412181c1556fd45efcdbc007877b5edd6ad17c4e2",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e30303031",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "77fd982b6c76924c6bd96eb3796cf3da0c2e23b830c4d3608ebee24770699c37",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e30303031",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "aa136ec9ec2f1cb0c2e38e9c5c39bc6525d3c6c6b541364063932266b48f3d09",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e30303031",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2c5265be4ca029b006d2737c3384c93715e8e78e4ac6c01614cce15ae704d025",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e30303031",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "a0f6fd29ee710e4951efe061a3c07d74cc9c7d51085e9713f3bde324a00a470f",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e30303031",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d7a637e0c787659c930dcf0683442c28e97f7a21eff972904fb9354fe5cd30b1",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_forged",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "9e91b77c4b8cd054dd4699fd2f5d570e92fe7b0d8804c9f9b208712390e492b7",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.selected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_backend_selected_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e6261636b656e645f73656c65637465642e30303031",
+   "event_type": "source_control.backend.selected",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e0298b4ced06c0e8477b3001bcd6567df9e5ba6b2dc6c856a4a7def3197c6827",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e30303031",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0d361ab476438b92b132118f9564b98cdebbe7177994998a0885d5118c4484e9",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e30303031",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b9843c63cdd7d2b7c2346a2980c6e09f3fdde428c172e101fc670e49025c6913",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e616d626967756f7573",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e2a5d8c1c2b636b0c16dd3d2a1656be01dcbab2cdf12cd581b9cf2025b742295",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e616d626967756f7573",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e2a5d8c1c2b636b0c16dd3d2a1656be01dcbab2cdf12cd581b9cf2025b742295",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e6c6567616379",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0d7a657307fe46a367288540dc91d28b023fb7f12d82461dcfb9f9e372ea091b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e666f726569676e",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e93d35621594973928aae4f5838485aae6f5863298f01481f5b61bfc992ef1f6",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e30303031",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "4f6b6abda3c3b40f4b401aab4d80e40ee250229645241e91cf39b9d716f3f79c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e30303031",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "a74293e658d53904b4df2efa203232ae47d5b834c50ef058df4a2e4a84ae71c8",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e30303031",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c54ce871b6224bd6d7aa9f6a00e59984da10de7a0b0333b3eb91600213ac4002",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e30303031",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "5a29cd3b9ba23cef6d58af5a2441c6ad28e8c9667dce1501cf95f3b0db796c1d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e30303031",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "293c5aa962244cdce2684f8b6ace12a73f47f04fe7d8a75aabf0689c93985ba0",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e30303031",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1ddb05b8aafdd37efc76581ef3166c43aa5f9e7f5a823d63fbb009eba369616e",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e30303031",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1f2fd2ad990dbba7ed7d5f415828cdf151b02454f0664c350cc4e371eb876656",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_forged",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "f37515428443358467f9b965e09771ffb9f74b4cba93214c02e5b84c720749d5",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f637265617465642e30303031",
+   "event_type": "source_control.checkpoint.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "7cdef47cc28fffaef89a96ba0b2ebd3d8d739f05389d110aa625de2a9bf8d805",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e30303031",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "62aedd944c17c556f7147112ace1d17531188e2201302e0adc05a7126a04ff30",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e30303031",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "05ff4eef0279b85d2e4190eaae3b2941bfb8c62a6620b12ddddaa56525964700",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e616d626967756f7573",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "087ddbe48b485d64a8742e5bd02c7b55e7fd3dc03f7e512a47729677da1434c8",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e616d626967756f7573",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "087ddbe48b485d64a8742e5bd02c7b55e7fd3dc03f7e512a47729677da1434c8",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e6c6567616379",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d00df989d171614777ec3a412e2a5bbeb77f219222861e0f48070baef7915ed4",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e666f726569676e",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "897f573640c5e5a8d9e869a366fed4e68abf882eaafd575c70f2925efb2e9d17",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e30303031",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "dfca89ce8ed2657a1643ffcd723d2e05ea49debdbd024b51622eaf901855b59b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e30303031",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "3da147e7025104e395f5234fb06c3cbb7a4e636e9c9091e49075665e7ac6e0bb",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e30303031",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c8188ea2b4cfdcd0df16882e95efc7e6c0e5ab88d9b8d2fe52c669e413fa8872",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e30303031",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "3d0d9d9872a8513021614fa59e7c2c8f8ff843578cc434e1acef3c00b76890b0",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e30303031",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "09d1937298b601e9f52db7d86970a9cd4ae86cf6a78e939284591d50a1bfd4ad",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e30303031",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8ba06416f09385afe0468ea60804b848584bf0c5b9c473633fa6cb17ae8c3342",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e30303031",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "505b27ba2221899a6c8a5e38056dd2f233fc03a75c63a0b1fbbf9f22331af14e",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_forged",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "5c111f8ecf2da6a75ac075f64fb408c2ee8b8dccae2d81c44fbe4e31318c9cef",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.checkpoint.restored",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_checkpoint_restored_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e636865636b706f696e745f726573746f7265642e30303031",
+   "event_type": "source_control.checkpoint.restored",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "f27506da0cc78f80f2f24d477f8d6ad8b467d4a4e6ecd01bf2eda49c42e1cd16",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8fa9de7b1e634a5940b21e1600cd6ef756367442c81a6af84176b87bfc35aaca",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2cde4470445f79ce3674ff6c06f2184266fe0cda38350570a19046124709a49c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e616d626967756f7573",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e1bb2f4277721ff71e40d6cc986b06a3193f85ecdeb01d846738c8c87f118f74",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e616d626967756f7573",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e1bb2f4277721ff71e40d6cc986b06a3193f85ecdeb01d846738c8c87f118f74",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e6c6567616379",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "66fd254952394cbb92ce56b5c53346aafa7bc812dec508ad3b6fa47224484941",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e666f726569676e",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e8a02538bf6e2a2ca37f4243d00c2373e950b0ca9a0b7616ded287d44893bfeb",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "4924838db3aa37188bfdcd78a71ab809dd1b480e09c3bd8964ff0954d53eaf79",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "999b64a76bc9ae8f3a036359494c20fe0fb80a7a307eb4e0939219a64255c304",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "52f0bbe592b27d79aa611a3c5516f2165d805c5a2c4ddb289e4406027cc0f772",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "253f92d8a7af8f19d09ceadc6beea7223691462ce67ea7875356d94a60039a12",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "5d9268a0334de0cc0df0413e9f5bb544476aa68d7eb48a9822465c9d08583413",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6918a2406c1720cfa11164fc0dc069a17f513a8df415e24b2be482698183884a",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_forged",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "9312fa711371bc7882d70debb7959e6d97cbbe60209d92cce602743d3690f0cd",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.fetch_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b0dd4a72f0c683593fe7087d6bcb3e035c13510a4d5e584b9d6f72c2c9e97ba2",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e30303031",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "cae77b6701c91667c13869e7c465cc8f47a371feb0185fcaa518218d3fe11c46",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e30303031",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c54d59b13fbc3de9d9e3ec9e2297b3bd7ce7299e80a6cab20d36b15ee5cb5833",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e616d626967756f7573",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8afec7b24416782a21ca1897ea566c6922b277b37cdd1274cc820366ac1ce59b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e616d626967756f7573",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8afec7b24416782a21ca1897ea566c6922b277b37cdd1274cc820366ac1ce59b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e6c6567616379",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "a0fed1c2aecb281d8cd768136d4b8a346ad7900585c50fc71a59245ea27945da",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e666f726569676e",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d1a071c91bc70d9777f2e8b2af40571cf1c97c94138641c7f12647472105354c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e30303031",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8d9288a08b85e0a3132acbeebaad248b58355aaa65c91e29562b63824aaadc03",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e30303031",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "71af6a313db27753c20f9b1a7e1ddd89955e87108754b8959c1719de3c7457a2",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e30303031",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "eed60f515edfcbc2e6e1b1979fa1ff00a70c476cdeafe4b44506ed3d1dd7c1be",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e30303031",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b613aa76acfe345e4b6074a6d1cf817d095f5b4260f5e279a29a211ea273f462",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e30303031",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8d059229ae8e74a9d7c665fe5ded1fc044fa6d3cc77d073b0b5eb33c78153cbd",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e30303031",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "da39948774ce19ad5db24b1f69760a4b8552648fa97b1350080d507bc5244457",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_forged",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0bab7cead4511a4aa50bcc18f53cc5aa6158893918ded757f6a1f60af6281f7f",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.fetch_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_fetch_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f66657463685f737461727465642e30303031",
+   "event_type": "source_control.remote.fetch_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c3b0fe5d722aa64e627b7da0a74ab8f2a645f360b0d0add1e5b8ea6f31aab11c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b25b860ac2bbc01497581fd1e185fcf33355ceaea6d56919b685ab30ee5dab36",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "73ce8c7bb5d0dba1ff62779f7ea8bd8b2d0bf5349a5f66cb82e7ba37f92a172a",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e616d626967756f7573",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "dac605fdf9445254704c7c5e3bda6f8ce5516394362603e363548b113443ca71",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e616d626967756f7573",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "dac605fdf9445254704c7c5e3bda6f8ce5516394362603e363548b113443ca71",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e6c6567616379",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "df69a0023b00c32fb16c300a0e0524876baef0dfefdeb32f2e47e1eef05e6105",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e666f726569676e",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "aca77e109f932a5a4b57cafefe2f1ee62d4ed53712766028c14b290f79768557",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "27d5a47635577cf54cca7857fb1c1ca9c1218b722800fe4b25692ca258b5e7b8",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "63a3600681c7b20f9af93d4e4728394c58b60445dec1914d37c0ec2b07bfe80c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "502128f9b0f4e6b7c6b5d87dc605c99192442a800c4b296a9e73d670f1773536",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8bb4ce33f5778b7a11edd45d774a81989ff39ca8ca703a763829f5fadc06a02d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6e7b3cf9158ba8bc6204656f01e2a0cdf73a2e66bbd399742f3e23d22c91795e",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "50825611b133aecd6d493c4b95ff22c1924ffd02d76d621ece714e44f9e739a0",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_forged",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0b5280bebef7fbe9381426b3d78a45eedf8a8abd9f386810f329823090b91211",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.publish_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c6d389557a7673f0819b46d24da90649ad15949547d94495dbeea0dc14616765",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e30303031",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6a2adfe872d2fd2bc72a608986d85b6f780fd40a6d63bd18be7c10af3573d6c0",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e30303031",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "ae9b956148657c21e95eea5850730048d867a160bffec1b913a6208b3438a895",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e616d626967756f7573",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "dc7412daefdaa97cfcfb6dbaca24604e23bf45eb908b988ef475c821e305755b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e616d626967756f7573",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "dc7412daefdaa97cfcfb6dbaca24604e23bf45eb908b988ef475c821e305755b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e6c6567616379",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "823ae0019e1930c80940118e6f80eced24fff971a8ef3307a11574c1e1d5b724",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e666f726569676e",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d7ebda2ccad618a4cf68f6af95e56585cc84169d64b4f0cbb33153a6a673dfa5",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e30303031",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0d2468736bb0aaafe20957816307c1004a4ee2f0d788c3dfa613663c5cd5ada9",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e30303031",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e916684ab01d428423aaed1436f80761e125d6e38c8000f2dfe007b25588d20b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e30303031",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d8e0af2ea7e6f3a4b9c21c39b92f25c032d0486cb3e77c82dd7a8340e8cba408",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e30303031",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "7869eecf4f190a602122fb6bb772e4f4ee89bddbc1e2e1eb452ff5ac9a9f9229",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e30303031",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "7b6f05870399d7f5a884ece5bb776f45d43bb43b2d56da98f39e3d27d454ab7a",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e30303031",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6a3ca506d4cd31ed343912931c1e28916208ba48a9f1806f6cf2f945369a0f91",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_forged",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d6cc977fe9457a09b938a051dd793bfbd3fdf076d026270b47a099b33f3563e0",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.publish_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_publish_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f7075626c6973685f737461727465642e30303031",
+   "event_type": "source_control.remote.publish_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "3e68da016557ec241ccc96551578802388f982578bbbe150c388ad33671a5321",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0bc9a56c10d97d15fb71c38f04e9215103ced800825e58e5c02f6c47ca141b23",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e0f62dee4256b26b3489ec077cf675c0d59f49ee037efaef7a8ae5bc88f32283",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e616d626967756f7573",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "177ecace5d499b0932e589fc21ef7b4a3833d3c5057566b2503ee2ea8bcd50df",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e616d626967756f7573",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "177ecace5d499b0932e589fc21ef7b4a3833d3c5057566b2503ee2ea8bcd50df",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e6c6567616379",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2b2b41313f8f611ac189f33536586cbf59189c6efc2aff6b5bdbdf3b5b2a464d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e666f726569676e",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "ae05e075dd90f0eeb27d44516c1c9fc2da3fb5eebea9cc32eee5879f89ed49ef",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "646ba819c40631a586c978b2f22abba81044904f531685ce365e24ac6f3f6a11",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "cf95f061906a984ef3c74c2b0d30b8b335c782508b1989dd4159831dc95026f5",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1bb04c79ce1935b843e3a159ec4ea40b20e9321b145f3b5adf16d8ffd9da9dca",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b747cf4f7cf5fa4de87daf349dd98abdfb38cb600a0b93c37e31dd2f9da3151b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0cec19feb4703e3e7c78b9613b1a577dc798f32a0addebb52e630b82ca63805f",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "5bde39e0f837551e7c0edb53ad089589fdb77384e2731905f5b230190300a989",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_forged",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "ec0f74f70b4849b68497db64997556dd97e5df15f3ecd192b3d809151ec3ef0d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_completed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_completed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f636f6d706c657465642e30303031",
+   "event_type": "source_control.remote.sync_completed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e3572c5b6474b549ad3dd8495d14660a55d7950fc9ff00ee7d70c794b326f457",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e30303031",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1ec460f4964d5dbc44e4870a00401b4e828ac6142aa45ecd64e75564454f8916",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e30303031",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "364a7bfb0e83b6036546d742f7aaafda29fd97191a2ce9e49ddd8d775e4c5557",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e616d626967756f7573",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2c2c7d2c0fb9a8e0d4bed0e6251cb1ef64b687d8e8414babaac9612c25164524",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e616d626967756f7573",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2c2c7d2c0fb9a8e0d4bed0e6251cb1ef64b687d8e8414babaac9612c25164524",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e6c6567616379",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "9e4b517fbab991e1eab27fd1a00b4f4e5603899bc240506be255dcf3a161ed5b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e666f726569676e",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "9a32990ec613e4fa0ceda04ccb2649bc544169d2a4b114b682602d253b31b37d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e30303031",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "417d6e8eef1d00cbc2956970f8e2f4a2645a35f217894b7c979c9e8ade317468",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e30303031",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "092feffc12bec1edeed031e90359e655b21ff56cff02cedd8c295c5424ce67ee",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e30303031",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d1fb97ffb11110bff69cacf3b971b1dee1807e87a52658bcf598fe8ee95e0712",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e30303031",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "08a4de91358be023ffb480b081d52430d6dbda1a7cc37f682920af6099e9d3e6",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e30303031",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1c9c4f89d886430a73d45629a35a7f376e902191d17f8c6d3b0f74aa5f18f44c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e30303031",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "af3f43e02123460d93c39122e1374ed1c4843b43567c1de0ca8f9df03408be5c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_forged",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "cb9950b768f0be527d70673db80c6f28c8f48891cc75cdb0a5428c1ef82476cf",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.remote.sync_started",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_remote_sync_started_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e72656d6f74655f73796e635f737461727465642e30303031",
+   "event_type": "source_control.remote.sync_started",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "aa169681685cf962f127d651cb28683388dd9b0ce2a13bbd94e15766c306f665",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e30303031",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "df13d0e3c819b74705e20e11891a1061aa4ac63fa3e49b689cbf8e8d63641499",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e30303031",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "da5d36cc5c482f8689bfe868692e9f6e99fd3c0bb313978c9023851000139cac",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e616d626967756f7573",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "deffa4932d5e499a590f3f9f6fe61a7b290a8f38916ab9e6274b6bc3456b7098",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e616d626967756f7573",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "deffa4932d5e499a590f3f9f6fe61a7b290a8f38916ab9e6274b6bc3456b7098",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e6c6567616379",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "3d97489a0cdee97de6c8b53158f379df21f1871fbaac8eca561e342390ecfed4",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e666f726569676e",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "62c740fbf34a3a2af3398bac5e9f9e3ce5e2d5e46770b363081d42cf2ef84c7f",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e30303031",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "4fb53e60c7d098f2bcb05a9a6a6b889e7262185daba0afac06a7d45d025d260d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e30303031",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "725b3ae8eba21954ccce108cb9adfbbc65844b80c55bb93fc84e663846ad4ead",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e30303031",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1b96e616cc856a0285b239591b9fc47ed41beca80f8125a6db85d7695f534201",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e30303031",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "be1b63a4c039d30d1ebd6e79b4807010ac217139a0e8b77956a861b42dc92042",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e30303031",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6f65c5dc43aca52a9791909a38222e943b3ad741108dbce6433cc22edecd44aa",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e30303031",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1b6269c3b4ded2a9ed42070aef59a50c989d88b3fb5995efcb2b5ccbaa864f1b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e30303031",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b6494a6f015ea2495e8fe48ba1f3c5c44e3921bdd8eb76bab7405b7d278ab4e2",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_forged",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8a0be58eba23d6cf2a0bea47724cb7aecde43387d4b8fbe2fb0e78de32ce5f68",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.bound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_bound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f626f756e642e30303031",
+   "event_type": "source_control.repository.bound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0d9ef455564d5ea218b42f95272942d288199a52a1a8027218057f6326a9a39a",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e30303031",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1b7790908bf5b218c56d6dad8dae8a3ef4880c0a3951c192758f86c23f456ecb",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e30303031",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e5e96c73ba512b350a5ff382be74732b0dfa01898dfd25c3ed5f27a5b2e49960",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e616d626967756f7573",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1fc13b2ad1f9a1fbd0adc4f583207dab0ec4a865563012ae10ee9774bb5ad039",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e616d626967756f7573",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1fc13b2ad1f9a1fbd0adc4f583207dab0ec4a865563012ae10ee9774bb5ad039",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e6c6567616379",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2f439f27d53070459337acb2744645f3ce7619228a8e1036417b6018cb7198a4",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e666f726569676e",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "701e7edad89e961d1e14594d25c64ee6d5de3a96760085b3f24da3e770d5952a",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e30303031",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "45e9fd3417e7cfea1636b06f4fd91a0b1f8c48a76c1e7df550d57101dacde153",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e30303031",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "5e26cd28f4e98463189e9e28a01352e809f5a7a76fe7dd5f518539268836ffc5",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e30303031",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "efe00576f1981cabb90c64331dd92063e71356e8c1e357d40db4a09f6562a8fe",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e30303031",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "9e69d54d49260e08df051a0700eb062625ae2a0747af7c4368dbfd0dbd9c6a7f",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e30303031",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "7a34a1cf0057589164181b46e60c732b449d7807dd010189eec6a2a01c4201a4",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e30303031",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2d90cdfa321ff62dd7a3404c115de2745bfc772a825f1b18aba51e37031293fb",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e30303031",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "00e798933f61319023170b0d2265d65da2119cc63ca87456d4ae105db767f146",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_forged",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "4fd98138645826a66be53eefc4b386fc6d71632ccbc11a2de7f1666c5903748e",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.repository.unbound",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_repository_unbound_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7265706f7369746f72795f756e626f756e642e30303031",
+   "event_type": "source_control.repository.unbound",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8a39d2c9a21fa0ee374ffb09a8754b7251438db6243d5326fefc70ebeb74a672",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e30303031",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "db9da4076232f8f327cc589122dac022e79e77c2e17042c119b7c01a89350e49",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e30303031",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "290f774ffefe96b715fec47a621f37a9931f6d04fcbd102b900646d5acfcc3c4",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e616d626967756f7573",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "ed0f6ec5f480187ea931ea4236f62b81fc4abe8f4a2418fc7b1c5f833b8f9dad",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e616d626967756f7573",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "ed0f6ec5f480187ea931ea4236f62b81fc4abe8f4a2418fc7b1c5f833b8f9dad",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e6c6567616379",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "ea7e3d3a6e7e4b3f652ab14dc2dfc3eef1fc37ee7de40ae513a6c37c2d7d1981",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e666f726569676e",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2faf349522b77d5ca0ecdb34b750c5217cb58471fa30e8df2dd8788eabd6ca0d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e30303031",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "344af2690f9386422c5e94591042730734bcfdd84727a87d3494a98382d7c2ff",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e30303031",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c3ad10995ef38aad66de65d138def8a36a97c10f50b66bd51953d290abcaa00e",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e30303031",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2bf24907809e78889e0bf23cf630cfd67e10d319f0a60b1eb129d82a787587ed",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e30303031",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d758dc2de89caac6cfce7e9e7224550e229a018e1f0b88d9cf42e41304f1c80d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e30303031",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "874e874e3e255a9bfccce33b7200e151bec74c4f4257613592d2dbfdc58addec",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e30303031",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c87398bbe5a5c6976d663390ba172f8fe16eab6c5d8e5f8e91fb4b2fa85be905",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_forged",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "aca396c09724eb710f5c73edeee1205b64637b0104d8b3d834b94a2649671124",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.status.refreshed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_status_refreshed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7374617475735f7265667265736865642e30303031",
+   "event_type": "source_control.status.refreshed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e18ee094b65a3b7c7acf922a1e8a590ec37629fadc65c39a3b2bfd65c0696fd6",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e30303031",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "9da6ab10d682e58e2f225e21770056348b6ae10dc150c4bab7b92384d298c7eb",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e30303031",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c6486142b0d13991477c7b7ca1e01c0a117da3a6265d638ad41f9ea547197d1e",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e616d626967756f7573",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "196e5a98d60b5cecd43b8a3b0c37d9533603f4de7f18edd015233d50bf78dafe",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e616d626967756f7573",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "196e5a98d60b5cecd43b8a3b0c37d9533603f4de7f18edd015233d50bf78dafe",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e6c6567616379",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6747b66b0e8eaaf8f62fd88e7e640f7856045a7cfbbd8e9881ebaa56519389b7",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e666f726569676e",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2a1861154000596d6fca31d8ee5e8b7ce633f15b6332f4be3e75e985dc67666b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e30303031",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b3ea95c0a2ace5a99cea493244425fcc8cddfaa81a90fdb636fae7b7ca1692c8",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e30303031",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "de685329f52e1b7844a67be6d52ab9dc5f641291ab103f4bc904759ea8d216a2",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e30303031",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "617fb35ef89543a1cddbea45a036b118dd558a1f87634dca7bbefd1b75f7798c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e30303031",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "4b2f4e2af7c7af80180862f2a36525c8bdd36bf5631075940dfe970b2c884b63",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e30303031",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "a09260cd9c788dd58b1d9ac988db9729d06b7dbbd2cb103adb223187f7453088",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e30303031",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "100804efeecec449e7d05e86b17f79d4372e58e27cbb323f69d517850f4fd1e9",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_forged",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "7b9796491dbfdcb2163e3911f22684543a9a6be33e9b158995085dd3f67f69a3",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.created",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_created_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f637265617465642e30303031",
+   "event_type": "source_control.workspace.created",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0c00abc304ef4bba894173314d52a47d82e5bea81320b60f5aab1c430e0ecd0b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e30303031",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8104d38782bd239be92b224b22b596b70a876ebf0f2ecd7298182b89f37c918d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e30303031",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "7b41aa2dfa43728170a0c690d4551d826426d08c58f0ddaaa841fb60c4f3a166",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e616d626967756f7573",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1073f3b53a355b64990ab8c5dc659be77bd80ef536cfb1427e0e3306e22c1b9b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e616d626967756f7573",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1073f3b53a355b64990ab8c5dc659be77bd80ef536cfb1427e0e3306e22c1b9b",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e6c6567616379",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8272c41e0df26859a9e6d96f59da731bd49d338be3fc3b5a9887002e1a4b1625",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e666f726569676e",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "eacbc110586e2f86adbf2597d2fd8dc8a7ba359d31ed972d63f37b440cb984ba",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e30303031",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2f993f2e7be7aaad10a5c6f14c7e369b32b4f81dd81b407a58349acacd94a3a9",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e30303031",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e8cb4541f5287607cc597e83e1fb233310fbe5dd974a47d4937143fc6ff17dbe",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e30303031",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "43fba0a6a2a05d885e2f077094ea90cf5f8cf0f99d7e8df830c39b745e9bbd39",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e30303031",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "81bd32d70f4980f0c74a72e045ed1fa950cdad98c014490520c213f1a8354ca2",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e30303031",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "a68ff0bac7650fe5f24a45ffb76f8e80be49bc27c6c239c76cae474e826ceff7",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e30303031",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "a67642f33633ebdb93210ba68ee59138514b5fcfd897dfd4c42c557b0c6b6c20",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_forged",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b75f4e2b8ec0e78d226540f692e1b23b9fecf8df0411be1967f973cbf4b2695c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.opened",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_opened_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f6f70656e65642e30303031",
+   "event_type": "source_control.workspace.opened",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6f5bf2454da7128ededf4e9252fdb452991fc5b002be450c45b3e731eab63991",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e30303031",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "7702607e490fb08cf89db0fec7676ee33dccdc250015534516db8702d0b267e2",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e30303031",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "25c416d85900fb072dccd93da8e6045462e9bfe93660706f17720cd94c6f9d85",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e616d626967756f7573",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8ed63bcc132e665f9186f18f0778e3dc22f3ecd2610ba0cf931e4787dcf02085",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e616d626967756f7573",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "8ed63bcc132e665f9186f18f0778e3dc22f3ecd2610ba0cf931e4787dcf02085",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e6c6567616379",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "bc424a67d267c10fba8d731473359acfabaa11aa5bedbf029a45581f0d82cf4c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e666f726569676e",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6b2909dfff026a3d9dd9544a9e764cc7475a28cf8b571a7c62f09eb5855ae535",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e30303031",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "57345af266514a9cc6b08dfb755c06555a15fffbc9c320c9d827855450d4ccfd",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e30303031",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "5cbd64a2154ce52abf3ba3b3f1741278eedc91e81053c5f191dd6d0a8e064515",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e30303031",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "655ae36e37b1af52e26c4d8245a1b46b2e2708d04d7d1828ae9d2bf92065fb71",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e30303031",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2182e5bfd2c12984f8b593f99c45b2713a26fc08206edaf12f9770be9a07d61a",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e30303031",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c8ba670baa8ff6f7ccf9202660bef4cc1633d3696d3d3cdf1a09032404359de9",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e30303031",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e8faad4b4ac69bcfa817aab57edef1f50dfd368d688fb37dc82b6f3e3396bcdd",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_forged",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d00bc5920926b53a3cb36371538f93b62d34dd4c44a5d58659e99873a1014b8a",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.removed",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_removed_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f72656d6f7665642e30303031",
+   "event_type": "source_control.workspace.removed",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2d6697e406620d7f72f1b54942e22b4fc687218290652c0692301637757849a8",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e30303031",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "7a489c261cbb1d720c6ccfd1a657aa9de4c9dc7725586c222e4d3bdcf5cd7ae9",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e30303031",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b06ff7b0002c2304d04450c62e091c5fb8a89bcc20e592f17286e98099a8ff0e",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e616d626967756f7573",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "602cf14446ae87a0cf3a4084e35fca286870680c945beb25c41e224e7fdb2fbc",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e616d626967756f7573",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "602cf14446ae87a0cf3a4084e35fca286870680c945beb25c41e224e7fdb2fbc",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e6c6567616379",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0402bf3604b096ca8d72118dc1806aec38584e3aae16107769a46feb190184e7",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e666f726569676e",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "359ff22fdf26cdcddc66ed8502586b05110c518f547a61f98acfc74f8446a9db",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e30303031",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "0d929cd43d1742f5f6f7a0ec811e9b544bbe1690e3e33fe5152d70df494f44b6",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e30303031",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "003ef4b6fd56f08c1ab7b272a4f53dbe91d10f393b68d9b6601b1a295a5e55ec",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e30303031",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6e75dca03313735bf5818e75316c2a452c829c825f1623010c8fe85ee695ac6d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e30303031",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "bb33cd2d3a2fedc22f14ad39fbb8977aa374a624375e4f48dea87233db720ba8",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e30303031",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "f96c7a77f9def72935a889f101cb8e0f1ee8956f57fb58fd9dc7f33468dcda5a",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e30303031",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "715a34abf000dc83b2ad2e66395de500bbfc0d23ab81967d93682aa57c82b3b4",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_forged",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e686910ccb857e40f38dce4af5e74cd2d3c121f790db0524531eaa7a89eb139c",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.workspace.switched",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_workspace_switched_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e776f726b73706163655f73776974636865642e30303031",
+   "event_type": "source_control.workspace.switched",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "9413b5ca8e6915e467493cf045e217b46789c18f954a97e70eb759d6e15e59ce",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e30303031",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "81cd18ca02d029c19ce1522c0d202fdbb366c75d71498921310b2ada983a0404",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e30303031",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b93347cd4c53f1d2c452a78dae4964d38b3e3997053aa8ef7cf981290b8f30f4",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e616d626967756f7573",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b0059a8295d6395df042e54f705bfec2251fd7d7c6145f178a0b830299708e62",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e616d626967756f7573",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b0059a8295d6395df042e54f705bfec2251fd7d7c6145f178a0b830299708e62",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e6c6567616379",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c192b674b8489bd5832fdb8b6764cd9acdf6af957fc4306a28fa9198611cfe78",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e666f726569676e",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "64a1bf05e8fa598f0275f1d3b71d0f8b1e33c92350f4fe43fdd6beb00278c719",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e30303031",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2fda7bfc006bf95190669f6024f7555128ca07835bd777915f03a5e8c5650dfd",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e30303031",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "7d9b68df8a0b84152d45cb842323018401a5a40dc817e09aac23117e2bcab2fc",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e30303031",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "e3047e7669dd30c1f10dc93a111f14f461447d0e76243438166443899986cd98",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e30303031",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "6bf91f5294d6c54ef9a7456c56a28816ea647543905f81b8ced1185dfb36213d",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e30303031",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "dc27067b3ef3a27708c1d92e3bcc3b97b601b5eda007ecfeda1aa7f2cef91324",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e30303031",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "9889eededf407fd08649e9c8995124fa4930ec296bddb9179ac160c7842ef3d2",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e30303031",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "c45ec7c622e157de9239bc623ac20a6a4442120257825a1037646de2d35997a4",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_forged",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "57aa9152d960bbb6d3c72c505061c84fc2d9fe6ff3a8ffaec02214f2bc16aba3",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.granted",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_granted_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6772616e7465642e30303031",
+   "event_type": "source_control.writer_lease.granted",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "20bc162e73ebb5c08df7a186d879add90adf34b9a27d8e5d2da0e88f93756893",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e30303031",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "eb5cd832613b2dab3928ab94be3a7219603c7d5518ba8a47f45caceb95b20969",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e30303031",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "3efc8f2816b5400d3d996904a63a64b51e595a71033bc436f8ff6c42a60597b8",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e616d626967756f7573",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d5aade14424a5aea17e771b4484f064c3080a6e2e9e2ce3853ec5dab390a7c2e",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e616d626967756f7573",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "d5aade14424a5aea17e771b4484f064c3080a6e2e9e2ce3853ec5dab390a7c2e",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e6c6567616379",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@0",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "4fbf184593222240e8d585a5e7aed44826c4f4fd789983d362c1c6e076c54158",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.backend.detected",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e666f726569676e",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "702c7bb995da5af6f2e3f8194716598797dd72999e2669fcd61e19ccc708749e",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e30303031",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "2bb286338709509a70db7a603a0d1c989a9f8d164b4bfb30936a7d2b17b1d2d5",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e30303031",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "b680ba819d217340134b6d6690368c57ce332410503d00219558719cb1071c49",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e30303031",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "590a14ca55735693acb34ff3584a646fc9e25ca1274e0545ec6e6a4e5d28a899",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e30303031",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "1b588f268d33897789550c53176549f11d181708a708ff6c5f4c0f908a68f4ba",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e30303031",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "555deadac443a12b9c317080f027a6efef23eb95653091487871489e28c30456",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e30303031",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "25d260d59c42cdd4332f67f69e8a0a9794b72c7a58061ca93d323f6ce09ea2c1",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e30303031",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "f6776967ab928720bca186cd1c8bcd3bddbe8717b0c3c069a8d90aed1c816278",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_forged",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "54c434896b3d871d9ce854efe2b848feab83dd4addcb476545de1b0c2a4aeca2",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  },
+  {
+   "admission": {
+    "family": "source_control.writer_lease.lost",
+    "registry_revision": "w3b-prepared-1.0.0",
+    "version": "1.0.0"
+   },
+   "event_id": "evt_scs_writer_lease_lost_36663163326139652d336237642d346338352d396532312d356130643763346238653133_70726f6a2e616c706861_6f702e7772697465725f6c656173655f6c6f73742e30303031",
+   "event_type": "source_control.writer_lease.lost",
+   "recipe": "w3b@1",
+   "resource_manifest_sha256": "6f0a5c9a520bd0d806814b8bd23f30f4221366abcf38591957074211f051b52a",
+   "server_id": "srv.home",
+   "source_commitment": "9a6f0774c6c60fdcb75c2359988a67888a560cce299cf43b2cd90dcdb1d1f418",
+   "storage_instance_id": "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+  }
+ ],
+ "stores": [
+  "6f1c2a9e-3b7d-4c85-9e21-5a0d7c4b8e13"
+ ]
+}

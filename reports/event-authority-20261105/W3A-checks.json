@@ -1,0 +1,125 @@
+{
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "phase": "1",
+  "native_execution": "NOT_RUN",
+  "oracle_code": "NOT_AUTHORED_PHASE_2",
+  "checks": [
+    {
+      "name": "forge-followup",
+      "command": [
+        "python3",
+        "scripts/pm_forge_command_followup.py"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-11-05T05:16:52.368149+00:00",
+      "available_GB_at_start": 10,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/forge-followup.log",
+      "sha256": "e463c160e5a0d22ffe74113ba42849669ee0322fc8c584170363f791b6dbd485"
+    },
+    {
+      "name": "forge-packet-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_forge_packet_semantics.py"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-11-05T05:16:52.699662+00:00",
+      "available_GB_at_start": 10,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/forge-packet-tests.log",
+      "sha256": "e3f0a689e207779e1d8265dcb7a3e30e982ff88789aa1936ef5cfd7f7f689cf8"
+    },
+    {
+      "name": "storage-recovery",
+      "command": [
+        "python3",
+        "scripts/pm-storage-recovery-contracts.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-11-05T05:16:59.354906+00:00",
+      "available_GB_at_start": 10,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/storage-recovery.log",
+      "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
+    },
+    {
+      "name": "structure-complete",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/check_structure.py"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-11-05T05:27:38.715116+00:00",
+      "available_GB_at_start": 9,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/structure-complete.log",
+      "sha256": "1c1cbc6ceb3764535edd0a11ea693184335a6eb08a7a02329e848e21d4f74f86"
+    },
+    {
+      "name": "shard-generate-complete",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-11-05T05:27:41.928200+00:00",
+      "available_GB_at_start": 9,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/shard-generate-complete.log",
+      "sha256": "984126b6be07784510fec816d860b321f52d68978b5b99e7a2bcd292d5a86aa3"
+    },
+    {
+      "name": "index-generate-complete",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-11-05T05:27:49.662221+00:00",
+      "available_GB_at_start": 8,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/index-generate-complete.log",
+      "sha256": "f85443c580e4a7932161ec5e00ca35f8c96da1efda29296f8aadfd08ca14dc47"
+    },
+    {
+      "name": "shard-check-complete",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-11-05T05:28:49.155253+00:00",
+      "available_GB_at_start": 11,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/shard-check-complete.log",
+      "sha256": "7e9b336abf34b1be511ab317aac1456585f14badaad7a90773a08a6e9d171835"
+    },
+    {
+      "name": "index-validate-complete",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "started_at_utc": "2026-11-05T05:29:20.085474+00:00",
+      "available_GB_at_start": 11,
+      "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3A/index-validate-complete.log",
+      "sha256": "98b27354c1874bc332c23ead6b680b278345941e52cf5ad1464edc1f530ee424"
+    }
+  ],
+  "memory_pause": {
+    "available_GB_when_paused": 5,
+    "available_GB_at_two_minute_recheck": 5,
+    "available_GB_when_resumed": 14
+  },
+  "claim_boundary": "Existing regression tests plus structural/governance-derived consistency; no event-specific oracle execution or guard-isolation proof."
+}

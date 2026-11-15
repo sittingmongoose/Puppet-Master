@@ -1,0 +1,1499 @@
+{
+  "schema_id": "pm.goal_own_c3_w5.part3_remaining.v1",
+  "family": "goal_run.certified",
+  "closure": "NOT_COMPLETE",
+  "representation_successor": "AUTHORED_COMPONENT_CONTROLS_PASS",
+  "complete_original_tuple_positives": 0,
+  "complete_original_tuple_negatives": 0,
+  "technical_blocker": null,
+  "product_question": null,
+  "reason": "Full original semantic fixture construction and execution is unfinished. No claim that frozen packages or native NOT_RUN block authored completion. General successor rule still applies.",
+  "facets": [
+    {
+      "id": "CF-01",
+      "name": "Whole v3 wire/identity",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete I0/IdentityInput and all actual original identity sources; full producer25-to-Event equality, original recipe/input/result carriers, nullable/wire/Unicode and identity negatives."
+    },
+    {
+      "id": "CF-02",
+      "name": "Producer assignment/invocation",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Full AssignmentSource, InvocationSource, ResolverGraphSource, ReferenceSource, CausalSource and WholeProducerSource at original prepare.v2 and each source helper, complete field mapping and after-helper drift refusals."
+    },
+    {
+      "id": "CF-03",
+      "name": "Native successful chain",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete OriginalCertificationSource, required-node/WorkNode/Attempt, final decision, durable Standard/capture, original successful native result/origin and D01 chain; missing/failed/cancelled/waived/exception negatives."
+    },
+    {
+      "id": "CF-04",
+      "name": "Birth/profile/complete composition",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Full B1 native birth/Goal/binding argument/candidate union, all participant registration and method-root occurrences, original v7/prepare.v2 profile selection. Eager reference/profile-member DAG controls are done, but not a complete original birth tuple or full final owner-to-composition graph."
+    },
+    {
+      "id": "CF-05",
+      "name": "Preidentity chronology",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete B1 joint native+compact Birth+Control candidate/preimage tuple; I0 sources before issued identity/P9; original identity issuance then producer preparation. Whole chronology, cyclic/future/partial visibility negatives."
+    },
+    {
+      "id": "CF-06",
+      "name": "Append/dedupe/all-member custody",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete F5a preappend source and prospective Event, F5b frame+manifest candidates and original barriers, F5c full multi-member group custody/readback, F5d EventPhase/control/outer return. Equal retry versus unequal conflict, replay-only current refusal, lost acknowledgements and partial group negatives."
+    },
+    {
+      "id": "CF-07",
+      "name": "Native+D01 joint commit/release",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete native candidates, original Event prerequisite, all-member AppendEvidence, joint native/D01/Commit/Origin/control before/after images, genuine readback then Release; crash, premature release, pending visibility, partial commit and passive-repair negatives."
+    },
+    {
+      "id": "CF-08",
+      "name": "Independent native/Goal/guard source boundaries",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete Q1-Q4 actual GuardStoreSource/GuardReadResult and separate Goal/native/permissions/Stop sources at every enumerated participant-method occurrence, every lower own boundary and outer final disclosure. Missing/borrowed/stale/foreign/drifting source negatives."
+    },
+    {
+      "id": "CF-09",
+      "name": "Retained/full-Event/historical/current",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "All original retained metadata and custody roots with separately callable retained-native, inspect-original, read-historical and read-current tuples; lawful later state change/history, expired source, payload-only inspection and passive effects negatives."
+    },
+    {
+      "id": "CF-10",
+      "name": "Full global prefix/reducer",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete generic CURRENT/manifest/segment/index/raw frames/gaps and all actual original supported legacy/native-v7/certified source tuples. Off-run validation before filtering, original Start expiry/gap rebuilding, deterministic reducer and every unsupported/conflicting/reordered/foreign source case."
+    },
+    {
+      "id": "CF-11",
+      "name": "Checkpoint/CAS/stage/cutover",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete actual and candidate ProjectState, full root+generic source preimages, all exact afterimages, source/owner epochs, row/checkpoint operations and actual transaction adapter. Atomic crash/lost ack, stale frontier/root, partial staging/current cutover and fourth-generation negatives. Representation round-trips alone are not these tuples."
+    },
+    {
+      "id": "CF-12",
+      "name": "Original lifetime/restore",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete original authority backup/restore and source/deletion/hold/tombstone controls, lawful Start expiry/survivor gap and BRS-031 derived rebuild. Missing authority, resurrection, extended source hold, partial authority backup and archive negatives."
+    },
+    {
+      "id": "P4",
+      "name": "Bounded reducer",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Same complete original global-prefix and lifecycle-source corpus as CF-10, including all unrelated physical frames before filtering and every exact old/current branch adapter."
+    },
+    {
+      "id": "P5",
+      "name": "Birth/anchor/frontier",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete generation roots with original nine-field durable token, real actual root revision/transaction, original profile digest, immutable anchor and complete coverage/gap/frontier chain from the full prefix. Key/row/operation representation components are done; no full original generation tuple is executed."
+    },
+    {
+      "id": "P6",
+      "name": "Storage read/publish and cutover",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete independently callable lower read_sources and publish argument/result unions, original sources, candidate state, actual root/full frontier CAS and bounded joint publication/stage/cutover/fault corpus."
+    },
+    {
+      "id": "P7",
+      "name": "Current and historical final disclosure",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete original coordinator read_current union (all twenty-seven consumer current arguments), original native/Standard/D01/Goal/Stop/guard and exhaustive current frontier at each helper and final held fence. Separate retained history, current drift and withdrawn reader negatives."
+    },
+    {
+      "id": "P8",
+      "name": "Source lifetime and restore",
+      "status": "NOT_RUN_COMPLETE_ORIGINAL_TUPLE",
+      "remaining": "Complete source-coupled content/pack/disclosure controls across staged/current/retired/held generations and authentic source policies; full original backup and current BRS-031 post-restore rebuild with deletion/hold/access controls."
+    }
+  ],
+  "selected_consumer_methods": [
+    {
+      "method": "owner.goal_run.certified.read_retained_native.reference.v1",
+      "original_method": "owner.goal_run.certified.read_retained_native.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "retained_native",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/RetainedCertifiedNative"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/RetainedCertifiedNative",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.certified.inspect_original.reference.v1",
+      "original_method": "owner.goal_run.certified.inspect_original.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "retained_native",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/RetainedCertifiedNative"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        {
+          "name": "event",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CertifiedEventCustody"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertified",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.started_cancelled_certified.project_prefix.reference.v1",
+      "original_method": "owner.goal_run.started_cancelled_certified.project_prefix.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        },
+        {
+          "name": "original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet"
+        },
+        {
+          "name": "legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence"
+        },
+        {
+          "name": "goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        },
+        {
+          "name": "actual_projection_state",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectorResult",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P8"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P8"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.certified.read_historical.reference.v1",
+      "original_method": "owner.goal_run.certified.read_historical.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "retained_native",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/RetainedCertifiedNative"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        {
+          "name": "event",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CertifiedEventCustody"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        },
+        {
+          "name": "actual_projection_state",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalCertified",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P5",
+        "P8"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P5",
+        "P8"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.certified.read_current.reference.v1",
+      "original_method": "owner.goal_run.certified.read_current.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "retained_native",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/RetainedCertifiedNative"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        {
+          "name": "event",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/CertifiedEventCustody"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        },
+        {
+          "name": "actual_projection_state",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+        },
+        {
+          "name": "coordinator_request",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Request"
+        },
+        {
+          "name": "coordinator_original_certification_source",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/OriginalCertificationSource"
+        },
+        {
+          "name": "coordinator_current_goal",
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        {
+          "name": "coordinator_durable_standard",
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "name": "coordinator_whole_producer_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_source.v1.schema.json#/$defs/WholeProducerSource"
+        },
+        {
+          "name": "coordinator_identity_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json#/$defs/IdentityResult"
+        },
+        {
+          "name": "coordinator_whole_native_candidate",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/CertificationCandidateResult"
+        },
+        {
+          "name": "coordinator_producer25",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_producer_submission.v1.schema.json"
+        },
+        {
+          "name": "coordinator_intent",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageIntent"
+        },
+        {
+          "name": "coordinator_event_phase",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageEventPhase"
+        },
+        {
+          "name": "coordinator_commit",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageCommit"
+        },
+        {
+          "name": "coordinator_origin",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageOrigin"
+        },
+        {
+          "name": "coordinator_control",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageControl"
+        },
+        {
+          "name": "coordinator_published_native",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json#/$defs/PublishedWorkflow"
+        },
+        {
+          "name": "coordinator_whole_original_event_source",
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json#/$defs/OriginalEventPrerequisite"
+        },
+        {
+          "name": "coordinator_all_member_append_evidence",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json#/$defs/AppendEvidence"
+        },
+        {
+          "name": "coordinator_release",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/StorageRelease"
+        },
+        {
+          "name": "actual_guard_source",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardStoreSource"
+        },
+        {
+          "name": "actual_guard_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardReadResult"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentCertified",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P7",
+        "P8"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P7",
+        "P8"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.started_cancelled_certified.read_historical_legacy.reference.v1",
+      "original_method": "owner.goal_run.started_cancelled_certified.read_historical_legacy.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        },
+        {
+          "name": "original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet"
+        },
+        {
+          "name": "legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence"
+        },
+        {
+          "name": "goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        },
+        {
+          "name": "actual_projection_state",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/HistoricalLegacy",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P4",
+        "P5",
+        "P8"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P4",
+        "P5",
+        "P8"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.started_cancelled_certified.read_current_started.original_profile.reference.v1",
+      "original_method": "owner.goal_run.started_cancelled_certified.read_current_started.original_profile.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        },
+        {
+          "name": "original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet"
+        },
+        {
+          "name": "legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence"
+        },
+        {
+          "name": "goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        },
+        {
+          "name": "actual_projection_state",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        {
+          "name": "original_0",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CurrentStartedPrivate"
+        },
+        {
+          "name": "original_1",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/CurrentStartedGoal"
+        },
+        {
+          "name": "original_2",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "original_3",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentStartedOriginal",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P4",
+        "P5",
+        "P7",
+        "P8"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P4",
+        "P5",
+        "P7",
+        "P8"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.started_cancelled_certified.read_current_started.native_v7.reference.v1",
+      "original_method": "owner.goal_run.started_cancelled_certified.read_current_started.native_v7.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        },
+        {
+          "name": "original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet"
+        },
+        {
+          "name": "legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence"
+        },
+        {
+          "name": "goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        },
+        {
+          "name": "actual_projection_state",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        {
+          "name": "native_v7_0",
+          "realm": "companions",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.native_v7.v1.schema.json#/$defs/CurrentStartedPrivate"
+        },
+        {
+          "name": "native_v7_1",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/CurrentStartedGoal"
+        },
+        {
+          "name": "native_v7_2",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "native_v7_3",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        },
+        {
+          "name": "actual_guard_source",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardStoreSource"
+        },
+        {
+          "name": "actual_guard_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardReadResult"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentStartedV7",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P4",
+        "P5",
+        "P7",
+        "P8"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P4",
+        "P5",
+        "P7",
+        "P8"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.started_cancelled_certified.read_current_cancelled.original_profile.reference.v1",
+      "original_method": "owner.goal_run.started_cancelled_certified.read_current_cancelled.original_profile.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        },
+        {
+          "name": "original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet"
+        },
+        {
+          "name": "legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence"
+        },
+        {
+          "name": "goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        },
+        {
+          "name": "actual_projection_state",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        {
+          "name": "original_0",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CurrentCancelledPrivate"
+        },
+        {
+          "name": "original_1",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/CurrentCancelledGoal"
+        },
+        {
+          "name": "original_2",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "original_3",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentCancelledOriginal",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P4",
+        "P5",
+        "P7",
+        "P8"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P4",
+        "P5",
+        "P7",
+        "P8"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.goal_run.started_cancelled_certified.read_current_cancelled.native_v7.reference.v1",
+      "original_method": "owner.goal_run.started_cancelled_certified.read_current_cancelled.native_v7.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        },
+        {
+          "name": "original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet"
+        },
+        {
+          "name": "legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence"
+        },
+        {
+          "name": "goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        },
+        {
+          "name": "actual_projection_state",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        {
+          "name": "native_v7_0",
+          "realm": "companions",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.native_v7.v1.schema.json#/$defs/CurrentCancelledPrivate"
+        },
+        {
+          "name": "native_v7_1",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/CurrentCancelledGoal"
+        },
+        {
+          "name": "native_v7_2",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "native_v7_3",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        },
+        {
+          "name": "actual_guard_source",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardStoreSource"
+        },
+        {
+          "name": "actual_guard_result",
+          "realm": "coordinator",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/GuardReadResult"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CurrentCancelledV7",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P4",
+        "P5",
+        "P7",
+        "P8"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P4",
+        "P5",
+        "P7",
+        "P8"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.storage.goal_run.started_cancelled_certified.read_sources.reference.v1",
+      "original_method": "owner.storage.goal_run.started_cancelled_certified.read_sources.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        },
+        {
+          "name": "original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet"
+        },
+        {
+          "name": "legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence"
+        },
+        {
+          "name": "goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        },
+        {
+          "name": "actual_projection_state",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "actual_projection_state",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            },
+            {
+              "name": "generic",
+              "realm": "cancelled_native_consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            },
+            {
+              "name": "actual_generic_sources",
+              "realm": "cancelled_native_consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            },
+            {
+              "name": "original_certifications",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            },
+            {
+              "name": "legacy_sources",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            },
+            {
+              "name": "goal_causes",
+              "realm": "cancelled_goal_consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            },
+            {
+              "name": "filesafe_effects",
+              "realm": "cancelled_filesafe_consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            },
+            {
+              "name": "whole_original_custody_source",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            },
+            {
+              "name": "whole_current_disclosure_source",
+              "realm": "producer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P8"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P8"
+      ],
+      "tuple_status": "NOT_RUN"
+    },
+    {
+      "method": "owner.storage.goal_run.started_cancelled_certified.publish.reference.v1",
+      "original_method": "owner.storage.goal_run.started_cancelled_certified.publish.v1",
+      "whole_arguments": [
+        {
+          "name": "request",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ScopeRequest"
+        },
+        {
+          "name": "generic",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/GenericSnapshot"
+        },
+        {
+          "name": "actual_generic_sources",
+          "realm": "cancelled_native_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/ActualGenericSources"
+        },
+        {
+          "name": "original_certifications",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/OriginalCertifiedSet"
+        },
+        {
+          "name": "legacy_sources",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/LegacyProjectionEvidence"
+        },
+        {
+          "name": "goal_causes",
+          "realm": "cancelled_goal_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_goal_arguments.v1.schema.json#/$defs/ProjectGoalCauses"
+        },
+        {
+          "name": "filesafe_effects",
+          "realm": "cancelled_filesafe_consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects"
+        },
+        {
+          "name": "actual_projection_state",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectState"
+        },
+        {
+          "name": "whole_original_custody_source",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/ActualConsumerSources"
+        },
+        {
+          "name": "whole_current_disclosure_source",
+          "realm": "producer",
+          "schema_ref": "https://puppetmaster.local/proposals/goal_certified_original_sources.v1.schema.json#/$defs/OriginalStructuredValue"
+        },
+        {
+          "name": "candidate",
+          "realm": "consumer",
+          "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectionCandidate"
+        }
+      ],
+      "return_variants": [
+        {
+          "outcome": "success",
+          "results": [
+            {
+              "name": "value",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectorResult",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        },
+        {
+          "outcome": "unavailable",
+          "results": [
+            {
+              "name": "unavailable",
+              "realm": "consumer",
+              "schema_ref": "https://puppetmaster.local/proposals/goal_run_started_cancelled_certified_consumer.v1.schema.json#/$defs/Unavailable",
+              "authority": "Actual independent native owner-private acquisition; whole schema transport is not authority"
+            }
+          ]
+        }
+      ],
+      "entry_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P8"
+      ],
+      "final_predicates": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P8"
+      ],
+      "tuple_status": "NOT_RUN"
+    }
+  ],
+  "coordinator_tuple_map": "Plans/goal_certified_event_coordinator_contracts/methods.json",
+  "all_original_lower_boundary_occurrences": "Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json",
+  "append_phase_tuples": "Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json",
+  "required_regressions_not_run": {
+    "status": "NOT_RUN",
+    "reason": "Long inherited DG audits remained unstarted behind other active checkers. Queue controller stopped for the brief-authorized partial handoff; no checker owned by another worker was signalled. No earlier result is asserted as fresh.",
+    "commands": [
+      [
+        "python3",
+        "scripts/pm_goal_current_writer_oracles.py",
+        "--guard-table",
+        "<output>/current-guards.json"
+      ],
+      [
+        "python3",
+        "scripts/pm_goal_history_reader_fixtures.py",
+        "--guard-table",
+        "<output>/history-guards.json"
+      ],
+      [
+        "python3",
+        "scripts/pm_goal_run_stop_block_oracles.py",
+        "--guard-table",
+        "<output>/stop-block-guards.json"
+      ],
+      [
+        "python3",
+        "scripts/pm_goal_lifecycle_successor_oracles.py",
+        "--guard-table",
+        "<output>/lifecycle-guards.json"
+      ]
+    ]
+  }
+}

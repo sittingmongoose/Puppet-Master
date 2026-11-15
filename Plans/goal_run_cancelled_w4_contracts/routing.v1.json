@@ -1,0 +1,79 @@
+{
+  "schema_id": "pm.goal_run_cancelled.scoped_routing.v1",
+  "status": "NEWLY_AUTHORED_UNINSTALLED_SUCCESSOR",
+  "network_fallback": false,
+  "whole_bank_merge": false,
+  "predecessor": {
+    "path": "Plans/goal_run_cancelled_consumer_schema_resources.json",
+    "sha256": "b616a2b1c219dceb152f1d67fee0b23a00afe8c98c0e821bff04a2592704869c"
+  },
+  "source_realm": "native_consumer",
+  "source_whole": {
+    "path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+    "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1"
+  },
+  "source_retrieval_aliases": [
+    "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+    "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1"
+  ],
+  "sites": [
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/receipt/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_completion_receipt"
+    },
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/dispatch/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_dispatch_receipt"
+    },
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/changes/items/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_change_receipt"
+    },
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/tests/items/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt"
+    },
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/auditor/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_verification_receipt"
+    },
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/auditor_cycles/items/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_cycle_report"
+    },
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/source_control/items/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_receipt"
+    },
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/finalization/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_finalization_receipt"
+    },
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/validators/items/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/validator_outcome"
+    },
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/repairs/items/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/repair_attempt_receipt"
+    },
+    {
+      "schema_location": "/$defs/OriginalCompletionInput/properties/promotions/items/$ref",
+      "literal_reference": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/merge_or_promotion_receipt"
+    }
+  ],
+  "absolute_target_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+  "target_realm": "retained_original_d05",
+  "target_whole": {
+    "path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+    "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+  },
+  "target_realm_selection": {
+    "manifest": {
+      "path": "Plans/goal_run_certified_consumer_contracts/resource-realms.json",
+      "sha256": "37bbb87f92c86add8555e8f35498b4e609bd270fe38941396ff2fba72896ea66"
+    },
+    "realm": "retained_original_d05"
+  },
+  "rule": "Only the listed literal reference at the listed location in the exact whole source, in native_consumer, may enter the pinned retained_original_d05 bank. Nested resolution stays in that bank. No guessed alias, global registration, fallback, original byte change, fragment copy or current-recipe substitution."
+}

@@ -1,0 +1,1265 @@
+{
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "lane": "W3A",
+  "status": "prepared_without_admission_phase1",
+  "contracts": [
+    {
+      "event_type": "forge.api.compatibility_changed",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1200",
+      "envelope_unit": "CV-1200",
+      "storage_unit": "SP-1200",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_api_compatibility_changed.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-007",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/api_compatibility",
+      "bindings": {
+        "producer": "ForgeCompatibilityProbe.commit_result@1.0.0",
+        "publisher": "forge.api.compatibility_changed.publish@1.0.0",
+        "consumer": "consumer.forge.api.compatibility_changed.history@1.0.0",
+        "projector": "projector.forge.api.compatibility_changed.history@1.0.0",
+        "source_family": "forge_api_compatibility_changed_source",
+        "checkpoint_family": "forge_api_compatibility_changed_checkpoint"
+      },
+      "source_predicate": "An actual compatibility probe replaces a previously committed compatibility assessment and changes at least one endpoint/version/release-state, schema pin, mutation-safety, scope, feature or rate/currentness fact. Unchanged re-observation saves no change. Unknown or failed compatibility remains mutation-closed; a changed assessment does not itself enable mutation.",
+      "specific_fence": "Endpoint pins are per endpoint; a preview-only or absent route degrades only its dependent capability. A synthesized global API version is not evidence.",
+      "consumer_purpose": "Forge Settings connection health reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.connection.capabilities_changed",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1201",
+      "envelope_unit": "CV-1201",
+      "storage_unit": "SP-1201",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_connection_capabilities_changed.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-003",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
+      "bindings": {
+        "producer": "ForgeCapabilityResolver.commit_assessment@1.0.0",
+        "publisher": "forge.connection.capabilities_changed.publish@1.0.0",
+        "consumer": "consumer.forge.connection.capabilities_changed.history@1.0.0",
+        "projector": "projector.forge.connection.capabilities_changed.history@1.0.0",
+        "source_family": "forge_connection_capabilities_changed_source",
+        "checkpoint_family": "forge_connection_capabilities_changed_checkpoint"
+      },
+      "source_predicate": "A committed capability assessment for the exact connection differs from its previous committed assessment. Preserve requested/effective capability, catalog and adapter generation, tier/license/version/currentness and exact disabled reason. Repeating an unchanged probe is not a change.",
+      "specific_fence": "A review-scoped capability can narrow the binding ceiling only. API, transport and Actions support stay independent; unknown mutation safety never authorizes a write.",
+      "consumer_purpose": "Forge capability routing history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.connection.reauthorized",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1202",
+      "envelope_unit": "CV-1202",
+      "storage_unit": "SP-1202",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_connection_reauthorized.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-006",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/app_installation",
+      "bindings": {
+        "producer": "ForgeConnectionLifecycle.commit_reauthorization@1.0.0",
+        "publisher": "forge.connection.reauthorized.publish@1.0.0",
+        "consumer": "consumer.forge.connection.reauthorized.history@1.0.0",
+        "projector": "projector.forge.connection.reauthorized.history@1.0.0",
+        "source_family": "forge_connection_reauthorized_source",
+        "checkpoint_family": "forge_connection_reauthorized_checkpoint"
+      },
+      "source_predicate": "The credential owner has completed a successful reauthorization for the same provider/instance/account connection and returned a new verified non-secret grant/lease result. Opening protected sign-in, waiting, cancellation, a failed auth result or merely selecting an account cannot satisfy this predicate.",
+      "specific_fence": "Broker custody and protected-browser restrictions remain external owners. Capture grant identity and scoped outcome only, with no token, code, credential path or protected-browser content.",
+      "consumer_purpose": "Hosting Services grant-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a)",
+      "retention_anchor": "change entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.connection.validated",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1203",
+      "envelope_unit": "CV-1203",
+      "storage_unit": "SP-1203",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_connection_validated.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-003",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
+      "bindings": {
+        "producer": "ForgeConnectionLifecycle.commit_connection_test@1.0.0",
+        "publisher": "forge.connection.validated.publish@1.0.0",
+        "consumer": "consumer.forge.connection.validated.history@1.0.0",
+        "projector": "projector.forge.connection.validated.history@1.0.0",
+        "source_family": "forge_connection_validated_source",
+        "checkpoint_family": "forge_connection_validated_checkpoint"
+      },
+      "source_predicate": "The exact connection test has a settled typed validation result. Record its actual succeeded, degraded, blocked or failed result, including the capability/currentness proof. Dispatch, cached labels, an unfinished probe and a different account test do not count as completed validation.",
+      "specific_fence": "Validation does not create an account or repository and sign-in is not repository-write proof. A failed validation must not be rendered successful.",
+      "consumer_purpose": "Hosting Services connection-test history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.mirror.connected",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1204",
+      "envelope_unit": "CV-1204",
+      "storage_unit": "SP-1204",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_connected.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-002",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
+      "bindings": {
+        "producer": "ForgeMirrorCoordinator.commit_connect@1.0.0",
+        "publisher": "forge.mirror.connected.publish@1.0.0",
+        "consumer": "consumer.forge.mirror.connected.history@1.0.0",
+        "projector": "projector.forge.mirror.connected.history@1.0.0",
+        "source_family": "forge_mirror_connected_source",
+        "checkpoint_family": "forge_mirror_connected_checkpoint"
+      },
+      "source_predicate": "An admitted connect/reconnect operation commits a topology with the exact distinct source/destination bindings, authoritative binding, requested/effective mode and revision fence. Preserve the prior detached/unconnected state and successful transition receipt. Starting an attempted connection is not connected.",
+      "specific_fence": "Human disclosure and Permissions/FileSafe, capability and current-revision fences precede effects. Retired Origin or a generic transport route cannot regain mirror authority.",
+      "consumer_purpose": "Source Control Mirror Health history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.mirror.degraded",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1205",
+      "envelope_unit": "CV-1205",
+      "storage_unit": "SP-1205",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_degraded.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-002",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
+      "bindings": {
+        "producer": "ForgeMirrorCoordinator.commit_degradation@1.0.0",
+        "publisher": "forge.mirror.degraded.publish@1.0.0",
+        "consumer": "consumer.forge.mirror.degraded.history@1.0.0",
+        "projector": "projector.forge.mirror.degraded.history@1.0.0",
+        "source_family": "forge_mirror_degraded_source",
+        "checkpoint_family": "forge_mirror_degraded_checkpoint"
+      },
+      "source_predicate": "The committed topology first enters degraded service relative to its prior committed state, with exact lag/divergence/health evidence. Repeated observation of the same degradation does not emit another transition. No automatic detach, authority transfer or recovery is implied.",
+      "specific_fence": "Direction and lag do not select authority. Preserve both binding identities and the actual revision fence even when service is degraded.",
+      "consumer_purpose": "Source Control Mirror Health degradation reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.mirror.detached",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1206",
+      "envelope_unit": "CV-1206",
+      "storage_unit": "SP-1206",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_detached.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-002",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
+      "bindings": {
+        "producer": "ForgeMirrorCoordinator.commit_detach@1.0.0",
+        "publisher": "forge.mirror.detached.publish@1.0.0",
+        "consumer": "consumer.forge.mirror.detached.history@1.0.0",
+        "projector": "projector.forge.mirror.detached.history@1.0.0",
+        "source_family": "forge_mirror_detached_source",
+        "checkpoint_family": "forge_mirror_detached_checkpoint"
+      },
+      "source_predicate": "A permitted, disclosed detach completes and commits effective mode detached, preserving the preceding topology and the successful transition receipt. An attempted or uncertain detach remains its truthful owner result and cannot be presented as detached.",
+      "specific_fence": "Detach preserves the recovery/dedupe and capability re-resolution obligations. It never deletes repositories or silently transfers authority.",
+      "consumer_purpose": "Source Control Mirror Health detach-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.mirror.status_changed",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1207",
+      "envelope_unit": "CV-1207",
+      "storage_unit": "SP-1207",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_status_changed.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-002",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
+      "bindings": {
+        "producer": "ForgeMirrorCoordinator.commit_status@1.0.0",
+        "publisher": "forge.mirror.status_changed.publish@1.0.0",
+        "consumer": "consumer.forge.mirror.status_changed.history@1.0.0",
+        "projector": "projector.forge.mirror.status_changed.history@1.0.0",
+        "source_family": "forge_mirror_status_changed_source",
+        "checkpoint_family": "forge_mirror_status_changed_checkpoint"
+      },
+      "source_predicate": "A committed mirror status changes mode, lag state or health from a particular prior topology snapshot. Store both exact snapshots; unchanged polling is not a transition. This status fact remains distinct from a connect/detach operation receipt and from a particular sync operation outcome.",
+      "specific_fence": "Do not infer authority from direction, claim behind as current, or erase divergence. Any linked operation fact remains separately identified rather than reminted from this status.",
+      "consumer_purpose": "Source Control Mirror Health status reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.mirror.sync_completed",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1208",
+      "envelope_unit": "CV-1208",
+      "storage_unit": "SP-1208",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_sync_completed.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-002",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
+      "bindings": {
+        "producer": "ForgeMirrorCoordinator.commit_sync_result@1.0.0",
+        "publisher": "forge.mirror.sync_completed.publish@1.0.0",
+        "consumer": "consumer.forge.mirror.sync_completed.history@1.0.0",
+        "projector": "projector.forge.mirror.sync_completed.history@1.0.0",
+        "source_family": "forge_mirror_sync_completed_source",
+        "checkpoint_family": "forge_mirror_sync_completed_checkpoint"
+      },
+      "source_predicate": "The exact previously started sync operation settles with a truthful terminal result and source/destination revisions. Completion records the actual succeeded, failed or cancelled outcome; it never implies every sync succeeded. An effect-unknown result requires reconciliation and is not a completed fact.",
+      "specific_fence": "Join the original start, authoritative binding, dedupe identity and revision fence. An error result cannot carry a success indicator or successful exit status.",
+      "consumer_purpose": "Source Control mirror sync-result reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.mirror.sync_started",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1209",
+      "envelope_unit": "CV-1209",
+      "storage_unit": "SP-1209",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_mirror_sync_started.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-002",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/mirror_topology",
+      "bindings": {
+        "producer": "ForgeMirrorCoordinator.commit_sync_start@1.0.0",
+        "publisher": "forge.mirror.sync_started.publish@1.0.0",
+        "consumer": "consumer.forge.mirror.sync_started.history@1.0.0",
+        "projector": "projector.forge.mirror.sync_started.history@1.0.0",
+        "source_family": "forge_mirror_sync_started_source",
+        "checkpoint_family": "forge_mirror_sync_started_checkpoint"
+      },
+      "source_predicate": "The mirror owner actually admits and starts the specific sync operation after current authority/revision/permission checks, preserving its accepted intent and ObservableWork. A button press, queued request or elapsed timer does not prove execution started.",
+      "specific_fence": "No secondary provider mutation without current authority. Subsequent recovery resolves this same start identity; retrying delivery of its history never repeats the sync.",
+      "consumer_purpose": "Source Control mirror sync-progress history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.pipeline.cancelled",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1210",
+      "envelope_unit": "CV-1210",
+      "storage_unit": "SP-1210",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_pipeline_cancelled.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-005",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
+      "bindings": {
+        "producer": "ForgePipelineObserver.commit_cancelled@1.0.0",
+        "publisher": "forge.pipeline.cancelled.publish@1.0.0",
+        "consumer": "consumer.forge.pipeline.cancelled.history@1.0.0",
+        "projector": "projector.forge.pipeline.cancelled.history@1.0.0",
+        "source_family": "forge_pipeline_cancelled_source",
+        "checkpoint_family": "forge_pipeline_cancelled_checkpoint"
+      },
+      "source_predicate": "The exact provider pipeline attempt is observed terminal cancelled. The terminal result joins its original start and independent AutomationBinding. Sending a cancel request, accepted cancellation work, timeout or a merely stale cancelled projection is not evidence of terminal cancellation.",
+      "specific_fence": "A provider run is not a Puppet Master run_id. Never manufacture a PM run or infer automation provider/account/generation from repository hosting.",
+      "consumer_purpose": "Actions & Pipelines cancellation-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a)",
+      "retention_anchor": "finish entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.pipeline.completed",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1211",
+      "envelope_unit": "CV-1211",
+      "storage_unit": "SP-1211",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_pipeline_completed.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-005",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
+      "bindings": {
+        "producer": "ForgePipelineObserver.commit_completed@1.0.0",
+        "publisher": "forge.pipeline.completed.publish@1.0.0",
+        "consumer": "consumer.forge.pipeline.completed.history@1.0.0",
+        "projector": "projector.forge.pipeline.completed.history@1.0.0",
+        "source_family": "forge_pipeline_completed_source",
+        "checkpoint_family": "forge_pipeline_completed_checkpoint"
+      },
+      "source_predicate": "The provider supplies a terminal succeeded, failed or skipped outcome for the exact started attempt. Preserve its jobs/checks completeness and currentness. Cancelled has its own cancelled fact; queued, running, waiting, unknown and effect-unknown are not completed outcomes.",
+      "specific_fence": "The run state is not an individual gate status. Truncated checks retain their cursor and cannot certify the complete required-gate set.",
+      "consumer_purpose": "Actions & Pipelines terminal-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a)",
+      "retention_anchor": "finish entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.pipeline.retried",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1212",
+      "envelope_unit": "CV-1212",
+      "storage_unit": "SP-1212",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_pipeline_retried.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-005",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
+      "bindings": {
+        "producer": "ForgePipelineObserver.commit_retry_started@1.0.0",
+        "publisher": "forge.pipeline.retried.publish@1.0.0",
+        "consumer": "consumer.forge.pipeline.retried.history@1.0.0",
+        "projector": "projector.forge.pipeline.retried.history@1.0.0",
+        "source_family": "forge_pipeline_retried_source",
+        "checkpoint_family": "forge_pipeline_retried_checkpoint"
+      },
+      "source_predicate": "An authorized retry has actually created or started the provider attempt identified in its retry result, linked to the exact earlier attempt. A retry request or uncertain result does not prove a new attempt. Same retry operation returns the original attempt and never triggers a second retry.",
+      "specific_fence": "Direct revalidation of the exact automation generation, provider capability, revision, permission and currentness precedes retry. A stale or partial projection alone cannot authorize it.",
+      "consumer_purpose": "Actions & Pipelines retry-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a)",
+      "retention_anchor": "retry entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.pipeline.started",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1213",
+      "envelope_unit": "CV-1213",
+      "storage_unit": "SP-1213",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_pipeline_started.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-005",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
+      "bindings": {
+        "producer": "ForgePipelineObserver.commit_started@1.0.0",
+        "publisher": "forge.pipeline.started.publish@1.0.0",
+        "consumer": "consumer.forge.pipeline.started.history@1.0.0",
+        "projector": "projector.forge.pipeline.started.history@1.0.0",
+        "source_family": "forge_pipeline_started_source",
+        "checkpoint_family": "forge_pipeline_started_checkpoint"
+      },
+      "source_predicate": "The provider has actually started the exact automation attempt, as shown by its provider result/current projection; admission or queued ObservableWork alone does not prove a started run. Preserve the immutable attempt identity and selected revision, including an absent review relationship where genuine.",
+      "specific_fence": "Only the actual AutomationBinding selects service/provider/instance/account. Historical/external observations do not manufacture a PM command or ObservableWork.",
+      "consumer_purpose": "Actions & Pipelines start-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-455 (E-CARDS-3 item 3.a)",
+      "retention_anchor": "start entry under the Storage Project first-save anchor adapter (Project); creation (application); 220,752,000 s",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.repository.authority_changed",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1214",
+      "envelope_unit": "CV-1214",
+      "storage_unit": "SP-1214",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_repository_authority_changed.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-002",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/repository_binding",
+      "bindings": {
+        "producer": "ForgeAuthorityCoordinator.commit_transfer@1.0.0",
+        "publisher": "forge.repository.authority_changed.publish@1.0.0",
+        "consumer": "consumer.forge.repository.authority_changed.history@1.0.0",
+        "projector": "projector.forge.repository.authority_changed.history@1.0.0",
+        "source_family": "forge_repository_authority_changed_source",
+        "checkpoint_family": "forge_repository_authority_changed_checkpoint"
+      },
+      "source_predicate": "A disclosed authorized transfer commits the requested/effective repository-function authority change between the exact prior and next bindings. The transfer receipt and revision fences prove the same storage/review/checks/issues/transport/mirror role. Actor-permission or account changes are different facts.",
+      "specific_fence": "Legacy repository automation role is compatibility projection only; a transfer cannot select AutomationBinding, silently mutate a secondary, or infer a role from origin/upstream.",
+      "consumer_purpose": "Source Control Source of Truth history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.repository.created",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1215",
+      "envelope_unit": "CV-1215",
+      "storage_unit": "SP-1215",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_repository_created.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-023",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/repository_binding",
+      "bindings": {
+        "producer": "ForgeRepositoryCreate.commit_verified_result@1.0.0",
+        "publisher": "forge.repository.created.publish@1.0.0",
+        "consumer": "consumer.forge.repository.created.history@1.0.0",
+        "projector": "projector.forge.repository.created.history@1.0.0",
+        "source_family": "forge_repository_created_source",
+        "checkpoint_family": "forge_repository_created_checkpoint"
+      },
+      "source_predicate": "The create owner has verified the remote repository identity after a successful actual create for the exact reviewed provider/variant/instance/account/container/options. Accepted, effect-unknown, a reused existing repository or a URL without verified create proof does not mean created.",
+      "specific_fence": "PJCT-007/010 original result, idempotency and reconciliation remain authoritative. A history retry cannot create another repository or automatically delete one; no paid signup or site publication is implied.",
+      "consumer_purpose": "Project online-repository origin reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.repository.discovered",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1216",
+      "envelope_unit": "CV-1216",
+      "storage_unit": "SP-1216",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_repository_discovered.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-023",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/repository_binding",
+      "bindings": {
+        "producer": "ForgeRepositoryDiscovery.commit_verified_item@1.0.0",
+        "publisher": "forge.repository.discovered.publish@1.0.0",
+        "consumer": "consumer.forge.repository.discovered.history@1.0.0",
+        "projector": "projector.forge.repository.discovered.history@1.0.0",
+        "source_family": "forge_repository_discovered_source",
+        "checkpoint_family": "forge_repository_discovered_checkpoint"
+      },
+      "source_predicate": "Verified discovery resolves one stable repository identity in the exact admitted account/instance/owner discovery scope and result page. It records that observation, not a repository creation or Project binding. A pasted locator, inaccessible item or unverified URL cannot stand for discovery.",
+      "specific_fence": "The list may occur before a Project/repository binding exists. Preserve explicit scope and pagination/coverage; incomplete discovery cannot assert absence and no account/write authority follows.",
+      "consumer_purpose": "Hosting Services repository-discovery history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.repository.eligibility_changed",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1217",
+      "envelope_unit": "CV-1217",
+      "storage_unit": "SP-1217",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_repository_eligibility_changed.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-003",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
+      "bindings": {
+        "producer": "ForgeRepositoryEligibility.commit_assessment@1.0.0",
+        "publisher": "forge.repository.eligibility_changed.publish@1.0.0",
+        "consumer": "consumer.forge.repository.eligibility_changed.history@1.0.0",
+        "projector": "projector.forge.repository.eligibility_changed.history@1.0.0",
+        "source_family": "forge_repository_eligibility_changed_source",
+        "checkpoint_family": "forge_repository_eligibility_changed_checkpoint"
+      },
+      "source_predicate": "A settled repository eligibility assessment for one requested operation changes from its prior assessment under the actual provider admission, access, capability and currentness evidence. Repeated assessment with the same outcome is not a change.",
+      "specific_fence": "Eligibility is specific to an operation and current binding, not a global permission bit. Retired providers, transport-only routes and deferred restricted-token support remain refused.",
+      "consumer_purpose": "Source Control repository eligibility-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.approved",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1218",
+      "envelope_unit": "CV-1218",
+      "storage_unit": "SP-1218",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_approved.schema.json#",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_question": null,
+      "reuse_unit": "FGI-020",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+      "bindings": {
+        "producer": "ForgeReviewVoteObserver.commit_approval@1.0.0",
+        "publisher": "forge.review.approved.publish@1.0.0",
+        "consumer": "consumer.forge.review.approved.history@1.0.0",
+        "projector": "projector.forge.review.approved.history@1.0.0",
+        "source_family": "forge_review_approved_source",
+        "checkpoint_family": "forge_review_approved_checkpoint"
+      },
+      "source_predicate": "One provider-native approval vote is saved for the exact reviewer and immutable review revision, using provider-asserted revision binding or the explicitly recorded Puppet Master observation binding. A missing binding cannot be shown as current approval. Preserve the required-reviewer fact and native vote identity.",
+      "specific_fence": "A vote recorded against an earlier revision stays historical after any base/head/merge-base change. It never becomes an Orchestrator approval.granted record or authorizes merge by itself.",
+      "consumer_purpose": "Source Control review-approval history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN"
+    },
+    {
+      "event_type": "forge.review.changes_requested",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1219",
+      "envelope_unit": "CV-1219",
+      "storage_unit": "SP-1219",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_changes_requested.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-020",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+      "bindings": {
+        "producer": "ForgeReviewVoteObserver.commit_changes_requested@1.0.0",
+        "publisher": "forge.review.changes_requested.publish@1.0.0",
+        "consumer": "consumer.forge.review.changes_requested.history@1.0.0",
+        "projector": "projector.forge.review.changes_requested.history@1.0.0",
+        "source_family": "forge_review_changes_requested_source",
+        "checkpoint_family": "forge_review_changes_requested_checkpoint"
+      },
+      "source_predicate": "One provider-native changes-requested vote is saved with exact reviewer, immutable revision, required-reviewer fact and provider-asserted or observed revision binding. Requesting a review, posting an ordinary comment or an unbound vote is not this fact.",
+      "specific_fence": "Do not translate another provider vote value to changes_requested without its owner mapping. A later revision preserves this vote as historical and never silently carries its authority forward.",
+      "consumer_purpose": "Source Control review changes-requested history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.closed",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1220",
+      "envelope_unit": "CV-1220",
+      "storage_unit": "SP-1220",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_closed.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-004",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+      "bindings": {
+        "producer": "ForgeReviewLifecycle.commit_closed@1.0.0",
+        "publisher": "forge.review.closed.publish@1.0.0",
+        "consumer": "consumer.forge.review.closed.history@1.0.0",
+        "projector": "projector.forge.review.closed.history@1.0.0",
+        "source_family": "forge_review_closed_source",
+        "checkpoint_family": "forge_review_closed_checkpoint"
+      },
+      "source_predicate": "The provider review has actually changed from open to closed without merge, preserving its exact current immutable revision and successful close result/observation. A close request or merged review is not this close-without-merge fact.",
+      "specific_fence": "Failure or uncertainty leaves the truthful earlier state. Replaying history never sends close to the provider again or deletes review comments.",
+      "consumer_purpose": "Source Control review closure-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.created",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1221",
+      "envelope_unit": "CV-1221",
+      "storage_unit": "SP-1221",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_created.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-004",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+      "bindings": {
+        "producer": "ForgeReviewLifecycle.commit_created@1.0.0",
+        "publisher": "forge.review.created.publish@1.0.0",
+        "consumer": "consumer.forge.review.created.history@1.0.0",
+        "projector": "projector.forge.review.created.history@1.0.0",
+        "source_family": "forge_review_created_source",
+        "checkpoint_family": "forge_review_created_checkpoint"
+      },
+      "source_predicate": "The provider confirms creation of the exact review, repository/head/base identities and first immutable revision. Preserve the actual Draft state and effective policy: agent creation defaults Draft unless that exact policy permits otherwise. A request, reused review or uncertain response is not creation.",
+      "specific_fence": "Cross-repository review explicitly joins fork/head and original/base under FGI-024; a single repo ID or remote name cannot replace that pair. No automatic Ready or merge follows.",
+      "consumer_purpose": "Source Control review origin-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.marked_ready",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1222",
+      "envelope_unit": "CV-1222",
+      "storage_unit": "SP-1222",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_marked_ready.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-022",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+      "bindings": {
+        "producer": "ForgeReviewLifecycle.commit_mark_ready@1.0.0",
+        "publisher": "forge.review.marked_ready.publish@1.0.0",
+        "consumer": "consumer.forge.review.marked_ready.history@1.0.0",
+        "projector": "projector.forge.review.marked_ready.history@1.0.0",
+        "source_family": "forge_review_marked_ready_source",
+        "checkpoint_family": "forge_review_marked_ready_checkpoint"
+      },
+      "source_predicate": "The separate authorized Mark Ready action has successfully changed this exact review from Draft to non-Draft. Its request carries draft=false and its current provider result confirms the change; a generic edit, draft=true, a request alone or already-Ready reobservation is insufficient.",
+      "specific_fence": "Preserve direct current revision, effective authority, permission and idempotency checks. Mark Ready does not approve or merge the review.",
+      "consumer_purpose": "Source Control review readiness-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.merged",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1223",
+      "envelope_unit": "CV-1223",
+      "storage_unit": "SP-1223",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_merged.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-018",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+      "bindings": {
+        "producer": "ForgeReviewLifecycle.commit_merged@1.0.0",
+        "publisher": "forge.review.merged.publish@1.0.0",
+        "consumer": "consumer.forge.review.merged.history@1.0.0",
+        "projector": "projector.forge.review.merged.history@1.0.0",
+        "source_family": "forge_review_merged_source",
+        "checkpoint_family": "forge_review_merged_checkpoint"
+      },
+      "source_predicate": "The provider confirms that this exact immutable review revision was merged with the explicitly selected admitted merge strategy and required gate/permission evidence. A queued/accepted merge, effect-unknown, approval or synthetic local merge cannot claim a merged review.",
+      "specific_fence": "Keep provider-supported merge/strategy/currentness rules and cross-repository head/base joins. Replaying or retrying the history publication never merges again.",
+      "consumer_purpose": "Source Control review merge-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.reopened",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1224",
+      "envelope_unit": "CV-1224",
+      "storage_unit": "SP-1224",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_reopened.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-004",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+      "bindings": {
+        "producer": "ForgeReviewLifecycle.commit_reopened@1.0.0",
+        "publisher": "forge.review.reopened.publish@1.0.0",
+        "consumer": "consumer.forge.review.reopened.history@1.0.0",
+        "projector": "projector.forge.review.reopened.history@1.0.0",
+        "source_family": "forge_review_reopened_source",
+        "checkpoint_family": "forge_review_reopened_checkpoint"
+      },
+      "source_predicate": "The provider confirms the same closed, unmerged review has actually reopened. Preserve its prior closure and exact resulting immutable revision. A request or newly created different review is not a reopening, and no unsupported reopen of a merged review is invented.",
+      "specific_fence": "Prior votes, tests and captures stay bound to their original immutable revisions; reopening alone does not refresh them.",
+      "consumer_purpose": "Source Control review reopening-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.thread.reopened",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1225",
+      "envelope_unit": "CV-1225",
+      "storage_unit": "SP-1225",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_thread_reopened.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-004",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_thread",
+      "bindings": {
+        "producer": "ForgeReviewThreadLifecycle.commit_reopened@1.0.0",
+        "publisher": "forge.review.thread.reopened.publish@1.0.0",
+        "consumer": "consumer.forge.review.thread.reopened.history@1.0.0",
+        "projector": "projector.forge.review.thread.reopened.history@1.0.0",
+        "source_family": "forge_review_thread_reopened_source",
+        "checkpoint_family": "forge_review_thread_reopened_checkpoint"
+      },
+      "source_predicate": "The exact resolved discussion actually becomes unresolved under its permitted thread action, retaining provider thread identity, actor, full immutable revision window and tracking state. A different discussion, comment addition or repeat read of unresolved state is not reopening.",
+      "specific_fence": "A thread anchor includes created-against, left and right revision refs plus tracking state/identity; partial or substituted windows cannot persist.",
+      "consumer_purpose": "Source Control review-thread reopening reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.thread.replied",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1226",
+      "envelope_unit": "CV-1226",
+      "storage_unit": "SP-1226",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_thread_replied.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-004",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_thread",
+      "bindings": {
+        "producer": "ForgeReviewThreadLifecycle.commit_reply@1.0.0",
+        "publisher": "forge.review.thread.replied.publish@1.0.0",
+        "consumer": "consumer.forge.review.thread.replied.history@1.0.0",
+        "projector": "projector.forge.review.thread.replied.history@1.0.0",
+        "source_family": "forge_review_thread_replied_source",
+        "checkpoint_family": "forge_review_thread_replied_checkpoint"
+      },
+      "source_predicate": "The provider confirms one new reply/comment identity in this exact discussion and immutable revision window. Retain comment and actor refs, not reply text. A submitted draft, another thread comment or replay of the same native reply does not create another reply fact.",
+      "specific_fence": "Comments, paths, ranges and participant detail remain behind their owner refs and read permissions; this event must not preserve deleted reply content.",
+      "consumer_purpose": "Source Control review-thread reply-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.thread.resolved",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1227",
+      "envelope_unit": "CV-1227",
+      "storage_unit": "SP-1227",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_thread_resolved.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-004",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_thread",
+      "bindings": {
+        "producer": "ForgeReviewThreadLifecycle.commit_resolved@1.0.0",
+        "publisher": "forge.review.thread.resolved.publish@1.0.0",
+        "consumer": "consumer.forge.review.thread.resolved.history@1.0.0",
+        "projector": "projector.forge.review.thread.resolved.history@1.0.0",
+        "source_family": "forge_review_thread_resolved_source",
+        "checkpoint_family": "forge_review_thread_resolved_checkpoint"
+      },
+      "source_predicate": "The exact unresolved discussion actually becomes resolved with its authorized resolution actor, complete immutable revision window and successful result. A resolve request, comment alone or repeated resolved observation is not a new resolution.",
+      "specific_fence": "Resolution never proves the review approved or merged. It changes no blocking policy beyond the provider thread state already specified.",
+      "consumer_purpose": "Source Control review-thread resolution reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.updated",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1228",
+      "envelope_unit": "CV-1228",
+      "storage_unit": "SP-1228",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_updated.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-022",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+      "bindings": {
+        "producer": "ForgeReviewLifecycle.commit_updated@1.0.0",
+        "publisher": "forge.review.updated.publish@1.0.0",
+        "consumer": "consumer.forge.review.updated.history@1.0.0",
+        "projector": "projector.forge.review.updated.history@1.0.0",
+        "source_family": "forge_review_updated_source",
+        "checkpoint_family": "forge_review_updated_checkpoint"
+      },
+      "source_predicate": "A successful authorized typed nonempty review patch changes this review metadata at the expected revision and returns the exact updated provider result. An empty/no-change patch, request acceptance or effect-unknown response is not a committed update.",
+      "specific_fence": "Preserve direct revalidation, authority, permission, confirmation and reconciliation. A change to any base/head/merge-base leg separately creates a new immutable version and stales or revalidates evidence; this update does not reuse old evidence as current.",
+      "consumer_purpose": "Source Control review edit-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.review.version_created",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1229",
+      "envelope_unit": "CV-1229",
+      "storage_unit": "SP-1229",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_review_version_created.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-004",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+      "bindings": {
+        "producer": "ForgeReviewRevisionStore.commit_new_version@1.0.0",
+        "publisher": "forge.review.version_created.publish@1.0.0",
+        "consumer": "consumer.forge.review.version_created.history@1.0.0",
+        "projector": "projector.forge.review.version_created.history@1.0.0",
+        "source_family": "forge_review_version_created_source",
+        "checkpoint_family": "forge_review_version_created_checkpoint"
+      },
+      "source_predicate": "A new immutable revision is committed because at least one exact base/head/merge-base leg changed, preserving previous/new triples and actual evidence-state cause. Unchanged triples, newest-label inference or a partially anchored revision do not create a version.",
+      "specific_fence": "Completeness and evidence staleness are separate. A retarget or target-only move is not falsely called stale_head_changed, and old approvals/tests/captures remain bound to old triples.",
+      "consumer_purpose": "Source Control immutable review-version history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-453 (E-CARDS-3 item 1.a)",
+      "retention_anchor": "none (no age or count expiry, no new count allowance)",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.webhook.delivery_failed",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1230",
+      "envelope_unit": "CV-1230",
+      "storage_unit": "SP-1230",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_webhook_delivery_failed.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-006",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery",
+      "bindings": {
+        "producer": "ForgeWebhookProcessor.commit_failed@1.0.0",
+        "publisher": "forge.webhook.delivery_failed.publish@1.0.0",
+        "consumer": "consumer.forge.webhook.delivery_failed.history@1.0.0",
+        "projector": "projector.forge.webhook.delivery_failed.history@1.0.0",
+        "source_family": "forge_webhook_delivery_failed_source",
+        "checkpoint_family": "forge_webhook_delivery_failed_checkpoint"
+      },
+      "source_predicate": "Processing the exact previously received verified delivery has failed with an actual failure result and truthful retry/inspection/terminal recovery state. Failure is not signature rejection, unverified parsing or a successful processing result. No success exit status can accompany failure.",
+      "specific_fence": "Original raw-body signature/time/context, replay and dedupe gates were satisfied before parsed effects. Re-observing the same failed processing attempt cannot repeat effects or remint a failure fact.",
+      "consumer_purpose": "Hosting Services webhook failure-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.webhook.delivery_recovered",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1231",
+      "envelope_unit": "CV-1231",
+      "storage_unit": "SP-1231",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_webhook_delivery_recovered.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-006",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery",
+      "bindings": {
+        "producer": "ForgeWebhookProcessor.commit_recovered@1.0.0",
+        "publisher": "forge.webhook.delivery_recovered.publish@1.0.0",
+        "consumer": "consumer.forge.webhook.delivery_recovered.history@1.0.0",
+        "projector": "projector.forge.webhook.delivery_recovered.history@1.0.0",
+        "source_family": "forge_webhook_delivery_recovered_source",
+        "checkpoint_family": "forge_webhook_delivery_recovered_checkpoint"
+      },
+      "source_predicate": "Recovery of this exact failed delivery processing attempt is verified and recovery_state becomes recovered, linked to its original failure and actual successful reconciliation/result. Queueing retry/redelivery or receiving an acknowledgement is not recovery.",
+      "specific_fence": "Resolve the original verified delivery and dedupe/effect ledger before recovery. Recovery cannot rerun a completed webhook effect or replace the original first receipt.",
+      "consumer_purpose": "Hosting Services webhook recovery-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.webhook.received",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1232",
+      "envelope_unit": "CV-1232",
+      "storage_unit": "SP-1232",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_webhook_received.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-006",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery",
+      "bindings": {
+        "producer": "ForgeWebhookIngress.commit_verified_received@1.0.0",
+        "publisher": "forge.webhook.received.publish@1.0.0",
+        "consumer": "consumer.forge.webhook.received.history@1.0.0",
+        "projector": "projector.forge.webhook.received.history@1.0.0",
+        "source_family": "forge_webhook_received_source",
+        "checkpoint_family": "forge_webhook_received_checkpoint"
+      },
+      "source_predicate": "The configured ingress has received this exact signed delivery and verified its raw-body signature before parsing, then time/context, fresh replay state and new dedupe state. This records verified receipt, not successful downstream processing. Invalid delivery belongs to rejected instead; duplicate delivery resolves its original fact.",
+      "specific_fence": "Fast provider transport acknowledgement is distinct from durable EventRecord first receipt and processing completion. No raw body, signature secret or credential bytes enter history.",
+      "consumer_purpose": "Hosting Services webhook receipt-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.webhook.redelivery_queued",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1233",
+      "envelope_unit": "CV-1233",
+      "storage_unit": "SP-1233",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_webhook_redelivery_queued.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-006",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery",
+      "bindings": {
+        "producer": "ForgeWebhookRecovery.commit_redelivery_queued@1.0.0",
+        "publisher": "forge.webhook.redelivery_queued.publish@1.0.0",
+        "consumer": "consumer.forge.webhook.redelivery_queued.history@1.0.0",
+        "projector": "projector.forge.webhook.redelivery_queued.history@1.0.0",
+        "source_family": "forge_webhook_redelivery_queued_source",
+        "checkpoint_family": "forge_webhook_redelivery_queued_checkpoint"
+      },
+      "source_predicate": "The exact authorized redelivery has been durably queued by the webhook recovery owner after current signature, time/context, replay, dedupe, delivery identity and redelivery-idempotency checks. A GUI click, unsupported operation or uncertain queue result is not queued.",
+      "specific_fence": "Redelivery is linked to the original delivery and actual request identity; it does not reset the original occurrence, expiry clock or existing processing-effect identity.",
+      "consumer_purpose": "Hosting Services webhook redelivery-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    },
+    {
+      "event_type": "forge.webhook.rejected",
+      "outcome": "prepared",
+      "family_revision": "1.0.0",
+      "membership": "ABSENT",
+      "runtime_enabled": false,
+      "owner_unit": "FGI-1234",
+      "envelope_unit": "CV-1234",
+      "storage_unit": "SP-1234",
+      "payload_schema_ref": "Plans/event_payloads/forge/forge_webhook_rejected.schema.json#",
+      "retention_policy_ref": {
+        "project": "RP-TELEMETRY-90D@1.0.0",
+        "application": "RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0"
+      },
+      "retention_question": null,
+      "reuse_unit": "FGI-006",
+      "reuse_shape": "Plans/forge_integration_contracts.schema.json#/$defs/signed_webhook_delivery",
+      "bindings": {
+        "producer": "ForgeWebhookIngress.commit_rejection@1.0.0",
+        "publisher": "forge.webhook.rejected.publish@1.0.0",
+        "consumer": "consumer.forge.webhook.rejected.history@1.0.0",
+        "projector": "projector.forge.webhook.rejected.history@1.0.0",
+        "source_family": "forge_webhook_rejected_source",
+        "checkpoint_family": "forge_webhook_rejected_checkpoint"
+      },
+      "source_predicate": "The configured ingress rejects an incoming delivery for signature, timestamp, context, unknown key, replay-window or conflicting-duplicate failure. Capture the trusted local ingress observation/decision identity and reason without parsing rejected raw input or trusting a supplied delivery identity. An ordinary already-accepted duplicate is a dedupe result, not a second rejection.",
+      "specific_fence": "No effect dispatch or downstream body parse precedes verification. Rejection evidence is a bounded non-secret owner result; invalid bytes and protected material never become history content.",
+      "consumer_purpose": "Hosting Services webhook rejection-history reader",
+      "search_hit": [
+        "Plans/Forge_Integrations.md:632-666"
+      ],
+      "oracle_status": "PHASE_2_EXECUTED_STATIC_NATIVE_NOT_RUN",
+      "retention_decision": "DL-454 (E-CARDS-3 item 2.a)",
+      "retention_anchor": "creation: first successful save that survives a restart (DL-415); 7,776,000 s; never restarted by retry, reprocessing or restore",
+      "retention_source": "main a27594279e Plans/storage-plan.md:17644-17690 (third-sitting assignments, DL-453..DL-457); application policy objects Plans/storage_value_registry.json:686, :702"
+    }
+  ],
+  "phase_2": {
+    "retention": "34 pending cells bound to DL-453 (15), DL-454 (14), DL-455 (5); forge.review.approved keeps RP-AUTHORITY-INDEFINITE@1.0.0",
+    "oracle_status": "PHASE_2_EXECUTED_STATIC; native NOT_RUN"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "tests_run": 3,
+  "failures": [
+    {
+      "test": "test_disposition_row_bound_and_bounded (w3d_base_contract_tests.BsdLifecycleRecordClosureTests.test_disposition_row_bound_and_bounded)",
+      "message": "AssertionError: 344 != 342"
+    },
+    {
+      "test": "test_definitionless_records_stay_blocked (w3d_base_contract_tests.LiveEquivalentPayloadClosureTests.test_definitionless_records_stay_blocked)",
+      "message": "AssertionError: '\"pm.brainstorm.question_bank.v1\"' unexpectedly found in '{\\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\\n  \"$id\": \"https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json\",\\n  \"x-schema-id\": \"pm.collaborative_workflows.contracts.v1\",\\n  \"title\": \"Collaborative Workflows static contract schemas\",\\n  \"description\": \"Closed record, projection, request and result shapes for Plans/Collaborative_Workflows.md sections 10 to 12, PART-001..020, the Wand Modules Redesign Addendum (CWR-018..CWR-044) and the helper me"
+    },
+    {
+      "test": "test_live_equivalent_negatives_fail_for_intended_reason (w3d_base_contract_tests.LiveEquivalentPayloadClosureTests.test_live_equivalent_negatives_fail_for_intended_reason)",
+      "message": "AssertionError: False is not true : schedrec_envelope_record_wrong_type rejected for the wrong reason: [('oneOf', ['record'], '42 is not valid under any of the given schemas')]"
+    }
+  ],
+  "errors": [],
+  "unchanged_input_hashes": [
+    {
+      "path": "tests/test_pm_assistant_contract_closure.py",
+      "sha256": "67531b055d5259ba42ed63ed0271cdd44453f10061bbcaaeca911d2d8263cece"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "8b6ea945950d76f83a5aa741148e3a238e782cb74d36cc575a1817ce566ca944"
+    },
+    {
+      "path": "Plans/collaborative_workflows_contracts.schema.json",
+      "sha256": "99dc64f79b872620c6b852dbb118ed9c5f68f177d0adf9b742af6123b791f4e3"
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_custody.schema.json",
+      "sha256": "82f464009a00399a84d9369135065b796b6625c9a582e9c12fcf83c6c8c27281"
+    },
+    {
+      "path": "tests/fixtures/assistant_contract_closure/payload_fixtures.json",
+      "sha256": "5466d1012f8aa308ff771a49189ff9090899dc2cad0b91b052e59ce334358fa1"
+    },
+    {
+      "path": "scripts/pm-assistant-contract-check.py",
+      "sha256": "e395497df2cbccd674c9e432a04e4748b33f49e14826a9d67bd81c954636acec"
+    }
+  ],
+  "claim": "Only the three failures from the current 41-test run were compared; this is not a full baseline suite pass.",
+  "assistant_inspection": {
+    "status": "gaps_found",
+    "errors": [],
+    "pending_browser_memberships": 51,
+    "reason": "pm-assistant-contract-check.py returns gaps_found when errors OR planned Browser events remain; no structural errors were reported. Browser event registry/candidate inputs are unchanged from base."
+  },
+  "status": "BASELINE_FAILURES_REPRODUCED"
+}

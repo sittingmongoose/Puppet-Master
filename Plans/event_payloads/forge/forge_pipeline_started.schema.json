@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "event_type",
+    "fact_ref",
+    "provider",
+    "subject_ref",
+    "source_record_ref",
+    "automation_binding_ref",
+    "pipeline_snapshot_ref",
+    "provider_start_result_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event_payload.forge_pipeline_started.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "event_type": {
+      "const": "forge.pipeline.started"
+    },
+    "fact_ref": {
+      "$ref": "#/$defs/opaque_ref"
+    },
+    "provider": {
+      "$ref": "../../forge_integration_contracts.schema.json#/$defs/provider"
+    },
+    "subject_ref": {
+      "$ref": "#/$defs/opaque_ref"
+    },
+    "source_record_ref": {
+      "$ref": "#/$defs/opaque_ref"
+    },
+    "automation_binding_ref": {
+      "$ref": "#/$defs/opaque_ref"
+    },
+    "pipeline_snapshot_ref": {
+      "$ref": "#/$defs/opaque_ref"
+    },
+    "provider_start_result_ref": {
+      "$ref": "#/$defs/opaque_ref"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/Plans/event_payloads/forge/forge_pipeline_started.schema.json",
+  "title": "forge.pipeline.started 1.0.0 prepared payload",
+  "$defs": {
+    "opaque_ref": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 256,
+      "pattern": "^pmref:[A-Za-z0-9._:-]+(?![\\s\\S])",
+      "description": "New opaque non-secret Forge history handle. Exact bytes, full-match, no URL, path or content. Native identity is resolved through the owning record, never decoded from this handle."
+    }
+  }
+}

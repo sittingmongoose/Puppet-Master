@@ -1,0 +1,520 @@
+{
+  "original_realm": "retained_original_d05",
+  "network_fallback": false,
+  "merge_with_other_realms": false,
+  "resources": [
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json",
+      "sha256": "f03fb4a96cc262274ce9d6413daf368fcaae93a7f8c797bb2990a1f69304d453",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+      "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+      "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/activation-v4/frozen/models-requests/inputs/Plans/plans_to_code_handoff.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+      "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json"
+    },
+    {
+      "path": "Plans/project_plan_node.schema.json",
+      "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/project_plan_node.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/project_plan_node.schema.json"
+    },
+    {
+      "path": "Plans/evidence.schema.json",
+      "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/evidence.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/evidence.schema.json"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+      "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json"
+    },
+    {
+      "path": "Plans/goal_body_custody.schema.json",
+      "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/goal_body_custody.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/goal_body_custody.schema.json"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+      "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json"
+    },
+    {
+      "path": "Plans/full_thread_runtime_contracts.schema.json",
+      "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/full_thread_runtime_contracts.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/full_thread_runtime_contracts.schema.json"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_append_receipt_contracts.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_append_receipt_contracts.schema.json"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_record.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_record.schema.json"
+    },
+    {
+      "path": "Plans/ui_command_response.schema.json",
+      "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/ui_command_response.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/ui_command_response.schema.json"
+    },
+    {
+      "path": "Plans/shared_runtime_command_contracts.schema.json",
+      "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/shared_runtime_command_contracts.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/shared_runtime_command_contracts.schema.json"
+    },
+    {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/proposed/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json"
+    },
+    {
+      "path": "Plans/event_record_index_checkpoint.schema.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/inputs/Plans/event_record_index_checkpoint.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_record_index_checkpoint.schema.json"
+    },
+    {
+      "path": "Plans/execution_unit_context.schema.json",
+      "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/execution_unit_context.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/execution_unit_context.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json",
+      "sha256": "2b5107675393d694299efb0de9acbf2f19de169dfed2dcd53b0013328129fc54",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v3/source.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json",
+      "sha256": "44bae9a5df18ca8e368b276c6e167645705dc63d6ec2f71c7aaa2f7e2c2aea9e",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/disposition.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_record.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_record.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+      "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/goal_run_cancelled.v3.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_append_receipt_contracts.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+      "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/producer-submission.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+      "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+      "retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+      "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "retrieval_uri": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+      "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/pm.executor.native_worknode_custody.proposed.v1",
+      "json_pointer": "",
+      "original_declared_path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json"
+    },
+    {
+      "path": "Plans/project_plan_node.schema.json",
+      "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/pm.project-plan-node.v1",
+      "json_pointer": "",
+      "original_declared_path": "Plans/project_plan_node.schema.json"
+    },
+    {
+      "path": "Plans/evidence.schema.json",
+      "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/pm.evidence.schema.v1",
+      "json_pointer": "",
+      "original_declared_path": "Plans/evidence.schema.json"
+    },
+    {
+      "path": "Plans/goal_body_custody.schema.json",
+      "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+      "retrieval_uri": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/goal_body_custody.schema.json"
+    },
+    {
+      "path": "Plans/full_thread_runtime_contracts.schema.json",
+      "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+      "retrieval_uri": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/full_thread_runtime_contracts.schema.json"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_append_receipt_contracts.schema.json"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_record.schema.json"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+      "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+      "retrieval_uri": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json"
+    },
+    {
+      "path": "Plans/ui_command_response.schema.json",
+      "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+      "retrieval_uri": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/ui_command_response.schema.json"
+    },
+    {
+      "path": "Plans/shared_runtime_command_contracts.schema.json",
+      "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+      "retrieval_uri": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/shared_runtime_command_contracts.schema.json"
+    },
+    {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+      "retrieval_uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v3",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json"
+    },
+    {
+      "path": "Plans/event_record_index_checkpoint.schema.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_record_index_checkpoint.schema.json"
+    },
+    {
+      "path": "Plans/execution_unit_context.schema.json",
+      "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+      "retrieval_uri": "https://puppetmaster.local/schemas/execution_unit_context.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/execution_unit_context.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json",
+      "sha256": "2b5107675393d694299efb0de9acbf2f19de169dfed2dcd53b0013328129fc54",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v3.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json",
+      "sha256": "44bae9a5df18ca8e368b276c6e167645705dc63d6ec2f71c7aaa2f7e2c2aea9e",
+      "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_disposition_source.v3.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+      "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/pm.goal_runtime_event.goal_run_cancelled.schema.v3",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+      "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839",
+      "retrieval_uri": "https://puppetmaster.local/proposals/workflow_cancel_producer_submission.v1.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json",
+      "sha256": "f03fb4a96cc262274ce9d6413daf368fcaae93a7f8c797bb2990a1f69304d453",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/proposed/Plans/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v3",
+      "json_pointer": "",
+      "original_declared_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json",
+      "sha256": "cb4e863836060ba06c8c17c8a3c3cc791aae93409a0cdc339984278cbb128354",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-filesafe-effect-source-20260913/v2/filesafe-effect-source.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json",
+      "sha256": "cb4e863836060ba06c8c17c8a3c3cc791aae93409a0cdc339984278cbb128354",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_filesafe_effect_sources.v2.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "sha256": "91656f1e79355ad7ac7b6144ead1724c46222aea054fefdc07f4b56a49f87ed9",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-filesafe-effect-source-20260913/v2/original-schemas/permission_snapshot_record.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "sha256": "91656f1e79355ad7ac7b6144ead1724c46222aea054fefdc07f4b56a49f87ed9",
+      "retrieval_uri": "https://puppetmaster.local/schemas/storage_value/permission_snapshot_record/1.0.0/permission_snapshot_record.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+      "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-filesafe-effect-source-20260913/v2/original-schemas/safe_point_record.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+      "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-filesafe-effect-source-20260913/v2/original-schemas/safe_point_restore_transaction.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json",
+      "sha256": "e0dcd4d5e782cd6344a3039b922a61fddf560a2bd9ec76b7ca2fdcda648959e0",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/process-shutdown-source.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json",
+      "sha256": "e0dcd4d5e782cd6344a3039b922a61fddf560a2bd9ec76b7ca2fdcda648959e0",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json",
+      "sha256": "505bdb5d702546637b80dfddc1d7f32abe411665f88ca193ca5af105c6b69a31",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/original-schemas/event_append_receipt_custody.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json",
+      "sha256": "081d50dbaef96ce8c5e56b8bc743752943920b9727fdba03583592c6904dcef6",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/original-schemas/mcp_server_lifecycle_record.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json",
+      "sha256": "081d50dbaef96ce8c5e56b8bc743752943920b9727fdba03583592c6904dcef6",
+      "retrieval_uri": "https://puppetmaster.local/schemas/storage_value/mcp_server_lifecycle_record/1.0.0/mcp_server_lifecycle_record.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json",
+      "sha256": "f5b1f19aee3876e6c8fdc4ac8418c10941f13e7a56741f31056d2eb37bac9c7f",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/original-schemas/seglog_current.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json",
+      "sha256": "51b95bc7346c643a21a7f10791c2f78258dfad95d4e44777abba2ba238b02c49",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-process-shutdown-source-20260913/v1/original-schemas/seglog_manifest.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json",
+      "sha256": "a500726cbf15548663c03f80a13353a9674f5677201e4018fc0a5b90cc54d338",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-bounded-safestop-source-20260914/v2/aggregate.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json",
+      "sha256": "a500726cbf15548663c03f80a13353a9674f5677201e4018fc0a5b90cc54d338",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_bounded_safestop_sources.v2.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json",
+      "sha256": "a500726cbf15548663c03f80a13353a9674f5677201e4018fc0a5b90cc54d338",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/executor-bounded-safestop-source-20260914/v3/aggregate.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+      "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_record.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+      "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json",
+      "sha256": "081d50dbaef96ce8c5e56b8bc743752943920b9727fdba03583592c6904dcef6",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_process_original/mcp_server_lifecycle_record.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json",
+      "sha256": "f5b1f19aee3876e6c8fdc4ac8418c10941f13e7a56741f31056d2eb37bac9c7f",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_process_original/seglog_current.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json",
+      "sha256": "51b95bc7346c643a21a7f10791c2f78258dfad95d4e44777abba2ba238b02c49",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_process_original/seglog_manifest.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json",
+      "sha256": "505bdb5d702546637b80dfddc1d7f32abe411665f88ca193ca5af105c6b69a31",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_process_original/event_append_receipt_custody.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json",
+      "sha256": "a1e9a055f48c4917adcbce9fe9cf240363e429a5d0fd9dd3806eaaf0a7ecfd47",
+      "retrieval_uri": "https://puppetmaster.local/proposals/executor_process_normalized_producer_submission.v1.schema.json",
+      "json_pointer": "",
+      "original_declared_path": "Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+      "retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/cancellation/proposed/Plans/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v2",
+      "json_pointer": "#/legacy_v2_reader",
+      "original_declared_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v2",
+      "json_pointer": "#/legacy_v2_reader",
+      "original_declared_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json"
+    }
+  ],
+  "source_map": "Plans/executor_cancellation_schema_resources.json",
+  "source_map_sha256": "b8497da06f2937146f0ef8f44af74be177765bf82345a8d3f6e07ef481e938fb",
+  "extension": "Whole new native v7 and its exact original dependent resources only where fresh native methods require them; existing original URI/hash selections preserved",
+  "original_source_map_scope": {
+    "path": "Plans/goal_certified_original_scope_dispatch.json",
+    "sha256": "b3a95da247c8588a11fa4345ad41e05d9fb1deeee82b9d20bf9d228ca70c7787",
+    "source_scope_id": "original-scope:sha256:3bce9331be27f2e31ef4c0921db3caf813c9fe3915231e0a204d52fe1def1c44",
+    "source_member_path": "Plans/executor_cancellation_schema_resources.json"
+  },
+  "schema_id": "pm.goal.cancel.w12.retained_original_native_resources.v2",
+  "status": "NEWLY_AUTHORED_BYTE_BINDING_ONLY_NO_COORDINATOR_AUTHORITY",
+  "byte_lineage": {
+    "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+    "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7",
+    "pointer": "/retained_original_d05"
+  }
+}

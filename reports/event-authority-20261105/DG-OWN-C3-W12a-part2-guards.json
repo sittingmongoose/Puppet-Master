@@ -1,0 +1,2966 @@
+{
+  "status": "INVENTORY_NOT_ISOLATION_PROOF",
+  "native": "NOT_RUN",
+  "guard_predicates": [
+    {
+      "id": "w12a-physical:83:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 83,
+      "label": "physical/complete_wrapper_limit",
+      "predicate": "len(value_bytes(result)) <= LIMIT",
+      "witnesses": [
+        "physical/complete_wrapper_over_limit"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:94:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 94,
+      "label": "physical/selection_once_before_birth",
+      "predicate": "_STORE is None",
+      "witnesses": [
+        "physical/selection_once"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:100:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 100,
+      "label": "physical/explicit_selected_payload_owner",
+      "predicate": "type(_STORE) is PayloadOwner",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:476:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 476,
+      "label": "physical/complete_wrapper_limit",
+      "predicate": "type(raw) is bytes",
+      "witnesses": [
+        "physical/complete_wrapper_over_limit"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:476:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 476,
+      "label": "physical/complete_wrapper_limit",
+      "predicate": "len(raw) <= LIMIT",
+      "witnesses": [
+        "physical/complete_wrapper_over_limit"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:479:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 479,
+      "label": "physical/exact_edition",
+      "predicate": "outer['schema_id'] == EDITION",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:483:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 483,
+      "label": "physical/logical_wrapper",
+      "predicate": "type(value) is dict",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:483:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 483,
+      "label": "physical/logical_wrapper",
+      "predicate": "set(value) == {'schema_id', 'schema_version', 'record'}",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:484:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 484,
+      "label": "physical/logical_schema_join",
+      "predicate": "value['schema_id'] == outer['logical_schema_id']",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:484:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 484,
+      "label": "physical/logical_schema_join",
+      "predicate": "value['schema_version'] == outer['logical_schema_version']",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:485:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 485,
+      "label": "physical/source_identity_lifetime_join",
+      "predicate": "digest(value_bytes(identity(value))) == outer['owner_identity_sha256']",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:485:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 485,
+      "label": "physical/source_identity_lifetime_join",
+      "predicate": "lifetime(value) == outer['source_lifetime']",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:486:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 486,
+      "label": "physical/whole_value_commitment",
+      "predicate": "digest(value_bytes(value)) == outer['value_sha256']",
+      "witnesses": [
+        "physical/outer/value_sha256/'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:487:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 487,
+      "label": "physical/exact_canonical_representation",
+      "predicate": "encode(value) == raw",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:135:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 135,
+      "label": "physical/current_physical_schema",
+      "predicate": "hashlib.sha256((BASE / 'physical-v3.schema.json').read_bytes()).hexdigest() == SCHEMA_SHA256",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:136:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 136,
+      "label": "physical/payload_available",
+      "predicate": "self.available is True",
+      "witnesses": [
+        "physical/source/available"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:137:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 137,
+      "label": "physical/payload_access",
+      "predicate": "self.allowed is True",
+      "witnesses": [
+        "physical/source/allowed"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:138:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 138,
+      "label": "physical/payload_source_lifetime",
+      "predicate": "self.source_live is True",
+      "witnesses": [
+        "physical/source/source_live"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:139:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 139,
+      "label": "physical/exact_pack_selection",
+      "predicate": "(self.path, self.pack_path, self.index_path, self.reference_path) == self._paths",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:140:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 140,
+      "label": "physical/original_index",
+      "predicate": "value_bytes(self.index) == value_bytes(self._original_index)",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:141:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 141,
+      "label": "physical/original_references",
+      "predicate": "value_bytes(self.references) == value_bytes(self._original_references)",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:142:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 142,
+      "label": "physical/durable_reference_origin",
+      "predicate": "value_bytes(self.reference_rows()) == value_bytes(self.references)",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:235:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 235,
+      "label": "physical/original_owner_birth",
+      "predicate": "type(physical) is C.A.PhysicalOwner",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:235:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 235,
+      "label": "physical/original_owner_birth",
+      "predicate": "physical in C.A._PHYSICAL_BIRTHS",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:235:2",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 235,
+      "label": "physical/original_owner_birth",
+      "predicate": "type(semantic) is C.M.ModelStore",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:235:3",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 235,
+      "label": "physical/original_owner_birth",
+      "predicate": "semantic in C.M._SEMANTIC_BIRTHS",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:239:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 239,
+      "label": "physical/original_owner_enrollment",
+      "predicate": "start is not None",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:239:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 239,
+      "label": "physical/original_owner_enrollment",
+      "predicate": "semantic._goal_start_owner is start",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:239:2",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 239,
+      "label": "physical/original_owner_enrollment",
+      "predicate": "C.M._GOAL_ENROLLMENTS.get(semantic) == (physical, start, start.sir, start.root, start.shared, start.token)",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:259:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 259,
+      "label": "physical/source_lifetime_selection",
+      "predicate": "outer['source_lifetime'] == lifetime({'schema_id': outer['logical_schema_id']})",
+      "witnesses": [
+        "physical/outer/source_lifetime/'authority_indefinite'",
+        "physical/lower_payload/substituted_lifetime"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:296:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 296,
+      "label": "physical/exact_original_source",
+      "predicate": "len(unique) == 1",
+      "witnesses": [
+        "physical/outer/owner_identity_sha256/'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:300:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 300,
+      "label": "physical/original_owner_enrollment",
+      "predicate": "type(physical) is C.A.PhysicalOwner",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:300:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 300,
+      "label": "physical/original_owner_enrollment",
+      "predicate": "physical in C.A._PHYSICAL_BIRTHS",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:300:2",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 300,
+      "label": "physical/original_owner_enrollment",
+      "predicate": "type(semantic) is C.M.ModelStore",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:300:3",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 300,
+      "label": "physical/original_owner_enrollment",
+      "predicate": "semantic in C.M._SEMANTIC_BIRTHS",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:300:4",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 300,
+      "label": "physical/original_owner_enrollment",
+      "predicate": "semantic._goal_start_owner is start",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:300:5",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 300,
+      "label": "physical/original_owner_enrollment",
+      "predicate": "C.M._GOAL_ENROLLMENTS.get(semantic) == (physical, start, start.sir, start.root, start.shared, start.token)",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:305:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 305,
+      "label": "physical/current_source_permission",
+      "predicate": "semantic.allowed is True",
+      "witnesses": [
+        "physical/lower_payload/permission"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:305:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 305,
+      "label": "physical/current_source_permission",
+      "predicate": "semantic.audit_allowed is True",
+      "witnesses": [
+        "physical/lower_payload/permission"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:306:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 306,
+      "label": "physical/current_original_installation",
+      "predicate": "getattr(semantic, 'registered') is True",
+      "witnesses": [
+        "physical/lower_payload/receipt_installation"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:306:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 306,
+      "label": "physical/current_original_installation",
+      "predicate": "getattr(semantic, 'installed') is True",
+      "witnesses": [
+        "physical/lower_payload/receipt_installation"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:306:2",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 306,
+      "label": "physical/current_original_installation",
+      "predicate": "getattr(semantic, 'migration_valid') is True",
+      "witnesses": [
+        "physical/lower_payload/receipt_installation"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:306:3",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 306,
+      "label": "physical/current_original_installation",
+      "predicate": "getattr(semantic, 'backup_valid') is True",
+      "witnesses": [
+        "physical/lower_payload/receipt_installation"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:306:4",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 306,
+      "label": "physical/current_original_installation",
+      "predicate": "getattr(semantic, 'receipt_registered') is True",
+      "witnesses": [
+        "physical/lower_payload/receipt_installation"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:306:5",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 306,
+      "label": "physical/current_original_installation",
+      "predicate": "getattr(semantic, 'receipt_installed') is True",
+      "witnesses": [
+        "physical/lower_payload/receipt_installation"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:306:6",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 306,
+      "label": "physical/current_original_installation",
+      "predicate": "getattr(semantic, 'receipt_migration_valid') is True",
+      "witnesses": [
+        "physical/lower_payload/receipt_installation"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:306:7",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 306,
+      "label": "physical/current_original_installation",
+      "predicate": "getattr(semantic, 'receipt_backup_valid') is True",
+      "witnesses": [
+        "physical/lower_payload/receipt_installation"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:309:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 309,
+      "label": "physical/current_storage_identity",
+      "predicate": "semantic.instance == original_scope['storage_instance_id']",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:340:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 340,
+      "label": "physical/original_physical_row",
+      "predicate": "len(matches) == 1",
+      "witnesses": [
+        "physical/outer/payload_ref.id/'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'",
+        "physical/outer/payload_ref.size/17043"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:350:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 350,
+      "label": "physical/stage_original_root_held",
+      "predicate": "start.root._is_owned()",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:351:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 351,
+      "label": "physical/stage_complete_candidate",
+      "predicate": "encode(value) == value_bytes(outer)",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:385:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 385,
+      "label": "physical/stage_actual_owner_candidate",
+      "predicate": "any((value_bytes(v) == value_bytes(value) for v in candidates))",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:168:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 168,
+      "label": "physical/complete_index_limit",
+      "predicate": "len(index_raw) <= LIMIT",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:179:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 179,
+      "label": "physical/durable_before_reference",
+      "predicate": "self._read(ref, outer, candidate=value) == raw",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:190:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 190,
+      "label": "physical/complete_wrapper_limit",
+      "predicate": "len(value_bytes(outer)) <= LIMIT",
+      "witnesses": [
+        "physical/complete_wrapper_over_limit"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:191:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 191,
+      "label": "physical/read_reference_join",
+      "predicate": "value_bytes(ref) == value_bytes(outer['payload_ref'])",
+      "witnesses": [
+        "physical/lower_payload/reference_selection"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:195:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 195,
+      "label": "physical/reference_members",
+      "predicate": "type(ref) is dict",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:195:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 195,
+      "label": "physical/reference_members",
+      "predicate": "set(ref) == {'id', 'size', 'media_type'}",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:196:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 196,
+      "label": "physical/reference_id",
+      "predicate": "type(ref['id']) is str",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:196:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 196,
+      "label": "physical/reference_id",
+      "predicate": "len(ref['id']) == 64",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:196:2",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 196,
+      "label": "physical/reference_id",
+      "predicate": "all((c in '0123456789abcdef' for c in ref['id']))",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:197:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 197,
+      "label": "physical/reference_size_type",
+      "predicate": "type(ref['size']) is int",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:197:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 197,
+      "label": "physical/reference_size_type",
+      "predicate": "ref['size'] >= 0",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:198:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 198,
+      "label": "physical/reference_media",
+      "predicate": "ref['media_type'] == MEDIA",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:200:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 200,
+      "label": "physical/missing_payload",
+      "predicate": "entry is not None",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:201:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 201,
+      "label": "physical/reference_index_join",
+      "predicate": "{k: entry[k] for k in ref} == ref",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:215:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 215,
+      "label": "physical/durable_index_origin",
+      "predicate": "found",
+      "witnesses": [
+        "physical/resource/missing_index_entry"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:215:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 215,
+      "label": "physical/durable_index_origin",
+      "predicate": "all((value_bytes(x) == value_bytes(entry) for x in found))",
+      "witnesses": [
+        "physical/resource/missing_index_entry"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:218:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 218,
+      "label": "physical/pack_truncated",
+      "predicate": "len(compressed) == entry['stored_size']",
+      "witnesses": [
+        "physical/resource/truncated_pack"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:223:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 223,
+      "label": "physical/exact_original_payload",
+      "predicate": "len(raw) == ref['size']",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:223:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 223,
+      "label": "physical/exact_original_payload",
+      "predicate": "blake3.blake3(raw).hexdigest() == ref['id']",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:223:2",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 223,
+      "label": "physical/exact_original_payload",
+      "predicate": "digest(raw) == entry['sha256']",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:244:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 244,
+      "label": "physical/original_body_source",
+      "predicate": "current is not None",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:244:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 244,
+      "label": "physical/original_body_source",
+      "predicate": "semantic._issued.get(id(current)) == C.M.digest(current)",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:251:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 251,
+      "label": "physical/immutable_owner_scope",
+      "predicate": "prior is None",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:251:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 251,
+      "label": "physical/immutable_owner_scope",
+      "predicate": "prior == scope",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:312:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 312,
+      "label": "physical/original_update_enrollment",
+      "predicate": "type(enrollment) is tuple",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:312:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 312,
+      "label": "physical/original_update_enrollment",
+      "predicate": "len(enrollment) == 9",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:312:2",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 312,
+      "label": "physical/original_update_enrollment",
+      "predicate": "enrollment[0] is semantic",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:312:3",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 312,
+      "label": "physical/original_update_enrollment",
+      "predicate": "enrollment[1] is physical",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:312:4",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 312,
+      "label": "physical/original_update_enrollment",
+      "predicate": "enrollment[8] == operation",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:316:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 316,
+      "label": "physical/exact_update_participants",
+      "predicate": "command.sir is sir",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:316:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 316,
+      "label": "physical/exact_update_participants",
+      "predicate": "command.root is root",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:316:2",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 316,
+      "label": "physical/exact_update_participants",
+      "predicate": "command.shared is shared",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:316:3",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 316,
+      "label": "physical/exact_update_participants",
+      "predicate": "sir.command is command",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:316:4",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 316,
+      "label": "physical/exact_update_participants",
+      "predicate": "command.token is sir.token",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "command.available is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "command.allowed is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:2",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "command.audit_allowed is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:3",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "getattr(command, 'registered') is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:4",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "getattr(command, 'installed') is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:5",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "getattr(command, 'migration_valid') is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:6",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "getattr(command, 'backup_valid') is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:7",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "sir.available is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:8",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "sir.allowed is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:9",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "shared.available is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:319:10",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 319,
+      "label": "physical/current_update_permission",
+      "predicate": "shared.allowed is True",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:326:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 326,
+      "label": "physical/bound_thread_lifetime",
+      "predicate": "semantic.deleted is False",
+      "witnesses": [
+        "physical/lower_payload/tombstone"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:326:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 326,
+      "label": "physical/bound_thread_lifetime",
+      "predicate": "semantic.canonical is not None",
+      "witnesses": [
+        "physical/lower_payload/tombstone"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:358:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 358,
+      "label": "physical/stage_original_source",
+      "predicate": "sir in S._UPDATE_SOURCE_BIRTHS",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:358:1",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 358,
+      "label": "physical/stage_original_source",
+      "predicate": "U.h(sir._update_state) == S._UPDATE_SOURCE_SEALS.get(sir)",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:423:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 423,
+      "label": "physical/exact_publication_namespace",
+      "predicate": "namespace in ('body', 'update')",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:424:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 424,
+      "label": "physical/publication_original_root_held",
+      "predicate": "physical._command_owner.root._is_owned()",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:159:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 159,
+      "label": "physical/dedupe_exact_bytes",
+      "predicate": "self._read(ref, outer, candidate=value) == raw",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:324:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 324,
+      "label": "physical/current_input_permission",
+      "predicate": "sir.input_allowed is True",
+      "witnesses": [
+        "physical/lower_payload/content_permission"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:392:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 392,
+      "label": "physical/reference_log_truncated",
+      "predicate": "len(prefix) == 4",
+      "witnesses": [
+        "physical/resource/truncated_reference_operation"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:394:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 394,
+      "label": "physical/complete_reference_operation_limit",
+      "predicate": "n <= LIMIT",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:396:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 396,
+      "label": "physical/reference_log_truncated",
+      "predicate": "len(raw) == n",
+      "witnesses": [
+        "physical/resource/truncated_reference_operation"
+      ],
+      "coverage": "LABEL_WITNESSES_NOT_COMPLETE_PREDICATE_PROOF"
+    },
+    {
+      "id": "w12a-physical:399:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 399,
+      "label": "physical/reference_operation_members",
+      "predicate": "set(row) == {'namespace', 'operation', 'row_key_sha256', 'reference'}",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:429:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 429,
+      "label": "physical/publication_actual_cell_origin",
+      "predicate": "origins.get(key) == (id(cell), cell['raw'])",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:452:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 452,
+      "label": "physical/complete_reference_operation_limit",
+      "predicate": "len(raw) <= LIMIT",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:207:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 207,
+      "label": "physical/index_truncated",
+      "predicate": "len(size) == 4",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:209:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 209,
+      "label": "physical/complete_index_limit",
+      "predicate": "n <= LIMIT",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:211:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 211,
+      "label": "physical/index_truncated",
+      "predicate": "len(data) == n",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:402:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 402,
+      "label": "physical/reference_acquire_once",
+      "predicate": "row['row_key_sha256'] not in rows",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical:405:0",
+      "source": "scripts/pm_goal_own_c3_w12a_physical.py",
+      "line": 405,
+      "label": "physical/exact_reference_release",
+      "predicate": "rows.get(row['row_key_sha256']) == row['reference']",
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/type",
+      "predicate": {
+        "type": "object"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/additionalProperties",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/additionalProperties",
+      "predicate": {
+        "additionalProperties": false
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/required/schema_id",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/required",
+      "predicate": {
+        "required_member": "schema_id"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/required/schema_version",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/required",
+      "predicate": {
+        "required_member": "schema_version"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/required/logical_schema_id",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/required",
+      "predicate": {
+        "required_member": "logical_schema_id"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/required/logical_schema_version",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/required",
+      "predicate": {
+        "required_member": "logical_schema_version"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/required/owner_identity_sha256",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/required",
+      "predicate": {
+        "required_member": "owner_identity_sha256"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/required/source_lifetime",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/required",
+      "predicate": {
+        "required_member": "source_lifetime"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/required/value_sha256",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/required",
+      "predicate": {
+        "required_member": "value_sha256"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/required/record",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/required",
+      "predicate": {
+        "required_member": "record"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/required/payload_ref",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/required",
+      "predicate": {
+        "required_member": "payload_ref"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/schema_id/const",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/schema_id/const",
+      "predicate": {
+        "const": "pm.goal.updated.physical.v3"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/schema_version/const",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/schema_version/const",
+      "predicate": {
+        "const": "3.0.0"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/logical_schema_id/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/logical_schema_id/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/logical_schema_version/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/logical_schema_version/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/source_lifetime/enum",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/source_lifetime/enum",
+      "predicate": {
+        "enum": [
+          "bound_thread",
+          "authority_indefinite"
+        ]
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/value_sha256/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/value_sha256/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/value_sha256/pattern",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/value_sha256/pattern",
+      "predicate": {
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/value_sha256/minLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/value_sha256/minLength",
+      "predicate": {
+        "minLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/value_sha256/maxLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/value_sha256/maxLength",
+      "predicate": {
+        "maxLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/record/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/record/type",
+      "predicate": {
+        "type": [
+          "object",
+          "null"
+        ]
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/0/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/0/type",
+      "predicate": {
+        "type": "null"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/type",
+      "predicate": {
+        "type": "object"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/additionalProperties",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/additionalProperties",
+      "predicate": {
+        "additionalProperties": false
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/required/id",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/required",
+      "predicate": {
+        "required_member": "id"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/required/size",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/required",
+      "predicate": {
+        "required_member": "size"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/required/media_type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/required",
+      "predicate": {
+        "required_member": "media_type"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/properties/id/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/properties/id/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/properties/id/pattern",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/properties/id/pattern",
+      "predicate": {
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/properties/id/minLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/properties/id/minLength",
+      "predicate": {
+        "minLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/properties/id/maxLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/properties/id/maxLength",
+      "predicate": {
+        "maxLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/properties/size/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/properties/size/type",
+      "predicate": {
+        "type": "integer"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/properties/size/minimum",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/properties/size/minimum",
+      "predicate": {
+        "minimum": 0
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/payload_ref/oneOf/1/properties/media_type/const",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/payload_ref/oneOf/1/properties/media_type/const",
+      "predicate": {
+        "const": "application/vnd.puppetmaster.goal-value+msgpack"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/owner_identity_sha256/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/owner_identity_sha256/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/owner_identity_sha256/pattern",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/owner_identity_sha256/pattern",
+      "predicate": {
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/owner_identity_sha256/minLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/owner_identity_sha256/minLength",
+      "predicate": {
+        "minLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/properties/owner_identity_sha256/maxLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/properties/owner_identity_sha256/maxLength",
+      "predicate": {
+        "maxLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/oneOf/0/properties/record/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/oneOf/0/properties/record/type",
+      "predicate": {
+        "type": "object"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/oneOf/0/properties/payload_ref/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/oneOf/0/properties/payload_ref/type",
+      "predicate": {
+        "type": "null"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/oneOf/1/properties/record/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/oneOf/1/properties/record/type",
+      "predicate": {
+        "type": "null"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/oneOf/1/properties/payload_ref/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/oneOf/1/properties/payload_ref/type",
+      "predicate": {
+        "type": "object"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/type",
+      "predicate": {
+        "type": "object"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/additionalProperties",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/additionalProperties",
+      "predicate": {
+        "additionalProperties": false
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/required/id",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/required",
+      "predicate": {
+        "required_member": "id"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/required/size",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/required",
+      "predicate": {
+        "required_member": "size"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/required/media_type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/required",
+      "predicate": {
+        "required_member": "media_type"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/required/offset",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/required",
+      "predicate": {
+        "required_member": "offset"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/required/stored_size",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/required",
+      "predicate": {
+        "required_member": "stored_size"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/required/compression",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/required",
+      "predicate": {
+        "required_member": "compression"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/required/sha256",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/required",
+      "predicate": {
+        "required_member": "sha256"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/id/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/id/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/id/pattern",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/id/pattern",
+      "predicate": {
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/id/minLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/id/minLength",
+      "predicate": {
+        "minLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/id/maxLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/id/maxLength",
+      "predicate": {
+        "maxLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/size/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/size/type",
+      "predicate": {
+        "type": "integer"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/size/minimum",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/size/minimum",
+      "predicate": {
+        "minimum": 0
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/media_type/const",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/media_type/const",
+      "predicate": {
+        "const": "application/vnd.puppetmaster.goal-value+msgpack"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/offset/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/offset/type",
+      "predicate": {
+        "type": "integer"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/offset/minimum",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/offset/minimum",
+      "predicate": {
+        "minimum": 0
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/stored_size/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/stored_size/type",
+      "predicate": {
+        "type": "integer"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/stored_size/minimum",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/stored_size/minimum",
+      "predicate": {
+        "minimum": 0
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/compression/const",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/compression/const",
+      "predicate": {
+        "const": "zstd-3"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/sha256/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/sha256/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/sha256/pattern",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/sha256/pattern",
+      "predicate": {
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/sha256/minLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/sha256/minLength",
+      "predicate": {
+        "minLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/index_entry/properties/sha256/maxLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/index_entry/properties/sha256/maxLength",
+      "predicate": {
+        "maxLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/type",
+      "predicate": {
+        "type": "object"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/additionalProperties",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/additionalProperties",
+      "predicate": {
+        "additionalProperties": false
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/required/namespace",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/required",
+      "predicate": {
+        "required_member": "namespace"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/required/operation",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/required",
+      "predicate": {
+        "required_member": "operation"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/required/row_key_sha256",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/required",
+      "predicate": {
+        "required_member": "row_key_sha256"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/required/reference",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/required",
+      "predicate": {
+        "required_member": "reference"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/namespace/enum",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/namespace/enum",
+      "predicate": {
+        "enum": [
+          "body",
+          "update"
+        ]
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/operation/enum",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/operation/enum",
+      "predicate": {
+        "enum": [
+          "acquire",
+          "release"
+        ]
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/row_key_sha256/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/row_key_sha256/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/row_key_sha256/pattern",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/row_key_sha256/pattern",
+      "predicate": {
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/row_key_sha256/minLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/row_key_sha256/minLength",
+      "predicate": {
+        "minLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/row_key_sha256/maxLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/row_key_sha256/maxLength",
+      "predicate": {
+        "maxLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/type",
+      "predicate": {
+        "type": "object"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/additionalProperties",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/additionalProperties",
+      "predicate": {
+        "additionalProperties": false
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/required/payload_id",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/required",
+      "predicate": {
+        "required_member": "payload_id"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/required/row_physical_sha256",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/required",
+      "predicate": {
+        "required_member": "row_physical_sha256"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/required/source_identity_sha256",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/required",
+      "predicate": {
+        "required_member": "source_identity_sha256"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/required/source_lifetime",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/required",
+      "predicate": {
+        "required_member": "source_lifetime"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/payload_id/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/payload_id/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/payload_id/pattern",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/payload_id/pattern",
+      "predicate": {
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/payload_id/minLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/payload_id/minLength",
+      "predicate": {
+        "minLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/payload_id/maxLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/payload_id/maxLength",
+      "predicate": {
+        "maxLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/row_physical_sha256/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/row_physical_sha256/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/row_physical_sha256/pattern",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/row_physical_sha256/pattern",
+      "predicate": {
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/row_physical_sha256/minLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/row_physical_sha256/minLength",
+      "predicate": {
+        "minLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/row_physical_sha256/maxLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/row_physical_sha256/maxLength",
+      "predicate": {
+        "maxLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/source_identity_sha256/type",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/source_identity_sha256/type",
+      "predicate": {
+        "type": "string"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/source_identity_sha256/pattern",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/source_identity_sha256/pattern",
+      "predicate": {
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/source_identity_sha256/minLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/source_identity_sha256/minLength",
+      "predicate": {
+        "minLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/source_identity_sha256/maxLength",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/source_identity_sha256/maxLength",
+      "predicate": {
+        "maxLength": 64
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    },
+    {
+      "id": "w12a-physical-schema:/$defs/reference_operation/properties/reference/properties/source_lifetime/enum",
+      "source": "Plans/goal_own_c_contracts/w12a-successor-v3/physical.schema.json",
+      "pointer": "/$defs/reference_operation/properties/reference/properties/source_lifetime/enum",
+      "predicate": {
+        "enum": [
+          "bound_thread",
+          "authority_indefinite"
+        ]
+      },
+      "witnesses": [],
+      "coverage": "PENDING_ITEM_5_WITNESS"
+    }
+  ],
+  "case_inventory": [
+    {
+      "scenario": "empty",
+      "id": "terminal/replay",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "unchanged",
+      "id": "terminal/replay",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "ordinary",
+      "id": "terminal/replay",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "approved_agent",
+      "id": "terminal/replay",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "no_effect",
+      "id": "cancel/absence_is_not_terminal",
+      "status": "PASS",
+      "expected_refusal": "unresolved effect remains retained",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "no_effect",
+      "id": "U5/replay",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U2/last_helper/revocation",
+      "status": "PASS",
+      "expected_refusal": "A2/revoked",
+      "error_type": "Refusal",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U2/last_helper/content_access",
+      "status": "PASS",
+      "expected_refusal": "A2/content_access",
+      "error_type": "Refusal",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U2/last_helper/stop",
+      "status": "PASS",
+      "expected_refusal": "stop_epoch",
+      "error_type": "Rejected",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U2/interrupted_before_commit",
+      "status": "PASS",
+      "expected_refusal": null
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U2/no_effect_after_body",
+      "status": "PASS",
+      "expected_refusal": "cannot infer rollback",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U2/read_after_lost_ack",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U3/proof_before_append",
+      "status": "PASS",
+      "expected_refusal": "first append receipt unavailable",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U3/recover_lost_append_ack",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U3/repeat_publication",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U4/approval_expired_after_body",
+      "status": "PASS",
+      "expected_refusal": null
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U4/approval_revoked_after_body",
+      "status": "PASS",
+      "expected_refusal": null
+    },
+    {
+      "scenario": "boundaries",
+      "id": "U4/substituted_stage_ticket",
+      "status": "PASS",
+      "expected_refusal": "same-owner terminal stage ticket",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/source_audit/valid",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/source_audit/command.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/source_audit/sir.available",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/source_audit/semantic.receipt_installed",
+      "status": "PASS",
+      "expected_refusal": "semantic receipt/audit installation",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/source_audit/shared.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/input/valid",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/input/command.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/input/sir.available",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/input/semantic.receipt_installed",
+      "status": "PASS",
+      "expected_refusal": "semantic receipt/audit installation",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/input/shared.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/progress/valid",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/progress/command.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/progress/sir.available",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/progress/semantic.receipt_installed",
+      "status": "PASS",
+      "expected_refusal": "semantic receipt/audit installation",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/progress/shared.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/immutable_progress/valid",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/immutable_progress/command.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/immutable_progress/sir.available",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/immutable_progress/semantic.receipt_installed",
+      "status": "PASS",
+      "expected_refusal": "semantic receipt/audit installation",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/immutable_progress/shared.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/terminal/valid",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/terminal/command.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/terminal/sir.available",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/terminal/semantic.receipt_installed",
+      "status": "PASS",
+      "expected_refusal": "semantic receipt/audit installation",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/terminal/shared.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/proof/valid",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/proof/command.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/proof/sir.available",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/proof/semantic.receipt_installed",
+      "status": "PASS",
+      "expected_refusal": "semantic receipt/audit installation",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/proof/shared.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/terminal_replay/valid",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/terminal_replay/command.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/terminal_replay/sir.available",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/terminal_replay/semantic.receipt_installed",
+      "status": "PASS",
+      "expected_refusal": "semantic receipt/audit installation",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "read/terminal_replay/shared.allowed",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "reader_helper/SourceAudit/permission",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "reader_helper/SourceAudit/candidate",
+      "status": "PASS",
+      "expected_refusal": "final exact original update row read",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "reader_helper/InputContent/permission",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "reader_helper/InputContent/candidate",
+      "status": "PASS",
+      "expected_refusal": "final exact original update row read",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "reader_helper/Progress/permission",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "reader_helper/Progress/candidate",
+      "status": "PASS",
+      "expected_refusal": "final exact original update row read",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "reader_helper/Terminal/permission",
+      "status": "PASS",
+      "expected_refusal": "source/owner/shared audit admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "reader_helper/Terminal/candidate",
+      "status": "PASS",
+      "expected_refusal": "final exact original update row read",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "input/content_permission",
+      "status": "PASS",
+      "expected_refusal": "current original thread content admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "input/thread_tombstone",
+      "status": "PASS",
+      "expected_refusal": "current original thread content admission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "progress/epoch/-1",
+      "status": "PASS",
+      "expected_refusal": "exact historical progress epoch request",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "progress/epoch/True",
+      "status": "PASS",
+      "expected_refusal": "exact historical progress epoch request",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "progress/epoch/'0'",
+      "status": "PASS",
+      "expected_refusal": "exact historical progress epoch request",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "progress/epoch/[]",
+      "status": "PASS",
+      "expected_refusal": "exact historical progress epoch request",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "boundaries",
+      "id": "progress/epoch/{}",
+      "status": "PASS",
+      "expected_refusal": "exact historical progress epoch request",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "replay_only",
+      "id": "input/replay_only",
+      "status": "PASS",
+      "expected_refusal": "dedupe_by_idempotency_key",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "revision_type",
+      "id": "input/revision_type",
+      "status": "PASS",
+      "expected_refusal": "not of type",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "foreign_body",
+      "id": "input/foreign_body",
+      "status": "PASS",
+      "expected_refusal": "actual accepted Direct Save body/head expectation",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "agent_masquerade",
+      "id": "input/agent_masquerade",
+      "status": "PASS",
+      "expected_refusal": "actual successor approval participant required",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/terminal_replay",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/outer/schema_id/'pm.goal.updated.physical.v2'",
+      "status": "PASS",
+      "expected_refusal": "was expected",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/outer/schema_version/'2.0.0'",
+      "status": "PASS",
+      "expected_refusal": "was expected",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/outer/value_sha256/'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'",
+      "status": "PASS",
+      "expected_refusal": "physical/whole_value_commitment",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/outer/owner_identity_sha256/'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'",
+      "status": "PASS",
+      "expected_refusal": "physical/exact_original_source",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/outer/source_lifetime/'authority_indefinite'",
+      "status": "PASS",
+      "expected_refusal": "physical/source_lifetime_selection",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/outer/payload_ref.id/'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'",
+      "status": "PASS",
+      "expected_refusal": "physical/original_physical_row",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/outer/payload_ref.size/17043",
+      "status": "PASS",
+      "expected_refusal": "physical/original_physical_row",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/outer/payload_ref.size/True",
+      "status": "PASS",
+      "expected_refusal": "not valid under any of the given schemas",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/outer/payload_ref.media_type/'text/plain'",
+      "status": "PASS",
+      "expected_refusal": "not valid under any of the given schemas",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/source/available",
+      "status": "PASS",
+      "expected_refusal": "physical/payload_available",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/source/allowed",
+      "status": "PASS",
+      "expected_refusal": "physical/payload_access",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/source/source_live",
+      "status": "PASS",
+      "expected_refusal": "physical/payload_source_lifetime",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/complete_wrapper_over_limit",
+      "status": "PASS",
+      "expected_refusal": "physical/complete_wrapper_limit",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/selection_once",
+      "status": "PASS",
+      "expected_refusal": "physical/selection_once_before_birth",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/typed_ref/size/'1'",
+      "status": "PASS",
+      "expected_refusal": "not valid under any of the given schemas",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/typed_ref/size/None",
+      "status": "PASS",
+      "expected_refusal": "not valid under any of the given schemas",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/typed_ref/size/[]",
+      "status": "PASS",
+      "expected_refusal": "not valid under any of the given schemas",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/typed_ref/size/{}",
+      "status": "PASS",
+      "expected_refusal": "not valid under any of the given schemas",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/typed_ref/id/'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\\n'",
+      "status": "PASS",
+      "expected_refusal": "not valid under any of the given schemas",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/typed_ref/media_type/False",
+      "status": "PASS",
+      "expected_refusal": "not valid under any of the given schemas",
+      "error_type": "ValidationError",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/lower_payload/tombstone",
+      "status": "PASS",
+      "expected_refusal": "physical/bound_thread_lifetime",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/lower_payload/permission",
+      "status": "PASS",
+      "expected_refusal": "physical/current_source_permission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/no_JSON_fallback",
+      "status": "PASS",
+      "expected_refusal": "messagepack_",
+      "error_type": "Corrupt",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/lower_payload/substituted_lifetime",
+      "status": "PASS",
+      "expected_refusal": "physical/source_lifetime_selection",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/lower_payload/reference_selection",
+      "status": "PASS",
+      "expected_refusal": "physical/read_reference_join",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/audit_after_tombstone",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/lower_payload/original",
+      "status": "PASS",
+      "expected_refusal": null,
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/lower_payload/content_permission",
+      "status": "PASS",
+      "expected_refusal": "physical/current_input_permission",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/lower_payload/receipt_installation",
+      "status": "PASS",
+      "expected_refusal": "physical/current_original_installation",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/resource/truncated_pack",
+      "status": "PASS",
+      "expected_refusal": "physical/pack_truncated",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/resource/mismatched_pack",
+      "status": "PASS",
+      "expected_refusal": "physical/pack_decode",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/resource/missing_index_entry",
+      "status": "PASS",
+      "expected_refusal": "physical/durable_index_origin",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_current",
+      "id": "physical/resource/truncated_reference_operation",
+      "status": "PASS",
+      "expected_refusal": "physical/reference_log_truncated",
+      "error_type": "Unavailable",
+      "preserved_earlier_effects": true
+    },
+    {
+      "scenario": "physical_pack_cut",
+      "id": "physical/durability/before_reference",
+      "status": "PASS",
+      "expected_refusal": "physical/interrupted/before_reference",
+      "preserved_earlier_effects": true
+    }
+  ],
+  "selected_manifest_sha256": "31447afd3644e469594bf9c493e788cbe5bc9254d53e53a97d9098838c31dd1b",
+  "summary": {
+    "positives": 21,
+    "negatives": 86,
+    "predicate_count": 214,
+    "predicates_with_label_witnesses": 31,
+    "isolation": "SHARED_SWEEP_NOT_RUN"
+  },
+  "raw_result": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W12a/part2/v3-corpus-final.json",
+    "sha256": "e1d8ee23117a5755b101fd39a17be0ac22ae50850c7ce208f01090cc2130cac1"
+  },
+  "source_qualification_guards": [
+    {
+      "id": "w12a-qualification:exact_member_set",
+      "source": "scripts/pm_goal_own_c3_w12a_p2_oracles.py",
+      "line": 45,
+      "predicate": "actual selected source files equal manifest member paths plus manifest.json",
+      "positive": "harness-qa.member_set_positive",
+      "negative": "harness-qa.unlisted_member_refused",
+      "scope": "PURE_PREREQUISITE_NO_OWNER_BIRTH",
+      "isolation": "SHARED_SWEEP_NOT_RUN"
+    }
+  ]
+}

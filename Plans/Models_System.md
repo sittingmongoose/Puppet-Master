@@ -764,6 +764,13 @@ Deterministic alias resolution requirements:
 
 Aliases and variants are distinct concepts: aliases are lookup keys for model resolution, while variants are named model presets selected by the user.
 
+**The Settings list (DL-479).** Settings › Models › Presets and nicknames has one **Model nicknames** list, `ai.models.model-alias`, for chat and media models; Media has no nickname setting of its own.
+- **A line** is a nickname and the model it means, stored as the canonical `provider_id/model_id` with no depth: a preset, not a nickname, is where a model plus depth lives. The model is chosen with the shared chat model picker as an overlay, under the same rules as a model row: an exact typed name passes one small call before saving, and a refusal or unreachable service saves nothing.
+- **Built-ins:** the §6.8 built-ins are listed in the same list, marked built in. A line whose normalized nickname matches one replaces it for lookup, and removing that line brings the built-in back. The stored value holds only the person's own lines; its default is `{}`.
+- **Refusals:** a second nickname that normalizes the same as one already in the list at that level is refused, with the reason. A nickname that equals an exact model id is refused, with the reason, because it would hide that model. A nickname never proves the model is available (§6.8).
+- **Levels:** Everywhere is the home and a project may have its own lines; there is no Computer or Device value. Each nickname resolves on its own: a project's line wins for that nickname, and nicknames set only Everywhere still apply in the project. Typing a nickname in chat still works, through the resolution order above.
+- **Older values:** a value saved in this row's former shape (one nickname kept inside a model's record) reads as that model's line Everywhere, under the same refusals. The retired Media box `media.image.model-aliases` is a compatibility read into this list (`Plans/settings_inventory.json` `compatibility_reads`): the person's own entries merge at the same level; an entry drops only when its normalized nickname and its resolved canonical model both equal a shipped built-in pair, so the same nickname naming another model is the person's override and merges, and an entry whose model can't be resolved unambiguously is listed for review; a Computer-level entry is shown once for review and never applied silently, and on a clash the Model nicknames entry is kept and the other is listed.
+
 ### 6.8 Canonical media model alias table
 
 
@@ -779,7 +786,7 @@ The following aliases are registered by default for media-generation models. The
 | `tts flash` | `gemini-2.5-flash-preview-tts` | tts |
 | `tts pro` | `gemini-2.5-pro-preview-tts` | tts |
 
-Alias keys are normalized per §6.7 rules (lowercase, collapse spaces/underscores/hyphens). Implementations MUST ship these aliases in the default alias registry; users MAY add or override aliases in config. Overrides can affect lookup, not capability truth; provider/model support still comes from catalog metadata plus route-specific verification.
+Alias keys are normalized per §6.7 rules (lowercase, collapse spaces/underscores/hyphens). Implementations MUST ship these aliases in the default alias registry; users MAY add or override aliases in the one Settings list, Model nicknames (`ai.models.model-alias`, §6.7), which shows these built-ins marked built in. Overrides can affect lookup, not capability truth; provider/model support still comes from catalog metadata plus route-specific verification.
 
 ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2
 
@@ -828,7 +835,7 @@ One **Default models** list has **Everywhere** and **This project** tabs on this
 
 Helpers have no separate model or depth row. A parent may choose any available model and supported effort for a child, where available means allowed and runnable under parent/managed/provider/account policy ceilings; absent that choice, resolve the normal job/everyday defaults. Model size alone creates no new ceiling. Personas and commands carry no model defaults. Goals use their ordinary chat choice and a Review's sheet supplies its own checking choice.
 
-Presets and nicknames remain under the list; More options retains answer controls, capability/cache controls and the visible What actually ran link to run history. Service tried first belongs in Limits & switching. Settings must show:
+Presets and nicknames remain under the list, the nicknames as the one Model nicknames list for chat and media models (§6.7); More options retains answer controls, capability/cache controls and the visible What actually ran link to run history. Service tried first belongs in Limits & switching. Settings must show:
 - provider/runtime grouping
 - concrete runtime surface availability
 - current defaults and their source
@@ -4207,7 +4214,8 @@ status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: Model aliases are optional friendly names that resolve to canonical provider_id/model_id identifiers for model
   override parsing; keys normalize lowercase and spaces/underscores/hyphens, and resolution order is alias, exact model id,
-  exact display name.
+  exact display name. A person's own nicknames live in one Settings list, Model nicknames (ai.models.model-alias), whose
+  rules MS-053 owns (DL-479).
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -4261,8 +4269,9 @@ plan_unit_id: MS-053
 unit_type: alias_registry
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: The default media alias registry includes canonical image, video, and TTS aliases that resolve per the alias
-  normalization rules and may be extended or overridden by users.
+canonical_text: |-
+  The default media alias registry includes canonical image, video, and TTS aliases that resolve per the alias normalization rules and may be extended or overridden by users.
+  DL-479: users MAY add or override aliases in the one Model nicknames list, ai.models.model-alias, on Settings › Models › Presets and nicknames, for chat and media models; Media has no nickname setting of its own. A line is a nickname and its canonical provider_id/model_id, with no depth (presets hold depth), chosen with the shared chat model picker as an overlay; an exact typed name passes one small call before saving. The built-ins are listed in the same list, marked built in; a line whose normalized nickname matches one replaces it for lookup, and removing that line brings it back. The stored value holds only the person's own lines, default {}. A second nickname that normalizes the same as one already at that level, or one equal to an exact model id, is refused with the reason. A nickname never proves availability. Everywhere is home with optional This project lines and no Computer or Device value; each nickname resolves on its own, so a project's line wins for that nickname and Everywhere-only nicknames still apply in the project. The retired media.image.model-aliases box is a compatibility read: own entries merge at the same level; an entry drops only when its normalized nickname and resolved canonical model both equal a shipped built-in pair (the same nickname with another model is the person's override and merges, and an unresolvable model is listed for review); a Computer-level entry is shown once for review and never applied silently, and on a clash the Model nicknames entry is kept and the other listed.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -4289,6 +4298,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0039
 - pldg-20260624-001-provider-updates:atom-0141
+- DL-479; Jared 2026-11-13, one nickname list (settings feedback item 4)
 preserved_exact_tokens:
 - MEDIA-ALIASES
 - nano banana
@@ -4502,8 +4512,9 @@ canonical_text: >-
   public `agy` capability rows. One Default models list offers Everywhere and This project only, showing
   the named fallback source and its current model/depth. §7.2 owns all rows, including the six jobs,
   naming, Teach, BSD and per-kind media routes. Depth is chosen inside the model picker, with no separate
-  helper/model/depth setting. Presets and nicknames remain below, More options links What actually ran to
-  run history, and Service tried first moves to Limits & switching.
+  helper/model/depth setting. Presets and nicknames remain below, the nicknames as the one Model nicknames
+  list for chat and media models (DL-479), More options links What actually ran to run history, and Service
+  tried first moves to Limits & switching.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.

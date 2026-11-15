@@ -434,7 +434,7 @@ ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
 The `model_override` field allows a user to specify a model for a single generation request without changing the persistent model configured in Settings. This is ephemeral — it applies only to the current `media.generate` invocation.
 
 Resolution order for `model_override`:
-1. **Alias mapping** — check registered model aliases.
+1. **Alias mapping** — check registered model aliases: the person's one Model nicknames list (`ai.models.model-alias`, Settings › Models › Presets and nicknames) and the built-ins it shows (`Plans/Models_System.md` §6.7, §6.8).
 2. **Exact model ID** — match against known model IDs.
 3. **Exact displayName** — match against model display names (case-insensitive).
 4. **Else** — return `MODEL_UNAVAILABLE` disabled reason.
@@ -711,7 +711,7 @@ Keyword form:
 
 **Resolution order:** alias → exact model id → exact displayName → else `MODEL_UNAVAILABLE`.
 
-**Canonical media model aliases** (e.g., "Nano Banana", "Nano Banana Pro", "Veo fast", "TTS flash", "TTS pro") are defined in `Plans/Models_System.md` [§6.8](Plans/Models_System.md#MEDIA-ALIASES) (SSOT). Do not restate the alias table here.
+**Canonical media model aliases** (e.g., "Nano Banana", "Nano Banana Pro", "Veo fast", "TTS flash", "TTS pro") are defined in `Plans/Models_System.md` [§6.8](Plans/Models_System.md#MEDIA-ALIASES) (SSOT). Do not restate the alias table here. People add or override nicknames in the one Model nicknames list for chat and media models, `ai.models.model-alias` (Models_System §6.7); Media has no nickname setting of its own (DL-479).
 
 ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID, ContractName:Plans/Models_System.md#MEDIA-ALIASES
 

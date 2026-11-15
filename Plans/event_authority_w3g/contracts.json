@@ -1,0 +1,898 @@
+{
+  "schema_id": "pm.event_authority.w3g.phase1.v1",
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "status": "PREPARED_WITHOUT_ADMISSION",
+  "families": [
+    {
+      "prefix": "APR",
+      "emitter": "AssistantPlanRuntime build admission for cmd.chat.plan.build or cmd.chat.plan.build_with_crew; Scheduling may invoke that same owner for one admitted occurrence",
+      "source": "APR-008, APR-011, APR-073/074, PGOAL-003..006 and the complete native AssistantPlanRecord/PlanRun, approved revision, To-Do mapping and applicable Crew/Goal/schedule original result",
+      "transition": "The current Plan control build becomes building after exact-version admission. Exactly one new PlanRun freezes the approved version/hash; Crew, Goal association and To-Dos commit under their existing atomic owners. An existing paused/waiting run resuming is not another build_started.",
+      "store": [
+        "assistant_plan_record",
+        "assistant_plan_run",
+        "assistant_plan_record_application",
+        "assistant_plan_run_application"
+      ],
+      "retention": "RP-RUNTIME-365D@1.0.0",
+      "retention_reason": "Case L-3 Runtime/run/node/attempt; this exact event requires a real admitted PlanRun and its original completion anchor.",
+      "app": true,
+      "event_type": "assistant_plan.build_started",
+      "number": 1500,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "owner_unit": "APR-1500",
+      "cv": "CV-1500",
+      "sp": "SP-1500",
+      "reader": "reader.assistant_plan.build_started.history.v1@1.0.0",
+      "ats": "ATS-1260",
+      "slug": "assistant_plan_build_started",
+      "payload_path": "Plans/event_authority_w3g/payloads/assistant_plan_build_started.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_build_started.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_build_started.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-assistant-plan-build-started",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StorageAssistantPlanRecord",
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StoragePlanRun"
+        ],
+        "application": [
+          "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanRecordStorageApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-RUNTIME-365D@1.0.0",
+        "application": "RP-RUNTIME-365D@1.0.0"
+      },
+      "retention_decision": "DL-401 (Card 1, Case L-3), bound in phase 1"
+    },
+    {
+      "prefix": "APR",
+      "emitter": "AssistantPlanRuntime cmd.chat.plan.cancel and the exact explicit-new-Plan replacement cancellation path",
+      "source": "APR-005, APR-010, APR-017, APR-074 and PFAIL-003..009 original Plan/cancel/PlanRun/epoch/schedule-quota settlement",
+      "transition": "An unfinished control build or building becomes canceled. If a run exists, its safe-stop, cancelled state, epoch fence and exact schedule/quota invalidation must be settled by their original owners before publication. A pre-Build cancellation has no fabricated PlanRun. A waiting safe stop, failed attempt or unknown cancellation is not completed cancellation.",
+      "store": [
+        "assistant_plan_record",
+        "assistant_plan_run",
+        "assistant_plan_cancel_result",
+        "assistant_plan_cancel_result_application"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": true,
+      "event_type": "assistant_plan.cancelled",
+      "number": 1501,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "owner_unit": "APR-1501",
+      "cv": "CV-1501",
+      "sp": "SP-1501",
+      "reader": "reader.assistant_plan.cancelled.history.v1@1.0.0",
+      "ats": "ATS-1260",
+      "slug": "assistant_plan_cancelled",
+      "payload_path": "Plans/event_authority_w3g/payloads/assistant_plan_cancelled.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_cancelled.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_cancelled.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-assistant-plan-cancelled",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StorageAssistantPlanRecord",
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StoragePlanRun",
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StoragePlanCancelResult"
+        ],
+        "application": [
+          "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanRecordStorageApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "APR",
+      "emitter": "AssistantPlanRuntime final Plan completion owner, never a provider callback acting alone",
+      "source": "APR-008/010, PFAIL-003..009, PPROG-001..018, APR-073/074 original PlanRun completion and To-Do/approved-step/scoped-bundle evidence",
+      "transition": "The original building control becomes completed only when the exact frozen Plan completion predicate, required To-Dos, admitted work and any scoped PlanUnits are resolved. Failed, paused, blocked, waiting and cancelled work cannot supply completion. No provider final message is a completion receipt.",
+      "store": [
+        "assistant_plan_record",
+        "assistant_plan_run",
+        "assistant_plan_record_application",
+        "assistant_plan_run_application"
+      ],
+      "retention": "RP-RUNTIME-365D@1.0.0",
+      "retention_reason": "Case L-3 Runtime/run/node/attempt; the required real PlanRun terminal record supplies the original run-completion anchor.",
+      "app": true,
+      "event_type": "assistant_plan.completed",
+      "number": 1502,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "owner_unit": "APR-1502",
+      "cv": "CV-1502",
+      "sp": "SP-1502",
+      "reader": "reader.assistant_plan.completed.history.v1@1.0.0",
+      "ats": "ATS-1260",
+      "slug": "assistant_plan_completed",
+      "payload_path": "Plans/event_authority_w3g/payloads/assistant_plan_completed.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_completed.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_completed.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-assistant-plan-completed",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StorageAssistantPlanRecord",
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StoragePlanRun"
+        ],
+        "application": [
+          "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanRecordStorageApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-RUNTIME-365D@1.0.0",
+        "application": "RP-RUNTIME-365D@1.0.0"
+      },
+      "retention_decision": "DL-401 (Card 1, Case L-3), bound in phase 1"
+    },
+    {
+      "prefix": "APR",
+      "emitter": "AssistantPlanRuntime cmd.chat.plan.create after its actual one-current-slot admission",
+      "source": "APR-001/002/005, APR-073/074, exact AssistantPlanRecord and first document revision under the direct or ledger-bound source owner",
+      "transition": "Birth is version 1 with the selected legal strategy/backend. The retained thread has at most one unfinished Plan across both scopes. Explicit replacement first settles its predecessor cancellation; no two current slots. Creation does not build, create a NamedPlan or admit product planning.",
+      "store": [
+        "assistant_plan_record",
+        "assistant_plan_document_revision_application",
+        "assistant_plan_record_application"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": true,
+      "event_type": "assistant_plan.created",
+      "number": 1503,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "owner_unit": "APR-1503",
+      "cv": "CV-1503",
+      "sp": "SP-1503",
+      "reader": "reader.assistant_plan.created.history.v1@1.0.0",
+      "ats": "ATS-1260",
+      "slug": "assistant_plan_created",
+      "payload_path": "Plans/event_authority_w3g/payloads/assistant_plan_created.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_created.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_created.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-assistant-plan-created",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StorageAssistantPlanRecord"
+        ],
+        "application": [
+          "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanRecordStorageApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "APR",
+      "emitter": "AssistantPlanRuntime cmd.chat.plan.export after the artifact/export owner returns its actual successful result",
+      "source": "APR-003, PPROG-015..016, PDET-009..012 and the original artifact export receipt of the exact immutable revision",
+      "transition": "Export records the exact version/hash and actual produced artifact. It changes neither the source revision nor Build control. Opening a print window, a failed PDF, cancellation and an unusable temporary window produce no exported success event (DL-259 FX-1).",
+      "store": [
+        "assistant_plan_record",
+        "assistant_plan_record_application",
+        "runtime_artifact_projector_families"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": true,
+      "event_type": "assistant_plan.exported",
+      "number": 1504,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "owner_unit": "APR-1504",
+      "cv": "CV-1504",
+      "sp": "SP-1504",
+      "reader": "reader.assistant_plan.exported.history.v1@1.0.0",
+      "ats": "ATS-1260",
+      "slug": "assistant_plan_exported",
+      "payload_path": "Plans/event_authority_w3g/payloads/assistant_plan_exported.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_exported.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_exported.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-assistant-plan-exported",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StorageAssistantPlanRecord",
+          "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/ArtifactExportResultScopeV2"
+        ],
+        "application": [
+          "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanRecordStorageApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "APR",
+      "emitter": "AssistantPlanRuntime cmd.chat.plan.request_revision after agent-mediated full revision commit",
+      "source": "APR-004/005/073 and original immutable PlanDocumentRevision plus its exact parent/current-slot result",
+      "transition": "The same Plan gets version previous_version+1 and an exact parent revision/hash link. Approved prior bytes, Plan/thread/Project/creation identity, strategy and backend remain immutable. Building work first reaches its owner safe stop; pending exact-version schedules are invalidated through Scheduling without retargeting.",
+      "store": [
+        "assistant_plan_record",
+        "assistant_plan_document_revision_application",
+        "assistant_plan_record_application"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": true,
+      "event_type": "assistant_plan.version_created",
+      "number": 1505,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "owner_unit": "APR-1505",
+      "cv": "CV-1505",
+      "sp": "SP-1505",
+      "reader": "reader.assistant_plan.version_created.history.v1@1.0.0",
+      "ats": "ATS-1260",
+      "slug": "assistant_plan_version_created",
+      "payload_path": "Plans/event_authority_w3g/payloads/assistant_plan_version_created.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_version_created.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_version_created.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-assistant-plan-version-created",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StorageAssistantPlanRecord"
+        ],
+        "application": [
+          "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanRecordStorageApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "APR",
+      "emitter": "AssistantPlanRuntime records the successful PlanningWizard intake returned to explicit cmd.chat.plan.send_to_planning_wizard",
+      "source": "APR-012, APR-074 and Planning_Wizard intake original handoff receipt with exact source Plan revision/hash and real destination Project",
+      "transition": "An explicit person-started exact-version handoff records the genuine Wizard intake identity. An application source requires explicit real-Project selection/conversion and fresh destination permission. Cancel leaves the source intact. Intake bypasses PRD Builder and starts no Orchestrator before Wizard approval and compilation.",
+      "store": [
+        "assistant_plan_record",
+        "assistant_plan_record_application"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17646): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": true,
+      "event_type": "assistant_plan.wizard_handoff_created",
+      "number": 1506,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "owner_unit": "APR-1506",
+      "cv": "CV-1506",
+      "sp": "SP-1506",
+      "reader": "reader.assistant_plan.wizard_handoff_created.history.v1@1.0.0",
+      "ats": "ATS-1260",
+      "slug": "assistant_plan_wizard_handoff_created",
+      "payload_path": "Plans/event_authority_w3g/payloads/assistant_plan_wizard_handoff_created.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_wizard_handoff_created.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/assistant_plan_wizard_handoff_created.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-assistant-plan-wizard-handoff-created",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/assistant_plan_cancel_custody.schema.json#/$defs/StorageAssistantPlanRecord",
+          "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/PlanningWizardIntakeResultScopeV2"
+        ],
+        "application": [
+          "Plans/application_workflow_contracts.schema.json#/$defs/AssistantPlanRecordStorageApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "assistant_plan_id/thread_id and immutable scope come from the original Plan aggregate; plan_version/plan_hash select the exact original document or frozen PlanRun binding; plan_run_id is its actual original run or null. aggregate_revision is the original typed mutation result revision (as APR typed result boundary defines), not a guessed Storage sequence or newly invented counter. currentness_hash is the original result currentness token, independently recomputed using its existing whole selected Project physical record recipe (APR-017/SP-306), or the selected CV-366 application physical wrapper recipe. No source field or approved byte is rewritten to match the payload.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "ERS",
+      "emitter": "ExternalResearch admission gate immediately before the next model request",
+      "source": "ERS-008/009, research_budget_receipt and the actual durable request meter/native usage records",
+      "transition": "A denied admission records captured usage, bounded allowance, retained unresolved usage and cap before the next request. It never denies a response that already happened, erases a retained unresolved charge, or increments admitted-response count on refusal. Same-arm/same-stage averaging starts only after two fully reconciled jobs.",
+      "store": [
+        "event_append_receipt_custody"
+      ],
+      "retention": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_reason": "`RP-OPERATIONAL-2555D@1.0.0` for its Project records, assigned by DL-455 (E-CARDS-3 item 3.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17659 and :17668): seven years (220,752,000 seconds) sharing the existing 2,000,000-entry seven-year Project allowance; Storage's Project first-save anchor adapter for that policy (DL-455, DL-457; :17675) lists this type among its change, failure and refusal entries (:17681), so the anchor is the entry's own first durable save unless an independently saved original supplies its own proved first-save time; retry, reprocessing, recovery and restore never restart it",
+      "app": false,
+      "event_type": "external_research.budget_denied",
+      "number": 1507,
+      "owner_doc": "Plans/External_Research.md",
+      "owner_unit": "ERS-1507",
+      "cv": "CV-1507",
+      "sp": "SP-1507",
+      "reader": "reader.external_research.budget_denied.history.v1@1.0.0",
+      "ats": "ATS-1261",
+      "slug": "external_research_budget_denied",
+      "payload_path": "Plans/event_authority_w3g/payloads/external_research_budget_denied.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/external_research_budget_denied.schema.json#/$defs/ProjectPayloadV1"
+      },
+      "family_id": "event-family-external-research-budget-denied",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "source_schema_refs": {
+        "project": [
+          "Plans/external_research_contracts.schema.json#/$defs/research_budget_receipt"
+        ],
+        "application": []
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes.",
+      "retention_by_scope": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0"
+      },
+      "retention_decision": "DL-455"
+    },
+    {
+      "prefix": "ERS",
+      "emitter": "ExternalResearch finding classification/adjudication owner",
+      "source": "ERS-004/013, research_finding_record and genuine delivered assertion/citation/union-owner evidence",
+      "transition": "Record one original finding classification and credit decision. correction/capability/product_choice/unsupported_or_covered retain their exact meaning and landing path. credited requires the same delivered proposition and supporting passage; partial is never credit; candidate remains outside the union with rejection checks. An adjudicator cannot add to the union.",
+      "store": [
+        "event_append_receipt_custody"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17647): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": false,
+      "event_type": "external_research.finding_classified",
+      "number": 1508,
+      "owner_doc": "Plans/External_Research.md",
+      "owner_unit": "ERS-1508",
+      "cv": "CV-1508",
+      "sp": "SP-1508",
+      "reader": "reader.external_research.finding_classified.history.v1@1.0.0",
+      "ats": "ATS-1261",
+      "slug": "external_research_finding_classified",
+      "payload_path": "Plans/event_authority_w3g/payloads/external_research_finding_classified.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/external_research_finding_classified.schema.json#/$defs/ProjectPayloadV1"
+      },
+      "family_id": "event-family-external-research-finding-classified",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "source_schema_refs": {
+        "project": [
+          "Plans/external_research_contracts.schema.json#/$defs/research_finding_record"
+        ],
+        "application": []
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "ERS",
+      "emitter": "ExternalResearch job-end reconciliation owner after durable runtime result and request-meter capture",
+      "source": "ERS-008/009/010, research_job_record, native runtime result, durable request meter and research_run_manifest",
+      "transition": "Exactly one terminal outcome finished/responses/time/budget/other names the genuine bound_by. The runtime result and durable meter determine it, never an adapter label alone. Responses already made remain recorded; missing native cost records preserve unresolved charges. Event delivery or replay never starts a replacement job.",
+      "store": [
+        "event_append_receipt_custody"
+      ],
+      "retention": "RP-OPERATIONAL-2555D@1.0.0",
+      "retention_reason": "`RP-OPERATIONAL-2555D@1.0.0` for its Project records, assigned by DL-455 (E-CARDS-3 item 3.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17659 and :17668): seven years (220,752,000 seconds) sharing the existing 2,000,000-entry seven-year Project allowance; Storage's Project first-save anchor adapter for that policy (DL-455, DL-457; :17675) lists this type among its finish and outcome entries (:17678), so the anchor is the entry's own first durable save unless an independently saved original supplies its own proved first-save time; retry, reprocessing, recovery and restore never restart it",
+      "app": false,
+      "event_type": "external_research.job_terminal",
+      "number": 1509,
+      "owner_doc": "Plans/External_Research.md",
+      "owner_unit": "ERS-1509",
+      "cv": "CV-1509",
+      "sp": "SP-1509",
+      "reader": "reader.external_research.job_terminal.history.v1@1.0.0",
+      "ats": "ATS-1261",
+      "slug": "external_research_job_terminal",
+      "payload_path": "Plans/event_authority_w3g/payloads/external_research_job_terminal.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/external_research_job_terminal.schema.json#/$defs/ProjectPayloadV1"
+      },
+      "family_id": "event-family-external-research-job-terminal",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "source_schema_refs": {
+        "project": [
+          "Plans/external_research_contracts.schema.json#/$defs/research_job_record"
+        ],
+        "application": []
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes.",
+      "retention_by_scope": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0"
+      },
+      "retention_decision": "DL-455"
+    },
+    {
+      "prefix": "ERS",
+      "emitter": "ExternalResearch packet owner after the chat artifact/decision-card owner confirms original delivery",
+      "source": "ERS-005/007, research_decision_packet/research_decision_card and actual destination thread delivery receipt under DL-036",
+      "transition": "A delivered packet references its exact artifact and nonempty cards. Each card derives from one capability or product_choice union finding. Text-only labels, one-at-a-time presentation and the DL-036 response set remain. Delivery approves nothing, lands no capability, writes no answer and performs no subject-owner action.",
+      "store": [
+        "event_append_receipt_custody"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17647): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": false,
+      "event_type": "external_research.packet_delivered",
+      "number": 1510,
+      "owner_doc": "Plans/External_Research.md",
+      "owner_unit": "ERS-1510",
+      "cv": "CV-1510",
+      "sp": "SP-1510",
+      "reader": "reader.external_research.packet_delivered.history.v1@1.0.0",
+      "ats": "ATS-1261",
+      "slug": "external_research_packet_delivered",
+      "payload_path": "Plans/event_authority_w3g/payloads/external_research_packet_delivered.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/external_research_packet_delivered.schema.json#/$defs/ProjectPayloadV1"
+      },
+      "family_id": "event-family-external-research-packet-delivered",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "source_schema_refs": {
+        "project": [
+          "Plans/external_research_contracts.schema.json#/$defs/research_decision_packet"
+        ],
+        "application": []
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "ERS",
+      "emitter": "ExternalResearch topic admission host, before first job admission",
+      "source": "ERS-002/003/014, exact real Project, frozen plans snapshot, product brief and original run manifest",
+      "transition": "The host freezes the exact Project/snapshot/brief and original protocol/runtime identities before jobs. Discovery/study stages see only admitted inputs; frozen plans enter only reconcile/compare, and decisions/answers/packets are never research input. A changed binary or post-job freeze fails closed. No missing Project or brief admits a partial run.",
+      "store": [
+        "event_append_receipt_custody"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project scope, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17647): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": false,
+      "event_type": "external_research.topic_started",
+      "number": 1511,
+      "owner_doc": "Plans/External_Research.md",
+      "owner_unit": "ERS-1511",
+      "cv": "CV-1511",
+      "sp": "SP-1511",
+      "reader": "reader.external_research.topic_started.history.v1@1.0.0",
+      "ats": "ATS-1261",
+      "slug": "external_research_topic_started",
+      "payload_path": "Plans/event_authority_w3g/payloads/external_research_topic_started.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/external_research_topic_started.schema.json#/$defs/ProjectPayloadV1"
+      },
+      "family_id": "event-family-external-research-topic-started",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "source_schema_refs": {
+        "project": [
+          "Plans/external_research_contracts.schema.json#/$defs/research_run_manifest"
+        ],
+        "application": []
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "All topic/job/finding/union/packet identities and scalar outcomes equal the complete selected original research record. Budget captured/allowance/unresolved/cap equal research_budget_receipt captured_usage_usd/in_flight_allowance_usd/unresolved_usage_usd/lifetime_cap_usd respectively. Frozen snapshot/brief select actual admitted inputs, never a source merely named by the model. Packet card_count equals actual original card_refs cardinality; the delivery thread/receipt comes independently from the chat artifact owner. Original host runtime/metadata and native usage determine outcomes.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "GRS",
+      "emitter": "GoalRuntime cmd.chat.goal.pause through the existing owner.goal.body.mutation@1.0.0 authority and actual host Stop control",
+      "source": "GRS-048/051/064/086, SP-287/SP-351 complete original body/control/Stop and original narrow body mutation receipt",
+      "transition": "An eligible nonterminal original Goal moves active or blocked to paused through the admitted lifecycle body mutation. The current Stop epoch is latched before another continuation can dispatch. Same-state pause has no second change event. Objective text and accepted objective-history head are preserved; workflow records are never cancelled by this event.",
+      "store": [
+        "goal_body_record",
+        "goal_body_control",
+        "goal_body_mutation_receipt",
+        "goal_host_stop_control",
+        "goal_body_record_application",
+        "goal_body_control_application",
+        "goal_body_mutation_receipt_application"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17648): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": true,
+      "event_type": "goal.paused",
+      "number": 1512,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "owner_unit": "GRS-1512",
+      "cv": "CV-1512",
+      "sp": "SP-1512",
+      "reader": "reader.goal.paused.history.v1@1.0.0",
+      "ats": "ATS-1262",
+      "slug": "goal_paused",
+      "payload_path": "Plans/event_authority_w3g/payloads/goal_paused.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/goal_paused.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/goal_paused.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-goal-paused",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/goal_body_custody.schema.json#/$defs/storage_body",
+          "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
+          "Plans/goal_body_custody.schema.json#/$defs/storage_receipt"
+        ],
+        "application": [
+          "Plans/application_workflow_contracts.schema.json#/$defs/GoalBodyRecordStorageApplicationV1",
+          "Plans/application_workflow_contracts.schema.json#/$defs/GoalBodyControlStorageApplicationV1",
+          "Plans/application_workflow_contracts.schema.json#/$defs/GoalBodyMutationReceiptStorageApplicationV1"
+        ]
+      },
+      "source_selection_rule": "Current Project writes/retries and their complete before/after control joins select Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2 (wrapper pm.storage_value.goal_body_control.v2, schema_version 2.0.0, record pm.goal.body_control.v2). Validate the actual complete original V2 control, including independently owned cancellation_pending and cancellation_receipt_ref; never default either from missing fields. The selected source is independently authenticated by native owner/installation, not payload source_schema_id. Plans/goal_body_custody.schema.json#/$defs/storage_control is decoder-only for retained originals whose authenticated original installation and original family/selector admission selected V1. It cannot authorize a current write/retry, be relabelled V2 or receive a fabricated cancellation_pending=null upgrade. A retained V2 original keeps its original V2 admission/edition despite later cancellation or Stop. Current disclosure/deletion/withdrawal remains separate. Application sources retain their distinct original GRS-086/CV-366 selected graph; no Project control or hash is cast into an application value and unresolved original app custody leaves the route unavailable.",
+      "field_join_recipe": "The original narrow GRS-064 body receipt supplies before_revision/after_revision and before/after currentness; they equal expected_revision/goal_revision and before_currentness_hash/currentness_hash respectively. Whole original before/after body/control, genuine Stop, actual active_run_ref, immutable scope/thread/Goal and actor/permissions must agree. Ordinary body revision advances by one; accepted objective history remains unchanged. App hashes use exact CV-366 app source recipe; no Project hash is recast. Pause preserves actual blocker lineage; a pending owner condition cannot be erased by a state label. Any clearing must be independently authorized by the original condition owner. Current Project before/after control wrappers must both be StorageBodyControlV2; join their body_key/body_sha256, current_revision/currentness_hash, accepted-history head/origin, control_epoch, pending, cancellation_pending and cancellation_receipt_ref to the same actual original body mutation and host Stop under the native owner boundary. A new pause/resume mutation requires cancellation_pending=null and cancellation_receipt_ref=null separately. Ordinary pending is either absent for the direct route or the same original operation/intent under its admitted staged route; a foreign pending owner cannot be overwritten. Current/retry authority is rechecked after every helper. An already committed native mutation is resolved by its original result/receipt without another mutation; current cancellation never rewrites the original fact.",
+      "historical_source_schema_refs": {
+        "project_control_v1": "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+        "project_control_v2": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
+        "selection_rule": "Authenticated original installation, original family/selector admission and original edition only; not caller choice or live writer eligibility."
+      },
+      "source_version_authority": {
+        "revision": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+        "refs": [
+          "Plans/Goal_Runtime_System.md#GRS-064",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/storage-plan.md#SP-304",
+          "Plans/storage_value_registry.json:goal_body_control"
+        ],
+        "integration_dependency": null
+      },
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "GRS",
+      "emitter": "GoalRuntime cmd.chat.goal.resume after explicit user authority and existing host continuation revalidation",
+      "source": "GRS-048/050/051/064/086, original body/control/Stop, current permission and any blocked-condition clearance source",
+      "transition": "An original paused or blocked Goal becomes active only on explicit user resume, exact body/currentness and permission checks, no effective manual-stop latch, and cleared blocked_reason_ref where present. This event does not clear a latch: the existing host owner must independently establish eligibility. Quota/window/dependency/approval/reconnect cannot supply user resume authority. Same-state active replay emits no second change.",
+      "store": [
+        "goal_body_record",
+        "goal_body_control",
+        "goal_body_mutation_receipt",
+        "goal_host_stop_control",
+        "goal_body_record_application",
+        "goal_body_control_application",
+        "goal_body_mutation_receipt_application"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17648): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": true,
+      "event_type": "goal.resumed",
+      "number": 1513,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "owner_unit": "GRS-1513",
+      "cv": "CV-1513",
+      "sp": "SP-1513",
+      "reader": "reader.goal.resumed.history.v1@1.0.0",
+      "ats": "ATS-1262",
+      "slug": "goal_resumed",
+      "payload_path": "Plans/event_authority_w3g/payloads/goal_resumed.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/goal_resumed.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/goal_resumed.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-goal-resumed",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/goal_body_custody.schema.json#/$defs/storage_body",
+          "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
+          "Plans/goal_body_custody.schema.json#/$defs/storage_receipt"
+        ],
+        "application": [
+          "Plans/application_workflow_contracts.schema.json#/$defs/GoalBodyRecordStorageApplicationV1",
+          "Plans/application_workflow_contracts.schema.json#/$defs/GoalBodyControlStorageApplicationV1",
+          "Plans/application_workflow_contracts.schema.json#/$defs/GoalBodyMutationReceiptStorageApplicationV1"
+        ]
+      },
+      "source_selection_rule": "Current Project writes/retries and their complete before/after control joins select Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2 (wrapper pm.storage_value.goal_body_control.v2, schema_version 2.0.0, record pm.goal.body_control.v2). Validate the actual complete original V2 control, including independently owned cancellation_pending and cancellation_receipt_ref; never default either from missing fields. The selected source is independently authenticated by native owner/installation, not payload source_schema_id. Plans/goal_body_custody.schema.json#/$defs/storage_control is decoder-only for retained originals whose authenticated original installation and original family/selector admission selected V1. It cannot authorize a current write/retry, be relabelled V2 or receive a fabricated cancellation_pending=null upgrade. A retained V2 original keeps its original V2 admission/edition despite later cancellation or Stop. Current disclosure/deletion/withdrawal remains separate. Application sources retain their distinct original GRS-086/CV-366 selected graph; no Project control or hash is cast into an application value and unresolved original app custody leaves the route unavailable.",
+      "field_join_recipe": "The original narrow GRS-064 body receipt supplies before_revision/after_revision and before/after currentness; they equal expected_revision/goal_revision and before_currentness_hash/currentness_hash respectively. Whole original before/after body/control, genuine Stop, actual active_run_ref, immutable scope/thread/Goal and actor/permissions must agree. Ordinary body revision advances by one; accepted objective history remains unchanged. App hashes use exact CV-366 app source recipe; no Project hash is recast. Pause preserves actual blocker lineage; a pending owner condition cannot be erased by a state label. Any clearing must be independently authorized by the original condition owner. Current Project before/after control wrappers must both be StorageBodyControlV2; join their body_key/body_sha256, current_revision/currentness_hash, accepted-history head/origin, control_epoch, pending, cancellation_pending and cancellation_receipt_ref to the same actual original body mutation and host Stop under the native owner boundary. A new pause/resume mutation requires cancellation_pending=null and cancellation_receipt_ref=null separately. Ordinary pending is either absent for the direct route or the same original operation/intent under its admitted staged route; a foreign pending owner cannot be overwritten. Current/retry authority is rechecked after every helper. An already committed native mutation is resolved by its original result/receipt without another mutation; current cancellation never rewrites the original fact.",
+      "historical_source_schema_refs": {
+        "project_control_v1": "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+        "project_control_v2": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
+        "selection_rule": "Authenticated original installation, original family/selector admission and original edition only; not caller choice or live writer eligibility."
+      },
+      "source_version_authority": {
+        "revision": "73f2231a9ec1c93190adafcdde51030f028c8c2d",
+        "refs": [
+          "Plans/Goal_Runtime_System.md#GRS-064",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/storage-plan.md#SP-304",
+          "Plans/storage_value_registry.json:goal_body_control"
+        ],
+        "integration_dependency": null
+      },
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "WN",
+      "emitter": "WorkingNotebook checkpoint owner at the Storage barrier-class commit boundary",
+      "source": "WN-016/017/021, SP-256/SP-336 and exact notebook_checkpoint_record plus the complete original required entry-revision/capsule/workflow dependency set",
+      "transition": "preparing becomes committed only after every required original entry revision, capsule and workflow checkpoint dependency is durable and directly readable. The original required-set owner supplies the full set; a caller cannot omit a slot. Full flush precedes committed publication. The note checkpoint never substitutes for a pending tool receipt or proves a side effect.",
+      "store": [
+        "notebook_checkpoint_record",
+        "working_notebook_entry_record"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17649): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": true,
+      "event_type": "notebook.checkpoint_committed",
+      "number": 1514,
+      "owner_doc": "Plans/Working_Notebook.md",
+      "owner_unit": "WN-1514",
+      "cv": "CV-1514",
+      "sp": "SP-1514",
+      "reader": "reader.notebook.checkpoint_committed.history.v1@1.0.0",
+      "ats": "ATS-1263",
+      "slug": "notebook_checkpoint_committed",
+      "payload_path": "Plans/event_authority_w3g/payloads/notebook_checkpoint_committed.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/notebook_checkpoint_committed.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/notebook_checkpoint_committed.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-notebook-checkpoint-committed",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/working_notebook_contracts.schema.json#/$defs/notebook_checkpoint_record"
+        ],
+        "application": [
+          "Plans/working_notebook_contracts.schema.json#/$defs/notebook_checkpoint_recordApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "WN",
+      "emitter": "WorkingNotebook checkpoint owner on an originally recorded typed capture/commit failure",
+      "source": "WN-016/020/021 and exact failed notebook_checkpoint_record or original typed failure result preserving recovery material",
+      "transition": "A preparing checkpoint becomes failed only on its actual typed reason. Required failure defers destructive context transition and preserves source context. Optional capture failure is visible and has at most one transport retry under the same original identity. No committed checkpoint, discarded source or success receipt is claimed.",
+      "store": [
+        "notebook_checkpoint_record",
+        "context_transition_record"
+      ],
+      "retention": "RP-OPERATIONAL-2555D@1.0.0 (project); RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (application)",
+      "retention_reason": "`RP-OPERATIONAL-2555D@1.0.0` for its Project records, assigned by DL-455 (E-CARDS-3 item 3.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17659 and :17669): seven years (220,752,000 seconds) sharing the existing 2,000,000-entry seven-year Project allowance; Storage's Project first-save anchor adapter for that policy (DL-455, DL-457; :17675) lists this type among its change, failure and refusal entries (:17681), so the anchor is the entry's own first durable save unless an independently saved original supplies its own proved first-save time; retry, reprocessing, recovery and restore never restart it. Its application records use `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` (DL-455's separate 2,000,000-entry application allowance, count key `app:operational_security`, `anchor_kind=creation`: the first successful save that survives a restart, 220,752,000 seconds)",
+      "app": true,
+      "event_type": "notebook.checkpoint_failed",
+      "number": 1515,
+      "owner_doc": "Plans/Working_Notebook.md",
+      "owner_unit": "WN-1515",
+      "cv": "CV-1515",
+      "sp": "SP-1515",
+      "reader": "reader.notebook.checkpoint_failed.history.v1@1.0.0",
+      "ats": "ATS-1263",
+      "slug": "notebook_checkpoint_failed",
+      "payload_path": "Plans/event_authority_w3g/payloads/notebook_checkpoint_failed.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/notebook_checkpoint_failed.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/notebook_checkpoint_failed.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-notebook-checkpoint-failed",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/working_notebook_contracts.schema.json#/$defs/notebook_checkpoint_record"
+        ],
+        "application": [
+          "Plans/working_notebook_contracts.schema.json#/$defs/notebook_checkpoint_recordApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself.",
+      "retention_by_scope": {
+        "project": "RP-OPERATIONAL-2555D@1.0.0",
+        "application": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0"
+      },
+      "retention_decision": "DL-455"
+    },
+    {
+      "prefix": "WN",
+      "emitter": "WorkingNotebook notebook_write or authorized user correction through the same original revision/CAS owner",
+      "source": "WN-006/007/019/021, original notebook_revision_mutation and exact working_notebook_entry_record revision/body hash/restrictions",
+      "transition": "Birth is entry revision 1 with expected_revision 0; every update/append is expected_revision+1 under CAS. An attributed original commit is directly readable regardless of search lag. Flexible note bodies stay behind refs and retain epistemic kind, freshness and inherited restrictions. No note becomes memory verification, execution permission or completion.",
+      "store": [
+        "working_notebook_entry_record"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17649): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": true,
+      "event_type": "notebook.entry_committed",
+      "number": 1516,
+      "owner_doc": "Plans/Working_Notebook.md",
+      "owner_unit": "WN-1516",
+      "cv": "CV-1516",
+      "sp": "SP-1516",
+      "reader": "reader.notebook.entry_committed.history.v1@1.0.0",
+      "ats": "ATS-1263",
+      "slug": "notebook_entry_committed",
+      "payload_path": "Plans/event_authority_w3g/payloads/notebook_entry_committed.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/notebook_entry_committed.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/notebook_entry_committed.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-notebook-entry-committed",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/working_notebook_contracts.schema.json#/$defs/working_notebook_entry_record"
+        ],
+        "application": [
+          "Plans/working_notebook_contracts.schema.json#/$defs/working_notebook_entry_recordApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "WN",
+      "emitter": "WorkingNotebook notebook_supersede and the original attributed successor-revision owner",
+      "source": "WN-007/010/014/019/021, exact original superseded entry revision and original successor link under notebook restriction/CAS custody",
+      "transition": "An actual active entry revision is superseded by its recorded successor under exact CAS. Both immutable revisions and attributed old/new linkage remain. Supersession is not deletion, verification or cross-scope sharing; an unchanged retry does not append another event. In-flight model bytes retain the old bound revision.",
+      "store": [
+        "working_notebook_entry_record"
+      ],
+      "retention": "RP-AUTHORITY-INDEFINITE@1.0.0",
+      "retention_reason": "`RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and application scopes, assigned by DL-453 (E-CARDS-3 item 1.a, option A) as Storage's third-sitting retention assignments record it on main f8b2098608 (Plans/storage-plan.md:17638 and :17649): no age or count expiry and no new count allowance; explicit Project or application data deletion and storage-pressure refusal apply exactly as DL-453 states, and the native record, receipt and source keep their own lifetimes",
+      "app": true,
+      "event_type": "notebook.entry_superseded",
+      "number": 1517,
+      "owner_doc": "Plans/Working_Notebook.md",
+      "owner_unit": "WN-1517",
+      "cv": "CV-1517",
+      "sp": "SP-1517",
+      "reader": "reader.notebook.entry_superseded.history.v1@1.0.0",
+      "ats": "ATS-1263",
+      "slug": "notebook_entry_superseded",
+      "payload_path": "Plans/event_authority_w3g/payloads/notebook_entry_superseded.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/notebook_entry_superseded.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/notebook_entry_superseded.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-notebook-entry-superseded",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/working_notebook_contracts.schema.json#/$defs/working_notebook_entry_record"
+        ],
+        "application": [
+          "Plans/working_notebook_contracts.schema.json#/$defs/working_notebook_entry_recordApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself.",
+      "retention_by_scope": {
+        "project": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "application": "RP-AUTHORITY-INDEFINITE@1.0.0"
+      },
+      "retention_decision": "DL-453"
+    },
+    {
+      "prefix": "WN",
+      "emitter": "SharedIntegrationRuntime context-transition lifecycle owner; Notebook supplies required content only",
+      "source": "Prompt_Pipeline proactive fresh-window request/admission section, SIR-042, WN-016/021 and original context_transition_record/admission receipt",
+      "transition": "Record an actual owner transition along requested -> preparing -> checkpointed -> admitted -> activated -> recovered_resumed, or its defined terminal deferred/denied/failed/cancelled edge from a nonterminal state. Each exact source transition has one original identity; unchanged reads/replay create none. Changed route/account/Stop/generations require safe owner re-admission, never invented activation. Observable activation and complete checkpoint/admission evidence precede the respective success edges; recovery resumes no stopped work.",
+      "store": [
+        "context_transition_record",
+        "notebook_checkpoint_record"
+      ],
+      "retention": "RP-RUNTIME-365D@1.0.0",
+      "retention_reason": "Case L-3 Runtime/run/node/attempt and SP-256 context_transition_record assignment; require the actual original run lineage/completion anchor, never window or provider-session identity.",
+      "app": true,
+      "event_type": "notebook.transition_state_changed",
+      "number": 1518,
+      "owner_doc": "Plans/Working_Notebook.md",
+      "owner_unit": "WN-1518",
+      "cv": "CV-1518",
+      "sp": "SP-1518",
+      "reader": "reader.notebook.transition_state_changed.history.v1@1.0.0",
+      "ats": "ATS-1263",
+      "slug": "notebook_transition_state_changed",
+      "payload_path": "Plans/event_authority_w3g/payloads/notebook_transition_state_changed.schema.json",
+      "payload_selectors": {
+        "ProjectPayloadV1": "Plans/event_authority_w3g/payloads/notebook_transition_state_changed.schema.json#/$defs/ProjectPayloadV1",
+        "ApplicationPayloadV1": "Plans/event_authority_w3g/payloads/notebook_transition_state_changed.schema.json#/$defs/ApplicationPayloadV1"
+      },
+      "family_id": "event-family-notebook-transition-state-changed",
+      "family_revision": "1.0.0",
+      "scope_policy": "application_or_project",
+      "source_schema_refs": {
+        "project": [
+          "Plans/working_notebook_contracts.schema.json#/$defs/context_transition_record"
+        ],
+        "application": [
+          "Plans/working_notebook_contracts.schema.json#/$defs/context_transition_recordApplicationV1"
+        ]
+      },
+      "source_selection_rule": "These are complete existing source schemas, not copied field subsets. Select the actual original source kind/edition and native issuer independently of payload source_schema_id. Additional whole owner-result/permission/Stop/association participants named in this family remain mandatory. App Project ids/codecs are never cast into each other; unresolved native source custody keeps that route unavailable.",
+      "field_join_recipe": "notebook_id/thread_id/Computer/scope and entry/checkpoint/transition refs equal their complete original selected owner records. Entry committed revision is expected_revision+1; supersession old/new are the actual attributed original revision link, including a distinct successor entry when the owner records one. body_sha256 uses the exact original body hash recipe. required_revisions_sha256 is newly bound as lowercase SHA-256 of CV-317 RFC8785 canonical JSON over the complete original required_entry_revisions array in its stored order, using the reviewed shared numeric qualification before effects; it is not a caller-selected subset or capsule hash. checkpoint commit_receipt_ref is the actual barrier receipt. Transition before/after states and reason equal its actual original lifecycle record and original operation result; Notebook cannot issue that transition itself.",
+      "retention_by_scope": {
+        "project": "RP-RUNTIME-365D@1.0.0",
+        "application": "RP-RUNTIME-365D@1.0.0"
+      },
+      "retention_decision": "DL-401 (Card 1, Case L-3), bound in phase 1"
+    }
+  ]
+}

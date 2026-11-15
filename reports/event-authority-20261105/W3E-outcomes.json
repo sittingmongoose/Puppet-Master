@@ -1,0 +1,656 @@
+{
+  "lane": "W3E",
+  "phase": 1,
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "counts": {
+    "prepared": 20,
+    "merged": 0,
+    "excluded": 0,
+    "stopped": 0
+  },
+  "owner_investigations": [],
+  "rows": [
+    {
+      "event_type": "backup.destination_changed",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "owner_unit": "BRS-1400",
+      "contract_unit": "CV-1400",
+      "storage_unit": "SP-1400",
+      "payload_schema": "Plans/event_payloads/w3e/backup_destination_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For backup.destination_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G01 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination",
+      "producer": "BackupCoordinator.destination_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "BRS-004",
+        "BRS-018",
+        "BRS-032"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
+      ]
+    },
+    {
+      "event_type": "backup.state_changed",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "owner_unit": "BRS-1401",
+      "contract_unit": "CV-1401",
+      "storage_unit": "SP-1401",
+      "payload_schema": "Plans/event_payloads/w3e/backup_state_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For backup.state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Project and Full Server/application records? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_run",
+      "producer": "BackupCoordinator.backup_phase_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "BRS-005",
+        "BRS-007",
+        "BRS-017",
+        "BRS-031"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
+      ]
+    },
+    {
+      "event_type": "remote_access.private_endpoint_state_changed",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "owner_unit": "RAS-1402",
+      "contract_unit": "CV-1402",
+      "storage_unit": "SP-1402",
+      "payload_schema": "Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For remote_access.private_endpoint_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_private_endpoint_projection",
+      "producer": "RemoteAccessRouteService.private_endpoint_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "RAS-002",
+        "RAS-015"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "remote_access.proxy_state_changed",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "owner_unit": "RAS-1403",
+      "contract_unit": "CV-1403",
+      "storage_unit": "SP-1403",
+      "payload_schema": "Plans/event_payloads/w3e/remote_access_proxy_state_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For remote_access.proxy_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/remote_route_record",
+      "producer": "RemoteAccessRouteService.proxy_state_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "RAS-005",
+        "RAS-007"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "remote_access.public_security_violation_detected",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "owner_unit": "RAS-1404",
+      "contract_unit": "CV-1404",
+      "storage_unit": "SP-1404",
+      "payload_schema": "Plans/event_payloads/w3e/remote_access_public_security_violation_detected.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For remote_access.public_security_violation_detected, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/public_ingress_security_policy",
+      "producer": "PublicIngressGuard.record_violation@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "RAS-004",
+        "RAS-007"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "remote_access.remote_link_state_changed",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "owner_unit": "RAS-1405",
+      "contract_unit": "CV-1405",
+      "storage_unit": "SP-1405",
+      "payload_schema": "Plans/event_payloads/w3e/remote_access_remote_link_state_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For remote_access.remote_link_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/remote_link_configuration",
+      "producer": "RemoteAccessRouteService.remote_link_state_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "RAS-006",
+        "RAS-014"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "remote_access.route_migration_state_changed",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "owner_unit": "RAS-1406",
+      "contract_unit": "CV-1406",
+      "storage_unit": "SP-1406",
+      "payload_schema": "Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For remote_access.route_migration_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/remote_route_migration_record",
+      "producer": "RemoteAccessRouteService.migration_phase_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "RAS-002"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "remote_access.route_preference_changed",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "owner_unit": "RAS-1407",
+      "contract_unit": "CV-1407",
+      "storage_unit": "SP-1407",
+      "payload_schema": "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For remote_access.route_preference_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G01 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/remote_route_record",
+      "producer": "RemoteAccessRouteService.preference_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "RAS-002"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "remote_access.route_state_changed",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "owner_unit": "RAS-1408",
+      "contract_unit": "CV-1408",
+      "storage_unit": "SP-1408",
+      "payload_schema": "Plans/event_payloads/w3e/remote_access_route_state_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For remote_access.route_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/remote_route_record",
+      "producer": "RemoteAccessRouteService.route_state_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "RAS-002",
+        "RAS-004",
+        "RAS-005",
+        "RAS-006",
+        "RAS-015"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "remote_access.route_test_completed",
+      "owner_doc": "Plans/Remote_Access_System.md",
+      "owner_unit": "RAS-1409",
+      "contract_unit": "CV-1409",
+      "storage_unit": "SP-1409",
+      "payload_schema": "Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For remote_access.route_test_completed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt",
+      "producer": "RemoteAccessRouteService.test_terminal_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "RAS-002",
+        "RAS-005",
+        "RAS-007"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "restore.state_changed",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "owner_unit": "BRS-1410",
+      "contract_unit": "CV-1410",
+      "storage_unit": "SP-1410",
+      "payload_schema": "Plans/event_payloads/w3e/restore_state_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For restore.state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Project and Full Server/application records? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_run",
+      "producer": "BackupCoordinator.restore_phase_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "BRS-006",
+        "BRS-007",
+        "BRS-019",
+        "BRS-023",
+        "BRS-033"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
+      ]
+    },
+    {
+      "event_type": "server.catalog_changed",
+      "owner_doc": "Plans/Server_System.md",
+      "owner_unit": "SRV-1411",
+      "contract_unit": "CV-1411",
+      "storage_unit": "SP-1411",
+      "payload_schema": "Plans/event_payloads/w3e/server_catalog_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For server.catalog_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G01 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/server_catalog",
+      "producer": "ServerCatalogService.catalog_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "SRV-002",
+        "SRV-007",
+        "SRV-009"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
+      ]
+    },
+    {
+      "event_type": "server.client_pairing_state_changed",
+      "owner_doc": "Plans/Server_System.md",
+      "owner_unit": "SRV-1412",
+      "contract_unit": "CV-1412",
+      "storage_unit": "SP-1412",
+      "payload_schema": "Plans/event_payloads/w3e/server_client_pairing_state_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For server.client_pairing_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/pairing_run",
+      "producer": "ClientTrustRegistry.pairing_phase_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "SRV-004",
+        "SRV-007"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
+      ]
+    },
+    {
+      "event_type": "server.client_revoked",
+      "owner_doc": "Plans/Server_System.md",
+      "owner_unit": "SRV-1413",
+      "contract_unit": "CV-1413",
+      "storage_unit": "SP-1413",
+      "payload_schema": "Plans/event_payloads/w3e/server_client_revoked.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For server.client_revoked, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/revocation_record",
+      "producer": "ClientTrustRegistry.revoke_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "SRV-004",
+        "SRV-011"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
+      ]
+    },
+    {
+      "event_type": "server.client_trust_changed",
+      "owner_doc": "Plans/Server_System.md",
+      "owner_unit": "SRV-1414",
+      "contract_unit": "CV-1414",
+      "storage_unit": "SP-1414",
+      "payload_schema": "Plans/event_payloads/w3e/server_client_trust_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For server.client_trust_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/client_trust_record",
+      "producer": "ClientTrustRegistry.trust_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "SRV-004",
+        "SRV-011",
+        "SRV-016"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
+      ]
+    },
+    {
+      "event_type": "server.connection_state_changed",
+      "owner_doc": "Plans/Server_System.md",
+      "owner_unit": "SRV-1415",
+      "contract_unit": "CV-1415",
+      "storage_unit": "SP-1415",
+      "payload_schema": "Plans/event_payloads/w3e/server_connection_state_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For server.connection_state_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/server_connection_projection",
+      "producer": "ServerConnectionService.connection_state_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "SRV-005",
+        "SRV-007"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "server.discovery_expired",
+      "owner_doc": "Plans/Server_System.md",
+      "owner_unit": "SRV-1416",
+      "contract_unit": "CV-1416",
+      "storage_unit": "SP-1416",
+      "payload_schema": "Plans/event_payloads/w3e/server_discovery_expired.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For server.discovery_expired, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/discovery_observation",
+      "producer": "ServerDiscoveryService.expiry_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "SRV-003",
+        "SRV-007"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "server.discovery_observed",
+      "owner_doc": "Plans/Server_System.md",
+      "owner_unit": "SRV-1417",
+      "contract_unit": "CV-1417",
+      "storage_unit": "SP-1417",
+      "payload_schema": "Plans/event_payloads/w3e/server_discovery_observed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For server.discovery_observed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G26 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/discovery_observation",
+      "producer": "ServerDiscoveryService.observation_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "SRV-002",
+        "SRV-003"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410).",
+        "Ordinary telemetry: 90 days, 2000000/project; W3E class and application bucket/clock not selected (Case L-3, Plans/storage-plan.md:17414; deck 2 1.a..1.g names other populations)."
+      ]
+    },
+    {
+      "event_type": "server.endpoint_changed",
+      "owner_doc": "Plans/Server_System.md",
+      "owner_unit": "SRV-1418",
+      "contract_unit": "CV-1418",
+      "storage_unit": "SP-1418",
+      "payload_schema": "Plans/event_payloads/w3e/server_endpoint_changed.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For server.endpoint_changed, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G01 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/server_endpoint_record",
+      "producer": "ServerCatalogService.endpoint_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "SRV-002",
+        "SRV-007"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
+      ]
+    },
+    {
+      "event_type": "server.identity_mismatch_detected",
+      "owner_doc": "Plans/Server_System.md",
+      "owner_unit": "SRV-1419",
+      "contract_unit": "CV-1419",
+      "storage_unit": "SP-1419",
+      "payload_schema": "Plans/event_payloads/w3e/server_identity_mismatch_detected.schema.json",
+      "outcome": "prepared",
+      "membership": "ABSENT",
+      "retention": "PENDING_RETENTION_DECISION",
+      "retention_question": "For server.identity_mismatch_detected, which history class, expiry anchor, counting scope/cap/overflow and explicit deletion rule apply to its Server-owned application records with no Project? The G05 analogy is not an exact-name grant; existing original receipts and source records keep their own policies.",
+      "source_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/server_endpoint_record",
+      "producer": "ServerIdentityVerifier.mismatch_commit@1.0.0",
+      "newly_authored_bindings": [
+        "payload",
+        "producer source method",
+        "family-specific source custody",
+        "operation/event identity",
+        "history reader/projector",
+        "filtered checkpoint",
+        "replay/withdrawal"
+      ],
+      "reused_owner_units": [
+        "SRV-002",
+        "SRV-004",
+        "SRV-007"
+      ],
+      "candidate_retention_classes": [
+        "Approval/receipt/audit authority/source lineage: indefinite, no count eviction (Case L-3, Plans/storage-plan.md:17409).",
+        "Non-authority security diagnostics or migration/recovery operational history: 2555 days, 2000000/project; no W3E application bucket granted (Case L-3, Plans/storage-plan.md:17410)."
+      ]
+    }
+  ]
+}

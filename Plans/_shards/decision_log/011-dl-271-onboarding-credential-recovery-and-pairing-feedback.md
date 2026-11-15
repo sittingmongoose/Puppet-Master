@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L32456
+Source lines: L28747-L32562
 
-Source SHA256: `c29b7ef5db937646b9b1fa2b620d07d35c5cd01a901ce658d733699e1f392331`
+Source SHA256: `4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca`
 
 ---
 
@@ -3717,4 +3717,110 @@ negative_constraints:
   - Do not offer Gemini CLI as an active provider, auth default, family-pool member or media route.
   - Do not infer native implementation, readiness or a governance seal from this decision.
 owner_hints: [Plans/Goal_Runtime_System.md, Plans/Contracts_V0.md, Plans/Plan_To_Node_Compilation.md, Plans/CLI_Bridged_Providers.md]
+```
+
+### DL-479 - One Model Nicknames List For Chat And Media Models
+
+```yaml
+plan_unit_id: DL-479
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared reviewed Settings on 2026-11-13. His review item 4, verbatim: "There is a field that says model nicknames...It makes no sense, it doesnt let you set any values that make sense, this is pointless."
+  The stream P lead asked, verbatim: "Model nicknames (your item 4): the specs keep nicknames so you can type a short name like "opus" or "nano banana" instead of a full model name, but Settings shows them as two separate rows both called Model nicknames: a bare text field and a key/value box. What should it become?"
+  Jared answered "One nickname list (Recommended)". The option read, verbatim: "One "Model nicknames" list for chat and media models. Each line is a nickname plus the model it means, chosen with the shared model picker. Typing a nickname in chat still works. Replaces both current rows."
+  The accepted design is one row, ai.models.model-alias, "Model nicknames", on Settings › Models › Presets and nicknames, for chat and media models. A line is a nickname and the model it means, stored as the canonical provider_id/model_id with no depth; presets, not nicknames, hold a model plus depth (Models_System §6.7). The model is chosen with the shared chat model picker as an overlay under the same rules as a model row: an exact typed name passes one small call before saving. The Models_System §6.8 built-ins are listed in the same list, marked built in; a line whose normalized nickname matches one replaces it for lookup, and removing that line brings the built-in back. The stored value holds only the person's own lines; the default is {}.
+  Behaviour: nicknames normalize per §6.7. A second nickname that normalizes the same as one already in the list at that level is refused with the reason, and so is a nickname that equals an exact model id, because it would hide that model. A nickname never proves the model is available (§6.8). Everywhere is home and a project may differ; Computer is not offered (same_for_you) and Device is not offered (not_about_the_screen). Each nickname resolves on its own, expressed with the existing per_item combine keyed by the normalized nickname under SSYS-059: a project's line wins for that nickname, and nicknames set only Everywhere still apply in the project. Typing a nickname in chat still works. A value saved in the row's former shape (one nickname kept inside a model's record) reads as that model's line Everywhere, under the same refusals.
+  Behaviour: media.image.model-aliases retires into retired_input_ids and compatibility_reads in settings_inventory.json, replacement ai.models.model-alias, with omit_retired_key, explain_retirement and omit_with_notice. Its read rule merges the person's own entries at the same level (Everywhere or This project), drops an entry only when its normalized nickname and resolved canonical model both equal a shipped built-in pair (the same nickname with another model is the person's override and merges, and an unresolvable model is listed for review), shows a Computer-level entry once for review and never applies it silently, and on a clash keeps the Model nicknames entry and lists the other. The six settings snapshot enums swap media.image.model-aliases for ai.models.model-alias. Search, All Settings, transfer, Reset and census derive their active admission from the inventory.
+  Wording: this entry records Jared's batch 4 answer; it does not reseal governance or claim native runtime proof.
+gui_related: true
+gui_classification_reason: Owns the visible Model nicknames list, its refusals, levels, compatibility disclosure, Settings
+  search and transfer behavior.
+depends_on:
+- SSYS-077
+- SSYS-059
+- MS-052
+- MS-053
+unblocks: []
+acceptance_criteria:
+- Jared's item 4 words, the lead's question, his answer and the option text are preserved verbatim.
+- Exactly one active Model nicknames row exists, ai.models.model-alias, Everywhere with optional This project lines, resolved per nickname, default {}.
+- media.image.model-aliases is retired with a compatibility read whose replacement is ai.models.model-alias; it gains no new writer.
+- The compatibility read drops only an exact built-in pair, so nano banana naming gemini-2.5-flash-image drops as redundant while nano banana naming another model is the person's override and merges.
+- A nickname never proves availability; duplicates after normalization and nicknames equal to an exact model id are refused with the reason.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-settings-layering
+- python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+- python3 -m unittest discover -s tests -p test_pm_settings_draft_transfer.py
+risk_class: model_nickname_list_and_retirement_drift
+reasoning_tier: high
+context_scope: settings_nicknames_batch4_20261113
+implementation_surfaces: &id001
+- Plans/Models_System.md
+- Plans/Settings_System.md
+- Plans/Media_Generation_and_Capabilities.md
+- Plans/settings_inventory.json
+- Plans/settings_system_contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- settings-feedback-20261113:item-4 (Jared's review, relayed by the stream P lead)
+- share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-batch4-nicknames.md
+preserved_exact_tokens:
+- It makes no sense, it doesnt let you set any values that make sense, this is pointless.
+- One nickname list (Recommended)
+- Typing a nickname in chat still works. Replaces both current rows.
+- ai.models.model-alias
+- media.image.model-aliases
+- compatibility_reads
+- per_item
+negative_constraints:
+- Do not keep a second nickname row on the Media page or anywhere else.
+- Do not store depth in a nickname; presets hold model plus depth.
+- Do not offer nicknames per Computer or per Device, or apply a Computer-level legacy entry silently.
+- Do not treat a nickname as proof that its model is available.
+owner_hints: *id001
+```
+
+### DL-510: Source Control source records (retention deck 6, E6-1)
+
+```yaml
+plan_unit_id: DL-510
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered card E6-1 of retention deck 6 in chat on 2026-11-13 at 10:43 PM EST (03:43Z on 2026-11-14); pm7-build relayed it. His answer, verbatim: "Same as the history". That is option A.
+
+  The question, as the card asked it: "How long should Source Control's saved source records be kept?" Each of the 19 Source Control event types saves a history entry, which already has a keep-rule (DL-453, DL-454 and DL-455), and a separate source record of what actually happened, which the history entry points back to. Option A, "Same lifetime as each history entry", keeps every history entry able to show its source and repeats the rule DL-507 chose for the developer-tool source records.
+
+  That answer keeps each Source Control original source fact exactly as long as the history entry that points to it. The following 19 exact prepared stored values (Plans/source_control_event_storage_rows.json) receive their family's history policy:
+  - DL-453 history (kept permanently, no age or count expiry): RP-AUTHORITY-INDEFINITE@1.0.0: source_control_backend_selected_fact (SP-1251), source_control_checkpoint_created_fact (SP-1252), source_control_checkpoint_restored_fact (SP-1253), source_control_repository_bound_fact (SP-1260), source_control_repository_unbound_fact (SP-1261), source_control_workspace_created_fact (SP-1263), source_control_workspace_removed_fact (SP-1265), source_control_writer_lease_granted_fact (SP-1267), source_control_writer_lease_lost_fact (SP-1268).
+  - DL-454 history (90 days from the first successful save that survives a restart): RP-TELEMETRY-90D@1.0.0: source_control_backend_detected_fact (SP-1250), source_control_status_refreshed_fact (SP-1262), source_control_workspace_opened_fact (SP-1264), source_control_workspace_switched_fact (SP-1266).
+  - DL-455 history (seven years from the original saved change): RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter: source_control_remote_fetch_completed_fact (SP-1254), source_control_remote_fetch_started_fact (SP-1255), source_control_remote_publish_completed_fact (SP-1256), source_control_remote_publish_started_fact (SP-1257), source_control_remote_sync_completed_fact (SP-1258), source_control_remote_sync_started_fact (SP-1259).
+  All 19 families are Project-only, so no application edition and no application allowance applies.
+
+  For these exact stored values this decision supersedes the earlier PENDING_RETENTION_DECISION statements in SCS-1250 through SCS-1268 (C7), SP-1250 through SP-1268, Plans/source_control_event_preparation.json and Plans/source_control_event_storage_rows.json. Existing policy definitions keep their anchors, counting scopes, counts, overflow actions, stronger holds and required dependencies. Snapshot bodies, native receipts, checkpoint contents, repository files and credential resources keep their independently assigned policies. This assigns no additional family, changes no schema or frozen recipe, and grants no admission, hold release, native execution or governance seal.
+gui_related: false
+gui_classification_reason: Assigns storage retention policies without changing visual presentation.
+depends_on: [DL-453, DL-454, DL-455]
+unblocks: []
+acceptance_criteria:
+- Every named source-fact row uses exactly its family's history policy.
+- Existing holds and policy limits remain intact; no admission or native evidence is inferred.
+validation_surfaces: [scripts/pm_w3b_event_oracles.py, Plans/source_control_event_storage_rows.json]
+risk_class: retention_and_data_loss
+reasoning_tier: high
+context_scope: event_authority_retention_deck6
+implementation_surfaces: [Plans/source_control_event_storage_rows.json, Plans/source_control_event_preparation.json]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-6_20261114.md; SHA-256 980b44d2a58373758e20eb0cd376748a4146bffac774b265781521e0d9d3a2da; Jared answer relayed by pm7-build mail 1114034303-dce3"
+- "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-6.md"
+preserved_exact_tokens: ["Same as the history", "RP-AUTHORITY-INDEFINITE@1.0.0", "RP-TELEMETRY-90D@1.0.0", "RP-OPERATIONAL-2555D@1.0.0", "source_control_backend_selected_fact", "source_control_checkpoint_created_fact", "source_control_checkpoint_restored_fact", "source_control_repository_bound_fact", "source_control_repository_unbound_fact", "source_control_workspace_created_fact", "source_control_workspace_removed_fact", "source_control_writer_lease_granted_fact", "source_control_writer_lease_lost_fact", "source_control_backend_detected_fact", "source_control_status_refreshed_fact", "source_control_workspace_opened_fact", "source_control_workspace_switched_fact", "source_control_remote_fetch_completed_fact", "source_control_remote_fetch_started_fact", "source_control_remote_publish_completed_fact", "source_control_remote_publish_started_fact", "source_control_remote_sync_completed_fact", "source_control_remote_sync_started_fact"]
+negative_constraints:
+- No policy definition, family admission, native execution claim or governance seal is created.
 ```
