@@ -692,6 +692,17 @@ def cases():
         negatives.append(c.mutate(control, 'sr_sru_reason', ('sr', 'resume', 'events_appended', 0, 'payload', 'recovery_unavailable_reason_code'),
                                   'snapshot_corrupt', 'resume-changes-reason') if at == 'durability_commit' else
                          c.mutate(control, 'sr_sru_anchor', ('sr', 'establish', 'anchor_after', 'anchor_state'), 'released', 'crash-releases-anchor'))
+    # Episode facts (P01, Executor Known-37 admission): on an episode whose
+    # establishing event is constructed here, so the stored-event join is not touched.
+    control = next(x for x in controls if x['id'] == SRU + '/sr/reason/snapshot_missing')
+    for path, replacement, label in [(E('events_appended', 0, 'payload', 'run_id'), 'run-other', 'payload-other-run'),
+                                     (E('events_appended', 0, 'payload', 'node_id'), 'node-other', 'payload-other-node'),
+                                     (E('events_appended', 0, 'payload', 'blocked_sequence'), 6, 'payload-stale-blocked-sequence'),
+                                     (E('events_appended', 0, 'payload', 'snapshot_refs'), ['snapshot-A'], 'payload-partial-snapshot-set'),
+                                     (E('events_appended', 0, 'payload', 'safe_point_id'), 'safe-point-other', 'payload-other-safe-point'),
+                                     (E('events_appended', 0, 'payload', 'anchor_ref'), 'recovery_anchor_record.v1:project-A:anchor-B', 'payload-other-anchor'),
+                                     (E('events_appended', 0, 'run_id'), 'run-other', 'envelope-other-run')]:
+        negatives.append(c.mutate(control, 'sr_sru_episode', path, replacement, label))
     return controls, negatives
 
 
