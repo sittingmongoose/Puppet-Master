@@ -817,20 +817,25 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # and restore_point_corruption_commit add two materialized later_gui_or_feature_projection families: 680 families,
 # 649 materialized, 591 later. Retention policies unchanged. No event admission follows. Integration re-pins once
 # from the merged registry if other PNC-019 lanes add rows too.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 684
+# Re-pinned once for the admission-merge-2 merged registry (plans/ea-merge2-int-20261115, INT4 item D5):
+# batch 3's 678 + S2's 4 + S3b's 2 + s4b's 51 Browser Program checkpoint rows (SP-2500..2550, prepared only)
+# = 735 unique families, every added row materialized later_gui_or_feature_projection: 647 + 57 = 704
+# materialized, 30 deferred, 1 alias; 79 tier-0, 589 + 57 = 646 later, 10 migration-only. All 41 retention
+# policies are unchanged. No event admission follows from this census re-pin.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 735
 # Re-pinned 2026-11-05 (DL-401, DL-415..DL-421): telemetry plus six independent no-project
 # policies are materialized; existing policies and every family/status/tier count remain unchanged.
 # Re-pinned 2026-11-05 (DL-454, DL-455, DL-457, DL-460, DL-463, DL-464): six further independent
 # application policies are materialized; existing policies and every family/status/tier count remain unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 41
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 653,
+    "materialized": 704,
     "deferred_not_build_blocking": 30,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 79,
-    "later_gui_or_feature_projection": 595,
+    "later_gui_or_feature_projection": 646,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
