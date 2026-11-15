@@ -338,6 +338,10 @@
   {
    "event_type": "runtime.automation_pause_changed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "runtime.quota_resume_attempted",
+   "outcome": "registered"
   }
  ]
 }
