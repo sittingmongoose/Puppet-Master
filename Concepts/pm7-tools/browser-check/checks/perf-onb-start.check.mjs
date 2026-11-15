@@ -18,7 +18,12 @@
 //            arrived laid the whole page out again (4,034 objects, "Fonts changed", in the frame after the press).
 // Welcome idle (60-ui-core.js predraw: the Look screen drawn invisibly, one or two elements a slice, so a cold browser's
 // GPU compiles its programs before Start): no frame over --set pdgap=80 ms while it draws (every gap over 34 ms is
-// logged: a single shape can need two programs, the lead's ruling C keeps those 50-75 ms stalls), the whole pre-draw
+// logged: a single shape can need two programs, the lead's ruling C keeps those 50-75 ms stalls), no frame over --set
+// bgap=50 ms from the moment its host is built to its first slice (the host was built hidden, and an SVG filter in it, the
+// Glass tile's drop shadow, was drawn all the same: five GPU programs in one 113-129 ms raster on Alexis, 117 ms on the
+// owner's PC; the build and the first slice are seen from outside, by a MutationObserver, so main's page is judged too;
+// animation frames are begun by the compositor, which begins none while the GPU process is busy, so a GPU stall is a
+// frame gap here), the whole pre-draw
 // within --set pdms=4000 ms (on a quiet PC), and once done nothing left (no host, marked element or listener); Start
 // pressed while it runs: the Look screen comes in and it ends, leaving nothing; low-resource mode: it draws nothing once
 // on. K-AA (the lead's ruling (a)), with and without Reduced Motion: the pane before and after the pre-draw is the same to
@@ -26,7 +31,7 @@
 // edges a little differently then, so only the
 // anti-aliased edges of rounded controls may differ: within 2.5 px of a curved outline, at most 40 levels, at most 120 pixels
 // a control (none inside a shape, on a straight edge, away from the controls); --set aamutant=1 paints one pixel inside Get
-// Started while it runs (the rows' red test); --set only=pixels runs these rows alone.
+// Started while it runs (the rows' red test); --set only=pixels runs these rows alone, --set only=predraw the pre-draw rows alone.
 // Logged: when the new screen's title was first presented (Element Timing: the check gives the title an elementtiming
 // attribute as its layer is appended; its renderTime follows the title's own staggered fade-in, so it is not the
 // screen's first frame);
@@ -175,7 +180,22 @@ async function surface(t, sandbox) {
 		await t.emulate({ reducedMotion: reduced ? 'reduce' : 'no-preference' });
 		const f = await t.app.open({ onboarding: true, query: 'o55=fresh' + (o && o.hold ? '&o55pdhold=1' : '') + (t.args.q ? '&' + t.args.q : ''), sandbox });
 		// every frame from the start, so the Welcome screen's idle time (and a pre-draw in it) is seen whole
-		await f.evaluate(() => { if (window.__pdf) return; window.__pdf = []; const tk = (now) => { window.__pdf.push(now); requestAnimationFrame(tk); }; requestAnimationFrame(tk); });
+		await f.evaluate(() => {
+			if (window.__pdf) return; window.__pdf = []; const tk = (now) => { window.__pdf.push(now); requestAnimationFrame(tk); }; requestAnimationFrame(tk);
+			// the pre-draw host's build and its first slice, seen from outside (main's page names neither): the end of the task
+			// that put the host in the pane, and of the frame that marked its first element data-pd
+			const B = window.__pdb = { built: 0, first: 0 }, root = document.getElementById('pm-o55-onboarding');
+			if (!root) return;
+			const mo = new MutationObserver((ms) => {
+				const now = performance.now();
+				for (const m of ms) {
+					if (!B.built && m.type === 'childList') for (const n of m.addedNodes) { if (n.nodeType === 1 && n.classList.contains('o55-prewarm')) B.built = now; }
+					if (!B.first && m.type === 'attributes' && m.target.closest && m.target.closest('.o55-prewarm')) B.first = now;
+				}
+				if (B.built && B.first) mo.disconnect();
+			});
+			mo.observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ['data-pd'] });
+		});
 		await f.waitForFunction(() => { const h = document.querySelector('#pm-o55-onboarding .o55-stage'); return !!(h && h.__pipStage && h.__pipStage.svg); }, null, { timeout: 60000 });
 		if (o && o.early) return f;
 		await f.waitForTimeout(5000);
@@ -337,7 +357,11 @@ async function surface(t, sandbox) {
 		for (let k = 0; k < 250 && st() && st().phase === 'running'; k++) await new Promise((r) => setTimeout(r, 100));
 		const s0 = st(); if (!s0 || s0.phase === 'none') return { none: true };
 		const ts = window.__pdf.filter((x) => x >= s0.startedAt - 20 && x <= s0.endedAt + 20), d = ts.slice(1).map((x, i) => [ts[i], x - ts[i]]);
-		return Object.assign({}, s0, { ms: Math.round(s0.endedAt - s0.startedAt), frames: d.length, worstGap: Math.round(Math.max(0, ...d.map((g) => g[1]))), gaps: d.filter((g) => g[1] > 34).map((g) => [Math.round(g[0] - s0.startedAt), Math.round(g[1])]),
+		// (from the host's build to its first slice: every frame that ended after the build and by the first mark; the first
+		// slice's own raster comes in the frame after its mark and is judged with the slices)
+		const B = window.__pdb || {}, all = window.__pdf.slice(1).map((x, i) => [window.__pdf[i], x]).filter(([a, b]) => B.built && B.first && b > B.built && b <= B.first);
+		const build = B.built && B.first ? { ms: Math.round(B.first - B.built), frames: all.length, worst: Math.round(Math.max(0, ...all.map(([a, b]) => b - a))), gaps: all.filter(([a, b]) => b - a > 34).map(([a, b]) => [Math.round(a - B.built), Math.round(b - a)]) } : null;
+		return Object.assign({}, s0, { build, ms: Math.round(s0.endedAt - s0.startedAt), frames: d.length, worstGap: Math.round(Math.max(0, ...d.map((g) => g[1]))), gaps: d.filter((g) => g[1] > 34).map((g) => [Math.round(g[0] - s0.startedAt), Math.round(g[1])]),
 			left: document.querySelectorAll('#pm-o55-onboarding .o55-prewarm, #pm-o55-onboarding [data-pd]').length });
 	});
 	const cur = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
@@ -361,11 +385,15 @@ async function surface(t, sandbox) {
 		if (pre.gaps.length) t.log(`${tag}: NOTE Welcome's pre-draw: ${pre.gaps.length} frame gap(s) over 34 ms ${JSON.stringify(pre.gaps)}; long slices ${JSON.stringify(pre.long || [])}`);
 		const over = pre.gaps.filter((g) => g[1] > PDGAP);
 		await t.check(`${tag}: Welcome idle: the pre-draw of the Look screen holds no frame over ${PDGAP} ms`, over.length === 0, `${pre.slices} slices of ${pre.pieces} elements in ${pre.ms} ms, ended '${pre.why}'; frame gaps over 34 ms ${JSON.stringify(pre.gaps)}`);
+		const BGAP = +(t.args.bgap || 50);
+		await t.check(`${tag}: Welcome idle: no frame over ${BGAP} ms from the pre-draw host's build to its first slice`, !!pre.build && pre.build.worst <= BGAP, pre.build ? `${pre.build.frames} frames in ${pre.build.ms} ms, the longest ${pre.build.worst} ms; gaps over 34 ms (ms after the build, length) ${JSON.stringify(pre.build.gaps)}` : 'the build or the first slice was not seen');
 		// (in frames, R46-3: a slice is one frame that draws and three that watch, so in wall time the same pre-draw took 2.7
 		// times as long at 60 Hz as at 165 Hz; a stall is one frame here, judged apart above)
 		await t.check(`${tag}: Welcome idle: the whole pre-draw takes at most ${PDFRAMES} frames (4 s at 165 Hz)`, pre.frames <= PDFRAMES, `${pre.frames} frames for ${pre.slices} slices (${pre.ms} ms)`);
 		await t.check(`${tag}: Welcome idle: the pre-draw ended and left nothing (no host, no marked element, no listener)`, pre.phase === 'done' && pre.why === 'done' && pre.left === 0 && pre.listeners === 0, JSON.stringify({ phase: pre.phase, why: pre.why, left: pre.left, listeners: pre.listeners }));
 	}
+	// --set only=predraw: Welcome's pre-draw rows alone
+	if (t.args.only === 'predraw') return;
 	const s = await change(f, `${cur} [data-o55-do="start"]`);
 	say('Start', s);
 	await t.check(`${tag}: Start: the press reached the window and built the Look screen`, s.click && s.screen === 'look', JSON.stringify(s));
