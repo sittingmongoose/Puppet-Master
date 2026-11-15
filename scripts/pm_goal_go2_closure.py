@@ -438,6 +438,7 @@ def bench(args):
 SAMPLED = collections.Counter()
 DONORS = [None]  # GO2: a Donors index in the residual pass
 REACHING = [False]  # GO2: the clause being searched has a control that reaches it
+RESIDUAL = [False]  # GO2: this is a residual pass
 MISMATCHES = []
 CONTROL_STORE = {}  # GO2: sha256 -> control, for every control a witness was found on (replayed on the reference validator)
 ORDERING = collections.Counter()
@@ -502,7 +503,9 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
     donated = {}
     if DONORS[0] is not None and reaches and not REACHING[0]:  # GO2 addition: donor constructions for every reach first
         # (only for a clause no existing control reaches; a reaching control goes straight to GO's defects)
-        total = (2 * CLAUSE_CAP[0]) // 3  # adaptive shares: what one reach leaves unused flows to the next
+        # adaptive shares (what one reach leaves unused flows to the next); a residual pass gives the donor stage two
+        # thirds of the cap, because GO's own pools already ran in full for these clauses in the earlier pass
+        total = (2 * CLAUSE_CAP[0]) // 3 if RESIDUAL[0] else CLAUSE_CAP[0] // 3
         for number, reach in enumerate(reaches):
             left = total - (COUNT[0] - start)
             if left <= 0:
@@ -515,6 +518,7 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
             if donated[id(reach)]:
                 break  # one reach with a built control is enough to test the clause's defects
     reaches = sorted(reaches, key=lambda r: not donated.get(id(r)))  # GO2: a reach with built controls is searched first
+    pools_start = COUNT[0]  # GO2: GO's suite share (half the cap) is measured from here, after the donor pre-pass
     for reach in reaches:
         pools = [(c, 'donated') for c in donated.get(id(reach), [])] + [(c, None) for c in controls[:40]]
         for variant in range(4):
@@ -527,7 +531,7 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
             if COUNT[0] - root0 > budget or COUNT[0] - start > CLAUSE_CAP[0] or (
                     covered_at is not None and COUNT[0] - covered_at > COVERED_EXTRA):
                 break
-            if variant is None and COUNT[0] - start > CLAUSE_CAP[0] // 2:
+            if variant is None and COUNT[0] - pools_start > CLAUSE_CAP[0] // 2:
                 continue
             if variant == 'swap':
                 if best is None:
@@ -939,7 +943,9 @@ def donor_controls(cl, v, reach, seeds, controls, donors, by_ipath, budget_left,
     # GO2: branch entry from every distinct control (protected selectors), scored by the errors left; the three closest
     # are greedily repaired. Distinct: one control per signature of the enum/boolean members on the way.
     entered, signatures = [], set()
-    for control in diverse(cl, list(controls)[:400], reach)[:200]:
+    ranked = diverse(cl, list(controls)[:400], reach)
+    ranked = sorted(ranked, key=lambda c: -plausible(cl, c, reach))  # stable: diversity order within a score
+    for control in ranked[:200]:
         if cl.COUNT[0] - start > (2 * budget_left) // 3:
             break
         try:
@@ -1226,20 +1232,80 @@ def _force(cl, v, target, condition, resolver, want, donors, prefix, member_sche
     return None
 
 
+def plausible(cl, control, reach):
+    """GO2 ordering only (no validation): how many of the reach's union alternatives and conditional branches this control
+    already meets, read from its data (an `if` member's const/enum/null pin against the value there; an alternative's
+    type, const or enum against the value at its location), plus how deep the reach's path exists in it."""
+    path, node, depth_ok = (), control, 0
+    for segment, _, _ in reach['steps']:
+        if segment == '#' and isinstance(node, list) and node:
+            node, path = node[0], path + (0,)
+        elif segment == '*' and isinstance(node, dict) and node:
+            key = next(iter(node))
+            node, path = node[key], path + (key,)
+        elif isinstance(node, dict) and segment in node:
+            node, path = node[segment], path + (segment,)
+        elif isinstance(node, list) and isinstance(segment, int) and len(node) > segment:
+            node, path = node[segment], path + (segment,)
+        else:
+            break
+        depth_ok += 1
+    score = depth_ok
+    def kind_of(x):
+        return ('null' if x is None else 'boolean' if isinstance(x, bool) else 'integer' if type(x) is int else 'number'
+                if isinstance(x, float) else 'string' if isinstance(x, str) else 'array' if isinstance(x, list) else 'object')
+    for kind, depth, index, owner, resolver, obj in reach['ctx']:
+        if depth > len(path):
+            continue
+        try:
+            here = cl.get(control, path[:depth])
+        except (KeyError, IndexError, TypeError):
+            continue
+        if kind in ('then', 'else') and isinstance(here, dict):
+            props = cl.deref(owner['if'], resolver)[0].get('properties', {})
+            hits = []
+            for name, sub in props.items():
+                sub = cl.deref(sub, resolver)[0]
+                allowed = [sub['const']] if 'const' in sub else sub.get('enum') if isinstance(sub.get('enum'), list) else None
+                if allowed is not None and name in here:
+                    hits.append(here[name] in allowed)
+                elif sub.get('type') and name in here:  # a type pin
+                    types = sub['type'] if isinstance(sub['type'], list) else [sub['type']]
+                    hits.append(kind_of(here[name]) in types or (kind_of(here[name]) == 'integer' and 'number' in types))
+            if hits and (all(hits) if kind == 'then' else not all(hits)):
+                score += 2
+        elif kind in ('anyOf', 'oneOf'):
+            alt = cl.deref(owner[kind][index], resolver)[0]
+            kinds = alt.get('type') if isinstance(alt, dict) else None
+            kinds = kinds if isinstance(kinds, list) else [kinds] if kinds else (['object'] if isinstance(alt, dict) and 'properties' in alt else [])
+            if kinds and kind_of(here) in kinds:
+                score += 2
+            if isinstance(alt, dict) and isinstance(here, dict):
+                for name, sub in alt.get('properties', {}).items():
+                    sub = cl.deref(sub, resolver)[0]
+                    if 'const' in sub and name in here:
+                        score += 1 if here[name] == sub['const'] else -1
+    return score
+
+
 def diverse(cl, controls, reach):
     """Order construction starting points so each distinct selector signature comes first: the short scalar members
     (booleans, null, short strings, small integers) of every object on the reach's path, at depth one below it too."""
+    def token(x):  # enum-like values only: booleans, null, short lowercase words (states, outcomes, kinds), never ids
+        return x is None or isinstance(x, bool) or (isinstance(x, str) and len(x) <= 32 and re.fullmatch(r'[a-z][a-z_]*', x) is not None)
+
+    near = max(0, len(reach['steps']) - 3)  # only the last three objects on the path: the clause's neighbourhood
+
     def signature(control):
         out = []
         node, here = control, ()
-        for segment in (s for s, _, _ in reach['steps']):
-            if isinstance(node, dict):
+        for number, segment in enumerate(s for s, _, _ in reach['steps']):
+            if isinstance(node, dict) and number >= near:
                 for k, x in node.items():
-                    if x is None or isinstance(x, bool) or (isinstance(x, str) and len(x) <= 32) or (type(x) is int and abs(x) < 64):
+                    if token(x):
                         out.append((here, k, x))
                     elif isinstance(x, dict):
-                        out += [(here + (k,), k2, y) for k2, y in x.items()
-                                if y is None or isinstance(y, bool) or (isinstance(y, str) and len(y) <= 32)]
+                        out += [(here + (k,), k2, y) for k2, y in x.items() if token(y)]
             if segment in ('#', '*') or not isinstance(node, (dict, list)):
                 break
             try:
@@ -1301,7 +1367,15 @@ def _enter_union(cl, v, value, reach, depth, owner, kind, index, resolver, path,
     kinds = kinds if isinstance(kinds, list) else [kinds] if kinds else []
     same_shape = (isinstance(target, dict) and ('object' in kinds or (not kinds and 'properties' in alternative))
                   or isinstance(target, list) and 'array' in kinds)
-    if not same_shape and not cl.holds(v, alternative, target, ares):  # a container of the alternative's shape is kept
+    shallow = False
+    if same_shape:  # a container of the alternative's shape is kept unless it fails at the location or a direct member
+        cl.COUNT[0] += 1
+        try:
+            failures = list(v.evolve(schema=alternative, _resolver=ares).iter_errors(target))
+        except Exception:  # noqa: BLE001
+            failures = []
+        shallow = any(len(e.absolute_path) <= 1 for e in failures)
+    if (not same_shape or shallow) and not cl.holds(v, alternative, target, ares):
         pool = (donors.candidates(at[-1], 24) if at and isinstance(at[-1], str) else [])
         for variant in (0, 1):
             try:
@@ -1309,9 +1383,10 @@ def _enter_union(cl, v, value, reach, depth, owner, kind, index, resolver, path,
             except Exception:  # noqa: BLE001
                 pass
         pick = next((x for x in pool if cl.holds(v, alternative, x, ares)), NONE)
-        if pick is NONE:
+        if pick is NONE and not same_shape:
             return None
-        value = cl.put(value, at, copy.deepcopy(pick))
+        if pick is not NONE:
+            value = cl.put(value, at, copy.deepcopy(pick))
         try:
             cl.get(value, tuple(path))
         except (KeyError, IndexError, TypeError):
@@ -1323,29 +1398,75 @@ def _enter_union(cl, v, value, reach, depth, owner, kind, index, resolver, path,
     member = at[-1]
     if not isinstance(parent, dict):
         return value
-    for _, node, nres in by_ipath.get(tuple(reach['ipath'][:depth - 1]), []):
-        if not isinstance(node.get('if'), dict):
-            continue
-        fits = {}
-        for branch in ('then', 'else'):
-            bnode, bres = cl.deref(node.get(branch, {}), nres) if isinstance(node.get(branch), dict) else ({}, nres)
-            sub = bnode.get('properties', {}).get(member) if isinstance(bnode, dict) else None
-            fits[branch] = True if sub is None else cl.holds(v, cl.deref(sub, bres)[0], parent[member], cl.deref(sub, bres)[1])
-        if fits['then'] == fits['else']:
-            continue
-        want = 'then' if fits['then'] else 'else'
-        condition, cres = cl.deref(node['if'], nres)
-        if cl.holds(v, condition, parent, cres) != (want == 'then'):
-            forced = _force(cl, v, parent, condition, cres, want == 'then', donors, at[:-1],
-                            member_schemas(cl, by_ipath, tuple(reach['ipath'][:depth - 1])))
-            if forced is None:
-                continue
-            protect |= set(forced)
-            selectors |= set(forced)
-        if isinstance(node.get(want), dict):
-            bnode, bres = cl.deref(node[want], nres)
-            _fill_branch(cl, v, parent, bnode, bres, selectors | {at}, at[:-1], donors)
+    _steer(cl, v, parent, member, tuple(reach['ipath'][:depth - 1]), at[:-1], donors, by_ipath, protect, selectors)
     return value
+
+
+def _steer(cl, v, parent, member, parent_ipath, parent_at, donors, by_ipath, protect, selectors):
+    """GO2: choose one value for a selector of the parent object so that, in every conditional of the parent, the branch
+    that value decides accepts the member's current value; then fill each decided branch's members. Selectors are
+    members the conditionals' `if` read (never the member itself); candidate values are the `if` const/enum values, the
+    selector's own enum, its current value and donors; values the selector's own subschemas refuse are skipped."""
+    conds = [(n, r) for _, n, r in by_ipath.get(parent_ipath, []) if isinstance(n.get('if'), dict)]
+    if not conds:
+        return
+    own = member_schemas(cl, by_ipath, parent_ipath)
+
+    def branch_of(node, nres, trial):
+        condition, cres = cl.deref(node['if'], nres)
+        kind = 'then' if cl.holds(v, condition, trial, cres) else 'else'
+        return cl.deref(node[kind], nres) if isinstance(node.get(kind), dict) else (None, nres)
+
+    def fits(trial):
+        for node, nres in conds:
+            branch, bres = branch_of(node, nres, trial)
+            sub = branch.get('properties', {}).get(member) if isinstance(branch, dict) else None
+            if sub is not None:
+                sub, sres = cl.deref(sub, bres)
+                if not cl.holds(v, sub, trial[member], sres):
+                    return False
+        return True
+    if fits(parent):
+        chosen = None
+    else:
+        chosen = None
+        names = []
+        for node, nres in conds:
+            for name in cl.deref(node['if'], nres)[0].get('properties', {}):
+                if name != member and name not in names:
+                    names.append(name)
+        for name in names:
+            values = [parent.get(name)]
+            for node, nres in conds:
+                sub = cl.deref(cl.deref(node['if'], nres)[0].get('properties', {}).get(name, {}), nres)[0]
+                values += ([sub['const']] if 'const' in sub else []) + list(sub.get('enum', []))
+            for sub, res in own.get(name, []):
+                values += list(cl.deref(sub, res)[0].get('enum', []))
+            values += donors.candidates(name, 8)
+            seen = set()
+            for x in values:
+                key = sha(x)
+                if key in seen:
+                    continue
+                seen.add(key)
+                if own.get(name) and not all(cl.holds(v, sub, x, res) for sub, res in own[name]):
+                    continue
+                trial = dict(parent)
+                trial[name] = x
+                if fits(trial):
+                    chosen = (name, x)
+                    break
+            if chosen:
+                break
+        if chosen is None:
+            return
+        parent[chosen[0]] = copy.deepcopy(chosen[1])
+        protect.add(parent_at + (chosen[0],))
+        selectors.add(parent_at + (chosen[0],))
+    for node, nres in conds:
+        branch, bres = branch_of(node, nres, parent)
+        if isinstance(branch, dict):
+            _fill_branch(cl, v, parent, branch, bres, selectors | {parent_at + (member,)}, parent_at, donors)
 
 
 def enter_light(cl, v, control, reach, donors, by_ipath=None):
@@ -1579,6 +1700,7 @@ def close(args):
         print(f'resumed {len(state["entries"])} clauses', file=sys.stderr, flush=True)
     state.setdefault('tool_history', []).append(dict(tool_sha256=TOOL_SHA256, at_clauses=len(state['entries'])))
     residual = {}
+    RESIDUAL[0] = bool(args.residual)
     if args.residual:  # GO2 residual pass: every clause the earlier report classified other than UNCOVERED is kept as is
         earlier = json.loads(Path(args.residual).read_text())
         if earlier['root'] != root:
