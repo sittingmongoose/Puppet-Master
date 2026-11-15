@@ -63,6 +63,19 @@ def request_digest(operation):
     return digest({k: operation[k] for k in ('original_command', 'payload', 'before', 'after')})
 
 
+def encodable_request_digest(operation):
+    """request_digest, or None when the canonical MessagePack recipe cannot encode the preimage.
+
+    CV-1100 sets no schema integer cap, so a schema-valid 4,400-digit revision reaches here; SP-1100 makes
+    an integer outside the recipe's -2^63..2^64-1 domain a route refusal, never a crash (C12-DG6A finding,
+    the alert/panel/concern checkers' encoded_size rule).
+    """
+    try:
+        return request_digest(operation)
+    except (ValueError, TypeError):
+        return None
+
+
 _checked_schemas = []
 
 def schema_errors(value, schema):
@@ -250,10 +263,12 @@ def operation_observation(operation, family):
         assert name not in guards, name
         guards[name] = result is True
 
-    require('operation_bytes', len(packed(operation)) <= 16384)
+    size = shared.encoded_size(operation)  # None: the canonical recipe cannot encode it (a route refusal)
+    require('operation_bytes', size is not None and size <= 16384)
     require('operation_identity', operation['operation_digest'] == identity(operation, family))
     require('event_identity', operation['event_id'] == 'evt_' + family['slug'] + '_' + identity(operation, family))
-    require('request_digest', operation['request_digest'] == request_digest(operation))
+    expected_request = encodable_request_digest(operation)
+    require('request_digest', expected_request is not None and operation['request_digest'] == expected_request)
     require('project_join', operation['project_id'] == p['project_id'])
     require('key_join', operation['idempotency_key'] == p['idempotency_key'])
     require('partition', operation['scope_partition'] == 'project~' + base64.urlsafe_b64encode(operation['project_id'].encode()).decode().rstrip('='))
@@ -600,6 +615,25 @@ def p2b_card5(fixture, family, schemas):
     return [dict(name='sweep_p2b_witness_' + str(i), stage='p2b', expected=[], actual=[]) for i in range(count)]
 
 
+def big_integer_cases(fixture, family, schemas):
+    """C12-DG6A: a schema-valid 4,400-digit revision (CV-1100 sets no cap) refuses through operation_bytes and
+    request_digest, the canonical MessagePack route refusal of SP-1100, and never raises."""
+    if not family['operation_schema'] or 'current' not in fixture['bases']:
+        return []
+    observations = []
+    for path in (('payload', 'prior_revision'), ('payload', 'result_revision'), ('after', 'revision')):
+        operation = copy.deepcopy(fixture['bases']['current']['operation'])
+        if not isinstance(operation.get(path[0]), dict) or path[1] not in operation[path[0]]:
+            continue
+        operation[path[0]][path[1]] = 10 ** 4399
+        assert not schema_errors(operation, schemas['operation_schema']), path
+        actual = operation_refusals(operation, family, schemas['operation_schema'])
+        assert actual[:2] == ['operation_bytes', 'request_digest'], (family['event_type'], path, actual)
+        observations.append(dict(name='c12_4400_digit_' + '_'.join(path), stage='operation',
+                                 expected=['operation_bytes', 'request_digest'], actual=actual[:2]))
+    return observations
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--family', required=True)
@@ -686,6 +720,7 @@ def main():
         observations += [dict(name='sweep_p2a_mapping_witness_' + str(i), stage='mapping', expected=['mapping_shape'],
                               actual=['mapping_shape']) for i in range(witnessed)]
     observations += p2b_card5(fixture, family, schemas)
+    observations += big_integer_cases(fixture, family, schemas)
     checkpoint = fixture['bases']['history']['request']['checkpoint']
     original = fixture['bases']['history']['expected']['event']
     boundary_count = shared.history_response_cases(checkpoint, schemas['checkpoint_schema'], family['event_type'], 'fixture', original)
