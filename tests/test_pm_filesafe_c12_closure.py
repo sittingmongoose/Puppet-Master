@@ -11,6 +11,20 @@ import pm_filesafe_c12_closure as X
 
 
 class ClosureEvidenceTests(unittest.TestCase):
+    def test_restore_branch_controls_preserve_the_complete_declared_schema(self):
+        row = next(r for r in X.A.load('Plans/filesafe_event_authority_fixtures.json')['families']
+                   if r['event_type'] == 'safe_point.restored')
+        validator = X.A.context('safe_point.restored')[1]('materialization')
+        for seed in row['positive'][:2]:
+            original = seed['candidate']
+            before = copy.deepcopy(original)
+            enriched = X.df_branch_control(original)
+            self.assertEqual(X.errors(validator, enriched), [])
+            self.assertEqual(original, before)
+        transaction = X.df_branch_control(row['positive'][0]['candidate'])['source']['native_project_record']
+        self.assertEqual(len(transaction['operations']), 1)
+        self.assertNotIn('repo_id', transaction)
+
     def test_nullable_pattern_still_gets_a_string_refusal_witness(self):
         branch = {'type': 'string', 'pattern': '^(?:[0-9a-f]{2})*$(?![\\s\\S])'}
         validator = X.SG.SlotValidator({'anyOf': [branch, {'type': 'null'}]})

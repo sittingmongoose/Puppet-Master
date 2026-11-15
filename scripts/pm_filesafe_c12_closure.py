@@ -300,9 +300,17 @@ def df_branch_control(value):
             continue
         if node.get('index_entries') == []:
             node['index_entries'] = [{'path': 'c12-file', 'stage': 0, 'oid': 'a' * 40, 'mode': '100644'}]
-        if 'native_project_record' in node:
+        if 'scm' in node and node['scm'] is None:
+            node['scm'] = dict(repo_id='c12-repo', worktree_id='c12-worktree', worktree_path='/c12',
+                               branch_name='c12', HEAD_sha='a' * 40, index_state_sha256='b' * 64,
+                               index_entries=[dict(path='c12-file', stage=0, oid='a' * 40, mode='100644')])
+        if 'native_project_record' in node and 'created_at_utc' in node['native_project_record']:
             for field in ('repo_id', 'index_state_sha256', 'last_hold_released_at_utc'):
                 node['native_project_record'].setdefault(field, None)
+        if node.get('operations') == [] and 'restore_transaction_id' in node:
+            node['operations'] = [dict(operation_id='c12-operation', canonical_path_ref='c12-path',
+                                       operation_kind='replace', expected_before_sha256=None,
+                                       target_sha256=None, stage_ref=None, state='pending')]
         if 'symlink_target_hex' in node and node['symlink_target_hex'] is None:
             node['symlink_target_hex'] = '61'
     return result
@@ -314,16 +322,21 @@ def add_schema_branch_controls(trace):
     with trace.installed():
         for phase, validator, value, events, facts in originals:
             enriched = df_branch_control(value)
-            key = phase, digest(validator.schema), digest(enriched)
-            if enriched == value or key in unique:
-                continue
-            unique.add(key)
-            if errors(validator, enriched):
-                continue
-            observed = C.schema_facts(fresh(validator), enriched)
-            if T.codes(phase, observed):
-                raise AssertionError(('schema branch control refused', phase))
-            added += 1
+            variants = [enriched]
+            for path, node in walk(enriched):
+                if isinstance(node, dict) and node.get('post_restore_manifest') is not None and 'post_restore_manifest' in node:
+                    variants.append(replaced(enriched, path + ('post_restore_manifest',), None))
+            for enriched in variants:
+                key = phase, digest(validator.schema), digest(enriched)
+                if enriched == value or key in unique:
+                    continue
+                unique.add(key)
+                if errors(validator, enriched):
+                    continue
+                observed = C.schema_facts(fresh(validator), enriched)
+                if T.codes(phase, observed):
+                    raise AssertionError(('schema branch control refused', phase))
+                added += 1
     return added
 
 
@@ -352,6 +365,11 @@ def schema_coverage(family, out):
                        keyword=keyword, instance_pointer=pointer(path), control=call_id,
                        constraint_sha256=digest(node[keyword]), method='whole_definition', witnesses=[])
             matrix.append(row)
+            if keyword in ('required', 'additionalProperties', 'minProperties', 'maxProperties') and not isinstance(at(value, path), dict):
+                row['coverage'] = 'inapplicable_object_value'
+                row['reason'] = 'This JSON Schema object keyword makes no assertion on the non-object control. It earns no kill; applicable object-branch controls are separately inventoried.'
+                seen.discard(occurrence)
+                continue
             if keyword in APPLICATORS:
                 row['coverage'] = 'complete_definition_applicator'
                 row['reason'] = 'Original validator dispatches this applicator to its unchanged referenced/child assertions; the original whole-definition row consumes the complete error count. No independent scalar-row credit.'
@@ -441,6 +459,16 @@ def schema_coverage(family, out):
         item['observed'] = key in observed
         item['covering_witnesses'] = covered.get(key, [])
         item['covered'] = item['observed'] or bool(item['covering_witnesses'])
+        if (not item['covered'] and item['schema'] == 'Plans/shared_integration_runtime.schema.json'
+                and item['pointer'].startswith('/$defs/WorkflowScopeV2/allOf/0/else')
+                and '#/$defs/application_request/properties/scope/allOf/0/' in item['route']):
+            local = SG.context(family)[1][f'Plans/filesafe_event_sources/{family.replace(".", "_")}.schema.json']
+            selected_kind = local['$defs']['application_request']['properties']['scope']['allOf'][1]['properties']['scope_kind']['const']
+            shared = SG.context(family)[1]['Plans/shared_integration_runtime.schema.json']
+            condition = shared['$defs']['WorkflowScopeV2']['allOf'][0]['if']['properties']['scope_kind']['const']
+            assert selected_kind == condition == 'application'
+            item.update(covered=True, covering_proof='Application request scope allOf[1] fixes scope_kind=application; WorkflowScopeV2 allOf[0].if tests that same const. Thus its project else is unreachable at this exact root. Both original schema clauses are checked here.',
+                        implication_source=f'Plans/filesafe_event_sources/{family.replace(".", "_")}.schema.json#/$defs/application_request/properties/scope/allOf/1/properties/scope_kind/const')
     uncovered = [x for x in definitions if not x['covered']]
     summary = dict(family=family, controls=controls, branch_schema_controls=branch_controls,
                    calls=len(calls), occurrences=len(matrix),
