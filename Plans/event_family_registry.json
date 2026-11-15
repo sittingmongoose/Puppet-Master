@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-15.5",
+  "registry_revision": "2026-11-15.6",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -3660,6 +3660,92 @@
           "producer_admission": "requires_owner_adoption",
           "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-247",
           "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-247",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+    },
+    {
+      "family_id": "event-family-browser-session-state-changed",
+      "family_revision": "1.0.0",
+      "event_type": "browser.session.state_changed",
+      "scope_policy": "application_or_project",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-245",
+      "payload_owner_doc": "Plans/Contracts_V0.md#CV-781",
+      "payload_schema_id": "pm.browser.session.state_changed.payload.v1",
+      "payload_schema_ref": {
+        "path": "Plans/card2_event_payloads.schema.json",
+        "json_pointer": "#/$defs/browser_session_state_changed",
+        "schema_id": "pm.browser.session.state_changed.payload.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/project_id"
+          ],
+          "thread_id": [
+            "/payload/thread_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-245",
+        "Plans/Contracts_V0.md#CV-781",
+        "Plans/storage-plan.md#SP-761",
+        "Plans/card2_event_payloads.schema.json#/$defs/browser_session_state_changed",
+        "Plans/card2_event_contracts.json#/families/1",
+        "reports/event-authority-20261104/DCN-self-grade.json"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.browser.session.state_changed.payload.application.v1",
+          "payload_schema_ref": {
+            "path": "Plans/card2_event_payloads.schema.json",
+            "json_pointer": "#/$defs/browser_session_state_changed",
+            "schema_id": "pm.browser.session.state_changed.payload.application.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-245",
+          "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-245",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        },
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.browser.session.state_changed.payload.v1",
+          "payload_schema_ref": {
+            "path": "Plans/card2_event_payloads.schema.json",
+            "json_pointer": "#/$defs/browser_session_state_changed",
+            "schema_id": "pm.browser.session.state_changed.payload.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-245",
+          "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-245",
           "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
           "retention_policy_ref": {
             "registry_schema_id": "pm.storage_value_registry.v2",
