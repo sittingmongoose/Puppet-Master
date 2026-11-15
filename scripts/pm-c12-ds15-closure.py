@@ -668,6 +668,12 @@ def proposals(keyword, rule, seed):
         yield 'too_many_items', seed + [copy.deepcopy(seed[0])] * (rule['maxItems'] + 1 - len(seed))
     elif keyword == 'uniqueItems' and rule['uniqueItems'] and isinstance(seed, list) and seed:
         yield 'duplicate_item', seed + [copy.deepcopy(seed[0])]
+    elif keyword == 'uniqueItems' and rule['uniqueItems'] and seed == [] and isinstance(rule.get('items'), dict):
+        items = rule['items']
+        allowed = items.get('enum') or ([items['const']] if 'const' in items else None) or (
+            ['c12'] if items.get('type') == 'string' else None)
+        if allowed:  # an empty seed: two copies of one allowed item
+            yield 'duplicate_allowed_item', [copy.deepcopy(allowed[0]), copy.deepcopy(allowed[0])]
     elif keyword in ('anyOf', 'oneOf'):
         for value in (7, 'c12', [], {}, None, False):
             yield 'no_branch/' + json.dumps(value), value
@@ -1232,6 +1238,81 @@ def numbers_mode(m16, deck, out):
     return summary
 
 
+# =========================================================================== gated
+def gated_mode(m16, deck, out, family, collection, max_rss=1900, low=12, resume=13, negative_limit=10, control_limit=10):
+    """One family's gated proof on the unchanged tool, from the pinned collection of pm-ds15-guard-tables.py.
+
+    Each table this family reaches runs with only this family's own controls and negatives, except that a row this family
+    has no negative for (a row it cannot refuse first: its entailment is in --mode entailed) is exercised by other
+    families' negatives of that row, marked assisting, so the table can certify and the family's own rows keep their
+    credit. An assisting negative is never credited to this family: the matrix credits a row as this family's own only
+    when every negative the tool cut for it names this family.
+    """
+    import gzip
+    import pickle
+    import time
+    import pm_ds15_guard_suites as suites
+    g = suites.g
+    root = suites.ROOT
+    sources = (sorted(root.glob('scripts/pm_ds15*.py')) + sorted(root.glob('scripts/pm-ds15*.py'))
+               + [root / 'scripts/pm_guard_isolation.py', root / 'scripts/pm_event_numbers.py']
+               + sorted(root.glob('Plans/ds15_*.json')) + [root / 'Plans/event_number_recipe_corpus.json'])
+    inputs = {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(sources))}
+    saved = pickle.loads(Path(collection).read_bytes())
+    if saved['inputs'] != inputs:
+        raise SystemExit('collection was made from different checker, table, fixture or tool sources')
+    gate = g.MemoryGate(max_rss, low, resume, 30, 2700)
+    summary = dict(tool_sha256=inputs['scripts/pm_guard_isolation.py'], source_sha256=inputs, family=family, assisted=True,
+                   collection_sha256=hashlib.sha256(Path(collection).read_bytes()).hexdigest(), suites=[])
+    for phase in sorted(saved['collected']):
+        full = saved['collected'][phase]
+        slot = suites.family_slot(full, family)
+        if not slot['controls'] and not slot['negatives']:
+            continue
+        own_targets = {n['target'] for n in slot['negatives'].values()}
+        rows = [name for name, _, _ in suites.table_rows(phase)]
+        assisting = {}
+        for k, n in full['negatives'].items():
+            if n['target'] not in own_targets and k not in slot['negatives']:
+                assisting[k] = dict(n, kind='assisting-' + n['kind'])
+                if n['control'] and n['control'] not in {c['id'] for c in slot['controls'].values()}:
+                    for ck, cv in full['controls'].items():
+                        if cv['id'] == n['control']:
+                            slot['controls'][ck] = cv
+        slot['negatives'].update(assisting)
+        controls, negatives = list(slot['controls'].values()), list(slot['negatives'].values())
+        entry = dict(phase=phase, rows=rows, controls=len(controls), negatives=len(negatives),
+                     own_targets=sorted(own_targets), assisted_rows=sorted({n['target'] for n in assisting.values()}),
+                     row_negatives={r: sum(1 for n in negatives if n['target'] == r and n['kind'].startswith('assisting-') is False)
+                                    for r in rows},
+                     lane_matrix=suites.lane_matrix(phase, controls, negatives))
+        entry['rows_without_negative'] = [r for r in rows if r not in {n['target'] for n in negatives}]
+        if negatives and controls:
+            path = root / f'scripts/{suites.TABLE_PREFIX}{phase}.py'
+            stops = [e for e in g.prescan_sources(path) if e['kind'] in g.STATIC_STOP_KINDS]
+            suite = suites.suite_for(phase, slot, negative_limit, control_limit)
+            t = time.monotonic()
+            report = g.run(suite, memory=gate) if not stops else g.prescan_report(stops)
+            name = f'{phase}.json.gz'
+            target = out('__dir__', None) / name
+            with gzip.open(target, 'wt') as handle:
+                handle.write(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
+            rows_report = report.get('rows', [])
+            entry.update(tool_status=report['status'], seconds=round(time.monotonic() - t, 1),
+                         proved=sorted(r['id'] for r in rows_report if r.get('proved')),
+                         unproved=sorted(report.get('unproved_guards', [])), masked=report.get('masked_negatives', []),
+                         unrelated=sum(len(r.get('unrelated_changes', [])) for r in rows_report),
+                         report=name, report_sha256=hashlib.sha256(target.read_bytes()).hexdigest())
+            print(f"{phase} {entry['tool_status']} proved {len(entry['proved'])}/{len(rows)} assisted {entry['assisted_rows']}",
+                  file=sys.stderr, flush=True)
+        summary['suites'].append(entry)
+    out('summary-' + family + '.json', summary)
+    bad = [x['phase'] for x in summary['suites'] if x.get('tool_status') not in (None, 'PASS')]
+    return dict(family=family, tables=len(summary['suites']), failed_tables=bad,
+                rows_proved=sum(len(x.get('proved', [])) for x in summary['suites']),
+                lane_matrix_problems=sum(len(x['lane_matrix']) for x in summary['suites']))
+
+
 # =========================================================================== matrix
 OWNER = 'Plans/Section15_MVP_Promoted_Features_Spec.md'
 # (clause id, paragraph label in the family's owner unit, exact sentence fragment quoted from it, guard tables)
@@ -1280,8 +1361,9 @@ def unit_lines(family, contracts):
     start = next(i for i, ln in enumerate(lines) if ln.startswith('### ' + unit + ' '))
     end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith('### ')), len(lines))
     out = {}
+    labels = [label for _, label, _, _ in CLAUSES] + ['Oracles:']
     for i in range(start, end):
-        for _, label, _, _ in CLAUSES:
+        for label in labels:
             if lines[i].startswith('  ' + label):
                 out.setdefault(label, (i + 1, lines[i]))
     return unit, out
@@ -1343,11 +1425,12 @@ def matrix_mode(m16, deck, out, guard_dir, entailed_path):
                 if phase not in tables:
                     continue
                 ev = rows[(phase, row)]
-                if ev['proved'] and ev['own_negatives']:
+                if ev['proved'] and ev['own_negatives'] and ev['own_families_only']:
                     status = 'PROVED_BY_OWN_WITNESSES'
                 elif (phase, row) in tool_ent:
                     status = 'ENTAILED_SINGLETON'
                 elif (family, phase, row) in fam_ent:
+                    # cannot be refused first by this family; when proved, only by assisting negatives of other families
                     status = 'ENTAILED_FOR_FAMILY'
                 else:
                     status = 'OPEN'
@@ -1358,9 +1441,11 @@ def matrix_mode(m16, deck, out, guard_dir, entailed_path):
         statuses = [e['status'] for c in clauses for e in c['rows']]
         mapped = {(e['table'], e['row']) for c in clauses for e in c['rows']}
         totals[family] = dict(tables=len({p for p, _ in reached}), rows=len(reached), mapped_rows=len(mapped),
-                              proved_own=sum(1 for p in reached if rows[p]['proved'] and rows[p]['own_negatives']),
+                              proved_own=sum(1 for p in reached if rows[p]['proved'] and rows[p]['own_negatives']
+                                             and rows[p]['own_families_only']),
                               entailed_singleton=sum(1 for p in reached if p in tool_ent),
-                              entailed_family=sum(1 for p in reached if (family,) + p in fam_ent and not (rows[p]['proved'] and rows[p]['own_negatives'])),
+                              entailed_family=sum(1 for p in reached if (family,) + p in fam_ent and not (
+                                  rows[p]['proved'] and rows[p]['own_negatives'] and rows[p]['own_families_only'])),
                               open=sorted(f'{e["table"]}:{e["row"]}' for c in clauses for e in c['rows'] if e['status'] == 'OPEN'),
                               unmapped_tables=unmapped, tool_failures=sorted({s['phase'] for s in summary['suites']
                                                                              if s.get('tool_status') not in (None, 'PASS')}),
@@ -1510,7 +1595,8 @@ def git_head():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('--mode', required=True, choices=('entailed', 'schema', 'datetime', 'retained', 'numbers', 'regressions', 'matrix', 'ledger', 'grade'))
+    parser.add_argument('--mode', required=True, choices=('entailed', 'schema', 'datetime', 'retained', 'numbers', 'regressions', 'gated', 'matrix', 'ledger', 'grade'))
+    parser.add_argument('--collection', type=Path, help='gated: the pinned collection of pm-ds15-guard-tables.py --save-collection')
     parser.add_argument('--derivation', type=Path, help='ledger: c12-derivation.json of pm_ds15_c12_cases.py --derive')
     parser.add_argument('--evidence', type=Path, help='grade: the directory holding every mode summary')
     parser.add_argument('--guard', type=Path, help='matrix: the directory of the per-family gated runs (--family F)')
@@ -1524,9 +1610,14 @@ def main():
         FAMILIES = tuple(f for f in FAMILIES if f in args.family)
 
     def out(name, value):
+        if name == '__dir__':
+            return args.out
         (args.out / name).write_text(json.dumps(value, indent=1, sort_keys=True, ensure_ascii=True, default=str) + '\n')
     m16, deck = load()
-    if args.mode == 'matrix':
+    if args.mode == 'gated':
+        assert args.family and len(args.family) == 1, 'gated runs one --family'
+        summary = gated_mode(m16, deck, out, args.family[0], args.collection)
+    elif args.mode == 'matrix':
         summary = matrix_mode(m16, deck, out, args.guard, args.entailed)
     elif args.mode == 'ledger':
         summary = ledger_mode(m16, deck, out, args.guard, args.evidence, args.derivation)
@@ -1537,7 +1628,7 @@ def main():
     print(json.dumps(summary, sort_keys=True, default=str))
     bad = (summary.get('failed_checks') or summary.get('disagreements') or summary.get('changed')
            or summary.get('custody_changed_by_read') or summary.get('plans_custody_unchanged') is False
-           or summary.get('quote_mismatches')
+           or summary.get('quote_mismatches') or summary.get('failed_tables') or summary.get('lane_matrix_problems')
            or (args.mode == 'grade' and any(v[1] != 'PASS' for v in summary['families'].values()))
            or (args.mode == 'matrix' and any(v['open'] or v['unmapped_tables'] or v['tool_failures'] or v['masked']
                                              or v['unrelated'] or v['lane_matrix_problems'] for v in summary.values())))
