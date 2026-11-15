@@ -139,6 +139,9 @@ CUSTODY_STORES = frozenset(CUSTODY['custody_stores'])
 # ordered chain of phases; reused boundaries (types, body, scope, joins,
 # history) are phases of their callers.
 TABLE_PHASES = (
+    'sd_complete', 'nw_producer', 'wt_presence', 'wt_original', 'wt_receipt', 'wt_transaction', 'wt_state',
+    'wt_bound', 'wt_create_failed', 'wt_merged', 'wt_merge_failed', 'wt_pr_created', 'wt_pr_failed',
+    'wt_test_started', 'wt_protocol', 'wt_terminal', 'wt_renamed', 'wt_unbound',
     'rn_recipe', 'rn_receipt', 'rn_original', 'ty_a', 'ty_b', 'rb_route', 'rb_pack_a', 'rb_pack_b',
     'sc_app', 'sc_project_a', 'sc_project_b', 'sc_project_bytes',
     'jn_policy', 'jn_envelope_a', 'jn_envelope_b',
@@ -146,8 +149,8 @@ TABLE_PHASES = (
     'hr_encode', 'hr_flags', 'hr_source',
     'tj_start', 'tj_passed', 'tj_failed_a', 'tj_failed_b',
     'cp_schema', 'cp_node', 'cp_store', 'cp_generation', 'cp_frontier', 'cp_dataset', 'cp_event', 'cp_family',
-    'cp_family_entailed', 'cp_publication', 'cp_state',
-    'cs_value', 'cs_inline', 'cs_pointer', 'cs_pointer_bounds', 'cs_pack_a', 'cs_pack_b',
+    'cp_family_entailed', 'cp_event_family_entailed', 'cp_consumer_entailed', 'cp_projector_entailed', 'cp_publication', 'cp_state',
+    'cs_value', 'cs_inline', 'cs_pointer', 'cs_pointer_bounds', 'cs_pointer_size_entailed', 'cs_pack_a', 'cs_pack_b',
     'ar_request', 'ar_state', 'ar_commit', 'rf_closure',
     'st_value', 'st_inline', 'st_ref', 'st_ref_bytes', 'st_pack_a', 'st_pack_b', 'st_pack_c', 'st_pointer_bounds',
     'st_request_mode', 'st_request_store', 'st_request_schema', 'st_request_access', 'st_request_writer',
@@ -918,9 +921,10 @@ def _checkpoint_joins(value, source, row, key):
         require('cp_family', dict(index_event_type=index['event_type'], family=row['event_type'], key=key,
                                   expected_key=row['domain_checkpoint_key'].format(
                                       storage_instance_id=store, scope_partition=p['scope']['scope_partition'])))
-        require('cp_family_entailed', dict(value_event_type=value['event_type'], event_event_type=event['event_type'],
-                                           family=row['event_type'], consumer_id=value['consumer_id'], reader=row['reader'],
-                                           projector_id=value['projector_id'], domain_projector=row['domain_projector']))
+        require('cp_family_entailed', dict(value_event_type=value['event_type'], family=row['event_type']))
+        require('cp_event_family_entailed', dict(event_event_type=event['event_type'], family=row['event_type']))
+        require('cp_consumer_entailed', dict(consumer_id=value['consumer_id'], reader=row['reader']))
+        require('cp_projector_entailed', dict(projector_id=value['projector_id'], domain_projector=row['domain_projector']))
         publication = source['publication']
         require('cp_publication', dict(projection_refs=value['projection_refs'],
                                        publication_projection_refs=publication['projection_refs'],
@@ -985,8 +989,9 @@ def _checkpoint_storage(value, source, row, key):
                                pack_body_equal=body_raw == raw if body_error is None else None))
     # Entailed by the exact pointer above (at most 131 bytes); kept as defence in depth.
     pointer_error, pointer_raw = encoded(pointer)
-    require('cs_pointer_bounds', dict(pointer_encoding_error=pointer_error,
-                                      pointer_size=len(pointer_raw) if pointer_raw is not None else None))
+    require('cs_pointer_bounds', dict(pointer_encoding_error=pointer_error))
+    require('cs_pointer_size_entailed', dict(pointer_encoding_error=pointer_error,
+                                            pointer_size=len(pointer_raw) if pointer_raw is not None else None))
     require('cs_pack_a', dict(pack_key=packed['key'], expected_pack_key='payload:v1:' + digest,
                               byte_size=packed['byte_size'], raw_size=len(raw), media_type=packed['media_type'],
                               pack_store=packed['storage_instance_id'], store=source['storage_instance_id'],
@@ -1038,6 +1043,79 @@ def reference_closure_refusal(errors):
 def references_valid(schema, path):
     """Standing check 9: the whole schema graph resolves (rf_closure)."""
     return reference_closure_refusal(schema_reference_errors(schema, path)) is None
+
+
+def schema_admission(value, validator):
+    """Method B whole-definition boundary; preserves every owner keyword and format.
+
+    CH1 deliberately uses the W3H route: SD01 cuts the complete definition, never
+    claims an atomic keyword cut. The clause inventory supplies separate actual
+    instance witnesses and explicit covering arguments for redundant assertions.
+    """
+    try:
+        _schema_admission(value, validator)
+    except TableRefusal:
+        return False
+    return True
+
+
+def _schema_admission(value, validator):
+    require('sd_complete', dict(definition_valid=validator.is_valid(value)))
+
+
+def current_record_valid(record, row, source=None, storage_instance=STORAGE_INSTANCE):
+    """Complete current schema/physical/identity boundary; retained reads stay separate."""
+    try:
+        _current_record(record, row, source, storage_instance)
+    except TableRefusal:
+        return False
+    return True
+
+
+def _current_record(record, row, source, storage_instance):
+    _input_types({'record': record})
+    _schema_admission(record, current_validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text())))
+    body = _resolve_body(record, source, storage_instance, CURRENT_RULE)
+    _schema_admission(body, current_validator(json.loads((ROOT/row['payload_schema_ref']).read_text())))
+    _joins(record, row['event_type'], source, storage_instance, CURRENT_RULE)
+    # Schema validity is a logical-domain result, not qualification of the
+    # current producer's RFC8785 route. Keep the shared refusal structured.
+    producer_refusal = None
+    try:
+        semantic_commitment(record)
+    except Refusal as refusal:
+        producer_refusal = refusal.reason
+    require('nw_producer', dict(producer_refusal=producer_refusal))
+    return body
+
+
+def worktree_event_outcome(record, row, original_ref, originals, storage_instance=STORAGE_INSTANCE):
+    """Exact first-refusal tuple; exceptions propagate and never earn mutation credit."""
+    try:
+        from pm_dch_worktree import check_original
+        from types import SimpleNamespace
+        check_original(SimpleNamespace(**globals()), record, row, original_ref, originals, storage_instance)
+    except TableRefusal as refusal:
+        return refusal.phase, refusal.row, refusal.code
+    return None
+
+
+def worktree_event_valid(record, row, original_ref, originals, storage_instance=STORAGE_INSTANCE):
+    """Complete worktree route over an independent original operation store (CH1)."""
+    return worktree_event_outcome(record, row, original_ref, originals, storage_instance) is None
+
+
+def worktree_checkpoint_valid(value, source, row, key, original_ref, originals):
+    """Compose original worktree result/receipt custody with SP-278 publication."""
+    try:
+        from pm_dch_worktree import check_original
+        from types import SimpleNamespace
+        check_original(SimpleNamespace(**globals()), source['event_record'], row, original_ref, originals,
+                       source['storage_instance_id'])
+        _checkpoint_joins(value, source, row, key)
+    except TableRefusal:
+        return False
+    return True
 
 
 def semantic_body_mutation(record, event):
@@ -1228,7 +1306,7 @@ def main():
     for case in fixtures:
         record=case['record']; event=case['event_type']
         check(case['storage_instance_id']==STORAGE_INSTANCE,event+': actual Storage fixture instance')
-        check(envelope.is_valid(record) and joins(record,event) and record['payload']==case['valid'], event+': envelope and source joins')
+        check(current_record_valid(record, row=next(r for r in contracts if r['event_type']==event)) and record['payload']==case['valid'], event+': envelope and source joins')
         for key in ['event_type','event_id','idempotency_key','payload_schema_id','scope_kind','project_id','thread_id','actor_ref','occurred_at_utc','payload_ref','run_id','node_id','attempt_id']:
             if key=='payload_ref':
                 reference=next(o for o in case['transport_oracles'] if o['name']=='authorized_payload_reference')
@@ -1417,6 +1495,15 @@ def main():
     from pm_dch_guard_witnesses import cases as table_cases, evaluate as evaluate_table
     for oracle in table_cases(subject):
         check(evaluate_table(subject, oracle, envelope) == oracle.expected, oracle.name.split('/')[0]+': '+oracle.name)
+    from pm_dch_worktree import checks as worktree_checks
+    for label, ok in worktree_checks(subject):
+        check(ok, label)
+    from pm_dch_worktree import publication_checks
+    for label, ok in publication_checks(subject):
+        check(ok, label)
+    from pm_dch_c12_cases import checks as closure_checks
+    for label, ok in closure_checks(subject):
+        check(ok, label)
     return finish()
 
 if __name__=='__main__':

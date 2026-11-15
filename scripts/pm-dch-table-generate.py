@@ -43,6 +43,123 @@ RECIPE = 'recipe_refused'
 INVALID = 'invalid_input_type'
 CONFLICT = 'conflict'
 
+# Criterion-12 CH1: complete-schema Method B route and independently held worktree originals.
+phase('sd_complete', 'schema_admission: unchanged complete owner schema, formats and supplementary selector constraints.', [
+    ('SD01_complete_definition', '/schema-input', 'satisfies every assertion in the complete selected owner definition', 'schema_refused',
+     "value['definition_valid'] is not True"),
+])
+phase('wt_presence', 'worktree: exactly one independent original before any source field is read.', [
+    ('WT01_original_present', '/original_ref', 'identifies exactly one independently held original operation', 'source_unavailable',
+     "value['original_count'] != 1"),
+])
+phase('wt_original', 'worktree: independently committed original intent, outcome and first receipt.', [
+    ('WT02_original_store', '/original/storage_instance_id', 'equals the actual reading Store', 'worktree_refused',
+     "value['original_store'] != value['store']"),
+    ('WT03_original_event', '/original/record', 'the candidate equals the committed original EventRecord', 'worktree_refused',
+     "value['record_equal'] is not True"),
+    ('WT04_intent_copies', '/original/intent', 'every independently frozen input equals the canonical result input', 'worktree_refused',
+     "value['intent_mismatches'] != []"),
+    ('WT05_result_copies', '/original/result', 'the resolved body equals the independently committed original result', 'worktree_refused',
+     "value['result_equal'] is not True"),
+    ('WT06_receipt_event', '/original/receipt/event_id', 'equals the committed original event identity', 'worktree_refused',
+     "value['receipt_event'] != value['original_event']"),
+    ('WT07_receipt_sequence', '/original/receipt/sequence_id', 'equals the original Storage-assigned sequence', 'worktree_refused',
+     "value['receipt_sequence'] != value['original_sequence']"),
+])
+phase('wt_receipt', 'worktree: first-AppendReceipt and original full-value commitment copies.', [
+    ('WT08_receipt_numbers', '/original/receipt', 'all receipt Storage integers use storage_uint64', 'worktree_refused',
+     "value['number_refusals'] != []"),
+    ('WT09_original_commitment', '/original/commitment/sha256', 'equals shared full_value_commitment of the independently held original', 'worktree_refused',
+     "value['commitment'] != value['expected_commitment']"),
+    ('WT10_receipt_identity', '/original/first_receipt', 'the result receipt equals the separately held first receipt', 'worktree_refused',
+     "value['receipt_equal'] is not True"),
+])
+phase('wt_transaction', 'worktree: original transaction observations under the exact family owner.', [
+    ('WT11_operation_identity', '/original/operation', 'operation family and frozen operation id match the original intent', 'worktree_refused',
+     "value['operation_identity'] is not True"),
+    ('WT12_operation_order', '/original/operation/actions', 'observed actions preserve the exact owner ordering and no replayed effect', 'worktree_refused',
+     "value['operation_order'] is not True"),
+] )
+phase('wt_state', 'worktree: the atomic binding/reverse/worktree transition.', [
+    ('WT14_state_transition', '/original/before and after', 'binding, reverse key and worktree state satisfy the selected atomic transition', 'worktree_refused',
+     "value['state_transition'] is not True"),
+])
+
+# Each original family outcome predicate is a real, separately named row.
+phase('wt_bound', 'ACD-616 successful creation/binding completion.', [
+    ('WB01_created', '/operation/outcome/status', 'the actual creation completed', 'worktree_refused', "value['status'] != 'created'"),
+    ('WB02_no_inflight', '/operation/outcome/inflight_turn', 'binding changes are refused during an in-flight turn', 'worktree_refused', "value['inflight'] is not False"),
+    ('WB03_worktree', '/after/worktree/worktree_id', 'equals the committed result worktree', 'worktree_refused', "value['worktree'] != value['payload_worktree']"),
+    ('WB04_path', '/after/worktree/worktree_path', 'equals the committed result path', 'worktree_refused', "value['path'] != value['payload_path']"),
+    ('WB05_branch', '/after/worktree/branch_name', 'equals the committed result branch', 'worktree_refused', "value['branch'] != value['payload_branch']"),
+])
+phase('wt_create_failed', 'ACD-617 actual failed or timed-out creation, without claiming a binding.', [
+    ('WC01_failed', '/operation/outcome/status', 'the creation failed or timed out', 'worktree_refused', "value['status'] not in ('failed', 'timed_out')"),
+    ('WC02_error', '/operation/outcome/error', 'equals the original sanitized error', 'worktree_refused', "value['error'] != value['payload_error']"),
+])
+phase('wt_merged', 'ACD-619 completed merge strategy under the owner lock and tests.', [
+    ('WM01_lock', '/operation/outcome/lock_owner', 'the same original operation holds the merge lock', 'worktree_refused', "value['lock'] != value['operation']"),
+    ('WM02_strategy', '/operation/outcome/strategy', 'equals the original strategy', 'worktree_refused', "value['strategy'] != value['payload_strategy']"),
+    ('WM03_completed', '/operation/outcome/status', 'git completed', 'worktree_refused', "value['status'] != 'completed'"),
+    ('WM04_guards', '/operation/outcome/guards', 'dirty/conflict/active-run/detached-HEAD guards were rechecked and clear', 'worktree_refused', "value['guard_mismatches'] != []"),
+    ('WM05_tests', '/operation/outcome/tests', 'tests passed or the existing explicit override was accepted', 'worktree_refused', "value['tests_enabled'] is True and value['tests'] not in ('passed', 'explicit_override')"),
+    ('WM06_commit', '/operation/outcome/result_commit_sha', 'equals the actual completed commit', 'worktree_refused', "value['commit'] != value['payload_commit']"),
+    ('WM07_rebase_steps', '/operation/outcome/rebase_steps', 'rebase includes worktree rebase then main ff-merge under the lock', 'worktree_refused', "value['strategy'] == 'rebase' and value['rebase_steps'] != ['worktree_rebase', 'main_ff_merge']"),
+])
+phase('wt_merge_failed', 'ACD-618 actual failed merge, preserving the binding.', [
+    ('WF01_lock', '/operation/outcome/lock_owner', 'the original operation holds the merge lock', 'worktree_refused', "value['lock'] != value['operation']"),
+    ('WF02_strategy', '/operation/outcome/strategy', 'equals the original strategy', 'worktree_refused', "value['strategy'] != value['payload_strategy']"),
+    ('WF03_failed', '/operation/outcome/status', 'the merge failed', 'worktree_refused', "value['status'] != 'failed'"),
+    ('WF04_error', '/operation/outcome/error', 'equals the actual sanitized error', 'worktree_refused', "value['error'] != value['payload_error']"),
+    ('WF05_conflicts', '/operation/outcome/has_conflicts', 'equals the original conflicts observation', 'worktree_refused', "value['conflicts'] is not value['payload_conflicts']"),
+    ('WF06_no_commit', '/operation/outcome/result_commit_sha', 'a failure claims no success commit', 'worktree_refused', "value['commit'] is not None"),
+    ('WF07_abort', '/operation/outcome/rebase_steps', 'a rebase conflict was auto-aborted', 'worktree_refused', "value['strategy'] == 'rebase' and value['payload_conflicts'] is True and value['rebase_attempted'] is True and value['rebase_steps'] != ['auto_abort']"),
+])
+phase('wt_pr_created', 'ACD-620 original auto-push and actual Create PR API outcome.', [
+    ('WP01_push', '/operation/outcome/push', 'auto-push succeeded', 'worktree_refused', "value['push'] != 'succeeded'"),
+    ('WP02_api', '/operation/outcome/api/status', 'the API returned the actual created PR', 'worktree_refused', "value['api_status'] != 'created'"),
+    ('WP03_url', '/operation/outcome/api/pr_url', 'equals the original API URL', 'worktree_refused', "value['url'] != value['payload_url']"),
+    ('WP04_number', '/operation/outcome/api/pr_number', 'equals the original API PR number', 'worktree_refused', "value['number'] != value['payload_number']"),
+])
+phase('wt_pr_failed', 'ACD-621 distinguishes push failure from failure after successful push.', [
+    ('WX01_error', '/operation/outcome/error', 'equals the original sanitized error', 'worktree_refused', "value['error'] != value['payload_error']"),
+    ('WX02_push', '/operation/outcome/push', 'the original push failed in push phase and succeeded before api phase', 'worktree_refused', "value['push'] != value['expected_push']"),
+    ('WX03_api_absent', '/operation/outcome/api', 'push failure has no API outcome', 'worktree_refused', "value['phase'] == 'push' and value['api_present'] is not False"),
+    ('WX04_api_failed', '/operation/outcome/api/status', 'api phase has an actual failed API result', 'worktree_refused', "value['phase'] == 'api' and value['api_status'] != 'failed'"),
+])
+phase('wt_test_started', 'ACD-624 original pre-merge test launch source.', [
+    ('WS01_lock', '/operation/outcome/lock_owner', 'the original operation holds the merge lock', 'worktree_refused', "value['lock'] != value['operation']"),
+    ('WS02_target', '/operation/outcome/target', 'equals the original test target', 'worktree_refused', "value['target'] != value['payload_target']"),
+    ('WS03_strategy', '/operation/outcome/strategy', 'equals the original strategy', 'worktree_refused', "value['strategy'] != value['payload_strategy']"),
+    ('WS04_guards', '/operation/outcome/guards', 'dirty/conflict/active-run/detached-HEAD guards were rechecked and clear', 'worktree_refused', "value['guard_mismatches'] != []"),
+    ('WS05_snapshot', '/operation/outcome/safe_point_ref', 'a safe-point worktree snapshot exists before mutation-capable tests', 'worktree_refused', "value['safe_point_present'] is not True"),
+    ('WS06_rebase_conflict', '/operation/outcome/rebase_conflict', 'tests do not start after an earlier rebase conflict', 'worktree_refused', "value['rebase_conflict'] is not False"),
+])
+phase('wt_terminal', 'ACD-622/623 independently committed terminal outcome source.', [
+    ('WT13_owner_outcome', '/operation/outcome', 'equals the separately held actual terminal outcome consumed by the original TJ rows', 'worktree_refused', "value['outcome'] != value['terminal_source']"),
+])
+phase('wt_renamed', 'ACD-625 original successful rename and old/new branch copies.', [
+    ('WR01_renamed', '/operation/outcome/status', 'the actual rename succeeded', 'worktree_refused', "value['status'] != 'renamed'"),
+    ('WR02_old_branch', '/before/worktree/branch_name', 'equals the original old branch', 'worktree_refused', "value['old_branch'] != value['payload_old']"),
+    ('WR03_new_branch', '/after/worktree/branch_name', 'equals the committed new branch', 'worktree_refused', "value['new_branch'] != value['payload_new']"),
+])
+phase('wt_unbound', 'ACD-626 explicit cleanup or verified missing-path origin.', [
+    ('WU01_origin', '/operation/outcome/origin', 'unbind follows explicit cleanup or original path revalidation', 'worktree_refused', "value['origin'] != value['expected_origin']"),
+    ('WU02_missing_path', '/operation/outcome/path_exists', 'path_missing is supported by the original actual path observation', 'worktree_refused', "value['reason'] == 'path_missing' and value['path_exists'] is not False"),
+])
+
+phase('wt_protocol', 'W.8/W.9 original guard, target, override and process trace evidence.', [
+    ('WG01_context', '/operation/owner_context', 'owner-specific prerequisites or actual guard failure are evidenced', 'worktree_refused', "value['context_refusals'] != []"),
+    ('WG02_target', '/operation/owner_context/test_target', 'equals the independently retained original test target', 'worktree_refused', "value['target'] != value['original_target']"),
+    ('WG03_override', '/operation/owner_context/override_authorized', 'an override is an independently authorized original choice', 'worktree_refused', "value['override_requested'] is True and value['override_authorized'] is not True"),
+    ('WG05_guard_conflicts', '/operation/outcome/guards/conflicts', 'a pre-existing conflict refused before mutation is preserved in the failure payload', 'worktree_refused', "value['guard_conflicts'] is True and value['payload_conflicts'] is not True"),
+    ('WG04_trace', '/operation/execution_trace', 'matches original owner ordering, working root, shell, no-commit, hooks and cleanup', 'worktree_refused', "value['trace'] != value['expected_trace']"),
+])
+
+phase('nw_producer', 'Current append producer projection uses the unchanged shared CV-1100 route.', [
+    ('NW01_producer_route', '/record/producer_semantic_projection', 'has an exact supported shared producer-semantic commitment', 'producer_route_refused', "value['producer_refusal'] is not None"),
+])
+
 # --------------------------------------------------------------- recipe selector
 phase('rn_recipe', 'record_number_rule: retained-original recipe selection from independent write receipts.', [
     ('RN01_provenance_object', '/provenance', 'a supplied provenance is exactly a JSON object', RECIPE,
@@ -379,13 +496,20 @@ phase('cp_family', 'checkpoint_joins: family, domain key, reader and projector.'
     ('CP31_domain_key', '/key', 'equals the family domain checkpoint key for the Store and body partition', CHECKPOINT,
      "value['key'] != value['expected_key']"),
 ])
-phase('cp_family_entailed', 'checkpoint_joins: value family, reader and projector (the checkpoint schema consts decide first, CP01) and the retained event family (JN02 decides first); defence in depth.', [
+phase('cp_family_entailed', 'checkpoint_joins: one defensive singleton, implied by earlier schema or source-family checks.', [
     ('CP29_value_event_type', '/value/event_type', 'equals the family', CHECKPOINT, "value['value_event_type'] != value['family']"),
-    ('CP30_event_event_type', '/source/event_record/event_type', 'equals the family', CHECKPOINT,
-     "value['event_event_type'] != value['family']"),
+])
+
+phase('cp_event_family_entailed', 'checkpoint_joins: one defensive singleton, implied by earlier schema or source-family checks.', [
+    ('CP30_event_event_type', '/source/event_record/event_type', 'equals the family', CHECKPOINT, "value['event_event_type'] != value['family']"),
+])
+
+phase('cp_consumer_entailed', 'checkpoint_joins: one defensive singleton, implied by earlier schema or source-family checks.', [
     ('CP32_consumer', '/value/consumer_id', 'equals the family reader', CHECKPOINT, "value['consumer_id'] != value['reader']"),
-    ('CP33_projector', '/value/projector_id', 'equals the family domain projector', CHECKPOINT,
-     "value['projector_id'] != value['domain_projector']"),
+])
+
+phase('cp_projector_entailed', 'checkpoint_joins: one defensive singleton, implied by earlier schema or source-family checks.', [
+    ('CP33_projector', '/value/projector_id', 'equals the family domain projector', CHECKPOINT, "value['projector_id'] != value['domain_projector']"),
 ])
 phase('cp_publication', 'checkpoint_joins: publication copies and the source token.', [
     ('CP34_projection_refs', '/value/projection_refs', 'equals the publication projection refs', CHECKPOINT,
@@ -427,11 +551,12 @@ phase('cs_pointer', 'checkpoint_storage_valid: exact SP-337 pointer and pack bod
     ('CS08_pack_body_bytes', '/source/checkpoint_storage/pack/body', 'has exactly the checkpoint value bytes', STORAGE,
      "value['pack_body_encoding_error'] is None and value['pack_body_equal'] is not True"),
 ])
-phase('cs_pointer_bounds', 'checkpoint_storage_valid: pointer encodability and size (entailed by CS06: an exact pointer is at most 131 bytes; defence in depth).', [
-    ('CS04_pointer_encodable', '/source/checkpoint_storage/pointer', 'the inline pointer encodes', STORAGE,
-     "value['pointer_encoding_error'] is not None"),
-    ('CS05_pointer_size', '/source/checkpoint_storage/pointer', 'the inline pointer encodes to at most 16384 bytes', STORAGE,
-     f"value['pointer_encoding_error'] is None and value['pointer_size'] > {LIMIT}"),
+phase('cs_pointer_bounds', 'checkpoint_storage_valid: one defensive pointer-bound singleton, implied by exact CS06 pointer.', [
+    ('CS04_pointer_encodable', '/source/checkpoint_storage/pointer', 'the inline pointer encodes', STORAGE, "value['pointer_encoding_error'] is not None"),
+])
+
+phase('cs_pointer_size_entailed', 'checkpoint_storage_valid: one defensive pointer-bound singleton, implied by exact CS06 pointer.', [
+    ('CS05_pointer_size', '/source/checkpoint_storage/pointer', 'the inline pointer encodes to at most 16384 bytes', STORAGE, f"value['pointer_encoding_error'] is None and value['pointer_size'] > {LIMIT}"),
 ])
 phase('cs_pack_a', 'checkpoint_storage_valid: pack key, size, media, Store and domain copies.', [
     ('CS09_pack_key', '/source/checkpoint_storage/pack/key', 'equals payload:v1: plus BLAKE3 of the value bytes', STORAGE,
