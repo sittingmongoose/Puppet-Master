@@ -1,56 +1,75 @@
-// E3 (pm7-perf stream, 2026-11-15): a hidden lens comes back by events, not by a 400 ms poll. glass.js now watches
+// E3 (pm7-perf stream, 2026-11-15): a hidden lens comes back by events, not by a 400 ms poll. glass.js watches
 // every hidden lens's strip with a per-strip ResizeObserver (showWatch): a box that goes from at most 1 px to more
 // than 1 px in either axis runs the hidden-lens check once through onLayout. A 2000 ms safety-net timer remains for
 // what no observer reports (a visibility-only change: inline visibility, a stylesheet visibility keyed to an
-// unobserved attribute), re-armed only from inside the check and only while a lens is hidden. Spec: the share's
-// 2026-11-11-pm7-performance/followups/E3-glass-poll.md, test rows 1, 2, 3, 4, 9 and 13 (the lead's QW4 budgets).
+// unobserved attribute), re-armed only from inside the check and only while a lens is hidden. The wake and the tick
+// share one queued check (showHold): a sync that lands while the check waits for layout does not arm an interval of
+// its own; the queued check drops any pending tick, looks, and arms the next interval itself (5ea1e87906, verified
+// in a browser by QW6: one net tick per show, no re-arm race). Spec: the share's
+// 2026-11-11-pm7-performance/followups/E3-glass-poll.md, test rows 1, 2, 3, 4, 9 and 13.
 //
-// Rows, per Glass look (Glass Dark and Light), both surfaces, 1920x1080:
-//   1  inline display: nav.page-tabs style.display='none', lens out, then '' again: lens back within 40 ms
-//      (the ResizeObserver wake; one frame plus layout). FAILS on main: no observer sees an inline style, the
-//      400 ms poll answers it (up to 400 ms).
+// Rows, per Glass look (Glass Dark and Light), both surfaces, 1920x1080. Budgets are QW6's, from measurements on
+// alexis (loaded host, RTX 3080): 5 full runs per surface on the branch page (qw6.html, 5ea1e87906) and on main
+// (v-main.html), plus row 2 x20 per surface on the branch page twice (the lead's queue and QW6's own). Ranges are
+// min-max over both looks.
+//   1  inline display: nav.page-tabs style.display='none', lens out, then '' again: lens back within 150 ms
+//      (the ResizeObserver wake; one frame plus layout). Branch measured 18-88 ms. FAILS on main: its 400 ms poll
+//      answers, and the show is landed just after a poll fire (showTabsLocked below), the poll's worst case, so
+//      main reads about 350-420 ms every run. Without that lock main's free-phase tail reached 114 ms (an ambient
+//      sync or the PM_LG.sync() fallback can discover the hide at any poll phase), which no bound above the
+//      branch's 88 ms could fail every run; the lock makes the separation deterministic. The measured time is
+//      from the show write either way; the branch has no 400 ms timer, so its show is never delayed.
 //   2  inline visibility: style.visibility='hidden' then '': lens back within 2200 ms. By design no observer sees
-//      this (edit 1 of the spec was not done): the safety net answers it. Passes on main too (its poll is faster).
+//      this (edit 1 of the spec was not done): the safety net answers it. The design guarantee is one 2000 ms
+//      interval plus one layout; wall time adds the loaded host's scheduling: the slowest of the 80 queue/self
+//      repetitions was 2110 ms (sandbox, Glass Dark) = 2000 + a callback 60 ms late (dt2060) + 43 ms to the
+//      queued check + 14 ms rAF sampling, one tick and one look, no race. Branch measured 1357-2110 ms over 100
+//      reps (the short reps are phase luck: the pending tick was already part-way through its interval); main
+//      72-446 ms (its poll is faster). Passes on main too.
 //   3  stylesheet visibility (case C): a temporary <style> nav.page-tabs { visibility: hidden } in <head>, then
-//      removed: lens back within 2200 ms (the safety-net interval + one layout). Documents the fallback; if the
-//      net is ever deleted by audit, remove this row on purpose, not leave it failing.
+//      removed: lens back within 2200 ms (the same net; branch measured 856-2025 ms, main 181-350 ms). Documents
+//      the fallback; if the net is ever deleted by audit, remove this row on purpose, not leave it failing.
 //   4  ancestor class: the Usage page's own hiding class (.primary-content > .page loses and regains 'active',
-//      display:none via class): lens back within 40 ms. mo's class record already covered this; the row guards it.
+//      display:none via class): lens back within 600 ms. A .page class change alone is not HOT in glass.js's mo
+//      handler: it syncs through lazySync's 140 ms debounce plus the page's own transition, measured 216-478 ms on
+//      the branch and 156-380 ms on main. This change does not touch that path; the budget is main's worst x1.5
+//      rounded up, a regression guard, not the spec's 40 ms (which neither page meets).
 //   9  onboarding window: opened with data-o55-solid (the visibility:hidden sheet rule at 10-window.css:27 is
-//      asserted to apply), the behind-window lens out within 200 ms of the open call; on close, back within
-//      200 ms of the removal of data-o55-open (the root observer's own trigger). The window's exit animation runs
-//      before that removal; the wall time from the close() call is logged, not judged.
+//      asserted to apply), the behind-window lens out within 700 ms of the open call (branch 181-451 ms, main
+//      159-434 ms: the window-open path, which this change does not touch; main's worst x1.5 rounded up); on close,
+//      back within 200 ms of the removal of data-o55-open (the root observer's own trigger; branch 8-24 ms, main
+//      7-27 ms, the spec's budget kept). The window's exit animation runs before that removal; the wall time from
+//      the close() call is logged, not judged (532-1062 ms seen).
 //   13 resting wake count: with one strip hidden by row 1's method, a setTimeout wrapper installed before the
 //      page's scripts run counts the timers asked for from glass.js (the lg-js block's lines) with delay 400 or
-//      2000 ms over 10 s: at most 6 requests and none at 400 ms. FAILS on main (about 25 requests in 10 s, all
-//      400 ms: the poll re-arms 2.5 times a second for as long as any lens is hidden, and in the Glass looks some
-//      strip always is). The branch's net asks about 5 in 10 s. Then the strip is shown and the lens must appear
-//      within row 1's budget.
+//      2000 ms over 10 s: at most 6 requests and none at 400 ms (unchanged). Branch asks 4-5, all 2000 ms; main
+//      asks 24-25, all 400 ms: FAILS on main. Then the strip is shown (with row 1's lock) and the lens must appear
+//      within 150 ms (branch 20-44 ms; main's free-phase tail reached 13 ms, so without the lock this assertion
+//      could pass on main — the counts above are row 13's unconditional separation).
 //
 // QW5: --set only=1,2,3,4,9,13 runs those rows and no others; --set repeat=<n> runs each of them n times
 // (default 1). Row 2 keeps a trace, times relative to the show write: each glass.js timer of 400 or 2000 ms
 // (ask, fire, and clear — a clear is the ResizeObserver wake, or the queued check, dropping the pending tick),
-// and each change of the captured lens's inline opacity. An ask's g is its line inside the lg-js block, which
-// is glass.js's own line (the block is that file). The ask sites are awaitShow (g2081, only when no tick is
-// pending and no check is waiting for layout), the document.hidden re-arm (g2104, inFire and docHidden), and
-// the re-arm at the bottom of the check (g2125). fire dt is ms from that ask to the callback: a dt well over
-// 2000 is a late callback; a fire near +2000 whose ask is near the show is one interval; a clear after the
-// show followed by an awaitShow ask is a new interval started by a sync that beat the queued check. Budgets
-// below are still QW4's until the measured ranges replace them.
+// and each change of the captured lens's inline opacity. An ask's g is its line inside the lg-js block, which is
+// glass.js's own line (the block is that file). At 5ea1e87906 the ask sites are awaitShow (g2081, only when no
+// tick is pending and no check is waiting for layout), the queued check's document.hidden re-arm (g2095), the
+// tick's document.hidden re-arm (g2105, inFire and docHidden), and the re-arm at the bottom of the check (g2126;
+// inFire when onLayout ran the check at once inside the timer callback). fire dt is ms from that ask to the
+// callback: a dt well over 2000 is a late callback; a fire near +2000 whose ask is near the show is one interval;
+// a clear after the show followed by an awaitShow ask (g2081) would be the old re-arm race, fixed by showHold.
 //
-// WRITTEN WITHOUT A BROWSER RUN (the lead runs the checks). What the lead must confirm:
-//   - Row 4's 40 ms budget is the spec's. A class change on .page alone is not HOT in glass.js's mo handler, so it
-//     syncs through lazySync's 140 ms debounce (glass.js lazySync): if the row measures about 140-160 ms on BOTH
-//     main and the branch, the budget needs the lead's ruling (the mo path owns this row, not the poll); the
-//     measured ms is logged for that decision.
+// Measured facts (QW6's runs, replacing QW4's written-without-a-browser notes):
 //   - The hide direction of rows 1-3 is discovered by the app's ambient writes (an inline style or a <head> sheet
-//     is not observed; edit 1 was deliberately not done). If no ambient sync has put the lens out within 1200 ms,
-//     the check calls PM_LG.sync() once (the spec's named hook) and logs it; the appearance budget is measured
-//     from the show write either way.
+//     is not observed; edit 1 was deliberately not done). When no ambient sync puts the lens out within 1200 ms,
+//     the check calls PM_LG.sync() once (the spec's named hook) and logs it: 5 of the 20 row-2 hides in the
+//     branch's full runs used it, 3 of 40 in each queue run. The appearance budget is measured from the show
+//     write either way.
 //   - Timings are rAF-sampled (±1 frame) from the DOM write to the lens's inline opacity leaving '0' (or coming
-//     back with visibility not hidden), the spec's measure; budgets assume the 120 fps target.
-//   - Row 13's attribution is the built page's lg-js block (helpers/built-source.mjs); confirm the counts
-//     (about 5 on the branch, about 25 on main) and that no other glass.js timer at 400/2000 ms fires at rest.
+//     back with visibility not hidden), the spec's measure. On the loaded host one sampling gap measured 63 ms
+//     and one timer callback ran 60 ms late (the 2067 and 2110 ms reps): the budget, not the product, carries
+//     those gaps; both traces show one tick, one check, the lens back on that check.
+//   - Row 13's attribution is the built page's lg-js block (helpers/built-source.mjs); the counts matched on every
+//     run (branch 4-5 at 2000 ms, main 24-25 at 400 ms), and no other glass.js timer at 400/2000 ms fires at rest.
 //   --set looks=glass-dark   --set size=1920x1080   --set settle=6000   --set only=2   --set repeat=20
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
 import { pageSource, blocksOf } from '../helpers/built-source.mjs';
@@ -255,6 +274,26 @@ async function showTabs(f, how) {
 	}, how);
 }
 
+/* rows 1 and 13: on a page that still polls at 400 ms (main), land the show just after a poll fire — the poll's
+   worst case — so the separation from the event path is deterministic (main's free-phase tail reached 114 ms on
+   row 1 and 13 ms on row 13). The event path answers any phase: when no 400 ms timer is pending, the show is not
+   delayed. The measured time is from the show write either way. */
+async function showTabsLocked(f, how) {
+	await f.evaluate(async () => {
+		const P = window.__swt;
+		if (!P) return;
+		let poll = false;
+		P.byId.forEach((m) => { if (m.d === 400) poll = true; });
+		if (!poll) return;
+		const t0 = performance.now();
+		while (performance.now() - t0 < 700) {
+			if (P.events.some((e) => e.k === 'fire' && e.d === 400 && e.at >= t0)) break;
+			await new Promise((r) => setTimeout(r, 8));
+		}
+	});
+	await showTabs(f, how);
+}
+
 async function cell(t, surface, W, H) {
 	const only = wanted(t.args.only);
 	const reps = repeatCount(t.args.repeat);
@@ -282,7 +321,7 @@ async function cell(t, surface, W, H) {
 		if (!on) continue;
 
 		/* rows 1-3: nav.page-tabs, the lens captured while shown */
-		for (const [row, how, budget] of [[1, 'display', 40], [2, 'visibility', 2200], [3, 'sheet', 2200]]) {
+		for (const [row, how, budget] of [[1, 'display', 150], [2, 'visibility', 2200], [3, 'sheet', 2200]]) {
 			if (!runRow(row)) continue;
 			for (let rep = 1; rep <= reps; rep++) {
 				const tag = tagOf(look, surface, rep, reps);
@@ -300,7 +339,7 @@ async function cell(t, surface, W, H) {
 					}
 					continue;
 				}
-				await showTabs(f, how);
+				await (row === 1 ? showTabsLocked(f, how) : showTabs(f, how));
 				const back = await f.evaluate((b) => window.__gsw.wait('back', b + 2000), budget);
 				let trace = '';
 				if (row === 2) {
@@ -333,8 +372,8 @@ async function cell(t, surface, W, H) {
 				await t.check(`row 4: the page class hide puts the lens out ${tag}`, out.ok, `${Math.round(out.ms)} ms`);
 				await f.evaluate(() => { window.__gsw.mark(); document.querySelector('#pmuRange').closest('.primary-content > .page').classList.add('active'); });
 				const back = await f.evaluate(() => window.__gsw.wait('back', 2000));
-				t.log(`row 4 ${tag}: lens back in ${Math.round(back.ms)} ms (budget 40 ms; a .page class change alone syncs through lazySync's 140 ms debounce, see the header)`);
-				await t.check(`row 4: the ancestor class show returns the lens within 40 ms ${tag}`, back.ok && back.ms <= 40, `${Math.round(back.ms)} ms`);
+				t.log(`row 4 ${tag}: lens back in ${Math.round(back.ms)} ms (budget 600 ms; a .page class change alone syncs through lazySync's 140 ms debounce, see the header)`);
+				await t.check(`row 4: the ancestor class show returns the lens within 600 ms ${tag}`, back.ok && back.ms <= 600, `${Math.round(back.ms)} ms`);
 			}
 		}
 		if (runRow(4) && (runRow(9) || runRow(13))) {
@@ -358,8 +397,8 @@ async function cell(t, surface, W, H) {
 			if (shown) {
 				await f.evaluate(() => { window.__gsw.mark(); O55.solid.set(true); O55.ui.open(); });
 				const out = await f.evaluate(() => window.__gsw.wait('out', 1500));
-				t.log(`row 9 ${tag}: lens out in ${Math.round(out.ms)} ms from the open call (budget 200 ms)`);
-				await t.check(`row 9: the open puts the behind-window lens out within 200 ms ${tag}`, out.ok && out.ms <= 200, `${Math.round(out.ms)} ms`);
+				t.log(`row 9 ${tag}: lens out in ${Math.round(out.ms)} ms from the open call (budget 700 ms)`);
+				await t.check(`row 9: the open puts the behind-window lens out within 700 ms ${tag}`, out.ok && out.ms <= 700, `${Math.round(out.ms)} ms`);
 				await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-solid') && !document.getElementById('pm-o55-onboarding').classList.contains('o55-opening'), null, { timeout: 10000 });
 				const solid = await f.evaluate(() => getComputedStyle(document.querySelector('nav.page-tabs')).visibility === 'hidden');
 				await t.check(`row 9: the solid sheet rule hides the strip (case C exercised) ${tag}`, solid, solid ? '' : 'nav.page-tabs is not visibility:hidden under the open solid window: the row judged nothing');
@@ -398,10 +437,10 @@ async function cell(t, surface, W, H) {
 			t.log(`row 13 ${tag}: glass.js show-watch timer requests in 10 s: ${c.n400} at 400 ms, ${c.n2000} at 2000 ms [${c.sites.join(', ')}]`);
 			await t.check(`row 13: no 400 ms show-watch timer is asked for ${tag}`, c.n400 === 0, `${c.n400} requests at 400 ms (main asks about 25 in 10 s)`);
 			await t.check(`row 13: at most 6 show-watch timer requests in 10 s ${tag}`, c.n400 + c.n2000 <= 6, `${c.n400 + c.n2000} requests (the 2000 ms net asks about 5)`);
-			await showTabs(f, 'display');
+			await showTabsLocked(f, 'display');
 			const back = await f.evaluate(() => window.__gsw.wait('back', 2040));
-			t.log(`row 13 ${tag}: lens back in ${Math.round(back.ms)} ms after the count (row 1's 40 ms budget)`);
-			await t.check(`row 13: the lens still appears within 40 ms once shown ${tag}`, back.ok && back.ms <= 40, `${Math.round(back.ms)} ms`);
+			t.log(`row 13 ${tag}: lens back in ${Math.round(back.ms)} ms after the count (row 1's 150 ms budget)`);
+			await t.check(`row 13: the lens still appears within 150 ms once shown ${tag}`, back.ok && back.ms <= 150, `${Math.round(back.ms)} ms`);
 		}
 	}
 	await parkPointer(t.page, W, H);
