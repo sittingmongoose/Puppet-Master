@@ -122,6 +122,9 @@ def kind_of(event_type: str, ledger: dict, recount: dict) -> str:
 
 
 def prepare(args) -> int:
+    problems = self_test()
+    if problems:
+        raise SystemExit("writer self-test failed: " + "; ".join(problems))
     readiness = load_module("pm_impl_readiness_for_writer", "scripts/pm-implementation-readiness.py")
     ledger = {json.loads(line)["event_type"]: json.loads(line) for line in (REPO / LEDGER).read_text(encoding="utf-8").splitlines()}
     recount = {row["name"]: row for row in load(RECOUNT_LIST)}
@@ -211,8 +214,109 @@ def file_text(rel: str) -> str | None:
     return _TEXT_CACHE[rel]
 
 
+HEADING_LINE = re.compile(r"#{1,6} ")
+FENCE_LINE = re.compile(r"\s*(```|~~~)")
+
+
+_SPLIT_CACHE: dict[int, tuple[str, list[str], dict[str, tuple[int, int] | None]]] = {}
+HEADING_PARTS = re.compile(r"(#{1,6}) (.*)")
+
+
+def _split_and_spans(text: str) -> tuple[list[str], dict[str, tuple[int, int] | None]]:
+    """The text's lines and every declared PlanUnit's span (1-based, inclusive); cached per text.
+
+    A unit starts at the heading that names its id, when one sits between the previous declaration and its
+    own (EP-210's '## EP-210 - ...' above its own '###' subheading); otherwise at the nearest heading above
+    its declaration (AMS-044's addendum heading). It ends before the next heading of the same or a higher
+    level after the fenced block that holds its declaration, and never reaches the next unit's start. A unit
+    declared more than once has no span.
+    """
+    key = id(text)
+    cached = _SPLIT_CACHE.get(key)
+    if cached is not None and cached[0] is text:
+        return cached[1], cached[2]
+    lines = text.split("\n")
+    headings = []
+    declarations = []
+    fenced = False
+    for i, line in enumerate(lines):
+        if FENCE_LINE.match(line):
+            fenced = not fenced
+            continue
+        match = re.fullmatch(r"plan_unit_id: (\S+)\s*", line)
+        if match:
+            declarations.append((i, match.group(1)))
+            continue
+        heading = HEADING_PARTS.fullmatch(line) if not fenced else None
+        if heading:
+            headings.append((i, len(heading.group(1)), heading.group(2)))
+    counts: dict[str, int] = {}
+    for _, unit in declarations:
+        counts[unit] = counts.get(unit, 0) + 1
+    fence_ends = []
+    for at, _ in declarations:
+        fence_end = at + 1
+        while fence_end < len(lines) and not FENCE_LINE.match(lines[fence_end]):
+            fence_end += 1
+        fence_ends.append(fence_end)
+    starts = []
+    for index, (at, unit) in enumerate(declarations):
+        previous = declarations[index - 1][0] if index else -1
+        region = [h for h in headings if previous < h[0] < at]
+        naming = [h for h in region if re.search(r"(?<![A-Za-z0-9-])" + re.escape(unit) + r"(?![0-9])", h[2])]
+        if naming or region:
+            head = naming[-1] if naming else region[-1]
+        elif index:
+            # No heading of its own: it starts right after the previous unit's block, at that unit's level.
+            head = (fence_ends[index - 1] + 1, starts[index - 1][1], "")
+        else:
+            head = max((h for h in headings if h[0] < at), key=lambda h: h[0], default=(0, 1, ""))
+        starts.append(head)
+    spans: dict[str, tuple[int, int] | None] = {}
+    for index, (at, unit) in enumerate(declarations):
+        head_line, level, _ = starts[index]
+        fence_end = fence_ends[index]
+        stop = next((h[0] for h in headings if h[0] > fence_end and h[1] <= level), len(lines))
+        if index + 1 < len(declarations):
+            stop = min(stop, starts[index + 1][0])
+        spans[unit] = None if counts[unit] != 1 else (head_line + 1, stop)
+    _SPLIT_CACHE[key] = (text, lines, spans)
+    return lines, spans
+
+
+def unit_span(text: str, unit: str) -> tuple[int, int] | None:
+    """(first, last) 1-based lines of a PlanUnit's declared span, or None when not declared exactly once."""
+    return _split_and_spans(text)[1].get(unit)
+
+
+def relocate(text: str, quote: str, want: int, span: tuple[int, int] | None) -> tuple[int, int, str] | None:
+    """(line_start, line_end, quote_check) of the quotation inside span (the whole text when span is None).
+
+    T221 (Astra, merge-1 review note 1): a quotation is looked for only inside its own unit's span, never in a
+    sibling unit, even a nearer one. An exact occurrence is preferred, nearest the cited line; otherwise an
+    occurrence equal after collapsing whitespace (a re-wrapped YAML line). None when neither exists there.
+    """
+    lines, _ = _split_and_spans(text)
+    first, last = span if span is not None else (1, len(lines))
+    window = text if span is None else "\n".join(lines[first - 1:last])
+    exact = [window.count("\n", 0, m.start()) + first for m in re.finditer(re.escape(quote), window)]
+    if exact:
+        start = min(exact, key=lambda n: (abs(n - want), n))
+        return start, start + quote.count("\n"), "exact"
+    words = quote.split()
+    if not words:
+        return None
+    pattern = r"\s+".join(re.escape(w) for w in words)
+    loose = [(window.count("\n", 0, m.start()) + first, window.count("\n", 0, m.end()) + first)
+             for m in re.finditer(pattern, window)]
+    if loose:
+        start, end = min(loose, key=lambda pair: (abs(pair[0] - want), pair[0]))
+        return start, end, "whitespace_normalized"
+    return None
+
+
 def refresh_evidence(item: dict) -> dict:
-    """Re-read one cited quotation at the current tree; relocate its lines or fail closed."""
+    """Re-read one cited quotation at the current tree; relocate it inside its own unit or fail closed."""
     rel = item.get("path")
     if not isinstance(rel, str) or rel.startswith("/") or ".." in Path(rel).parts:
         raise Gap(f"evidence path is not a repository path: {rel}")
@@ -221,22 +325,71 @@ def refresh_evidence(item: dict) -> dict:
         raise Gap(f"evidence file missing: {rel}")
     out = dict(item)
     unit = item.get("unit")
+    span = None
     if (rel.startswith("Plans/") and rel.endswith(".md") and isinstance(unit, str)
-            and re.fullmatch(r"[A-Z][A-Z0-9]*-[0-9]+", unit) and unit_ref(unit) not in (None, rel + "#" + unit)):
-        raise Gap(f"evidence unit {unit} is not declared by {rel}")
+            and re.fullmatch(r"[A-Z][A-Z0-9]*-[0-9]+", unit)):
+        if unit_ref(unit) not in (None, rel + "#" + unit):
+            raise Gap(f"evidence unit {unit} is not declared by {rel}")
+        if unit_ref(unit) is not None:
+            span = unit_span(text, unit)
+            if span is None:
+                raise Gap(f"evidence unit {unit} has no single declared span in {rel}")
     quote = item.get("quote")
     if isinstance(quote, str) and quote:
-        positions = [m.start() for m in re.finditer(re.escape(quote), text)]
-        if not positions:
-            raise Gap(f"cited quotation no longer present in {rel}: {quote[:80]!r}")
         want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
-        lines = [text.count("\n", 0, p) + 1 for p in positions]
-        start = min(lines, key=lambda n: (abs(n - want), n))
-        span = quote.count("\n")
-        out["line_start"], out["line_end"] = start, start + span
-        out["quote_check"] = "exact"
+        found = relocate(text, quote, want, span)
+        if found is None:
+            where = f"unit {unit} ({rel}:{span[0]}-{span[1]})" if span else rel
+            raise Gap(f"cited quotation not present in {where}: {quote[:80]!r}")
+        out["line_start"], out["line_end"], out["quote_check"] = found
+        out["quote_scope"] = f"unit {unit}, {rel}:{span[0]}-{span[1]}" if span else "document"
     out["file_sha256"] = sha256_bytes(text.encode("utf-8"))
     return out
+
+
+def self_test() -> list[str]:
+    """Standing negatives of the evidence relocation (T221); empty when every case holds."""
+    doc = "\n".join([
+        "## AMS-044 addendum", "The quoted claim stays in its own unit.", "```yaml", "plan_unit_id: AMS-044",
+        "canonical_text: |-", "  own unit text", "```", "",
+        "## Sibling", "The quoted claim stays in its own unit.", "```yaml", "plan_unit_id: AMS-045",
+        "canonical_text: |-", "  The quoted claim", "  stays wrapped here.", "```", "", "## Tail", "only tail",
+    ])
+    problems = []
+    own, sibling = unit_span(doc, "AMS-044"), unit_span(doc, "AMS-045")
+    if own != (1, 8) or sibling != (9, 17):
+        problems.append(f"declared spans {own} {sibling}")
+    quote = "The quoted claim stays in its own unit."
+    # The sibling's copy is nearer the cited line; it must not be chosen.
+    if relocate(doc, quote, 10, own) != (2, 2, "exact"):
+        problems.append("a quotation repeated in another unit was chosen over its own unit")
+    if relocate(doc, quote, 10, None) != (10, 10, "exact"):
+        problems.append("document-scope relocation no longer picks the nearest occurrence")
+    if relocate(doc, "only tail", 1, own) is not None:
+        problems.append("a quotation found only outside its unit was accepted")
+    if relocate(doc, "The quoted claim stays wrapped here.", 1, sibling) != (14, 15, "whitespace_normalized"):
+        problems.append("a re-wrapped quotation in its own unit was not found")
+    if unit_span(doc + "\nplan_unit_id: AMS-044\n", "AMS-044") is not None:
+        problems.append("a unit declared twice still has a span")
+    # A unit's own titled heading holds prose above a subheading of its own (the EP-210 shape).
+    titled = "\n".join([
+        "## EP-210 - one family", "Sequence quote.", "### pass two", "more", "```yaml", "plan_unit_id: EP-210", "```",
+        "## EP-211 - next family", "Sequence quote.", "```yaml", "plan_unit_id: EP-211", "```",
+    ])
+    if unit_span(titled, "EP-210") != (1, 7) or unit_span(titled, "EP-211") != (8, 12):
+        problems.append(f"titled spans {unit_span(titled, 'EP-210')} {unit_span(titled, 'EP-211')}")
+    if relocate(titled, "Sequence quote.", 9, unit_span(titled, "EP-210")) != (2, 2, "exact"):
+        problems.append("a quotation under the unit's own titled heading was not kept in its unit")
+    # Two units under one heading (the AMS-044/AMS-045 shape): the second starts after the first's block.
+    shared = "\n".join([
+        "## Addendum", "Claim prose.", "```yaml", "plan_unit_id: AMS-044", "```", "Second prose.", "```yaml",
+        "plan_unit_id: AMS-045", "```", "## Next",
+    ])
+    if unit_span(shared, "AMS-044") != (1, 5) or unit_span(shared, "AMS-045") != (6, 9):
+        problems.append(f"shared-heading spans {unit_span(shared, 'AMS-044')} {unit_span(shared, 'AMS-045')}")
+    if relocate(shared, "Second prose.", 2, unit_span(shared, "AMS-044")) is not None:
+        problems.append("a quotation of the next unit under a shared heading was accepted")
+    return problems
 
 
 def carried_cells(grade: dict, grade_ref: dict) -> dict:
@@ -820,6 +973,8 @@ def main(argv=None) -> int:
     a.add_argument("--commit", action="store_true")
     a.add_argument("--results", default="")
     a.set_defaults(func=apply)
+    t = sub.add_parser("self-test", help="the standing negatives of evidence relocation (T221)")
+    t.set_defaults(func=lambda _args: (print(json.dumps({"problems": self_test()})), 1 if self_test() else 0)[1])
     v = sub.add_parser("verify")
     v.add_argument("--manifest", required=True)
     v.add_argument("--out", default="")
