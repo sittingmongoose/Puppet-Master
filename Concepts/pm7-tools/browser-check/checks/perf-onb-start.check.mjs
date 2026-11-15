@@ -22,7 +22,8 @@
 // within --set pdms=4000 ms (on a quiet PC), and once done nothing left (no host, marked element or listener); Start
 // pressed while it runs: the Look screen comes in and it ends, leaving nothing; low-resource mode: it draws nothing once
 // on. K-AA (the lead's ruling (a)), with and without Reduced Motion: the pane before and after the pre-draw is the same to
-// the pixel; while it runs, Chrome rasters the page with MSAA (the pre-drawn SVG paths make it switch), so only the
+// the pixel; while it runs its host is a composited layer in the window (even empty), and Chrome draws the window's rounded
+// edges a little differently then, so only the
 // anti-aliased edges of rounded controls may differ: within 2.5 px of a curved outline, at most 40 levels, at most 120 pixels
 // a control (none inside a shape, on a straight edge, away from the controls); --set aamutant=1 paints one pixel inside Get
 // Started while it runs (the rows' red test); --set only=pixels runs these rows alone.
@@ -62,8 +63,10 @@ function png(buf) {
 	}
 	return { w, h, px: out };
 }
-// FO-206 K-AA (the lead's ruling (a)): while the Look screen's pre-draw runs, Chrome rasters the page with MSAA (the pre-drawn
-// SVG paths make it switch), and the anti-aliased edges of rounded shapes come out a little different. Allowed: a pixel that
+// FO-206 K-AA (the lead's ruling (a)): while the Look screen's pre-draw runs, its near-transparent host is a composited layer in
+// the window, and Chrome draws the window's rounded edges a little differently then (held before it is composited the pane is
+// the same to the pixel; held after, with nothing drawn in the host yet, the edges already differ: it is the layer, not what is
+// drawn in it). Allowed: a pixel that
 // differs by at most AA_MAX levels, in the anti-aliased band of one of the pane's rounded controls (within AA_BAND pixels of
 // its rounded outline, where that outline curves: a corner, or anywhere on a circle), at most AA_PER pixels a control.
 // Anything else fails: inside a shape, on a straight edge, away from every control, or over AA_MAX levels.
@@ -198,7 +201,7 @@ async function surface(t, sandbox) {
 		await f.waitForTimeout(400);
 		// R49-T3: the pre-draw held at its boundary (?o55pdhold=1: the host in place, nothing drawn in it), the settled pane
 		// pictured, then the pre-draw released: no race with its start. A page without the hold falls back to the old order.
-		const holds = await f.waitForFunction(() => { const s = window.O55.ui.prewarm && window.O55.ui.prewarm.state && window.O55.ui.prewarm.state(); return !!(s && s.held === true && s.phase === 'running' && s.slices === 0); }, null, { timeout: 20000 }).then(() => true, () => false);
+		const holds = await f.waitForFunction(() => { const s = window.O55.ui.prewarm && window.O55.ui.prewarm.state && window.O55.ui.prewarm.state(); return !!(s && s.held === true && s.phase === 'pending'); }, null, { timeout: 20000 }).then(() => true, () => false);
 		const at = [];
 		const before = await pane.screenshot(); at.push(['before', await pdState(f)]);
 		if (holds) await f.evaluate(() => window.O55.ui.prewarm.release());
@@ -214,7 +217,7 @@ async function surface(t, sandbox) {
 		if (process.env.T_DIR) [['before', before], ['during', during], ['after', after]].forEach(([k, b]) => fs.writeFileSync(`${process.env.T_DIR}/aa-${tag}-${reduced ? 'rm' : 'm'}${t.args.aamutant ? '-mut' : ''}-${k}.png`, b));
 		await t.check(`${tag}: ${mode}: the pane before and after the pre-draw, the same pixels`, before.equals(after), `${before.length} and ${after.length} bytes`);
 		const j = judgeAA(before, during, boxes);
-		await t.check(`${tag}: ${mode}: while the pre-draw runs only the anti-aliased edges of rounded controls differ (Chrome rasters with MSAA then: at most ${AA_MAX} levels, ${AA_PER} pixels a control; none inside a shape or on a straight edge; within ${AA_BAND} px of a curved outline)`,
+		await t.check(`${tag}: ${mode}: while the pre-draw runs only the anti-aliased edges of rounded controls differ (the composited host changes how Chrome draws them: at most ${AA_MAX} levels, ${AA_PER} pixels a control; none inside a shape or on a straight edge; within ${AA_BAND} px of a curved outline)`,
 			j.ok, JSON.stringify({ differing: j.n, worst: j.worst, failing: j.bad, perControl: j.perControl, crowded: j.crowded, where: j.where }));
 	};
 	const pdRunning = (f, ms) => f.waitForFunction(() => { const s = window.O55.ui.prewarm && window.O55.ui.prewarm.state && window.O55.ui.prewarm.state(); return !!(s && s.phase === 'running' && s.slices >= 2); }, null, { timeout: ms || 20000 }).then(() => true, () => false);
@@ -264,23 +267,26 @@ async function surface(t, sandbox) {
 	const tabs = async () => {
 		const f = await open(false, { early: true, hold: true });
 		await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-prewarm') && !document.getElementById('pm-o55-onboarding').classList.contains('o55-opening'), null, { timeout: 20000 }).catch(() => {});
+		// (the window's real ends are marked once, before the presses, and the focused element is compared by that mark: an
+		// element's place in the window moves when a focus note comes and goes)
 		const ends = () => f.evaluate(() => {
-			const win = document.querySelector('#pm-o55-onboarding .o55-win'), id = (n) => (n ? (n.getAttribute('aria-label') || n.textContent || n.className || '').trim().slice(0, 24) + '#' + Array.from(win.querySelectorAll('*')).indexOf(n) : null);
+			const win = document.querySelector('#pm-o55-onboarding .o55-win');
 			const all = Array.from(win.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter((n) => !n.closest('.o55-out') && !n.closest('[inert]') && !n.hasAttribute('disabled') && n.getClientRects().length);
-			const a = document.activeElement;
-			return { first: id(all[0]), last: id(all[all.length - 1]), active: id(a), activeInHost: !!(a && a.closest && a.closest('.o55-prewarm')), host: !!document.querySelector('#pm-o55-onboarding .o55-prewarm') };
+			win.querySelectorAll('[data-kit-end]').forEach((n) => n.removeAttribute('data-kit-end'));
+			if (all.length) { all[0].setAttribute('data-kit-end', 'first'); all[all.length - 1].setAttribute('data-kit-end', 'last'); }
+			const name = (n) => (n ? (n.getAttribute('aria-label') || n.textContent || '').trim().slice(0, 24) : null);
+			return { first: name(all[0]), last: name(all[all.length - 1]), host: !!document.querySelector('#pm-o55-onboarding .o55-prewarm') };
 		});
-		const focusEnd = (which) => f.evaluate((w) => { const win = document.querySelector('#pm-o55-onboarding .o55-win'); const all = Array.from(win.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter((n) => !n.closest('.o55-out') && !n.closest('[inert]') && !n.hasAttribute('disabled') && n.getClientRects().length); const el = w === 'first' ? all[0] : all[all.length - 1]; el.focus(); return document.activeElement === el; }, which);
-		await focusEnd('first');
+		const focused = () => f.evaluate(() => { const a = document.activeElement; return { end: a && a.getAttribute ? a.getAttribute('data-kit-end') : null, name: a ? (a.getAttribute('aria-label') || a.textContent || '').trim().slice(0, 24) : null, inHost: !!(a && a.closest && a.closest('.o55-prewarm')), host: !!document.querySelector('#pm-o55-onboarding .o55-prewarm') }; });
 		const e0 = await ends();
+		await f.evaluate(() => document.querySelector('#pm-o55-onboarding [data-kit-end="first"]').focus());
 		await t.page.keyboard.press('Shift+Tab');
-		const e1 = await ends();
-		await t.check(`${tag}: Shift+Tab from the window's first control wraps to its last while the pre-draw's host is up`, e0.host && e1.active === e0.last && !e1.activeInHost, JSON.stringify({ host: e0.host, from: e0.active, to: e1.active, last: e0.last }));
-		await focusEnd('last');
-		const e2 = await ends();
+		const e1 = await focused();
+		await t.check(`${tag}: Shift+Tab from the window's first control wraps to its last while the pre-draw's host is up`, e0.host && e1.host && e1.end === 'last' && !e1.inHost, JSON.stringify({ host: e1.host, first: e0.first, last: e0.last, to: e1.name, toEnd: e1.end }));
+		await f.evaluate(() => document.querySelector('#pm-o55-onboarding [data-kit-end="last"]').focus());
 		await t.page.keyboard.press('Tab');
-		const e3 = await ends();
-		await t.check(`${tag}: Tab from the window's last control wraps to its first while the pre-draw's host is up`, e2.host && e3.active === e2.first && !e3.activeInHost, JSON.stringify({ host: e2.host, from: e2.active, to: e3.active, first: e2.first }));
+		const e3 = await focused();
+		await t.check(`${tag}: Tab from the window's last control wraps to its first while the pre-draw's host is up`, e3.host && e3.end === 'first' && !e3.inHost, JSON.stringify({ host: e3.host, first: e0.first, last: e0.last, to: e3.name, toEnd: e3.end }));
 		await f.evaluate(() => { if (window.O55.ui.prewarm.release) window.O55.ui.prewarm.release(); });
 	};
 	// R49-2: in Glass, the pre-draw's copy of the Light / Dark control is never given a lens in the real window: in a tall window
@@ -298,7 +304,7 @@ async function surface(t, sandbox) {
 			root.querySelectorAll('.lg-lens').forEach((el) => { const r = el.getBoundingClientRect(), cs = getComputedStyle(el); if (r.width && r.height && cs.display !== 'none' && cs.visibility !== 'hidden' && +cs.opacity > 0) out.push([Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)].join(',')); });
 			const st = window.O55.ui.prewarm.state(); return { lenses: out.sort(), phase: st.phase, slices: st.slices, held: st.held };
 		});
-		await f.waitForFunction(() => { const s = window.O55.ui.prewarm.state(); return s.phase === 'running' && s.held === true; }, null, { timeout: 20000 }).catch(() => {});
+		await f.waitForFunction(() => { const s = window.O55.ui.prewarm.state(); return s.phase === 'pending' && s.held === true; }, null, { timeout: 20000 }).catch(() => {});
 		await f.waitForTimeout(400);
 		const b = await lenses();
 		await f.evaluate(() => window.O55.ui.prewarm.release && window.O55.ui.prewarm.release());
