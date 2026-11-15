@@ -1,10 +1,10 @@
 {
  "schema_id": "pm.pnc019.s3ao.depth_grades.v1",
- "grade": "core-checkpoint",
+ "grade": "final-shared-oracle-sweep",
  "assessed_tree": {
-  "commit": "9c188cd769759dadd5c2c9b1d1f6f317928468f9",
+  "commit": "34e1e0eb80a6100846fd5a430b37d6cf02b3d397",
   "branch": "plans/ea-pnc-s3ao-20261114",
-  "note": "Core checkpoint only. Restore and run adoption/retention guard closure remains pending. Native NOT_RUN."
+  "note": "Source-bound final eight-source oracle proof; thirteen criterion-12 cells close. Native execution NOT_RUN."
  },
  "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
  "criteria": [
@@ -619,44 +619,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -667,13 +667,13 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
     "GRS-086 (app Goal edition) changed only its parent-ceiling sentence (DL-478/GRS-052); the registered Project and application selections of goal.created v3 are unchanged.",
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
@@ -1252,68 +1252,66 @@
      "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
     },
     "positive_negative_oracles": {
-     "status": "PARTIAL",
-     "representation": "exact_normative_owner",
-     "finding": "Authored positives and negatives exist: restore_point_deleted_contract_fixtures.json (14 value-shape cases), ATS RSD-P01..N03 and five pinned external frozen suites (all present, SHA-256 equal at the base). Under the stream E oracle bar (PNC019-RUN quality bar; the same bar lane s3b applies), criterion 12 PASS needs an executable checker whose guard rows are proved by the gated tool (scripts/pm_guard_isolation.py), with the shared number and date-time calls and retained reads from the sealed receipt. None exists for this family, so the cell is PARTIAL. Under the 2026-09-24 rubric alone it was PASS.",
+     "status": "PASS",
+     "representation": "executable_oracle_with_method_b_observation_tables",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
-       "path": "Plans/Automated_Testing_System.md",
-       "unit": "restore_point.deleted planned/static oracle set",
-       "line_start": 2305,
-       "line_end": 2305,
-       "quote": "`RSD-P01` \u2014 One exact-hash unprotected `available` record with permission/writer/hold/ref authority transitions once to `deleted`",
-       "excerpt_sha256": "0cef27c926192ea2ad1245d3dfaf26e1722bad0b8bf0c0c7f5dfae0dbf15ef0a",
-       "file_sha256": "a5d610c482aaab958ae88afb208df462409c8e63f9133f97530700b53f4d002e",
+       "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
+       "unit": "Goal shared oracle final result",
+       "line_start": 2,
+       "line_end": 2,
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
-       "path": "Plans/restore_point_deleted_contract_fixtures.json",
-       "unit": "#/native_execution",
-       "line_start": 4,
-       "line_end": 4,
-       "quote": "\"native_execution\": \"NOT_RUN\"",
-       "excerpt_sha256": "ccf57b1caebf027995d1030f4f044de0c5e261e4cb610b52bcd6c5595c9fe0b5",
-       "file_sha256": "a0f60b17038ad102b890cfac78f31f032eec395aad1734ab9d6ddc1225fabfce",
+       "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
-       "path": "Plans/restore_point_deleted_contract_fixtures.json",
-       "unit": "#/frozen_joined_subject",
-       "line_start": 8,
-       "line_end": 8,
-       "quote": "\"files_verified\": 93",
-       "excerpt_sha256": "c5da3b8e7f00db0e64cb55a7a95ba2ea18013b55f74cc091ef4d70cebe89161d",
-       "file_sha256": "a0f60b17038ad102b890cfac78f31f032eec395aad1734ab9d6ddc1225fabfce",
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
+       "quote": "if 'exception' in detail:",
+       "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
-       "path": "Plans/storage-plan.md",
-       "unit": "SP-026",
-       "line_start": 4127,
-       "line_end": 4127,
-       "quote": "Plans/seglog_frame_v2_wire_fixtures.json",
-       "excerpt_sha256": "d9a958812d96cd67da666a8c834e518023377471cbaed77283015a01e43bebb0",
-       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "path": "scripts/pm_goal_retained.py",
+       "unit": "Goal shared oracle final result",
+       "line_start": 82,
+       "line_end": 82,
+       "quote": "def resolve(",
+       "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
+       "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
       }
      ],
      "prior": {
-      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json",
       "status": "PARTIAL"
      },
-     "change": "carried",
-     "change_reason": "Same as the before grade; this lane changed no oracle for this family."
+     "change": "closed",
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
-   "remaining_gaps": [
-    "positive_negative_oracles: an executable checker over the authored cases with Method B guard tables on the gated tool, shared number and date-time calls, and retained reads from the sealed receipt."
-   ],
+   "remaining_gaps": [],
    "notes": [
     "SP-349 now maps app restore-point records and a restore_point_deleted_checkpoint_application key, and ACD-086 gives app restore points delete semantics; the registered family stays project_only and SP-349 says acceptance proves no Event Authority admission. An app edition would be a separate admission (CV-366 keeps missing_event_registration); it does not reopen the registered Project version.",
-    "Graded 12/12 on 2026-09-24 under the rubric then in force; 11/12 under the stream E oracle bar. The only open cell is the oracle cell."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
-   "pass_count": 11,
-   "vector": "P P P P P P P P P P P p"
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P"
   },
   {
    "event_type": "run.started",
@@ -1869,68 +1867,66 @@
      "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
     },
     "positive_negative_oracles": {
-     "status": "PARTIAL",
-     "representation": "exact_normative_owner",
-     "finding": "Authored positives and negatives exist: run_started_consumer_contract_fixtures.json, run_started_checkpoint_retention_fixtures.json, event_index_consumer_adoption_fixtures.json and ATS RUN-P01..P12/RUN-N01..N21 (no in-repository checker runs these fixtures). Under the stream E oracle bar (PNC019-RUN quality bar; the same bar lane s3b applies), criterion 12 PASS needs an executable checker whose guard rows are proved by the gated tool (scripts/pm_guard_isolation.py), with the shared number and date-time calls and retained reads from the sealed receipt. None exists for this family, so the cell is PARTIAL. Under the 2026-09-24 rubric alone it was PASS.",
+     "status": "PASS",
+     "representation": "executable_oracle_with_method_b_observation_tables",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
-       "path": "Plans/Automated_Testing_System.md",
-       "unit": "run.started owner oracles",
-       "line_start": 2762,
-       "line_end": 2762,
-       "quote": "`RUN-P01` \u2014 `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` \u2014 Exact no-fallback regular start.",
-       "excerpt_sha256": "435f331e4932de104f25cb17067c39d3499f008615f2b1d5a3a87a6ad637f295",
-       "file_sha256": "a5d610c482aaab958ae88afb208df462409c8e63f9133f97530700b53f4d002e",
+       "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
+       "unit": "Goal shared oracle final result",
+       "line_start": 2,
+       "line_end": 2,
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
-       "path": "Plans/Automated_Testing_System.md",
-       "unit": "run.started negative oracles",
-       "line_start": 2804,
-       "line_end": 2804,
-       "quote": "`RUN-N15` \u2014 `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` \u2014 Reject a second append for the same semantic start",
-       "excerpt_sha256": "1f7f448d1683e8405f805b73b6182149c86a00b7fd1ef897b81f62d078713bd2",
-       "file_sha256": "a5d610c482aaab958ae88afb208df462409c8e63f9133f97530700b53f4d002e",
+       "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
-       "path": "Plans/run_started_consumer_contract_fixtures.json",
-       "unit": "#/status",
-       "line_start": 4,
-       "line_end": 4,
-       "quote": "\"status\": \"SYNTHETIC_CONTRACT_FIXTURES_NOT_RUNTIME_EVIDENCE\"",
-       "excerpt_sha256": "21dbeea92736ada78c68ab356a3b2c0bd50b32aabb2d3f6143b75ec775955b04",
-       "file_sha256": "5310028861da355c64c9dc8008cad710b227ffa701f32e003865193e4768fc74",
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
+       "quote": "if 'exception' in detail:",
+       "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
-       "path": "Plans/event_index_consumer_adoption_fixtures.json",
-       "unit": "#/native",
-       "line_start": 115885,
-       "line_end": 115885,
-       "quote": "\"depth_pass\": false",
-       "excerpt_sha256": "27e2f74d2bec1aab1e19324d907747b0c284de4e922f405d05bad62324efab53",
-       "file_sha256": "ec23a212f39756e6a1d221d1368d1d4681b909cc1bf21317fca7292c8df41439",
+       "path": "scripts/pm_goal_retained.py",
+       "unit": "Goal shared oracle final result",
+       "line_start": 82,
+       "line_end": 82,
+       "quote": "def resolve(",
+       "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
+       "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
       }
      ],
      "prior": {
-      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "source": "reports/event-authority-20261114/PNC019-S3A-grades-after.json",
       "status": "PARTIAL"
      },
-     "change": "carried",
-     "change_reason": "Same as the before grade; this lane changed no oracle for this family."
+     "change": "closed",
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
-   "remaining_gaps": [
-    "positive_negative_oracles: an executable checker over the authored cases with Method B guard tables on the gated tool, shared number and date-time calls, and retained reads from the sealed receipt."
-   ],
+   "remaining_gaps": [],
    "notes": [
     "EP-116 and OP-036 now send app run starts to an explicitly versioned app sibling through SIR-055/EP-132 and keep the Project reader and codec unchanged; the registered project_only version is unaffected.",
-    "Graded 12/12 on 2026-09-24 under the rubric then in force; 11/12 under the stream E oracle bar. The only open cell is the oracle cell."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
-   "pass_count": 11,
-   "vector": "P P P P P P P P P P P p"
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P"
   },
   {
    "event_type": "goal.child_status_changed",
@@ -2438,44 +2434,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -2486,12 +2482,12 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
@@ -2992,44 +2988,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -3040,12 +3036,12 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
@@ -3546,44 +3542,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -3594,12 +3590,12 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
@@ -4100,44 +4096,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -4148,12 +4144,12 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
@@ -4664,44 +4660,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -4712,12 +4708,12 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
@@ -5218,44 +5214,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -5266,12 +5262,12 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
@@ -5782,44 +5778,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -5830,12 +5826,12 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
@@ -6136,44 +6132,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -6184,12 +6180,12 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
@@ -6490,44 +6486,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -6538,12 +6534,12 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
@@ -6844,44 +6840,44 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "executable_oracle_with_method_b_observation_tables",
-     "finding": "Shared complete-checker calls pass; 867 one-row tables are inventoried, 862 are proved by the gated tool and five nullable/edition declarations have verified earlier-union proofs. All 862 expected-refusal mutation witnesses match exactly. Number and timestamp calls and exact sealed-receipt retained reads are exercised with full store snapshots. Credit is the named predicate observation phase; it is not a schema keyword occurrence or native-runtime proof.",
+     "finding": "The final eight-source sweep runs 62,778 complete calls. Its 1,395 one-row tables comprise 1,378 gated Method B passes and 17 source-bound earlier-clause implications whose dependency tables pass. All 1,378 exact expected-refusal mutations kill. Shared number/date-time calls and sealed original receipt selection are exercised with full backing-store snapshots. Predicate-observation proof is separate from whole-checker cut diagnostics; native NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 2,
        "line_end": 2,
-       "quote": "\"status\": \"PASS_CORE_BOUNDARIES\"",
-       "excerpt_sha256": "0989563ed7542132e60c34ffd42dbb1d539fd7fb7e425b6b2a43e408e7f26f56",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "quote": "\"status\": \"PASS_GOAL_SWEEP\"",
+       "excerpt_sha256": "d778e282f6eed4b88fde7843d72248f2f545bd8e31fd5c6d7f79abbb8a2adcf1",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-S3AO-core.json",
-       "unit": "Goal shared oracle core result",
-       "line_start": 6,
-       "line_end": 6,
-       "quote": "\"proved\": 862",
-       "excerpt_sha256": "f7134a45998f84223aff729f4ae2ffb9b40ba55b6767bfa94a88a77ac101b6fe",
-       "file_sha256": "89bbc1060b170c1280a5f745c2508a7f75d6d07d9574e536cec0b5c2361f9c5b",
+       "unit": "Goal shared oracle final result",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"proved\": 1378",
+       "excerpt_sha256": "b1d47fb1881ed0fcdc8a1971611607d9a8bf75dc834e91ed9c75a712fb058283",
+       "file_sha256": "d3c352a66eb919e439c7bcef50ba70fa2a33f00fd21429d7e4ccf8f6809dfcd9",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
-       "unit": "Goal shared oracle core result",
-       "line_start": 445,
-       "line_end": 445,
+       "unit": "Goal shared oracle final result",
+       "line_start": 503,
+       "line_end": 503,
        "quote": "if 'exception' in detail:",
        "excerpt_sha256": "643ca020f70f84856e01033e8135cedb66b2afa616e9173c8f869af48fa4b79f",
-       "file_sha256": "2e71daf3ba006a3723f3babd356169acc56bcbfb251be33306f207ac2500e19a",
+       "file_sha256": "b9d8de7979deb1eb055f98f394d1a7c072829bb5aea86cee15046cf44b65f25b",
        "quote_check": "exact"
       },
       {
        "path": "scripts/pm_goal_retained.py",
-       "unit": "Goal shared oracle core result",
+       "unit": "Goal shared oracle final result",
        "line_start": 82,
        "line_end": 82,
-       "quote": "def resolve(snapshot, event, storage, *, recipe_override=None):",
+       "quote": "def resolve(",
        "excerpt_sha256": "41a2ef4430bb4f840ed879c351e514b41201ba35e8ec206c45e01c8df05cc676",
        "file_sha256": "d1e4ed470f59345dea453b7afc72ac88f9c39cf049acd32b4db9c23a2a147237",
        "quote_check": "exact"
@@ -6892,12 +6888,12 @@
       "status": "PARTIAL"
      },
      "change": "closed",
-     "change_reason": "Shared oracle sweep at core checkpoint; no product canon or registered version changed."
+     "change_reason": "Final source-bound shared oracle sweep; product canon and registered versions unchanged."
     }
    },
    "remaining_gaps": [],
    "notes": [
-    "Shared oracle core checkpoint closes criterion 12 under the stated observation-phase proof scope; native remains NOT_RUN."
+    "Criterion 12 closed by the final source-bound shared sweep; native NOT_RUN."
    ],
    "pass_count": 12,
    "vector": "P P P P P P P P P P P P"
