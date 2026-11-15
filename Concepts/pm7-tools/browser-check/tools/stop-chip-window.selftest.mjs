@@ -86,6 +86,7 @@ function nierTwice() {
 const twice = everyFrame(nierTwice());
 assert.ok(twice.worst > 1, `a second NieR glyph jump on the sample after the window's must fail (worst ${twice.worst}; named: ${(twice.known || []).join('; ') || 'none'})`);
 // The sample BEFORE the reference's frame is not the window's either (the glyph jumps at index 4, the reference at 5).
+// An earlier mark at index 1 puts index 4 inside the sampling window, as a real run's earlier changes do.
 function nierBefore() {
 	const R = run({ later: false, withOpen: true });
 	for (let i = 0; i < R.rows.length; i++) {
@@ -93,6 +94,7 @@ function nierBefore() {
 		R.rows[i].nier = 'on';
 		R.rows[i].g.s = i >= 4 ? -80 : 0;
 	}
+	R.marks.unshift({ name: 'a word arrives', i: 1, kind: 'word' });
 	return R;
 }
 const before = everyFrame(nierBefore());

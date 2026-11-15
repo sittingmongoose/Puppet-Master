@@ -463,26 +463,34 @@ const spanOf = (spans, i) => spans.find((x) => i >= x.from && i < x.to) || null;
 // run-s0-1 (Alexis, 2026-11-15) named nothing while the reference jumped 373 ms at +379 ms and
 // the glyph's hand-over was 0.16932 of the 2200 ms loop (372 ms). That neighbour is waived only
 // when its size is the reference's, within one frame. A later jump, or a different size, fails.
+// A waived jump keeps main's two caps (R62): it is no larger than the reference's jump plus a frame (wc.limitMs),
+// and, on the reference's own frame, no larger than the gap between its two samples plus a frame. One jump a
+// window (R62-A1): the next sample is waived only when the glyph did not jump on the reference's own frame, and
+// the sample before the reference's frame never is.
 function restyleFrame(R, i, frame, spans) {
 	const wc = spanOf(spans, i);
 	if (!wc || wc.otherI == null) return false;
-	const msOf = (layer) => {
-		const row = R.rows[i][layer], prev = R.rows[i - 1][layer];
+	const msOf = (k, layer) => {
+		if (k < 1 || k >= R.rows.length) return null;
+		const row = R.rows[k][layer], prev = R.rows[k - 1][layer];
 		if (!row || !prev || !(row.dur > 0)) return null;
-		const x = pair(R, i, layer, 0, frame);
+		const x = pair(R, k, layer, 0, frame);
 		if (!x || x.hand == null) return null;
 		return x.hand * row.dur;
 	};
-	const g = msOf('g'), b = msOf('b');
+	const capped = (ms) => ms <= wc.limitMs && ms <= R.rows[i].w - R.rows[i - 1].w + frame;
+	const g = msOf(i, 'g'), b = msOf(i, 'b');
 	if (g == null || !(g > frame)) return false;
 	const glowRuns = (R.rows || []).some((r) => r && r.b && r.b.place != null && r.b.dur > 0);
 	const nierRun = (R.rows || []).some((r) => r && r.nier === 'on');
 	if (!glowRuns && nierRun && b == null) {
-		if (i === wc.otherI) return true;
-		return Math.abs(i - wc.otherI) === 1 && Math.abs(g - wc.otherMs) <= frame;
+		if (i === wc.otherI) return capped(g);
+		if (i !== wc.otherI + 1) return false;
+		const own = msOf(wc.otherI, 'g');
+		return !(own != null && own > frame) && Math.abs(g - wc.otherMs) <= frame;
 	}
 	if (i !== wc.otherI || b == null) return false;
-	return b > frame && Math.abs(g - b) <= frame;
+	return b > frame && Math.abs(g - b) <= frame && capped(g) && capped(b);
 }
 // Every frame from the first change to the end, not only the frames that hold a change: the loop is never made anew,
 // never jumps at a hand-over, and (outside the frames after a long task) its place never moves more than one frame at
