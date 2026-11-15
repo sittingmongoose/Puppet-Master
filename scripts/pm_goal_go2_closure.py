@@ -1423,10 +1423,28 @@ def diverse(cl, controls, reach):
     return first + rest
 
 
-def member_schemas(cl, by_ipath, ipath):
-    """name -> [(property subschema, resolver)] of every object node reached at this instance path."""
+UNCOND = [None]  # GO2: instance path -> [(node, resolver)] reached with no conditional branch on the way and no union at it
+
+
+def index_unconditional(cl, nodes):
     out = collections.defaultdict(list)
-    for _, node, res in by_ipath.get(ipath, []):
+    for location, info in nodes.items():
+        for reach in info['reach']:
+            here = len(reach['ipath'])
+            if any(c[0] in cl.APART for c in reach['ctx']):
+                continue
+            if any(c[0] in ('then', 'else') or (c[1] == here and c[0] in ('anyOf', 'oneOf')) for c in reach['ctx']):
+                continue  # a branch anywhere on the way, or an alternative at this object, is a constraint, not the definition
+            out[reach['ipath']].append((location, info['node'], info['resolver']))
+    UNCOND[0] = out
+    return out
+
+
+def member_schemas(cl, by_ipath, ipath):
+    """name -> [(property subschema, resolver)] of the object's own definition at this instance path: nodes reached
+    there with no conditional branch or union alternative at that same object (those are what a branch constrains)."""
+    out = collections.defaultdict(list)
+    for _, node, res in (UNCOND[0] if UNCOND[0] is not None else by_ipath).get(ipath, []):
         for name, sub in (node.get('properties', {}) if isinstance(node, dict) else {}).items():
             out[name].append((sub, res))
     return out
@@ -1957,6 +1975,7 @@ def close(args):
         for reach in info['reach']:
             if not any(c[0] in cl.APART for c in reach['ctx']):
                 by_ipath[reach['ipath']].append((location, info['node'], info['resolver']))
+    index_unconditional(cl, nodes)
     work = [(location, keyword) for location, info in nodes.items() for keyword in cl.clauses_of(info['node'])]
     if args.only:  # GO2: exactly these clause ids (the walk order can differ between processes; ids never do)
         wanted = {canon(c, mapping) for c in json.loads(Path(args.only).read_text())}
