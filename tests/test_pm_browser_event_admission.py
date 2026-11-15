@@ -415,12 +415,19 @@ class BrowserPreparedAdmissionTests(unittest.TestCase):
         sibling["authority_contract_ref"] = "Plans/browser_workspace_created_contracts.schema.json#/x-pm-event-authority-binding"
         family = synthetic_family(sibling)
         value = event(sibling["event_type"])
-        self.assertIn("complete_browser_authority_binding_missing", GATE.event_failures(value, producer(value), context, families={sibling["event_type"]: family}))
+        # browser.workspace.closed is one of the 51 Browser Program families, so it is judged by its own
+        # per-family binding: without lane s4b's contracts it has none, and with them the borrowed
+        # authority_contract_ref is not its own Storage unit. Either way it never binds through created's.
+        own = ("browser_program_contract_missing" if not (ROOT / GATE.BROWSER_PROGRAM_CONTRACTS).is_file()
+               else "browser_program_authority_contract")
+        failures = GATE.event_failures(value, producer(value), context, families={sibling["event_type"]: family})
+        self.assertIn(own, failures)
+        self.assertNotIn("complete_browser_authority_binding_missing", failures)
         registry["families"].append(family)
         with patch.object(GATE, "contract_context", return_value=context), registry_snapshot(registry):
             report = GATE.validate()
         self.assertEqual(report["status"], "fail")
-        self.assertIn("complete_browser_authority_binding_missing", {row["error"] for row in report["failures"]})
+        self.assertIn(own, {row["error"] for row in report["failures"]})
 
     def test_created_requires_exact_depth_ref_beyond_label_and_central_row(self):
         context, _ = all_prepared_snapshot()
