@@ -56,9 +56,9 @@
 //     flight's layers stand still (what the reader sees, under the window's scrim). At the close the flight carries on
 //     from there and lands: no .tx-fly layer left, no message still marked data-flight, body not .tx-flying. The
 //     branch before lane C3 asked for a frame on every refresh for the whole visit.
-//   PM7PERF-CHATRUN-NIER-AFTER-VISIT: each judged chain visit records the look painted while the window was open
-//   ("the visit ran in the look under test"). After the visit part, the look under test is written through Settings,
-//   because the window's close leaves a preview that look()'s persist:false paint does not replace.
+//   PM7PERF-CHATRUN-NIER-AFTER-VISIT: each judged chain visit logs the look painted while the window was open (a
+//   note, not a row: the window paints its run's own look). After the visit part, the look under test is written
+//   through Settings, because the window's close leaves a preview that look()'s persist:false paint does not replace.
 //
 // --set looks=<a,b>  default basic-dark,glass-dark,retro-dark,nier-dark; looks=all for all ten
 // --set parts=run,rest,visit   --set settle=<ms> (default 30000)
@@ -316,7 +316,10 @@ export default async function (t) {
 					}
 					if (unjudged.length) t.log(`${look} visit ${kind}: NOTE ${unjudged.length} attempt(s) not judged, the window ${unjudged.join(', ')} ms after the arming`);
 					await t.check(`${look} visit ${kind}: the chain's next run starts after its delay counted outside the window (${kind === 'short' ? 'the window closed before it was due' : 'the window stayed past it'})`, outside >= delay - 40 && outside <= delay + 300, `${Math.round(outside)} ms outside the window of ${Math.round(total)} ms from the arming to orbitB's start (window ${visit[0]}-${visit[1]} ms); expected ${delay - 40} to ${delay + 300}`);
-					await t.check(`${look} visit ${kind}: the visit ran in the look under test`, visitRanInLook(look, r.painted), r.painted ? `data-theme ${r.painted.theme}, NieR ${r.painted.nier ? 'on' : 'off'}${r.painted.loose ? ', preview lingering' : ''}` : 'the window opened with no painted look read');
+					// Logged, not judged: the setup window paints its run's own look while it is open (Basic Dark for a new run),
+					// so on a correct page the visit is not in the look under test (Alexis, 2026-11-15, the integration page:
+					// "data-theme basic-dark, NieR off" in Glass, Retro and NieR Dark, both surfaces, 6 of 6 judged visits).
+					t.log(`${look} visit ${kind}: NOTE the window was open in ${r.painted ? `data-theme ${r.painted.theme}, NieR ${r.painted.nier ? 'on' : 'off'}${r.painted.loose ? ', preview lingering' : ''}` : 'a look that was not read'}${visitRanInLook(look, r.painted) ? ' (the look under test)' : ' (the run\'s own look, not the look under test)'}`);
 					break;
 				}
 			}
