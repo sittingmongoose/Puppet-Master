@@ -14,8 +14,8 @@ probing and no caller override.
 
 Static stand-in (native custody NOT_RUN). Storage's sealed custody is SEALED:
 original_ref -> {SHA-256 of the original's SP-1100 EVENT_VALUE bytes: (binding,
-recipe)}. Composition seals the committed positive originals of the sixteen
-DG6A fixture files on first use (`_install`); a test that models a different
+recipe)}. Module composition seals the committed positive originals of the sixteen
+DG6A fixture files before any read (`_install`); a test that models a different
 Storage history declares it with `written(...)`. A reader never seals.
 
 Frozen recipes (one per installed payload edition, pinned by the SHA-256 of the
@@ -313,7 +313,9 @@ class DG6AOriginalOwner:
         if not sealed:
             raise Refusal('original_unavailable')
         entry = sealed.get(hashlib.sha256(self.raw).hexdigest())
-        if entry is None:
+        # A missing or ambiguous independently sealed receipt cannot select a
+        # recipe. Do not unpack an arbitrary sequence or repair it on read.
+        if type(entry) is not tuple or len(entry) != 2:
             raise Refusal('original_authority')
         binding, recipe = entry
         return OriginalCustody(binding, recipe, self.raw, self.raw, self.raw)
@@ -324,7 +326,6 @@ def resolve(original):
 
     facts holds the five chained CUSTODY_FACTS: every fact before the dispatcher's refusing step holds, the
     refusing step's fact fails, and later facts are False (the chained rows ignore them)."""
-    _install()
     facts = dict.fromkeys(CUSTODY_FACTS, False)
     ref = original.get('event_ref') if type(original) is dict else None
     if type(ref) is not str or not ref or not SEALED.get(ref):
@@ -364,3 +365,8 @@ def replaced_resource_recipe(original):
 def edition_recipe(event_type, version):
     """The installed tuple of event_type's edition with the given schema_version."""
     return next(e.recipe() for key, e in EDITIONS.items() if key[0] == event_type and key[2] == version)
+
+
+# Composition installs the independently sealed fixture originals before any
+# read is possible. resolve() never installs, recreates or chooses a receipt.
+_install()

@@ -1,0 +1,2086 @@
+{
+ "base": "104c6c82b5ea0b5bf154806712496777c48c675b",
+ "entailed": [
+  {
+   "attempts": 4,
+   "attempts_ok": true,
+   "families": 1,
+   "key": "CK03_command_id",
+   "ok": true,
+   "premise_ok": true,
+   "row": "CK03_command_id",
+   "singleton_tables": [
+    "concern_command_keys_entailed__1"
+   ]
+  },
+  {
+   "attempts": 4,
+   "attempts_ok": true,
+   "families": 1,
+   "key": "CK07_handler_target",
+   "ok": true,
+   "premise_ok": true,
+   "row": "CK07_handler_target",
+   "singleton_tables": [
+    "concern_command_keys_entailed__2"
+   ]
+  },
+  {
+   "attempts": 45,
+   "attempts_ok": true,
+   "families": 1,
+   "key": "CONCERN_OPERATION_PAYLOAD_schema",
+   "ok": true,
+   "premise_ok": true,
+   "row": "CONCERN_OPERATION_PAYLOAD_schema",
+   "singleton_tables": [
+    "sch_concern_operation_payload"
+   ]
+  },
+  {
+   "attempts": 48,
+   "attempts_ok": true,
+   "families": 16,
+   "key": "CZ00_encodable",
+   "ok": true,
+   "premise_ok": true,
+   "row": "CZ00_encodable",
+   "singleton_tables": [
+    "checkpoint_encoding_entailed"
+   ]
+  },
+  {
+   "attempts": 2,
+   "attempts_ok": true,
+   "families": 2,
+   "key": "G_after_annotation_id",
+   "ok": true,
+   "premise_ok": true,
+   "row": "G_after_annotation_id",
+   "singleton_tables": [
+    "c5_after_note_entailed__3"
+   ]
+  },
+  {
+   "attempts": 2,
+   "attempts_ok": true,
+   "families": 2,
+   "key": "G_after_bundle_id",
+   "ok": true,
+   "premise_ok": true,
+   "row": "G_after_bundle_id",
+   "singleton_tables": [
+    "c5_after_note_entailed__1"
+   ]
+  },
+  {
+   "attempts": 2,
+   "attempts_ok": true,
+   "families": 2,
+   "key": "G_after_doc_id",
+   "ok": true,
+   "premise_ok": true,
+   "row": "G_after_doc_id",
+   "singleton_tables": [
+    "c5_after_note_entailed__2"
+   ]
+  },
+  {
+   "attempts": 2,
+   "attempts_ok": true,
+   "families": 2,
+   "key": "G_after_note_id",
+   "ok": true,
+   "premise_ok": true,
+   "row": "G_after_note_id",
+   "singleton_tables": [
+    "c5_after_note_entailed__4"
+   ]
+  },
+  {
+   "attempts": 2,
+   "attempts_ok": true,
+   "families": 2,
+   "key": "G_after_provenance_ref",
+   "ok": true,
+   "premise_ok": true,
+   "row": "G_after_provenance_ref",
+   "singleton_tables": [
+    "c5_after_note_entailed__5"
+   ]
+  },
+  {
+   "attempts": 4,
+   "attempts_ok": true,
+   "families": 1,
+   "key": "HN09_after_present",
+   "ok": true,
+   "premise_ok": true,
+   "row": "HN09_after_present",
+   "singleton_tables": [
+    "c5_history_mapping_after_entailed"
+   ]
+  },
+  {
+   "attempts": 16,
+   "attempts_ok": true,
+   "families": 4,
+   "key": "OK07_command_id",
+   "ok": true,
+   "premise_ok": true,
+   "row": "OK07_command_id",
+   "singleton_tables": [
+    "alert_command_keys_entailed__1"
+   ]
+  },
+  {
+   "attempts": 16,
+   "attempts_ok": true,
+   "families": 4,
+   "key": "OK12_handler_target",
+   "ok": true,
+   "premise_ok": true,
+   "row": "OK12_handler_target",
+   "singleton_tables": [
+    "alert_command_keys_entailed__2"
+   ]
+  },
+  {
+   "attempts": 10,
+   "attempts_ok": true,
+   "families": 4,
+   "key": "OK16_mute_scope",
+   "ok": true,
+   "premise_ok": true,
+   "row": "OK16_mute_scope",
+   "singleton_tables": [
+    "alert_command_keys_entailed__3"
+   ]
+  },
+  {
+   "attempts": 8,
+   "attempts_ok": true,
+   "families": 2,
+   "key": "PK03_command_id",
+   "ok": true,
+   "premise_ok": true,
+   "row": "PK03_command_id",
+   "singleton_tables": [
+    "panel_command_keys_entailed__1"
+   ]
+  },
+  {
+   "attempts": 8,
+   "attempts_ok": true,
+   "families": 2,
+   "key": "PK07_panel_id",
+   "ok": true,
+   "premise_ok": true,
+   "row": "PK07_panel_id",
+   "singleton_tables": [
+    "panel_command_keys_entailed__2"
+   ]
+  },
+  {
+   "attempts": 5,
+   "attempts_ok": true,
+   "families": 2,
+   "key": "PK13_target_host",
+   "ok": true,
+   "premise_ok": true,
+   "row": "PK13_target_host",
+   "singleton_tables": [
+    "panel_command_keys_entailed__3"
+   ]
+  },
+  {
+   "attempts": 16,
+   "attempts_ok": true,
+   "families": 4,
+   "key": "RR03_stored_object:alert",
+   "ok": true,
+   "premise_ok": true,
+   "row": "RR03_stored_object",
+   "singleton_tables": [
+    "retry_retained_alert_entailed__1",
+    "retry_retained_panel_entailed__1"
+   ]
+  },
+  {
+   "attempts": 8,
+   "attempts_ok": true,
+   "families": 2,
+   "key": "RR03_stored_object:panel",
+   "ok": true,
+   "premise_ok": true,
+   "row": "RR03_stored_object",
+   "singleton_tables": [
+    "retry_retained_alert_entailed__1",
+    "retry_retained_panel_entailed__1"
+   ]
+  },
+  {
+   "attempts": 8,
+   "attempts_ok": true,
+   "families": 4,
+   "key": "RR08_digest:alert",
+   "ok": true,
+   "premise_ok": true,
+   "row": "RR08_digest",
+   "singleton_tables": [
+    "retry_retained_alert_entailed__2",
+    "retry_retained_panel_entailed__2"
+   ]
+  },
+  {
+   "attempts": 4,
+   "attempts_ok": true,
+   "families": 2,
+   "key": "RR08_digest:panel",
+   "ok": true,
+   "premise_ok": true,
+   "row": "RR08_digest",
+   "singleton_tables": [
+    "retry_retained_alert_entailed__2",
+    "retry_retained_panel_entailed__2"
+   ]
+  }
+ ],
+ "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg6a",
+ "families": [
+  {
+   "bigint": {
+    "accepted_by_schema": 11,
+    "checks": 32,
+    "failures": 0,
+    "replayed": 24,
+    "slots": 16
+   },
+   "bound_controls": 88,
+   "boundary_first_refusal": 664,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 260,
+   "branch_controls": 640,
+   "checker_cases": 635,
+   "checker_cases_final": 635,
+   "clause_invalid": 7,
+   "clause_kills": 924,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 456,
+    "complete_definition_applicator": 103,
+    "conditional_selector": 3,
+    "inapplicable_string_value": 6
+   },
+   "datetime": {
+    "checks": 3400,
+    "failures": 0,
+    "nodes": 5,
+    "owner_nodes": 3,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "1dfec6d9837922f8f902c4de11be7188b063d4530baf89741a23073c8fde90eb",
+    "datetime": "3e875d758db813e530666ae2c00ccbf5ff802058a0b446e4537ea890c5cac04e",
+    "inventory": "600cabc7f39d1c37ebffc909f5a5d11209b1a9023ed63d9f7c53661d7681ac02",
+    "ledger": "7367b2048537d047a3d4b78751e4802c160dfec60cdb3ebf9aee9ccc49e18955",
+    "matrix": "6cc93651c49fa52f5b7bac00b960b1cf2f7cca24f66b7b70a75b7641a19f71f0",
+    "schema_summary": "900a97a7130ce8572fc80ca45315aa4aa8b0211af9c38882a281aaa1b8b8eb22"
+   },
+   "family": "alert.acknowledged",
+   "joins": {
+    "KILLED_EXPECTED": 2344,
+    "MULTI_ROW": 164
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 313
+   },
+   "not_first_phases": {},
+   "occurrences": 568,
+   "reachable_clauses": 568,
+   "retained": {
+    "ACCEPTED_CONTROL": 11,
+    "KILLED_EXPECTED": 77
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2144,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 8,
+   "schema_calls": 545,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 15,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 11,
+    "checks": 32,
+    "failures": 0,
+    "replayed": 24,
+    "slots": 16
+   },
+   "bound_controls": 87,
+   "boundary_first_refusal": 666,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 260,
+   "branch_controls": 500,
+   "checker_cases": 638,
+   "checker_cases_final": 638,
+   "clause_invalid": 7,
+   "clause_kills": 926,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 456,
+    "complete_definition_applicator": 103,
+    "conditional_selector": 3,
+    "inapplicable_string_value": 6
+   },
+   "datetime": {
+    "checks": 3400,
+    "failures": 0,
+    "nodes": 5,
+    "owner_nodes": 3,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "b638dab3a4663aa90a5ef3d98381c4c6cc8b9dc22a1c5cf246bdd22a45b86611",
+    "datetime": "36b4a1ea2e7983d580538a499043ae8361fa84d19393f96af612fc42e637e9a6",
+    "inventory": "c9d7dff73fc6a95a274457a0d6aecb2c7e455479710d20326dd661b8dc4e90fb",
+    "ledger": "7688b2ed04bed7994939acb9dcf50518622a0ae3c9a5d1f5903d17222644ab35",
+    "matrix": "4c8964897c9373b14d74d0734c20463305f571358930bb52d75fb7ea99f982d1",
+    "schema_summary": "0354cea0769220be87e98727a34cd348e083002edb1829ab833b1f6e9971cdeb"
+   },
+   "family": "alert.dismissed",
+   "joins": {
+    "KILLED_EXPECTED": 2393,
+    "MULTI_ROW": 170
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 313
+   },
+   "not_first_phases": {},
+   "occurrences": 568,
+   "reachable_clauses": 568,
+   "retained": {
+    "ACCEPTED_CONTROL": 11,
+    "KILLED_EXPECTED": 77
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2145,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 8,
+   "schema_calls": 546,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 16,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 11,
+    "checks": 32,
+    "failures": 0,
+    "replayed": 24,
+    "slots": 16
+   },
+   "bound_controls": 87,
+   "boundary_first_refusal": 691,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 278,
+   "branch_controls": 630,
+   "checker_cases": 639,
+   "checker_cases_final": 639,
+   "clause_invalid": 7,
+   "clause_kills": 969,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 471,
+    "complete_definition_applicator": 103,
+    "conditional_selector": 3,
+    "inapplicable_string_value": 6
+   },
+   "datetime": {
+    "checks": 6800,
+    "failures": 0,
+    "nodes": 10,
+    "owner_nodes": 6,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "bfc513cc94cbc26de6375c9c449ccc0dd80fd2232bf6caa1d211730a7150245b",
+    "datetime": "e17430418a0d14bc24c2a635f0ce2570ae90b5759aa6aed49ec4aa15cecaa2fc",
+    "inventory": "a409ab2bd9a237a539b1a7559696e070055dc474ea2b00d86229021cc1e810fd",
+    "ledger": "f57a43d5a69ec864365bebdbf0821332f93004fd0d43b8ef32b39ef64b6f1429",
+    "matrix": "345de4b8d6788a5dc85f7045be81d5bea9b89a2264dafa9e94d10baa46673220",
+    "schema_summary": "0a1fd7193b8185832eaf15966a8cf4249cc030393f37f0a640f72bfe31c3ebd9"
+   },
+   "family": "alert.rule_muted",
+   "joins": {
+    "KILLED_EXPECTED": 2442,
+    "MULTI_ROW": 176
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 319
+   },
+   "not_first_phases": {},
+   "occurrences": 583,
+   "reachable_clauses": 583,
+   "retained": {
+    "ACCEPTED_CONTROL": 11,
+    "KILLED_EXPECTED": 77
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2146,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 8,
+   "schema_calls": 549,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 17,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 11,
+    "checks": 32,
+    "failures": 0,
+    "replayed": 24,
+    "slots": 16
+   },
+   "bound_controls": 98,
+   "boundary_first_refusal": 696,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 276,
+   "branch_controls": 554,
+   "checker_cases": 667,
+   "checker_cases_final": 667,
+   "clause_invalid": 7,
+   "clause_kills": 972,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 467,
+    "complete_definition_applicator": 103,
+    "conditional_selector": 3,
+    "inapplicable_string_value": 5
+   },
+   "datetime": {
+    "checks": 7480,
+    "failures": 0,
+    "nodes": 11,
+    "owner_nodes": 7,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "c6ad87145bc255504320c09122e2275ec5d56fd81bb036bd7cbe7f8fc43b9b94",
+    "datetime": "8f320c7cc790fc772787c794ff6b3e51a6b2ed24e67feea198723f608eb2c076",
+    "inventory": "8adbe1a3695eae87fdb4bad700e5ed120bb356537b7559decc51f4fc60bd20a5",
+    "ledger": "25006d7fbee0161598d9c23146da74585f196107833e98c144fa1bd30976c434",
+    "matrix": "53292e4fbeb9236f7fe1c707e291891999625584bf188c4c533bdf789ed5c780",
+    "schema_summary": "8204e32b0c93f73fb4c3936de83ce8652a197d2d8c4c938a339c23a7ae25ffb8"
+   },
+   "family": "alert.snoozed",
+   "joins": {
+    "KILLED_EXPECTED": 2442,
+    "MULTI_ROW": 176
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 317
+   },
+   "not_first_phases": {},
+   "occurrences": 578,
+   "reachable_clauses": 578,
+   "retained": {
+    "ACCEPTED_CONTROL": 11,
+    "KILLED_EXPECTED": 77
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2146,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 8,
+   "schema_calls": 588,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 17,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 14,
+    "checks": 38,
+    "failures": 0,
+    "replayed": 26,
+    "slots": 19
+   },
+   "bound_controls": 114,
+   "boundary_first_refusal": 489,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 240,
+   "branch_controls": 772,
+   "checker_cases": 666,
+   "checker_cases_final": 666,
+   "clause_invalid": 1,
+   "clause_kills": 729,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 425,
+    "complete_definition_applicator": 40,
+    "conditional_selector": 6,
+    "inapplicable_number_value": 1,
+    "inapplicable_string_value": 2
+   },
+   "datetime": {
+    "checks": 3400,
+    "failures": 0,
+    "nodes": 5,
+    "owner_nodes": 3,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "5c0aa8f440cf353bdb6a617e88a6a0030ab4ea7472de883ba342fe6a8f2ca15c",
+    "datetime": "71104218c408555ea9f8c5742697f809c8f1c256d0e58dd633ac4f63569c1022",
+    "inventory": "a907a248a64e85cc0d3969aca31dab75726c1247683019a009d236eede6e3628",
+    "ledger": "f7b741461b762b11926578c963897d1b67f87b3dc67c3ee682a5c68560b2912d",
+    "matrix": "45414db472fa80fcc80071701c8bdf9254fe70d4c9530b9e743c3e0ced81b283",
+    "schema_summary": "8507cca21433f1f4204e4f14948e749b63a6c8bc3187bd915d086833c4430dc6"
+   },
+   "family": "panel.redocked",
+   "joins": {
+    "KILLED_EXPECTED": 2863,
+    "MULTI_ROW": 245
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 255
+   },
+   "not_first_phases": {},
+   "occurrences": 474,
+   "reachable_clauses": 474,
+   "retained": {
+    "ACCEPTED_CONTROL": 11,
+    "KILLED_EXPECTED": 77
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2152,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 8,
+   "schema_calls": 837,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 21,
+    "REFUSED_EARLIER": 3
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 14,
+    "checks": 38,
+    "failures": 0,
+    "replayed": 26,
+    "slots": 19
+   },
+   "bound_controls": 106,
+   "boundary_first_refusal": 489,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 238,
+   "branch_controls": 673,
+   "checker_cases": 665,
+   "checker_cases_final": 665,
+   "clause_invalid": 1,
+   "clause_kills": 727,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 424,
+    "complete_definition_applicator": 40,
+    "conditional_selector": 6,
+    "inapplicable_string_value": 2
+   },
+   "datetime": {
+    "checks": 3400,
+    "failures": 0,
+    "nodes": 5,
+    "owner_nodes": 3,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "51a51a6c30e89be49c48811397325526dc3f1e8a04b0588b1950aa6c49bdb94c",
+    "datetime": "3e7eda64a5786a21adfebfd5dd15a263d15212c33df5850c155553abf01ba358",
+    "inventory": "47913961299ef6b7114363efa60bcf9a64699b2182c3716aa45fbc187bedbf0d",
+    "ledger": "25eb2302ef434de25577b72524c21a914fe7df827793fd0063d62fcbf91079d1",
+    "matrix": "f387a11a8e5084b187b28504c81a4fc702d7156fc785449142951d0c56f25a7f",
+    "schema_summary": "9a68196020ac318296a6c8eab77fbab75493a9bff455daeb12d8c531d856d155"
+   },
+   "family": "panel.undocked",
+   "joins": {
+    "KILLED_EXPECTED": 2863,
+    "MULTI_ROW": 245
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 255
+   },
+   "not_first_phases": {},
+   "occurrences": 472,
+   "reachable_clauses": 472,
+   "retained": {
+    "ACCEPTED_CONTROL": 11,
+    "KILLED_EXPECTED": 77
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2152,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 8,
+   "schema_calls": 819,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 21,
+    "REFUSED_EARLIER": 3
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 1,
+    "checks": 20,
+    "failures": 0,
+    "replayed": 18,
+    "slots": 10
+   },
+   "bound_controls": 109,
+   "boundary_first_refusal": 1862,
+   "boundary_not_first": 179,
+   "boundary_not_replayable": 179,
+   "branch_controls": 1229,
+   "checker_cases": 745,
+   "checker_cases_final": 745,
+   "clause_invalid": 12,
+   "clause_kills": 2220,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 1018,
+    "complete_definition_applicator": 153,
+    "conditional_selector": 3,
+    "inapplicable_string_value": 10
+   },
+   "datetime": {
+    "checks": 4760,
+    "failures": 0,
+    "nodes": 7,
+    "owner_nodes": 5,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "3c18292c542284ac4d3d49091e719a5254c128ee5c3d50ede0aa3eb26ad6136a",
+    "datetime": "024718df63cf0f6ce8e457b0d486a1ba4b1bdee1dd471f39b30a1b6fb28e2bb7",
+    "inventory": "ae0a7d372cd7af519942bb75e69f1996333ce0bd1c82cdf7bd55f3cd20568fe8",
+    "ledger": "b5239d5c76a03dbf97647ff6b54bbe120f5b813967f9516528dee6f2977da21d",
+    "matrix": "4f67e16c10f227884eee768a3ca565ab5b4bbfb5d1328702cec8f74d1c3b3cbb",
+    "schema_summary": "eeeaf69fda592f8ff43658eb0dcc36d684ab5cce68d86451176f899f41f86810"
+   },
+   "family": "concern.created",
+   "joins": {
+    "KILLED_EXPECTED": 1890,
+    "MULTI_ROW": 251
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 549
+   },
+   "not_first_phases": {
+    "sch_concern_operation_payload -> sch_concern_operation": 179
+   },
+   "occurrences": 1184,
+   "reachable_clauses": 807,
+   "retained": {
+    "ACCEPTED_CONTROL": 6,
+    "KILLED_EXPECTED": 42
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2108,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 9,
+   "schema_calls": 704,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 19,
+    "NOT_A_VIOLATION": 3,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 8,
+    "checks": 52,
+    "failures": 0,
+    "replayed": 10,
+    "slots": 26
+   },
+   "bound_controls": 43,
+   "boundary_first_refusal": 167,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 806,
+   "branch_controls": 26,
+   "checker_cases": 380,
+   "checker_cases_final": 380,
+   "clause_invalid": 7,
+   "clause_kills": 973,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 379,
+    "complete_definition_applicator": 19
+   },
+   "datetime": {
+    "checks": 2720,
+    "failures": 0,
+    "nodes": 4,
+    "owner_nodes": 2,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "0eb410df41216b9156ca5bd92dc713f2c67c8c319574c5c2f1aff97328fef3c6",
+    "datetime": "a9487864107634e3dbb638072b92fcb5de48d4c1ae5eb76dda8e2dbe07c85f21",
+    "inventory": "6715c88e1c513d833aeec241f0ab5a5a2768588cc28cc7550354d41030e0b1d0",
+    "ledger": "023b5618cfe5ab3081bb51403739336261900c348ab1e12499a7eb0a8600ecd9",
+    "matrix": "f70712b6b86bd33a6c6c32a6376186dd65ac78618ba8af22b830c6834b960aeb",
+    "schema_summary": "3e363a9f341b18cc5eeb7aad59df589eec2cb1ffef4730d7833266fff7690bad"
+   },
+   "family": "bundle.annotation_state_changed",
+   "joins": {
+    "KILLED_EXPECTED": 546,
+    "MULTI_ROW": 24
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 83
+   },
+   "not_first_phases": {},
+   "occurrences": 398,
+   "reachable_clauses": 398,
+   "retained": {
+    "ACCEPTED_CONTROL": 3,
+    "KILLED_EXPECTED": 21
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2083,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 27,
+   "schema_calls": 340,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 19
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 24,
+    "checks": 84,
+    "failures": 0,
+    "replayed": 22,
+    "slots": 42
+   },
+   "bound_controls": 106,
+   "boundary_first_refusal": 780,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 2425,
+   "branch_controls": 1489,
+   "checker_cases": 1027,
+   "checker_cases_final": 1027,
+   "clause_invalid": 75,
+   "clause_kills": 3205,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 1222,
+    "complete_definition_applicator": 137,
+    "inapplicable_object_value": 8,
+    "inapplicable_string_value": 13
+   },
+   "datetime": {
+    "checks": 6120,
+    "failures": 0,
+    "nodes": 9,
+    "owner_nodes": 4,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "590a25331778438705bb97cfa3b910b9a631548e89ec85510d24542324f7d248",
+    "datetime": "1bd54efb2b477e536fbf5c65f96d2de1fc7c783362910fce18f13cdbb31af5ea",
+    "inventory": "c14775d454308a9904648dc96216941d6b73c335a69a2da84559ff5c864aa7c1",
+    "ledger": "cd4f82744fa7400ccc8d655d99b65f5c81b9fd2e394c9c1f9af49b96ed91218b",
+    "matrix": "a7af34774776177e138749277e8cd44c3c06641d690eab07ae195511cbcd2277",
+    "schema_summary": "e9567fbeda881c395dd0e8c22eda696c5f6d72fd36dd38a03ed52af403d1c064"
+   },
+   "family": "bundle.note_created",
+   "joins": {
+    "KILLED_EXPECTED": 1520,
+    "MULTI_ROW": 112
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 362
+   },
+   "not_first_phases": {},
+   "occurrences": 1380,
+   "reachable_clauses": 1380,
+   "retained": {
+    "ACCEPTED_CONTROL": 6,
+    "KILLED_EXPECTED": 42
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2105,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 47,
+   "schema_calls": 1101,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 16,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 23,
+    "checks": 82,
+    "failures": 0,
+    "replayed": 22,
+    "slots": 41
+   },
+   "bound_controls": 116,
+   "boundary_first_refusal": 801,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 2377,
+   "branch_controls": 1620,
+   "checker_cases": 1034,
+   "checker_cases_final": 1034,
+   "clause_invalid": 72,
+   "clause_kills": 3178,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 1205,
+    "complete_definition_applicator": 133,
+    "inapplicable_object_value": 6,
+    "inapplicable_string_value": 9
+   },
+   "datetime": {
+    "checks": 6120,
+    "failures": 0,
+    "nodes": 9,
+    "owner_nodes": 4,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "5ba4f7d2767d01cfc3f16bfac548b03ddf9082eaa1648c5d2b05e07227d76c37",
+    "datetime": "5d8042b98df8f5a5bf4bb9f07efdbab3389bcdefd027c461c8ea1f229d9fd493",
+    "inventory": "ba6dcd7878cc83614f852bfb2514a9e32daef642f1a7203ed87cb4b5f355867d",
+    "ledger": "4250654bf82e694fc622e6320f9148aded1f9238a76c9b80d44b8fbe658da363",
+    "matrix": "88ed76416a7c1b65cc3a3dfb4a3839c0e90e7e3b6aace62c6e6b1c144b442f12",
+    "schema_summary": "557b187e2a599fec80dad89b364128c5032bb107f6b3cc4d890d76f4000934b3"
+   },
+   "family": "bundle.note_status_changed",
+   "joins": {
+    "KILLED_EXPECTED": 1560,
+    "MULTI_ROW": 120
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 361
+   },
+   "not_first_phases": {},
+   "occurrences": 1353,
+   "reachable_clauses": 1353,
+   "retained": {
+    "ACCEPTED_CONTROL": 6,
+    "KILLED_EXPECTED": 42
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2105,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 46,
+   "schema_calls": 1108,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 16,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 24,
+    "checks": 84,
+    "failures": 0,
+    "replayed": 22,
+    "slots": 42
+   },
+   "bound_controls": 151,
+   "boundary_first_refusal": 847,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 2489,
+   "branch_controls": 2187,
+   "checker_cases": 1110,
+   "checker_cases_final": 1110,
+   "clause_invalid": 69,
+   "clause_kills": 3336,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 1281,
+    "complete_definition_applicator": 161,
+    "inapplicable_object_value": 6,
+    "inapplicable_string_value": 7
+   },
+   "datetime": {
+    "checks": 6800,
+    "failures": 0,
+    "nodes": 10,
+    "owner_nodes": 5,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "b8f59e7990ee987d055d1a9a25e4bea935bfcaf9d71057ad001468312c62487b",
+    "datetime": "b2869c57998f6b3ffb4d325ecb8b8b2b219080e777aaee840180bcc783e45d87",
+    "inventory": "1b7a9705476b6c1e5d8ba51454aa07f5c60fb2112f75e622794093e4571713f0",
+    "ledger": "f396847faf964e400d0265b30baed6f2df9dde7b28540b6939d175b1af062874",
+    "matrix": "e8a46bb6085be7f5f9f1d2b3a39fbce0c1f19d19c13121d0e09ef81501b1f9e7",
+    "schema_summary": "e6823587e50a35a28d517dc3c4e891633a915f2018fad1da09eb18fe5e19d0d0"
+   },
+   "family": "concern.assigned",
+   "joins": {
+    "KILLED_EXPECTED": 1460,
+    "MULTI_ROW": 136
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 373
+   },
+   "not_first_phases": {},
+   "occurrences": 1455,
+   "reachable_clauses": 1455,
+   "retained": {
+    "ACCEPTED_CONTROL": 6,
+    "KILLED_EXPECTED": 42
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2100,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 47,
+   "schema_calls": 1275,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 11,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 24,
+    "checks": 84,
+    "failures": 0,
+    "replayed": 22,
+    "slots": 42
+   },
+   "bound_controls": 130,
+   "boundary_first_refusal": 842,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 2471,
+   "branch_controls": 1752,
+   "checker_cases": 1089,
+   "checker_cases_final": 1089,
+   "clause_invalid": 69,
+   "clause_kills": 3313,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 1272,
+    "complete_definition_applicator": 157,
+    "inapplicable_object_value": 6,
+    "inapplicable_string_value": 9
+   },
+   "datetime": {
+    "checks": 6800,
+    "failures": 0,
+    "nodes": 10,
+    "owner_nodes": 5,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "8afe2c356a535399ac3c47093292a69fd0d670bd2d49391aaf1f9bb2f417137e",
+    "datetime": "7f53ad34b07f9492e1676b69c5408619c9ba9edbc41277a984480aacd6e3a471",
+    "inventory": "8d4a183f583766ee397e064946a6c2226bcf4e1895c520fdb3c49bcdbef3fde0",
+    "ledger": "a4920720aa778b04feb0b1b693721c5cb2d60be37808ebf21e655c4e754480dd",
+    "matrix": "a9d42768329db52b8e4b4e55b3d0ddd53f021889a93ba5426ac4d5af886d0bac",
+    "schema_summary": "dad18744de7b73ab6edda3f86637b2fa222ee341029cc1408100d30063e84100"
+   },
+   "family": "concern.evidence_linked",
+   "joins": {
+    "KILLED_EXPECTED": 1454,
+    "MULTI_ROW": 136
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 373
+   },
+   "not_first_phases": {},
+   "occurrences": 1444,
+   "reachable_clauses": 1442,
+   "retained": {
+    "ACCEPTED_CONTROL": 6,
+    "KILLED_EXPECTED": 42
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2100,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 47,
+   "schema_calls": 1254,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 11,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 24,
+    "checks": 84,
+    "failures": 0,
+    "replayed": 22,
+    "slots": 42
+   },
+   "bound_controls": 152,
+   "boundary_first_refusal": 841,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 2480,
+   "branch_controls": 2149,
+   "checker_cases": 1111,
+   "checker_cases_final": 1111,
+   "clause_invalid": 69,
+   "clause_kills": 3321,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 1275,
+    "complete_definition_applicator": 160,
+    "inapplicable_object_value": 6,
+    "inapplicable_string_value": 8
+   },
+   "datetime": {
+    "checks": 6800,
+    "failures": 0,
+    "nodes": 10,
+    "owner_nodes": 5,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "72a537c5536a34da5adec0ad55f88cf9b068b41424e0731c42553627c1e7d591",
+    "datetime": "9cde7af0d9ec36a76ba4427e0e5b9d3a73f992f21a4e7ab02c10b8737e541563",
+    "inventory": "e1d2036fc6638d839d9088a1d71570a18255cf9139f449ea74b5526cde74e258",
+    "ledger": "ba6ecfb21d70033340173e821759cd3fc948262b2fc001295be9ae3ffa641c33",
+    "matrix": "f05db5c9ad18c58e054ef9cd1fba63f6ff9485f754c0460ffe6e70fa013dddce",
+    "schema_summary": "0c230a85275b86d7d86dc3b786958f6da748ad13df7fccc34ba12bf54d6cb41b"
+   },
+   "family": "concern.promoted",
+   "joins": {
+    "KILLED_EXPECTED": 1466,
+    "MULTI_ROW": 136
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 373
+   },
+   "not_first_phases": {},
+   "occurrences": 1449,
+   "reachable_clauses": 1449,
+   "retained": {
+    "ACCEPTED_CONTROL": 6,
+    "KILLED_EXPECTED": 42
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2100,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 47,
+   "schema_calls": 1276,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 11,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 24,
+    "checks": 84,
+    "failures": 0,
+    "replayed": 22,
+    "slots": 42
+   },
+   "bound_controls": 131,
+   "boundary_first_refusal": 841,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 2480,
+   "branch_controls": 1757,
+   "checker_cases": 1090,
+   "checker_cases_final": 1090,
+   "clause_invalid": 69,
+   "clause_kills": 3321,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 1275,
+    "complete_definition_applicator": 157,
+    "inapplicable_object_value": 6,
+    "inapplicable_string_value": 8
+   },
+   "datetime": {
+    "checks": 6800,
+    "failures": 0,
+    "nodes": 10,
+    "owner_nodes": 5,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "ff2b481d4d543ff3e812455b340eb96e7064b9b390a1bacb509437f99cb47d36",
+    "datetime": "59dc5f2c1d265fd4c9a0b5162608f7efe08478e6f2cd90ba2e9a0c6de3e2c9ab",
+    "inventory": "eb7ad33da80cf4769398a6184eb16f2b01521c969258988a3868239b559a6202",
+    "ledger": "e7afca93f3b972abb6f31bd771a73305a29e6cab246f7347025f0280338eb605",
+    "matrix": "633b396cf938f824eaeb6a754e6a3f5902ff98f5add8abd1417a98bc71b3daa9",
+    "schema_summary": "491ffbcef25133c9e4c6bf481d7e69104671f6698ed5e00c564eb94f3d8f6026"
+   },
+   "family": "concern.reopened",
+   "joins": {
+    "KILLED_EXPECTED": 1466,
+    "MULTI_ROW": 136
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 373
+   },
+   "not_first_phases": {},
+   "occurrences": 1446,
+   "reachable_clauses": 1446,
+   "retained": {
+    "ACCEPTED_CONTROL": 6,
+    "KILLED_EXPECTED": 42
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2100,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 47,
+   "schema_calls": 1255,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 11,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 24,
+    "checks": 84,
+    "failures": 0,
+    "replayed": 22,
+    "slots": 42
+   },
+   "bound_controls": 176,
+   "boundary_first_refusal": 842,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 2482,
+   "branch_controls": 2568,
+   "checker_cases": 1136,
+   "checker_cases_final": 1136,
+   "clause_invalid": 69,
+   "clause_kills": 3324,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 1277,
+    "complete_definition_applicator": 157,
+    "inapplicable_object_value": 6,
+    "inapplicable_string_value": 9
+   },
+   "datetime": {
+    "checks": 6800,
+    "failures": 0,
+    "nodes": 10,
+    "owner_nodes": 5,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "f61b60c5b699e4c38746a4e41b2e1c34492bc19a55e266947014c7817ef436e9",
+    "datetime": "bba756acec0b1183ec2acc4888d972b53438c16550080f1c83c63769cd3344d2",
+    "inventory": "87e43fda2d7202738032c41364030fe6d7a28dafbb52e03df85dc043bb0c3a43",
+    "ledger": "3486a8031695f9ec880375d8bd0f918f536c257be0e374398ec427c003c04cc1",
+    "matrix": "42d13eae6aa25ebf988eb8e945de7aabb9f10ad616c9874174f25b3a67912da3",
+    "schema_summary": "16c846e78601fa70290d14e96e3a75cdb730da37a2b4dda05b6afc5fdac76907"
+   },
+   "family": "concern.resolved",
+   "joins": {
+    "KILLED_EXPECTED": 1472,
+    "MULTI_ROW": 136
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 373
+   },
+   "not_first_phases": {},
+   "occurrences": 1449,
+   "reachable_clauses": 1447,
+   "retained": {
+    "ACCEPTED_CONTROL": 6,
+    "KILLED_EXPECTED": 42
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2100,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 47,
+   "schema_calls": 1301,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 11,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  },
+  {
+   "bigint": {
+    "accepted_by_schema": 24,
+    "checks": 84,
+    "failures": 0,
+    "replayed": 22,
+    "slots": 42
+   },
+   "bound_controls": 131,
+   "boundary_first_refusal": 835,
+   "boundary_not_first": 0,
+   "boundary_not_replayable": 2475,
+   "branch_controls": 1784,
+   "checker_cases": 1090,
+   "checker_cases_final": 1090,
+   "clause_invalid": 69,
+   "clause_kills": 3310,
+   "copies_failures": 0,
+   "coverage": {
+    "clause_witness": 1274,
+    "complete_definition_applicator": 158,
+    "inapplicable_object_value": 6,
+    "inapplicable_string_value": 9
+   },
+   "datetime": {
+    "checks": 6800,
+    "failures": 0,
+    "nodes": 10,
+    "owner_nodes": 5,
+    "owner_stricter": 0,
+    "samples": 680
+   },
+   "evidence": {
+    "copies": "f050e415be830e488dafbf8bb79fc242ae07310a5efa15a41a9e46f785e11b16",
+    "datetime": "15afd84fcdc4882bc8400aab1c5aea4b6ecd67cb889c46b9ad4cb6876a53091a",
+    "inventory": "a7ee914726edf4a7dc89527b22d7666b6749d741d4c87d8ed6a4899b8eee51ed",
+    "ledger": "1951b3aed52ac0330a736e8ba121acc4122188fbe9df554601b3bfc29c24dfaf",
+    "matrix": "0817a4fd9e9e7650058f0917387cf7723cdbdedd733d83fb6c4c07d296fba2ba",
+    "schema_summary": "923084743d25ccc8c6a41c0e7b157f0864830def0aaf616d175408c4e3b2fbf0"
+   },
+   "family": "concern.updated",
+   "joins": {
+    "KILLED_EXPECTED": 1454,
+    "MULTI_ROW": 136
+   },
+   "mirror": {
+    "KILLED_EXPECTED": 373
+   },
+   "not_first_phases": {},
+   "occurrences": 1447,
+   "reachable_clauses": 1447,
+   "retained": {
+    "ACCEPTED_CONTROL": 6,
+    "KILLED_EXPECTED": 42
+   },
+   "retained_store_changed": 0,
+   "retained_store_observations": 2100,
+   "retained_timestamp_fields": [
+    [
+     "acknowledged_at_utc",
+     "event_record"
+    ],
+    [
+     "observed_at_utc",
+     "storage_utc_z"
+    ],
+    [
+     "persisted_at_utc",
+     "storage_utc_z"
+    ]
+   ],
+   "retained_timestamps": {
+    "OK": 2040
+   },
+   "roots": 47,
+   "schema_calls": 1255,
+   "schema_failures": 0,
+   "sealed_invalid_history": {
+    "KILLED_EXPECTED": 11,
+    "REFUSED_EARLIER": 1
+   },
+   "uncovered_clauses": 0,
+   "unmapped_owner": 0,
+   "weak": 0
+  }
+ ],
+ "gated": {
+  "failure_kinds": [],
+  "lane_matrix_problems": 0,
+  "proved": 498,
+  "rows": 518,
+  "status": {
+   "NOT_RUN": 20,
+   "PASS": 112
+  },
+  "summary_sha256": "4c68e7b58e16575106086238c3c624ac07fcb325964ec8bf31dbe74754924dc0",
+  "tables": 132,
+  "unproved": [
+   "CK03_command_id",
+   "CK07_handler_target",
+   "CONCERN_OPERATION_PAYLOAD_schema",
+   "CZ00_encodable",
+   "G_after_annotation_id",
+   "G_after_bundle_id",
+   "G_after_doc_id",
+   "G_after_note_id",
+   "G_after_provenance_ref",
+   "HN09_after_present",
+   "OK07_command_id",
+   "OK12_handler_target",
+   "OK16_mute_scope",
+   "PK03_command_id",
+   "PK07_panel_id",
+   "PK13_target_host",
+   "RR03_stored_object",
+   "RR03_stored_object",
+   "RR08_digest",
+   "RR08_digest"
+  ]
+ },
+ "head": "6ead4f4885bc0039afb50f9b50ea3a08cbdbe94c",
+ "split": [
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    3
+   ],
+   "parts": [
+    "alert_command_keys_a__1",
+    "alert_command_keys_a__2"
+   ],
+   "phase": "alert_command_keys_a"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    4
+   ],
+   "parts": [
+    "alert_command_keys_b__1",
+    "alert_command_keys_b__2"
+   ],
+   "phase": "alert_command_keys_b"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 8,
+   "ok": true,
+   "part_rows": [
+    1,
+    1,
+    1
+   ],
+   "parts": [
+    "alert_command_keys_entailed__1",
+    "alert_command_keys_entailed__2",
+    "alert_command_keys_entailed__3"
+   ],
+   "phase": "alert_command_keys_entailed"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    3
+   ],
+   "parts": [
+    "append_result__1",
+    "append_result__2"
+   ],
+   "phase": "append_result"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    3
+   ],
+   "parts": [
+    "c5_after__1",
+    "c5_after__2"
+   ],
+   "phase": "c5_after"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 32,
+   "ok": true,
+   "part_rows": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "parts": [
+    "c5_after_note_entailed__1",
+    "c5_after_note_entailed__2",
+    "c5_after_note_entailed__3",
+    "c5_after_note_entailed__4",
+    "c5_after_note_entailed__5"
+   ],
+   "phase": "c5_after_note_entailed"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    4
+   ],
+   "parts": [
+    "c5_concern_a__1",
+    "c5_concern_a__2"
+   ],
+   "phase": "c5_concern_a"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 512,
+   "ok": true,
+   "part_rows": [
+    8,
+    1
+   ],
+   "parts": [
+    "c5_core_a__1",
+    "c5_core_a__2"
+   ],
+   "phase": "c5_core_a"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 512,
+   "ok": true,
+   "part_rows": [
+    8,
+    1
+   ],
+   "parts": [
+    "c5_core_b__1",
+    "c5_core_b__2"
+   ],
+   "phase": "c5_core_b"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 512,
+   "ok": true,
+   "part_rows": [
+    8,
+    1
+   ],
+   "parts": [
+    "c5_history_mapping_after__1",
+    "c5_history_mapping_after__2"
+   ],
+   "phase": "c5_history_mapping_after"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 512,
+   "ok": true,
+   "part_rows": [
+    8,
+    1
+   ],
+   "parts": [
+    "c5_history_mapping_before__1",
+    "c5_history_mapping_before__2"
+   ],
+   "phase": "c5_history_mapping_before"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    3
+   ],
+   "parts": [
+    "c5_mapping__1",
+    "c5_mapping__2"
+   ],
+   "phase": "c5_mapping"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    2
+   ],
+   "parts": [
+    "c5_note_ids__1",
+    "c5_note_ids__2"
+   ],
+   "phase": "c5_note_ids"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 512,
+   "ok": true,
+   "part_rows": [
+    8,
+    1
+   ],
+   "parts": [
+    "c5_outgoing__1",
+    "c5_outgoing__2"
+   ],
+   "phase": "c5_outgoing"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 512,
+   "ok": true,
+   "part_rows": [
+    8,
+    1
+   ],
+   "parts": [
+    "c5_receiving__1",
+    "c5_receiving__2"
+   ],
+   "phase": "c5_receiving"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    7
+   ],
+   "parts": [
+    "c5_resolution__1",
+    "c5_resolution__2"
+   ],
+   "phase": "c5_resolution"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 4,
+   "ok": true,
+   "part_rows": [
+    1,
+    1
+   ],
+   "parts": [
+    "concern_command_keys_entailed__1",
+    "concern_command_keys_entailed__2"
+   ],
+   "phase": "concern_command_keys_entailed"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    6
+   ],
+   "parts": [
+    "concern_record_a__1",
+    "concern_record_a__2"
+   ],
+   "phase": "concern_record_a"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    6
+   ],
+   "parts": [
+    "concern_record_b__1",
+    "concern_record_b__2"
+   ],
+   "phase": "concern_record_b"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    3
+   ],
+   "parts": [
+    "current_context",
+    "current_context__2"
+   ],
+   "phase": "current_context"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    3
+   ],
+   "parts": [
+    "history_event__1",
+    "history_event__2"
+   ],
+   "phase": "history_event"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 512,
+   "ok": true,
+   "part_rows": [
+    8,
+    1
+   ],
+   "parts": [
+    "history_shape__1",
+    "history_shape__2"
+   ],
+   "phase": "history_shape"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    4
+   ],
+   "parts": [
+    "panel_command_keys__1",
+    "panel_command_keys__2"
+   ],
+   "phase": "panel_command_keys"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 8,
+   "ok": true,
+   "part_rows": [
+    1,
+    1,
+    1
+   ],
+   "parts": [
+    "panel_command_keys_entailed__1",
+    "panel_command_keys_entailed__2",
+    "panel_command_keys_entailed__3"
+   ],
+   "phase": "panel_command_keys_entailed"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    2
+   ],
+   "parts": [
+    "retry_retained_alert__1",
+    "retry_retained_alert__2"
+   ],
+   "phase": "retry_retained_alert"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 4,
+   "ok": true,
+   "part_rows": [
+    1,
+    1
+   ],
+   "parts": [
+    "retry_retained_alert_entailed__1",
+    "retry_retained_alert_entailed__2"
+   ],
+   "phase": "retry_retained_alert_entailed"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 1024,
+   "ok": true,
+   "part_rows": [
+    8,
+    2
+   ],
+   "parts": [
+    "retry_retained_panel__1",
+    "retry_retained_panel__2"
+   ],
+   "phase": "retry_retained_panel"
+  },
+  {
+   "mismatch_count": 0,
+   "observations": 4,
+   "ok": true,
+   "part_rows": [
+    1,
+    1
+   ],
+   "parts": [
+    "retry_retained_panel_entailed__1",
+    "retry_retained_panel_entailed__2"
+   ],
+   "phase": "retry_retained_panel_entailed"
+  }
+ ],
+ "totals": {
+  "bigint.checks": 946,
+  "bigint.failures": 0,
+  "bigint.replayed": 352,
+  "bigint.slots": 473,
+  "boundary_first_refusal": 12353,
+  "boundary_not_first": 179,
+  "boundary_not_replayable": 22216,
+  "branch_controls": 20330,
+  "checker_cases": 13722,
+  "clause_invalid": 610,
+  "clause_kills": 34748,
+  "copies_failures": 0,
+  "datetime.checks": 88400,
+  "datetime.failures": 0,
+  "datetime.nodes": 130,
+  "datetime.owner_nodes": 70,
+  "datetime.owner_stricter": 0,
+  "joins.KILLED_EXPECTED": 29635,
+  "joins.MULTI_ROW": 2499,
+  "mirror.KILLED_EXPECTED": 5365,
+  "occurrences": 16248,
+  "reachable_clauses": 15867,
+  "retained.ACCEPTED_CONTROL": 123,
+  "retained.KILLED_EXPECTED": 861,
+  "retained_store_changed": 0,
+  "retained_store_observations": 33886,
+  "retained_timestamps.OK": 32640,
+  "schema_failures": 0,
+  "sealed_invalid_history.KILLED_EXPECTED": 243,
+  "sealed_invalid_history.NOT_A_VIOLATION": 3,
+  "sealed_invalid_history.REFUSED_EARLIER": 19,
+  "uncovered_clauses": 0
+ }
+}
