@@ -30,6 +30,10 @@
   {
    "event_type": "assistant_plan.created",
    "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.exported",
+   "outcome": "registered"
   }
  ]
 }
