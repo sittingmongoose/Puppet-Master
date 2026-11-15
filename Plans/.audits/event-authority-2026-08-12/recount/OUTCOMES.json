@@ -350,6 +350,10 @@
   {
    "event_type": "runtime.quota_wait_started",
    "outcome": "registered"
+  },
+  {
+   "event_type": "scheduled_dispatch.cancelled",
+   "outcome": "registered"
   }
  ]
 }
