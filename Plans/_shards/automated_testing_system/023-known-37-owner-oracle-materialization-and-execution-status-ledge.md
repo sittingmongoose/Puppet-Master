@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L2608-L2880
 
-Source SHA256: `f3c3d72de09045a06cd40d5c3023c3181d749ba428f3c338382246e738fe18c2`
+Source SHA256: `b4ccab47f79194578279863f8fdcbb5e80c960691c46e10acdb3c9550a1d7a3d`
 
 ---
 
@@ -124,7 +124,7 @@ For exactly `EA-UND-0005-GOAL`, the following source-dated pair and common-v2 st
 - `CAP-POS-006 not requested` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — `requested_state=not_requested` yields only `effective_state=not_evaluated`, `degradation_reason=none`, null selection fields, and an empty evidence array.
 - `CAP-POS-007 deterministic bytes` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Two evaluations with byte-identical frozen catalog and evidence inputs produce identical sorted evidence, payload canonical JSON, and EventRecord producer semantic digest.
 - `CAP-POS-008 historical replay` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — An event referencing a known superseded immutable revision validates and replays against that revision without recomputation against the active revision.
-- `CAP-POS-009 admitted legacy alias` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — One owner-approved `capability_key` alias and complete typed evidence sidecar normalize to the exact v2 ref/payload and record migration provenance.
+- `CAP-POS-009 admitted legacy alias` — `RETIRED_NO_PRE_RELEASE_INPUT` — Retired 2026-11-15 (admission merge 2 plan fix). It needed a stored v1 `platform.capability_evaluated` payload, a legacy `capability_key` alias and a typed evidence sidecar, and none can exist: Puppet Master has not been released, so nothing was ever saved in the v1 shape, and no owner text defines the sidecar. Jared's written answer to card E8-4 (2026-11-14, `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`) says records under shapes retired before the product is built cannot exist, so they need no reader, keep-rule or migration. A v1-shaped input takes `CAP-NEG-012`'s defined outcome, quarantine without checkpoint or event, which ATS-3900 executes. This positive is no longer an obligation; no other case changes.
 - `CAP-POS-010 scope identities` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Application evaluation persists outer `project_id=null`; project evaluation persists its one exact project ID; neither duplicates the field inside the payload.
 - `CAP-NEG-001 open capability identity` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — raw `capability_key`, display name, unknown ID, or missing catalog tuple used instead of `capability_ref`
 - `CAP-NEG-002 stale new-write revision` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — new evaluation begins with a superseded, retired, missing, or mutated catalog revision

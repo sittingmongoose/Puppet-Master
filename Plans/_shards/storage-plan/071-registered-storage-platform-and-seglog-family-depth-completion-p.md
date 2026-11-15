@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L28305-L28585
 
-Source SHA256: `723a258d7efc4f1aed3f91a3df6fac0e0f8eb2751f7909178ba703cfd4cba332`
+Source SHA256: `e303ea00404fc57bed286971eb71038b2d188b338d0ac248ede6dbd2302b6d00`
 
 ---
 
@@ -132,7 +132,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Aftermath starts only after the recovery event's verified first receipt and repeats nothing on restart.
-- invalidate_and_rebuild publishes a new generation from survivors; translate_by_semantic_identity keeps the generation.
+- Per the 2026-11-15 clarification, exclude_proven_range and restore_verified_backup publish a new generation rebuilt from surviving retained source; adopt_valid_tail and truncate_unacknowledged_tail keep the generation while the frontier advances; seal_degraded and block_mutation start no projector and advance nothing.
 - The aftermath stores no cursor of its own and writes no other owner's checkpoint.
 validation_surfaces:
 - Plans/Automated_Testing_System.md#ATS-2205
