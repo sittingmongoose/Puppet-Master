@@ -16,7 +16,8 @@
 //   (a) STILL_AFTER + 3 s after the input: no endless animation is running in document.getAnimations() (the code
 //       editor's caret is exempt: it is a text cursor, in a closed shadow root no page rule reaches), every mark holds
 //       an endless loop (no stray mark), no finite animation is held; and, once no finite animation runs, the display
-//       compositor draws at most 15 frames a second (--set drawn=) and the main thread renders at most 10 (--set main=)
+//       compositor draws at most 15 frames a second (--set drawn=), the main thread renders at most 10 (--set main=:
+//       frame starts less those Chrome abandons with nothing to update) and starts at most 60 (--set starts=; Settings)
 //       in at least one of three 2 s traces (a toast leaving or a live update between them is not a loop). Usage shows
 //       live data (its numbers tween after each demo update, the demo engine ticks every 250 ms): its frames are logged
 //       with the script blocks that draw them, never judged; Home's dashboard is live too: its compositor frames are
@@ -48,8 +49,10 @@
 //
 // --set looks=<a,b|all>  default all ten; --set views=settings,dashboard,usage; --set after=<ms> (default 3000)
 // --set ms=<ms>          rest trace length (default 2000)
+// --set framesBy=1       diagnosis, off by default: each rest trace also says what asked for its main frame starts
+//                        (logged per try, and named in a failing frames row)
 // Runs on both surfaces (--set sandbox=0 and 1). Main's page (no still page) fails (a), (c), (e) and the 20 s cell.
-import { TRACE_CATEGORIES, summarise } from '../helpers/frame-trace.mjs';
+import { TRACE_CATEGORIES, summarise, frameStarts } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { pageSource, blocksOf, blockAt } from '../helpers/built-source.mjs';
 import { writeFileSync, mkdirSync } from 'node:fs';
@@ -101,7 +104,7 @@ export const CENSUS = () => {
 };
 
 // One trace of `ms`, with what `during` does, summarised, plus the marks and the style recalcs of the page's renderer
-export async function trace(cdp, { ms, during, url, keep, track = false }) {
+export async function trace(cdp, { ms, during, url, keep, track = false, by = false }) {
 	await cdp.send('Tracing.start', { categories: TRACE_CATEGORIES + (track ? ',disabled-by-default-devtools.timeline.invalidationTracking,disabled-by-default-devtools.timeline.stack' : ''), transferMode: 'ReturnAsStream', bufferUsageReportingInterval: 0 });
 	const until = Date.now() + ms;
 	try { if (during) await during(); } finally { const left = until - Date.now(); if (left > 0) await new Promise((r) => setTimeout(r, left)); }
@@ -116,6 +119,7 @@ export async function trace(cdp, { ms, during, url, keep, track = false }) {
 	const json = JSON.parse(raw);
 	const sum = summarise(json, { url });
 	const events = json.traceEvents || json;
+	if (by) sum.startsBy = frameStarts(events, sum.renderer);
 	// the marks come from the page's own main thread: its style recalcs and main frames are those of the same thread
 	const marks = {}, styles = [], frames = [];
 	let pid = null, tid = null;
@@ -184,7 +188,9 @@ export default async function (t) {
 	const looks = String(t.args.looks || 'all') === 'all' ? ALL : String(t.args.looks).split(',').filter(Boolean);
 	const views = String(t.args.views || 'settings,dashboard,usage').split(',').filter(Boolean);
 	const after = Number(t.args.after || 3000), ms = Number(t.args.ms || 2000);
-	const drawnMax = Number(t.args.drawn || 15), mainMax = Number(t.args.main || 10);
+	const drawnMax = Number(t.args.drawn || 15), mainMax = Number(t.args.main || 10), startsMax = Number(t.args.starts || 60);
+	// --set framesBy=1 (diagnosis, logged only): each rest trace also says what asked for its main frame starts
+	const framesBy = String(t.args.framesBy || '0') === '1';
 	const W = 1920, H = 1080;
 	const toggleRows = [];
 	let toggleTraceSeq = 0;
@@ -278,6 +284,16 @@ export default async function (t) {
 		document.body.append(el); PM_PIP_LOADER.mount(el);
 	});
 
+	// Red control for the rendered count: a finite main-thread animation the check runs itself (left on a fixed box,
+	// laid out and committed every frame; the Web Animations API, so the still page neither marks nor holds it) must
+	// read as more than the bound, so a trace whose frame events were renamed or lost cannot pass the row by reading 0.
+	{
+		await f.evaluate(() => { const el = document.createElement('div'); el.id = '__still_main_control'; el.style.cssText = 'position:fixed;left:0;top:0;width:40px;height:40px;background:#888;z-index:2147483000;pointer-events:none'; document.body.append(el); el.animate([{ left: '0px' }, { left: '300px' }], { duration: 2500 }); });
+		const c = (await trace(cdp, { ms, url })).sum;
+		await f.evaluate(() => document.getElementById('__still_main_control')?.remove());
+		await t.check(`control: a main-thread animation the check runs reads as more than ${mainMax} rendered main frames a second`, c.mainFrames.renderedPerSec > mainMax,
+			`${c.mainFrames.renderedPerSec}/s rendered (${c.mainFrames.perSec}/s started, ${c.mainFrames.commitsPerSec}/s commits), drawn ${c.drawn.perSec}/s`);
+	}
 	for (const look of looks) {
 		await f.evaluate((label) => { window.__stillPrewarm.label = label; }, look);
 		await t.app.look(look);
@@ -321,22 +337,35 @@ export default async function (t) {
 			await t.check(`${at}: no finite animation is held by the state`, newlyPaused.length === 0, newlyPaused.length ? newlyPaused.slice(0, 6).join('; ') : `${a.finRun} finite running`);
 			// frames while still: up to three 2 s traces, each once no finite animation runs; the quietest is judged
 			const live = view === 'usage';
+			// main frames are the RENDERED ones (PM7PERF-STILL-FRAMES-STARTS): frame starts less those Chrome abandons with
+			// nothing to update (frame-trace.mjs). Counting starts read 11-17 a second on main's own still Settings in T3's
+			// sandbox (lb3-12, 2026-11-14) where 1 to 4 frames a second rendered; the starts are logged beside it.
+			const rendered = (r) => r.mainFrames.renderedPerSec;
+			// ...and the STARTS are judged too, at most --set starts= (60) a second (the lead's ruling, 2026-11-15): a loop
+			// that asks for a frame every frame and changes no pixel is main-thread work the still page must not have, and
+			// it renders nothing. Spread on main's page (lb2), Alexis 238 Hz: sandbox 9-41 a second over 3 runs x 10 looks
+			// (the code editor's exempt caret 8-15 of them, Glass's 400 ms checkShown poll 2.5), normal 2.2-8.4 (lg1 runs);
+			// a frame-callback loop reads about the refresh rate. On a 60 Hz display such a loop reads 60: it cannot bite.
+			const judgeStarts = !live && view !== 'dashboard';
+			const askers = (r) => (r.startsBy || []).slice(0, 4).map(([w, n]) => `${w} ${Math.round(n / r.secs * 10) / 10}/s`).join(', ');
 			let x = null; const tries = [];
 			for (let k = 0; k < 3; k++) {
 				const quiet = await f.evaluate(QUIET, 3000);
-				const r = (await trace(cdp, { ms, url })).sum;
-				tries.push(`${r.drawn.perSec}/${r.mainFrames.perSec}${quiet ? '' : ' (a finite animation still ran)'}${r.drawn.perSec > drawnMax || r.mainFrames.perSec > mainMax ? ' by ' + named(r) : ''}`);
-				if (!x || r.drawn.perSec + r.mainFrames.perSec < x.drawn.perSec + x.mainFrames.perSec) x = r;
-				if (r.drawn.perSec <= drawnMax && r.mainFrames.perSec <= mainMax) break;
+				const r = (await trace(cdp, { ms, url, track: framesBy, by: framesBy })).sum;
+				if (framesBy) t.log(`${at}: NOTE try ${k + 1} main frame starts by what asked for them [what, starts, nothing to update, rendered, ms]: ${JSON.stringify(r.startsBy.slice(0, 8))}`);
+				tries.push(`${r.drawn.perSec}/${rendered(r)} (starts ${r.mainFrames.perSec}, ${r.mainFrames.noUpdatePerSec} with nothing to update)${quiet ? '' : ' (a finite animation still ran)'}${r.drawn.perSec > drawnMax || rendered(r) > mainMax ? ' by ' + named(r) : ''}`);
+				if (!x || r.drawn.perSec + rendered(r) < x.drawn.perSec + rendered(x) || (r.drawn.perSec + rendered(r) === x.drawn.perSec + rendered(x) && r.mainFrames.perSec < x.mainFrames.perSec)) x = r;
+				if (r.drawn.perSec <= drawnMax && rendered(r) <= mainMax && (!judgeStarts || r.mainFrames.perSec <= startsMax)) break;
 			}
-			t.log(`${at}: STILL drawn ${x.drawn.perSec}/s, main frames ${x.mainFrames.perSec}/s, main ${Math.round(x.cost.main)} ms/s, GPU ${Math.round(x.cost.gpuMain)} ms/s, viz ${Math.round(x.cost.viz)} ms/s (drawn/main per try: ${tries.join('; ')}); toggle ${on && on.found ? `${on.first} elements, ${on.firstFrameMs} ms frame` : 'not seen'}`);
-			if (live) t.log(`${at}: NOTE live data (Usage): frames logged, not judged; quietest try draws ${x.drawn.perSec}/s, main ${x.mainFrames.perSec}/s, by ${named(x) || 'no script'}`);
+			t.log(`${at}: STILL drawn ${x.drawn.perSec}/s, main frames rendered ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s, ${x.mainFrames.noUpdatePerSec}/s with nothing to update, commits ${x.mainFrames.commitsPerSec}/s${Object.keys(x.mainFrames.aborts).length ? ', other early outs ' + JSON.stringify(x.mainFrames.aborts) : ''}), main ${Math.round(x.cost.main)} ms/s, GPU ${Math.round(x.cost.gpuMain)} ms/s, viz ${Math.round(x.cost.viz)} ms/s (drawn/rendered per try: ${tries.join('; ')}); toggle ${on && on.found ? `${on.first} elements, ${on.firstFrameMs} ms frame` : 'not seen'}`);
+			if (live) t.log(`${at}: NOTE live data (Usage): frames logged, not judged; quietest try draws ${x.drawn.perSec}/s, main renders ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s), by ${named(x) || 'no script'}`);
 			else {
 				await t.check(`${at}: still, the compositor draws at most ${drawnMax} frames a second`, x.drawn.perSec <= drawnMax, `${x.drawn.perSec}/s in the quietest of ${tries.length} tries (${tries.join('; ')})`);
 				// Home's dashboard is live too (its widgets tick with the demo engine): its main frames are logged, the loops'
 				// cost is judged by what the compositor draws
-				if (view === 'dashboard') t.log(`${at}: NOTE Home is live (its widgets tick): main frames ${x.mainFrames.perSec}/s logged, not judged${named(x) ? '; by ' + named(x) : ''}`);
-				else await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, x.mainFrames.perSec <= mainMax, `${x.mainFrames.perSec}/s, ${Math.round(x.cost.main)} ms/s in the quietest try${named(x) ? '; by ' + named(x) : ''}`);
+				if (view === 'dashboard') t.log(`${at}: NOTE Home is live (its widgets tick): main frames rendered ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s) logged, not judged${named(x) ? '; by ' + named(x) : ''}`);
+				else await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, rendered(x) <= mainMax, `${rendered(x)}/s rendered (${x.mainFrames.perSec}/s started, ${x.mainFrames.noUpdatePerSec}/s of them with nothing to update), ${Math.round(x.cost.main)} ms/s in the quietest try${named(x) ? '; by ' + named(x) : ''}${framesBy ? '; asked for by ' + (askers(x) || 'nothing named') : ''}`);
+				if (judgeStarts) await t.check(`${at}: still, the main thread starts at most ${startsMax} frames a second`, x.mainFrames.perSec <= startsMax, `${x.mainFrames.perSec}/s started (${x.mainFrames.noUpdatePerSec}/s of them with nothing to update, ${rendered(x)}/s rendered), ${Math.round(x.cost.main)} ms/s in the quietest try; ${framesBy ? 'asked for by ' + (askers(x) || 'nothing named') : 'run with --set framesBy=1 to name what asks for them'}`);
 			}
 			if (a.still) await t.check(`${at}: going still cost stays within its marked population`, onCost.pass, `${JSON.stringify(onCost)}; ${on?.found ? `${on.firstFrameMs} ms frame; largest following recalc ${on.max}, ${on.total} in ${on.steps}` : 'no recalc or mark: unjudgeable'}`);
 
