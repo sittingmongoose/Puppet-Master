@@ -1052,6 +1052,19 @@ def merge_shards(args):
     return 0
 
 
+def spine_copy(value, path):
+    """A copy of value in which only the containers on `path` (root included) are new; every other subtree is shared.
+    Safe here because nothing mutates a shared subtree: the repair edits only the copied spine, and GO's constructions
+    deep-copy a control before they edit it."""
+    root = copy.copy(value)
+    node = root
+    for part in path:
+        child = copy.copy(node[part])
+        node[part] = child
+        node = child
+    return root
+
+
 def _score(cl, v, value):
     errs = cl.errors_of(v, value)
     def size(es):
@@ -1074,7 +1087,7 @@ def greedy_repair(cl, v, value, protect, donors, rounds=14, tries=10, budget=600
     best, errs = _score(cl, v, value)
     for _ in range(rounds):
         if not errs:
-            return value
+            return copy.deepcopy(value)
         if cl.COUNT[0] - start > budget:
             return None
         improved = False
@@ -1130,13 +1143,18 @@ def greedy_repair(cl, v, value, protect, donors, rounds=14, tries=10, budget=600
                 if key in seen:
                     continue
                 seen.add(key)
-                candidate = copy.deepcopy(value)
                 try:
                     if kind == 'set':
-                        candidate = cl.put(candidate, at, copy.deepcopy(payload))
+                        if not at:
+                            candidate = copy.deepcopy(payload)
+                        else:
+                            candidate = spine_copy(value, at[:-1])
+                            cl.get(candidate, at[:-1])[at[-1]] = copy.deepcopy(payload)
                     elif kind == 'del':
+                        candidate = spine_copy(value, at[:-1])
                         del cl.get(candidate, at[:-1])[at[-1]]
                     else:
+                        candidate = spine_copy(value, at)
                         holder = cl.get(candidate, at)
                         for k in payload:
                             if at + (k,) not in protect:
@@ -1147,7 +1165,7 @@ def greedy_repair(cl, v, value, protect, donors, rounds=14, tries=10, budget=600
                 if score < best:
                     best, errs, value, improved = score, cerrs, candidate, True
                     if not cerrs:
-                        return value
+                        return copy.deepcopy(value)
             if improved:
                 break
         if not improved:
