@@ -897,6 +897,54 @@ def donor_controls(cl, v, reach, seeds, controls, donors, by_ipath, budget_left,
     return out
 
 
+def merge_shards(args):
+    """Join one root's shard reports into a GO-format closure report (one root), so GO's own `--merge` can combine it
+    with GO's other roots; the controls stores are joined too (witness replay)."""
+    import gzip
+    reports = [json.loads(Path(x).read_text()) for x in args.reports]
+    roots = {r['root'] for r in reports}
+    if len(roots) != 1:
+        raise SystemExit(f'reports name {len(roots)} roots')
+    root = roots.pop()
+    total = {r['clauses_in_root'] for r in reports}
+    clauses = {}
+    for r in reports:
+        for c, x in r['clauses'].items():
+            if c in clauses:
+                raise SystemExit(f'clause in two shards: {c}')
+            clauses[c] = dict(x, go2_report=Path(args.reports[reports.index(r)]).name)
+    if len(total) != 1 or len(clauses) != total.pop():
+        raise SystemExit(f'shards cover {len(clauses)} clauses, root has {reports[0]["clauses_in_root"]}')
+    store = {}
+    for x in args.reports:
+        path = Path(str(x) + '.controls.pkl.gz')
+        if path.exists():
+            store.update(pickle.loads(gzip.decompress(path.read_bytes())))
+    first = reports[0]
+    base = json.loads(Path(args.base).read_text())
+    counts = collections.Counter(x['cls'] for x in clauses.values())
+    entry = dict(kind=first['kind'], rows=first['rows'], sites=first['sites'], families=first['families'], seeds=first['seeds'],
+                 seed_sha256=first['seed_sha256'], seed_policy='authored', branch_controls=[b for r in reports for b in r['branch_controls']],
+                 validations=sum(r['validations'] for r in reports), counts=dict(counts), clauses=clauses,
+                 unresolved_refs=sorted({json.dumps(u, sort_keys=True) for r in reports for u in r['unresolved_refs']}),
+                 search_limits=dict(clause_cap=first['args']['clause_cap'], root_seconds=0, distinct_from=first['args']['distinct_from'],
+                                    note='GO2: no wall-clock bound; GC per-clause cap'),
+                 budget_args=dict(per_clause=first['args']['clause_cap'], clause_cap=first['args']['clause_cap'], root_seconds=0,
+                                  seed_cap=first['dump_meta']['seed_cap']),
+                 go2=dict(reports=[dict(file=Path(x).name, sha256=hashlib.sha256(Path(x).read_bytes()).hexdigest(), shard=r['clause_shard'],
+                                        tool_history=r.get('tool_history'), validator=r['validator'], seconds=r['seconds'],
+                                        sampled_agreement=r.get('sampled_agreement'), memo_stats=r.get('memo_stats'), ordering=r.get('ordering'),
+                                        args=r['args']) for x, r in zip(args.reports, reports)],
+                          seconds=round(sum(r['seconds'] for r in reports), 1)))
+    out = dict(method=base['method'], adapted_from=base['adapted_from'], calls=base.get('calls'), failures=base.get('failures'),
+               roots={root: entry}, shard='go2:' + root[:24], all_roots=base['all_roots'], seed_policy='authored',
+               closure_tool_sha256=TOOL_SHA256, native_execution='NOT_RUN')
+    Path(args.out).write_text(json.dumps(out, indent=1, sort_keys=True, default=str) + '\n')
+    Path(str(args.out) + '.controls.pkl.gz').write_bytes(gzip.compress(pickle.dumps(store, protocol=5)))
+    print(json.dumps(dict(root=root[:40], clauses=len(clauses), counts=dict(counts), controls=len(store))))
+    return 0
+
+
 def common_locations():
     import pm_goal_oracle_common as common
     return common._SCHEMA_LOCATIONS
@@ -969,7 +1017,7 @@ def close(args):
     cl.CURRENT[0] = v
     cl.UNRESOLVED.clear()
     carried = witnesses_from(args.carry, root)
-    elsewhere = searched_elsewhere(args.distinct_from, root, entry['families'])
+    elsewhere = {} if args.research_elsewhere else searched_elsewhere(args.distinct_from, root, entry['families'])
     nodes = cl.walk(v)
     by_ipath = collections.defaultdict(list)
     for location, info in nodes.items():
@@ -977,9 +1025,13 @@ def close(args):
             if not any(c[0] in cl.APART for c in reach['ctx']):
                 by_ipath[reach['ipath']].append((location, info['node'], info['resolver']))
     work = [(location, keyword) for location, info in nodes.items() for keyword in cl.clauses_of(info['node'])]
-    part, total = map(int, args.clause_shard.split('/'))
-    size = -(-len(work) // total)
-    mine = work[part * size:(part + 1) * size]  # contiguous blocks keep structurally close clauses (and their branch controls) together
+    if ':' in args.clause_shard:  # an explicit clause range a:b of the walk order (splits a slow block without overlap)
+        lo, hi = map(int, args.clause_shard.split(':'))
+        mine = work[lo:hi]
+    else:
+        part, total = map(int, args.clause_shard.split('/'))
+        size = -(-len(work) // total)
+        mine = work[part * size:(part + 1) * size]  # contiguous blocks keep structurally close clauses (and their branch controls) together
     state = dict(entries={}, controls=list(seeds), branch_controls=[], validations=0, seconds=0.0)
     checkpoint = Path(str(args.out) + '.ckpt')
     if args.resume and checkpoint.exists():
@@ -995,8 +1047,10 @@ def close(args):
             raise SystemExit('--residual report is for another root')
         residual = earlier['clauses']
         mine_set = {location + '/' + cl.name_of(keyword) for location, keyword in mine}
-        for clause, x in residual.items():
-            if x['cls'] != 'UNCOVERED' and clause not in state['entries'] and clause in mine_set:
+        again = ('UNCOVERED', 'SEARCHED_ELSEWHERE') if args.research_elsewhere else ('UNCOVERED',)
+        residual = {c: x for c, x in residual.items() if x['cls'] in again}  # the clauses this pass searches
+        for clause, x in earlier['clauses'].items():
+            if x['cls'] not in again and clause not in state['entries'] and clause in mine_set:
                 state['entries'][clause] = dict(x, kept_from=dict(report=Path(args.residual).name,
                                                                   report_sha256=hashlib.sha256(Path(args.residual).read_bytes()).hexdigest()))
         import gzip
@@ -1071,6 +1125,7 @@ def close(args):
                   clauses_in_shard=len(mine), validator='reference' if args.reference else 'memo',
                   args=dict(clause_cap=args.clause_cap, carry=args.carry, distinct_from=[str(x) for x in args.distinct_from],
                             residual=str(args.residual) if args.residual else None, donors=[str(x) for x in args.donors],
+                            research_elsewhere=args.research_elsewhere,
                             root_seconds=args.root_seconds, reorder=not args.no_reorder),
                   families=entry['families'], rows=entry['rows'], sites=entry['sites'][:12], kind=entry['kind'],
                   seeds=len(seeds), seed_sha256=entry['seed_sha256'], seed_policy='authored', dump_meta=data['meta'],
@@ -1117,17 +1172,23 @@ def main():
     c.add_argument('--no-reorder', action='store_true')
     c.add_argument('--residual', type=Path, help='re-search only the clauses this earlier GO2 report left UNCOVERED')
     c.add_argument('--donors', nargs='*', default=[], type=Path, help='root dumps whose seeds feed the donor construction')
+    c.add_argument('--research-elsewhere', action='store_true', help='residual pass: also search, in this root, the clauses '
+                   'an earlier pass recorded SEARCHED_ELSEWHERE (no witness of another root is relied on)')
     c.add_argument('--sample-every', type=int, default=400, help='compare every Nth memo validation with the reference')
     w = sub.add_parser('verify')
     w.add_argument('--dump', type=Path, required=True)
     w.add_argument('--report', type=Path, required=True)
     w.add_argument('--out', type=Path, required=True)
     w.add_argument('--shard', default='0/1')
+    m = sub.add_parser('merge-shards')
+    m.add_argument('--reports', nargs='+', required=True)
+    m.add_argument('--base', required=True, help="GO's merged closure (method, all_roots)")
+    m.add_argument('--out', type=Path, required=True)
     t = sub.add_parser('self-test')
     t.add_argument('--dump', type=Path)
     t.add_argument('--out', type=Path)
     args = parser.parse_args()
-    return dict(dump=dump, agree=agree, bench=bench, close=close, verify=verify, **{'self-test': self_test})[args.cmd](args)
+    return dict(dump=dump, agree=agree, bench=bench, close=close, verify=verify, **{'self-test': self_test, 'merge-shards': merge_shards})[args.cmd](args)
 
 
 if __name__ == '__main__':
