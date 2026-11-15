@@ -467,6 +467,9 @@ def candidates(site, value, control_instance, path):
     elif k == "maxItems" and isinstance(value, list) and isinstance(v, int):
         if value:
             put(value + [copy.deepcopy(value[-1])] * (v + 1 - len(value)))
+            if isinstance(value[-1], str):
+                # distinct items of the same lexical class (an index suffix), so uniqueItems still holds
+                put(value + [value[-1] + "_" + str(i) for i in range(v + 1 - len(value))])
     elif k == "uniqueItems" and v is True and isinstance(value, list) and value:
         put(value + [copy.deepcopy(value[0])])
         if len(value) >= 2:
@@ -788,12 +791,17 @@ def generate(node, resolver, loc, depth=0):
             if items:
                 out.append([copy.deepcopy(items[0])] * max(n, 1))
         elif ty == "object":
-            obj = {}
+            obj, alts = {}, {}
             props = node.get("properties", {})
             for m in node.get("required", []):
                 vals = generate(props.get(m, {}), resolver, (loc[0], loc[1] + "/properties/" + _esc(m)), depth + 1) if m in props else ["c12"]
                 obj[m] = vals[0] if vals else None
+                if len(vals) > 1 and depth == 0:
+                    alts[m] = vals[1]
             out.append(obj)
+            # one-member variants (each repaired later with that member frozen)
+            for m, alt in list(alts.items())[:6]:
+                out.append(dict(obj, **{m: alt}))
     return out
 
 
@@ -822,6 +830,16 @@ def repaired(node, resolver, loc, value, rounds=8, frozen=()):
             if changed:
                 break
         if not changed:
+            # drop a member the node does not require when that removes errors (a then branch may forbid it)
+            required = set(node.get("required", [])) if isinstance(node, dict) else set()
+            for key in list(cur):
+                if key in frozen or key in required:
+                    continue
+                trial = {k2: v2 for k2, v2 in cur.items() if k2 != key}
+                if len(list(v.iter_errors(trial))) < len(errors):
+                    cur, changed = trial, True
+                    break
+        if not changed:
             return None
     return cur if not list(v.iter_errors(cur)) else None
 
@@ -832,10 +850,11 @@ def generated_values(site, cap=4, node=None, resolver=None, loc=None):
     resolver, loc = resolver or site.resolver, loc or site.loc
     vals = []
     raw = generate(node, resolver, loc)
+    first = raw[0] if raw and isinstance(raw[0], dict) else {}
     for v in list(raw):
         if isinstance(v, dict):
             try:
-                r = repaired(node, resolver, loc, v)
+                r = repaired(node, resolver, loc, v, frozen=tuple(k for k in v if first.get(k) != v[k]))
             except Exception:  # a value the repair cannot judge is simply not a base
                 r = None
             if r is not None:
@@ -979,6 +998,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
             _gen[id(a.node)] = generated_values(a)
         return _gen[id(a.node)]
     reached = set()
+    valid_bases, valid_base_keys = [], set()
     for w in witnesses:
         if w.get("sole"):
             reached.add(w["sole"])
@@ -1010,6 +1030,11 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                 base = insert_at(inst, at, donor)
                 if base is None or not validator.is_valid(base):
                     continue
+                if len(valid_bases) < 300:
+                    db = digest(base)
+                    if db not in valid_base_keys:
+                        valid_base_keys.add(db)
+                        valid_bases.append((p["case_id"] + "@base:" + "/".join(map(str, at)), base))
                 for path, value in locations(base, s.template):
                     for cand in candidates(s, value, base, path):
                         attempts += 1
@@ -1021,6 +1046,10 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                         errors = list(validator.iter_errors(cand))
                         if len(errors) != 1:
                             continue
+                        with Cut(s):
+                            causal = validator.is_valid(cand)
+                        if not causal:
+                            continue
                         seen.add(d)
                         tree, conditional = error_tree(errors[0])
                         leaves = leaf_errors(errors[0])
@@ -1028,7 +1057,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                         witnesses.append(dict(target=s.key, attributed=att[0] if att else None, attributed_node=att[1] if att else None,
                                               exact=bool(att and att[0] == s.key and att[1] == id(s.node)), probe=p, instance=cand,
                                               location="/" + "/".join(map(str, path)), top_error=errors[0].validator,
-                                              tree=tree, conditional=conditional, donor_base=True, sole=sole_key(errors[0], cand)))
+                                              tree=tree, conditional=conditional, donor_base=True, sole=probe_key))
                         if witnesses[-1]["sole"]:
                             reached.add(witnesses[-1]["sole"])
                         done = True
@@ -1047,7 +1076,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
         if kinds[s.key] != "clause":
             continue
         probe_key = (id(s.node), s.keyword, s.member) if s.keyword == "required" else (id(s.node), s.keyword)
-        if any(w["target"] == s.key for w in witnesses) or probe_key in reached:
+        if probe_key in reached:
             continue
         done = False
         for depth in range(len(s.template) - 1, -1, -1):
@@ -1078,13 +1107,17 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                         tree, conditional = error_tree(errors[0])
                         if probe_key not in tree:
                             continue
+                        with Cut(s):
+                            causal = validator.is_valid(cand)
+                        if not causal:
+                            continue
                         seen.add(d)
                         leaves = leaf_errors(errors[0])
                         att = error_site(leaves[0], cand) if len(leaves) == 1 else None
                         witnesses.append(dict(target=s.key, attributed=att[0] if att else None, attributed_node=att[1] if att else None,
                                               exact=bool(att and att[0] == s.key and att[1] == id(s.node)), probe=p, instance=cand,
                                               location="/" + "/".join(map(str, anc_t)), top_error=errors[0].validator,
-                                              tree=tree, conditional=conditional, coherent=True, sole=sole_key(errors[0], cand)))
+                                              tree=tree, conditional=conditional, coherent=True, sole=probe_key))
                         if witnesses[-1]["sole"]:
                             reached.add(witnesses[-1]["sole"])
                         done = True
@@ -1117,6 +1150,8 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
             flipped = [w for w in good if ((nid, kw) in w["tree"] or w["conditional"]) and validator.is_valid(w["instance"])]
             # a required-member cut can only flip a witness missing that member
             ctrl_broken = [p["case_id"] for p, inst in instances if not validator.is_valid(inst)]
+            # constructed valid bases (each valid at the row before the cut) refused under the cut detect it too
+            ctrl_broken += [name for name, base in valid_bases if not validator.is_valid(base)][:5]
             kills = []
             for w in sorted(flipped, key=lambda w: (not (w["target"] in entry["eval_sites"]), not w["exact"]))[:route_kills]:
                 wp = with_instance(w["probe"], getter, w["instance"], None)
@@ -1260,11 +1295,9 @@ def forced_branch(site, by_template):
             if values is None:
                 continue
             holder_loc = site.loc
-            if site.context and site.context[-1].startswith(("anyOf/", "oneOf/")):
-                marker = "/" + site.context[-1].split("/")[0]
-                if marker not in site.loc[1]:
-                    continue
-                holder_loc = (site.loc[0], site.loc[1][:site.loc[1].rindex(marker)])
+            local = re.search(r"/(anyOf|oneOf)/\d+$", site.loc[1])
+            if local:
+                holder_loc = (site.loc[0], site.loc[1][:local.start()])
             try:
                 ok = all(node_valid(holder_loc, c) for c in values)
             except Exception:  # an unresolvable holder earns no proof
@@ -1287,6 +1320,9 @@ def implication(site, slot_sites_by_node, boundary):
     node, k, v = site.node, site.keyword, site.node.get(site.keyword)
     src = site.src or {}
     where = f"{src.get('path')}:{src.get('line')}"
+    if k in ("minItems", "minLength", "minProperties") and v == 0:
+        return dict(kind="vacuous_lower_bound", proof=f"{where} {k} 0 admits every value of its type, so no instance can violate it and "
+                    "cutting it changes no result: a vacuous clause with nothing to witness")
     pw = _pattern_width(node.get("pattern"))
     if k == "minLength" and isinstance(v, int) and pw and pw[0] >= v:
         return dict(kind="minLength_by_pattern", proof=f"{where} minLength {v} is implied by the sibling pattern {node['pattern']!r}: every string it "
@@ -1322,6 +1358,27 @@ def implication(site, slot_sites_by_node, boundary):
     forced = forced_branch(site, slot_sites_by_node) if slot_sites_by_node else None
     if forced:
         return forced
+    if k in ("anyOf", "oneOf") and isinstance(v, list) and slot_sites_by_node:
+        # A complete if/then/else at the enclosing object constrains this member in both branches, and each branch's
+        # constraint is one of this combinator's own branches: whichever applies, a value the combinator refuses also
+        # fails it, so the combinator is never the only failing clause.
+        by_holder = {}
+        for o in slot_sites_by_node.get(site.template, []):
+            for br in ("then", "else"):
+                m = re.search(r"^(.*)/" + br + r"/properties/[^/]+$", o.loc[1])
+                if m and o.keyword in ("$ref", "type", "const"):
+                    by_holder.setdefault((o.loc[0], m.group(1)), {})[br] = o
+        for (doc, hptr), pair in by_holder.items():
+            if set(pair) != {"then", "else"}:
+                continue
+            nodes = {br: _node_at((doc, pair[br].loc[1])) for br in pair}
+            if all(any(json.dumps(nodes[br], sort_keys=True) == json.dumps(b, sort_keys=True) for b in v) for br in nodes):
+                t, e = pair["then"].src or {}, pair["else"].src or {}
+                return dict(kind="combinator_entailed_by_complete_if", proof=f"{where} {k} is entailed by the complete if/then/else at "
+                            f"{src.get('path')}#{hptr}: its then constraint ({t.get('path')}:{t.get('line')}) and its else constraint "
+                            f"({e.get('path')}:{e.get('line')}) are each one of this {k}'s own branches, and one of them applies to every "
+                            f"instance, so a value this {k} refuses also fails the branch that applies; no single-defect witness fails it "
+                            "alone, and both branch constraints are witnessed and cut on their own")
     if k == "properties" and "if" in site.context and slot_sites_by_node is not None and isinstance(v, dict):
         outer = tuple(site.context)[:list(site.context).index("if")]
         restated = []

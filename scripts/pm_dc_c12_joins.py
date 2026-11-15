@@ -104,6 +104,9 @@ def analyse(collection_path, families=None):
 # changed probe is a distinct-copy witness for that side. Nothing is repaired or relabelled.
 
 def _bump(value):
+    if isinstance(value, (set, frozenset)):
+        items = sorted(value, key=repr)
+        return type(value)(items[:-1]) if len(items) > 1 else type(value)(items + ["c12_slot"])
     if isinstance(value, bool):
         return not value
     if isinstance(value, int):
@@ -125,7 +128,7 @@ def _leaves(node, path=()):
         for i, v in enumerate(node):
             yield from _leaves(v, path + (i,))
     else:
-        yield path, node
+        yield path, node  # scalars and sets (a reducer set is one copy)
 
 
 INPUT_KEYS = {"source": ("value", "source_context", "physical_key"), "prepared": ("value", "source_case", "payload_store"),
@@ -300,6 +303,11 @@ SIDE_REASONS = {
     ("WR05_server", "body_server"): ("U", "the body server is part of the captured binding (SF13) and joined to every application context by SF34 first"),
     ("WR06_scope", "record_scope_sha256"): ("U", "the record scope is part of the owner record, whose hash SF09/SF10 join and whose whole copy WR03 joins to the wrapper first"),
     ("TR01_idempotency_conflict", "recorded_digest"): ("U", "the recorded digest is the reducer's own dedupe entry for the original append; a different recorded digest for the same key is reached only through a different first append, which the dedupe witnesses (exact retry against conflict) vary"),
+    ("TR35_attempt_open", "attempt_slot"): ("U", "TR33 joins the attempt's slot to the payload slot first; TR35 reads the pair only as the precondition of its open-attempt check"),
+    ("TR35_attempt_open", "slot"): ("U", "TR33 joins the payload slot to the attempt's slot first"),
+    ("TR35_attempt_open", "attempt_revision"): ("U", "TR34 joins the attempt's revision to the payload assignment revision first"),
+    ("TR35_attempt_open", "assignment_revision"): ("U", "TR34 joins the payload assignment revision to the attempt's revision first"),
+    ("TR16_latest_revision", "config_previous_revision"): ("D", "the payload's previous revision equals definition_revision - 1 by PR05 (payload rules), so it moves only with the subject revision PR04 joins first; the reducer's latest recorded revision is the stored side TR16 witnesses"),
     ("EV02_event_type", "boundary_event_type"): ("U", "the caller's family selects the payload edition and identity recipe; a sibling caller refuses at that sibling's own rows first where its payload definition differs"),
 }
 
