@@ -40238,3 +40238,43 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+
+### DL-693 - A Restore Point Records Everything Up To Its Message, Sorted By Kind (E10-1)
+
+```yaml
+plan_unit_id: DL-693
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered stream E's card E10-1 on the AI Account Center Status tab on 2026-11-15 at 12:51 AM EST (05:51:30Z), signed; pm7-build relayed it in mail 1115055331-5426. His answer: option A, "Everything up to that message, sorted by kind", with no added words.
+
+  The question, as the card asked it: "When you save a restore point in a chat, what should it remember?" A restore point keeps four lists of what the conversation used up to its message (what the user added to the chat's context, the sources behind the answers, files attached to messages and sources the answers cite), and no plan said what goes into each list. Option A promised: "Context: what you added to the chat's context. Sources: what tools and the model used for each answer. Attachments: files on messages. Citations: sources an answer cites. Going back brings back everything the chat had then." Its stated cost: "Larger restore points." Options B, "Only what that one message used", and C, "Only attached files and citations", were not chosen.
+
+  That answer defines how cmd.chat.create_restore_point fills the four frozen capture lists over the inclusive message boundary, in Plans/assistant-chat-design.md#ACD-465 ("Capture selection (DL-693)"). The range is the source conversation branch's persisted transcript up to and including the chosen message. context_refs holds what the user added to the chat's context and still had there at that message; provenance_refs holds, for every answer in the range, the sources its tools and its model used to write it; attachment_refs holds the files attached to messages in the range; citation_refs holds the sources the answers in the range cite. Each list keeps a ref once, in first-appearance order, and the canonical record's context_provenance_refs is context_refs followed by the provenance refs not already in it. Messages after the boundary, other branches, drafts, queued messages and streams add nothing. Every existing rule stays: the frozen categories, their unique union equal to canonical context_provenance_refs, no new redaction transform, the forbidden ephemeral stream and queue data, workspace file bodies, secrets and credentials, and refuse or quarantine for unresolved or unhandled material, which now includes a context item that cannot be placed against the boundary.
+
+  This changes no schema, hash recipe, identity recipe, retention policy, event admission or GUI, and claims no native execution, readiness clearance or governance seal.
+gui_related: false
+gui_classification_reason: Defines which stored refs a restore point captures; no visible control or layout changes.
+depends_on: [DL-045]
+unblocks: [ACD-465, ATS-3880]
+acceptance_criteria:
+- Plans/assistant-chat-design.md#ACD-465 defines each of the four capture lists over the inclusive boundary of the source branch, with first-appearance order and the merged context_provenance_refs order.
+- Every existing capture rule is kept; unplaceable, unresolved or forbidden selected material refuses or quarantines and is never dropped or redacted.
+- Plans/Automated_Testing_System.md#ATS-3880 executes the selection as real predicates with single-defect witnesses.
+validation_surfaces: [scripts/pm-s3bo-check.py, scripts/pm_s3bo_ext_sr2_capture.py, reports/event-authority-20261114/depth-c12-sr2-created.json]
+risk_class: conversation_restore_fidelity
+reasoning_tier: high
+context_scope: event_authority_restore_point_created
+implementation_surfaces: [Plans/assistant-chat-design.md, Plans/Automated_Testing_System.md, scripts/pm_s3bo_ext_sr2_capture.py]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-10_20261115.md; SHA-256 9171b69a3d7a64052b72a3771b45c2757491cc07beb573357651a5842f58839d; Jared's answers to E10-1 and E10-2, relayed by pm7-build mail 1115055331-5426"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm-ea-lead--E10-1.json; SHA-256 613dcfa392562616a4be1e4b2c75a1af73c5e77ade78b938a190d919f70e3b8f; Jared's signed answer A to card E10-1, 2026-11-15T05:51:30.328Z, card SHA-256 5eb9ee37154833ebb81818ca639abb9d7a92eee3a8ed0859915bd9d08bb25f0e"
+- "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-10.md; SHA-256 955d0bccf85e990be373f32375dac7d3f55a92ec38c0f8e2b56934dfee5af484; card E10-1 text"
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: ["Everything up to that message, sorted by kind", "context_refs", "provenance_refs", "attachment_refs", "citation_refs", "context_provenance_refs", "cmd.chat.create_restore_point"]
+negative_constraints:
+- No capture category is guessed, inferred from the merged record field or redacted to fit.
+- No schema, recipe, policy, admission, native execution claim or governance seal is created.
+```

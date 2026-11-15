@@ -15216,6 +15216,10 @@ For `safe_point.recovery_unavailable`, establishment runs classify, durability c
 
 For `restore_point.created`, the checker executes the thirteen-field `pm.restore_point.immutable_capture_sha256.v1` recipe against every owner vector in `Plans/restore_point_created_hash_vectors.json`, the union and set equalities against the canonical record, the exact frozen capture categories and order, the `rpc_` identity, the source and record joins, the B1, B2 and B3 order, crash recovery without recapture or a second append, and the native completion predicate. Not closed: no owner text defines how the creation owner selects conversation-history properties into `context_refs`, `provenance_refs`, `attachment_refs` and `citation_refs`. The checker therefore never constructs or infers a category assignment and accepts an empty category only where the frozen capture records it empty. `restore_point.created` criterion 12 stays open on that owner definition.
 
+Amended 2026-11-15 (DL-693, lane C12-SR2), closing the gap above: that selection is now owner text, `Plans/assistant-chat-design.md#ACD-465` "Capture selection (DL-693)", and the co-extension `scripts/pm_s3bo_ext_sr2_capture.py` executes it. From an independently presented source transcript, custody and admission attempts it selects, through the boundary message inclusive, the context still in effect at the boundary in addition order, every answer's tool-call then model-run sources, every message's attachments and every answer's citations, each ref once, and compares the frozen `context_refs` and `provenance_refs` and the record's `attachment_refs`, `citation_refs` and `context_provenance_refs` order with it, one designated copy per list while the owner rows keep the other copies equal. Witnesses include context added after or removed before the boundary, current rather than boundary context, only the chosen message's sources, later, streaming, queued, draft, other-branch and other-thread material, the boundary message left out, a wrong-kind ref, and the merged order. Creation over unplaceable context, an unresolved selected ref or forbidden selected material must refuse or quarantine with no record, companion or event, while forbidden material outside the range does not block; a dropped, guessed, written or over-refused attempt is refused. Each expected capture is written out by hand. `restore_point.created` criterion 12 is graded in `reports/event-authority-20261114/depth-c12-sr2-created.json`.
+
+Amended 2026-11-15 (DL-693, lane C12-SR2): a later lane adds rows to a family another extension owns only as a co-extension that names the family in `EXTENDS`. The loader requires exactly one other owner, refuses a co-extension's payload, envelope and corpus-slot hooks, and orders co-extensions after every owner, so the owner's controls, every common copy and the existing row, table and case order are unchanged.
+
 These are deterministic fixture comparisons of presented protocol outcomes against owner rules over independently held inputs, plus the replay of one frozen external package; they do not authenticate a native Store or execute native producers. Native conformance remains NOT_RUN for all five families.
 
 ```yaml
@@ -15227,8 +15231,8 @@ canonical_text: >-
   PNC-019 C12-SR adds executable family-boundary extensions to the ATS-2206 s3bo checker for
   restore_point.applied, restore_point.corrupt, restore_point.created, restore_point.expired and
   safe_point.recovery_unavailable, runs the whole shared number and date-time corpus through each
-  family boundary, and replays the SP-275 expiry package refrozen for DL-076. The created-event capture
-  constructor remains an owner gap.
+  family boundary, and replays the SP-275 expiry package refrozen for DL-076. Under DL-693 the co-extension
+  pm_s3bo_ext_sr2_capture.py executes the restore_point.created capture selection.
 gui_related: false
 gui_classification_reason: Static event-authority contract oracles without presentation changes.
 depends_on:
@@ -15241,13 +15245,14 @@ depends_on:
 - SP-2204
 - SP-275
 - DL-076
+- DL-693
 unblocks: []
 acceptance_criteria:
 - Each family-boundary refusal is a real named table predicate with an independently labelled single-defect witness, at most eight per table.
-- Extension modules cannot overlap rows, table groups or families, and the common witnesses and their guard selections are unchanged by an extension.
+- Extension modules cannot overlap rows, table groups or families except through an explicit EXTENDS co-extension with exactly one other owner, and the common witnesses and their guard selections are unchanged by an extension.
 - The shared corpus runs through every common and declared boundary slot of each extension family, with expectations from corpus verdicts and owner bounds.
 - The refrozen SP-275 package is authenticated by its manifest and every file hash and replays to byte-identical fixtures with no stored redb_snapshot_id.
-- The restore_point.created capture-category selection is reported as missing owner text, never inferred.
+- The restore_point.created capture selection of DL-693 is executed against hand-written expected captures, with one refusing row per single-defect witness.
 validation_surfaces:
 - scripts/pm-s3bo-check.py
 - scripts/pm_s3bo_oracles.py
@@ -15264,6 +15269,7 @@ implementation_surfaces:
 - scripts/pm_s3bo_ext_sr_recovery.py
 - scripts/pm_s3bo_sr_common.py
 - scripts/pm-s3bo-sr-expiry-refreeze.py
+- scripts/pm_s3bo_ext_sr2_capture.py
 node_compile_hint:
   mode: contract_only
   create_worknodes: false
@@ -15274,6 +15280,7 @@ source_lineage:
 - Plans/storage-plan.md#SP-2204
 - Plans/storage-plan.md#SP-275
 - Plans/assistant-chat-design.md#ACD-465
+- Plans/Decision_Log.md#DL-693
 preserved_exact_tokens:
 - restore_point_corrupt_v1_upgrade_unresolvable
 - source_deleted_content_unavailable
@@ -15281,7 +15288,7 @@ preserved_exact_tokens:
 - pm.restore_point.immutable_capture_sha256.v1
 negative_constraints:
 - Do not admit events, reseal governance or claim native execution.
-- Do not infer a restore-point capture-category assignment or an empty category.
+- Do not infer a restore-point capture-category assignment or an empty category beyond the DL-693 selection.
 - Do not edit the gated guard tool or the frozen date-time files.
 ```
 

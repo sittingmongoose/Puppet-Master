@@ -403,7 +403,7 @@ def build(family, project=None):
     # Family-boundary extensions attach their complete boundary record to the
     # control of each family they own (EXTENSION CONTRACT, hook 'augment').
     for ext in EXTENSIONS:
-        if family in ext.FAMILIES and hasattr(ext,'augment'):
+        if family in ext.SERVES and hasattr(ext,'augment'):
             ext.augment(result)
     return result
 
@@ -833,7 +833,7 @@ def operands(case):
     common={'numeric_ok':not any(numeric) and v['storage_sequence']['left'] is None,
             'physical_ok':physical_ok,'source_count_ready':source_count_ready}
     for ext in EXTENSIONS:
-        if family in ext.FAMILIES:
+        if family in ext.SERVES:
             owned=ext.ROW_NAMES
             def ext_put(name,left,right=None,applies=True,_owned=owned,_ext=ext):
                 if name not in _owned:
@@ -899,6 +899,15 @@ def evaluate(case, cut=None):
 #   evidence(out)                   optional; extra family evidence for the
 #             'run' command (for example a pinned external package replay).
 # The loader below refuses overlapping rows, groups or families.
+#
+# CO-EXTENSIONS (C12-SR2, 2026-11-15). A later lane adds predicates to a family
+# another extension already owns only by naming it in EXTENDS (FAMILIES stays
+# disjoint). The family must have exactly one owning extension, other than the
+# co-extension. A co-extension adds only its own rows, groups and cases: it may
+# define augment, operands, cases and evidence, never payload, envelope or
+# corpus_slots, so the owner's controls and every common copy stay the owner's.
+# Co-extensions are ordered after every owner, so the owners' hooks run first
+# and the existing row, table and case order is unchanged.
 # ---------------------------------------------------------------------------
 
 
@@ -923,6 +932,16 @@ def load_extensions():
         families |= set(ext.FAMILIES)
         ext.ROW_NAMES=frozenset(names)
         loaded.append(ext)
+    for ext in loaded:
+        extends=tuple(getattr(ext,'EXTENDS',()))
+        for family in extends:
+            owners=[o for o in loaded if family in o.FAMILIES]
+            if len(owners)!=1 or owners[0] is ext:
+                raise ValueError(ext.__name__+': EXTENDS needs exactly one other owner of '+family)
+        if extends and any(hasattr(ext,hook) for hook in ('payload','envelope','corpus_slots')):
+            raise ValueError(ext.__name__+': a co-extension may not define payload, envelope or corpus_slots')
+        ext.SERVES=tuple(ext.FAMILIES)+extends
+    loaded.sort(key=lambda ext: bool(getattr(ext,'EXTENDS',())))
     return tuple(loaded)
 
 

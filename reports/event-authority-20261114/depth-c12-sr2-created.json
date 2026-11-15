@@ -1,0 +1,859 @@
+{
+ "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+ "assessment_id": "EA-PNC019-C12-SR2-20261115",
+ "assessed_tree": {
+  "branch": "plans/ea-pnc-c12-sr2-20261115",
+  "commit": "74db65cd5f376fcd94122f2b413f7205f652f83e"
+ },
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-04.1",
+  "sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+  "families": 46
+ },
+ "supersedes": {
+  "path": "reports/event-authority-20261114/depth-c12-sr-families.json",
+  "commit": "5b13ef359f08994ded76315ac03670a7b2aae227",
+  "note": "Supersedes the restore_point.created row only."
+ },
+ "scope": "PNC-019 step S4 criterion-12 closure lane C12-SR2: restore_point.created under DL-693.",
+ "status_meaning": {
+  "PASS": "Current owner text explicitly supports the criterion for this exact family at its registered version, including explicit adoption of any shared prerequisite it depends on. Never native or runtime proof.",
+  "PARTIAL": "Some exact or listed evidence exists, but a required part is unbound, unadopted, or explicitly left open by owner text.",
+  "ABSENT": "No binding for the criterion in the inspected owner surfaces; generic rules and broad labels do not count.",
+  "CONFLICT": "The only exact contract conflicts with current owner precedence, and no current disposition resolves it."
+ },
+ "dispositions_meaning": {
+  "CURRENT_WRITER": "Emitted under a current owner contract.",
+  "HISTORICAL_ONLY": "An owner unit prohibits current writes and defines a historical read contract.",
+  "UNDISPOSITIONED": "No current-writer contract for the registered version and no historical-only disposition."
+ },
+ "method": {
+  "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md, unchanged, plus the stream E oracle bar (criterion 12 PASS needs guard-tool proof).",
+  "grading": "Criterion 12 PASS requires the full C12-SR2 bundle (matrix, batteries, corpus, extension evidence) to pass and every row of the sr_created and sr2_capture tables to be proved by the gated tool, reused proofs re-verified against this tree; every quote exact-checked. Other cells carried and re-anchored."
+ },
+ "status_counts": {
+  "PASS": 12
+ },
+ "status_counts_by_criterion": {
+  "membership_version": {
+   "PASS": 1
+  },
+  "owner_doc": {
+   "PASS": 1
+  },
+  "producer": {
+   "PASS": 1
+  },
+  "closed_payload_schema": {
+   "PASS": 1
+  },
+  "scope_identity": {
+   "PASS": 1
+  },
+  "replay_idempotency": {
+   "PASS": 1
+  },
+  "retention": {
+   "PASS": 1
+  },
+  "redaction_custody": {
+   "PASS": 1
+  },
+  "transitions": {
+   "PASS": 1
+  },
+  "consumers_checkpoints": {
+   "PASS": 1
+  },
+  "compatibility_withdrawal": {
+   "PASS": 1
+  },
+  "positive_negative_oracles": {
+   "PASS": 1
+  }
+ },
+ "normative_depth_complete_families": [
+  "restore_point.created"
+ ],
+ "pass_counts": {
+  "restore_point.created": 12
+ },
+ "native_execution": "NOT_RUN for every family",
+ "evidence_items": 54,
+ "quote_check": {
+  "exact": 54
+ },
+ "rows": [
+  {
+   "event_type": "restore_point.created",
+   "family_id": "event-family-restore-point-created",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/24",
+   "disposition": "CURRENT_WRITER",
+   "pass_count": 12,
+   "normative_depth_complete": true,
+   "native_execution": "NOT_RUN",
+   "current_owner_units": [
+    "ACD-465",
+    "SP-281",
+    "SP-274",
+    "SP-269",
+    "SP-285",
+    "SP-278",
+    "SP-286/CV-339 (adopted)",
+    "RAP-059",
+    "SIR-044",
+    "ACD-086",
+    "UCC-126",
+    "CV-320",
+    "SP-242",
+    "DL-045",
+    "ATS-3880",
+    "DL-693"
+   ],
+   "remaining_gaps": [],
+   "contingency_questions": [],
+   "grading_batch": "c12-sr2",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row #/families/24 registers event-family-restore-point-created@2.0.0, project_only, with an inline closed payload whose $id equals payload_schema_id (restore_point_created/1.0.0); no aliases or extensions. ACD-465/SP-281 restate the unchanged family, payload and envelope versions and admit no sibling.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/24",
+       "line_start": 1554,
+       "line_end": 1554,
+       "quote": "\"family_id\": \"event-family-restore-point-created\"",
+       "excerpt_sha256": "398da2b063d4707e6834c6cfa0750823ac53148f0eb70cc44be12e73411ddcde",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/24",
+       "line_start": 1563,
+       "line_end": 1563,
+       "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0\"",
+       "excerpt_sha256": "7e98f06e966835abdc3d96f89f7877ab7359598b70ab5d02714aa8042abbb654",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/24",
+       "line_start": 1659,
+       "line_end": 1659,
+       "quote": "\"aliases\": []",
+       "excerpt_sha256": "3a770c67768bb8b1e0618ff18be0bc587ec5a6c80de3cd1818e91c448580f76d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point created consumer checkpoint contract",
+       "line_start": 20840,
+       "line_end": 20840,
+       "quote": "No sibling event is admitted.",
+       "excerpt_sha256": "60d2eb2f7f3625f85903a0674072b44d93a5c871ec047ab3299f0645f973819f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The whole-document semantic anchor (assistant-chat-design.md) contains ACD-465 and the restore lifecycle. The Case L-5 payload route is acceptable (clarification 1). Storage SP-281/SP-274/SP-269/SP-285 govern custody and checkpoints, and RAP-059/SIR-044 bound the passive reader and outcome custody.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/24",
+       "line_start": 1413,
+       "line_end": 1413,
+       "quote": "\"semantic_owner_doc\": \"Plans/assistant-chat-design.md\"",
+       "excerpt_sha256": "0260855fda8b48d830e24d2ee5332d233c1faee6fbdeaadc4eea9326b9b0d3f4",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-465",
+       "line_start": 26526,
+       "line_end": 26526,
+       "quote": "plan_unit_id: ACD-465",
+       "excerpt_sha256": "a433683ca5c04e0e7018f6d0ed09f3bf3ec81f192faab076768bea657e8cfd30",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-281",
+       "line_start": 20924,
+       "line_end": 20924,
+       "quote": "canonical_text: Storage selects pm.storage_value.restore_point_created_checkpoint.v2@2.0.0 at the existing",
+       "excerpt_sha256": "3e292f18a917da121a7c22461c1f16c82b074919208bf3f3419a9fd539e8a2ac",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Case L-5",
+       "line_start": 18135,
+       "line_end": 18135,
+       "quote": "### Case L-5. EventRecord persistence, legacy normalization, and dedupe",
+       "excerpt_sha256": "9ee76de1c36cdeca7642b5a3c7708c1e930ed76a670d813c322adf7c50a537da",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The producer is exact. Barrier 1 commits the rp point, pending companion and SP-274 pending result in one redb transaction, barrier 2 is the synced append, and barrier 3 CASes committed plus the terminal result before success. Recovery explicitly adopts SP-286 first-receipt custody and, through SP-285 pending recovery, storage.first_append_receipt.resolve_full_value.v1.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "Enforceable three-barrier producer protocol",
+       "line_start": 26477,
+       "line_end": 26477,
+       "quote": "Commit the immutable `rp` record and its complete `pending_append` companion in **one redb transaction**",
+       "excerpt_sha256": "3991b4ed78b68dcad5fb8a910daed2ee3ceb6d26021595d9eaea2c7bb86d7d43",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "Enforceable three-barrier producer protocol",
+       "line_start": 26479,
+       "line_end": 26479,
+       "quote": "Only after this transaction may creation return success or a reader publish completed creation.",
+       "excerpt_sha256": "d32066e5332a5b17d5849d68871f49091104bbe360b3b83e20215d291feca44f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-274 Three barriers and terminal publication",
+       "line_start": 21277,
+       "line_end": 21277,
+       "quote": "SP-274/SP-281 explicitly adopt SP-285 creation_pending_recovery and SP-286 first-receipt authority after actual initial admission",
+       "excerpt_sha256": "0e902fc4bba2dbdf877b58ca74eab5ba1833915d07ea09ab783c897dbff55f4b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-285 Original admission, new lifecycle admission and pending recovery",
+       "line_start": 23605,
+       "line_end": 23605,
+       "quote": "These three recovery bindings explicitly adopt SP-286/CV-339, including `storage.first_append_receipt.resolve_full_value.v1`",
+       "excerpt_sha256": "cc7187b9a1d528f1732595b47d6b07127f1334bab003707844a89f4f838e021c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-465",
+       "line_start": 26568,
+       "line_end": 26568,
+       "quote": "Native ordinary crash with SP-286 genuine exact-first-receipt custody recovers the exact",
+       "excerpt_sha256": "2cb133d0af4263326b45da334c6ab88879f4219336f7f2bb4f92c733e85887d7",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The inline payload 1.0.0 is closed at the root with status const available, and owner text keeps it unchanged. The frozen append input must satisfy exactly this registered payload schema, and new non-event values have closed schemas (companion, create result, v2 checkpoint).",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/24",
+       "line_start": 1565,
+       "line_end": 1565,
+       "quote": "\"additionalProperties\": false",
+       "excerpt_sha256": "1be4b6c3f19530f8ac3978ba46d81790dbfc498fb7af9f83cf88c18415edbc60",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/24",
+       "line_start": 1645,
+       "line_end": 1645,
+       "quote": "\"const\": \"available\"",
+       "excerpt_sha256": "3c6100ccdd313c4abd33d38d2e4de6d52546a40e7bfbaa45fc10f97364da229f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "New required creation custody and commit marker",
+       "line_start": 26469,
+       "line_end": 26469,
+       "quote": "It must satisfy the current EventRecord 2.0 schema when the writer supplies its two fields and the exact registered payload schema.",
+       "excerpt_sha256": "78c625e31b1b0d71fdf1fcd2cbb3c0bde990a2ec79a08054b084907dec03645d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_index_consumer_adoption.schema.json",
+       "unit": "#/$defs/restore_created_checkpoint_v2",
+       "line_start": 1756,
+       "line_end": 1756,
+       "quote": "\"additionalProperties\": false",
+       "excerpt_sha256": "376fa919043e6409ace666364a3bfde313253dc49fc27eb59c3c147097b9427e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Project-only scope with envelope, payload, rp key and permission-target project equality. Deterministic identities are restore_point_id rpc_ and event_id er_rpc_ over the length-prefixed (type, project_id, idempotency_key) tuple; the source thread/branch/message refs join the frozen capture exactly, and the result key binds the scope partition and idempotency key.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "Restore-point created native and historical consumers",
+       "line_start": 26442,
+       "line_end": 26442,
+       "quote": "The envelope's project, payload project, canonical `rp:` key/value project and permission/storage target must agree.",
+       "excerpt_sha256": "7b30b19adeacdb3b301d4138402b35e294fa2af1c9aac2f56e8c63a2eff92cfa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "New required creation custody and commit marker",
+       "line_start": 26473,
+       "line_end": 26473,
+       "quote": "`event_id = er_rpc_` plus the same digest",
+       "excerpt_sha256": "0b87034fcf47187d22921b00714c42604b06934e853058fd9e754b054791d813",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "Restore-point created native and historical consumers",
+       "line_start": 26442,
+       "line_end": 26442,
+       "quote": "`source_thread_ref` resolves to `source_thread_id`, `source_branch_ref` to `source_branch_id`, and `message_boundary_ref` to `source_message_id`",
+       "excerpt_sha256": "7b30b19adeacdb3b301d4138402b35e294fa2af1c9aac2f56e8c63a2eff92cfa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-274 Physical and result authority",
+       "line_start": 21269,
+       "line_end": 21269,
+       "quote": "The key is `restore_point_create_result.v1:{sha256_utf8(scope_partition)}:{sha256_utf8(idempotency_key)}`.",
+       "excerpt_sha256": "6503ee51ad52ca8a1142266bd24272571f4586b7a455f753c0092b6a048f6b20",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "A retry appends at most once from the frozen input without recapture. A lost acknowledgement runs Storage recovery and checks dedupe/source proof before anything is assumed. The same command identity and request digest return the exact SP-274 original result for the app-root lifetime, even after point retirement, and passive replay has no owner effects.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "Enforceable three-barrier producer protocol",
+       "line_start": 26481,
+       "line_end": 26481,
+       "quote": "A lost append acknowledgement first runs Storage recovery and checks dedupe/source proof; it never assumes the append failed.",
+       "excerpt_sha256": "4bc725503a665d350a97a2105bbb3da89a69ec68d95574b3515ee53099c96577",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "Original create-command result after lawful point retirement",
+       "line_start": 26627,
+       "line_end": 26627,
+       "quote": "Equal original command identity and request digest returns this exact owner result for the app-root lifetime, even after lawful removal of point/capture bytes.",
+       "excerpt_sha256": "e5e411ae804dc26018defce2e18cca47d1f8ca81d0ff1f890931457606a6c52b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point created consumer checkpoint contract",
+       "line_start": 20868,
+       "line_end": 20868,
+       "quote": "After crash before checkpoint commit, replay revalidates the same join and commits once.",
+       "excerpt_sha256": "74180f4efd0a577146dd205435935ad5dc7bb4d85616bd191e9dd27a04b157fc",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The source row keeps RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0, the companion is RP90 custody of the same point, the checkpoint is RP-PROJECTION-3GEN@1.0.0 with persisted retirement anchors, the create result is RP-AUTHORITY-INDEFINITE@1.0.0, and the SP-269 summary is the retain_hash_summary residue. No new policy or product choice is open.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/24",
+       "line_start": 1511,
+       "line_end": 1511,
+       "quote": "\"policy_id\": \"RP-RESTOREPOINT-90D-AFTER-RELEASE\"",
+       "excerpt_sha256": "3146cd0b2f8163116739034d1d5ecd63971b50d0a54aa3087c814899d1d98db4",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point created consumer checkpoint contract",
+       "line_start": 20872,
+       "line_end": 20872,
+       "quote": "The checkpoint is directly assigned **`RP-PROJECTION-3GEN@1.0.0`**, not the source restore-point policy.",
+       "excerpt_sha256": "d898697643d4d237a8e3603731943346f641a62a34f99547858496cfb44a47d2",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point created consumer checkpoint contract",
+       "line_start": 20874,
+       "line_end": 20874,
+       "quote": "The companion is directly assigned **`RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0` as required custody of the same restore_point_id**",
+       "excerpt_sha256": "63fa39579b79d0de93aba93b4c98847cc86fc51e43b62b1a56e809ec12eee158",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-274 Retention and recovery",
+       "line_start": 21287,
+       "line_end": 21287,
+       "quote": "Assign this one new row `RP-AUTHORITY-INDEFINITE@1.0.0`",
+       "excerpt_sha256": "b361b2601c98f50e1b957e33c798bb871606552839ab236f814fcc37c82e4b01",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Family custody is explicit. The companion and create result are canonical_non_rebuildable with mandatory backup and restore; the result is content-free and can be access-refused to unauthorized callers; SIR-044 delegates exact outcome custody; missing custody fences only the affected point. No secrets, bodies or new redaction transform are allowed.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-274 Retention and recovery",
+       "line_start": 21289,
+       "line_end": 21289,
+       "quote": "This family is canonical_non_rebuildable, mandatory-backup, restore-from-backup, with a mutation fence limited to commands dependent on the unresolved identity.",
+       "excerpt_sha256": "f10684de04496be72a8a0218828861abf9e635bb238bcc28ec328c0be198cbbf",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-274 Retention and recovery",
+       "line_start": 21287,
+       "line_end": 21287,
+       "quote": "Original results may remain internally authoritative but access-refused to an unauthorized caller.",
+       "excerpt_sha256": "b361b2601c98f50e1b957e33c798bb871606552839ab236f814fcc37c82e4b01",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "Restore-point created native and historical consumers",
+       "line_start": 26444,
+       "line_end": 26444,
+       "quote": "Ephemeral stream/queue data, workspace file bodies, secrets and credentials are forbidden.",
+       "excerpt_sha256": "b42cca974eca6b9630b038b16ff64435127304c7b6eb50b6e15b72fe675e97a9",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Shared_Integration_Runtime.md",
+       "unit": "SIR-044",
+       "line_start": 2305,
+       "line_end": 2305,
+       "quote": "Shared Integration Runtime delegates custody of its",
+       "excerpt_sha256": "df3ee0cc4711b6e3890271f198a0eaaf460c0e177a6a54ee3e44faa4f5a3897a",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Creation's pending/committed companion and admitted_pending/terminal result states have explicit durability barriers. The checkpoint's generation transitions are atomic with persisted retirement anchors. SP-269's terminal branch never becomes live completion, and the affected-record fence blocks dependent mutation until custody resolves.",
+     "evidence": [
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "New required creation custody and commit marker",
+       "line_start": 26467,
+       "line_end": 26467,
+       "quote": "state `pending_append | committed`, nullable synced `AppendReceipt` and nullable commit time",
+       "excerpt_sha256": "7c53203e84a553adc74ccb25962f4cbf6e76e94d8ce0bcbb7a16e14f0a6d5943",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Concrete checkpoint generation history",
+       "line_start": 20899,
+       "line_end": 20899,
+       "quote": "Ordinary traversal performs a CAS update to the same current generation's cursor",
+       "excerpt_sha256": "1d8a1bd3f135ba5b81a0fbf2db884b73ce881f79d54b9b787e7a7694bc57ebb0",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "Affected-record mutation fence",
+       "line_start": 26500,
+       "line_end": 26500,
+       "quote": "publishing native creation success, branching from it, transitioning/deleting it or releasing its required capture cannot proceed",
+       "excerpt_sha256": "1d08bc9632e9e7d41091bc714985a1a65a17a4c00a6e7ccccfd8e759531f8125",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The consumer, projector and four readers are exact at 2.0.0. The checkpoint key and v2 value schema are exact, commit is atomic CAS, and rebuild is governed. SP-278 is adopted by name. The persisted index_selection_sha256 hashes exactly the nine durable token fields; the redb snapshot ID is pinned live and not persisted, which is consistent with DL-076.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Exact successor registration and routing",
+       "line_start": 21898,
+       "line_end": 21898,
+       "quote": "Its current value is newly versioned `pm.storage_value.restore_point_created_checkpoint.v2@2.0.0`",
+       "excerpt_sha256": "a9852712167df144811d68e74eeb259515a8021148169cd2125e3015545ef371",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Exact current selection and cursor joins",
+       "line_start": 21930,
+       "line_end": 21930,
+       "quote": "The redb read-snapshot ID is separately pinned and revalidated before commit/disclosure; it is not persisted in this digest.",
+       "excerpt_sha256": "3ee997d6fc53ec1d79341d06b354b448cd34a1ab7e0075acafa229a75834506c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "restore_point_created_checkpoint",
+       "line_start": 37678,
+       "line_end": 37678,
+       "quote": "\"value_schema_ref\": \"Plans/event_index_consumer_adoption.schema.json#/$defs/restore_created_checkpoint_v2\"",
+       "excerpt_sha256": "927bd06200d447b86512ddd1b25123ca455b6128a64f49a1c86625ce77840227",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-465",
+       "line_start": 26538,
+       "line_end": 26538,
+       "quote": "2.0.0 reader successors under SP-281/SP-278",
+       "excerpt_sha256": "55fdc9bb58c3987996944b73e055a7de5cb67e0d0abf94c34d101e1da2ed0571",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "Restore-point created passive record reader",
+       "line_start": 2910,
+       "line_end": 2910,
+       "quote": "current publication uses `reader.runtime_artifacts.restore_point_record@2.0.0` with the actual SP-281/SP-278 v2 successor",
+       "excerpt_sha256": "12c007961395c2e4f0aa54cacca261175373a4d72ebd95b42c85bf00a0dc1fab",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The v1 checkpoint and reader bindings are compatibility-only, and handoff needs a verified rebuild. Envelope-v1 input is projector_replay_only, and historical payloads and hashes are never rewritten. Withdrawing a binding needs a versioned successor and currentness handoff, with currentness unavailable meanwhile. Writer admission re-checks current registry/schema. Family withdrawal is explicitly out of scope.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point created consumer checkpoint contract",
+       "line_start": 20882,
+       "line_end": 20882,
+       "quote": "Withdrawing or replacing this consumer binding requires an owner-reviewed versioned successor and verified source-range/currentness handoff before publishing successor coverage.",
+       "excerpt_sha256": "3667cffab1798d5ea67e46348bb550f0eace0027583b78edb96f518bf70e969d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point created consumer checkpoint contract",
+       "line_start": 20882,
+       "line_end": 20882,
+       "quote": "Until a supported successor is available, affected projection currentness is unavailable",
+       "excerpt_sha256": "3667cffab1798d5ea67e46348bb550f0eace0027583b78edb96f518bf70e969d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point created consumer checkpoint contract",
+       "line_start": 20880,
+       "line_end": 20880,
+       "quote": "Registered envelope-v1 compatibility is read-only normalization into `projector_replay_only`",
+       "excerpt_sha256": "abd37e0ba2bf5476cb507ec62774459e5a0600800cc3015f1584ebcca49e3b9a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "Enforceable three-barrier producer protocol",
+       "line_start": 26477,
+       "line_end": 26477,
+       "quote": "perform current registry/schema, permission, original command identity, dedupe and source-boundary/ref/hold checks",
+       "excerpt_sha256": "3991b4ed78b68dcad5fb8a910daed2ee3ceb6d26021595d9eaea2c7bb86d7d43",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "DL-693 (Jared, card E10-1, option A) defines the capture selection in ACD-465 \"Capture selection (DL-693)\", and ATS-3880 binds it: scripts/pm_s3bo_ext_sr2_capture.py selects every list over the inclusive boundary from an independently presented transcript and compares one designated copy per list, with real table predicates, independently labelled single-defect witnesses against hand-written captures and a gated cut, alongside the owner boundary in scripts/pm_s3bo_ext_sr_created.py. Proof: 16/16 rows in 2 tables, none unproved. Native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-693",
+       "line_start": 32572,
+       "line_end": 32572,
+       "quote": "His answer: option A, \"Everything up to that message, sorted by kind\", with no added words.",
+       "excerpt_sha256": "b092432d53c2ffb4167b3436bea343782b15b32ee481dacb005f5c1b28ccdf9a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-465",
+       "line_start": 26448,
+       "line_end": 26448,
+       "quote": "`cmd.chat.create_restore_point` captures everything up to and including the chosen message, sorted by kind.",
+       "excerpt_sha256": "eb5bceac8dfaff5b4cbabadff09cad5c022aa866a17d4b9eae8dfecd67851a63",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-465",
+       "line_start": 26450,
+       "line_end": 26450,
+       "quote": "- `context_refs`: the items in the chat's context at the boundary message",
+       "excerpt_sha256": "9e471e9c150385c1b5d63f444cdf1a9c2c6de8d0bd0b5a0a7d4d5be23bff23be",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-465",
+       "line_start": 26451,
+       "line_end": 26451,
+       "quote": "- `provenance_refs`: for each assistant answer in the range, the sources its tools and its model used to write it",
+       "excerpt_sha256": "1e794b681a38db98f05694fca05ced8a97b4aac79d8c093890a5f7cbae9649bd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-465",
+       "line_start": 26452,
+       "line_end": 26452,
+       "quote": "- `attachment_refs`: what is attached to each message in the range (its `attachments[]`, such as attached files), in message order.",
+       "excerpt_sha256": "14b630bca6f6a465f35dcbf6533b6215bcfe3f4930f4c5d9d12b962cc32c83b4",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-465",
+       "line_start": 26453,
+       "line_end": 26453,
+       "quote": "- `citation_refs`: the sources each assistant answer in the range cites (`citations[]`), in message order.",
+       "excerpt_sha256": "8cf0f542888539a6bf45f94cac0866389cef71fd488836ce07044d6c7688f1a2",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-465",
+       "line_start": 26455,
+       "line_end": 26455,
+       "quote": "The canonical record's `context_provenance_refs` is `context_refs` followed by each `provenance_refs` ref not already in it",
+       "excerpt_sha256": "adcd55a8407b72a794259011f32794506679e09c1ad74e6936a74c6ecb7369c9",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-465",
+       "line_start": 26455,
+       "line_end": 26455,
+       "quote": "creation refuses or quarantines with no record, companion or event, and nothing is dropped, rewritten or redacted to make the capture fit.",
+       "excerpt_sha256": "adcd55a8407b72a794259011f32794506679e09c1ad74e6936a74c6ecb7369c9",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3880",
+       "line_start": 14471,
+       "line_end": 14471,
+       "quote": "For `restore_point.created`, the checker executes the thirteen-field `pm.restore_point.immutable_capture_sha256.v1` recipe",
+       "excerpt_sha256": "f66249c07e83c0af87f490ff4aabaaa262190e9e329c05dfd6d9aacee839e57e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3880",
+       "line_start": 14473,
+       "line_end": 14473,
+       "quote": "Amended 2026-11-15 (DL-693, lane C12-SR2), closing the gap above: that selection is now owner text",
+       "excerpt_sha256": "7f2ecb50464d4978c922f35e1db72e0619aea67f3719e4fda0d6c58b91b94d67",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/depth-c12-sr-families.json",
+      "commit": "5b13ef359f08994ded76315ac03670a7b2aae227",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The missing capture-selection owner definition is now owner text and is executed and proved; see the C12-SR2 report."
+    }
+   },
+   "static_checks_seen": [
+    "scripts/pm-s3bo-check.py matrix / batteries / guards",
+    "scripts/pm-s3bo-check.py run (matrix / batteries / corpus / evidence / guards)",
+    "scripts/pm-s3bo-check.py matrix / batteries / corpus / evidence; guards --tables sr2_ plus verified reuse"
+   ]
+  }
+ ],
+ "note": "Native execution remains NOT_RUN.",
+ "guard_proof": {
+  "restore_point.created": {
+   "tables": [
+    "sr_created_0",
+    "sr2_capture_0"
+   ],
+   "rows": 16,
+   "proved": 16,
+   "unproved": [],
+   "status": [
+    "PASS"
+   ],
+   "reuse_verified": [
+    "aftermath_0",
+    "anchor_0",
+    "companion_0",
+    "context_0",
+    "datetime_0",
+    "dedupe_0",
+    "family_0",
+    "identity_0",
+    "joins_0",
+    "numbers_0",
+    "patterns_0",
+    "platform_0",
+    "protocol_0",
+    "quarantine_0",
+    "quarantine_delete_0",
+    "quarantine_delete_1",
+    "quarantine_delete_2",
+    "read_0",
+    "receipt_0",
+    "restore_0",
+    "retained_0",
+    "retry_0",
+    "schema_0",
+    "scope_0",
+    "seglog_0",
+    "sr2_capture_0",
+    "sr_applied_0",
+    "sr_applied_custody_0",
+    "sr_applied_effects_0",
+    "sr_corrupt_0",
+    "sr_corrupt_custody_0",
+    "sr_corrupt_upgrade_0",
+    "sr_created_0",
+    "sr_expired_0",
+    "sr_expired_custody_0",
+    "sr_recovery_0",
+    "sr_recovery_custody_0",
+    "sr_recovery_release_0",
+    "token_shape_0",
+    "transitions_0",
+    "withdrawal_0"
+   ]
+  }
+ },
+ "run_summary": {
+  "batteries": {
+   "cases": 1726,
+   "passed": 1726,
+   "status": "pass"
+  },
+  "corpus": {
+   "cases": 23632,
+   "passed": 23632,
+   "status": "pass"
+  },
+  "evidence": {
+   "status": "pass"
+  },
+  "guards": {
+   "flips": 186,
+   "max_rows": 8,
+   "proved": 186,
+   "rows": 186,
+   "status": "pass",
+   "stays": 938,
+   "tables": 41,
+   "unproved": []
+  },
+  "matrix": {
+   "controls": 197,
+   "negatives": 2294,
+   "status": "pass"
+  },
+  "status": "pass"
+ }
+}
