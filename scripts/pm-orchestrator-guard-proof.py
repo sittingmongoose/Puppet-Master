@@ -145,7 +145,10 @@ def checkpoint_inputs(fixtures):
         bad = copy.deepcopy(base)
         bad['event'] = None
         negatives.append((base['case_id'] + ':C12:retained_event_root_null', bad,
-                          ['historical_original_recipe'], base['case_id'], None))
+                          ['historical_original_recipe'], base['case_id'],
+                          'A non-object original cannot match sealed custody or its disclosed source ref; '
+                          'recipe_supported and recipe_evidence_source_ref both refuse. This full-boundary '
+                          'root diagnostic earns no isolated-row mutation credit.'))
     return controls, negatives, view
 
 
