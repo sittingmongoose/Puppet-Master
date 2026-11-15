@@ -513,6 +513,8 @@ def contradicted_branch(info, nodes):
             if kind != 'then':
                 continue
             condition = deref(owner.get('if', {}), resolver)[0]
+            if selector_clash(reach['ipath'], reach['ipath'][:depth], condition):
+                continue
             for prop, sub in condition.get('properties', {}).items():
                 sub = deref(sub, resolver)[0]
                 if not requires_null(sub):
@@ -578,6 +580,8 @@ def excluded_by_cases(info, nodes):
                 continue
             condition = deref(owner.get('if', {}), resolver)[0]
             object_path = reach['ipath'][:depth]
+            if selector_clash(reach['ipath'], object_path, condition):
+                continue
             parent, member = object_path[:-1], object_path[-1]
             for prop, sub in condition.get('properties', {}).items():
                 sub = deref(sub, resolver)[0]
@@ -620,42 +624,100 @@ def excluded_by_cases(info, nodes):
     return reasons[0] if reasons else None
 
 
-def union_prefix(ctx, depth):
-    """The scope a reach is evaluated in, up to an instance depth: the union alternatives (anyOf/oneOf entries) it is
-    inside up to that depth, and every conditional branch (then/else entry, by owner node) it is inside."""
-    return (tuple(ctx_key(c) for c in ctx if c[0] in ('anyOf', 'oneOf') and c[1] <= depth),
-            frozenset(ctx_key(c) for c in ctx if c[0] in ('then', 'else')))
-
-
 def applies(r, scope):
-    """A node reached by r constrains every instance the scoped reach is evaluated for: r is inside exactly the same
-    union alternatives and only inside conditional branches the scoped reach is also inside (whenever the scoped
-    clause is evaluated those branches are taken, so r's node is evaluated too); never inside if/not/contains."""
+    """A node reached by r constrains every instance the scoped reach is evaluated for: r is only inside union
+    alternatives and conditional branches the scoped reach is also inside (whenever the scoped clause is evaluated
+    in its alternative those branches are taken, so r's node is evaluated too); never inside if/not/contains."""
     unions, branches = scope
     keys = [ctx_key(c) for c in r['ctx']]
-    return (tuple(k for k in keys if k[0] in ('anyOf', 'oneOf')) == unions
+    return (all(k in unions for k in keys if k[0] in ('anyOf', 'oneOf'))
             and all(k in branches for k in keys if k[0] in ('then', 'else'))
             and not any(k[0] in APART or k[0] == 'if' for k in keys))
 
 
-def pinned(nodes, ipath, union):
+def null_at(branch, resolver, relative):
+    """Whether a conditional branch requires the member at a relative instance path to be null."""
+    sub_node, res = deref(branch, resolver)
+    for segment in relative:
+        if not isinstance(segment, str) or segment in ('*', '#') or not isinstance(sub_node, dict):
+            return False
+        nxt = sub_node.get('properties', {}).get(segment)
+        if nxt is None:
+            return False
+        sub_node, res = deref(nxt, res)
+    return isinstance(sub_node, dict) and requires_null(sub_node)
+
+
+SCOPES = {}
+
+
+def scope_of(reach, nodes):
+    """The scope a reach is evaluated in: the union alternatives and conditional branches (by owner node) it is inside,
+    plus implied branches (GO addition): when a conditional X that is evaluated whenever the reach is (at the reach's
+    location or an ancestor) has a branch requiring a strict ancestor of the reach's location to be null, every
+    valid instance that holds the reach's location takes X's other branch (the ancestor holds an object, so that
+    branch would fail). Iterated to a fixed point."""
+    key = id(reach)
+    if key in SCOPES and SCOPES[key][0] is reach:
+        return SCOPES[key][1]
+    unions = frozenset(ctx_key(c) for c in reach['ctx'] if c[0] in ('anyOf', 'oneOf'))
+    branches = set(ctx_key(c) for c in reach['ctx'] if c[0] in ('then', 'else'))
+    ipath = reach['ipath']
+    for _ in range(4):
+        added = False
+        for n in nodes.values():
+            node = n['node']
+            if not isinstance(node.get('if'), dict):
+                continue
+            for r in n['reach']:
+                depth = len(r['ipath'])
+                if depth >= len(ipath) or ipath[:depth] != r['ipath'] or not applies(r, (unions, frozenset(branches))):
+                    continue
+                for branch, other in (('then', 'else'), ('else', 'then')):
+                    implied = (other, depth, 0, id(node))
+                    if implied in branches or not isinstance(node.get(branch), dict) or not isinstance(node.get(other), dict):
+                        continue
+                    if any(null_at(node[branch], n['resolver'], ipath[depth:end]) for end in range(depth + 1, len(ipath))):
+                        branches.add(implied)
+                        added = True
+        if not added:
+            break
+    scope = (unions, frozenset(branches))
+    SCOPES[key] = (reach, scope)
+    return scope
+
+
+def value_key(x):
+    """JSON-Schema equality key: 1 and 1.0 are the same value."""
+    if isinstance(x, float) and x.is_integer():
+        x = int(x)
+    if isinstance(x, dict):
+        return '{' + ','.join(json.dumps(k) + ':' + value_key(v) for k, v in sorted(x.items())) + '}'
+    if isinstance(x, list):
+        return '[' + ','.join(value_key(v) for v in x) + ']'
+    return json.dumps(x)
+
+
+def pinned(nodes, ipath, union, exclude=None):
     """Allowed values at an instance location from nodes whose reach there applies to the scope (see applies): the
-    intersection of their const/enum/null-type constraints, or None when nothing pins it."""
+    intersection of their const/enum/null-type constraints, or None when nothing pins it. `exclude` = (node id,
+    keyword): that keyword of that node is not a pin (a clause never vouches for itself)."""
     allowed = None
     for n in nodes.values():
         for r in n['reach']:
             if r['ipath'] != ipath or not applies(r, union):
                 continue
             node = n['node']
-            if 'const' in node:
+            skip = exclude[1] if exclude and exclude[0] == id(node) else None
+            if 'const' in node and skip != 'const':
                 values = [node['const']]
-            elif isinstance(node.get('enum'), list):
+            elif isinstance(node.get('enum'), list) and skip != 'enum':
                 values = list(node['enum'])
-            elif node.get('type') == 'null':
+            elif node.get('type') == 'null' and skip != 'type':
                 values = [None]
             else:
                 continue
-            keyed = {json.dumps(x, sort_keys=True): x for x in values}
+            keyed = {value_key(x): x for x in values}
             allowed = keyed if allowed is None else {k: x for k, x in allowed.items() if k in keyed}
     return allowed
 
@@ -667,15 +729,27 @@ def required_at(nodes, ipath, prop, union):
 
 def condition_values(sub):
     if 'const' in sub:
-        return {json.dumps(sub['const'], sort_keys=True)}
+        return {value_key(sub['const'])}
     if isinstance(sub.get('enum'), list):
-        return {json.dumps(x, sort_keys=True) for x in sub['enum']}
+        return {value_key(x) for x in sub['enum']}
     if sub.get('type') == 'null':
-        return {json.dumps(None)}
+        return {value_key(None)}
     return None
 
 
-def pinned_proof(info, nodes, v):
+def selector_clash(ipath, object_path, condition):
+    """GO safety rule for branch proofs: when the clause's instance location and a member the `if` reads are
+    prefix-related, a single-field defect at the clause's location can switch the branch on (and so kill the
+    clause), so no unreachability claim is made for that reach."""
+    for prop in condition.get('properties', {}):
+        member = object_path + (prop,)
+        n = min(len(member), len(ipath))
+        if member[:n] == ipath[:n]:
+            return True
+    return False
+
+
+def pinned_proof(info, nodes, v, keyword=None):  # noqa: C901
     """GO addition, two checked proofs over members pinned by const/enum inside the same union alternative:
     (1) UNREACHABLE: every reach passes a `then` whose `if` requires a present member P to take values the definition
         pins P away from (or an `else` whose `if` the pin makes always true);
@@ -690,8 +764,22 @@ def pinned_proof(info, nodes, v):
                 continue
             condition = deref(owner.get('if', {}), resolver)[0]
             object_path = reach['ipath'][:depth]
-            union = union_prefix(reach['ctx'], depth)
+            if selector_clash(reach['ipath'], object_path, condition):
+                continue
+            union = scope_of(reach, nodes)
             props = condition.get('properties', {})
+            taken = deref(owner.get(kind, {}), resolver)[0]
+            for prop in (taken.get('properties', {}) if isinstance(taken, dict) else {}):
+                # GO addition, contradicted branch: the pins in scope (the branch's own member constraint among them)
+                # leave a present member no value, so no valid instance takes this branch.
+                allowed = pinned(nodes, object_path + (prop,), union)
+                present = prop in (taken.get('required') or []) or required_at(nodes, object_path, prop, union)
+                if allowed == {} and present:
+                    reason = (f'contradicted branch: inside the `{kind}` at {owner.get("x-pm-oracle-id", "")} the pins in scope '
+                              f'leave the present member `{prop}` no value')
+                    break
+            if reason:
+                break
             if kind == 'then':
                 for prop, sub in props.items():
                     wanted = condition_values(deref(sub, resolver)[0])
@@ -717,8 +805,8 @@ def pinned_proof(info, nodes, v):
         if reason:
             branch_reasons.append(reason)
             continue
-        union = union_prefix(reach['ctx'], len(reach['ipath']))
-        allowed = pinned(nodes, reach['ipath'], union)
+        union = scope_of(reach, nodes)
+        allowed = pinned(nodes, reach['ipath'], union, exclude=(id(info['node']), keyword))
         if allowed is None or len(allowed) != 1:
             return None
         value = next(iter(allowed.values()))
@@ -1002,6 +1090,43 @@ APART = ('if', 'not', 'contains')
 COVERED_EXTRA = 120
 
 
+SUITE_SHARE = 450  # GO addition: at most this many of a clause's 900 validations go to unmodified suite controls
+
+
+def swap_candidates(v, controls, reach, limit=6):
+    """GO addition: branch controls for a clause inside union alternatives. Innermost alternative first, the value at
+    the alternative's instance location in a real control is replaced by a generated instance of that alternative
+    (then error-guided repair, never at or above that location); only candidates the owner definition accepts and
+    that hold the clause's location are returned."""
+    out = []
+    for kind, depth, index, owner, resolver, obj in reversed(reach['ctx']):
+        if kind not in ('anyOf', 'oneOf'):
+            continue
+        alternatives = owner.get(kind) if isinstance(owner, dict) else None
+        if not isinstance(alternatives, list) or index >= len(alternatives):
+            continue
+        location = reach['ipath'][:depth]
+        for control in controls[:40]:
+            for path in list(concrete(control, location))[:2]:
+                for variant in range(2):
+                    try:
+                        built = gen(alternatives[index], resolver, 0, variant)
+                        if built is None:
+                            continue
+                        candidate = put(copy.deepcopy(control), path, built)
+                        if errors_of(v, candidate):
+                            candidate = error_repair(v, candidate, path)
+                    except Exception:  # noqa: BLE001 - a failed construction attempt
+                        candidate = None
+                    if candidate is None or errors_of(v, candidate):
+                        continue
+                    if any(True for _ in concrete(candidate, reach['ipath'])):
+                        out.append(candidate)
+                        if len(out) >= limit:
+                            return out
+    return out
+
+
 def close_root(root, v, seeds, budget, carried=None):
     carried = carried or {}
     CURRENT[0] = v
@@ -1051,13 +1176,27 @@ def close_root(root, v, seeds, budget, carried=None):
                 for variant in range(4):
                     for control in seeds[:6]:
                         pools.append((control, variant))
+                pools.append((None, 'swap'))  # GO addition: union-alternative swaps once the constructions found nothing
                 for control, variant in pools:
                     if COUNT[0] - root0 > budget or COUNT[0] - start > 900 or (
                             covered_at is not None and COUNT[0] - covered_at > COVERED_EXTRA):
                         break
-                    if variant is None:
+                    if variant is None and COUNT[0] - start > SUITE_SHARE:
+                        continue  # GO addition: suite controls that never enter the branch leave room for constructions
+                    if variant == 'swap':
+                        if best is None:
+                            pools.extend((candidate, 'swapped') for candidate in swap_candidates(v, controls, reach))
+                        continue
+                    if variant is None or variant == 'swapped':
                         paths = list(concrete(control, reach['ipath']))
                         base = control
+                        if variant == 'swapped':
+                            attempts += 1
+                            fingerprint = hashlib.sha256(pickle.dumps(base, protocol=5)).hexdigest()
+                            if fingerprint not in known:
+                                known.add(fingerprint)
+                                controls.append(base)
+                                branch_controls.append(dict(clause=clause, variant='swap', sha256=fingerprint))
                     else:
                         attempts += 1
                         try:
@@ -1112,7 +1251,7 @@ def close_root(root, v, seeds, budget, carried=None):
                             tops = sorted({common._SCHEMA_LOCATIONS.get(getattr(e, 'oracle_guard', None)) for e in errs} - {None})
                             witness = dict(path=[str(p) for p in path], edit=repr(edit)[:80], top_level=tops,
                                            input_sha256=hashlib.sha256(pickle.dumps(mutated, protocol=5)).hexdigest(),
-                                           control='branch' if variant is not None else 'suite')
+                                           control='suite' if variant is None else 'swap' if variant == 'swapped' else 'branch')
                             if not cut:
                                 restored = errors_of(v, mutated)
                                 if restored:
@@ -1136,7 +1275,7 @@ def close_root(root, v, seeds, budget, carried=None):
                 if proof:
                     best = dict(cls='UNREACHABLE', proof=proof)
                 else:
-                    pinned = pinned_proof(info, nodes, v)
+                    pinned = pinned_proof(info, nodes, v, keyword)
                     if pinned:
                         best = pinned
             entries[clause] = best or dict(cls='UNCOVERED', construction_attempts=attempts)
@@ -1253,7 +1392,60 @@ def self_test():
     p3 = pinned_proof(n3['U0kind'], n3, v3)
     print('U0kind proof', p3)
     assert p3 and p3['cls'] == 'UNREACHABLE'
-    print('closure self-test pass: two same-depth conditionals keep two reaches; no UNREACHABLE while one reach is live; pins under a shared else apply')
+    # implied else: the root `then` requires `r` null, so any instance holding r.cid takes the root `else`, whose pin
+    # applies to the reach through the plain anyOf member as well
+    schema4 = {"x-pm-oracle-id": "R4", "type": "object", "required": ["state", "r"], "properties": {
+        "state": {"x-pm-oracle-id": "st4", "enum": ["a", "b"]},
+        "r": {"x-pm-oracle-id": "r4", "anyOf": [{"x-pm-oracle-id": "r4ref", "$ref": "#/$defs/U"}, {"x-pm-oracle-id": "r4null", "type": "null"}]}},
+        "if": {"x-pm-oracle-id": "if4", "properties": {"state": {"x-pm-oracle-id": "if4s", "const": "a"}}},
+        "then": {"x-pm-oracle-id": "then4", "properties": {"r": {"x-pm-oracle-id": "r4n", "type": "null"}}},
+        "else": {"x-pm-oracle-id": "else4", "properties": {"r": {"x-pm-oracle-id": "r4pin", "properties": {"cid": {"x-pm-oracle-id": "cid4pin", "const": "cmd"}}}}},
+        "$defs": {"U": {"x-pm-oracle-id": "U4", "type": "object", "required": ["cid"], "properties": {"cid": {"x-pm-oracle-id": "cid4", "type": ["string", "null"]}, "kind": {"x-pm-oracle-id": "kind4"}},
+                        "allOf": [{"x-pm-oracle-id": "U4c", "if": {"x-pm-oracle-id": "U4if", "properties": {"cid": {"x-pm-oracle-id": "U4ifc", "type": "null"}}},
+                                   "then": {"x-pm-oracle-id": "U4then", "properties": {"kind": {"x-pm-oracle-id": "U4kind", "const": "rej"}}}}]}}}
+    v4 = jsonschema.Draft202012Validator(schema4)
+    n4 = walk(v4)
+    p4 = pinned_proof(n4['U4kind'], n4, v4, 'const')
+    print('U4kind proof', p4)
+    assert p4 and p4['cls'] == 'UNREACHABLE', 'the implied root else applies to the anyOf reach'
+    # selector clash: `if p == d then p const c`; a single defect at p (p = d) enters the branch and kills the clause
+    schema5 = {"x-pm-oracle-id": "R5", "type": "object", "required": ["p"], "properties": {"p": {"x-pm-oracle-id": "p5", "enum": ["c", "d", "e"]}},
+               "if": {"x-pm-oracle-id": "if5", "properties": {"p": {"x-pm-oracle-id": "if5p", "const": "d"}}},
+               "then": {"x-pm-oracle-id": "then5", "properties": {"p": {"x-pm-oracle-id": "then5p", "const": "c"}}}}
+    v5 = jsonschema.Draft202012Validator(schema5)
+    n5 = walk(v5)
+    p5 = pinned_proof(n5['then5p'], n5, v5, 'const')
+    print('then5p proof', p5)
+    assert not p5 or p5['cls'] != 'UNREACHABLE', 'a defect at the selector itself can enter the branch'
+    # a clause never vouches for itself: the only pin at a const clause's location is that const
+    schema6 = {"x-pm-oracle-id": "R6", "type": "object", "properties": {"k": {"x-pm-oracle-id": "k6", "const": "x"}}}
+    v6 = jsonschema.Draft202012Validator(schema6)
+    n6 = walk(v6)
+    p6 = pinned_proof(n6['k6'], n6, v6, 'const')
+    print('k6 proof', p6)
+    assert p6 is None, 'no COVERED_BY_CONST from the clause itself'
+    # contradicted branch: the branch's own member constraint (null) meets an outside pin (a string const)
+    schema7 = {"x-pm-oracle-id": "R7", "type": "object", "required": ["cid", "err"], "properties": {
+        "cid": {"x-pm-oracle-id": "cid7", "const": "cmd"}, "err": {"x-pm-oracle-id": "err7"}, "kind": {"x-pm-oracle-id": "kind7"}},
+        "allOf": [{"x-pm-oracle-id": "C7", "if": {"x-pm-oracle-id": "C7if", "properties": {"err": {"x-pm-oracle-id": "C7ife", "const": "unknown"}}},
+                   "then": {"x-pm-oracle-id": "C7then", "properties": {"cid": {"x-pm-oracle-id": "C7cid", "type": "null"}, "kind": {"x-pm-oracle-id": "C7kind", "const": "rej"}}}}]}
+    v7 = jsonschema.Draft202012Validator(schema7)
+    n7 = walk(v7)
+    p7 = pinned_proof(n7['C7kind'], n7, v7, 'const')
+    print('C7kind proof', p7)
+    assert p7 and p7['cls'] == 'UNREACHABLE', 'a branch the pins leave no value for a present member is never taken'
+    # alternative swap: a real control holds alternative 0; the clause sits in alternative 1
+    schema8 = {"x-pm-oracle-id": "R8", "type": "object", "required": ["e"], "properties": {"e": {"x-pm-oracle-id": "e8", "oneOf": [
+        {"x-pm-oracle-id": "e8a", "type": "object", "additionalProperties": False, "required": ["d"], "properties": {"d": {"x-pm-oracle-id": "e8ad", "const": "u"}}},
+        {"x-pm-oracle-id": "e8b", "type": "object", "additionalProperties": False, "required": ["d", "ref"], "properties": {"d": {"x-pm-oracle-id": "e8bd", "const": "n"}, "ref": {"x-pm-oracle-id": "e8bref", "type": "string", "minLength": 1}}}]}}}
+    v8 = jsonschema.Draft202012Validator(schema8)
+    n8 = walk(v8)
+    reach8 = n8['e8bref']['reach'][0]
+    swapped = swap_candidates(v8, [{"e": {"d": "u"}}], reach8)
+    print('swap', swapped[:1])
+    assert swapped and v8.is_valid(swapped[0]) and swapped[0]['e']['d'] == 'n'
+    print('closure self-test pass: same-depth conditionals keep their reaches; no UNREACHABLE while one reach is live; '
+          'shared and implied branch pins apply; selector clash and self-pins make no claim; contradicted branches; alternative swap')
     return 0
 
 
