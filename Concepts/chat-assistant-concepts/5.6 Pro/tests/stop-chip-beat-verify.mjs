@@ -802,6 +802,24 @@ const CASES = {
 		};
 		assert.throws(() => smooth(W, 0, 'b'), /backlight/);
 		return 'the 0.1 backlight hand-over is rejected';
+	},
+	// Same long gap (1 s, place 1 to 1.4125, inside one frame at the faster pace). A hand-over on both
+	// loops at the index smooth is told to allow. The glyph's step is 0.1 of a loop, past one frame.
+	// The allowance is the backlight catch-up's frame, so the glyph record must still be rejected.
+	'a glyph hand-over in the backlight catch-up\'s frame is still judged (constructed)': () => {
+		const W = {
+			k: 1,
+			frames: [
+				{ t: 0, g: { a: 1, place: 1, dur: 3200 }, b: { a: 2, place: 1, dur: 3200 } },
+				{ t: 1000, g: { a: 1, place: 1.4125, dur: 3200 }, b: { a: 2, place: 1.4125, dur: 3200 } },
+			],
+			jumps: [
+				{ i: 1, t: 1000, layer: 'bl', before: 1.3125, after: 1.4125, d: 3200 },
+				{ i: 1, t: 1000, layer: 'g', before: 1.3125, after: 1.4125, d: 3200 },
+			],
+		};
+		assert.throws(() => smooth(W, 0, 'g', [1]), /glyph/);
+		return 'the glyph hand-over in the catch-up frame is rejected';
 	}
 };
 
