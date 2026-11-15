@@ -2040,11 +2040,12 @@
      same path the timer uses. What no observer reports is a visibility-only change (an inline visibility, a stylesheet
      visibility keyed to an unobserved attribute): for those a 2000 ms safety-net timer remains, armed when the first
      lens is hidden and re-armed only from inside the check, only while any lens is still hidden; a hidden document
-     re-arms it without reading anything. The check's reads are stripParked (a closest(), no layout), cvSkipped (the
+     re-arms it without reading anything. A sync that lands while that check is waiting for layout does not start an
+     interval of its own: the check still runs, and it arms the next interval if a lens is still hidden. The check's reads are stripParked (a closest(), no layout), cvSkipped (the
      section's own style and box, never the skipped content) and visible() (the strip's and its target's rect and
      computed visibility), all after the frame's layout, where they are free. Where ResizeObserver does not exist the
      timer alone does the work, at the same 2000 ms. */
-  var hiddenLenses = new Map(), showT = 0;
+  var hiddenLenses = new Map(), showT = 0, showHold = false;
   var showSize = new WeakMap();
   var showWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
     var woke = false;
@@ -2059,7 +2060,7 @@
     if (!woke || !hiddenLenses.size) return;
     /* the pending net tick is dropped so the check runs now; the check re-arms the net from inside itself */
     if (showT) { clearTimeout(showT); showT = 0; }
-    onLayout(checkShownNow);
+    queueShown();
   }) : null;
   /* a strip is observed while any hidden lens uses it: one lens leaving does not unwatch a strip another still hides */
   function showUnwatch(L) {
@@ -2076,12 +2077,26 @@
     if (!L.strip.isConnected) { hiddenLenses.delete(L); showUnwatch(L); return; }
     hiddenLenses.set(L, cfg);
     if (showWatch) showWatch.observe(L.strip);
-    if (!showT) showT = setTimeout(checkShown, 2000);
+    /* a check already waiting for layout arms this itself if the lens is still hidden */
+    if (!showT && !showHold) showT = setTimeout(checkShown, 2000);
   }
   /* onLayout(fn): fn runs once after the frame's own style and layout, before paint, so every read in it is free (Q16).
      It is afterLayout(fn): one probe and one ResizeObserver for all of Glass. Work that a timer would otherwise run in the
      middle of an app's rebuild waits there instead: */
   function onLayout(fn) { if (!afterLayout(fn)) fn(); }
+  /* the wake and the tick share one queued check. showHold stops awaitShow from arming a fresh 2000 ms interval in the
+     gap before it runs: that arm used to trip the showT guard and skip the look, so a lens already shown waited another
+     whole interval. */
+  function queueShown() {
+    if (showHold) return;
+    showHold = true;
+    onLayout(function () {
+      showHold = false;
+      if (document.hidden) { if (hiddenLenses.size && !showT) showT = setTimeout(checkShown, 2000); return; }
+      if (showT) { clearTimeout(showT); showT = 0; }
+      checkShownNow();
+    });
+  }
   /* - the hidden-lens check, whose tick landing on a Settings chapter change forced the half-built page through 242 ms
        of layout in Basic Dark */
   function checkShown() {
@@ -2089,7 +2104,7 @@
     /* a background tab never wakes layout: the tick re-arms without reading anything */
     if (document.hidden) { if (hiddenLenses.size) showT = setTimeout(checkShown, 2000); return; }
     if (!switchOn()) { showUnwatchAll(); hiddenLenses.clear(); return; }
-    onLayout(checkShownNow);
+    queueShown();
   }
   function checkShownNow() {
     if (showT) return;

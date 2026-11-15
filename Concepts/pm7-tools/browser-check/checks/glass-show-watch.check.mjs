@@ -29,14 +29,14 @@
 //
 // QW5: --set only=1,2,3,4,9,13 runs those rows and no others; --set repeat=<n> runs each of them n times
 // (default 1). Row 2 keeps a trace, times relative to the show write: each glass.js timer of 400 or 2000 ms
-// (ask, fire, and clear — glass.js clears the pending tick only when the ResizeObserver wake drops it), and
-// each change of the captured lens's inline opacity. An ask's g is its line inside the lg-js block, which is
-// glass.js's own line (the block is that file). At this revision the three ask sites are awaitShow (g2079,
-// only when no tick is pending), the document.hidden re-arm (g2090, inFire and docHidden), and the re-arm at
-// the bottom of the check (g2111). fire dt is ms from that ask to the callback: a dt well over 2000 is a late
-// callback; a fire near +2000 whose ask is near the show is one interval; a fire near +3000 whose previous
-// fire did not change the opacity is a tick that did not bring the lens back. Budgets below are still QW4's
-// until the measured ranges replace them.
+// (ask, fire, and clear — a clear is the ResizeObserver wake, or the queued check, dropping the pending tick),
+// and each change of the captured lens's inline opacity. An ask's g is its line inside the lg-js block, which
+// is glass.js's own line (the block is that file). The ask sites are awaitShow (g2081, only when no tick is
+// pending and no check is waiting for layout), the document.hidden re-arm (g2104, inFire and docHidden), and
+// the re-arm at the bottom of the check (g2125). fire dt is ms from that ask to the callback: a dt well over
+// 2000 is a late callback; a fire near +2000 whose ask is near the show is one interval; a clear after the
+// show followed by an awaitShow ask is a new interval started by a sync that beat the queued check. Budgets
+// below are still QW4's until the measured ranges replace them.
 //
 // WRITTEN WITHOUT A BROWSER RUN (the lead runs the checks). What the lead must confirm:
 //   - Row 4's 40 ms budget is the spec's. A class change on .page alone is not HOT in glass.js's mo handler, so it
