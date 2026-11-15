@@ -34,6 +34,55 @@ export default (ctx) => {
 	else throw new Error(`no built page at ${page}; build it (python3 Concepts/onboarding/opus-5.5/tools/build.py --out <path>) and pass --set page=<path>`);
 	if (ctx.fleet && /^file:/.test(url)) throw new Error('--host: a browser on another machine can\'t open this machine\'s file:// page. Use ssh and a checkout of the branch on that machine.');
 	let cb = 0;
+	// One viewport for the run's config and for every check that does not ask for a size itself.
+	const defaultViewport = { width: 1920, height: 1080 };
+	// The outgoing page's saved settings must not boot the next load. Home writes localStorage once the
+	// document is already hidden (pagehide): clear what is stored and drop only that going-away write.
+	// The new document keeps its own Storage.prototype, so a save during the check still works
+	// (OPUS-FO163-T1). The sandbox has no storage to clear.
+	const clearSaved = async (t) => {
+		const frames = [];
+		if (t.root) frames.push(t.root);
+		const main = t.page && t.page.mainFrame();
+		if (main && main !== t.root) frames.push(main);
+		for (const frame of frames) {
+			await frame.evaluate(() => {
+				const proto = Storage.prototype, orig = proto.setItem;
+				if (typeof orig === 'function' && !orig.__pmResetLayout) {
+					proto.setItem = function (k, v) { return document.visibilityState === 'hidden' ? undefined : orig.call(this, k, v); };
+					proto.setItem.__pmResetLayout = true;
+				}
+				try { localStorage.clear(); } catch (e) { /* the sandbox: no storage */ }
+			}).catch(() => { /* about:blank, or a frame that has already gone */ });
+		}
+	};
+	// Set true when this test has asked for a size. Reset at each test; the page method is wrapped once.
+	let viewportChosen = false;
+	let sizeWrapped = false;
+	// One init script for the context. A fresh open sets __pmBcFresh on the outgoing document; the next
+	// document clears its own localStorage before any page script (the boot snippet reads the saved look
+	// there). A reload does not set the flag, so a check that saves and reloads still sees its write.
+	let freshArmed = false;
+	const armFresh = async (t) => {
+		if (!freshArmed) {
+			freshArmed = true;
+			await t.context.addInitScript(() => {
+				try {
+					if (sessionStorage.getItem('__pmBcFresh') === '1') {
+						sessionStorage.removeItem('__pmBcFresh');
+						localStorage.clear();
+					}
+				} catch (e) { /* the sandbox: no storage */ }
+			});
+		}
+		const frames = [];
+		if (t.root) frames.push(t.root);
+		const main = t.page && t.page.mainFrame();
+		if (main && main !== t.root) frames.push(main);
+		for (const frame of frames) {
+			await frame.evaluate(() => { try { sessionStorage.setItem('__pmBcFresh', '1'); } catch (e) { /* no storage */ } }).catch(() => {});
+		}
+	};
 	// The one sandbox switch. --set sandbox=1: every check runs its page as T3's file preview shows it, inside
 	// t.openInSandbox at its default flags (allow-scripts allow-forms allow-popups allow-downloads: an opaque origin, no
 	// storage, no modals). --set sandbox=0: every check on a normal page, the provider checks too. Unset: each check's own
@@ -83,7 +132,7 @@ export default (ctx) => {
 	return {
 		name: 'puppetmaster',
 		pageUrl: url,
-		viewport: { width: 1920, height: 1080 },
+		viewport: defaultViewport,
 		consoleErrors: { fail: true, allow: [] },
 		failedRequests: { fail: false },
 		// Silent by default (Jared, 2026-11-10: test runs on his PC played the onboarding sounds). Every frame of every
@@ -91,7 +140,19 @@ export default (ctx) => {
 		// mutes media elements (a JS play() at the call, a native autoplay start at its play event). The audio engine itself still runs: contexts, unlock, logs, taps and analysers
 		// ahead of the destination behave as before, so sound checks keep measuring. `--set audible=1` restores the speakers.
 		prepareContext: async (t, context) => { await silence(context); },
-		beforeEach: async (t) => { await silence(t.context); },
+		// A size the check asks for (t.viewport, or page.setViewportSize) is kept. Anything left by the
+		// previous check is not: open() puts the config viewport back when this test has not asked.
+		beforeEach: async (t) => {
+			await silence(t.context);
+			viewportChosen = false;
+			const orig = t.viewport.bind(t);
+			t.viewport = async (w, h) => { viewportChosen = true; return orig(w, h); };
+			if (!sizeWrapped) {
+				sizeWrapped = true;
+				const setSize = t.page.setViewportSize.bind(t.page);
+				t.page.setViewportSize = async (size) => { viewportChosen = true; return setSize(size); };
+			}
+		},
 		helpers: {
 			// Whether this check runs in the sandbox: the switch when it is given, else the check's own default
 			sandboxed(t, own = false) { return sandboxArg === null ? own : sandboxArg; },
@@ -102,6 +163,11 @@ export default (ctx) => {
 			// switch at 1 also puts in the sandbox). Returns the frame the app is in, which t.root (what t.until, t.css and the
 			// other checks look at) also is: the page's main frame, or the sandbox's.
 			async open(t, { onboarding = false, query = '', settleMs = 300, sandbox } = {}) {
+				// Default saved look and default viewport, unless this test already asked for a size.
+				// A look asked for after the load (t.app.look, or Settings' own rows) is unchanged.
+				if (!viewportChosen) await t.viewport(defaultViewport.width, defaultViewport.height);
+				await armFresh(t);
+				await clearSaved(t);
 				const sep = url.includes('?') ? '&' : '?';
 				const u = `${url}${sep}cb=${Date.now()}-${++cb}${onboarding ? '' : '&o55=off'}${query ? '&' + query : ''}`;
 				if (sandbox === true || sandboxArg === true) await t.openInSandbox(u, { settleMs });
@@ -150,14 +216,7 @@ export default (ctx) => {
 			// page's life still work (OPUS-FO163-T1: with setItem a no-op for good, the FO-163 reset flows could not
 			// verify a single write). The sandbox has no storage to clear.
 			async resetLayout(t) {
-				await t.root.evaluate(() => {
-					const proto = Storage.prototype, orig = proto.setItem;
-					if (typeof orig === 'function' && !orig.__pmResetLayout) {
-						proto.setItem = function (k, v) { return document.visibilityState === 'hidden' ? undefined : orig.call(this, k, v); };
-						proto.setItem.__pmResetLayout = true;
-					}
-					try { localStorage.clear(); } catch (e) { /* the sandbox: no storage */ }
-				});
+				await clearSaved(t);
 			}
 		}
 	};

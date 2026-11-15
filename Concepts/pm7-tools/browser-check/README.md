@@ -247,7 +247,7 @@ FO-61: Later must remain uncommitted and unconfirmed before the first comparison
 ```js
 const LOADER = '<your surface selector>';    // the element your lane owns
 export default async function (t) {
-	await t.app.open();                      // fresh load: cache-buster, o55=off, waits for ready
+	await t.app.open();                      // fresh load: cache-buster, o55=off, default look, default viewport, waits for ready
 	await t.app.look('nier-dark');           // one of the ten looks, not persisted; waits out NieR's switch-on
 	await t.app.resetLayout();               // block Home's localStorage writes and clear them
 	await t.visible(LOADER, 'loader on top');
@@ -257,6 +257,8 @@ export default async function (t) {
 	await t.crop('loader', LOADER, 'loader at 16 px: eyes read through the band');
 }
 ```
+
+`t.app.open()` starts each check from the default saved look and the config viewport, 1920×1080. The next document clears its own storage before any page script, and the outgoing page's hidden writes are dropped, so a look or a viewport left by the check before it does not change this one. A reload keeps what this check saved. A `t.viewport(...)` or `page.setViewportSize(...)` earlier in the same test is kept. `t.app.look` still does not persist; `t.app.resetLayout()` is the same storage clear, for a check that reloads without opening again.
 
 ## Motion
 
