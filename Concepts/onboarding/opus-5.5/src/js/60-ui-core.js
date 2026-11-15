@@ -832,7 +832,10 @@
     };
     const live = () => S.open && S.sess.screen === from && host.isConnected && !O55.motion.lowResource;
     const settled = () => { const l = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); return !S.root.classList.contains('o55-opening') && !!l && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold'); };
-    let i = 0, n = 1, last = 0, watch = 0, gap = 0;
+    /* (it starts with three frames that only watch: the host becomes a composited layer and is restyled for drawing, 422
+       elements, with nothing drawn in it yet, and the first element's programs come in a frame of their own; together they
+       were one 117 ms stall at the pre-draw's start on the owner's PC, follow-up of FO-206) */
+    let i = 0, n = 1, last = 0, watch = 3, gap = 0;
     const frame = (now) => {
       if (stop) return;
       if (!live()) { end('left'); return; }
