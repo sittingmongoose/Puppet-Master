@@ -238,6 +238,10 @@
   {
    "event_type": "forge.review.thread.replied",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.thread.resolved",
+   "outcome": "registered"
   }
  ]
 }
