@@ -155,7 +155,14 @@ def walk(v):
     def visit(node, resolver, ipath, ctx, steps, depth, obj=None, empty=None):
         if not isinstance(node, dict) or depth > 40:
             return
+        if depth and isinstance(node.get('$id'), str):  # GO fix: an inline document with its own $id is its own base
+            try:
+                from referencing.jsonschema import DRAFT202012
+                resolver = resolver.in_subresource(DRAFT202012.create_resource(node))
+            except Exception:  # noqa: BLE001 - keep the enclosing resolver; a dangling ref is then recorded below
+                pass
         location = node.get('x-pm-oracle-id', json.dumps(node, sort_keys=True))
+        RESOLVERS.setdefault(id(node), resolver)
         key = (location, ipath, tuple(ctx_key(c) for c in ctx))
         if key in seen:
             return
@@ -384,10 +391,15 @@ CURRENT = [None]  # the root validator of the definition being closed (for condi
 COUNT = [0]  # GO addition: every schema validation the closure performs (GC charged repair() a flat 8)
 
 
-def holds(v, node, value):
+RESOLVERS = {}  # GO fix: id(schema node) -> the resolver of the document that node belongs to (filled by walk)
+
+
+def holds(v, node, value, resolver=None):
     COUNT[0] += 1
+    resolver = resolver if resolver is not None else RESOLVERS.get(id(node))
     try:
-        return not any(True for _ in v.evolve(schema=node).iter_errors(value))
+        evolved = v.evolve(schema=node, _resolver=resolver) if resolver is not None else v.evolve(schema=node)
+        return not any(True for _ in evolved.iter_errors(value))
     except Exception:  # noqa: BLE001
         return False
 
@@ -883,6 +895,7 @@ def error_repair(v, value, keep, rounds=16):
             if where == keep[:len(where)] and error.validator not in ('required', 'additionalProperties', 'unevaluatedProperties'):
                 continue  # never regenerate the member under test or one of its ancestors
             node = error.schema if isinstance(error.schema, dict) else {}
+            node_resolver = RESOLVERS.get(id(node), v._resolver)  # GO fix: the failing node's own document, not the root's
             try:
                 target = get(value, where)
             except (KeyError, IndexError, TypeError):
@@ -890,7 +903,7 @@ def error_repair(v, value, keep, rounds=16):
             if error.validator == 'required' and isinstance(target, dict):
                 for name in error.validator_value:
                     if name not in target:
-                        target[name] = gen(node.get('properties', {}).get(name, {}), v._resolver, 0, 0)
+                        target[name] = gen(node.get('properties', {}).get(name, {}), node_resolver, 0, 0)
                         changed = True
             elif error.validator in ('additionalProperties', 'unevaluatedProperties') and isinstance(target, dict):
                 allowed = set(node.get('properties', {}))
@@ -899,7 +912,7 @@ def error_repair(v, value, keep, rounds=16):
                         del target[name]
                         changed = True
             elif where != keep[:len(where)]:
-                generated = gen(node, v._resolver, 0, 0)
+                generated = gen(node, node_resolver, 0, 0)
                 if generated != target:
                     value = put(value, where, generated)
                     changed = True
@@ -1490,8 +1503,17 @@ def self_test():
     p9 = pinned_proof(n9['path9'], n9, v9, 'pattern')
     print('path9 proof', p9)
     assert p9 and p9['cls'] == 'COVERED_BY_CONST'
+    # an embedded document with its own $id: repair resolves its `#/$defs/...` in that document, not in the root
+    schema10 = {"$id": "urn:go-selftest:root", "x-pm-oracle-id": "R10", "type": "object", "required": ["x"], "properties": {"x": {
+        "$id": "urn:go-selftest:inner", "x-pm-oracle-id": "X10", "type": "object", "required": ["a"],
+        "properties": {"a": {"x-pm-oracle-id": "A10", "$ref": "#/$defs/Id"}}, "$defs": {"Id": {"x-pm-oracle-id": "Id10", "type": "string", "minLength": 1}}}}}
+    v10 = jsonschema.Draft202012Validator(schema10)
+    walk(v10)
+    repaired = error_repair(v10, {"x": {}}, ("x", "zz"))
+    print('embedded repair', repaired)
+    assert repaired is not None and v10.is_valid(repaired)
     print('closure self-test pass: same-depth conditionals keep their reaches; no UNREACHABLE while one reach is live; '
-          'shared and implied branch pins apply; selector clash and self-pins make no claim; contradicted branches; alternative swap')
+          'shared and implied branch pins apply; selector clash and self-pins make no claim; contradicted branches; alternative swap; ancestor pins; embedded-document repair')
     return 0
 
 
