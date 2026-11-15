@@ -7,7 +7,7 @@ from reports/event-authority-20261114/PNC019-S3D-grades.json. Every inherited qu
 (same text, nearest occurrence; excerpt and file hashes recomputed); a quote that is no longer present fails the
 build. Only the positive_negative_oracles cell is rewritten, from the committed GC bundle. Check the output with
 scripts/pm-pnc019-s3a-grade-check.py.
-Usage: python3 scripts/pm-goal-gc-grades.py --commit SHA [--out reports/event-authority-20261115/PNC019-C12-GC-grades.json]
+Usage: python3 scripts/pm-goal-gc-grades.py --commit SHA [--branch NAME] [--out reports/event-authority-20261115/PNC019-C12-GC-grades.json]
 """
 import argparse
 import copy
@@ -60,6 +60,7 @@ def after(path, marker, quote):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--commit', required=True, help='the tree the grades assess')
+    parser.add_argument('--branch', default='plans/ea-pnc-c12-gc-20261114', help='the branch that holds --commit')
     parser.add_argument('--out', type=Path, default=ROOT / 'reports/event-authority-20261115/PNC019-C12-GC-grades.json')
     args = parser.parse_args()
     core_path = 'reports/event-authority-20261115/PNC019-C12-GC-core.json'
@@ -116,7 +117,7 @@ def main():
         row['criterion_12_before'] = before
         rows.append(row)
     out = dict(schema_id='pm.pnc019.c12_gc.depth_grades.v1', grade='after',
-               assessed_tree=dict(commit=args.commit, branch='plans/ea-pnc-c12-gc-20261114',
+               assessed_tree=dict(commit=args.commit, branch=args.branch,
                                   note='Grades the tree at this commit; the bundle and grade file are committed after it.'),
                rubric='/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md',
                criteria=ORDER, status_meaning='PASS/PARTIAL/ABSENT/CONFLICT as in the rubric; a PASS grades owner text and '
