@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L40279
+Source lines: L28747-L40321
 
-Source SHA256: `37604c2d195139ca0c614b202b37894213dda65d69ac2d7b76d5ae7a15fb9e4a`
+Source SHA256: `af6e51c71efe8b240e08fd4d661e890663633428bacf277ad03ebdfa0ad8407c`
 
 ---
 
@@ -11540,4 +11540,46 @@ preserved_exact_tokens: ["Everything up to that message, sorted by kind", "conte
 negative_constraints:
 - No capture category is guessed, inferred from the merged record field or redacted to fit.
 - No schema, recipe, policy, admission, native execution claim or governance seal is created.
+```
+
+### DL-695 - A Retried Failed Deletion Stays Hidden And Re-Checks Before Carrying On (E11-1)
+
+```yaml
+plan_unit_id: DL-695
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered stream E's card E11-1 on the AI Account Center Status tab on 2026-11-15 at 11:05 AM EST (16:05:40Z), signed, in send a5dd87b4-e1e1-4992-8c92-1628b73211ad. His answer: option A, "It stays hidden; the retry re-checks and carries on", with no added words.
+
+  The question, as the card asked it: "When a failed deletion is retried, does the content stay hidden?" Storage deletes in steps (hidden from view, held while anything still needs it, permanently purged), and the plans said a retry after a failed step must re-check everything and may not skip straight to purging, but never said which step the retry starts from. Option A promised: "The content never reappears during a retry." Its stated cost: "A retry can't undo the hide; restoring the content goes through the normal restore path." Option B, "It starts over as a new request", was not chosen.
+
+  That answer defines the one edge out of `failed` in the Storage deletion lifecycle, in Plans/storage-plan.md Case L-3 Thread/project deletion (owner unit SP-237): a retried `failed` deletion goes to `logically_hidden`. The retry keeps the same `deletion_id` and deletion-operation idempotency identity, takes the next `event_refs` ordinal (SP-2200), and before it records `logically_hidden` revalidates holds, tombstone, scope, storage-writer posture and purge/compaction authority, proving the content-free tombstone and logical hide again. `held`, `purge_pending` and `purged` then follow only through the ordinary graph. A retry whose revalidation is missing or fails is refused with zero effect and the record stays `failed`. There is no `failed -> requested` edge and no bypass from `failed` to `purge_pending` or `purged`. Every existing rule stays: the failure ingress `requested | logically_hidden | purge_pending -> failed`, the forbidden `held -> failed` and `purged -> failed`, the fail-closed admission order and its zero-effect refusals.
+
+  This changes no payload or record field, identity recipe, deletion window, hold rule, retention policy, event admission or GUI, and claims no native execution, readiness clearance or governance seal.
+gui_related: false
+gui_classification_reason: Defines the retry successor in the Storage deletion lifecycle; no visible control or layout changes.
+depends_on: [DL-045, SP-237, SP-2200]
+unblocks: [SP-237, ATS-3920]
+acceptance_criteria:
+- Plans/storage-plan.md Case L-3 Thread/project deletion states that the graph-valid successor of a revalidated retry is exactly failed -> logically_hidden, with no failed -> requested edge and no bypass to purge_pending or purged.
+- Every existing deletion rule is kept; an incomplete or failed retry revalidation refuses with zero effect and leaves the record failed.
+- Plans/Automated_Testing_System.md#ATS-3920 executes the retry edge as real predicates with single-defect witnesses and refusals for retries to requested, purge_pending and purged and for missing revalidation.
+validation_surfaces: [scripts/pm-s3bo-check.py, scripts/pm_s3bo_ext_sl_deletion.py, reports/event-authority-20261114/depth-c12-sl2-families.json]
+risk_class: deletion_lifecycle_retry_drift
+reasoning_tier: high
+context_scope: event_authority_pnc019_c12_sl
+implementation_surfaces: [Plans/storage-plan.md, Plans/Automated_Testing_System.md, scripts/pm_s3bo_ext_sl_deletion.py]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-11_20261115.md; SHA-256 dfc5b200bd4fbd724affa7218e0ff4cd1f7395ba6c738f4495428ec88f1e18e0; Jared's answer to E11-1"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm-ea-lead--E11-1.json; SHA-256 4231bf09bdf6d8dd809ae3d9a00f0a597b4ccb0a7ec5ecb075f7fa3fe6c8409a; Jared's signed answer A to card E11-1, 2026-11-15T16:05:40.673Z, card SHA-256 6b8cac82f2b9d79113580083cb306048340fad98c99840fc63b782290bd3b56f"
+- "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-11.md; SHA-256 250484ab553c547b456cde9a0c9abfd0c3f2c54e56ef716b98a92d16845d5fd7; card E11-1 text"
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-237
+- Plans/storage-plan.md#SP-2200
+preserved_exact_tokens: ["It stays hidden; the retry re-checks and carries on", "failed -> logically_hidden", "logically_hidden", "deletion_id", "purge_pending"]
+negative_constraints:
+- No retry successor other than logically_hidden, and no bypass from failed to purge_pending or purged.
+- No field, recipe, policy, admission, native execution claim or governance seal is created.
 ```
