@@ -23,6 +23,7 @@ Nothing here repairs, caches or decides a checker result. Every refusal still co
 """
 import copy
 import hashlib
+import itertools
 import json
 import pickle
 import re
@@ -1238,9 +1239,10 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
             # (bases built where this clause's location and the base's insertion location are nested in each other)
             # nested in each other, or siblings under the same enclosing object (an if there reads its members)
             temps = {s_.template for s_ in group}
-            near = [b for (at, _root), lst in bases_by_t.items()
-                    if any(at == t[:len(at)] or t == at[:len(t)] or (t and at[:len(t) - 1] == t[:-1]) for t in temps) for b in lst]
-            ctrl_broken += [name for name, base in near if not validator.is_valid(base)][:5]
+            near = (b for (at, _root), lst in bases_by_t.items()
+                    if any(at == t[:len(at)] or t == at[:len(t)] or (t and at[:len(t) - 1] == t[:-1]) for t in temps) for b in lst)
+            # the first five refused bases, in the same order a full scan would list them (stops early)
+            ctrl_broken += list(itertools.islice((name for name, base in near if not validator.is_valid(base)), 5))
             kills = []
             for w in sorted(flipped, key=lambda w: (not (w["target"] in entry["eval_sites"]), not w["exact"]))[:route_kills]:
                 wp = with_instance(w["probe"], getter, w["instance"], None)
