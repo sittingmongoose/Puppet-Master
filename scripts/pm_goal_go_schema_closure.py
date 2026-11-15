@@ -602,6 +602,113 @@ def excluded_by_cases(info, nodes):
     return reasons[0] if reasons else None
 
 
+def union_prefix(ctx, depth):
+    """The union alternatives (anyOf/oneOf entries) a reach is inside, up to an instance depth."""
+    return tuple(c[:3] for c in ctx if c[0] in ('anyOf', 'oneOf') and c[1] <= depth)
+
+
+def pinned(nodes, ipath, union):
+    """Allowed values at an instance location from nodes reached there inside exactly the same union alternatives and
+    no conditional: the intersection of their const/enum/null-type constraints, or None when nothing pins it."""
+    allowed = None
+    for n in nodes.values():
+        for r in n['reach']:
+            if r['ipath'] != ipath or tuple(c[:3] for c in r['ctx']) != union:
+                continue
+            node = n['node']
+            if 'const' in node:
+                values = [node['const']]
+            elif isinstance(node.get('enum'), list):
+                values = list(node['enum'])
+            elif node.get('type') == 'null':
+                values = [None]
+            else:
+                continue
+            keyed = {json.dumps(x, sort_keys=True): x for x in values}
+            allowed = keyed if allowed is None else {k: x for k, x in allowed.items() if k in keyed}
+    return allowed
+
+
+def required_at(nodes, ipath, prop, union):
+    return any(prop in (n['node'].get('required') or []) for n in nodes.values() for r in n['reach']
+               if r['ipath'] == ipath and tuple(c[:3] for c in r['ctx']) == union)
+
+
+def condition_values(sub):
+    if 'const' in sub:
+        return {json.dumps(sub['const'], sort_keys=True)}
+    if isinstance(sub.get('enum'), list):
+        return {json.dumps(x, sort_keys=True) for x in sub['enum']}
+    if sub.get('type') == 'null':
+        return {json.dumps(None)}
+    return None
+
+
+def pinned_proof(info, nodes, v):
+    """GO addition, two checked proofs over members pinned by const/enum inside the same union alternative:
+    (1) UNREACHABLE: every reach passes a `then` whose `if` requires a present member P to take values the definition
+        pins P away from (or an `else` whose `if` the pin makes always true);
+    (2) COVERED_BY_CONST: every reach's own instance location is pinned to one value V that the clause's node accepts,
+        so any instance the clause refuses differs from V and the pinning const refuses it as well (the structural
+        form of COVERED_LATER; no kill credit)."""
+    branch_reasons, covered = [], []
+    for reach in info['reach']:
+        reason = None
+        for kind, depth, _, owner, resolver, obj in reach['ctx']:
+            if kind not in ('then', 'else'):
+                continue
+            condition = deref(owner.get('if', {}), resolver)[0]
+            object_path = reach['ipath'][:depth]
+            union = union_prefix(reach['ctx'], depth)
+            props = condition.get('properties', {})
+            if kind == 'then':
+                for prop, sub in props.items():
+                    wanted = condition_values(deref(sub, resolver)[0])
+                    allowed = pinned(nodes, object_path + (prop,), union)
+                    present = prop in (condition.get('required') or []) or required_at(nodes, object_path, prop, union)
+                    if wanted is not None and allowed is not None and present and not (wanted & set(allowed)):
+                        reason = (f'pinned selector: the `if` at {owner.get("x-pm-oracle-id", "")} requires `{prop}` in '
+                                  f'{sorted(wanted)} but the definition pins it to {sorted(allowed)} at the same object')
+                        break
+            elif props and set(condition) - {'x-pm-oracle-id'} <= {'properties', 'required'}:
+                always = True
+                for prop, sub in props.items():
+                    wanted = condition_values(deref(sub, resolver)[0])
+                    allowed = pinned(nodes, object_path + (prop,), union)
+                    if wanted is None or allowed is None or not set(allowed) <= wanted or not required_at(nodes, object_path, prop, union):
+                        always = False
+                        break
+                if always:
+                    reason = (f'pinned selector: the definition pins every member of the `if` at {owner.get("x-pm-oracle-id", "")} '
+                              'to values it accepts, so the `else` branch is never taken')
+            if reason:
+                break
+        if reason:
+            branch_reasons.append(reason)
+            continue
+        union = union_prefix(reach['ctx'], len(reach['ipath']))
+        allowed = pinned(nodes, reach['ipath'], union)
+        if allowed is None or len(allowed) != 1:
+            return None
+        value = next(iter(allowed.values()))
+        try:
+            COUNT[0] += 1
+            accepted = not any(True for _ in v.evolve(schema=info['node'], _resolver=info['resolver']).iter_errors(value))
+        except Exception:  # noqa: BLE001 - an evaluation that cannot run proves nothing
+            return None
+        if not accepted:
+            branch_reasons.append('the clause node rejects the only value pinned at its location, so no valid instance '
+                                  'reaches it in this union alternative')
+            continue
+        covered.append(json.dumps(value, sort_keys=True)[:120])
+    if branch_reasons and not covered:
+        return dict(cls='UNREACHABLE', proof=branch_reasons[0] + (f' (+{len(branch_reasons) - 1} more reaches)' if len(branch_reasons) > 1 else ''))
+    if covered or branch_reasons:
+        return dict(cls='COVERED_BY_CONST', proof='every reach is either an unreachable branch or a location pinned to one value '
+                    'the clause accepts (' + '; '.join(covered[:2]) + '); any value the clause refuses also fails the pin')
+    return None
+
+
 def error_repair(v, value, keep, rounds=16):
     """GO addition: error-guided branch-control repair. Each round fixes the deepest failing nodes the owner
     validator itself reports (a missing required member is generated from its owner subschema, an unexpected
@@ -987,6 +1094,10 @@ def close_root(root, v, seeds, budget):
                 proof = contradicted_branch(info, nodes) or forbidden_member(info, nodes) or excluded_by_cases(info, nodes)
                 if proof:
                     best = dict(cls='UNREACHABLE', proof=proof)
+                else:
+                    pinned = pinned_proof(info, nodes, v)
+                    if pinned:
+                        best = pinned
             entries[clause] = best or dict(cls='UNCOVERED', construction_attempts=attempts)
     return entries, branch_controls, COUNT[0] - root0
 
@@ -1146,7 +1257,7 @@ def merge(paths, out):
 
 
 def summarize(report):
-    rank = {'KILLED': 0, 'COVERED_LATER': 1, 'UNREACHABLE': 2, 'VACUOUS': 3, 'SELECTOR_OR_NEGATED': 4, 'UNCOVERED': 5}
+    rank = {'KILLED': 0, 'COVERED_LATER': 1, 'COVERED_BY_CONST': 2, 'UNREACHABLE': 3, 'VACUOUS': 4, 'SELECTOR_OR_NEGATED': 5, 'UNCOVERED': 6}
     per_family = {}
     for family in ('goal.created', 'restore_point.deleted', 'run.started'):
         occurrences, distinct = collections.Counter(), {}
