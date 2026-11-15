@@ -13,7 +13,16 @@
 //   built-in  a line of your own named like a built-in ("Nano-Banana") replaces it (the built-in line goes, yours says
 //             it replaces one); removing yours brings the built-in back
 //   retired   the Media box media.image.model-aliases is drawn nowhere (Media & Output, both tabs) and is no setting
+//   r2 legacy  the retired Media box's entries read into the list after a project reload (the new key at its old
+//             text default ''); one real Add writes both lines into ai.models.model-alias; the old key's bytes stay
+//   r2 typed   a real Add of "saffron review", then the chat's model menu: typing the nickname (whole, then a
+//             prefix) lists the model it means and shows the nickname beside it; an unknown nickname shows the
+//             empty-result line; the name search still works. The built-in "nano banana" lists Gemini 2.5 Flash
+//             Image only if it is a configured chat model (in this fixture it is not one: nothing asserted about it)
+//   r2 depth   a model row's depth survives the project round trip: real presses pick Claude Opus at Max in the
+//             shared picker, PM12_KIMI.reloadProject reloads, and the row and PM51.modelResolve still name Max
 // Fails main 564ed6a467 (a plain text box; the Media box drawn) and passes the head, both surfaces.
+// The r2 cases fail bd45b96e4c (the legacy line absent; a typed nickname finds nothing; the depth lost on reload) and pass the head, both surfaces.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-model-nicknames.check.mjs --set page=<build> --set sandbox=0
 import fs from 'node:fs';
 import path from 'node:path';
@@ -33,7 +42,7 @@ const LIST = (id) => {
 	const row = document.querySelector(`#pm-settings-root [id="setting-${CSS.escape(id)}"]`);
 	if (!row) return { row: false };
 	const box = row.querySelector('.o55-nick');
-	const lines = box ? [...box.querySelectorAll('.o55-nick-line')].map((l) => ({ nick: l.dataset.nick, builtin: l.classList.contains('is-builtin'), tags: [...l.querySelectorAll('.o55-nick-tag')].map((x) => x.textContent.trim()), text: l.textContent.replace(/\s+/g, ' ').trim() })) : [];
+	const lines = box ? [...box.querySelectorAll('.o55-nick-line')].map((l) => ({ nick: l.dataset.nick, builtin: l.classList.contains('is-builtin'), tags: [...l.querySelectorAll('.o55-nick-tag')].map((x) => x.textContent.trim()), text: l.textContent.replace(/\s+/g, ' ').trim(), model: (l.querySelector('select') || {}).value || '' })) : [];
 	const input = row.querySelector('input.text-control, textarea');
 	return { row: true, list: !!box, lines, plain: !box && input ? `a text box (value "${input.value}")` : '', msg: ((box && box.querySelector('.o55-nick-msg')) || {}).textContent || '', value: JSON.stringify(window.PM51 && PM51.value ? PM51.value(id) : null) };
 };
@@ -68,6 +77,29 @@ async function addLine(t, f, nick, modelName) {
 	await row.locator('[data-action="pm51-nick-add"]').click();
 	await t.page.waitForTimeout(500);
 	return { pop, depth };
+}
+/* FO-186 r2: the hosted chat's model menu on Home, read as the person sees it: its rows (id, name, the nickname
+   shown beside the model) and the empty-result line */
+const CHAT_MENU = () => {
+	const rows = [...document.querySelectorAll('#pmOverlayRoot .model-scroll .model-row')].map((r) => ({ id: r.dataset.value || '', name: ((r.querySelector('.model-copy strong') || {}).textContent || '').trim(), nick: ((r.querySelector('.model-nick') || {}).textContent || '').trim() }));
+	const scroll = document.querySelector('#pmOverlayRoot .model-scroll');
+	return { rows, empty: !!scroll && /No configured model matches this view/.test(scroll.textContent) };
+};
+async function openChatModelMenu(t, f) {
+	await f.evaluate(() => document.getElementById('tab-dashboard').click());
+	await t.settle();
+	await f.waitForFunction(() => !!document.querySelector('#pmRoot .composer-box[data-k="composer-box"]'), null, { timeout: 30000 });
+	await f.locator('#pmRoot [data-menu="model"]').first().click();
+	await t.page.waitForTimeout(450);
+	const search = f.locator('#pmOverlayRoot [data-input="model-search"]');
+	await search.click();
+	return search;
+}
+/* replace the search text by keyboard: select all, then type */
+async function typeSearch(t, search, text) {
+	await search.click({ clickCount: 3 });
+	await t.page.keyboard.type(text);
+	await t.page.waitForTimeout(350);
 }
 
 export const tests = {
@@ -179,5 +211,109 @@ export const tests = {
 		await t.check(`FO-186 the Media nickname box (${OLD}) is drawn nowhere on Media & Output`, !seen.length, `drawn on ${seen.join(', ')}`);
 		const known = await f.evaluate((id) => !!(window.PM51 && PM51.setting && PM51.setting(id)), OLD);
 		await t.check(`FO-186 ${OLD} is no setting of the page (retired into Model nicknames)`, !known);
+	},
+	/* (a) the retired Media box is a compatibility read: after a project reload its line shows with its model; the
+	   next real Add writes the merged lines into the new key; the old key's stored bytes are untouched */
+	'FO-186 r2 legacy Media nicknames read into the list after a reload; the next Add writes both, the old bytes stay': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1920, 1080);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		const LEGACY = { 'legacy review': 'claude-code/claude-haiku' };
+		await f.evaluate(([old, id, legacy]) => {
+			const st = window.PM12_KIMI.getState();
+			st.settings[old] = legacy;
+			st.settings[id] = '';   /* the old text default: the new key holds no lines of its own */
+			window.PM12_KIMI.setState(st);
+		}, [OLD, ID, LEGACY]);
+		await f.evaluate(() => window.PM12_KIMI.reloadProject());
+		await t.settle();
+		await toModels(t, f);
+		const l0 = await f.evaluate(LIST, ID);
+		const line = l0.lines.find((x) => x.nick === 'legacy review');
+		await t.check(`FO-186 r2 after the reload the list shows the legacy line with its model (${line ? line.model : 'absent'})`, !!line && !line.builtin && line.model === LEGACY['legacy review'], JSON.stringify(l0.lines));
+		await addLine(t, f, 'quick look', 'Claude Sonnet');
+		const l1 = await f.evaluate(LIST, ID);
+		const v1 = JSON.parse(l1.value || 'null') || {};
+		await t.check('FO-186 r2 one real Add writes both lines into ai.models.model-alias', v1['legacy review'] === LEGACY['legacy review'] && typeof v1['quick look'] === 'string' && /sonnet/i.test(v1['quick look']), l1.value);
+		const stored = await f.evaluate((old) => JSON.stringify((window.PM12_KIMI.getState().settings || {})[old] ?? null), OLD);
+		await t.check('FO-186 r2 media.image.model-aliases still holds its old bytes', stored === JSON.stringify(LEGACY), stored);
+	},
+	/* (b) a typed nickname finds its model in the chat's model picker: whole, prefix, the empty line, and the name
+	   search unchanged */
+	'FO-186 r2 a typed nickname finds its model in the chat picker (whole, prefix, and the empty line)': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1920, 1080);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		await toModels(t, f);
+		await addLine(t, f, 'saffron review', 'Claude Haiku');
+		const l = await f.evaluate(LIST, ID);
+		const v = JSON.parse(l.value || 'null') || {};
+		await t.check('FO-186 r2 the real Add saved "saffron review" meaning a configured chat model', typeof v['saffron review'] === 'string' && /haiku/i.test(v['saffron review']), l.value);
+		const search = await openChatModelMenu(t, f);
+		await typeSearch(t, search, 'saffron review');
+		const m1 = await f.evaluate(CHAT_MENU);
+		const hit = m1.rows.find((r) => /claude haiku/i.test(r.name));
+		await t.check('FO-186 r2 typing the whole nickname lists the model it means', !!hit, JSON.stringify(m1));
+		await t.check('FO-186 r2 the nickname shows beside the model in the menu', !!hit && hit.nick.includes('saffron review'), JSON.stringify(hit || null));
+		await typeSearch(t, search, 'saffron');
+		const m2 = await f.evaluate(CHAT_MENU);
+		await t.check('FO-186 r2 a prefix of the nickname lists it too', m2.rows.some((r) => /claude haiku/i.test(r.name)), JSON.stringify(m2));
+		await typeSearch(t, search, 'zzz-no-such-nick');
+		const m3 = await f.evaluate(CHAT_MENU);
+		await t.check('FO-186 r2 an unknown nickname shows the empty-result line as before', m3.rows.length === 0 && m3.empty, JSON.stringify(m3));
+		await typeSearch(t, search, 'Claude Haiku');
+		const m4 = await f.evaluate(CHAT_MENU);
+		await t.check('FO-186 r2 the name search still lists the model unchanged', m4.rows.some((r) => /claude haiku/i.test(r.name)), JSON.stringify(m4));
+	},
+	/* (c) a built-in nickname: Gemini 2.5 Flash Image is a media model, not one of this fixture's configured chat
+	   models, so nothing is asserted about it (the case name says so); were it configured, it would have to list */
+	'FO-186 r2 the built-in nano banana lists Gemini 2.5 Flash Image only if it is a configured chat model (in this fixture it is not one, so nothing is asserted about it)': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1920, 1080);
+		const search = await openChatModelMenu(t, f);
+		await typeSearch(t, search, 'nano banana');
+		const configured = await f.evaluate(() => ((window.PM56_APP && PM56_APP.ctx().D.models) || []).some((m) => m.id === 'gemini-2.5-flash-image' || /gemini 2\.5 flash image/i.test(m.name)));
+		if (configured) {
+			const m = await f.evaluate(CHAT_MENU);
+			await t.check('FO-186 r2 nano banana lists Gemini 2.5 Flash Image (a configured chat model here)', m.rows.some((r) => /gemini 2\.5 flash image/i.test(r.name)), JSON.stringify(m));
+		} else {
+			await t.check('FO-186 r2 Gemini 2.5 Flash Image is not a configured chat model here: nothing asserted about it', true);
+		}
+	},
+	/* (d) a model row's depth survives the project round trip: real presses pick Claude Opus at its deepest level
+	   in the shared picker, PM12_KIMI.reloadProject reloads the saved project, and the row and PM51.modelResolve
+	   still name the same depth (the save keeps pm51.o55Depth beside pm51.o55Custom) */
+	'FO-186 r2 a model row keeps its depth through a project reload': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1920, 1080);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		await toModels(t, f);
+		const ROWID = 'ai.models.default-model';
+		const trig = f.locator(`#pm-settings-root .o55-msel[data-o55-msel="${ROWID}"] [role="combobox"]`).first();
+		await t.check('FO-186 r2 the Everyday model row has a picker to press', (await trig.count()) > 0);
+		if (!(await trig.count())) return;
+		await trig.click(); await t.page.waitForTimeout(450);
+		const opt = f.locator('.o55-pick-pop.is-open [role="option"]').filter({ hasText: 'Claude Opus' }).first();
+		await t.check('FO-186 r2 the shared picker offers Claude Opus', (await opt.count()) > 0);
+		if (!(await opt.count())) { await t.page.keyboard.press('Escape'); return; }
+		await opt.click(); await t.page.waitForTimeout(350);
+		await f.locator('[role="listbox"][aria-label^="Thinking depth"] [role="option"]').filter({ hasText: 'Max' }).first().click();
+		await t.page.waitForTimeout(700);
+		const readRow = (id) => {
+			const c = document.querySelector(`.o55-msel[data-o55-msel="${id}"] [role="combobox"]`);
+			const r = window.PM51 && PM51.modelResolve ? PM51.modelResolve(id) : null;
+			return { name: c ? ((c.querySelector('strong') || {}).textContent || '').trim() : '', small: c ? ((c.querySelector('small') || {}).textContent || '').trim() : '', effort: r ? r.effort : null, value: window.PM51 ? PM51.value(id) : null };
+		};
+		const before = await f.evaluate(readRow, ROWID);
+		await t.check(`FO-186 r2 the presses saved Claude Opus at Max depth ("${before.small}")`, /Claude Opus/.test(before.name) && before.small.includes('Max depth') && before.effort === 'Max', JSON.stringify(before));
+		await f.evaluate(() => window.PM12_KIMI.reloadProject());
+		await t.settle();
+		await toModels(t, f);
+		const after = await f.evaluate(readRow, ROWID);
+		await t.check(`FO-186 r2 after the reload the row still names the model at the same depth ("${after.small}")`, /Claude Opus/.test(after.name) && after.small.includes('Max depth'), JSON.stringify(after));
+		await t.check('FO-186 r2 after the reload PM51.modelResolve still shows the depth', after.effort === 'Max' && after.value === before.value, JSON.stringify(after));
 	}
 };
