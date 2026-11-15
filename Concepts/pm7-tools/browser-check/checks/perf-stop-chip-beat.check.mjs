@@ -15,8 +15,9 @@
 // callback every 100 ms, as turn-stream.js and thought-stream.js release their words, the chip sampled every frame (its loops' place and length, the glyph's
 // scale and the backlight's opacity, as the page computes them; the films show the pixels). Changes: a word while
 // waiting, early in the loop and just before its end; 900 ms without a word while flowing, landing near a loop's end
-// and in its middle; Settings' Animation speed set to Fast mid-loop, then a word right after it and the quiet after
-// that, then Slow (Cinematic) the same way, then Measured again; a word followed by a 200 ms long task before the next frame; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
+// and in its middle; Settings' Animation speed set to Fast mid-loop, then a word right after the loops show that
+// speed, and the quiet after that, then Slow (Cinematic) the same way, then Measured again (also from a finally if
+// that leg stops short, so a later cell is not left at Cinematic); a word followed by a 200 ms long task before the next frame; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
 // so the pace turns to waiting while held), closed, then a word. For each change:
 //   - at once: a word changes data-flow and the loop's length by the frame after it; the quiet one comes 900 ms after
 //     the last word (the module's timer on the word's age; up to --set late=<ms>, default 150, plus the main thread's long tasks after it fell due);
@@ -120,16 +121,49 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 		feedOn();
 	};
 	// stop the words so that the quiet change (900 ms later) lands near `target` of a loop at the flowing length
+	const snap = () => {
+		const r = last(), one = (x) => (x ? { dur: x.dur, place: x.place, state: x.state } : null);
+		let debug = null;
+		try { debug = SS.debug(); } catch (e) { debug = String(e); }
+		return JSON.stringify({ ss: r.ss, flow: r.flow, nier: r.nier, g: one(r.g), b: one(r.b), debug });
+	};
+	let quietWhy = '';
 	const quietAt = async (name, target) => {
 		await sleep(400);
 		const ahead = 901 / (last().g ? last().g.dur : 2200);
 		const stopAt = ((target - ahead) % 1 + 1) % 1;
-		if (!(await until(() => { const f = frac(); return f != null && Math.abs(f - stopAt) < 0.02; }))) return false;
+		if (!(await until(() => { const f = frac(); return f != null && Math.abs(f - stopAt) < 0.02; }))) { quietWhy = 'position ' + snap(); return false; }
 		feedOff(); word();                                            // the last word, now
 		marks.push({ name, i: -1, kind: 'quiet', wordAt: lastWord, aim: target });
-		return until(() => last().flow === 'waiting', 3000);
+		const ok = await until(() => last().flow === 'waiting', 3000);
+		if (!ok) quietWhy = 'flow ' + snap();
+		return ok;
 	};
-	const inLoop = (lo, hi) => until(() => { const f = frac(); return f != null && f >= lo && f <= hi && last().g.place >= 1; });
+	// minDur is set only for the wait after Slow. Cinematic's waiting loop is 5120 ms (3200 * 1.6,
+	// 17-look.js O55_SPEED and send-stop.css --ss-beat * --ss-speed) and its opening delay is 1280 ms
+	// (800 * 1.6, --ss-ld). place >= 1 needs that delay plus one iteration, then the .3-.4 window, and
+	// one spare iteration if a sample skips the 0.1-wide band: 14368 ms. The other waits stay at 9 s,
+	// which fits a 3200 ms loop. basic-dark's speed-back hit the 9 s cap first (Alexis, run b2-02, 2026-11-15).
+	const inLoop = (lo, hi, minDur = 0) => {
+		let ms = 9000;
+		if (minDur) {
+			const dur = Math.max(minDur, (last().g && last().g.dur > 0) ? last().g.dur : 3200);
+			const factor = dur / 3200;
+			ms = Math.max(9000, Math.ceil(800 * factor + dur + hi * dur + dur + 800));
+		}
+		return until(() => { const f = frac(); return f != null && f >= lo && f <= hi && last().g.place >= 1; }, ms);
+	};
+	// After Settings applies a speed, wait until the loops show that factor. A fixed 150 ms still had
+	// no ss-breathe on the frame after the Slow word (glass-dark, the same run: flow "waiting", glyph
+	// undefined). NieR hides .ss-bl (send-stop.css) and the glow element lives inside it, so only the glyph is required there.
+	const expectDur = async (factor) => until(() => {
+		const r = last();
+		if (!r.g || !(r.g.dur > 0) || r.g.place == null) return false;
+		const base = r.flow === 'flowing' ? 2200 : 3200;
+		if (Math.abs(r.g.dur - base * factor) > 1) return false;
+		if (r.b && r.b.dur > 0) return Math.abs(r.b.dur - base * factor) <= 1;
+		return r.nier === 'on';
+	}, 8000);
 
 	try {
 		D.pauseWorking(); await sleep(300);
@@ -155,26 +189,38 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 		if (!(await quietAt('quiet after the long task', 0.6))) throw new Error('quiet after the long task: no change');
 		}
 		if (speed) {
-			if (!(await inLoop(0.3, 0.4))) throw new Error('speed: the loop never reached .3-.4');
-			await sleep(2); mark('Animation speed Fast, waiting, mid-loop', { kind: 'speed' });
-			const ok = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Fast');
-			if (!ok) throw new Error('Settings refused Fast');
-			await sleep(150);
-			await wordAt('word right after the speed change');
-			if (!(await quietAt('quiet after the speed change', 0.7))) throw new Error('quiet after speed: no change');
-			// Slow is Settings' Cinematic (1.6). Both cadences are sampled before Measured is restored, so the
-			// speed row can read each loop against the unscaled length times the factor (judgeSpeed).
-			if (!(await inLoop(0.3, 0.4))) throw new Error('slow: the loop never reached .3-.4');
-			await sleep(2); mark('Animation speed Slow (Cinematic), waiting, mid-loop', { kind: 'speed' });
-			const okSlow = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Cinematic');
-			if (!okSlow) throw new Error('Settings refused Cinematic');
-			await sleep(150);
-			await wordAt('word right after Slow');
-			if (!(await quietAt('quiet after Slow', 0.7))) throw new Error('quiet after Slow: no change');
-			if (!(await inLoop(0.3, 0.4))) throw new Error('speed back: the loop never reached .3-.4');
-			await sleep(2); mark('Animation speed Measured, waiting, mid-loop', { kind: 'speed' });
-			window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured');
-			await sleep(300);
+			// Both cadences are sampled before Measured is restored, so the speed row can read each loop
+			// against the unscaled length times the factor (judgeSpeed). The finally puts Measured back
+			// even when a wait throws, so Reduced Motion is not left at Cinematic (that run read 3520 and
+			// 5120 ms, which is 2200 and 3200 times 1.6).
+			let speedBack = false;
+			const setMeasured = () => {
+				const okM = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured');
+				if (!okM) throw new Error('Settings refused Measured');
+				speedBack = true;
+			};
+			try {
+				if (!(await inLoop(0.3, 0.4))) throw new Error('speed: the loop never reached .3-.4 (' + snap() + ')');
+				await sleep(2); mark('Animation speed Fast, waiting, mid-loop', { kind: 'speed' });
+				const ok = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Fast');
+				if (!ok) throw new Error('Settings refused Fast');
+				if (!(await expectDur(0.6))) throw new Error('Fast did not land (' + snap() + ')');
+				await wordAt('word right after the speed change');
+				if (!(await quietAt('quiet after the speed change', 0.7))) throw new Error('quiet after speed: no change (' + quietWhy + ')');
+				if (!(await inLoop(0.3, 0.4))) throw new Error('slow: the loop never reached .3-.4 (' + snap() + ')');
+				await sleep(2); mark('Animation speed Slow (Cinematic), waiting, mid-loop', { kind: 'speed' });
+				const okSlow = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Cinematic');
+				if (!okSlow) throw new Error('Settings refused Cinematic');
+				if (!(await expectDur(1.6))) throw new Error('Slow did not land (' + snap() + ')');
+				await wordAt('word right after Slow');
+				if (!(await quietAt('quiet after Slow', 0.7))) throw new Error('quiet after Slow: no change (' + quietWhy + ')');
+				if (!(await inLoop(0.3, 0.4, 5120))) throw new Error('speed back: the loop never reached .3-.4 (' + snap() + ')');
+				await sleep(2); mark('Animation speed Measured, waiting, mid-loop', { kind: 'speed' });
+				setMeasured();
+				await sleep(300);
+			} finally {
+				if (!speedBack) { try { setMeasured(); } catch (e) { errors.push('speed not restored: ' + String(e && e.message || e)); } }
+			}
 		}
 		if (windowPart) {
 			await wordAt('word before the window');
@@ -469,6 +515,11 @@ export function judgeSpeed(R) {
 	const marks = (R.marks || []).filter((m) => m.kind === 'speed' && m.i >= 0);
 	const bad = [];
 	const seen = [];
+	// NieR hides .ss-bl (send-stop.css) and .ss-blg, the glow loop, is inside it, so getAnimations
+	// returns no ss-glow. The glyph is the loop that speed scales. A look that draws the glow, or a
+	// sample set that is not NieR, still has to produce both. A missing one fails the row.
+	const glowSeen = (R.rows || []).some((r) => r && r.b && r.b.dur > 0);
+	const nierGlyph = !glowSeen && (R.rows || []).some((r) => r && r.nier === 'on');
 	for (let s = 0; s < marks.length; s++) {
 		const m = marks[s];
 		const speed = /Fast/.test(m.name) ? 'Fast' : /Slow|Cinematic/.test(m.name) ? 'Slow' : null;
@@ -478,15 +529,18 @@ export function judgeSpeed(R) {
 		const last = {};
 		for (let i = m.i; i < end && i < R.rows.length; i++) {
 			const r = R.rows[i];
-			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing') || !r.g || !r.b) continue;
-			if (!(r.g.dur > 0) || !(r.b.dur > 0)) continue;
+			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing') || !r.g || !(r.g.dur > 0)) continue;
+			if (!nierGlyph && (!r.b || !(r.b.dur > 0))) continue;
 			last[r.flow] = r;
 		}
 		seen.push(speed);
 		for (const flow of ['waiting', 'flowing']) {
 			const r = last[flow];
 			if (!r) { bad.push({ speed, flow, missing: true }); continue; }
-			for (const [layer, loop] of [['glyph', r.g], ['backlight', r.b]]) {
+			const loops = [['glyph', r.g]];
+			if (r.b && r.b.dur > 0) loops.push(['backlight', r.b]);
+			else if (!nierGlyph) { bad.push({ speed, flow, layer: 'backlight', missing: true }); continue; }
+			for (const [layer, loop] of loops) {
 				const want = LOOP_BASE[flow] * factor;
 				if (Math.abs(loop.dur - want) > 1) bad.push({ speed, flow, layer, dur: loop.dur, want });
 			}
@@ -537,6 +591,18 @@ export default async function (t) {
 	await t.page.waitForTimeout(Number(t.args.settle ?? (alone ? 8000 : 30000)));
 	const sandbox = f !== t.page.mainFrame();
 	const home = () => (alone ? Promise.resolve() : f.evaluate(() => PM_PAGES.go('dashboard')));
+	// Measured is the default. A pace leg that already put it back does not write again (a second
+	// save rebuilds Settings). A leg that threw is put back here too, before the next look.
+	const restoreMeasured = async () => {
+		if (alone) return;
+		await f.evaluate(() => {
+			const K = window.PM12_KIMI;
+			if (!K || typeof K.getState !== 'function' || typeof K.setSettingFromHost !== 'function') return;
+			let cur = null;
+			try { cur = K.getState().settings['general.visual.animation-speed']; } catch (e) { return; }
+			if (cur && cur !== 'Measured') K.setSettingFromHost('general.visual.animation-speed', 'Measured');
+		}).catch(() => {});
+	};
 
 	if (parts.has('rest')) {
 		const cdp = await t.page.context().newCDPSession(t.page);
@@ -571,6 +637,7 @@ export default async function (t) {
 	};
 	if (parts.has('pace')) {
 		for (const [n, look] of looks.entries()) {
+			try {
 			await savedLook(look);
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await home();
@@ -603,11 +670,12 @@ export default async function (t) {
 			// sample posted from frame N - 1 can run after frame N, which put the count one sample early; s-5, Basic Dark)
 			const by = (m) => R.rows.find((r, i) => i >= m.i && m.ft != null && r.t > m.ft) || R.rows[R.rows.length - 1];
 			const slow = words.filter((m) => { const p = R.rows[m.i - 1], r = by(m); if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
-			await t.check(`${look}: a word turns the pace to flowing by the next frame`, words.length >= (alone ? 2 : 3) && slow.length === 0, slow.length ? slow.map((m) => `${m.name}: the frame after ${JSON.stringify(by(m).flow)} ${by(m).g && by(m).g.dur}`).join('; ') : `${words.length} words`);
+			await t.check(`${look}: a word turns the pace to flowing by the next frame`, words.length >= (alone ? 2 : 3) && slow.length === 0, slow.length ? slow.map((m) => { const r = by(m); return `${m.name}: the frame after ${JSON.stringify(r.flow)} ${r.g ? r.g.dur : 'could not judge'}`; }).join('; ') : `${words.length} words`);
 			if (!alone) {
 				const sp = judgeSpeed(R);
+				const missed = sp.bad.some((x) => x.missing);
 				await t.check(`${look}: Animation speed Fast and Slow scale both loops by that speed's factor`, sp.ok,
-					sp.ok ? 'Fast 0.6 and Slow (Cinematic) 1.6 against the unscaled 2200 ms flowing and 3200 ms waiting' : JSON.stringify(sp.bad.slice(0, 6)));
+					sp.ok ? 'Fast 0.6 and Slow (Cinematic) 1.6 against the unscaled 2200 ms flowing and 3200 ms waiting' : (missed ? 'could not judge: ' : '') + JSON.stringify(sp.bad.slice(0, 6)));
 			}
 			const quiet = R.marks.filter((m) => m.kind === 'quiet');
 			// allowed: `late` ms after 900, plus the time the main thread was held by long tasks after the timer fell due
@@ -634,6 +702,7 @@ export default async function (t) {
 				t.log(`${look} light/dark: one pulse: ${tp.n} frames with both loops, worst ${tp.worst.toFixed(5)} of a loop${tp.where ? ` (${tp.where})` : ''}`);
 				await t.check(`${look} light/dark: one pulse: in every frame the backlight is at the glyph's place in the loop (to 0.002 of a loop), through the light/dark change and back`, tp.n > 60 && tp.worst <= 0.002, `${tp.n} frames, worst ${tp.worst.toFixed(4)} of a loop${tp.where ? ` (${tp.where})` : ''}`);
 			}
+			} finally { await restoreMeasured(); }
 		}
 	}
 

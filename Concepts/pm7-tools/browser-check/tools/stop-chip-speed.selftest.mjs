@@ -47,4 +47,30 @@ const one = runPage(true);
 one.rows[one.rows.length - 1].b.dur = BASE.flowing;
 const partial = judge(one);
 assert.equal(partial.ok, false, `a backlight that stays at the unscaled flowing length under Slow must fail ${JSON.stringify(partial.bad)}`);
-console.log('stop-chip-speed: 3 cases pass');
+// NieR hides .ss-bl, so a real NieR sample has a glyph and no glow. The glyph still has to scale.
+// A look that is not NieR and has no glow has not produced the backlight sample.
+function nierPage(scaled) {
+	const rows = [];
+	const marks = [];
+	let w = 0;
+	const push = (flow, speed) => {
+		const dur = BASE[flow] * (scaled ? FACTOR[speed] : 1);
+		rows.push({ w, t: w, flow, nier: 'on', g: { dur } });
+		w += 16;
+	};
+	for (const speed of ['Fast', 'Slow']) {
+		marks.push({ name: `Animation speed ${speed}, waiting, mid-loop`, i: rows.length, kind: 'speed' });
+		push('waiting', speed);
+		push('flowing', speed);
+	}
+	return { rows, marks };
+}
+const nierOk = judge(nierPage(true));
+assert.equal(nierOk.ok, true, `NieR's glyph at the factors must pass ${JSON.stringify(nierOk.bad)}`);
+const nierNo = judge(nierPage(false));
+assert.equal(nierNo.ok, false, `NieR's glyph left unscaled must fail ${JSON.stringify(nierNo)}`);
+const bare = runPage(true);
+for (const r of bare.rows) delete r.b;
+const noGlow = judge(bare);
+assert.equal(noGlow.ok, false, `a non-NieR page with no backlight sample must fail ${JSON.stringify(noGlow)}`);
+console.log('stop-chip-speed: 6 cases pass');
