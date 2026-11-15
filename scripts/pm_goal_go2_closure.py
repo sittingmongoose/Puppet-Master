@@ -1421,6 +1421,14 @@ def close(args):
         store_path = Path(str(args.residual) + '.controls.pkl.gz')
         if store_path.exists():
             CONTROL_STORE.update(pickle.loads(gzip.decompress(store_path.read_bytes())))
+        earlier_state = Path(str(args.residual) + '.ckpt')
+        if earlier_state.exists() and not (args.resume and checkpoint.exists()):
+            # the earlier pass's controls (seeds and every control it built) are this pass's starting pool
+            have = {sha(c) for c in state['controls']}
+            for c in pickle.loads(earlier_state.read_bytes())['controls']:
+                if sha(c) not in have:
+                    have.add(sha(c))
+                    state['controls'].append(c)
     if args.donors:
         lists = []
         for path in args.donors:
