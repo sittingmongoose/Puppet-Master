@@ -13455,7 +13455,8 @@ canonical_text: >-
   native tools that Puppet Master cannot disable, the script tool is still offered, the provider's own tool calls stay outside Code
   Mode, and the run's effective mode is mixed. Where a provider accepts no Puppet Master tools at all, the effective
   mode is ordinary tool calls with a typed reason naming the execution shape, delegated or reasoning-only, and no
-  Puppet Master tool call is counted for the run. A provider's own code mode, where it has one, is a provider-native feature handled
+  Puppet Master tool call is counted for the run; that execution-shape reason is the one recorded when another
+  reason would also apply. A provider's own code mode, where it has one, is a provider-native feature handled
   under the provider-native feature policy and is never what makes Code Mode effective.
 gui_related: false
 gui_classification_reason: Provider request shaping and execution-shape behaviour; not GUI implementation work.
@@ -13523,7 +13524,7 @@ canonical_text: >-
   tools, and runs inside its parent deadline with bounded output; the deadline follows Tools deadline propagation, which is
   what bounds the script's nested calls, and the script's output bound and spill are the EvalSession's under Shared Integration Runtime; each nested tool's own
   output spills under T-177. Crossing the inline-output threshold uses the existing spill path and does not itself
-  fail the script. Each nested call emits the same
+  fail the script; crossing the EvalSession hard output-byte ceiling ends it with typed recovery evidence. Each nested call emits the same
   tool events, receipts and usage rollups as a direct call and also carries the script's operation identity, so the
   transcript shows the script and every tool call it made. Only question and task, whose
   contracts hand the turn to a person or to another agent, stay directly callable in Code Mode; they are not in the
