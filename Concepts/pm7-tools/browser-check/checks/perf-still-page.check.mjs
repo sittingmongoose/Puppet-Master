@@ -17,7 +17,8 @@
 //       editor's caret is exempt: it is a text cursor, in a closed shadow root no page rule reaches), every mark holds
 //       an endless loop (no stray mark), no finite animation is held; and, once no finite animation runs, the display
 //       compositor draws at most 15 frames a second (--set drawn=), the main thread renders at most 10 (--set main=:
-//       frame starts less those Chrome abandons with nothing to update) and starts at most 60 (--set starts=; Settings)
+//       frame starts less those Chrome abandons with nothing to update) and starts at most 0.45 of the refresh
+//       measured before the page goes still, capped at 60 (--set starts= is that cap; Settings)
 //       in at least one of three 2 s traces (a toast leaving or a live update between them is not a loop). Usage shows
 //       live data (its numbers tween after each demo update, the demo engine ticks every 250 ms): its frames are logged
 //       with the script blocks that draw them, never judged; Home's dashboard is live too: its compositor frames are
@@ -121,11 +122,19 @@ export function stillPick(x, r, j) {
 // starts; Home only what the compositor draws (its widgets tick, so its main frames are logged, not judged), ranked by
 // drawn first; Usage is live data and judges none of them: its tries still stop at the first quiet one by drawn and
 // rendered frames, as before, so its logged numbers stay comparable (nothing is judged from them).
-export function stillJudged(view, { drawn = 15, main = 10, starts = 60 } = {}) {
+// At most `share` starts per refresh, and never more than `cap` a second. 0.45 of 60 Hz is 27, so a
+// do-nothing loop on a 60 Hz display fails; 0.45 of 238 Hz is above 60, so the cap keeps main's 3 to 41.
+export function stillStartsBound(hz, { share = 0.45, cap = 60 } = {}) {
+	if (!(hz > 0)) return NaN;
+	return Math.min(cap, share * hz);
+}
+export function stillJudged(view, { drawn = 15, main = 10, starts = 60, hz = null, share = 0.45 } = {}) {
+	const startCap = hz == null ? starts : stillStartsBound(hz, { share, cap: starts });
 	const d = (q) => q.drawn.perSec, m = (q) => q.mainFrames.renderedPerSec, s = (q) => q.mainFrames.perSec;
-	if (view === 'usage') return { rows: [], meets: (q) => d(q) <= drawn && m(q) <= main, score: (q) => [d(q) + m(q), s(q)] };
-	if (view === 'dashboard') return { rows: ['drawn'], meets: (q) => d(q) <= drawn, score: (q) => [d(q), m(q), s(q)] };
-	return { rows: ['drawn', 'rendered', 'starts'], meets: (q) => d(q) <= drawn && m(q) <= main && s(q) <= starts, score: (q) => [d(q) + m(q), s(q)] };
+	const startsOk = (q) => Number.isFinite(startCap) && s(q) <= startCap;
+	if (view === 'usage') return { rows: [], meets: (q) => d(q) <= drawn && m(q) <= main, score: (q) => [d(q) + m(q), s(q)], startCap, hz };
+	if (view === 'dashboard') return { rows: ['drawn'], meets: (q) => d(q) <= drawn, score: (q) => [d(q), m(q), s(q)], startCap, hz };
+	return { rows: ['drawn', 'rendered', 'starts'], meets: (q) => d(q) <= drawn && m(q) <= main && startsOk(q), score: (q) => [d(q) + m(q), s(q)], startCap, hz };
 }
 
 // The still state's marks in a trace's events and, per mark, the style recalcs of the page's main thread after it
@@ -304,6 +313,13 @@ export default async function (t) {
 	});
 	const cdp = await t.page.context().newCDPSession(t.page);
 	const url = f.url();
+	// The display's refresh, from the draw gaps while the page is still moving. summarise already
+	// records drawn.gapP50 (the median milliseconds between Display::DrawAndSwap). This trace is taken
+	// before the settle that lets the page go still; once it is still those gaps are the pauses.
+	const moving = (await trace(cdp, { ms: 800, url })).sum;
+	const refreshRaw = moving.drawn && moving.drawn.gapP50 > 0 ? 1000 / moving.drawn.gapP50 : NaN;
+	const refreshHz = refreshRaw > 20 && refreshRaw < 400 ? refreshRaw : NaN;
+	t.log(`refresh before still: ${Number.isFinite(refreshHz) ? refreshHz.toFixed(1) : 'unread'} Hz (draw gap p50 ${moving.drawn ? moving.drawn.gapP50 : '?'} ms)`);
 	const traceToggle = async (options, view) => {
 		const watching = watchUsage && view === 'usage';
 		if (watching) await f.evaluate(() => { const s = window.__stillUsageLive; s.observer.takeRecords(); s.records = []; s.error = null; s.active = true; });
@@ -392,12 +408,12 @@ export default async function (t) {
 			// nothing to update (frame-trace.mjs). Counting starts read 11-17 a second on main's own still Settings in T3's
 			// sandbox (lb3-12, 2026-11-14) where 1 to 4 frames a second rendered; the starts are logged beside it.
 			const rendered = (r) => r.mainFrames.renderedPerSec;
-			// ...and the STARTS are judged too, at most --set starts= (60) a second (the lead's ruling, 2026-11-15): a loop
-			// that asks for a frame every frame and changes no pixel is main-thread work the still page must not have, and
-			// it renders nothing. Spread on main's page (lb2), Alexis 238 Hz: sandbox 9-41 a second over 3 runs x 10 looks
-			// (the code editor's exempt caret 8-15 of them, Glass's 400 ms checkShown poll 2.5), normal 2.2-8.4 (lg1 runs);
-			// a frame-callback loop reads about the refresh rate. On a 60 Hz display such a loop reads 60: it cannot bite.
+			// Starts are at most 0.45 of the refresh measured above, capped at --set starts= (60). A loop that asks
+			// for a frame every frame and changes no pixel reads about the refresh rate and renders nothing. At 60 Hz
+			// the bound is 27 a second, so that loop fails. At 238 Hz the cap is 60, and main's page (lb2, Alexis)
+			// stays under it: sandbox 9-41 a second, normal 2.2-8.4.
 			const judgeStarts = !live && view !== 'dashboard';
+			const startCap = stillStartsBound(refreshHz, { cap: startsMax });
 			const askers = (r) => (r.startsBy || []).slice(0, 4).map(([w, n]) => `${w} ${Math.round(n / r.secs * 10) / 10}/s`).join(', ');
 			let x = null; const tries = [];
 			for (let k = 0; k < 3; k++) {
@@ -405,7 +421,7 @@ export default async function (t) {
 				const r = (await trace(cdp, { ms, url, track: framesBy, by: framesBy })).sum;
 				if (framesBy) t.log(`${at}: NOTE try ${k + 1} main frame starts by what asked for them [what, starts, nothing to update, rendered, ms]: ${JSON.stringify(r.startsBy.slice(0, 8))}`);
 				tries.push(`${r.drawn.perSec}/${rendered(r)} (starts ${r.mainFrames.perSec}, ${r.mainFrames.noUpdatePerSec} with nothing to update)${quiet ? '' : ' (a finite animation still ran)'}${r.drawn.perSec > drawnMax || rendered(r) > mainMax ? ' by ' + named(r) : ''}`);
-				const pick = stillPick(x, r, stillJudged(view, { drawn: drawnMax, main: mainMax, starts: startsMax }));
+				const pick = stillPick(x, r, stillJudged(view, { drawn: drawnMax, main: mainMax, starts: startsMax, hz: refreshHz }));
 				x = pick.x;
 				if (pick.done) break;
 			}
@@ -417,7 +433,7 @@ export default async function (t) {
 				// cost is judged by what the compositor draws
 				if (view === 'dashboard') t.log(`${at}: NOTE Home is live (its widgets tick): main frames rendered ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s) logged, not judged${named(x) ? '; by ' + named(x) : ''}`);
 				else await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, rendered(x) <= mainMax, `${rendered(x)}/s rendered (${x.mainFrames.perSec}/s started, ${x.mainFrames.noUpdatePerSec}/s of them with nothing to update), ${Math.round(x.cost.main)} ms/s in the quietest try${named(x) ? '; by ' + named(x) : ''}${framesBy ? '; asked for by ' + (askers(x) || 'nothing named') : ''}`);
-				if (judgeStarts) await t.check(`${at}: still, the main thread starts at most ${startsMax} frames a second`, x.mainFrames.perSec <= startsMax, `${x.mainFrames.perSec}/s started (${x.mainFrames.noUpdatePerSec}/s of them with nothing to update, ${rendered(x)}/s rendered), ${Math.round(x.cost.main)} ms/s in the quietest try; ${framesBy ? 'asked for by ' + (askers(x) || 'nothing named') : 'run with --set framesBy=1 to name what asks for them'}`);
+				if (judgeStarts) await t.check(`${at}: still, the main thread starts at most 0.45 per refresh (${Number.isFinite(startCap) ? startCap.toFixed(1) : '?'} a second at ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, capped at ${startsMax})`, Number.isFinite(startCap) && x.mainFrames.perSec <= startCap, `${x.mainFrames.perSec}/s started (${x.mainFrames.noUpdatePerSec}/s of them with nothing to update, ${rendered(x)}/s rendered), bound ${Number.isFinite(startCap) ? startCap.toFixed(1) : 'unread'}/s = 0.45 of ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, cap ${startsMax}/s; ${framesBy ? 'asked for by ' + (askers(x) || 'nothing named') : 'run with --set framesBy=1 to name what asks for them'}`);
 			}
 			if (a.still) await t.check(`${at}: going still cost stays within its marked population`, onCost.pass, `${JSON.stringify(onCost)}; ${on?.found ? `${on.firstFrameMs} ms frame; largest following recalc ${on.max}, ${on.total} in ${on.steps}` : 'no recalc or mark: unjudgeable'}`);
 
