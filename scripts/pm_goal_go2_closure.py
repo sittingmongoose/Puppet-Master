@@ -762,10 +762,10 @@ def self_test(args):
         assert all(vv.is_valid(x) for x in probes), schema
     out['vacuous_rules'] = dict(schemas=3, probes=len(probes), all_valid=True)
     # 3c. duplicated-$id copies: identical copies map only under $defs, never inline; differing copies never map
-    copy = {'$id': 'urn:dup', 'type': 'object', '$defs': {'d': {'type': 'string'}}, 'properties': {'a': {'$ref': '#/$defs/d'}}}
-    other = dict(copy, properties={'a': {'type': 'integer'}})
-    doc = {'$id': 'urn:top', 'properties': {'x': copy, 'y': copy, 'z': dict(other, **{'$id': 'urn:diff'}),
-                                            'w': dict(copy, **{'$id': 'urn:diff'})}}
+    twin = {'$id': 'urn:dup', 'type': 'object', '$defs': {'d': {'type': 'string'}}, 'properties': {'a': {'$ref': '#/$defs/d'}}}
+    other = dict(twin, properties={'a': {'type': 'integer'}})
+    doc = {'$id': 'urn:top', 'properties': {'x': twin, 'y': twin, 'z': dict(other, **{'$id': 'urn:diff'}),
+                                            'w': dict(twin, **{'$id': 'urn:diff'})}}
     entry = dict(schema=common.runtime_schema(doc), resources={})
     mapping, checked = copy_canon(entry)
     assert checked['urn:dup'] == dict(copies=2, identical=True, canonical='urn:top/properties/x'), checked
