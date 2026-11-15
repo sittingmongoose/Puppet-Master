@@ -1,0 +1,470 @@
+{
+ "schema_id": "pm.pnc019.c12_go.core.v1",
+ "status": "PASS_GO_SWEEP",
+ "code_commit": "code 808e0ab7d0, tables 900661094d, supplement and justifications 2c1d42c72e, schema-closure tool 5f1f1829f2 (closure reports per root name the tool commit that produced them)",
+ "runner": "scripts/pm_goal_go_sweep.py (GH1 pm_goal_guard_sweep machinery; GO manifest scripts/pm_goal_go_rows.json, tables scripts/pm_goal_go_phase_*.py)",
+ "gated_tool": "scripts/pm_guard_isolation.py at 004bdedd63",
+ "tool_sha256": [],
+ "calls": 8326,
+ "rows": 724,
+ "tables": 569,
+ "table_status": {
+  "PASS": 555,
+  "NOT_RUN": 14
+ },
+ "max_rows_per_table": 8,
+ "proved_rows": 710,
+ "unproved_rows_with_proof": 12,
+ "unproved_rows_without_proof": [
+  "goal.created/member/reply_schema",
+  "goal.created/member/value_present"
+ ],
+ "outcomes": {
+  "control": 703,
+  "exact_expected": 2131,
+  "other_refusal": 4383,
+  "undeclared": 22,
+  "exception": 570,
+  "accepted": 1083,
+  "multiple_refusals": 4
+ },
+ "kills": {
+  "KILLED": 895,
+  "NOT_REPLAYED_CAP": 425,
+  "DUPLICATE_SET_KILLED": 99,
+  "COVERED_LATER": 640,
+  "CUT_EXCEPTION": 72
+ },
+ "fabricated_row_self_test": {
+  "status": "pass",
+  "pipeline": {
+   "status": "REFUSED",
+   "reason": "row_never_observed_by_complete_checker",
+   "unobserved": [
+    "reviewer/fabricated_guard_no_checker_has_this"
+   ]
+  },
+  "gated_tool_on_real_vectors": {
+   "status": "FAIL",
+   "fabricated_proved": false,
+   "failure_kinds": [
+    "control_refused",
+    "runtime_untracked_site",
+    "table_protocol_error",
+    "untracked_refusal"
+   ],
+   "proved": []
+  }
+ },
+ "judge_self_test": {
+  "status": "pass",
+  "trials": 12,
+  "commit": "c7d2d43e17"
+ },
+ "numbers_self_test": {
+  "status": "pass",
+  "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+  "commit": "c7d2d43e17"
+ },
+ "failures": [],
+ "source_drift": [],
+ "search": {
+  "pm_goal_go_deleted": {
+   "coverage_replays": 444,
+   "rows": 437,
+   "covered_before_search": 325,
+   "attempts": 3706,
+   "whole_checker_attempts": 478,
+   "duplicate_declarations": 51,
+   "search_killed": 41,
+   "covered_after_search": 366
+  },
+  "pm_goal_go_run_started": {
+   "coverage_replays": 267,
+   "rows": 269,
+   "covered_before_search": 196,
+   "attempts": 2732,
+   "whole_checker_attempts": 352,
+   "duplicate_declarations": 36,
+   "search_killed": 17,
+   "covered_after_search": 213
+  }
+ },
+ "retained_reads": 30,
+ "frozen_regressions": {
+  "status": "PASS",
+  "runs": 6,
+  "pinned_files": 144,
+  "frozen_bytes_unchanged": true,
+  "pin_check_equals_s3ao": true,
+  "commit": "c7d2d43e17"
+ },
+ "goal_runtime_event_fixtures": {
+  "status": "pass",
+  "failures": 0,
+  "exit": 0,
+  "command": "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures",
+  "commit": "c7d2d43e17"
+ },
+ "datetime_inventory": "NOT_RUN: this base predates S1 T198 refresh (TOOL-ISSUES C12-DC1-DTGATE-ROTATION); NUMRULE files unchanged",
+ "native_execution": "NOT_RUN",
+ "families": [
+  {
+   "family": "goal.created",
+   "goal.created_matrix": "CLOSED 136 / CLOSED_BY_PROOF 2",
+   "matrix_rows": 138,
+   "schema_rows": 15,
+   "open_rows": [],
+   "goal.created_schema_closure": "roots 14, uncovered 0",
+   "schema_closure_occurrences": {
+    "COVERED_BY_CONST": 6,
+    "COVERED_LATER": 241,
+    "KILLED": 1194,
+    "SELECTOR_OR_NEGATED": 44,
+    "UNREACHABLE": 21
+   },
+   "schema_closure_distinct": {
+    "COVERED_BY_CONST": 6,
+    "COVERED_LATER": 209,
+    "KILLED": 875,
+    "SELECTOR_OR_NEGATED": 41,
+    "UNREACHABLE": 21
+   },
+   "complete_calls": 686,
+   "declared_negative_attempts": 524,
+   "attempt_outcomes": {
+    "exact_expected": 524
+   },
+   "replay_results": {
+    "KILLED": 153,
+    "NOT_REPLAYED_CAP": 341,
+    "DUPLICATE_SET_KILLED": 10,
+    "CUT_EXCEPTION": 17,
+    "COVERED_LATER": 3
+   },
+   "invalid_attempts_listed": 0,
+   "declared_rules": {
+    "source_or_go_bank": 524
+   },
+   "undeclared_negatives": 0,
+   "distinct_copy_joins_killed": 58,
+   "distinct_copy_join_rows": [
+    "goal.created/envelope/actor",
+    "goal.created/envelope/causation",
+    "goal.created/envelope/correlation",
+    "goal.created/envelope/migration_null",
+    "goal.created/envelope/null/attempt_id",
+    "goal.created/envelope/null/effective_account_ref",
+    "goal.created/envelope/null/node_id",
+    "goal.created/envelope/null/parent_event_id",
+    "goal.created/envelope/null/producer_sequence_id",
+    "goal.created/envelope/null/requested_account_ref",
+    "goal.created/envelope/null/run_id",
+    "goal.created/envelope/project_id",
+    "goal.created/envelope/thread_id",
+    "goal.created/outcome/identity",
+    "goal.created/outcome/owner_result_ref",
+    "goal.created/outcome/owner_result_sha256",
+    "goal.created/outcome/request_digest",
+    "goal.created/outcome/result_receipt_ref",
+    "goal.created/payload/accepted_revision_hash",
+    "goal.created/payload/body_receipt_request",
+    "goal.created/payload/body_receipt_sha256",
+    "goal.created/payload/currentness_hash",
+    "goal.created/payload/goal_id",
+    "goal.created/payload/objective_revision_ref",
+    "goal.created/payload/original_action_ref",
+    "goal.created/payload/project_id",
+    "goal.created/payload/source_refs",
+    "goal.created/payload/thread_id",
+    "goal.created/publication/append_result",
+    "goal.created/publication/event_id",
+    "goal.created/publication/receipt_event",
+    "goal.created/reader/observation/payload_project",
+    "goal.created/reader/observation/v3_thread",
+    "goal.created/response/command_instance_id",
+    "goal.created/response/event_refs",
+    "goal.created/response/operation_id",
+    "goal.created/response/owner_identity",
+    "goal.created/response/owner_result_ref",
+    "goal.created/response/receipt_ref",
+    "goal.created/response/request_ref",
+    "goal.created/result/accepted_revision_hash",
+    "goal.created/result/command_instance_id",
+    "goal.created/result/creation_receipt/body_receipt_request",
+    "goal.created/result/creation_receipt/body_receipt_sha256",
+    "goal.created/result/creation_receipt/event_id",
+    "goal.created/result/creation_receipt/first_append_receipt",
+    "goal.created/result/creation_receipt/original_append_result",
+    "goal.created/result/creation_receipt/original_event_value_commitment",
+    "goal.created/result/currentness_hash",
+    "goal.created/result/goal_id",
+    "goal.created/result/operation_id",
+    "goal.created/result/project_id",
+    "goal.created/result/thread_id",
+    "goal.created/source/command_instance",
+    "goal.created/source/current_identity",
+    "goal.created/source/operation",
+    "goal.created/source/owner_project",
+    "goal.created/source/owner_thread"
+   ],
+   "goal.created_numbers": {
+    "cases": 430,
+    "agree": 430,
+    "disagree": 0,
+    "crashes": 0,
+    "disagreements": []
+   },
+   "datetime_corpus": {
+    "cases": 68,
+    "agree": 68,
+    "disagree": 0,
+    "crashes": 0,
+    "disagreements": []
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11,
+    "changed_by_declared_owner_race": [],
+    "note": "the deleted read harness raises unless a store change is the injected owner race of that case"
+   }
+  },
+  {
+   "family": "restore_point.deleted",
+   "restore_point.deleted_matrix": "CLOSED 414 / CLOSED_BY_PROOF 23",
+   "matrix_rows": 437,
+   "schema_rows": 35,
+   "open_rows": [],
+   "restore_point.deleted_schema_closure": "roots 31, uncovered 12601",
+   "schema_closure_occurrences": {
+    "COVERED_BY_CONST": 49,
+    "COVERED_LATER": 3294,
+    "KILLED": 4562,
+    "SEARCHED_ELSEWHERE": 824,
+    "SELECTOR_OR_NEGATED": 556,
+    "UNCOVERED": 12613,
+    "UNREACHABLE": 46
+   },
+   "schema_closure_distinct": {
+    "COVERED_BY_CONST": 49,
+    "COVERED_LATER": 3084,
+    "KILLED": 3875,
+    "SELECTOR_OR_NEGATED": 340,
+    "UNCOVERED": 12601,
+    "UNREACHABLE": 16
+   },
+   "complete_calls": 4807,
+   "declared_negative_attempts": 4378,
+   "attempt_outcomes": {
+    "other_refusal": 2558,
+    "exact_expected": 924,
+    "exception": 332,
+    "accepted": 564
+   },
+   "replay_results": {
+    "COVERED_LATER": 401,
+    "KILLED": 407,
+    "CUT_EXCEPTION": 36,
+    "NOT_REPLAYED_CAP": 32,
+    "DUPLICATE_SET_KILLED": 48
+   },
+   "invalid_attempts_listed": 3454,
+   "declared_rules": {
+    "joined_rejection": 76,
+    "root_type_of_whole_definition": 16,
+    "bank:frozen": 305,
+    "value_shape_definition": 10,
+    "retained_model_static": 48,
+    "shared_uint64_profile": 7,
+    "source": 2,
+    "source_literal": 3,
+    "bank:retained": 58,
+    "go_search_row": 3706,
+    "go_duplicate_chain": 51,
+    "source_or_go_bank": 96
+   },
+   "undeclared_negatives": 22,
+   "distinct_copy_joins_killed": 20,
+   "distinct_copy_join_rows": [
+    "restore_point.deleted/original/SP274/command",
+    "restore_point.deleted/original/SP274/dispatch",
+    "restore_point.deleted/original/SP274/dispatch_frame",
+    "restore_point.deleted/original/SP274/idempotency",
+    "restore_point.deleted/original/SP274/instance",
+    "restore_point.deleted/original/SP274/operation",
+    "restore_point.deleted/original/SP274/original_append",
+    "restore_point.deleted/original/SP274/outcome_ref",
+    "restore_point.deleted/original/SP274/payload_digest",
+    "restore_point.deleted/original/SP274/project",
+    "restore_point.deleted/original/SP274/receipt_ref",
+    "restore_point.deleted/original/SP274/request_digest",
+    "restore_point.deleted/original/SP274/request_ref",
+    "restore_point.deleted/original/SP274/response_command",
+    "restore_point.deleted/original/SP274/response_instance",
+    "restore_point.deleted/original/SP274/response_operation",
+    "restore_point.deleted/original/SP274/result_digest",
+    "restore_point.deleted/original/SP274/result_ref",
+    "restore_point.deleted/original/SP274/result_schema",
+    "restore_point.deleted/original/SP274/target_generation"
+   ],
+   "restore_point.deleted_numbers": {
+    "cases": 86,
+    "agree": 86,
+    "disagree": 0,
+    "crashes": 0,
+    "disagreements": []
+   },
+   "datetime_corpus": null,
+   "retained_store_snapshots": {
+    "count": 63,
+    "unchanged": 50,
+    "changed_by_declared_owner_race": [
+     "restore_point.deleted/retained-native/disclose/owner-revision",
+     "restore_point.deleted/retained-native/late-permission-before-outer-release",
+     "restore_point.deleted/retained-original/late-immutable-point",
+     "restore_point.deleted/retained/late/backup_coherent",
+     "restore_point.deleted/retained/late/installed_bindings",
+     "restore_point.deleted/retained/late/migration_supported",
+     "restore_point.deleted/retained/late/permissions_allowed",
+     "restore_point.deleted/retained/late/point_hold",
+     "restore_point.deleted/retained/late/quarantined",
+     "restore_point.deleted/retained/late/receipt_ambiguous",
+     "restore_point.deleted/retained/late/receipt_missing",
+     "restore_point.deleted/retained/late/registration_current",
+     "restore_point.deleted/retained/late/source_origin_admitted"
+    ],
+    "note": "the deleted read harness raises unless a store change is the injected owner race of that case"
+   }
+  },
+  {
+   "family": "run.started",
+   "run.started_matrix": "CLOSED 265 / CLOSED_BY_PROOF 13",
+   "matrix_rows": 278,
+   "schema_rows": 37,
+   "open_rows": [],
+   "run.started_schema_closure": "roots 16, uncovered 0",
+   "schema_closure_occurrences": {
+    "COVERED_LATER": 530,
+    "KILLED": 1042,
+    "SELECTOR_OR_NEGATED": 18
+   },
+   "schema_closure_distinct": {
+    "COVERED_LATER": 405,
+    "KILLED": 895,
+    "SELECTOR_OR_NEGATED": 14
+   },
+   "complete_calls": 3403,
+   "declared_negative_attempts": 3269,
+   "attempt_outcomes": {
+    "exact_expected": 683,
+    "multiple_refusals": 4,
+    "other_refusal": 1825,
+    "accepted": 519,
+    "exception": 238
+   },
+   "replay_results": {
+    "KILLED": 335,
+    "NOT_REPLAYED_CAP": 52,
+    "DUPLICATE_SET_KILLED": 41,
+    "COVERED_LATER": 236,
+    "CUT_EXCEPTION": 19
+   },
+   "invalid_attempts_listed": 2586,
+   "declared_rules": {
+    "schema_case_target": 18,
+    "static_join_mutation_path": 12,
+    "source_emit_name": 81,
+    "source": 17,
+    "adoption_rejection": 40,
+    "shape_first_check": 17,
+    "retention_policy_ineligible": 4,
+    "retention_first_check": 8,
+    "source_literal": 9,
+    "bank:adoption": 22,
+    "bank:frozen_transfer": 184,
+    "go_search_row": 2732,
+    "go_duplicate_chain": 36,
+    "source_or_go_bank": 89
+   },
+   "undeclared_negatives": 0,
+   "distinct_copy_joins_killed": 61,
+   "distinct_copy_join_rows": [
+    "run.started/adoption/domain/checkpoint_key",
+    "run.started/adoption/domain/coverage_order",
+    "run.started/adoption/domain/event_identity",
+    "run.started/adoption/domain/global_checkpoint_ref",
+    "run.started/adoption/domain/immutable_snapshot_hash",
+    "run.started/adoption/domain/immutable_snapshot_ref",
+    "run.started/adoption/domain/index_key",
+    "run.started/adoption/domain/new_start_id",
+    "run.started/adoption/domain/new_start_key",
+    "run.started/adoption/domain/producer_semantic_digest",
+    "run.started/adoption/domain/project_join",
+    "run.started/adoption/domain/run_lookup_join",
+    "run.started/adoption/domain/scope_encoding",
+    "run.started/adoption/domain/sequence_join",
+    "run.started/adoption/domain/snapshot_join_effective_account_id",
+    "run.started/adoption/domain/snapshot_join_effective_mode_overlay",
+    "run.started/adoption/domain/snapshot_join_effective_model",
+    "run.started/adoption/domain/snapshot_join_effective_persona",
+    "run.started/adoption/domain/snapshot_join_effective_platform",
+    "run.started/adoption/domain/snapshot_join_requested_account_id",
+    "run.started/adoption/domain/snapshot_join_requested_mode_overlay",
+    "run.started/adoption/domain/snapshot_join_requested_model",
+    "run.started/adoption/domain/snapshot_join_requested_persona",
+    "run.started/adoption/domain/snapshot_join_requested_platform",
+    "run.started/adoption/domain/snapshot_join_requested_runtime_mode",
+    "run.started/adoption/domain/snapshot_join_requested_strategy",
+    "run.started/adoption/domain/snapshot_join_runtime_mode",
+    "run.started/adoption/domain/snapshot_join_strategy",
+    "run.started/adoption/domain/snapshot_join_strategy_resolution_reason",
+    "run.started/adoption/domain/source_payload_hash",
+    "run.started/adoption/domain/thread_join",
+    "run.started/index/causation_event_id",
+    "run.started/index/correlation_id",
+    "run.started/index/event_id",
+    "run.started/index/event_type",
+    "run.started/index/idempotency_key",
+    "run.started/index/persisted_at_utc",
+    "run.started/index/project_id",
+    "run.started/index/redaction_profile",
+    "run.started/index/sequence_id",
+    "run.started/lookup/project_id",
+    "run.started/lookup/run_id",
+    "run.started/payload/project_id",
+    "run.started/payload/run_id",
+    "run.started/publication/manifest_generation",
+    "run.started/publication/recovery_epoch",
+    "run.started/publication/survivor_prefix_sha256",
+    "run.started/runtime/effective_account_id",
+    "run.started/runtime/effective_model",
+    "run.started/runtime/effective_persona",
+    "run.started/runtime/effective_platform",
+    "run.started/runtime/requested_model",
+    "run.started/runtime/requested_persona",
+    "run.started/runtime/requested_platform",
+    "run.started/runtime/requested_strategy",
+    "run.started/snapshot/project_id",
+    "run.started/snapshot/run_id",
+    "run.started/source_cursor/byte_offset",
+    "run.started/source_cursor/segment_generation",
+    "run.started/source_cursor/segment_name",
+    "run.started/source_cursor/sequence_id"
+   ],
+   "run.started_numbers": {
+    "cases": 173,
+    "agree": 173,
+    "disagree": 0,
+    "crashes": 0,
+    "disagreements": []
+   },
+   "datetime_corpus": null,
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11,
+    "changed_by_declared_owner_race": [],
+    "note": "the deleted read harness raises unless a store change is the injected owner race of that case"
+   }
+  }
+ ]
+}
