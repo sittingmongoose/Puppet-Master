@@ -865,6 +865,17 @@ class PmAuditClosureMatrixReplacementTests(unittest.TestCase):
         self.assertTrue(self.frozen_link_error(report))
         self.assertTrue(any("are not the bytes its supplemental pass record pinned" in error for error in self.refusals(report)))
 
+    def test_crlf_rewrite_of_the_pinned_prefix_is_refused(self) -> None:
+        # Review r1 finding 1 (T220): the pinned prefix and line digests bind exact bytes, not LF-normalized text.
+        self.write([self.frozen, self.replacing_row()])
+        self.assertEqual(self.validate()["errors"], [])
+        matrix = self.audit_dir / "repair_closure_matrix.jsonl"
+        matrix.write_bytes(matrix.read_bytes().replace(b"\n", b"\r\n"))
+        report = self.validate()
+        self.assertNotIn("matrix_replacements", report)
+        self.assertTrue(any("are not the bytes its supplemental pass record pinned" in error for error in self.refusals(report)),
+                        report["errors"])
+
     def test_replacement_keeps_the_source_row_and_closure_status(self) -> None:
         for changes, expected in (({"source_row": 2}, "must close the same source row as line 1"),
                                   ({"closure_status": "false_positive"}, "must keep the closure_status of line 1")):

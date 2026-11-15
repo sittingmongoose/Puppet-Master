@@ -3784,10 +3784,18 @@ def matrix_replacement_candidates(
     claims = [row for row in rows if any(field in row for field in MATRIX_REPLACEMENT_FIELDS)]
     if not claims:
         return {}
+    # Bind exact bytes: split on LF only and keep any CR, so a CRLF rewrite of a pinned line
+    # changes its digest instead of being normalized away (review r1 finding 1, T220).
     try:
-        raw_lines = _lines(matrix_path.read_text(encoding="utf-8"))
-    except (OSError, UnicodeDecodeError):
+        raw_lines = matrix_path.read_bytes().split(b"\n")
+    except OSError:
         raw_lines = []
+    if raw_lines and raw_lines[-1] == b"":
+        raw_lines.pop()
+
+    def line_digest(data: bytes) -> str:
+        return hashlib.sha256(data).hexdigest()
+
     rows_by_line = {row["_line_no"]: row for row in rows}
     historical = (legacy_state or {}).get("historical_matrix_lines")
     records: dict[str, Any] = {}
@@ -3811,8 +3819,8 @@ def matrix_replacement_candidates(
             problems.append(record_problem)
         if record is not None:
             frozen_rows = record["matrix"]["original_rows"]
-            prefix = "".join(text + "\n" for text in raw_lines[:frozen_rows])
-            if frozen_rows > len(raw_lines) or sha256_text(prefix) != record["matrix"]["original_sha256"]:
+            prefix = b"".join(data + b"\n" for data in raw_lines[:frozen_rows])
+            if frozen_rows > len(raw_lines) or line_digest(prefix) != record["matrix"]["original_sha256"]:
                 problems.append(f"the first {frozen_rows} matrix rows are not the bytes its supplemental pass record pinned")
             if line <= frozen_rows:
                 problems.append(f"a replacing row must be appended after the {frozen_rows} frozen rows its supplemental pass record pins")
@@ -3822,7 +3830,7 @@ def matrix_replacement_candidates(
                 entry for entry in record["closures"]
                 if isinstance(entry, dict) and entry.get("replaces_matrix_line") == target and entry.get("appended_line") == line
             ]
-            if target is not None and (len(entries) != 1 or entries[0].get("appended_row_sha256") != sha256_text(raw_lines[line - 1])):
+            if target is not None and (len(entries) != 1 or entries[0].get("appended_row_sha256") != line_digest(raw_lines[line - 1])):
                 problems.append("its supplemental pass record must list this replacement once "
                                 "(replaces_matrix_line, appended_line and appended_row_sha256 of this exact line)")
         if target is not None:
@@ -3834,7 +3842,7 @@ def matrix_replacement_candidates(
             elif "supplemental_pass" in frozen or any(field in frozen for field in MATRIX_REPLACEMENT_FIELDS):
                 problems.append(f"line {target} is an appended or replacing row, not a frozen row; a replacement is never itself replaced")
             else:
-                if target > len(raw_lines) or sha256_text(raw_lines[target - 1]) != digest:
+                if target > len(raw_lines) or line_digest(raw_lines[target - 1]) != digest:
                     problems.append(f"replaces_row_sha256 does not match the exact bytes of line {target}")
                 artifact = frozen.get("source_artifact")
                 frozen_key = source_row_key(artifact, frozen.get("source_row")) if isinstance(artifact, str) else None
