@@ -56,10 +56,14 @@
 //     flight's layers stand still (what the reader sees, under the window's scrim). At the close the flight carries on
 //     from there and lands: no .tx-fly layer left, no message still marked data-flight, body not .tx-flying. The
 //     branch before lane C3 asked for a frame on every refresh for the whole visit.
+//   PM7PERF-CHATRUN-NIER-AFTER-VISIT: each judged chain visit logs the look painted while the window was open (a
+//   note, not a row: the window paints its run's own look). After the visit part, the look under test is written
+//   through Settings, because the window's close leaves a preview that look()'s persist:false paint does not replace.
 //
 // --set looks=<a,b>  default basic-dark,glass-dark,retro-dark,nier-dark; looks=all for all ten
 // --set parts=run,rest,visit   --set settle=<ms> (default 30000)
 // Both surfaces. A run that never started, or a place missing from the page, fails as "could not judge".
+import { paintedLookHeld } from '../browser-check.config.mjs';
 import { muteSound, refreshRate, parkPointer } from '../helpers/quiet-page.mjs';
 import { CALLBACK_PROBE } from '../helpers/callback-probe.mjs';
 import { DOM_LISTEN, DOM_READ } from '../helpers/dom-writes.mjs';
@@ -72,6 +76,9 @@ const PLACES = [['card', `${CHAT} :is(.working-card, .orbit-card)`], ['bar', `${
 // Whether a visit can be judged (exported for tools/chat-visit.selftest.mjs): it opened after the arming, and a short visit
 // closed 100 ms before the delay would have been due, a long one stayed past it; a visit that overruns stays unjudged
 export const visitJudged = (kind, visit, delay) => !!visit && visit[0] > 0 && (kind === 'long' ? visit[1] > delay : visit[1] < delay - 100);
+
+// The look painted while a visit's window was open (PM7PERF-CHATRUN-NIER-AFTER-VISIT). Same rule as look()'s applied row.
+export const visitRanInLook = paintedLookHeld;
 
 export default async function (t) {
 	const want = String(t.args.looks || 'basic-dark,glass-dark,retro-dark,nier-dark');
@@ -226,6 +233,7 @@ export default async function (t) {
 			}
 		}
 		if (parts.includes('visit')) {
+			try {
 			const thread0 = await f.evaluate(() => window.PM56_DEMO.getState().selectedThread);
 			// 1. a chain's next run: its delay counts only the time the window is not open
 			const delay = await f.evaluate(() => { const r = window.PM56_DATA && PM56_DATA.workRuns && PM56_DATA.workRuns.orbitA; return r && r.next && r.next.run === 'orbitB' ? r.next.delayMs || 1200 : null; });
@@ -241,8 +249,21 @@ export default async function (t) {
 						const D = window.PM56_DEMO, H = window.PM56_HOST, real = window.setTimeout.bind(window);
 						const sleep = (ms) => new Promise((res) => real(res, ms));
 						const works = () => D.snapshot().works || {};
-						// what the chat hears: one listener for the page's life (onRest has no removal)
-						if (!window.__c3rest) { window.__c3rest = []; H.onRest((on) => window.__c3rest.push([on, performance.now()])); }
+						// what the chat hears: one listener for the page's life (onRest has no removal). The first open also
+						// records the look the visit is measured in (PM7PERF-CHATRUN-NIER-AFTER-VISIT).
+						window.__c3paint = null;
+						window.__c3paintNow = () => {
+							const theme = document.documentElement.getAttribute('data-theme') || '';
+							const pv = window.PM_NIER && typeof PM_NIER.previewing === 'function' ? PM_NIER.previewing() : null;
+							return { theme, nier: !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier'), loose: !!(pv && pv.loose) };
+						};
+						if (!window.__c3rest) {
+							window.__c3rest = [];
+							H.onRest((on) => {
+								window.__c3rest.push([on, performance.now()]);
+								if (on && !window.__c3paint && window.__c3paintNow) window.__c3paint = window.__c3paintNow();
+							});
+						}
 						if (!window.__c3closer) { window.__c3closer = true; H.onRest((on) => { const c = window.__c3closeNow; if (on && c) { window.__c3closeNow = null; c(); } }); }
 						const out = { arm: null, start: null, err: null, rest: null };
 						D.trigger('Multi-orbit turn');
@@ -276,6 +297,7 @@ export default async function (t) {
 							while (document.documentElement.hasAttribute('data-o55-open') && performance.now() < until + 5000) await sleep(20);
 						} finally { window.setTimeout = prev; window.__c3closeNow = null; }
 						out.rest = window.__c3rest.slice(mark);
+						out.painted = window.__c3paint;
 						return out;
 					}, { delay, openAt, closeAt, app: { from: appBlock.from, to: appBlock.to }, closeOnRest: kind === 'short' });
 					if (r.err || r.start == null) { await t.check(`${look} visit ${kind}: a chain's successor is armed and starts`, false, `${r.err || 'orbitB never started'}: could not judge ${JSON.stringify(r)}`); break; }
@@ -294,6 +316,10 @@ export default async function (t) {
 					}
 					if (unjudged.length) t.log(`${look} visit ${kind}: NOTE ${unjudged.length} attempt(s) not judged, the window ${unjudged.join(', ')} ms after the arming`);
 					await t.check(`${look} visit ${kind}: the chain's next run starts after its delay counted outside the window (${kind === 'short' ? 'the window closed before it was due' : 'the window stayed past it'})`, outside >= delay - 40 && outside <= delay + 300, `${Math.round(outside)} ms outside the window of ${Math.round(total)} ms from the arming to orbitB's start (window ${visit[0]}-${visit[1]} ms); expected ${delay - 40} to ${delay + 300}`);
+					// Logged, not judged: the setup window paints its run's own look while it is open (Basic Dark for a new run),
+					// so on a correct page the visit is not in the look under test (Alexis, 2026-11-15, the integration page:
+					// "data-theme basic-dark, NieR off" in Glass, Retro and NieR Dark, both surfaces, 6 of 6 judged visits).
+					t.log(`${look} visit ${kind}: NOTE the window was open in ${r.painted ? `data-theme ${r.painted.theme}, NieR ${r.painted.nier ? 'on' : 'off'}${r.painted.loose ? ', preview lingering' : ''}` : 'a look that was not read'}${visitRanInLook(look, r.painted) ? ' (the look under test)' : ' (the run\'s own look, not the look under test)'}`);
 					break;
 				}
 			}
@@ -384,6 +410,13 @@ export default async function (t) {
 			}
 			await f.evaluate((id) => window.PM56_DEMO.selectThread(id), thread0);
 			await t.page.waitForTimeout(1000);
+			} finally {
+				// The window's unfinished close leaves its preview until Settings writes. Re-apply the look under test
+				// once the window is closed, so the next look() is not stuck on that preview.
+				const still = await f.evaluate(() => document.documentElement.hasAttribute('data-o55-open')).catch(() => true);
+				if (!still) await t.app.look(look, { save: true });
+				else t.log(`NOTE ${look} visit: the window is still open, so the look under test is not re-applied`);
+			}
 		}
 		first = false;
 	}

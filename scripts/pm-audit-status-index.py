@@ -25,7 +25,9 @@ def utc_now() -> str:
 
 
 def rel(path: Path) -> str:
-    return path.resolve().relative_to(ROOT).as_posix()
+    # Logical in-worktree path: do not resolve symlinks, which may point at an
+    # external evidence target outside ROOT; relative_to still enforces the boundary.
+    return path.absolute().relative_to(ROOT).as_posix()
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
