@@ -126,7 +126,7 @@ def invalid_mutations(controls):
         ('storage.deletion_lifecycle_changed/sl/project-held', 'sl_del_payload', ('sl', 'runs', 1, 'events_appended'), [],
          'Drop the appended event of an admitted step: the payload row, the record row (its stored obligation no longer matches an appended event) and the replay of that event refuse.'),
         ('storage.deletion_lifecycle_changed/sl/retry-hides-then-holds', 'sl_del_decision', ('sl', 'runs', 3, 'to'), 'requested',
-         'Present the admitted retry as a retry to requested (DL-695 option B, not chosen): the edge stage refuses it, so the decision and zero-effect rows refuse together with the rows built on its hidden state.'),
+         'Present the admitted retry as a retry to requested (DL-695 option B, not chosen): the edge stage refuses it, so the decision row and the zero-effect row (its presented append and effects) both refuse.'),
         ('storage.value_quarantine_changed/sl/resettable-lifecycle', 'sl_qtn_detect', ('sl', 'value', 'raw_sha256'), 'c' * 64,
          'Change the held raw hash: identity, payload and record expectations all move, so several rows refuse.'),
         ('storage.compaction_lifecycle_changed/sl/recovery-to-committed', 'sl_cmp_phase', ('sl', 'runs', 5, 'facts', 'activation'), 'incomplete',
