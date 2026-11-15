@@ -14712,7 +14712,7 @@ negative_constraints:
 
 - **Producer and order:** raw custody synchronized before the record CAS, the append and the live-key effect. Negatives: live-key mutation before the receipt; an event with no raw custody; a reader appending the event.
 - **Identity:** `quarantine_id` with occurrence; re-detection of a non-terminal record mints nothing; re-occurrence after `purged` takes occurrence 2. Negatives: a second identity for the same open record; a state repeated for one `quarantine_id`; a forged occurrence.
-- **Custody:** a viewer without source permission sees only the quarantined fact; raw bytes only through protected export. Deletion interplay is not planned until S3B-Q1 is answered.
+- **Custody:** a viewer without source permission sees only the quarantined fact; raw bytes only through protected export. SP-2211 applies E8-5 B: keep raw bytes until resolution, then delete subject to holds; ATS-2206 executes the thread and Project examples.
 - **Consumer and withdrawal:** as ATS-2200, for `reader.storage.value_quarantine_history@1.0.0`; withdrawal never releases a value.
 
 ```yaml
@@ -14727,7 +14727,7 @@ depends_on:
 - SP-2201
 unblocks: []
 acceptance_criteria:
-- Every SP-2201 guard has a positive and single-defect negatives in the plan; the deletion interplay waits for S3B-Q1.
+- Every SP-2201 guard has a positive and single-defect negatives in the plan; the deletion interplay follows SP-2211 (E8-5 B).
 validation_surfaces:
 - reports/event-authority-20261114/depth-s3b-registered-families.json
 risk_class: event_authority
@@ -15125,3 +15125,162 @@ owner_hints:
 **Not covered here (NOT_RUN).** Native installation and original issuer authentication, real redb and seglog transactions, codecs on disk, flush timing, interleavings, crash and restore runs, effect owners, full native cancellation and the bounded manager's real decisions. The checker models them as boundary facts so their contracts can be checked; it does not run them.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-3100, ContractName:Plans/Goal_Runtime_System.md#GRS-3101, ContractName:Plans/Executor_Protocol.md#EP-3101, ContractName:Plans/storage-plan.md#SP-3100, ContractName:Plans/Contracts_V0.md#CV-3100
+
+## ATS-2206 - Executable s3bo contract checks and remaining criterion-12 boundaries
+
+The PNC-019 s3bo checker is `scripts/pm-s3bo-check.py`; its complete inputs and independently labelled source mutations are constructed by `scripts/pm_s3bo_cases.py`, and `scripts/pm_s3bo_oracles.py` projects the actual operands into the generated `scripts/pm_s3bo_table_*.py` predicates. Run `matrix`, `batteries`, and `guards` with `--out <evidence-directory>`. A table contains at most eight predicates. The gated `scripts/pm_guard_isolation.py` proves those exact predicates by baseline, single-row cut, peer preservation and restoration. Projection and shared-helper semantics remain separately reviewable; a table proof does not certify code outside its scanned modules.
+
+Coverage includes the complete registered payload and EventRecord schemas without deleting owner keywords; the complete CV-339 AppendReceipt schema; the SP-2202/SP-2203 closed application and corruption companions; SP-2209's platform read output; the existing platform, Boot, Hold and Integrity closed-value fixtures; SP-2200/SP-2201 identity recipes; the applied/corrupt/recovery-unavailable identity recipes; independently held pending, receipt and history copies; read token/snapshot/coverage joins; original request-digest replay; writer cutoff/drain/fence order; read-time access and deletion checks; source preservation; and the new post-restore and aftermath comparisons. Full-value commitments use the shared CV-339 helper, not SHA-256 of an alternate preimage.
+
+Every owned integer slot reached by these fixture constructors uses CV-1100 `current_integer` or SP-1100 `storage_uint64`; physical event values use `storage_value_bytes` and producer projections use `producer_semantic_bytes`/`producer_semantic_digest`. The battery includes a valid 4,400-digit JSON integer, full uint64 values and the separate producer-JCS refusal. Source timestamps use CV-1101 `date_time` with `event_record`; Storage observed/persisted times and the new application/corruption custody times use `storage_utc_z`. AppendReceipt `acknowledged_at_utc` uses `event_record`, including offset/lowercase positives (E5-2). Timestamp spelling is never normalized. Anchored identifier comparisons include final-LF negatives.
+
+Retained reads select the installed recipe only from the unique independently sealed receipt for that exact original. Missing, ambiguous, other-original and caller-selected recipes refuse. The verifier checks original bytes, original result, original receipt and original binding; it creates no receipt during a read. Each complete fixture carries a before-read store snapshot. The current writer and retained reader are separate paths. The fixtures model sealed custody; they do not authenticate a native Store or certify runtime producers.
+
+Only the expected guard together with its exact refusal code counts as a killed input mutation. Unexpected acceptance, another guard, another code, an exception or multiple independent refusals cannot earn a kill. The guard tool's cuts are a separate code-mutation proof; credit exactly its reported flips, stays, restoration and proved/unproved rows.
+
+**These are bounded executable checks, not complete criterion-12 closure for the fourteen families.** In particular, they do not supply ACD-465's missing original capture constructor; refreeze the expiry or seglog packages pinned before DL-076; supply SP-279's full-u64 semantic success adapter or `exact_event` corroboration; execute the SP-295..297 native source/effect/settlement negatives; or establish every SP-293 passive-read health path. The new producer/order checks are deterministic fixture comparisons, not original native custody authentication. Full-family positive/negative coverage and the shared corpus through every complete family boundary remain to be finished. No criterion-12 PASS follows merely from the bounded guard proof. SP-2211 applies E8-5 B and closes the S3B-Q1 redaction/custody gap; its deletion-after-resolution and hold examples are executable here. That custody answer alone does not close criterion 12. Native producer conformance remains NOT_RUN for all fourteen families.
+
+```yaml
+plan_unit_id: ATS-2206
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  PNC-019 s3bo provides bounded executable contract checks with at most eight real
+  predicates per guard table, exact-refusal mutation accounting, shared number and
+  date-time helpers, and sealed-original retained-read fixtures. The explicit
+  remaining boundaries prevent complete criterion-12 closure claims.
+gui_related: false
+gui_classification_reason: Static event-authority contract oracles without presentation changes.
+depends_on:
+- ATS-2200
+- ATS-2201
+- ATS-2202
+- ATS-2203
+- ATS-2204
+- ATS-2205
+- SP-2211
+- CV-1100
+- CV-1101
+- SP-1100
+- SP-1101
+unblocks: []
+acceptance_criteria:
+- Each executable refusal is a real named table predicate with an independently labelled source witness.
+- Tables have at most eight rows and earn only the gated tool's reported proof credit.
+- Only an exact expected guard and refusal code earns an input-mutation kill.
+- Sealed-original receipt selection preserves the complete read-store snapshot.
+- Reports retain every unclosed oracle boundary and apply E8-5 B to the custody cell without promoting partial oracle coverage to PASS.
+validation_surfaces:
+- scripts/pm-s3bo-check.py
+- scripts/pm_s3bo_oracles.py
+- scripts/pm_s3bo_cases.py
+- reports/event-authority-20261114/depth-s3bo-registered-families.json
+risk_class: false_event_oracle_closure
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3bo
+implementation_surfaces:
+- scripts/pm-s3bo-check.py
+- scripts/pm-s3bo-table-generate.py
+- scripts/pm_s3bo_oracles.py
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Automated_Testing_System.md#ATS-2200
+- Plans/Automated_Testing_System.md#ATS-2205
+- Plans/storage-plan.md#SP-2200
+- Plans/storage-plan.md#SP-2210
+preserved_exact_tokens:
+- acknowledged_at_utc
+- event_record
+- storage_uint64
+- S3B-Q1
+negative_constraints:
+- Do not admit events, reseal governance or claim native execution.
+- Do not claim complete criterion-12 closure from bounded comparisons or stand-in custody.
+- Apply only the signed E8-5 B answer to S3B-Q1; do not invent a new retention clock or hold bypass.
+```
+
+## ATS-3880 - Executable s3bo family boundaries for the restore-point and recovery-unavailable families (C12-SR)
+
+The ATS-2206 checker gains family-boundary extensions. `scripts/pm_s3bo_oracles.py` discovers every `scripts/pm_s3bo_ext_*.py` module in sorted order and refuses overlapping rows, table groups or families; each extension attaches a complete boundary record to its family's control, projects raw operands into its own generated tables of at most eight real predicates (`scripts/pm-s3bo-table-generate.py`), and adds independently labelled single-defect negatives through `scripts/pm_s3bo_cases.py`. PNC-019 lane C12-SR owns `pm_s3bo_ext_sr_applied.py`, `pm_s3bo_ext_sr_corrupt.py`, `pm_s3bo_ext_sr_created.py`, `pm_s3bo_ext_sr_expired.py` and `pm_s3bo_ext_sr_recovery.py`, with shared helpers in `pm_s3bo_sr_common.py`. `scripts/pm-s3bo-check.py corpus` runs the whole shared number and date-time corpus of `Plans/event_number_recipe_corpus.json` through every common payload, envelope and receipt slot and every declared boundary slot of each extension's family, changing every copy of a slot together; `evidence` replays extension-owned frozen packages. Only the expected guard together with its exact refusal code earns an input-mutation kill, and only the gated `scripts/pm_guard_isolation.py` cuts earn proof credit. Expected outcomes are derived from independently held inputs by the owner rules, never from a checker result.
+
+For `restore_point.applied`, every SP-2202 step-1 precondition and every UCC-126 reason (writer cutoff, missing family, read-only and exhausted storage, missing point, wrong project, expired, deleted or corrupt status, expected-hash mismatch, wrong source thread, permission, hold, operation in progress and deleted source content) refuses with no commit row, target, event, branch or source change, and a repeat returns the same no-event result; the exact tokens `storage_read_only`, `storage_io_exhausted`, `operation_in_progress` and `source_deleted_content_unavailable` are compared where UCC-126 names them. A failure decided inside the step-2 transaction writes only the terminal row. A branched first execution reserves the application, materializes exactly the reserved pair, records the protecting ref and the frozen obligation, appends once, resolves the first receipt and only then returns; a crash after each of reserve, materialize, record, append and first receipt resumes without a second branch or a second append. Replay returns the recorded result, targets and original receipt; a different request digest is `idempotency_conflict`; a second key is a second application with its own `rpa_` identity. Every run leaves the source thread, branch, worktree, files, Git index, queue and safe points unchanged, and every commit row keeps the complete closed `application_commit` schema and Storage UTC-Z times.
+
+For `restore_point.corrupt`, the fixed precedence is executed over independent inputs: missing record or material and indeterminate I/O stop without a commit, then trusted record-hash mismatch, decode failure, material hash or length mismatch for each canonical material field, and only then unsupported content scope, including both owner precedence pairs. Each of the four reasons appends exactly one event whose payload, evidence kind and branch fields are derived from the FileSafe attestation and the material inputs; the commit holds the complete attested evidence, the `rpx_` identity and the source thread only when the record is readable. Attestation, re-read, commit, barrier append, first receipt and publication run in order; a reader only reports a candidate; re-detection and replay resolve the existing commit with its first reason; a deletion or expiry commit excludes the corruption commit and a settled corruption refuses later branch, delete and expire. `MIG-RESTORE-POINT-CORRUPT-PAYLOAD-001@1.0.0` upgrades a frozen v1 payload only with exactly one identity-matching evidence result, preserving the v1 bytes and appending nothing, and otherwise quarantines with `restore_point_corrupt_v1_upgrade_unresolvable`.
+
+For `restore_point.expired`, eligibility is executed exactly: an available, hash-authenticated point expires at or after the inclusive `released_at + 7,776,000` seconds boundary only when all eleven protecting-ref classes are completely enumerated and clear, the policy is the exact registered row rather than an inference, release evidence is present and, under count pressure, the count exceeds 2,048 and the point is rank 0. E1, the E2 barrier append of the frozen input, the first receipt and E3 run in order; a crash after E1, after the append or after the first receipt resumes the same `rpe_` identity with the frozen input unchanged and never rolls back to available; replay returns the original result and a different digest fails closed. The SP-275 closed value-shape fixtures run through the common auxiliary schema boundary. `evidence` authenticates and replays the SP-275 frozen joined package refrozen for DL-076: `/mnt/Cursor/PM-Experiments/ea-c12-sr-expiry-refreeze-20261114/event-authority-step08-restore-expired-20260911/v6/manifest.json`, SHA-256 `366c1dbcdd4dc510f3213ef36edfc29201cb4cc92d795fc3fa6573b60ffac41b`, built by `scripts/pm-s3bo-sr-expiry-refreeze.py` from the v5 package `b458da5c7684dc7a4dcfc8f3f38bc7b09722ca0f1d3136dd34602d2f40038654`; its stored checkpoint tokens carry no `redb_snapshot_id`, and its 88 joined and 24 generation cases keep their declared validity.
+
+For `safe_point.recovery_unavailable`, establishment runs classify, durability commit, barrier append, first receipt and only then offers actions; a crash after the commit or after the append resumes without reclassifying or appending twice. The payload carries FileSafe's reason, the exact owner action array (with `start_fresh_attempt` only when the isolated baseline predicate holds), the Executor episode facts, the anchor key and the pre- or post-attempt identity, which the anchor and every resolution receipt repeat. Locate and abandon succeed only with every owner admission and verification or confirmation; every other request is a nonsuccess with the exact receipt-enum token where the condition names one, the anchor unchanged and the snapshot set preserved. Locate success records the verified set and releases as `resolved`; abandonment releases as `abandoned_by_user` with no cleanup, deletion, `abort_run`, worktree detachment or terminal transition; replan and a distinct verified successor release only after their own durable evidence. Replay returns the original receipt byte for byte and a conflicting digest is `invalid_args`. Age, exit, archive, completion, worktree unbinding, compaction, retention pressure, cleanup and withdrawal never release the anchor, and restore or ordinary retry refuses while it is unavailable. The UI shows success only for an applied or replayed result with a committed receipt.
+
+For `restore_point.created`, the checker executes the thirteen-field `pm.restore_point.immutable_capture_sha256.v1` recipe against every owner vector in `Plans/restore_point_created_hash_vectors.json`, the union and set equalities against the canonical record, the exact frozen capture categories and order, the `rpc_` identity, the source and record joins, the B1, B2 and B3 order, crash recovery without recapture or a second append, and the native completion predicate. Not closed: no owner text defines how the creation owner selects conversation-history properties into `context_refs`, `provenance_refs`, `attachment_refs` and `citation_refs`. The checker therefore never constructs or infers a category assignment and accepts an empty category only where the frozen capture records it empty. `restore_point.created` criterion 12 stays open on that owner definition.
+
+These are deterministic fixture comparisons of presented protocol outcomes against owner rules over independently held inputs, plus the replay of one frozen external package; they do not authenticate a native Store or execute native producers. Native conformance remains NOT_RUN for all five families.
+
+```yaml
+plan_unit_id: ATS-3880
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  PNC-019 C12-SR adds executable family-boundary extensions to the ATS-2206 s3bo checker for
+  restore_point.applied, restore_point.corrupt, restore_point.created, restore_point.expired and
+  safe_point.recovery_unavailable, runs the whole shared number and date-time corpus through each
+  family boundary, and replays the SP-275 expiry package refrozen for DL-076. The created-event capture
+  constructor remains an owner gap.
+gui_related: false
+gui_classification_reason: Static event-authority contract oracles without presentation changes.
+depends_on:
+- ATS-2202
+- ATS-2203
+- ATS-2204
+- ATS-2206
+- SP-2202
+- SP-2203
+- SP-2204
+- SP-275
+- DL-076
+unblocks: []
+acceptance_criteria:
+- Each family-boundary refusal is a real named table predicate with an independently labelled single-defect witness, at most eight per table.
+- Extension modules cannot overlap rows, table groups or families, and the common witnesses and their guard selections are unchanged by an extension.
+- The shared corpus runs through every common and declared boundary slot of each extension family, with expectations from corpus verdicts and owner bounds.
+- The refrozen SP-275 package is authenticated by its manifest and every file hash and replays to byte-identical fixtures with no stored redb_snapshot_id.
+- The restore_point.created capture-category selection is reported as missing owner text, never inferred.
+validation_surfaces:
+- scripts/pm-s3bo-check.py
+- scripts/pm_s3bo_oracles.py
+- scripts/pm_s3bo_cases.py
+- reports/event-authority-20261114/depth-c12-sr-families.json
+risk_class: false_event_oracle_closure
+reasoning_tier: high
+context_scope: event_authority_pnc019_c12_sr
+implementation_surfaces:
+- scripts/pm_s3bo_ext_sr_applied.py
+- scripts/pm_s3bo_ext_sr_corrupt.py
+- scripts/pm_s3bo_ext_sr_created.py
+- scripts/pm_s3bo_ext_sr_expired.py
+- scripts/pm_s3bo_ext_sr_recovery.py
+- scripts/pm_s3bo_sr_common.py
+- scripts/pm-s3bo-sr-expiry-refreeze.py
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Automated_Testing_System.md#ATS-2206
+- Plans/storage-plan.md#SP-2202
+- Plans/storage-plan.md#SP-2203
+- Plans/storage-plan.md#SP-2204
+- Plans/storage-plan.md#SP-275
+- Plans/assistant-chat-design.md#ACD-465
+preserved_exact_tokens:
+- restore_point_corrupt_v1_upgrade_unresolvable
+- source_deleted_content_unavailable
+- abandon_recovery_and_preserve_local_work
+- pm.restore_point.immutable_capture_sha256.v1
+negative_constraints:
+- Do not admit events, reseal governance or claim native execution.
+- Do not infer a restore-point capture-category assignment or an empty category.
+- Do not edit the gated guard tool or the frozen date-time files.
+```
