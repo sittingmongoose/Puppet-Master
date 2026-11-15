@@ -2757,7 +2757,11 @@ def corpus_number_checks(controls):
     return totals, len(raws), len(ints), disagreements
 
 
-def main():
+def main(argv=None):
+    import argparse
+    parser = argparse.ArgumentParser(description='W3I complete continuity checker')
+    parser.add_argument('--json', help='write the same summary to this path')
+    args = parser.parse_args(argv)
     eager = {'continuity': eager_refs(CONTINUITY_SCHEMA), 'event_record': eager_refs(EVENT_RECORD_SCHEMA),
              'receipt': eager_refs(RECEIPT_SCHEMA)}
     controls = build_controls()
@@ -2797,7 +2801,10 @@ def main():
         'exact_integers': ints,
         'failures': failures[:60],
     }
-    print(json.dumps(summary, indent=2, default=str))
+    text = json.dumps(summary, indent=2, default=str)
+    if args.json:
+        Path(args.json).write_text(text + '\n')
+    print(text)
     return 0 if not failures else 1
 
 
