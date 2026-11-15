@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8332-L8758
+Source lines: L8369-L8806
 
-Source SHA256: `7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347`
+Source SHA256: `122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e`
 
 ---
 
@@ -87,6 +87,8 @@ Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): curr
 
 Amended 2026-11-04 (DL-080, DL-045 depth): GRS-202 extends this projection to same-run goal_run.blocked and goal_run.stopped v3 rows for births whose Workflow source edition lists EP-200's writers; every other birth keeps the halt above.
 
+Amended 2026-11-14 (DL-080 option 1, PNC-019 lane rv8b): GRS-3101 adds the branch for genuine `all_writers.v8` births, which accept same-run `goal_run.replanned` v3 rows with started, certified and cancelled rows authenticated against the v8 source profiles; the branch is chosen by the authentic birth profile, and this unit's v7 branch is unchanged.
+
 ### GRS-200 - Current goal_run.stopped contract
 
 ```yaml
@@ -95,7 +97,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04), for exactly goal_run.stopped, Project edition. Producer: owner.executor.workflow_run.stop.v1 (EP-200), from cmd.orchestrator.pause and cmd.runtime.abort_run. Payload: pm.goal_runtime_event.goal_run_stopped.schema.v3 (CV-420) on the current GoalRun envelope; the Goal revision is unchanged. Transitions adopt D-R21 over the native Workflow status set: ready|running|provisional_success|verifying|failed_verification|repairing|blocked -> stopped; stopped -> stopped only with new settlement or recovery evidence; certified, failed and cancelled sources are illegal. "All child settlements" now means the run's own in-flight effect settlements (settlement_refs), and child_settlement_refs is authenticated empty under GRS-075. A stopped run leaves stopped only by D06 cancellation (GRS-080) until a resume or replan writer is admitted; resumable=true records eligibility, not a resume. Prepared without admission: the registry row keeps v2 until its own admission landing.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04), for exactly goal_run.stopped, Project edition. Producer: owner.executor.workflow_run.stop.v1 (EP-200), from cmd.orchestrator.pause and cmd.runtime.abort_run. Payload: pm.goal_runtime_event.goal_run_stopped.schema.v3 (CV-420) on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478, as the Workflow run's identity grammar; it carries no retired GoalRun build-flow obligation; the Goal revision is unchanged. Transitions adopt D-R21 over the native Workflow status set: ready|running|provisional_success|verifying|failed_verification|repairing|blocked -> stopped; stopped -> stopped only with new settlement or recovery evidence; certified, failed and cancelled sources are illegal. "All child settlements" now means the run's own in-flight effect settlements (settlement_refs), and child_settlement_refs is authenticated empty under GRS-075. A stopped run leaves stopped only by D06 cancellation (GRS-080) until a resume or replan writer is admitted; resumable=true records eligibility, not a resume. Prepared without admission: the registry row keeps v2 until its own admission landing.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -153,6 +155,9 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Contracts_V0.md#CV-420, ContractName:Plans/storage-plan.md#SP-426, ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/Decision_Log.md#DL-080
 
+
+**DG-OWN-A adoption.** Original stop source adoption: EP-1110/EP-1111 and SP-1110 supply the complete fresh birth, original source/method/result, first/full-value receipt and terminal publication contract.
+
 ### GRS-201 - Current goal_run.blocked contract
 
 ```yaml
@@ -161,7 +166,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04), for exactly goal_run.blocked, Project edition. Producer: owner.executor.workflow_run.block.v1 (EP-200), from the Executor scheduler. Payload: pm.goal_runtime_event.goal_run_blocked.schema.v3 (CV-421) on the current GoalRun envelope; the Goal revision is unchanged and the payload fields are those of v2. Transitions adopt D-R16 over the native Workflow status set: ready|running|provisional_success|verifying|failed_verification|repairing -> blocked; blocked -> blocked only with new evidence, action or recovery revision; certified, failed, cancelled and stopped sources are illegal. The block receipt exists before append. A blocked run leaves blocked by EP-200's stop writer or D06 cancellation; any other exit needs a writer not admitted here. The dormant application edition (DL-300, GRS-086) is unchanged. Prepared without admission: the registry row keeps v2 until its own admission landing.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04), for exactly goal_run.blocked, Project edition. Producer: owner.executor.workflow_run.block.v1 (EP-200), from the Executor scheduler. Payload: pm.goal_runtime_event.goal_run_blocked.schema.v3 (CV-421) on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478, as the Workflow run's identity grammar; it carries no retired GoalRun build-flow obligation; the Goal revision is unchanged and the payload fields are those of v2. Transitions adopt D-R16 over the native Workflow status set: ready|running|provisional_success|verifying|failed_verification|repairing -> blocked; blocked -> blocked only with new evidence, action or recovery revision; certified, failed, cancelled and stopped sources are illegal. The block receipt exists before append. A blocked run leaves blocked by EP-200's stop writer or D06 cancellation; any other exit needs a writer not admitted here. The dormant application edition (DL-300, GRS-086) is unchanged. Prepared without admission: the registry row keeps v2 until its own admission landing.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -219,6 +224,9 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Contracts_V0.md#CV-421, ContractName:Plans/storage-plan.md#SP-427, ContractName:Plans/Goal_Runtime_System.md#GRS-202, ContractName:Plans/Decision_Log.md#DL-080
 
+
+**DG-OWN-A adoption.** Original block source adoption: EP-1110/EP-1112 and SP-1111 supply the complete fresh birth, cause-owned original source/method/result, first/full-value receipt and scheduler publication contract.
+
 ### GRS-202 - Run-history projection extension for stopped and blocked rows
 
 ```yaml
@@ -227,7 +235,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It extends GRS-085's mandatory per-run projection, as DL-080 requires, to same-run goal_run.blocked v3 and goal_run.stopped v3 rows, only for a run whose birth used a fresh Workflow source edition that lists EP-200's writers. For such a run the reducer accepts started, then any of blocked and stopped by D-R16 and D-R21, blocked -> blocked and stopped -> stopped with a higher GoalRun revision, and positive D06 cancelled from blocked or stopped; certified from blocked or stopped is a conflicting lifecycle and halts. On every other birth, and for any v2 row of either family, the row stays unsupported and halts before it, exactly as GRS-085 says today. SP-428 owns the projection value and checkpoint delta.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It extends GRS-085's mandatory per-run projection, as DL-080 requires, to same-run goal_run.blocked v3 and goal_run.stopped v3 rows, only for a run whose birth used a fresh Workflow source edition that lists EP-200's writers. For such a run the reducer accepts started, then any of blocked and stopped by D-R16 and D-R21, blocked -> blocked and stopped -> stopped with a higher GoalRun revision, and positive D06 cancelled from blocked or stopped; certified from blocked or stopped is a conflicting lifecycle and halts. Revision relation (amended 2026-11-14 under DL-045, PNC-019 lane s3a, after Sol's DG-OWN-A review F1): a row's expected_goal_run_revision is the authentic native Workflow body revision immediately before its own stop or block mutation, read from the row's original native/D01 before-commitment, and its goal_run_revision is exactly one higher (EP-200's single native move). The expected revision may exceed the last projected revision only when the original D01/native chronology authenticates every intervening body revision as a supported non-emitting native step (original_execution_progress or provisional success under the native-v7 protocol); it never falls below the projected revision. An unauthenticated gap, a lower revision or an intervening actual same-run Event the reducer does not support halts before the row; the reducer never invents an Event for a non-emitting native step. On every other birth, and for any v2 row of either family, the row stays unsupported and halts before it, exactly as GRS-085 says today. SP-428 explicitly adopts the concrete SP-1112 profile, physical keys, whole checkpoint schema and atomic CAS/cutover contract; GRS-1110 fixes the fresh-birth map.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -244,7 +252,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - For a qualifying birth, a verified same-run blocked or stopped v3 row on a legal edge advances the projection and its checkpoint atomically.
-- Each accepted row must carry expected_goal_run_revision equal to the projected revision and goal_run_revision one higher.
+- Each accepted row carries goal_run_revision exactly one above its own expected_goal_run_revision, and that expected revision equals the projected revision or exceeds it only across intervening native body revisions that the original D01/native chronology authenticates as supported non-emitting steps.
+- An unauthenticated revision gap, a revision below the projected revision, or an intervening unsupported same-run Event halts before the row.
 - Certified after blocked or stopped, started after either, and any v2 row of either family halt before the row.
 - Non-qualifying births keep GRS-085's halt unchanged; no existing projection generation is reinterpreted.
 validation_surfaces:
@@ -277,11 +286,13 @@ owner_hints:
 - Plans/Goal_Runtime_System.md
 ```
 
-**Rule table** (same run, after a verified `goal_run.started`): `started -> blocked`, `started -> stopped`, `blocked -> blocked` (higher revision, new evidence), `blocked -> stopped`, `stopped -> stopped` (higher revision, new settlement or recovery evidence), `blocked -> cancelled` and `stopped -> cancelled` (positive D06), `started -> cancelled` and `started -> certified` as before. Halts: `blocked -> certified`, `stopped -> certified`, `stopped -> blocked`, anything after `cancelled` or `certified`, a revision that is not exactly one higher, a v2 row of either family, `goal_run.replanned` (still unsupported until its own contract). The projection never infers a Goal state, and a `stopped` row with `resumable=true` gives no resume authority.
+**Rule table** (same run, after a verified `goal_run.started`): `started -> blocked`, `started -> stopped`, `blocked -> blocked` (higher revision, new evidence), `blocked -> stopped`, `stopped -> stopped` (higher revision, new settlement or recovery evidence), `blocked -> cancelled` and `stopped -> cancelled` (positive D06), `started -> cancelled` and `started -> certified` as before. Halts: `blocked -> certified`, `stopped -> certified`, `stopped -> blocked`, anything after `cancelled` or `certified`, a `goal_run_revision` that is not exactly one above the row's own `expected_goal_run_revision`, an `expected_goal_run_revision` below the projected revision, an `expected_goal_run_revision` above it without an authenticated chronology of supported non-emitting native steps (`original_execution_progress`, provisional success) covering every intervening revision, a v2 row of either family, `goal_run.replanned` (still unsupported until its own contract). The projection never infers a Goal state, and a `stopped` row with `resumable=true` gives no resume authority.
 
-**Why only qualifying births.** GRS-085 is bound to the `all_writers.v7` birth and the `prepare.v2` producer source. A v7 birth cannot produce these rows (EP-200), so extending its reducer would change nothing real and would risk accepting rows from an unlisted writer. The extension therefore applies only where the source edition lists the writers.
+**Why only qualifying births.** GRS-085 is bound to the `all_writers.v7` birth and the `prepare.v2` producer source. A v7 birth cannot produce these rows (EP-200), so extending its reducer would change nothing real and would risk accepting rows from an unlisted writer. The extension therefore applies only to the genuine EP-1110 fresh source edition under GRS-1110; its installed descriptor is independently authenticated and cannot be supplied as an admission flag.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-085, ContractName:Plans/storage-plan.md#SP-428, ContractName:Plans/Executor_Protocol.md#EP-200, ContractName:Plans/Decision_Log.md#DL-080
+
+Amended 2026-11-14 (PNC-019 lane rv8b): `goal_run.replanned` now has its own contract (GRS-3100), and this branch still halts on it, because `all_writers.stop_block.v1` lists no Replan writer; replanned rows are read only by the v8 branch of GRS-3101.
 
 ### GRS-086 - Application Goal Birth Continuation And Versioned Custody
 

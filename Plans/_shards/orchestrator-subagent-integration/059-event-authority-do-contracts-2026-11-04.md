@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L32455-L33721
+Source lines: L32457-L34392
 
-Source SHA256: `fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1`
+Source SHA256: `b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365`
 
 ---
 
@@ -39,8 +39,20 @@ plan_unit_id: OSI-680
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  config.validation.failed@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "config.validation.failed@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `config.validation.failed`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-086.\n\nUse\
+  \ the existing policy object unchanged: {\"anchor_kind\": \"run_completion\", \"cardinality_scope\"\
+  : \"run\", \"expiry_action\": \"compact\", \"max_cardinality\": 1000000, \"overflow_action\": \"roll_successor\"\
+  , \"ttl_seconds\": 31536000}.\n\nThe cited Storage integration is present in this batch base. Existing\
+  \ original run/thread/board anchor and count rules remain exact; admission is a separate criterion,\
+  \ not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -59,6 +71,17 @@ preserved_exact_tokens: [config.validation.failed, reader.orchestrator.config_va
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `config.validation.failed` (2026-11-14).
+
+Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-086.
+
+Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "run", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "roll_successor", "ttl_seconds": 31536000}.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-681 — crew.board_message_posted
 
@@ -95,8 +118,20 @@ plan_unit_id: OSI-681
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  crew.board_message_posted@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "crew.board_message_posted@1.0.0 consumes its exact closed payload and the independently stated owner\
+  \ contract immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding\
+  \ for `crew.board_message_posted` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`,\
+  \ under DL-085.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"run_completion\", \"\
+  cardinality_scope\": \"project\", \"expiry_action\": \"compact\", \"max_cardinality\": 1000000, \"overflow_action\"\
+  : \"evict_oldest_eligible\", \"ttl_seconds\": 15552000}.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -115,6 +150,17 @@ preserved_exact_tokens: [crew.board_message_posted, reader.orchestrator.crew_boa
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `crew.board_message_posted` (2026-11-14).
+
+Event history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`, under DL-085.
+
+Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "evict_oldest_eligible", "ttl_seconds": 15552000}.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-682 — crew.board_message_read
 
@@ -149,8 +195,20 @@ plan_unit_id: OSI-682
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  crew.board_message_read@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "crew.board_message_read@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `crew.board_message_read`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`, under DL-085.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"run_completion\", \"cardinality_scope\"\
+  : \"project\", \"expiry_action\": \"compact\", \"max_cardinality\": 1000000, \"overflow_action\": \"\
+  evict_oldest_eligible\", \"ttl_seconds\": 15552000}.\n\nThe cited Storage integration is present in\
+  \ this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -169,6 +227,17 @@ preserved_exact_tokens: [crew.board_message_read, reader.orchestrator.crew_board
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `crew.board_message_read` (2026-11-14).
+
+Event history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`, under DL-085.
+
+Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "evict_oldest_eligible", "ttl_seconds": 15552000}.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-683 — crew.board_messages_archived
 
@@ -203,8 +272,20 @@ plan_unit_id: OSI-683
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  crew.board_messages_archived@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "crew.board_messages_archived@1.0.0 consumes its exact closed payload and the independently stated owner\
+  \ contract immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding\
+  \ for `crew.board_messages_archived` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`,\
+  \ under DL-085.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"run_completion\", \"\
+  cardinality_scope\": \"project\", \"expiry_action\": \"compact\", \"max_cardinality\": 1000000, \"overflow_action\"\
+  : \"evict_oldest_eligible\", \"ttl_seconds\": 15552000}.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -223,6 +304,17 @@ preserved_exact_tokens: [crew.board_messages_archived, reader.orchestrator.crew_
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `crew.board_messages_archived` (2026-11-14).
+
+Event history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`, under DL-085.
+
+Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "evict_oldest_eligible", "ttl_seconds": 15552000}.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-684 — parser.error
 
@@ -255,8 +347,20 @@ plan_unit_id: OSI-684
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  parser.error@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "parser.error@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately\
+  \ above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `parser.error`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-086.\n\nUse\
+  \ the existing policy object unchanged: {\"anchor_kind\": \"run_completion\", \"cardinality_scope\"\
+  : \"run\", \"expiry_action\": \"compact\", \"max_cardinality\": 1000000, \"overflow_action\": \"roll_successor\"\
+  , \"ttl_seconds\": 31536000}.\n\nThe cited Storage integration is present in this batch base. Existing\
+  \ original run/thread/board anchor and count rules remain exact; admission is a separate criterion,\
+  \ not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -275,6 +379,17 @@ preserved_exact_tokens: [parser.error, reader.orchestrator.parser_error.history.
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `parser.error` (2026-11-14).
+
+Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-086.
+
+Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "run", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "roll_successor", "ttl_seconds": 31536000}.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-685 — phase.force_completed
 
@@ -305,8 +420,20 @@ plan_unit_id: OSI-685
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  phase.force_completed@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "phase.force_completed@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `phase.force_completed`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-086.\n\nUse\
+  \ the existing policy object unchanged: {\"anchor_kind\": \"run_completion\", \"cardinality_scope\"\
+  : \"run\", \"expiry_action\": \"compact\", \"max_cardinality\": 1000000, \"overflow_action\": \"roll_successor\"\
+  , \"ttl_seconds\": 31536000}.\n\nThe cited Storage integration is present in this batch base. Existing\
+  \ original run/thread/board anchor and count rules remain exact; admission is a separate criterion,\
+  \ not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -325,6 +452,17 @@ preserved_exact_tokens: [phase.force_completed, reader.orchestrator.phase_force_
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `phase.force_completed` (2026-11-14).
+
+Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-086.
+
+Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "run", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "roll_successor", "ttl_seconds": 31536000}.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-686 — subagent.budget_warning
 
@@ -355,8 +493,23 @@ plan_unit_id: OSI-686
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.budget_warning@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.budget_warning@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.budget_warning`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -375,6 +528,19 @@ preserved_exact_tokens: [subagent.budget_warning, reader.orchestrator.subagent_b
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.budget_warning` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-687 — subagent.cancelled
 
@@ -405,8 +571,23 @@ plan_unit_id: OSI-687
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.cancelled@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.cancelled@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.cancelled`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -425,6 +606,19 @@ preserved_exact_tokens: [subagent.cancelled, reader.orchestrator.subagent_cancel
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.cancelled` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-688 — subagent.completed
 
@@ -455,8 +649,23 @@ plan_unit_id: OSI-688
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.completed@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.completed@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.completed`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -475,6 +684,19 @@ preserved_exact_tokens: [subagent.completed, reader.orchestrator.subagent_comple
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.completed` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-689 — subagent.context_warning
 
@@ -505,8 +727,23 @@ plan_unit_id: OSI-689
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.context_warning@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.context_warning@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.context_warning`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -525,6 +762,19 @@ preserved_exact_tokens: [subagent.context_warning, reader.orchestrator.subagent_
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.context_warning` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-690 — subagent.escalated
 
@@ -555,8 +805,23 @@ plan_unit_id: OSI-690
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.escalated@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.escalated@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.escalated`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -575,6 +840,19 @@ preserved_exact_tokens: [subagent.escalated, reader.orchestrator.subagent_escala
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.escalated` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-691 — subagent.failed
 
@@ -605,8 +883,23 @@ plan_unit_id: OSI-691
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.failed@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.failed@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately\
+  \ above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.failed`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -625,6 +918,19 @@ preserved_exact_tokens: [subagent.failed, reader.orchestrator.subagent_failed.hi
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.failed` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-692 — subagent.message_received
 
@@ -655,8 +961,23 @@ plan_unit_id: OSI-692
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.message_received@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.message_received@1.0.0 consumes its exact closed payload and the independently stated owner\
+  \ contract immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding\
+  \ for `subagent.message_received` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`,\
+  \ under DL-084.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\",\
+  \ \"cardinality_scope\": \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\"\
+  : 250000, \"overflow_action\": \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is\
+  \ the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries\
+  \ roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours\
+  \ and backup bytes within 30 days; holds delay purge without restoring visibility.\n\nThe cited Storage\
+  \ integration is present in this batch base. Existing original run/thread/board anchor and count rules\
+  \ remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint\
+  \ retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.\n\
+  \nThis paragraph supersedes earlier pending statements only for the exact assigned facets above. All\
+  \ independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation\
+  \ holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
+  \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -675,6 +996,19 @@ preserved_exact_tokens: [subagent.message_received, reader.orchestrator.subagent
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.message_received` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-693 — subagent.message_sent
 
@@ -705,8 +1039,23 @@ plan_unit_id: OSI-693
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.message_sent@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.message_sent@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.message_sent`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -725,6 +1074,19 @@ preserved_exact_tokens: [subagent.message_sent, reader.orchestrator.subagent_mes
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.message_sent` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-694 — subagent.model_switched
 
@@ -755,8 +1117,23 @@ plan_unit_id: OSI-694
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.model_switched@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.model_switched@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.model_switched`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -775,6 +1152,19 @@ preserved_exact_tokens: [subagent.model_switched, reader.orchestrator.subagent_m
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.model_switched` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-695 — subagent.output_truncated
 
@@ -805,8 +1195,23 @@ plan_unit_id: OSI-695
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.output_truncated@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.output_truncated@1.0.0 consumes its exact closed payload and the independently stated owner\
+  \ contract immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding\
+  \ for `subagent.output_truncated` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`,\
+  \ under DL-084.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\",\
+  \ \"cardinality_scope\": \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\"\
+  : 250000, \"overflow_action\": \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is\
+  \ the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries\
+  \ roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours\
+  \ and backup bytes within 30 days; holds delay purge without restoring visibility.\n\nThe cited Storage\
+  \ integration is present in this batch base. Existing original run/thread/board anchor and count rules\
+  \ remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint\
+  \ retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.\n\
+  \nThis paragraph supersedes earlier pending statements only for the exact assigned facets above. All\
+  \ independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation\
+  \ holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
+  \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -825,6 +1230,19 @@ preserved_exact_tokens: [subagent.output_truncated, reader.orchestrator.subagent
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.output_truncated` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-696 — subagent.paused
 
@@ -855,8 +1273,23 @@ plan_unit_id: OSI-696
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.paused@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.paused@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately\
+  \ above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.paused`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -875,6 +1308,19 @@ preserved_exact_tokens: [subagent.paused, reader.orchestrator.subagent_paused.hi
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.paused` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-697 — subagent.progress
 
@@ -905,8 +1351,23 @@ plan_unit_id: OSI-697
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.progress@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.progress@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.progress`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -925,6 +1386,19 @@ preserved_exact_tokens: [subagent.progress, reader.orchestrator.subagent_progres
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.progress` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-698 — subagent.resumed
 
@@ -955,8 +1429,23 @@ plan_unit_id: OSI-698
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.resumed@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.resumed@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.resumed`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -975,6 +1464,19 @@ preserved_exact_tokens: [subagent.resumed, reader.orchestrator.subagent_resumed.
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.resumed` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-699 — subagent.retried
 
@@ -1005,8 +1507,23 @@ plan_unit_id: OSI-699
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.retried@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.retried@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.retried`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -1025,6 +1542,19 @@ preserved_exact_tokens: [subagent.retried, reader.orchestrator.subagent_retried.
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.retried` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-700 — subagent.spawned
 
@@ -1055,8 +1585,23 @@ plan_unit_id: OSI-700
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.spawned@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.spawned@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.spawned`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -1075,6 +1620,19 @@ preserved_exact_tokens: [subagent.spawned, reader.orchestrator.subagent_spawned.
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.spawned` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-701 — subagent.started
 
@@ -1105,8 +1663,23 @@ plan_unit_id: OSI-701
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.started@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.started@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.started`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -1125,6 +1698,19 @@ preserved_exact_tokens: [subagent.started, reader.orchestrator.subagent_started.
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.started` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-702 — subagent.timeout
 
@@ -1155,8 +1741,23 @@ plan_unit_id: OSI-702
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.timeout@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.timeout@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.timeout`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -1175,6 +1776,19 @@ preserved_exact_tokens: [subagent.timeout, reader.orchestrator.subagent_timeout.
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.timeout` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-703 — subagent.tool_called
 
@@ -1205,8 +1819,23 @@ plan_unit_id: OSI-703
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.tool_called@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.tool_called@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.tool_called`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -1225,6 +1854,19 @@ preserved_exact_tokens: [subagent.tool_called, reader.orchestrator.subagent_tool
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+
+PNC-019 s4r retention binding for `subagent.tool_called` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 ### OSI-704 — subagent.tool_completed
 
@@ -1255,8 +1897,23 @@ plan_unit_id: OSI-704
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  subagent.tool_completed@1.0.0 consumes its exact closed payload and the independently stated owner contract immediately above; prepared without admission under DL-045.
+canonical_text: "subagent.tool_completed@1.0.0 consumes its exact closed payload and the independently stated owner contract\
+  \ immediately above; prepared without admission under DL-045.\n\nPNC-019 s4r retention binding for `subagent.tool_completed`\
+  \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.\n\
+  \nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\", \"cardinality_scope\"\
+  : \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\": 250000, \"overflow_action\"\
+  : \"roll_successor\", \"ttl_seconds\": null}.\n\nThe governing thread is the original payload/source\
+  \ thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation.\
+  \ Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30\
+  \ days; holds delay purge without restoring visibility.\n\nThe cited Storage integration is present\
+  \ in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission\
+  \ is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN;\
+  \ this passive reader creates no durable filtered cursor.\n\nThis paragraph supersedes earlier pending\
+  \ statements only for the exact assigned facets above. All independent source, receipt, referenced-body\
+  \ and backup lifetimes remain with their own owners. Legal/investigation holds, required references,\
+  \ recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without\
+  \ granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,\
+  \ admission, native proof or governance clearance is granted.\n"
 gui_related: false
 gui_classification_reason: Event identity, custody and read authority; no new visual design.
 depends_on: [SP-278, SP-286]
@@ -1275,3 +1932,15 @@ preserved_exact_tokens: [subagent.tool_completed, reader.orchestrator.subagent_t
 negative_constraints: [No event admission or runtime certification follows.]
 owner_hints: [Plans/orchestrator-subagent-integration.md]
 ```
+
+PNC-019 s4r retention binding for `subagent.tool_completed` (2026-11-14).
+
+Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.
+
+Use the existing policy object unchanged: {"anchor_kind": "explicit_delete", "cardinality_scope": "thread", "expiry_action": "tombstone_then_compact", "max_cardinality": 250000, "overflow_action": "roll_successor", "ttl_seconds": null}.
+
+The governing thread is the original payload/source thread, never the caller or a replacement chat; 250,000 shared entries roll to linked continuation. Deletion hides immediately, unheld active copies purge within 24 hours and backup bytes within 30 days; holds delay purge without restoring visibility.
+
+The cited Storage integration is present in this batch base. Existing original run/thread/board anchor and count rules remain exact; admission is a separate criterion, not an open retention choice. The generic index/checkpoint retain RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN; this passive reader creates no durable filtered cursor.
+
+This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
