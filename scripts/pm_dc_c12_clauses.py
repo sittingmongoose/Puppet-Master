@@ -1645,6 +1645,155 @@ def implication(site, slot_sites_by_node, boundary):
         return dict(kind="edition_selected_by_scope_kind", proof=f"{where} the application edition is selected only when the payload's own "
                     "scope_kind is 'application' (payload_rejection -> edition_of), so this const never sees another value; the project edition "
                     "judges every other value, and its own scope_kind const is witnessed there")
+    extra = _finite_domain_proofs(site, slot_sites_by_node) if slot_sites_by_node else None
+    if extra:
+        return extra
+    return None
+
+
+# --- C12-DC2: proofs over a member whose unconditional schema admits a finite set of values -------------------
+
+def _typed_in(x, values):
+    """x in values with JSON types kept apart (True is not 1)."""
+    return any(type(x) is type(y) and x == y for y in values)
+
+
+def _unconditional(slot_sites_by_node, template, outer, keyword):
+    return [o for o in slot_sites_by_node.get(tuple(template), []) if o.keyword == keyword
+            and not ({"if", "then", "else", "not"} & set(o.context)) and tuple(o.context) == tuple(outer)[:len(o.context)]]
+
+
+def _finite_domain(slot_sites_by_node, template, outer):
+    """(values, site) when the member's unconditional schema admits only finitely many values: an enum, a const, or
+    type boolean or null; None otherwise. The first such clause found is named."""
+    for kw in ("const", "enum", "type"):
+        for o in _unconditional(slot_sites_by_node, template, outer, kw):
+            v = o.node.get(kw)
+            if kw == "const":
+                return [v], o
+            if kw == "enum" and isinstance(v, list):
+                return list(v), o
+            if kw == "type" and v == "boolean":
+                return [True, False], o
+            if kw == "type" and v == "null":
+                return [None], o
+    return None
+
+
+def _mentions_only(cond, key):
+    """True when the if-condition reads only the member key: properties/required name key alone, and its value tests
+    are const/enum/type, combined with allOf/anyOf/oneOf/not."""
+    if not isinstance(cond, dict):
+        return False
+    for kw, v in cond.items():
+        if kw in SKIP:
+            continue
+        if kw == "properties":
+            if set(v) != {key} or not isinstance(v[key], dict) or set(v[key]) - {"const", "enum", "type"} - SKIP:
+                return False
+        elif kw == "required":
+            if v != [key]:
+                return False
+        elif kw in ("allOf", "anyOf", "oneOf"):
+            if not all(_mentions_only(x, key) for x in v):
+                return False
+        elif kw == "not":
+            if not _mentions_only(v, key):
+                return False
+        else:
+            return False
+    return True
+
+
+def _entails(constraint, site):
+    """True when every value the branch constraint admits also satisfies this clause alone (the clause's own keyword
+    on its own), decided from the constraint's const/enum or a tighter bound of the same direction."""
+    k, v = site.keyword, site.node.get(site.keyword)
+    if not isinstance(constraint, dict):
+        return False
+    if "const" in constraint or "enum" in constraint:
+        from jsonschema import Draft202012Validator as _V
+        vals = [constraint["const"]] if "const" in constraint else constraint["enum"]
+        return all(_V({k: v}).is_valid(x) for x in vals)
+    if k in ("minimum", "exclusiveMinimum") and isinstance(v, (int, float)):
+        lo = [(constraint.get("minimum"), False), (constraint.get("exclusiveMinimum"), True)]
+        return any(isinstance(b, (int, float)) and not isinstance(b, bool) and (b > v or (b == v and (strict or k == "minimum")))
+                   for b, strict in lo)
+    if k in ("maximum", "exclusiveMaximum") and isinstance(v, (int, float)):
+        hi = [(constraint.get("maximum"), False), (constraint.get("exclusiveMaximum"), True)]
+        return any(isinstance(b, (int, float)) and not isinstance(b, bool) and (b < v or (b == v and (strict or k == "maximum")))
+                   for b, strict in hi)
+    return False
+
+
+def _finite_domain_proofs(site, slot_sites_by_node):
+    k, v = site.keyword, site.node.get(site.keyword)
+    src = site.src or {}
+    where = f"{src.get('path')}:{src.get('line')}"
+    # An if-condition's enum/const test of a member whose unconditional schema admits only values inside it (type
+    # boolean against [true, false], for example): the test holds on every accepted instance.
+    if k == "properties" and "if" in site.context and isinstance(v, dict) and v:
+        outer = tuple(site.context)[:list(site.context).index("if")]
+        named = []
+        for prop, sub in v.items():
+            allowed = [sub["const"]] if isinstance(sub, dict) and "const" in sub else (sub.get("enum") if isinstance(sub, dict) else None)
+            if not isinstance(allowed, list) or set(sub) - {"enum", "const"}:
+                return None
+            dom = _finite_domain(slot_sites_by_node, tuple(site.template) + (prop,), outer)
+            if dom is None or not all(_typed_in(x, allowed) for x in dom[0]):
+                return None
+            named.append((prop, dom))
+        prop, (vals, o) = named[0]
+        os_ = o.src or {}
+        return dict(kind="condition_restates_finite_domain", proof=f"{where} the if-condition's enum/const test of {sorted(v)} admits every "
+                    f"value the member's unconditional {o.keyword} at {os_.get('path')}:{os_.get('line')} admits ({vals!r} for {prop!r}): on every "
+                    "instance the row accepts that test already holds, so cutting it changes no accepted instance (an equivalent mutant), and "
+                    "an instance outside it is refused by that unconditional clause, which is witnessed and cut on its own")
+    # A bound (or const/enum/type) on a member that every branch selected by a required finite-domain member entails:
+    # for each value that member can take, at least one if whose condition reads only that member holds and its then
+    # constrains this member inside the clause, so a value violating the clause also fails the branch that applies.
+    if k in ("minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "const", "enum", "type") and site.template \
+            and not ({"if", "then", "else", "not"} & set(site.context)):
+        parent, member = tuple(site.template[:-1]), site.template[-1]
+        outer = tuple(site.context)
+        holders = [o for o in slot_sites_by_node.get(parent, []) if o.keyword == "if" and not ({"if", "then", "else", "not"} & set(o.context))
+                   and tuple(o.context) == outer[:len(o.context)] and isinstance(o.node.get("then"), dict)
+                   and isinstance(o.node["then"].get("properties", {}).get(member), dict)]
+        from jsonschema import Draft202012Validator as _V
+        by_key = {}
+        for h in holders:
+            cond = h.node["if"]
+            keys = set(cond.get("properties", {})) | set(cond.get("required", []))
+            for sub in cond.get("allOf", []):
+                if isinstance(sub, dict):
+                    keys |= set(sub.get("properties", {})) | set(sub.get("required", []))
+            if len(keys) == 1:
+                (key,) = keys
+                if _mentions_only(cond, key):
+                    by_key.setdefault(key, []).append(h)
+        for key, hs in by_key.items():
+            if not any(r.member == key for r in _unconditional(slot_sites_by_node, parent, outer, "required")):
+                continue
+            dom = _finite_domain(slot_sites_by_node, parent + (key,), outer)
+            if dom is None:
+                continue
+            cover = []
+            for x in dom[0]:
+                applies = [h for h in hs if _V(h.node["if"]).is_valid({key: x})]
+                hit = [h for h in applies if _entails(h.node["then"]["properties"][member], site)]
+                if not hit:
+                    cover = None
+                    break
+                cover.append((x, hit[0]))
+            if cover:
+                d = dom[1].src or {}
+                parts = "; ".join(f"{key}={x!r}: the if at {(h.src or {}).get('path')}:{(h.src or {}).get('line')}, whose then sets {member!r} to "
+                                  f"{json.dumps(h.node['then']['properties'][member], sort_keys=True)}" for x, h in cover)
+                return dict(kind="entailed_by_condition_partition", proof=f"{where} {k} {v!r} on {member!r} is entailed by the ifs on the "
+                            f"required {key!r}, whose unconditional {dom[1].keyword} at {d.get('path')}:{d.get('line')} admits only "
+                            f"{dom[0]!r}; each if reads only {key!r}, and for every value it can take one of them applies with a then "
+                            f"constraint inside this clause ({parts}). A value that violates this clause also fails the branch that applies, "
+                            "so no single-defect witness fails it alone; each then constraint is witnessed and cut on its own")
     return None
 
 
