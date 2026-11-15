@@ -107,6 +107,18 @@ export const CENSUS = () => {
 
 // The still state's marks in a trace's events and, per mark, the style recalcs of the page's main thread after it
 // (exported for tools/still-toggle-recalc.selftest.mjs): { marks, after(first, last) }
+// The try the frame rows judge (R51 F2): the first one that meets every judged bound ends the tries and is the one judged;
+// while none has, the quietest so far (fewest drawn plus rendered frames, then fewest starts). Ranking a passing try
+// against an earlier failing one kept (drawn 1, rendered 1, starts 80) over (2, 1, 40), and the starts row then failed
+// what one of the three tries had met. meets(r) says whether trace summary r meets every bound this view judges.
+export function stillPick(x, r, meets) {
+	if (meets(r)) return { x: r, done: true };
+	if (!x) return { x: r, done: false };
+	const sum = (q) => q.drawn.perSec + q.mainFrames.renderedPerSec;
+	const quieter = sum(r) < sum(x) || (sum(r) === sum(x) && r.mainFrames.perSec < x.mainFrames.perSec);
+	return { x: quieter ? r : x, done: false };
+}
+
 export function toggleRecalcs(events, keep = null) {
 	// the marks come from the page's own main thread: its style recalcs and main frames are those of the same thread
 	const marks = {}, styles = [], frames = [];
@@ -382,8 +394,9 @@ export default async function (t) {
 				const r = (await trace(cdp, { ms, url, track: framesBy, by: framesBy })).sum;
 				if (framesBy) t.log(`${at}: NOTE try ${k + 1} main frame starts by what asked for them [what, starts, nothing to update, rendered, ms]: ${JSON.stringify(r.startsBy.slice(0, 8))}`);
 				tries.push(`${r.drawn.perSec}/${rendered(r)} (starts ${r.mainFrames.perSec}, ${r.mainFrames.noUpdatePerSec} with nothing to update)${quiet ? '' : ' (a finite animation still ran)'}${r.drawn.perSec > drawnMax || rendered(r) > mainMax ? ' by ' + named(r) : ''}`);
-				if (!x || r.drawn.perSec + rendered(r) < x.drawn.perSec + rendered(x) || (r.drawn.perSec + rendered(r) === x.drawn.perSec + rendered(x) && r.mainFrames.perSec < x.mainFrames.perSec)) x = r;
-				if (r.drawn.perSec <= drawnMax && rendered(r) <= mainMax && (!judgeStarts || r.mainFrames.perSec <= startsMax)) break;
+				const pick = stillPick(x, r, (q) => q.drawn.perSec <= drawnMax && rendered(q) <= mainMax && (!judgeStarts || q.mainFrames.perSec <= startsMax));
+				x = pick.x;
+				if (pick.done) break;
 			}
 			t.log(`${at}: STILL drawn ${x.drawn.perSec}/s, main frames rendered ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s, ${x.mainFrames.noUpdatePerSec}/s with nothing to update, commits ${x.mainFrames.commitsPerSec}/s${Object.keys(x.mainFrames.aborts).length ? ', other early outs ' + JSON.stringify(x.mainFrames.aborts) : ''}), main ${Math.round(x.cost.main)} ms/s, GPU ${Math.round(x.cost.gpuMain)} ms/s, viz ${Math.round(x.cost.viz)} ms/s (drawn/rendered per try: ${tries.join('; ')}); toggle ${on && on.found ? `${on.first} elements, ${on.firstFrameMs} ms frame` : 'not seen'}`);
 			if (live) t.log(`${at}: NOTE live data (Usage): frames logged, not judged; quietest try draws ${x.drawn.perSec}/s, main renders ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s), by ${named(x) || 'no script'}`);
