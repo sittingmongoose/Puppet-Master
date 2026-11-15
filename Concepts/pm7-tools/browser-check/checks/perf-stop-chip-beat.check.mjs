@@ -456,8 +456,12 @@ function windowSpans(R, frame) {
 	return out;
 }
 const spanOf = (spans, i) => spans.find((x) => i >= x.from && i < x.to) || null;
-// True only on the restyle's own frame, and only when both chip loops jump by the same amount there
-// (within one frame of each other, and each by more than one frame).
+// True only on the restyle's own frame. When both loops are drawn, both must jump by more than
+// one frame, by the same amount (within one frame of each other). NieR draws no glow
+// (send-stop.css: .ss-bl is display:none), so one pulse reads 0 frames with both loops and the
+// backlight half of that pair can never be true. The glyph's jump on that same frame is the
+// window's (Alexis, qw3 run-probe2: the reference jumped 570 ms and the glyph's hand-over was
+// 0.259 of the 2200 ms loop, and nothing was named). A later frame is not otherI, so it still fails.
 function restyleFrame(R, i, frame, spans) {
 	const wc = spanOf(spans, i);
 	if (!wc || wc.otherI == null || i !== wc.otherI) return false;
@@ -469,7 +473,8 @@ function restyleFrame(R, i, frame, spans) {
 		return x.hand * row.dur;
 	};
 	const g = msOf('g'), b = msOf('b');
-	if (g == null || b == null) return false;
+	if (g == null) return false;
+	if (b == null) return R.rows[i].nier === 'on' && g > frame;
 	return g > frame && b > frame && Math.abs(g - b) <= frame;
 }
 // Every frame from the first change to the end, not only the frames that hold a change: the loop is never made anew,
@@ -510,35 +515,34 @@ export function judgeSpeed(R) {
 	const marks = (R.marks || []).filter((m) => m.kind === 'speed' && m.i >= 0);
 	const bad = [];
 	const seen = [];
-	// NieR hides .ss-bl (send-stop.css) and .ss-blg, the glow loop, is inside it, so getAnimations
-	// returns no ss-glow. The glyph is the loop that speed scales. A look that draws the glow, or a
-	// sample set that is not NieR, still has to produce both. A missing one fails the row.
-	const glowSeen = (R.rows || []).some((r) => r && r.b && r.b.dur > 0);
-	const nierGlyph = !glowSeen && (R.rows || []).some((r) => r && r.nier === 'on');
+	// NieR hides .ss-bl, and the glow loop lives inside it. A speed's own samples are what count:
+	// the Fast half of a NieR run can still catch a glow that a later restyle drops, and requiring
+	// that glow on Slow then reports the glyph as missing (Alexis, qw3 run-probe2). A window with
+	// no glow, on NieR, judges the glyph. A window that has a glow, and every other look, must
+	// produce both. A missing one fails the row.
 	for (let s = 0; s < marks.length; s++) {
 		const m = marks[s];
 		const speed = /Fast/.test(m.name) ? 'Fast' : /Slow|Cinematic/.test(m.name) ? 'Slow' : null;
 		if (!speed) continue;
 		const factor = SPEED_FACTOR[speed];
 		const end = s + 1 < marks.length ? marks[s + 1].i : R.rows.length;
-		const last = {};
+		const lastG = {}, lastB = {};
+		let nier = false, glow = false;
 		for (let i = m.i; i < end && i < R.rows.length; i++) {
 			const r = R.rows[i];
-			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing') || !r.g || !(r.g.dur > 0)) continue;
-			if (!nierGlyph && (!r.b || !(r.b.dur > 0))) continue;
-			last[r.flow] = r;
+			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing')) continue;
+			if (r.nier === 'on') nier = true;
+			if (r.g && r.g.dur > 0) lastG[r.flow] = r.g;
+			if (r.b && r.b.dur > 0) { lastB[r.flow] = r.b; glow = true; }
 		}
 		seen.push(speed);
 		for (const flow of ['waiting', 'flowing']) {
-			const r = last[flow];
-			if (!r) { bad.push({ speed, flow, missing: true }); continue; }
-			const loops = [['glyph', r.g]];
-			if (r.b && r.b.dur > 0) loops.push(['backlight', r.b]);
-			else if (!nierGlyph) { bad.push({ speed, flow, layer: 'backlight', missing: true }); continue; }
-			for (const [layer, loop] of loops) {
-				const want = LOOP_BASE[flow] * factor;
-				if (Math.abs(loop.dur - want) > 1) bad.push({ speed, flow, layer, dur: loop.dur, want });
-			}
+			const glyph = lastG[flow], backlight = lastB[flow];
+			if (!glyph) { bad.push({ speed, flow, missing: true }); continue; }
+			const want = LOOP_BASE[flow] * factor;
+			if (Math.abs(glyph.dur - want) > 1) bad.push({ speed, flow, layer: 'glyph', dur: glyph.dur, want });
+			if (backlight) { if (Math.abs(backlight.dur - want) > 1) bad.push({ speed, flow, layer: 'backlight', dur: backlight.dur, want }); }
+			else if (!(nier && !glow)) bad.push({ speed, flow, layer: 'backlight', missing: true });
 		}
 	}
 	if (!seen.includes('Fast') || !seen.includes('Slow')) bad.push({ missing: ['Fast', 'Slow'].filter((x) => !seen.includes(x)) });

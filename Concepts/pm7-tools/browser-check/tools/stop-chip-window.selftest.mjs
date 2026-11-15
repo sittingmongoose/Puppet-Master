@@ -43,4 +43,18 @@ const late = everyFrame(run({ later: true, withOpen: false }));
 assert.ok(late.worst > 1, `a later backlight-only jump must fail (worst ${late.worst}; named: ${(late.known || []).join('; ') || 'none'})`);
 const both = everyFrame(run({ later: false, withOpen: true }));
 assert.ok(both.worst <= 1 && both.restarts.length === 0, `both loops jumping together on the restyle frame must pass (worst ${both.worst}; ${both.where || ''})`);
-console.log('stop-chip-window: 2 cases pass');
+// NieR has no glow. The glyph's jump on the reference's frame is the window's. A later glyph jump is not.
+function nierRun(laterGlyph) {
+	const R = run({ later: false, withOpen: true });
+	for (let i = 0; i < R.rows.length; i++) {
+		delete R.rows[i].b;
+		R.rows[i].nier = 'on';
+		if (laterGlyph && i >= 20) R.rows[i].g.s = -30;
+	}
+	return R;
+}
+const nierOk = everyFrame(nierRun(false));
+assert.ok(nierOk.worst <= 1 && nierOk.restarts.length === 0, `NieR's glyph jumping with the reference must pass (worst ${nierOk.worst}; ${nierOk.where || ''})`);
+const nierLate = everyFrame(nierRun(true));
+assert.ok(nierLate.worst > 1, `a later NieR glyph jump must fail (worst ${nierLate.worst}; named: ${(nierLate.known || []).join('; ') || 'none'})`);
+console.log('stop-chip-window: 4 cases pass');

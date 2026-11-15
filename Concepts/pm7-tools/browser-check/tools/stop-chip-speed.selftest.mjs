@@ -73,4 +73,12 @@ const bare = runPage(true);
 for (const r of bare.rows) delete r.b;
 const noGlow = judge(bare);
 assert.equal(noGlow.ok, false, `a non-NieR page with no backlight sample must fail ${JSON.stringify(noGlow)}`);
-console.log('stop-chip-speed: 6 cases pass');
+// Fast can still show a glow that Slow's restyle drops. Slow's glyph is still judged.
+const split = nierPage(true);
+for (const r of split.rows) if (r.flow && /Fast/.test(split.marks[0].name) && r.w < split.marks[1].i * 16) r.b = { dur: r.g.dur };
+const splitOk = judge(split);
+assert.equal(splitOk.ok, true, `NieR Slow with no glow must still judge the glyph ${JSON.stringify(splitOk.bad)}`);
+split.rows[split.rows.length - 1].g.dur = BASE.flowing;
+const splitBad = judge(split);
+assert.equal(splitBad.ok, false, `NieR Slow's glyph left unscaled must fail ${JSON.stringify(splitBad.bad)}`);
+console.log('stop-chip-speed: 8 cases pass');
