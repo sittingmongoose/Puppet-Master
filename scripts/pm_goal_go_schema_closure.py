@@ -1120,7 +1120,8 @@ APART = ('if', 'not', 'contains')
 COVERED_EXTRA = 120
 
 
-SUITE_SHARE = 450  # GO addition: at most this many of a clause's 900 validations go to unmodified suite controls
+CLAUSE_CAP = [900]  # GC's per-clause search cap (validations); --clause-cap lowers it for very large roots
+SUITE_SHARE = 450  # GO addition: unmodified suite controls get at most half of a clause's cap (450 of the default 900)
 
 
 def swap_candidates(v, controls, reach, limit=6):
@@ -1157,8 +1158,9 @@ def swap_candidates(v, controls, reach, limit=6):
     return out
 
 
-def close_root(root, v, seeds, budget, carried=None):
+def close_root(root, v, seeds, budget, carried=None, elsewhere=None, deadline=None):
     carried = carried or {}
+    elsewhere = elsewhere or {}
     CURRENT[0] = v
     nodes = walk(v)
     by_ipath = collections.defaultdict(list)
@@ -1184,6 +1186,9 @@ def close_root(root, v, seeds, budget, carried=None):
             if clause in carried:  # --carry: a clause the earlier report did not leave UNCOVERED
                 entries[clause] = carried[clause]
                 continue
+            if clause in elsewhere:  # --distinct-from: a witness for this clause exists in another root of every family
+                entries[clause] = dict(cls='SEARCHED_ELSEWHERE', closed_in=elsewhere[clause])
+                continue
             ident = common.schema_guard(node, keyword)
             if all(r['empty_domain'] for r in info['reach']):
                 entries[clause] = dict(cls='UNREACHABLE', proof='every instance location of the clause is an item of an array '
@@ -1200,18 +1205,19 @@ def close_root(root, v, seeds, budget, carried=None):
             best = None
             attempts = 0
             start = COUNT[0]
+            out_of_time = deadline is not None and time.monotonic() > deadline
             covered_at = None  # GO addition: once COVERED_LATER is shown, search COVERED_EXTRA more for a kill
-            for reach in [r for r in info['reach'] if not any(c[0] in APART for c in r['ctx'])][:6]:
+            for reach in [r for r in info['reach'] if not any(c[0] in APART for c in r['ctx'])][:6] if not out_of_time else []:
                 pools = [(c, None) for c in controls[:40]]
                 for variant in range(4):
                     for control in seeds[:6]:
                         pools.append((control, variant))
                 pools.append((None, 'swap'))  # GO addition: union-alternative swaps once the constructions found nothing
                 for control, variant in pools:
-                    if COUNT[0] - root0 > budget or COUNT[0] - start > 900 or (
+                    if COUNT[0] - root0 > budget or COUNT[0] - start > CLAUSE_CAP[0] or (
                             covered_at is not None and COUNT[0] - covered_at > COVERED_EXTRA):
                         break
-                    if variant is None and COUNT[0] - start > SUITE_SHARE:
+                    if variant is None and COUNT[0] - start > CLAUSE_CAP[0] // 2:
                         continue  # GO addition: suite controls that never enter the branch leave room for constructions
                     if variant == 'swap':
                         if best is None:
@@ -1308,7 +1314,8 @@ def close_root(root, v, seeds, budget, carried=None):
                     pinned = pinned_proof(info, nodes, v, keyword)
                     if pinned:
                         best = pinned
-            entries[clause] = best or dict(cls='UNCOVERED', construction_attempts=attempts)
+            entries[clause] = best or (dict(cls='UNCOVERED', not_searched='wall-clock budget (--root-seconds) spent before this clause')
+                                       if out_of_time else dict(cls='UNCOVERED', construction_attempts=attempts))
     return entries, branch_controls, COUNT[0] - root0
 
 
@@ -1498,6 +1505,12 @@ def main():
     parser.add_argument('--per-clause', type=int, default=0, help='raise a root budget to this many validations per clause')
     parser.add_argument('--seeds', choices=('controls', 'authored'), default='controls', help='seed policy (see collect)')
     parser.add_argument('--skip-roots', nargs='*', default=[], help='skip roots containing one of these substrings')
+    parser.add_argument('--distinct-from', nargs='*', default=[], help='reports whose witness classes (KILLED, COVERED_LATER) '
+                        'close a clause for a family: in the selected roots such a clause is recorded SEARCHED_ELSEWHERE (naming '
+                        'the root) when every family of the root has that witness, and not searched again')
+    parser.add_argument('--clause-cap', type=int, default=900, help='per-clause search cap in validations (GC: 900)')
+    parser.add_argument('--root-seconds', type=int, default=0, help='wall-clock search budget per root; clauses reached after it '
+                        'still get the static classes and proofs, otherwise UNCOVERED (not searched)')
     parser.add_argument('--carry', nargs='*', default=[], help='FILE@TOOL_COMMIT: for the selected roots found in FILE, '
                         'copy the clauses FILE classified by a witness (KILLED, COVERED_LATER; across files a KILLED witness wins) and '
                         'classify every other clause again')
@@ -1512,6 +1525,7 @@ def main():
         return merge(args.merge, args.out)
     part, total = map(int, args.shard.split('/'))
     SEED_POLICY[0] = args.seeds
+    CLAUSE_CAP[0] = args.clause_cap
     carry = {}
     for item in args.carry:
         path, _, commit = item.partition('@')
@@ -1528,6 +1542,14 @@ def main():
             for c, x in entry['clauses'].items():  # every file's witnesses join; a KILLED witness beats COVERED_LATER
                 if x['cls'] in WITNESSED and (c not in kept or (kept[c]['cls'] != 'KILLED' and x['cls'] == 'KILLED')):
                     kept[c] = dict(x, carried_from=dict(x.get('carried_from') or label, cls=x['cls']))
+    witnessed = collections.defaultdict(dict)  # family -> clause -> 'report:root (class)'
+    for item in args.distinct_from:
+        data = json.loads(Path(item.partition('@')[0]).read_text())
+        for other, entry in data['roots'].items():
+            for c, x in entry['clauses'].items():
+                if x['cls'] in WITNESSED:
+                    for family in entry['families']:
+                        witnessed[family].setdefault(c, f"{Path(item.partition('@')[0]).name}:{other} ({x['cls']})")
     collector, roots = collect()
     families = family_roots(collector, roots)
     print(f'roots {len(roots)}; shard {part}/{total}', file=sys.stderr, flush=True)
@@ -1545,7 +1567,13 @@ def main():
             clauses = sum(len(clauses_of(info['node'])) for info in walk(v).values())
             budget = max(budget, args.per_clause * clauses)
         try:
-            entries, branch_controls, spent = close_root(root, v, seeds, budget, carry.get(root, (None, {}))[1])
+            fams = sorted(families.get(root, ()))
+            elsewhere = {}
+            if fams and args.distinct_from:
+                common_clauses = set.intersection(*(set(witnessed[f]) for f in fams))
+                elsewhere = {c: witnessed[fams[0]][c] for c in common_clauses if root not in witnessed[fams[0]][c]}
+            deadline = time.monotonic() + args.root_seconds if args.root_seconds else None
+            entries, branch_controls, spent = close_root(root, v, seeds, budget, carry.get(root, (None, {}))[1], elsewhere, deadline)
         except Exception as exc:  # noqa: BLE001 - a root that cannot be closed is reported, never skipped
             report['roots'][root] = dict(kind=slot['kind'], rows=sorted(slot['rows']), families=sorted(families.get(root, ())),
                                          seeds=len(seeds), error=type(exc).__name__ + ': ' + str(exc)[:300],
@@ -1553,7 +1581,11 @@ def main():
             print(f'{root[:90]}: ERROR {exc!r}'[:300], file=sys.stderr, flush=True)
             continue
         counts = collections.Counter(e['cls'] for e in entries.values())
-        report['roots'][root] = dict(kind=slot['kind'], rows=sorted(slot['rows']), sites=sorted(map(list, slot['sites']))[:12],
+        if args.distinct_from or args.root_seconds:
+            counts_note = dict(distinct_from=list(args.distinct_from), root_seconds=args.root_seconds, clause_cap=args.clause_cap)
+        else:
+            counts_note = None
+        report['roots'][root] = dict(kind=slot['kind'], rows=sorted(slot['rows']), sites=sorted(map(list, slot['sites']))[:12], search_limits=counts_note,
                                      families=sorted(families.get(root, ())), seeds=len(seeds),
                                      branch_controls=branch_controls, validations=spent, counts=dict(counts), clauses=entries,
                                      unresolved_refs=list(UNRESOLVED))
@@ -1568,7 +1600,7 @@ def main():
     for root, entry in report['roots'].items():
         entry['seed_sha256'] = sorted(roots[root]['seeds'])
         entry['seed_policy'] = args.seeds
-        entry['budget_args'] = dict(budget=args.budget, per_clause=args.per_clause)
+        entry['budget_args'] = dict(budget=args.budget, per_clause=args.per_clause, clause_cap=args.clause_cap, root_seconds=args.root_seconds)
     report['all_roots'] = {root: sorted(families.get(root, ())) for root in sorted(roots)}
     summarize(report)
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
@@ -1600,7 +1632,8 @@ def merge(paths, out):
 
 
 def summarize(report):
-    rank = {'KILLED': 0, 'COVERED_LATER': 1, 'COVERED_BY_CONST': 2, 'UNREACHABLE': 3, 'VACUOUS': 4, 'SELECTOR_OR_NEGATED': 5, 'UNCOVERED': 6}
+    rank = {'KILLED': 0, 'COVERED_LATER': 1, 'COVERED_BY_CONST': 2, 'UNREACHABLE': 3, 'VACUOUS': 4, 'SELECTOR_OR_NEGATED': 5, 'UNCOVERED': 6,
+            'SEARCHED_ELSEWHERE': 7}  # SEARCHED_ELSEWHERE: the clause's witness is in another root of the family (never the best)
     per_family = {}
     for family in ('goal.created', 'restore_point.deleted', 'run.started'):
         occurrences, distinct = collections.Counter(), {}
