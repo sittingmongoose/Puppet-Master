@@ -78,7 +78,7 @@ counts.remote_route_cases = fixture.remote_route_cases.length;
 
 // CC5 uses its real provider and run/thread clock, not a parallel TTL implementation.
 const activity = read('Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js');
-const dockSource = section(activity, 'var DOCK_MS =', 'var dockOn =');
+const dockSource = section(activity, 'var DOCK_MS =', '/* pmx-system.js loads after this file');
 let dockSteps = 0;
 for (const scenario of fixture.dock_scenarios) {
   let now = 0, items = [], pending = null;
