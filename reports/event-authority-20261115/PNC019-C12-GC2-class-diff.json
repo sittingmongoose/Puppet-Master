@@ -1,0 +1,70 @@
+{
+ "sources": {
+  "own_a": {
+   "distinct_after": {
+    "COVERED_LATER": 103,
+    "KILLED": 551,
+    "SELECTOR_OR_NEGATED": 19
+   },
+   "distinct_before": {
+    "COVERED_LATER": 103,
+    "KILLED": 551,
+    "SELECTOR_OR_NEGATED": 19
+   },
+   "distinct_changes": [],
+   "occurrence_changes": [],
+   "occurrences_after": {
+    "COVERED_LATER": 359,
+    "KILLED": 1561,
+    "SELECTOR_OR_NEGATED": 55
+   },
+   "occurrences_before": {
+    "COVERED_LATER": 359,
+    "KILLED": 1561,
+    "SELECTOR_OR_NEGATED": 55
+   },
+   "only_in_one_run": [],
+   "roots_after": 25,
+   "roots_before": 25,
+   "static_entries_with_reach_count": 55,
+   "uncovered_after": []
+  },
+  "own_b": {
+   "distinct_after": {
+    "COVERED_LATER": 384,
+    "KILLED": 1559,
+    "SELECTOR_OR_NEGATED": 33,
+    "UNREACHABLE": 8,
+    "VACUOUS": 11
+   },
+   "distinct_before": {
+    "COVERED_LATER": 384,
+    "KILLED": 1559,
+    "SELECTOR_OR_NEGATED": 33,
+    "UNREACHABLE": 8,
+    "VACUOUS": 11
+   },
+   "distinct_changes": [],
+   "occurrence_changes": [],
+   "occurrences_after": {
+    "COVERED_LATER": 838,
+    "KILLED": 4006,
+    "SELECTOR_OR_NEGATED": 91,
+    "UNREACHABLE": 12,
+    "VACUOUS": 24
+   },
+   "occurrences_before": {
+    "COVERED_LATER": 838,
+    "KILLED": 4006,
+    "SELECTOR_OR_NEGATED": 91,
+    "UNREACHABLE": 12,
+    "VACUOUS": 24
+   },
+   "only_in_one_run": [],
+   "roots_after": 54,
+   "roots_before": 54,
+   "static_entries_with_reach_count": 103,
+   "uncovered_after": []
+  }
+ }
+}
