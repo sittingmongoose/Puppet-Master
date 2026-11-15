@@ -1,0 +1,46 @@
+{
+  "schema_id": "pm.setup_validation_event_families.v1",
+  "schema_version": "1.0.0",
+  "prepared_without_admission": true,
+  "decision": "E8-6 B, Jared, signed 2026-11-14 15:25 EST",
+  "decision_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md",
+  "retention_decision": "E9-2 A, Jared, signed 2026-11-14 15:39 EST",
+  "families": [
+    {
+      "event_type": "config.validation.passed",
+      "family_revision": "1.0.0",
+      "definition": "config_validation_passed",
+      "payload_schema_id": "pm.event_payload.config_validation_passed.v1@1.0.0",
+      "payload_schema_ref": "Plans/setup_validation_event_contracts.schema.json#/$defs/config_validation_passed",
+      "contract_ref": "Plans/Contracts_V0.md#CV-3200",
+      "storage_ref": "Plans/storage-plan.md#SP-3200",
+      "oracle_ref": "Plans/Automated_Testing_System.md#ATS-3200",
+      "scope_policy": "project_only",
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_policy_ref": "RP-RUNTIME-365D@1.0.0",
+      "retention_decision_ref": "E9-2 A; DL-086",
+      "reader_id": "reader.orchestrator.config_validation_passed.history.v1@1.0.0",
+      "admission_status": "prepared_not_admitted"
+    },
+    {
+      "event_type": "config.validation.warning",
+      "family_revision": "1.0.0",
+      "definition": "config_validation_warning",
+      "payload_schema_id": "pm.event_payload.config_validation_warning.v1@1.0.0",
+      "payload_schema_ref": "Plans/setup_validation_event_contracts.schema.json#/$defs/config_validation_warning",
+      "contract_ref": "Plans/Contracts_V0.md#CV-3201",
+      "storage_ref": "Plans/storage-plan.md#SP-3201",
+      "oracle_ref": "Plans/Automated_Testing_System.md#ATS-3201",
+      "scope_policy": "project_only",
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_policy_ref": "RP-RUNTIME-365D@1.0.0",
+      "retention_decision_ref": "E9-2 A; DL-086",
+      "reader_id": "reader.orchestrator.config_validation_warning.history.v1@1.0.0",
+      "admission_status": "prepared_not_admitted"
+    }
+  ],
+  "retention_decision_source": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-9_20261114.md",
+    "sha256": "40195a39ddc086579660c2c2a65d07519e2aed32b4613c3ba5ea385a0cdfeed3"
+  }
+}

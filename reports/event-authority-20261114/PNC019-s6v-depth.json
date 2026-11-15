@@ -1,0 +1,431 @@
+{
+  "schema_id": "pm.event_authority.pnc019_s6v_depth.v1",
+  "implementation_commit": "77a0e657aec8e6962d756dd411238175bae1c6ba",
+  "oracle_correction_commit": "772eb061920a644783794fc3496463b26e0b98d8",
+  "rubric": "Current owner text supports the exact-family criterion; static evidence is never native/runtime proof.",
+  "prepared_without_admission": true,
+  "retention_decision": "E9-2 A; DL-086",
+  "native_conformance": "NOT_RUN",
+  "families": [
+    {
+      "event_type": "config.validation.passed",
+      "version": "1.0.0",
+      "ids": [
+        "CV-3200",
+        "SP-3200",
+        "ATS-3200"
+      ],
+      "before": {
+        "PASS": 1,
+        "PARTIAL": 4,
+        "ABSENT": 7,
+        "source_revision": "3c33510c57",
+        "reason": "OSI-109 names the outcomes; producer, redaction, transitions and history are broad owner statements, with no complete exact-family contracts."
+      },
+      "after": {
+        "PASS": 11,
+        "PARTIAL": 0,
+        "ABSENT": 1
+      },
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "evidence": [
+            "Plans/setup_validation_event_families.json",
+            "Plans/event_family_registry.json"
+          ],
+          "finding": "Prepared without admission; no registry/DL/denominator mutation. Merge 2 owns admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51282,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Closed payload.** `Plans/setup_validation_event_contracts.schema.json#/$defs/config_validation_passed` is `pm.event_payload.config_validation_passed.v1@1.0.0`. Every declared field is required and unknown fields refuse. `scope=project`, `schema_version=1.0.0`, `status=Pass`; `project_id`, `storage_instance_id`, `server_id`, `run_id`, `thread_id`, `node_id` and `operation_id` are nonempty strings without CR/LF; `occurrence` is a positive integer; `tier_type` is Phase, Task or Subtask; `occurred_at_utc` is the original StartVerificationResult timestamp. `findings` is the complete sanitized ordered list. Each closed finding carries category (ConfigWiring, GuiBackendMapping, BackendGuiMapping, OperationSequence, KnownGaps), severity (Critical, Major, Minor, Info), nonempty message and nullable string suggestion. No failure-only `invalid_names` or `error_code` is synthesized for a passing/warning result. The completed result has no Critical or Major finding; zero findings and Minor/Info findings both pass. The OSI-109 precedence is Critical \u2192 Fail, otherwise Major \u2192 Warning, otherwise Pass. Save every settled result under its exact outcome, including a warning that policy permits to continue; this event never substitutes for the failed-family contract."
+            }
+          ]
+        },
+        "producer": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51286,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Producer and transitions.** `Orchestrator backend / verify_tier_start / AfterTierStart` is the sole producer. It validates the StartVerificationResult against the original check and policy snapshot, settles that canonical result, and redacts it before preparing this event. State order is `checking \u2192 result_settled \u2192 append_pending \u2192 receipt_resolved \u2192 history_published`. Before append, the writer resolves this family's admission, exact schema, E9-2 retention assignment, original permission and Stop/scope fences. Missing or contradictory retention binding blocks current append. Commit any SP-337 pack first, then Case L append; adopt SP-286/CV-339 `storage.first_append_receipt.resolve.v2` full-value custody. Publish only after the durable first receipt. An uncertain result resolves the exact original value before retry, publication or dispatch decisions. History cannot rerun validation, spawn a provider/child, switch a model, change a budget, charge usage, send a warning notification or authorize continuation. Existing BeforeTierStart policy owns dispatch and blocking; warning is an overlay, not an Executor node status. A crash after result settlement repairs only the missing history append. Restore never recycles operation entropy or converts an uncertain append into a new observation."
+            }
+          ]
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51282,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Closed payload.** `Plans/setup_validation_event_contracts.schema.json#/$defs/config_validation_passed` is `pm.event_payload.config_validation_passed.v1@1.0.0`. Every declared field is required and unknown fields refuse. `scope=project`, `schema_version=1.0.0`, `status=Pass`; `project_id`, `storage_instance_id`, `server_id`, `run_id`, `thread_id`, `node_id` and `operation_id` are nonempty strings without CR/LF; `occurrence` is a positive integer; `tier_type` is Phase, Task or Subtask; `occurred_at_utc` is the original StartVerificationResult timestamp. `findings` is the complete sanitized ordered list. Each closed finding carries category (ConfigWiring, GuiBackendMapping, BackendGuiMapping, OperationSequence, KnownGaps), severity (Critical, Major, Minor, Info), nonempty message and nullable string suggestion. No failure-only `invalid_names` or `error_code` is synthesized for a passing/warning result. The completed result has no Critical or Major finding; zero findings and Minor/Info findings both pass. The OSI-109 precedence is Critical \u2192 Fail, otherwise Major \u2192 Warning, otherwise Pass. Save every settled result under its exact outcome, including a warning that policy permits to continue; this event never substitutes for the failed-family contract."
+            }
+          ]
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51284,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Scope and identity.** Use the actual Project and original Run/node/tier, never GUI focus or an invented Project. The canonical immutable verification-result slot is `(storage_instance_id, project_id, run_id, node_id, operation_id, occurrence)`; one slot settles exactly one outcome, so the same observation cannot mint both siblings. A later recheck is a new occurrence; a retry retains its original occurrence and result. Adopt OSI-680's `ea-do-rfc8785-v2` recipe for this exact family: SHA-256 of shared `qualified_jcs([\"ea-do-v1\", scope_partition, server_id, thread_id, run_id, \"config.validation.passed\", operation_id, occurrence])`, with `idempotency_key=\"do1:\"+hex` and `event_id=\"evt_do_\"+hex`. `scope_partition=\"project~\"+base64url(UTF8(project_id))` without padding. Scope/project/run/thread/node/time, correlation_id=operation_id, actor_ref, producer_sequence_id, causation_event_id, parent_event_id, redaction_profile and the original runtime/account links join independently retained canonical owner facts. Producer sequence, occurrence and Storage sequence use distinct witnesses, as do parent and causation IDs. Thread, node, attempt and account witnesses use different values. The CV-317 producer projection uses shared `producer_semantic_digest`; fields assigned by Storage never become caller authority. Same key and producer semantics returns the exact first receipt and complete original EventRecord. A changed semantic value under that key conflicts; an unreadable dedupe slot is unavailable."
+            }
+          ]
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51284,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Scope and identity.** Use the actual Project and original Run/node/tier, never GUI focus or an invented Project. The canonical immutable verification-result slot is `(storage_instance_id, project_id, run_id, node_id, operation_id, occurrence)`; one slot settles exactly one outcome, so the same observation cannot mint both siblings. A later recheck is a new occurrence; a retry retains its original occurrence and result. Adopt OSI-680's `ea-do-rfc8785-v2` recipe for this exact family: SHA-256 of shared `qualified_jcs([\"ea-do-v1\", scope_partition, server_id, thread_id, run_id, \"config.validation.passed\", operation_id, occurrence])`, with `idempotency_key=\"do1:\"+hex` and `event_id=\"evt_do_\"+hex`. `scope_partition=\"project~\"+base64url(UTF8(project_id))` without padding. Scope/project/run/thread/node/time, correlation_id=operation_id, actor_ref, producer_sequence_id, causation_event_id, parent_event_id, redaction_profile and the original runtime/account links join independently retained canonical owner facts. Producer sequence, occurrence and Storage sequence use distinct witnesses, as do parent and causation IDs. Thread, node, attempt and account witnesses use different values. The CV-317 producer projection uses shared `producer_semantic_digest`; fields assigned by Storage never become caller authority. Same key and producer semantics returns the exact first receipt and complete original EventRecord. A changed semantic value under that key conflicts; an unreadable dedupe slot is unavailable."
+            }
+          ]
+        },
+        "retention": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51294,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Retention.** `retention_policy_ref=RP-RUNTIME-365D@1.0.0`, the existing failed-family policy under **DL-086**, extended to this exact family by **E9-2 A**, Jared, signed 2026-11-14 at 15:39 EST (`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-9_20261114.md`, SHA-256 `40195a39ddc086579660c2c2a65d07519e2aed32b4613c3ba5ea385a0cdfeed3`). Keep the saved result one year (31,536,000 seconds) after its actual Run completes, with at most 1,000,000 records per Run and 5,000,000 per Project; overflow rolls to a successor under the existing policy. Resolve the original project_id/run_id to the canonical Run and its first durable terminal completion source; do not substitute the diagnostic timestamp, a child Run, another Project or caller completion text. An unresolved terminal source makes expiry ineligible. Existing legal/recovery/live-reference/backup/rollback/maintenance holds and dependency custody remain effective. Source result, payload packs and first-receipt dependencies stay co-retained for the history they support; deletion/compaction follows the existing policy and current disclosure fences. The generic index/checkpoint keep their existing SP-278 policies. This binds an existing policy only; it creates no new policy or registry row, and admission remains merge 2."
+            }
+          ],
+          "finding": "RP-RUNTIME-365D@1.0.0; signed E9-2 A extends DL-086 to this exact family. Actual Run completion anchors 31536000 seconds, with existing caps, successor rollover, holds and source/body/receipt co-retention."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51292,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Custody and redaction.** Storage owns seglog/packs, exact first receipt and original complete value; the verification operation owns its immutable settled result. Storage instance, opaque commit-group digest and original segment reference join Storage\u2019s independently issued record. The custody record\u2019s own no_secrets profile remains the CV-339 schema constant; it is not a copy of the event\u2019s potentially redacted profile. A retained read selects one recipe only from an independently sealed exact-original receipt and store snapshot through `RetainedDispatcher`; no read creates a receipt, guesses by family/Store recognition or tries a weaker fallback. Missing, ambiguous, foreign or unsupported receipts preserve bytes and return unavailable/unsupported. This newly introduced family has only `ea-do-rfc8785-v2`; the failed family's older `ea-do-json-v1` edition is not evidence that old sibling records exist. Freeze schemas/recipe resources at original issuance and verify the complete original binding, source, producer digest and physical full-value commitment. Current writer policy, live findings and dispatch status cannot rewrite retained facts. Sanitize finding messages/suggestions before append; do not log credentials, raw configuration secrets or provider tokens. Current disclosure access, tombstone and hold restrictions still apply. A hold preserves custody and does not grant read access. Coherent backup/restore preserves original source, receipt, packs and recipe; a projection alone cannot reconstruct them."
+            }
+          ]
+        },
+        "transitions": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51286,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Producer and transitions.** `Orchestrator backend / verify_tier_start / AfterTierStart` is the sole producer. It validates the StartVerificationResult against the original check and policy snapshot, settles that canonical result, and redacts it before preparing this event. State order is `checking \u2192 result_settled \u2192 append_pending \u2192 receipt_resolved \u2192 history_published`. Before append, the writer resolves this family's admission, exact schema, E9-2 retention assignment, original permission and Stop/scope fences. Missing or contradictory retention binding blocks current append. Commit any SP-337 pack first, then Case L append; adopt SP-286/CV-339 `storage.first_append_receipt.resolve.v2` full-value custody. Publish only after the durable first receipt. An uncertain result resolves the exact original value before retry, publication or dispatch decisions. History cannot rerun validation, spawn a provider/child, switch a model, change a budget, charge usage, send a warning notification or authorize continuation. Existing BeforeTierStart policy owns dispatch and blocking; warning is an overlay, not an Executor node status. A crash after result settlement repairs only the missing history append. Restore never recycles operation entropy or converts an uncertain append into a new observation."
+            }
+          ]
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51290,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Consumers and checkpoints.** `reader.orchestrator.config_validation_passed.history.v1@1.0.0` serves the existing Orchestrator verification history/diagnostic inspector. It adopts SP-278's `reader.storage.event_record_index@1.0.0` and sole `projector.storage.event_record_index@1.0.0`, closed `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `event_record_index.v2@{generation_id}`; family cursor is `none_required`. The generic owner validates the complete all-scope retained dataset/CURRENT/manifest, source/frame locators, generation birth/frontier, gaps and synced watermarks before family filtering. Acquire all ten read_token fields in one actual redb snapshot; CAS publication is the generic owner's transaction. Same-generation nonmatching appends and changed access/deletion/hold fences invalidate the old token and discard disclosure. Durable tokens carry only the SP-278/DL-076 nine fields; never persist redb_snapshot_id. Rebuild derives from retained canonical sources; missing history returns unavailable, never empty-success or execution truth."
+            }
+          ]
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51296,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Compatibility and withdrawal.** New append/retry accepts only this exact schema/version and dedupe policy. Each of the four EventRecord migration members is null for these first-version families; no predecessor history is admitted. `projector_replay_only` is a historical reader mode and refuses current append. Retained originals require original admission/schema proof plus an explicitly supported active or compatibility reader. Writer withdrawal, first-receipt settlement and reader publication fencing are ordered; reader withdrawal or a changed publication epoch refuses disclosure without withdrawing the shared generic index. A successor requires its own closed schema, frozen recipe and governed generic rebuild before publication. The three outcomes stay distinct; no alias or status coercion turns failed/old text into this family."
+            }
+          ]
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "line": 14153,
+              "sha256": "661172c5d5d5f2ea7c8e6d6cfe6fb42a76f24b6b88f3951d80abbca5470ea1de",
+              "quote": "### ATS-3200 \u2014 config.validation.passed: prepared setup-history oracle obligations"
+            }
+          ],
+          "finding": "PASS for the declared deterministic schema/recipe/join/oracle binding. Native authority, durability, redb CAS/snapshot isolation and live races remain NOT_RUN separately."
+        }
+      },
+      "references": {
+        "producer": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51286,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Producer and transitions.** `Orchestrator backend / verify_tier_start / AfterTierStart` is the sole producer. It validates the StartVerificationResult against the original check and policy snapshot, settles that canonical result, and redacts it before preparing this event. State order is `checking \u2192 result_settled \u2192 append_pending \u2192 receipt_resolved \u2192 history_published`. Before append, the writer resolves this family's admission, exact schema, E9-2 retention assignment, original permission and Stop/scope fences. Missing or contradictory retention binding blocks current append. Commit any SP-337 pack first, then Case L append; adopt SP-286/CV-339 `storage.first_append_receipt.resolve.v2` full-value custody. Publish only after the durable first receipt. An uncertain result resolves the exact original value before retry, publication or dispatch decisions. History cannot rerun validation, spawn a provider/child, switch a model, change a budget, charge usage, send a warning notification or authorize continuation. Existing BeforeTierStart policy owns dispatch and blocking; warning is an overlay, not an Executor node status. A crash after result settlement repairs only the missing history append. Restore never recycles operation entropy or converts an uncertain append into a new observation."
+        },
+        "schema": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51282,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Closed payload.** `Plans/setup_validation_event_contracts.schema.json#/$defs/config_validation_passed` is `pm.event_payload.config_validation_passed.v1@1.0.0`. Every declared field is required and unknown fields refuse. `scope=project`, `schema_version=1.0.0`, `status=Pass`; `project_id`, `storage_instance_id`, `server_id`, `run_id`, `thread_id`, `node_id` and `operation_id` are nonempty strings without CR/LF; `occurrence` is a positive integer; `tier_type` is Phase, Task or Subtask; `occurred_at_utc` is the original StartVerificationResult timestamp. `findings` is the complete sanitized ordered list. Each closed finding carries category (ConfigWiring, GuiBackendMapping, BackendGuiMapping, OperationSequence, KnownGaps), severity (Critical, Major, Minor, Info), nonempty message and nullable string suggestion. No failure-only `invalid_names` or `error_code` is synthesized for a passing/warning result. The completed result has no Critical or Major finding; zero findings and Minor/Info findings both pass. The OSI-109 precedence is Critical \u2192 Fail, otherwise Major \u2192 Warning, otherwise Pass. Save every settled result under its exact outcome, including a warning that policy permits to continue; this event never substitutes for the failed-family contract."
+        },
+        "identity": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51284,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Scope and identity.** Use the actual Project and original Run/node/tier, never GUI focus or an invented Project. The canonical immutable verification-result slot is `(storage_instance_id, project_id, run_id, node_id, operation_id, occurrence)`; one slot settles exactly one outcome, so the same observation cannot mint both siblings. A later recheck is a new occurrence; a retry retains its original occurrence and result. Adopt OSI-680's `ea-do-rfc8785-v2` recipe for this exact family: SHA-256 of shared `qualified_jcs([\"ea-do-v1\", scope_partition, server_id, thread_id, run_id, \"config.validation.passed\", operation_id, occurrence])`, with `idempotency_key=\"do1:\"+hex` and `event_id=\"evt_do_\"+hex`. `scope_partition=\"project~\"+base64url(UTF8(project_id))` without padding. Scope/project/run/thread/node/time, correlation_id=operation_id, actor_ref, producer_sequence_id, causation_event_id, parent_event_id, redaction_profile and the original runtime/account links join independently retained canonical owner facts. Producer sequence, occurrence and Storage sequence use distinct witnesses, as do parent and causation IDs. Thread, node, attempt and account witnesses use different values. The CV-317 producer projection uses shared `producer_semantic_digest`; fields assigned by Storage never become caller authority. Same key and producer semantics returns the exact first receipt and complete original EventRecord. A changed semantic value under that key conflicts; an unreadable dedupe slot is unavailable."
+        },
+        "retention": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51294,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Retention.** `retention_policy_ref=RP-RUNTIME-365D@1.0.0`, the existing failed-family policy under **DL-086**, extended to this exact family by **E9-2 A**, Jared, signed 2026-11-14 at 15:39 EST (`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-9_20261114.md`, SHA-256 `40195a39ddc086579660c2c2a65d07519e2aed32b4613c3ba5ea385a0cdfeed3`). Keep the saved result one year (31,536,000 seconds) after its actual Run completes, with at most 1,000,000 records per Run and 5,000,000 per Project; overflow rolls to a successor under the existing policy. Resolve the original project_id/run_id to the canonical Run and its first durable terminal completion source; do not substitute the diagnostic timestamp, a child Run, another Project or caller completion text. An unresolved terminal source makes expiry ineligible. Existing legal/recovery/live-reference/backup/rollback/maintenance holds and dependency custody remain effective. Source result, payload packs and first-receipt dependencies stay co-retained for the history they support; deletion/compaction follows the existing policy and current disclosure fences. The generic index/checkpoint keep their existing SP-278 policies. This binds an existing policy only; it creates no new policy or registry row, and admission remains merge 2."
+        },
+        "custody": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51292,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Custody and redaction.** Storage owns seglog/packs, exact first receipt and original complete value; the verification operation owns its immutable settled result. Storage instance, opaque commit-group digest and original segment reference join Storage\u2019s independently issued record. The custody record\u2019s own no_secrets profile remains the CV-339 schema constant; it is not a copy of the event\u2019s potentially redacted profile. A retained read selects one recipe only from an independently sealed exact-original receipt and store snapshot through `RetainedDispatcher`; no read creates a receipt, guesses by family/Store recognition or tries a weaker fallback. Missing, ambiguous, foreign or unsupported receipts preserve bytes and return unavailable/unsupported. This newly introduced family has only `ea-do-rfc8785-v2`; the failed family's older `ea-do-json-v1` edition is not evidence that old sibling records exist. Freeze schemas/recipe resources at original issuance and verify the complete original binding, source, producer digest and physical full-value commitment. Current writer policy, live findings and dispatch status cannot rewrite retained facts. Sanitize finding messages/suggestions before append; do not log credentials, raw configuration secrets or provider tokens. Current disclosure access, tombstone and hold restrictions still apply. A hold preserves custody and does not grant read access. Coherent backup/restore preserves original source, receipt, packs and recipe; a projection alone cannot reconstruct them."
+        },
+        "consumer": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51290,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Consumers and checkpoints.** `reader.orchestrator.config_validation_passed.history.v1@1.0.0` serves the existing Orchestrator verification history/diagnostic inspector. It adopts SP-278's `reader.storage.event_record_index@1.0.0` and sole `projector.storage.event_record_index@1.0.0`, closed `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `event_record_index.v2@{generation_id}`; family cursor is `none_required`. The generic owner validates the complete all-scope retained dataset/CURRENT/manifest, source/frame locators, generation birth/frontier, gaps and synced watermarks before family filtering. Acquire all ten read_token fields in one actual redb snapshot; CAS publication is the generic owner's transaction. Same-generation nonmatching appends and changed access/deletion/hold fences invalidate the old token and discard disclosure. Durable tokens carry only the SP-278/DL-076 nine fields; never persist redb_snapshot_id. Rebuild derives from retained canonical sources; missing history returns unavailable, never empty-success or execution truth."
+        },
+        "compatibility": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51296,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Compatibility and withdrawal.** New append/retry accepts only this exact schema/version and dedupe policy. Each of the four EventRecord migration members is null for these first-version families; no predecessor history is admitted. `projector_replay_only` is a historical reader mode and refuses current append. Retained originals require original admission/schema proof plus an explicitly supported active or compatibility reader. Writer withdrawal, first-receipt settlement and reader publication fencing are ordered; reader withdrawal or a changed publication epoch refuses disclosure without withdrawing the shared generic index. A successor requires its own closed schema, frozen recipe and governed generic rebuild before publication. The three outcomes stay distinct; no alias or status coercion turns failed/old text into this family."
+        },
+        "storage": {
+          "path": "Plans/storage-plan.md",
+          "line": 66102,
+          "sha256": "de84bfe2a63a8a9e12860196799ea56b3f9a0849280098df5ded7db29d57efa6",
+          "quote": "### SP-3200 \u2014 config.validation.passed: prepared Storage adoption"
+        },
+        "oracle": {
+          "path": "Plans/Automated_Testing_System.md",
+          "line": 14153,
+          "sha256": "661172c5d5d5f2ea7c8e6d6cfe6fb42a76f24b6b88f3951d80abbca5470ea1de",
+          "quote": "### ATS-3200 \u2014 config.validation.passed: prepared setup-history oracle obligations"
+        }
+      }
+    },
+    {
+      "event_type": "config.validation.warning",
+      "version": "1.0.0",
+      "ids": [
+        "CV-3201",
+        "SP-3201",
+        "ATS-3201"
+      ],
+      "before": {
+        "PASS": 1,
+        "PARTIAL": 4,
+        "ABSENT": 7,
+        "source_revision": "3c33510c57",
+        "reason": "OSI-109 names the outcomes; producer, redaction, transitions and history are broad owner statements, with no complete exact-family contracts."
+      },
+      "after": {
+        "PASS": 11,
+        "PARTIAL": 0,
+        "ABSENT": 1
+      },
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "evidence": [
+            "Plans/setup_validation_event_families.json",
+            "Plans/event_family_registry.json"
+          ],
+          "finding": "Prepared without admission; no registry/DL/denominator mutation. Merge 2 owns admission."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51345,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Closed payload.** `Plans/setup_validation_event_contracts.schema.json#/$defs/config_validation_warning` is `pm.event_payload.config_validation_warning.v1@1.0.0`. Every declared field is required and unknown fields refuse. `scope=project`, `schema_version=1.0.0`, `status=Warning`; `project_id`, `storage_instance_id`, `server_id`, `run_id`, `thread_id`, `node_id` and `operation_id` are nonempty strings without CR/LF; `occurrence` is a positive integer; `tier_type` is Phase, Task or Subtask; `occurred_at_utc` is the original StartVerificationResult timestamp. `findings` is the complete sanitized ordered list. Each closed finding carries category (ConfigWiring, GuiBackendMapping, BackendGuiMapping, OperationSequence, KnownGaps), severity (Critical, Major, Minor, Info), nonempty message and nullable string suggestion. No failure-only `invalid_names` or `error_code` is synthesized for a passing/warning result. The completed result has at least one Major finding and no Critical finding; an Info-only or empty result is not a warning. The OSI-109 precedence is Critical \u2192 Fail, otherwise Major \u2192 Warning, otherwise Pass. Save every settled result under its exact outcome, including a warning that policy permits to continue; this event never substitutes for the failed-family contract."
+            }
+          ]
+        },
+        "producer": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51349,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Producer and transitions.** `Orchestrator backend / verify_tier_start / AfterTierStart` is the sole producer. It validates the StartVerificationResult against the original check and policy snapshot, settles that canonical result, and redacts it before preparing this event. State order is `checking \u2192 result_settled \u2192 append_pending \u2192 receipt_resolved \u2192 history_published`. Before append, the writer resolves this family's admission, exact schema, E9-2 retention assignment, original permission and Stop/scope fences. Missing or contradictory retention binding blocks current append. Commit any SP-337 pack first, then Case L append; adopt SP-286/CV-339 `storage.first_append_receipt.resolve.v2` full-value custody. Publish only after the durable first receipt. An uncertain result resolves the exact original value before retry, publication or dispatch decisions. History cannot rerun validation, spawn a provider/child, switch a model, change a budget, charge usage, send a warning notification or authorize continuation. Existing BeforeTierStart policy owns dispatch and blocking; warning is an overlay, not an Executor node status. A crash after result settlement repairs only the missing history append. Restore never recycles operation entropy or converts an uncertain append into a new observation."
+            }
+          ]
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51345,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Closed payload.** `Plans/setup_validation_event_contracts.schema.json#/$defs/config_validation_warning` is `pm.event_payload.config_validation_warning.v1@1.0.0`. Every declared field is required and unknown fields refuse. `scope=project`, `schema_version=1.0.0`, `status=Warning`; `project_id`, `storage_instance_id`, `server_id`, `run_id`, `thread_id`, `node_id` and `operation_id` are nonempty strings without CR/LF; `occurrence` is a positive integer; `tier_type` is Phase, Task or Subtask; `occurred_at_utc` is the original StartVerificationResult timestamp. `findings` is the complete sanitized ordered list. Each closed finding carries category (ConfigWiring, GuiBackendMapping, BackendGuiMapping, OperationSequence, KnownGaps), severity (Critical, Major, Minor, Info), nonempty message and nullable string suggestion. No failure-only `invalid_names` or `error_code` is synthesized for a passing/warning result. The completed result has at least one Major finding and no Critical finding; an Info-only or empty result is not a warning. The OSI-109 precedence is Critical \u2192 Fail, otherwise Major \u2192 Warning, otherwise Pass. Save every settled result under its exact outcome, including a warning that policy permits to continue; this event never substitutes for the failed-family contract."
+            }
+          ]
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51347,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Scope and identity.** Use the actual Project and original Run/node/tier, never GUI focus or an invented Project. The canonical immutable verification-result slot is `(storage_instance_id, project_id, run_id, node_id, operation_id, occurrence)`; one slot settles exactly one outcome, so the same observation cannot mint both siblings. A later recheck is a new occurrence; a retry retains its original occurrence and result. Adopt OSI-680's `ea-do-rfc8785-v2` recipe for this exact family: SHA-256 of shared `qualified_jcs([\"ea-do-v1\", scope_partition, server_id, thread_id, run_id, \"config.validation.warning\", operation_id, occurrence])`, with `idempotency_key=\"do1:\"+hex` and `event_id=\"evt_do_\"+hex`. `scope_partition=\"project~\"+base64url(UTF8(project_id))` without padding. Scope/project/run/thread/node/time, correlation_id=operation_id, actor_ref, producer_sequence_id, causation_event_id, parent_event_id, redaction_profile and the original runtime/account links join independently retained canonical owner facts. Producer sequence, occurrence and Storage sequence use distinct witnesses, as do parent and causation IDs. Thread, node, attempt and account witnesses use different values. The CV-317 producer projection uses shared `producer_semantic_digest`; fields assigned by Storage never become caller authority. Same key and producer semantics returns the exact first receipt and complete original EventRecord. A changed semantic value under that key conflicts; an unreadable dedupe slot is unavailable."
+            }
+          ]
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51347,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Scope and identity.** Use the actual Project and original Run/node/tier, never GUI focus or an invented Project. The canonical immutable verification-result slot is `(storage_instance_id, project_id, run_id, node_id, operation_id, occurrence)`; one slot settles exactly one outcome, so the same observation cannot mint both siblings. A later recheck is a new occurrence; a retry retains its original occurrence and result. Adopt OSI-680's `ea-do-rfc8785-v2` recipe for this exact family: SHA-256 of shared `qualified_jcs([\"ea-do-v1\", scope_partition, server_id, thread_id, run_id, \"config.validation.warning\", operation_id, occurrence])`, with `idempotency_key=\"do1:\"+hex` and `event_id=\"evt_do_\"+hex`. `scope_partition=\"project~\"+base64url(UTF8(project_id))` without padding. Scope/project/run/thread/node/time, correlation_id=operation_id, actor_ref, producer_sequence_id, causation_event_id, parent_event_id, redaction_profile and the original runtime/account links join independently retained canonical owner facts. Producer sequence, occurrence and Storage sequence use distinct witnesses, as do parent and causation IDs. Thread, node, attempt and account witnesses use different values. The CV-317 producer projection uses shared `producer_semantic_digest`; fields assigned by Storage never become caller authority. Same key and producer semantics returns the exact first receipt and complete original EventRecord. A changed semantic value under that key conflicts; an unreadable dedupe slot is unavailable."
+            }
+          ]
+        },
+        "retention": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51357,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Retention.** `retention_policy_ref=RP-RUNTIME-365D@1.0.0`, the existing failed-family policy under **DL-086**, extended to this exact family by **E9-2 A**, Jared, signed 2026-11-14 at 15:39 EST (`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-9_20261114.md`, SHA-256 `40195a39ddc086579660c2c2a65d07519e2aed32b4613c3ba5ea385a0cdfeed3`). Keep the saved result one year (31,536,000 seconds) after its actual Run completes, with at most 1,000,000 records per Run and 5,000,000 per Project; overflow rolls to a successor under the existing policy. Resolve the original project_id/run_id to the canonical Run and its first durable terminal completion source; do not substitute the diagnostic timestamp, a child Run, another Project or caller completion text. An unresolved terminal source makes expiry ineligible. Existing legal/recovery/live-reference/backup/rollback/maintenance holds and dependency custody remain effective. Source result, payload packs and first-receipt dependencies stay co-retained for the history they support; deletion/compaction follows the existing policy and current disclosure fences. The generic index/checkpoint keep their existing SP-278 policies. This binds an existing policy only; it creates no new policy or registry row, and admission remains merge 2."
+            }
+          ],
+          "finding": "RP-RUNTIME-365D@1.0.0; signed E9-2 A extends DL-086 to this exact family. Actual Run completion anchors 31536000 seconds, with existing caps, successor rollover, holds and source/body/receipt co-retention."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51355,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Custody and redaction.** Storage owns seglog/packs, exact first receipt and original complete value; the verification operation owns its immutable settled result. Storage instance, opaque commit-group digest and original segment reference join Storage\u2019s independently issued record. The custody record\u2019s own no_secrets profile remains the CV-339 schema constant; it is not a copy of the event\u2019s potentially redacted profile. A retained read selects one recipe only from an independently sealed exact-original receipt and store snapshot through `RetainedDispatcher`; no read creates a receipt, guesses by family/Store recognition or tries a weaker fallback. Missing, ambiguous, foreign or unsupported receipts preserve bytes and return unavailable/unsupported. This newly introduced family has only `ea-do-rfc8785-v2`; the failed family's older `ea-do-json-v1` edition is not evidence that old sibling records exist. Freeze schemas/recipe resources at original issuance and verify the complete original binding, source, producer digest and physical full-value commitment. Current writer policy, live findings and dispatch status cannot rewrite retained facts. Sanitize finding messages/suggestions before append; do not log credentials, raw configuration secrets or provider tokens. Current disclosure access, tombstone and hold restrictions still apply. A hold preserves custody and does not grant read access. Coherent backup/restore preserves original source, receipt, packs and recipe; a projection alone cannot reconstruct them."
+            }
+          ]
+        },
+        "transitions": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51349,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Producer and transitions.** `Orchestrator backend / verify_tier_start / AfterTierStart` is the sole producer. It validates the StartVerificationResult against the original check and policy snapshot, settles that canonical result, and redacts it before preparing this event. State order is `checking \u2192 result_settled \u2192 append_pending \u2192 receipt_resolved \u2192 history_published`. Before append, the writer resolves this family's admission, exact schema, E9-2 retention assignment, original permission and Stop/scope fences. Missing or contradictory retention binding blocks current append. Commit any SP-337 pack first, then Case L append; adopt SP-286/CV-339 `storage.first_append_receipt.resolve.v2` full-value custody. Publish only after the durable first receipt. An uncertain result resolves the exact original value before retry, publication or dispatch decisions. History cannot rerun validation, spawn a provider/child, switch a model, change a budget, charge usage, send a warning notification or authorize continuation. Existing BeforeTierStart policy owns dispatch and blocking; warning is an overlay, not an Executor node status. A crash after result settlement repairs only the missing history append. Restore never recycles operation entropy or converts an uncertain append into a new observation."
+            }
+          ]
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51353,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Consumers and checkpoints.** `reader.orchestrator.config_validation_warning.history.v1@1.0.0` serves the existing Orchestrator verification history/diagnostic inspector. It adopts SP-278's `reader.storage.event_record_index@1.0.0` and sole `projector.storage.event_record_index@1.0.0`, closed `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `event_record_index.v2@{generation_id}`; family cursor is `none_required`. The generic owner validates the complete all-scope retained dataset/CURRENT/manifest, source/frame locators, generation birth/frontier, gaps and synced watermarks before family filtering. Acquire all ten read_token fields in one actual redb snapshot; CAS publication is the generic owner's transaction. Same-generation nonmatching appends and changed access/deletion/hold fences invalidate the old token and discard disclosure. Durable tokens carry only the SP-278/DL-076 nine fields; never persist redb_snapshot_id. Rebuild derives from retained canonical sources; missing history returns unavailable, never empty-success or execution truth."
+            }
+          ]
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "line": 51359,
+              "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+              "quote": "**Compatibility and withdrawal.** New append/retry accepts only this exact schema/version and dedupe policy. Each of the four EventRecord migration members is null for these first-version families; no predecessor history is admitted. `projector_replay_only` is a historical reader mode and refuses current append. Retained originals require original admission/schema proof plus an explicitly supported active or compatibility reader. Writer withdrawal, first-receipt settlement and reader publication fencing are ordered; reader withdrawal or a changed publication epoch refuses disclosure without withdrawing the shared generic index. A successor requires its own closed schema, frozen recipe and governed generic rebuild before publication. The three outcomes stay distinct; no alias or status coercion turns failed/old text into this family."
+            }
+          ]
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "line": 14200,
+              "sha256": "661172c5d5d5f2ea7c8e6d6cfe6fb42a76f24b6b88f3951d80abbca5470ea1de",
+              "quote": "### ATS-3201 \u2014 config.validation.warning: prepared setup-history oracle obligations"
+            }
+          ],
+          "finding": "PASS for the declared deterministic schema/recipe/join/oracle binding. Native authority, durability, redb CAS/snapshot isolation and live races remain NOT_RUN separately."
+        }
+      },
+      "references": {
+        "producer": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51349,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Producer and transitions.** `Orchestrator backend / verify_tier_start / AfterTierStart` is the sole producer. It validates the StartVerificationResult against the original check and policy snapshot, settles that canonical result, and redacts it before preparing this event. State order is `checking \u2192 result_settled \u2192 append_pending \u2192 receipt_resolved \u2192 history_published`. Before append, the writer resolves this family's admission, exact schema, E9-2 retention assignment, original permission and Stop/scope fences. Missing or contradictory retention binding blocks current append. Commit any SP-337 pack first, then Case L append; adopt SP-286/CV-339 `storage.first_append_receipt.resolve.v2` full-value custody. Publish only after the durable first receipt. An uncertain result resolves the exact original value before retry, publication or dispatch decisions. History cannot rerun validation, spawn a provider/child, switch a model, change a budget, charge usage, send a warning notification or authorize continuation. Existing BeforeTierStart policy owns dispatch and blocking; warning is an overlay, not an Executor node status. A crash after result settlement repairs only the missing history append. Restore never recycles operation entropy or converts an uncertain append into a new observation."
+        },
+        "schema": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51345,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Closed payload.** `Plans/setup_validation_event_contracts.schema.json#/$defs/config_validation_warning` is `pm.event_payload.config_validation_warning.v1@1.0.0`. Every declared field is required and unknown fields refuse. `scope=project`, `schema_version=1.0.0`, `status=Warning`; `project_id`, `storage_instance_id`, `server_id`, `run_id`, `thread_id`, `node_id` and `operation_id` are nonempty strings without CR/LF; `occurrence` is a positive integer; `tier_type` is Phase, Task or Subtask; `occurred_at_utc` is the original StartVerificationResult timestamp. `findings` is the complete sanitized ordered list. Each closed finding carries category (ConfigWiring, GuiBackendMapping, BackendGuiMapping, OperationSequence, KnownGaps), severity (Critical, Major, Minor, Info), nonempty message and nullable string suggestion. No failure-only `invalid_names` or `error_code` is synthesized for a passing/warning result. The completed result has at least one Major finding and no Critical finding; an Info-only or empty result is not a warning. The OSI-109 precedence is Critical \u2192 Fail, otherwise Major \u2192 Warning, otherwise Pass. Save every settled result under its exact outcome, including a warning that policy permits to continue; this event never substitutes for the failed-family contract."
+        },
+        "identity": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51347,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Scope and identity.** Use the actual Project and original Run/node/tier, never GUI focus or an invented Project. The canonical immutable verification-result slot is `(storage_instance_id, project_id, run_id, node_id, operation_id, occurrence)`; one slot settles exactly one outcome, so the same observation cannot mint both siblings. A later recheck is a new occurrence; a retry retains its original occurrence and result. Adopt OSI-680's `ea-do-rfc8785-v2` recipe for this exact family: SHA-256 of shared `qualified_jcs([\"ea-do-v1\", scope_partition, server_id, thread_id, run_id, \"config.validation.warning\", operation_id, occurrence])`, with `idempotency_key=\"do1:\"+hex` and `event_id=\"evt_do_\"+hex`. `scope_partition=\"project~\"+base64url(UTF8(project_id))` without padding. Scope/project/run/thread/node/time, correlation_id=operation_id, actor_ref, producer_sequence_id, causation_event_id, parent_event_id, redaction_profile and the original runtime/account links join independently retained canonical owner facts. Producer sequence, occurrence and Storage sequence use distinct witnesses, as do parent and causation IDs. Thread, node, attempt and account witnesses use different values. The CV-317 producer projection uses shared `producer_semantic_digest`; fields assigned by Storage never become caller authority. Same key and producer semantics returns the exact first receipt and complete original EventRecord. A changed semantic value under that key conflicts; an unreadable dedupe slot is unavailable."
+        },
+        "retention": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51357,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Retention.** `retention_policy_ref=RP-RUNTIME-365D@1.0.0`, the existing failed-family policy under **DL-086**, extended to this exact family by **E9-2 A**, Jared, signed 2026-11-14 at 15:39 EST (`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-9_20261114.md`, SHA-256 `40195a39ddc086579660c2c2a65d07519e2aed32b4613c3ba5ea385a0cdfeed3`). Keep the saved result one year (31,536,000 seconds) after its actual Run completes, with at most 1,000,000 records per Run and 5,000,000 per Project; overflow rolls to a successor under the existing policy. Resolve the original project_id/run_id to the canonical Run and its first durable terminal completion source; do not substitute the diagnostic timestamp, a child Run, another Project or caller completion text. An unresolved terminal source makes expiry ineligible. Existing legal/recovery/live-reference/backup/rollback/maintenance holds and dependency custody remain effective. Source result, payload packs and first-receipt dependencies stay co-retained for the history they support; deletion/compaction follows the existing policy and current disclosure fences. The generic index/checkpoint keep their existing SP-278 policies. This binds an existing policy only; it creates no new policy or registry row, and admission remains merge 2."
+        },
+        "custody": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51355,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Custody and redaction.** Storage owns seglog/packs, exact first receipt and original complete value; the verification operation owns its immutable settled result. Storage instance, opaque commit-group digest and original segment reference join Storage\u2019s independently issued record. The custody record\u2019s own no_secrets profile remains the CV-339 schema constant; it is not a copy of the event\u2019s potentially redacted profile. A retained read selects one recipe only from an independently sealed exact-original receipt and store snapshot through `RetainedDispatcher`; no read creates a receipt, guesses by family/Store recognition or tries a weaker fallback. Missing, ambiguous, foreign or unsupported receipts preserve bytes and return unavailable/unsupported. This newly introduced family has only `ea-do-rfc8785-v2`; the failed family's older `ea-do-json-v1` edition is not evidence that old sibling records exist. Freeze schemas/recipe resources at original issuance and verify the complete original binding, source, producer digest and physical full-value commitment. Current writer policy, live findings and dispatch status cannot rewrite retained facts. Sanitize finding messages/suggestions before append; do not log credentials, raw configuration secrets or provider tokens. Current disclosure access, tombstone and hold restrictions still apply. A hold preserves custody and does not grant read access. Coherent backup/restore preserves original source, receipt, packs and recipe; a projection alone cannot reconstruct them."
+        },
+        "consumer": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51353,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Consumers and checkpoints.** `reader.orchestrator.config_validation_warning.history.v1@1.0.0` serves the existing Orchestrator verification history/diagnostic inspector. It adopts SP-278's `reader.storage.event_record_index@1.0.0` and sole `projector.storage.event_record_index@1.0.0`, closed `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `event_record_index.v2@{generation_id}`; family cursor is `none_required`. The generic owner validates the complete all-scope retained dataset/CURRENT/manifest, source/frame locators, generation birth/frontier, gaps and synced watermarks before family filtering. Acquire all ten read_token fields in one actual redb snapshot; CAS publication is the generic owner's transaction. Same-generation nonmatching appends and changed access/deletion/hold fences invalidate the old token and discard disclosure. Durable tokens carry only the SP-278/DL-076 nine fields; never persist redb_snapshot_id. Rebuild derives from retained canonical sources; missing history returns unavailable, never empty-success or execution truth."
+        },
+        "compatibility": {
+          "path": "Plans/Contracts_V0.md",
+          "line": 51359,
+          "sha256": "2dc31f72f7f48ba4f1d0d0ef86f37d3d9218cfb08bde177148b666bf81606128",
+          "quote": "**Compatibility and withdrawal.** New append/retry accepts only this exact schema/version and dedupe policy. Each of the four EventRecord migration members is null for these first-version families; no predecessor history is admitted. `projector_replay_only` is a historical reader mode and refuses current append. Retained originals require original admission/schema proof plus an explicitly supported active or compatibility reader. Writer withdrawal, first-receipt settlement and reader publication fencing are ordered; reader withdrawal or a changed publication epoch refuses disclosure without withdrawing the shared generic index. A successor requires its own closed schema, frozen recipe and governed generic rebuild before publication. The three outcomes stay distinct; no alias or status coercion turns failed/old text into this family."
+        },
+        "storage": {
+          "path": "Plans/storage-plan.md",
+          "line": 66151,
+          "sha256": "de84bfe2a63a8a9e12860196799ea56b3f9a0849280098df5ded7db29d57efa6",
+          "quote": "### SP-3201 \u2014 config.validation.warning: prepared Storage adoption"
+        },
+        "oracle": {
+          "path": "Plans/Automated_Testing_System.md",
+          "line": 14200,
+          "sha256": "661172c5d5d5f2ea7c8e6d6cfe6fb42a76f24b6b88f3951d80abbca5470ea1de",
+          "quote": "### ATS-3201 \u2014 config.validation.warning: prepared setup-history oracle obligations"
+        }
+      }
+    }
+  ]
+}

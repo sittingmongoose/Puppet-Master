@@ -1582,6 +1582,8 @@ When the orchestrator **enters** a Phase, Task, or Subtask, run the following **
 - **Persist verification results:** Emit canonical `config.validation.passed|warning|failed` events and update redb projections for this tier/runtime snapshot
 - **Track verification history:** Add verification entry to verification history for this tier
 
+**E8-6 B (Jared, signed 2026-11-14 15:25 EST):** Every settled setup-check result is saved: `config.validation.passed`, `config.validation.warning` and the existing `config.validation.failed`. Passed and warning are complete prepared contracts in CV-3200/SP-3200/ATS-3200 and CV-3201/SP-3201/ATS-3201 respectively, beside OSI-680. Their retention cells bind `RP-RUNTIME-365D@1.0.0` under DL-086 as extended by Jared’s signed E9-2 A answer (2026-11-14 15:39 EST, `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-9_20261114.md`): one year after the actual Run completes, the same as failures. Their registration belongs to admission merge 2. Original verification/dispatch policy and OSI-109 outcome precedence remain authoritative.
+
 **Implementation:** Create `src/verification/tier_start.rs` with `verify_tier_start()` function. Integrate with orchestrator tier entry point.
 
 **Integration with orchestrator:**
