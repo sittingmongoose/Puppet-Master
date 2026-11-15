@@ -545,6 +545,63 @@ def forbidden_member(info, nodes):
     return reasons[0] if reasons else None
 
 
+def excluded_by_cases(info, nodes):
+    """GO addition, a checked UNREACHABLE proof by case analysis: every reach of the clause passes a `then` whose `if`
+    requires member P of object O (member m of its parent A) to be const X, while A unconditionally requires a selector
+    S with a finite enum, and for every value e of S an unconditional `if S == e` member of A pins m.P to a const other
+    than X. Then no valid instance satisfies the `if`, so the branch, and the clause, is unreachable."""
+    def unconditional(path):
+        return [(loc, n) for loc, n in nodes.items() if any(r['ipath'] == path and not r['ctx'] for r in n['reach'])]
+    reasons = []
+    for reach in info['reach']:
+        found = None
+        for kind, depth, _, owner, resolver, obj in reach['ctx']:
+            if kind != 'then' or depth == 0:
+                continue
+            condition = deref(owner.get('if', {}), resolver)[0]
+            object_path = reach['ipath'][:depth]
+            parent, member = object_path[:-1], object_path[-1]
+            for prop, sub in condition.get('properties', {}).items():
+                sub = deref(sub, resolver)[0]
+                if 'const' not in sub:
+                    continue
+                wanted = sub['const']
+                at_parent = unconditional(parent)
+                for selector in {s for _, n in at_parent for s in (n['node'].get('required') or [])}:
+                    enums = [n['node'].get('enum') for _, n in unconditional(parent + (selector,)) if isinstance(n['node'].get('enum'), list)]
+                    if not enums:
+                        continue
+                    cases, pinned = enums[0], {}
+                    for loc, n in at_parent:
+                        cond = n['node'].get('if')
+                        then = n['node'].get('then')
+                        if not isinstance(cond, dict) or not isinstance(then, dict):
+                            continue
+                        res = n['resolver']
+                        cond = deref(cond, res)[0]
+                        value = deref(cond.get('properties', {}).get(selector, {}), res)[0]
+                        if 'const' not in value:
+                            continue
+                        branch = deref(then, res)[0]
+                        member_node = deref(branch.get('properties', {}).get(member, {}), res)[0]
+                        pin = deref(member_node.get('properties', {}).get(prop, {}), res)[0]
+                        if 'const' in pin and pin['const'] != wanted:
+                            pinned[json.dumps(value['const'])] = (loc, pin['const'])
+                    if cases and all(json.dumps(e) in pinned for e in cases):
+                        found = ('case analysis: `' + selector + '` is required with enum ' + json.dumps(cases) + ' and every case pins `'
+                                 + member + '.' + prop + '` to a value other than ' + json.dumps(wanted) + ' ('
+                                 + '; '.join(f"{k} -> {v[1]!r} at {v[0]}" for k, v in sorted(pinned.items())) + ')')
+                        break
+                if found:
+                    break
+            if found:
+                break
+        if not found:
+            return None
+        reasons.append(found)
+    return reasons[0] if reasons else None
+
+
 def error_repair(v, value, keep, rounds=16):
     """GO addition: error-guided branch-control repair. Each round fixes the deepest failing nodes the owner
     validator itself reports (a missing required member is generated from its owner subschema, an unexpected
@@ -927,7 +984,7 @@ def close_root(root, v, seeds, budget):
                 if best and best['cls'] == 'KILLED':
                     break
             if best is None:
-                proof = contradicted_branch(info, nodes) or forbidden_member(info, nodes)
+                proof = contradicted_branch(info, nodes) or forbidden_member(info, nodes) or excluded_by_cases(info, nodes)
                 if proof:
                     best = dict(cls='UNREACHABLE', proof=proof)
             entries[clause] = best or dict(cls='UNCOVERED', construction_attempts=attempts)
