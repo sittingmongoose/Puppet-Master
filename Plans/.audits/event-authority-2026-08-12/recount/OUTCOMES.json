@@ -274,6 +274,10 @@
   {
    "event_type": "goal.continuation_evaluated",
    "outcome": "registered"
+  },
+  {
+   "event_type": "goal.paused",
+   "outcome": "registered"
   }
  ]
 }
