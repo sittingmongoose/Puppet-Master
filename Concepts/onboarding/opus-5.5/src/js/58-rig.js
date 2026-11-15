@@ -448,7 +448,7 @@
        prop's way, so props come in from above; where it took its usual place over their ways instead, placeBubble's
        bubbleOver, they come in under it as they do under NieR's box: FO-214) */
     enterUnder(pr, tgt, still) {
-      const sb = this.famName === 'nier' ? this.keepOff : this.bubbleOver ? this.bubbleBox : null;
+      const sb = this.famName === 'nier' ? this.keepOff : this.bubbleOver ? this.bubbleBoxT || this.bubbleBox : null;
       if (!sb) return;
       const g = 4 / ((this.map && this.map.k) || 1), len0 = pr.len;
       pr.len = tgt.len; this.placeProp(pr);
@@ -573,7 +573,7 @@
         /* (and, while it comes in, off the bubble where it is: the bubble is placed clear of the way it comes down
            (placeBubble), and its swing or its bounce at the end of the way does not then send the bubble off its place,
            FO-191; not where it will rest, which the bubble is placed from: restBox) */
-        const bb = !this.restProbe && this.famName !== 'nier' && pr.state !== 'out' && !pr.settled ? this.bubbleBox : null;
+        const bb = !this.restProbe && this.famName !== 'nier' && pr.state !== 'out' && !pr.settled ? this.bubbleBoxT || this.bubbleBox : null;
         if (bb && pr.op > .05) obs.push(bb);
         /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
         const pk = this.pipKeep; if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
@@ -1336,7 +1336,7 @@
       /* (a place the bubble already holds is kept against where the props are now, not the ways they take: one coming in
          keeps off the bubble on its way down (fit), one leaving is held under it (holdUnder); a way that moved as Pip
          swayed under a prop still coming in sent the held bubble off a place nothing came to, FO-191) */
-      const now = [], rests = [], box = (q) => { const a = this.toScreen([q[0], q[1]]), c = this.toScreen([q[2], q[3]]); return [a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]; };
+      const now = [], rests = [], stay = [], box = (q) => { const a = this.toScreen([q[0], q[1]]), c = this.toScreen([q[2], q[3]]); return [a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]; };
       this.props.forEach((pr) => {
         const coming = pr.state !== 'out' && !pr.settled;
         /* (and one the held stage has not placed yet, FO-206: on a screen change its box is first measured at the first
@@ -1348,6 +1348,7 @@
            only the prop's drawing; the Start press writes no line, so it measures nothing there) */
         if (!pr.box) { const r = coming ? this.restBox(pr) : null; if (r) { rests.push(box(r)); obs.push(box([r[0], -1e4, r[2], r[3]])); } return; }
         if (pr.op > .05) now.push(box(pr.box));
+        if (!coming && pr.state !== 'out' && pr.op > .05) stay.push(box(pr.box));
         if (!coming && pr.op <= .05) return;
         let q = pr.box;
         const r = coming ? this.restBox(pr) : null;
@@ -1362,18 +1363,48 @@
       const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
       /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
          from, Retro Dark's Look 'Soft and cosy. I like it.', FO-59) */
-      const bar = this.barBox(gap); if (bar) obs.push(bar);
+      const pobs = obs.slice(), bar = this.barBox(gap); if (bar) obs.push(bar);
       const fx = (face[0] + face[2]) / 2, sideOf = (cx) => (cx + bw / 2 < fx ? 'L' : 'R');
       const over = (cx, cy, o) => cx < o[2] && cx + bw > o[0] && cy < o[3] && cy + bh > o[1];
       const fits = (cx, cy) => cx >= X0 - .5 && cx <= X1 + .5 && cy >= Y0 - .5 && cy <= Y1 + .5;
-      const clear = (cx, cy) => fits(cx, cy) && !over(cx, cy, face) && !obs.some((o) => over(cx, cy, o));
+      /* (and while Pip is on its way to a new spot, where it will be when Pip gets there: the bubble rides with Pip, so a
+         place clear only where Pip is now is not clear. The Look line is written as Pip wakes, still lying on the floor,
+         and is carried up with it about 155 px: "Dress me up" placed under the sleeping Pip's chin, the place left of the
+         palette's way missing the sleeping face by a few pixels or not, was carried up into where the palette comes to
+         rest, and went above Pip 170 px in a frame (Friendly Light, cold Start, FO-215 round 2). dd: how far Pip's head
+         has still to go; the props' ways and rests stay where they are, the face and the bar go with Pip) */
+      const ps = this.ps, mk = (this.map && this.map.k) || 1;
+      let dd = null, faceT = null, barT = null;
+      /* (where the hand is going: its spot, less the lift a long note asks for, placeTip) */
+      const tgx = ps ? ps.Ct.x : 0, tgy = ps ? ps.Ct.y - (ps.liftT || 0) : 0;
+      if (ps && Math.hypot(ps.C.x - tgx, ps.C.y - tgy) * mk > 12) {
+        let Ht = this.headAt(tgx, tgy, 0, 0); const hh = 28 * this.L.s;
+        if (Ht[1] + hh > this.L.ground - 2) Ht = [Ht[0], this.L.ground - 2 - hh];
+        const rch = this.pipReach(ps.tiltT); if (rch && Ht[1] + rch[3] > this.vis.y1) Ht = [Ht[0], this.vis.y1 - rch[3]];
+        const ht = this.toScreen(this.headXf([32, 34], Ht, ps.tiltT, 1, 1));
+        if (Math.hypot(ht[0] - hx0, ht[1] - hy0) > 12) {
+          dd = [ht[0] - hx0, ht[1] - hy0];
+          const ft = [[12, 32], [52, 32], [12, 58], [52, 58]].map((q) => this.toScreen(this.headXf(q, Ht, ps.tiltT, 1, 1)));
+          faceT = [Math.min(...ft.map((c) => c[0])) - gap, Math.min(...ft.map((c) => c[1])) - gap, Math.max(...ft.map((c) => c[0])) + gap, Math.max(...ft.map((c) => c[1])) + gap];
+          if (tall) faceT[1] -= 12; else faceT[2] += 12;
+          const bx0 = (tgx - ps.C.x) * mk, by0 = (tgy - ps.C.y) * mk;
+          barT = bar ? [bar[0] + bx0, bar[1] + by0, bar[2] + bx0, bar[3] + by0] : null;
+        }
+      }
+      const clearT = (cx, cy) => !dd || (fits(cx + dd[0], cy + dd[1]) && !over(cx + dd[0], cy + dd[1], faceT) && !(barT && over(cx + dd[0], cy + dd[1], barT)) && !pobs.some((o) => over(cx + dd[0], cy + dd[1], o)));
+      const clear0 = (cx, cy) => fits(cx, cy) && !over(cx, cy, face) && !obs.some((o) => over(cx, cy, o));
+      const clear = (cx, cy) => clear0(cx, cy) && clearT(cx, cy);
       /* (a place it already holds is kept until it would touch what it keeps off, not just its margin: placed against the
          margin, it followed Pip's sway a pixel into it and jumped away, FO-191) */
       const inner = (o) => [o[0] + gap, o[1] + gap, o[2] - gap, o[3] - gap];
       const holds = (cx, cy) => fits(cx, cy) && !over(cx, cy, inner(face)) && !(bar && over(cx, cy, inner(bar))) && !now.some((o) => over(cx, cy, inner(o)));
+      /* (while Pip is on its way, a place is also kept that holds where Pip is going, against where the props will be:
+         their rests, and those already resting. What it passes on the way Pip passes too) */
+      const D = rests.concat(stay);
+      const holdsT = (cx, cy) => !!dd && fits(cx + dd[0], cy + dd[1]) && !over(cx + dd[0], cy + dd[1], inner(faceT)) && !(barT && over(cx + dd[0], cy + dd[1], inner(barT))) && !D.some((o) => over(cx + dd[0], cy + dd[1], inner(o)));
       /* (a place on Pip's other side counts as far: new words never send the bubble across Pip, it goes above instead) */
       const cost = ([cx, cy]) => Math.hypot(cx - x, cy - y) + (this.bubbleSide && sideOf(cx) !== this.bubbleSide && !(cy + bh <= face[1]) ? 400 : 0);
-      const near = (list) => list.filter(([cx, cy]) => clear(cx, cy)).sort((p, q) => cost(p) - cost(q))[0];
+      const near = (list, ok) => list.filter(([cx, cy]) => (ok || clear)(cx, cy)).sort((p, q) => cost(p) - cost(q))[0];
       /* (where Pip's sway takes the place it moved to against the pane's edge, it slides along the edge rather than going:
          a pixel past it sent it back across 114 px, FO-191) */
       const prev = this.bubbleRel ? [clamp(hx0 + this.bubbleRel[0], X0, Math.max(X0, X1)), clamp(hy0 + this.bubbleRel[1], Y0, Math.max(Y0, Y1))] : null;
@@ -1384,22 +1415,35 @@
       const fresh = !this.bubbleTalked || this.bubbleScreen !== this.lastScreen;
       this.bubbleTalked = talking; this.bubbleScreen = this.lastScreen;
       if (fresh) this.bubbleOver = false;
+      if (fresh || !dd) this.bubbleFor = false;
       let at = null, over0 = false;
       const sideOk = !(this.bubbleSide && sideOf(x) !== this.bubbleSide && y + bh > face[1]);
-      if (prev && !fresh && holds(prev[0], prev[1])) at = prev; /* (the side it moved to, while it stays clear) */
-      else if (sideOk && (!prev && !fresh ? holds(x, y) : clear(x, y))) at = [x, y]; /* (its usual place, kept the same way) */
+      if (prev && !fresh && (holds(prev[0], prev[1]) || holdsT(prev[0], prev[1]))) at = prev; /* (the side it moved to, while it stays clear) */
+      else if (sideOk && (!prev && !fresh ? holds(x, y) || holdsT(x, y) : clear(x, y))) at = [x, y]; /* (its usual place, kept the same way) */
       else {
         const cand = [];
         [face].concat(obs).forEach((o) => { cand.push([o[0] - bw, y], [o[2], y], [x, o[1] - bh], [x, o[3]], [o[0] - bw, o[1] - bh], [o[2], o[1] - bh], [o[0] - bw, o[3]], [o[2], o[3]]); });
         cand.push([X0, Y0], [X1, Y0], [X0, Y1], [X1, Y1]);
-        at = near(cand.map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]));
+        /* (a place where Pip is going too, by the same moves from what it keeps off there; where none is clear both now
+           and there, the nearest clear now, as before) */
+        if (dd) [faceT].concat(pobs, barT ? [barT] : []).forEach((o) => { const a = o[0] - bw - dd[0], b = o[2] - dd[0], c = o[1] - bh - dd[1], e = o[3] - dd[1]; cand.push([a, y], [b, y], [x, c], [x, e], [a, c], [b, c], [a, e], [b, e]); });
+        const cl = cand.map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]);
+        const atB = near(cl);
+        at = atB || (dd ? near(cl, clear0) : null);
         /* FO-214: a new line whose usual place, over Pip, is taken only by the ways the props take (one lifted out, one
            lowered in), not by anything there now or by where a prop will rest, keeps that place where the nearest clear one
            is under Pip's face, or where none is: under the face its tail pointed down, away from Pip. Retro Dark's tube,
            cropped to fill the pane at 1694x1290, leaves no room beside the laptop leaving Where and the palette coming to
            Look, so "Dress me up" went under Pip's chin. Here the props make way instead: one leaving is held under the
            bubble (holdUnder), one coming in is lowered in from just under it (enterUnder, bubbleOver). */
-        if (fresh && tall && talking && (!at || at[1] + .5 >= face[3]) && sideOk && fits(x, y) && !over(x, y, face) && !(bar && over(x, y, bar)) && !now.concat(rests).some((o) => over(x, y, o))) { at = [x, y]; over0 = true; }
+        const freeT = !dd || (fits(x + dd[0], y + dd[1]) && !(barT && over(x + dd[0], y + dd[1], barT)) && !rests.some((o) => over(x + dd[0], y + dd[1], o)));
+        if (fresh && tall && talking && (!at || at[1] + .5 >= face[3]) && sideOk && fits(x, y) && !over(x, y, face) && !(bar && over(x, y, bar)) && !now.concat(rests).some((o) => over(x, y, o)) && freeT) { at = [x, y]; over0 = true; }
+        /* (and where Pip is on its way and no place is clear both where it is and where it is going, the usual place,
+           when that is clear where Pip is going of its face, its bar and the props there; the props make way as above,
+           against the bubble where Pip is going. Retro Dark's cold Start: the tube's crop leaves no room beside the palette
+           next to the sleeping Pip and the bar hangs low over it, so the place above the bar, the only one clear by the
+           floor, was carried off the tube's top and onto the bar as Pip rose, and came 150-210 px back down in a frame) */
+        else if (fresh && tall && talking && dd && !atB && sideOk && fits(x, y) && !over(x, y, face) && !(bar && over(x, y, bar)) && fits(x + dd[0], y + dd[1]) && !over(x + dd[0], y + dd[1], faceT) && !(barT && over(x + dd[0], y + dd[1], barT)) && !D.some((o) => over(x + dd[0], y + dd[1], o))) { at = [x, y]; over0 = true; this.bubbleFor = true; }
       }
       const claimed = this.bubbleClaim && talking && at && Math.abs(at[0] - this.bubbleClaim[0]) < 10 && Math.abs(at[1] - this.bubbleClaim[1]) < 10;
       if (!claimed) this.bubbleKeepOff = null;
@@ -1421,6 +1465,9 @@
       this.bubbleSide = talking ? sideOf(x) : null;
       /* where it is, with its tail, for the props that leave under it (holdUnder) */
       if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tall ? 0 : 10), y - gap), a1 = u(x + bw + gap, y + bh + gap + (tall ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
+      /* (and, for a place taken for where Pip is going, where it will be: the props coming in keep off that, fit, and come
+         in under it, enterUnder) */
+      const bk = this.bubbleBox; this.bubbleBoxT = this.bubbleFor && dd && bk ? [bk[0] + dd[0] / mk, bk[1] + dd[1] / mk, bk[2] + dd[0] / mk, bk[3] + dd[1] / mk] : null;
       /* (FO-214: the props coming in move under it in this same frame, before it is painted, and are lowered the rest of
          the way from there, as a prop added under NieR's box is; one the held stage has yet to place, measured above, is
          placed now too, at no opacity yet: placed in the first frame after the hold, it had fallen from the top on the
