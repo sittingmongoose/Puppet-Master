@@ -72,4 +72,45 @@ const nierNext = everyFrame(nierNeighbour(80));
 assert.ok(nierNext.worst <= 1 && nierNext.restarts.length === 0, `NieR's glyph jump on the next sample, the reference's size, must pass (worst ${nierNext.worst}; ${nierNext.where || ''})`);
 const nierOther = everyFrame(nierNeighbour(30));
 assert.ok(nierOther.worst > 1, `a different-sized NieR jump on the next sample must fail (worst ${nierOther.worst}; named: ${(nierOther.known || []).join('; ') || 'none'})`);
-console.log('stop-chip-window: 6 cases pass');
+// R62-A1: one jump a window. The glyph jumps 80 ms with the reference (index 5) AND another 80 ms on the next
+// sample (index 6): the second is not the window's.
+function nierTwice() {
+	const R = run({ later: false, withOpen: true });
+	for (let i = 0; i < R.rows.length; i++) {
+		delete R.rows[i].b;
+		R.rows[i].nier = 'on';
+		if (i >= 6) R.rows[i].g.s = -160;
+	}
+	return R;
+}
+const twice = everyFrame(nierTwice());
+assert.ok(twice.worst > 1, `a second NieR glyph jump on the sample after the window's must fail (worst ${twice.worst}; named: ${(twice.known || []).join('; ') || 'none'})`);
+// The sample BEFORE the reference's frame is not the window's either (the glyph jumps at index 4, the reference at 5).
+function nierBefore() {
+	const R = run({ later: false, withOpen: true });
+	for (let i = 0; i < R.rows.length; i++) {
+		delete R.rows[i].b;
+		R.rows[i].nier = 'on';
+		R.rows[i].g.s = i >= 4 ? -80 : 0;
+	}
+	return R;
+}
+const before = everyFrame(nierBefore());
+assert.ok(before.worst > 1, `a NieR glyph jump on the sample before the reference's must fail (worst ${before.worst}; named: ${(before.known || []).join('; ') || 'none'})`);
+// Main's caps: a waived jump is no larger than the reference's plus a frame, nor than the gap between its two
+// samples plus a frame. Both loops jump 200 ms together on the open's frame (reference 80 ms, gap 90 ms).
+function bothBig() {
+	const R = run({ later: false, withOpen: true });
+	for (let i = 5; i < R.rows.length; i++) { R.rows[i].g.s = -200; R.rows[i].b.s = -200; }
+	return R;
+}
+const big = everyFrame(bothBig());
+assert.ok(big.worst > 1, `both loops jumping far more than the reference on the open's frame must fail (worst ${big.worst}; named: ${(big.known || []).join('; ') || 'none'})`);
+function nierBig() {
+	const R = bothBig();
+	for (let i = 0; i < R.rows.length; i++) { delete R.rows[i].b; R.rows[i].nier = 'on'; }
+	return R;
+}
+const nBig = everyFrame(nierBig());
+assert.ok(nBig.worst > 1, `a NieR glyph jump far larger than the reference's on its frame must fail (worst ${nBig.worst}; named: ${(nBig.known || []).join('; ') || 'none'})`);
+console.log('stop-chip-window: 10 cases pass');
