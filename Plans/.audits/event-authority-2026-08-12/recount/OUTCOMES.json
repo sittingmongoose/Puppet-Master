@@ -282,6 +282,10 @@
   {
    "event_type": "goal.resumed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "named_plan.archived",
+   "outcome": "registered"
   }
  ]
 }
