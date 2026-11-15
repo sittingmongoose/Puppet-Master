@@ -77,6 +77,10 @@ def family_of(source, case):
     return 'shared'
 
 
+def race(snapshot):
+    return snapshot['case'].endswith('_disclosure') and snapshot['refusal'] == 'access/disclosure'
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run', type=Path, required=True)
@@ -144,7 +148,11 @@ def main():
                 join_cases=sum(1 for e in fam_ledger if '/join/' in '/' + e['case']),
                 retained_store_reads=sum(1 for s in stores if s['source'] == source and family_of(source, s['case']) in (family, 'shared')),
                 retained_store_changed=sum(1 for s in stores if s['source'] == source and family_of(source, s['case']) in (family, 'shared')
-                                           and s['store_before'] != s['store_after']))
+                                           and s['store_before'] != s['store_after'] and not race(s)),
+                # The declared owner race: DisclosureHook withdraws content_visible during the read (a modeled owner
+                # change, not a read effect); every such read refuses at access/disclosure.
+                retained_store_owner_race_changes=sum(1 for s in stores if s['source'] == source and family_of(source, s['case']) in (family, 'shared')
+                                                      and s['store_before'] != s['store_after'] and race(s)))
         src = summary['sources'][source]
         core['sources'][source] = dict(src, tables=sum(1 for t in tables if t['table'].startswith(source + '_')),
                                        tool_pass_tables=sum(1 for t in tables if t['table'].startswith(source + '_') and t['tool_status'] == 'PASS'),
