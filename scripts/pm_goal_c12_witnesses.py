@@ -21,7 +21,7 @@ import pm_goal_retained as retained
 import pm_goal_own_d_oracles as d
 from pm_goal_history_reader_fixtures import (FAMILIES, PAYLOAD_FILE, OUT_SCHEMA, ER_SCHEMA, CKPT_SCHEMA,
                                              history_guards)
-from pm_goal_oracle_common import load, materialize_cases, schema_registry, semantic_digest, validator
+from pm_goal_oracle_common import Gates, load, materialize_cases, schema_registry, semantic_digest, validator
 
 PLANS = d.PLANS
 OTHER_STORAGE = '00000000-0000-4000-8000-0000000000c1'
@@ -133,6 +133,28 @@ def protocol_route(collector):
         def evaluate(value, pv=pv, av=av):
             return history_guards(value, pv, av)
         collector.invoke(f'gh1/{key}/protocol/control', evaluate, base, True, family=family)
+        # A lawful application-scope EventRecord at ATS-211's own EventRecord
+        # boundary: the only place EventRecord's application branch applies
+        # (every history answer pins scope_kind to project). A seed, no credit.
+        record_validator = validator(load(ER_SCHEMA), registry)
+        application = copy.deepcopy(base['answer']['original_event'])
+        application.update(scope_kind='application', project_id=None)
+        if record_validator.is_valid(application):
+            def record_shape(value, rv=record_validator, key=key):
+                gate = Gates()
+                gate.schema(rv, value, key + '/event_record')
+                return gate.errors
+            collector.invoke(f'gh1/{key}/event_record/application_scope_control', record_shape, application, True, family=family)
+        else:
+            collector.failures.append(dict(kind='gh1_application_seed_invalid', family=family))
+        # ATS-211's read-token boundary for every family (the fixtures author it
+        # for child_status only): a lawful token as a seed, no credit.
+        token_validator = validator({'$ref': load(CKPT_SCHEMA)['$id'] + '#/$defs/read_token'}, registry)
+        def token_shape(value, tv=token_validator, key=key):
+            gate = Gates()
+            gate.schema(tv, value, key + '/read_token')
+            return gate.errors
+        collector.invoke(f'gh1/{key}/read_token/control', token_shape, base['answer']['read_token'], True, family=family)
         for label, value, target in protocol_witnesses(key, base):
             collector.invoke(f'gh1/{key}/protocol/{label}', evaluate, value, False, target=target, family=family)
             count += 1

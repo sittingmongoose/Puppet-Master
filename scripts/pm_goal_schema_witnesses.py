@@ -17,6 +17,8 @@ pick a target. It reads the outcome only to stop searching for a row.
 """
 import collections
 import copy
+import hashlib
+import pickle
 
 import pm_goal_oracle_common as common
 
@@ -187,11 +189,11 @@ def edits(node, keyword, inst, pool, context=None, peers=(), pools=None):
         # seed's alternative hold; then whole-value replacements.
         out = []
         if kind == 'object':
-            required = set(node.get('required', []))
+            for name, values in (context.get('member_enums') or {}).items():
+                if name in inst:
+                    out += [('merge', {name: other}) for other in values if other != inst[name]]
+            required = set(node.get('required', [])) | set(context.get('required_here', ()))
             out += [('remove', member) for member in inst if member not in required]
-            for name, sub in node.get('properties', {}).items():
-                if name in inst and isinstance(sub, dict) and isinstance(sub.get('enum'), list):
-                    out += [('merge', {name: other}) for other in sub['enum'] if other != inst[name]]
         if kind == 'array':
             out += [('replace', [])]
         return out + [('replace', v) for _, v in JSON_VALUES + (('negative', -1),) if v != inst]
@@ -322,6 +324,20 @@ def synthesize(schema, resolver, name, pool, depth=0):
     return None
 
 
+def resolved(sub, resolver):
+    for _ in range(24):
+        if not (isinstance(sub, dict) and '$ref' in sub and 'enum' not in sub):
+            break
+        found = resolver.lookup(sub['$ref'])
+        sub, resolver = found.contents, found.resolver
+    return sub
+
+
+def enum_of(sub, resolver):
+    sub = resolved(sub, resolver)
+    return sub.get('enum') if isinstance(sub, dict) and isinstance(sub.get('enum'), list) else None
+
+
 def derived_seeds(v, seed, pool, limit=120):
     """Seeds that also populate optional members or empty arrays, or take
     another enum member, kept only when the complete owner schema accepts them
@@ -332,10 +348,23 @@ def derived_seeds(v, seed, pool, limit=120):
         inst = at(seed, path)
         resolver = context.get('resolver', v._resolver)
         if isinstance(inst, dict):
+            # Pair flips: two enum-valued members together (transition pairs).
+            enums = [(name, enum_of(sub, resolver)) for name, sub in node.get('properties', {}).items()
+                     if name in inst and enum_of(sub, resolver)]
+            for (left, left_values), (right, right_values) in zip(enums, enums[1:2]):
+                for a_value in left_values:
+                    for b_value in right_values:
+                        if (a_value, b_value) == (inst[left], inst[right]) or len(out) >= limit:
+                            continue
+                        changed = dict(inst, **{left: a_value, right: b_value})
+                        derived = put(seed, path, changed)
+                        if v.is_valid(derived):
+                            out.append(derived)
             for name, sub in node.get('properties', {}).items():
                 if name in inst:
-                    if isinstance(sub, dict) and isinstance(sub.get('enum'), list):
-                        for other in sub['enum']:
+                    values = enum_of(sub, resolver)
+                    if values:
+                        for other in values:
                             if other != inst[name]:
                                 derived = put(seed, path + (name,), other)
                                 if v.is_valid(derived):
@@ -414,13 +443,23 @@ def value_pool_lists(seeds):
 
 
 LOCAL_KEYWORDS = ('const', 'enum', 'type', 'pattern', 'minLength', 'maxLength', 'minimum', 'maximum',
-                  'exclusiveMinimum', 'exclusiveMaximum', 'format')
+                  'exclusiveMinimum', 'exclusiveMaximum', 'format', 'required', 'minItems', 'maxItems',
+                  'uniqueItems', 'minProperties', 'maxProperties', 'dependentRequired', 'not',
+                  'additionalProperties')
 
 
-def keyword_violated(node, word, value):
-    """One owner keyword, alone, on the edited value (owner text; no attribution)."""
+def keyword_violated(node, word, value, resolver=None, v=None):
+    """One owner keyword, alone, on the value at its node (owner text; no attribution)."""
+    schema = {word: node[word]}
+    if word == 'additionalProperties':
+        if node[word] is not False:
+            return False
+        schema['properties'] = {name: True for name in node.get('properties', {})}
+        schema['patternProperties'] = {name: True for name in node.get('patternProperties', {})}
     try:
-        return not common.StrictValidator({word: node[word]}, format_checker=common.FORMATS).is_valid(value)
+        if v is not None and resolver is not None:
+            return not v.evolve(schema=schema, _resolver=resolver).is_valid(value)
+        return not common.StrictValidator(schema, format_checker=common.FORMATS).is_valid(value)
     except Exception:
         return False
 
@@ -433,7 +472,54 @@ def same_duplicate_group(left, right):
     return False
 
 
-def peer_targets(ident, node, keyword, value, nodes_at_path, assertions, context=None, v=None):
+def declared_target(ident, node, keyword, context, path, changed, fresh, seed_nodes, assertions, v):
+    """The declared refusal set of an edit, fixed before it runs, from owner text.
+
+    The emitted keyword, reported as its innermost enclosing union when the
+    edited value at that union's location violates every alternative; plus
+    every owner keyword on the nodes that apply to the edited instance, at the
+    edit location or an ancestor of it, that the edited instance violates on
+    its own (registered type/enum/const duplicates and same-location equal
+    type declarations are one unit); plus every union there that rejects.
+    """
+    unit = ident
+    for union in reversed(context.get('unions', ())):
+        holder = next(((q, n, c, w) for q, n, c in seed_nodes for w in ('anyOf', 'oneOf')
+                       if w in n and len(q) <= len(path) and tuple(path[:len(q)]) == tuple(q)
+                       and common.schema_guard(n, w) == union), None)
+        if holder is not None and union_rejects(v, holder[1], holder[3], at(changed, holder[0]), holder[2]):
+            unit = union
+        break
+    out = {unit}
+    types_at = {}
+    if keyword == 'type':
+        types_at[tuple(path)] = repr(node['type'])
+    for q, other, other_context in fresh:
+        if len(q) > len(path) or tuple(path[:len(q)]) != tuple(q):
+            continue
+        value = at(changed, q)
+        resolver = other_context.get('resolver')
+        for word in LOCAL_KEYWORDS:
+            if word not in other:
+                continue
+            peer = common.schema_guard(other, word)
+            if peer not in assertions or peer in (ident, unit) or same_duplicate_group(peer, ident):
+                continue
+            if word == 'type' and types_at.get(tuple(q)) == repr(other['type']):
+                continue  # the same type declared twice at one location is one assertion
+            if keyword_violated(other, word, value, resolver, v):
+                out.add(peer)
+                if word == 'type':
+                    types_at.setdefault(tuple(q), repr(other['type']))
+        for word in ('anyOf', 'oneOf'):
+            if word in other:
+                peer = common.schema_guard(other, word)
+                if peer in assertions and peer != unit and union_rejects(v, other, word, value, other_context):
+                    out.add(peer)
+    return out
+
+
+def peer_targets_seed(ident, node, keyword, value, nodes_at_path, assertions, context=None, v=None):
     """The declared refusal set of a replace edit, fixed before it runs: the
     emitted keyword plus every other owner keyword at the same instance
     location that the new value violates on its own. Owner text decides the
@@ -493,8 +579,15 @@ def run(collector):
         expanded = []
         for v, seed, prefix in seeds:
             expanded.append((v, seed, prefix))
+        seen_seeds = set()
         for v, seed, prefix in seeds[:4]:
-            for derived in derived_seeds(v, seed, pools):
+            first = derived_seeds(v, seed, pools)
+            second = [d for derived in first[:8] for d in derived_seeds(v, derived, pools, limit=40)]
+            for derived in first + second:
+                key = hashlib.sha256(pickle.dumps(derived, protocol=5)).hexdigest()
+                if key in seen_seeds:
+                    continue
+                seen_seeds.add(key)
                 expanded.append((v, derived, prefix))
                 stats['derived_seeds'] += 1
         for number, (v, seed, prefix) in enumerate(expanded):
@@ -512,7 +605,16 @@ def run(collector):
             for path, node, context in nodes:
                 stats['applications'] += 1
                 inst = at(seed, path)
-                context = dict(context, member=path[-1] if path and isinstance(path[-1], str) else None)
+                member_enums, required_here = {}, set()
+                if isinstance(inst, dict):
+                    for other, other_context in by_path[path]:
+                        required_here |= set(other.get('required', []) if isinstance(other.get('required'), list) else [])
+                        for name, sub in other.get('properties', {}).items():
+                            values = enum_of(sub, other_context.get('resolver', v._resolver))
+                            if values and name not in member_enums:
+                                member_enums[name] = values
+                context = dict(context, member=path[-1] if path and isinstance(path[-1], str) else None,
+                               member_enums=member_enums, required_here=required_here)
                 for keyword in list(node):
                     if keyword not in common._KEYWORDS:
                         continue
@@ -532,8 +634,12 @@ def run(collector):
                         changed = apply(seed, path, edit)
                         if keyword in ('anyOf', 'oneOf') and not union_rejects(v, node, keyword, at(changed, path), context):
                             continue
-                        target = peer_targets(ident, node, keyword, at(changed, path), by_path[path], assertions,
-                                              context, v) if edit[0] == 'replace' else {ident}
+                        try:
+                            fresh = applications(v, changed)
+                        except Exception:
+                            fresh = []
+                        target = declared_target(ident, node, keyword, context, path, changed, fresh,
+                                                 nodes, assertions, v)
                         declared = ident if len(target) == 1 else tuple(sorted(target))
                         stats['set_targets'] += len(target) > 1
                         stats['union_targets'] += keyword in ('anyOf', 'oneOf')
