@@ -75,6 +75,49 @@ function inStepRows() {
  `)({ now: () => 100 });
 }
 
+// R53-C4: the slow bar can dip under both logged endpoint bars and recover before the row is written.
+// Prime 30 intervals at 30 ms, then 16 watches whose rows are frameMs [30, 30, 30]. The last watch, after its
+// d1 and d2, notes four more 30 ms intervals and fifteen 8 ms intervals (240 ms, the rest of the 300 ms watch;
+// the worst of them is 30). That row is counter 16, median 30, slowMs 90, steadyMs 45. Two 8 ms admission
+// intervals leave the counter at 16 and drop the median to 8, so the bar the next d1 meets is 40. That d1 is
+// 45 ms, so the queue resets and watches; d2 is 16 and the watch is fifteen 16 ms intervals. The row logs
+// frameMs [45, 16, 16], slowMs 48, steadyMs 25. min(90, 48) is not a lower bound on the bar d1 met.
+function dipRows() {
+ const code = part('  const median = () => {', '  const pending = () =>') +
+  part('  const logStep = (st,', '  const tell = (st,') +
+  part('  const WATCH_KEEP = 16, STEADY_MS = 25;', '  /* the watch after a GPU step');
+ return new Function('performance', `
+  const warmDeltas = [], warmLog = [];
+  let warmLateAt = 0, watchClean = 0, watchResets = 0, watchUnseen = false, warmD1 = 0, warmD2 = 0;
+  ${code}
+  const gpu = (i, d1, d2, watch) => {
+   const st = { owner: 'gpu', name: i === 16 ? 'last' : 'step' + i, at: i * 400 };
+   const r0 = watchResets;
+   note(d1, 1); note(d2, 2);
+   let watchWorst = 0;
+   const needs = watching();
+   if (needs) {
+    for (const w of watch) { note(w); if (w > watchWorst) watchWorst = w; }
+    const fm = [d1, d2, watchWorst];
+    watched(fm);
+    logStep(st, 0, fm, false, 'ran');
+   } else {
+    st.unwatched = true;
+    logStep(st, 0, [d1, d2], false, 'ran');
+   }
+   return { needs, resets: watchResets - r0, counter: watchClean, median: median(), bar: lateMs() };
+  };
+  for (let i = 0; i < 30; i++) note(30);
+  for (let i = 0; i < 15; i++) gpu(i, 30, 30, [30]);
+  const sixteenth = gpu(15, 30, 30, [30, 30, 30, 30, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]);
+  const row16 = warmLog.at(-1);
+  note(8); note(8);
+  const admitted = { counter: watchClean, median: median(), bar: lateMs() };
+  const last = gpu(16, 45, 16, [16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16]);
+  return { sixteenth, row16, admitted, last, rows: warmLog };
+ `)({ now: () => 100 });
+}
+
 const CASES = [
  ['R18-4 from the product: a d1 over the 40 ms bar resets the count inside the step that then logs a 90 ms bar', () => {
   const p = inStepRows();
@@ -109,7 +152,19 @@ const CASES = [
 	['after the reset 16 steady watches again, then one judged by its two intervals, then one watched needlessly',
 		() => log(watched(16), step([8, 8, 8], { watchReset: true }), watched(15), step([8, 8], { watched: false }), step([8, 8, 8])), { needless: 1, early: 0 }],
 	['control: after the reset only 15 steady watches, then one judged by its two intervals (dropped one step early)',
-		() => log(watched(16), step([8, 8, 8], { watchReset: true }), watched(14), step([8, 8], { watched: false })), { needless: 0, early: 1 }]
+		() => log(watched(16), step([8, 8, 8], { watchReset: true }), watched(14), step([8, 8], { watched: false })), { needless: 0, early: 1 }],
+	['R53-C4 from the product: a slow bar that dips to 40 between the logged 90 and 48 makes the 45 ms d1 reset the count, so the watch was required', () => {
+		const p = dipRows();
+		assert.deepEqual([p.row16.frameMs, p.row16.slowMs, p.row16.steadyMs], [[30, 30, 30], 90, 45], 'the 16th watch logs the endpoint bars 90 and 45');
+		assert.deepEqual([p.sixteenth.counter, p.sixteenth.median], [16, 30], 'and the count stands at 16 on a median of 30');
+		assert.deepEqual([p.admitted.counter, p.admitted.median, p.admitted.bar], [16, 8, 40], 'two 8 ms admission intervals leave the count at 16 and the real bar at 40');
+		assert.equal(p.last.needs, true, '45 ms is over that 40 ms bar, so the queue watches');
+		assert.equal(p.last.resets, 1);
+		assert.equal(p.rows.at(-1).watched, undefined, 'the step was watched');
+		assert.deepEqual([p.rows.at(-1).frameMs, p.rows.at(-1).slowMs, p.rows.at(-1).steadyMs], [[45, 16, 16], 48, 25]);
+		console.log(`product admitted ${JSON.stringify(p.admitted)}, last ${JSON.stringify(p.last)}, row ${JSON.stringify(p.rows.at(-1))}`);
+		return p.rows;
+	}, { needless: 0, early: 0 }]
 ];
 
 let failed = 0;
