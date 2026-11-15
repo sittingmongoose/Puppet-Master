@@ -2088,6 +2088,7 @@
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
         "scripts/pm-collab-guard-tables.py",
         "scripts/pm-collab-table-generate.py",
+        "scripts/pm-dc-c12-check.py",
         "scripts/pm-filemanager-event-contracts.py",
         "scripts/pm-forge-backup-acceptance-verify.py",
         "scripts/pm-governance-seal.py",
@@ -2102,6 +2103,10 @@
         "scripts/pm-working-notebook-contracts.py",
         "scripts/pm_collaboration_events.py",
         "scripts/pm_coordination_events.py",
+        "scripts/pm_dc_c12_clauses.py",
+        "scripts/pm_dc_c12_datetime.py",
+        "scripts/pm_dc_c12_joins.py",
+        "scripts/pm_dc_c12_retained.py",
         "scripts/pm_goal_current_writer_oracles.py",
         "scripts/pm_goal_history_reader_fixtures.py",
         "scripts/pm_goal_run_stop_block_oracles.py",
@@ -2114,7 +2119,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 14149,
+      "line_count": 14163,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 184,
       "plan_unit_ids": [
@@ -2399,7 +2404,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+      "sha256": "fd25353564faf1d47b44d38955c423be21ce88a30f913c7d30456fad2582f256",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 182,
@@ -2576,6 +2581,10 @@
         "python3 scripts/pm-card2-number-corpus.py",
         "python3 scripts/pm-card2-p2a-cases.py --check",
         "python3 scripts/pm-collab-guard-tables.py --out <dir>",
+        "python3 scripts/pm-dc-c12-check.py clauses --out <dir>",
+        "python3 scripts/pm-dc-c12-check.py datetime --out <dir>",
+        "python3 scripts/pm-dc-c12-check.py joins --collection <collection.pkl> --out <dir>",
+        "python3 scripts/pm-dc-c12-check.py retained --out <dir>",
         "python3 scripts/pm-dch-guard-tables.py --out <guard-tables-dir>",
         "python3 scripts/pm-dch-table-generate.py scripts --check",
         "python3 scripts/pm-debug-investigation-events.py",
@@ -24145,7 +24154,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-14T16:55:46Z",
+  "generated_at_utc": "2026-11-15T01:01:05Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
