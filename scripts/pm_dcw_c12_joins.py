@@ -93,9 +93,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', required=True, type=Path)
     parser.add_argument('--search-only', action='store_true', help='run the missing-side search on an existing joins.json')
+    parser.add_argument('--dispositions', action='store_true', help='apply the written dispositions to the rows still open')
     args = parser.parse_args()
     if args.search_only:
         finish(args.out / 'joins.json')
+        return
+    if args.dispositions:
+        disposition(args.out / 'joins.json')
         return
     joins = join_rows()
     sides = defaultdict(lambda: defaultdict(list))
@@ -171,6 +175,11 @@ def perturb(v):
         return not v
     if type(v) is int:
         return v + 1
+    if isinstance(v, (dict, list)):
+        # A container copy: change its first scalar leaf, nothing else.
+        for parts, leaf in locations(v):
+            if parts and perturb(leaf) is not None and not isinstance(leaf, (dict, list)):
+                return setting(v, parts, perturb(leaf))
     return None
 
 
@@ -180,21 +189,32 @@ def search(joins, report, limit=40):
     from pm_dcw_event_regressions import scenario
     from pm_dcw_blockage_fixtures import base
     controls = []
+    special = ('restore', 'reference', 'compatibility', 'nonlatest')
     for name, row in fams.items():
-        for op in ('append', 'publish', 'retry', 'read'):
-            case = next((c for c in row['cases'] if c['expected'] == 'accept' and c['operation'] == op), None)
-            if case:
-                controls.append(dict(id=name + '/control/' + op, family=name, row=row, value=scenario(row, case), operation=op,
-                                     expected='accept'))
+        for op in ('append', 'publish', 'retry', 'read', 'rebuild', 'compatibility_read'):
+            picked = [c for c in row['cases'] if c['expected'] == 'accept' and c['operation'] == op]
+            chosen = picked[:1] + [c for c in picked[1:] if any(k in c['case_id'] for k in special)][:3]
+            for case in chosen:
+                controls.append(dict(id=name + '/control/' + op + '/' + case['case_id'], family=name, row=row,
+                                     value=scenario(row, case), operation=op, expected='accept'))
+    from pm_dcw_blockage_fixtures import restore as blockage_restore
     for name in ('wizard.blocked', 'wizard.unblocked'):
         for op in ('append', 'read'):
             controls.append(dict(id=name + '/control/' + op, family=name, row=None, value=base(name), operation=op, expected='accept'))
+        restored = base(name)
+        blockage_restore(restored)
+        controls.append(dict(id=name + '/control/publish/restore', family=name, row=None, value=restored, operation='publish',
+                             expected='accept'))
     observed = {c['id']: observations(c) for c in controls}
     for name, entry in report.items():
         if entry['status'] != 'open':
             continue
+        previous = entry.get('search', {})
         entry['search'] = {}
         for side in entry['missing']:
+            if previous.get(side, {}).get('status') in ('witnessed', 'pinned'):
+                entry['search'][side] = previous[side]
+                continue
             key, other = ('v0', 'v1') if side == 'left' else ('v1', 'v0')
             tried, outcome = 0, dict(status='pinned_earlier', first_refusals={})
             for control in controls:
@@ -203,7 +223,7 @@ def search(joins, report, limit=40):
                     continue
                 target, keep = seen[0].get(key), seen[0].get(other)
                 for parts, value in locations(control['value']):
-                    if not parts or isinstance(value, (dict, list)):
+                    if not parts:
                         continue
                     if value != target and m.typed_observation(value) != target:
                         continue
@@ -258,6 +278,51 @@ def finish(path):
     for entry in data['rows'].values():
         counts[entry['status']] = counts.get(entry['status'], 0) + 1
     data['summary']['after_search'] = counts
+    Path(path).write_text(json.dumps(data, indent=1, sort_keys=True, default=repr) + '\n')
+    print(json.dumps(counts, sort_keys=True))
+
+
+
+# Written dispositions for the join rows the bounded search left open. Each names
+# why the second copy has no separate witness; none is counted as a kill.
+DISPOSITIONS = {
+    'B039': 'payload project/run/blockage ids are pinned first by B005 (envelope), B021 (source key) and B026 (observation); the repair record copy is witnessed',
+    'B041': 'payload ids are pinned first by B005, B021, B024 and B026; the predecessor copy is witnessed',
+    'B047': 'payload ids are pinned first by B005, B021, B024 and B026; the route copy is witnessed',
+    'B059': 'payload ids are pinned first by B005, B021, B024 and B026; the clearing-action copy is witnessed',
+    'B105': 'configuration pair: the registry value_schema_ref is witnessed by blockage-preflight/schema-ref; the fixture row source schema selects the owner document itself',
+    'O191': 'configuration pair: the registry value_schema_ref is witnessed by preflight/value_schema_ref; the fixture row source schema selects the owner document itself',
+    'L007': 'legacy callback boundary: legacy/* witnesses change the envelope causation or the payload predecessor directly; on the complete path both are pinned first by O020/O021',
+    'L019': 'legacy callback boundary: legacy/* witnesses change each side directly; on the complete path the payload predecessor is pinned by L007/O021 (located) and the previous phase by O078/O061',
+    'L020': 'legacy callback boundary: legacy/* witnesses change each side directly; on the complete path the payload field is pinned by L002/L003/L005/O016/O018 (located) and the previous phase by O058',
+    'O004': 'the right side is canonical_json of the parsed descriptor (derived); the event payload_ref copy is witnessed by six first refusals at O004',
+    'O032': 'the event_id is its identity hash, pinned first by O016 and by the exact source and original copies (O037, O078)',
+    'O039': 'the event_id is its identity hash, pinned first by O016 and by the exact source and original copies (O037, O078)',
+    'O040': 'the event sequence_id is pinned first by its exact source and original copies (O037, O078) and by the index frame join',
+    'O061': 'the phase payload predecessor is pinned first by L019/O021 and the slot exact-equality join',
+    'O069': 'the slot result copy is pinned first by the original result join O066; the payload safe_point copy is witnessed',
+    'O081': 'the event actor_ref is pinned first by its exact source and original copies (O078, O037); the authority actor copy is witnessed',
+    'O120': 'the frontier predecessor digest is pinned first by the frontier digest O230 and the token/frontier joins; the reader copy is witnessed',
+    'O131': 'the generation dataset name is pinned first by O218 (dataset == prefix + key) and the dataset lookup; the token copy is witnessed',
+    'O139': 'the right side is the literal 16384; the registry profile copy is witnessed',
+    'O164': 'the right side is derived from the parsed event payload reference; the restored inventory copy is witnessed by six first refusals at O164',
+    'O214': 'the current_generation_id pointer selects the generation being compared; changing it alone selects no generation (structural); the generation copy is witnessed',
+    'O228': 'the right side is the row recomputed from the captured frame (derived); the stored row copy is witnessed by 230 first refusals',
+    'R006': 'the right side is the registry-selected payload schema id (configuration); the event copy is witnessed by 36 first refusals at R006',
+    'R007': 'the right side is the registry-selected payload schema id (configuration); the reference copy is witnessed',
+}
+
+
+def disposition(path):
+    data = json.loads(Path(path).read_text())
+    for name, entry in data['rows'].items():
+        if entry['status'] == 'open' and name in DISPOSITIONS:
+            entry.update(status='closed_written', disposition=DISPOSITIONS[name])
+    counts = {}
+    for entry in data['rows'].values():
+        counts[entry['status']] = counts.get(entry['status'], 0) + 1
+    data['summary']['final'] = counts
+    data['summary']['status'] = 'pass' if not counts.get('open') else 'open'
     Path(path).write_text(json.dumps(data, indent=1, sort_keys=True, default=repr) + '\n')
     print(json.dumps(counts, sort_keys=True))
 

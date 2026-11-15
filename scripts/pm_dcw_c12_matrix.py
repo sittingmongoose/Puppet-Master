@@ -48,6 +48,8 @@ PHASES = {
     'verify': 'family admission, restore admission, permission, cutoff, effects and retained-read boundary',
     'run': 'CLI family inventory and materialized source registry rows',
     'canonical_json': 'integer-only JSON digest domain',
+    'domain': 'integer-only JSON digest domain (canonical_json value walk)',
+    'no_secret': 'CV-317 redaction profile secret_refs_only (every envelope string)',
     'opened_source_custody': 'PWIZ-098 opened predecessor custody',
     'require_storage_timestamps': 'CV-253 Storage-assigned UTC-Z timestamps',
     'index_binding': 'SP-278 binding profile',
@@ -98,9 +100,8 @@ def coverage_file(evidence, family):
 
 
 def supplement(evidence, family):
-    path = evidence / 'schema-supplement' / (family + '.supplement.json')
     out = {}
-    if path.exists():
+    for path in sorted(evidence.glob('schema-supplement*/' + family + '.supplement.json')):
         for site in load(path):
             for clause in site.get('witnessed_clauses', []):
                 out[((site['schema'], site['definition'], site['historical']),

@@ -28,10 +28,43 @@ def patterns(value, parts=()):
     return out
 
 
-def capture(family, keys):
+def blockage_reference_controls(family):
+    """Accepting blockage inputs whose physical source is the SP-337 payload_reference form.
+
+    Built only with the authored fixture builders (base + externalize); no
+    authored accepting blockage case stores its source by reference.
+    """
+    if family not in ('wizard.blocked', 'wizard.unblocked'):
+        return
+    from pm_dcw_blockage_fixtures import base, externalize
+    for operation in ('append', 'publish', 'read'):
+        value = base(family)
+        externalize(value, source=True, event=False)
+        yield dict(id=family + '/c12-supplement/source-reference/' + operation, family=family, row=None,
+                   value=value, operation=operation, expected='accept')
+    if family == 'wizard.unblocked':
+        # The blocked predecessor's physical source stored by reference as well.
+        import pm_dcw_blockage_events as blockage
+        from pm_dcw_event_fixtures import source_reference
+        for operation in ('append', 'publish', 'read'):
+            value = base(family)
+            a = value['authority']
+            pid = value['event']['payload']['predecessor_event_id']
+            prior = a['sources'][pid]
+            temp = dict(source=prior, source_key=blockage.source_key(prior['prepared_event']['payload']), authority=a)
+            source_reference(blockage.row_for('wizard.blocked'), temp)
+            a.setdefault('stored_sources', {})[pid] = temp['stored_source']
+            yield dict(id=family + '/c12-supplement/predecessor-source-reference/' + operation, family=family, row=None,
+                       value=value, operation=operation, expected='accept')
+
+
+def capture(family, keys, extra=False):
     """All accepted values at the named sites, in witness order, with the first-eight set marked."""
+    from itertools import chain
     first, rest, signatures = defaultdict(list), defaultdict(list), defaultdict(set)
-    for w in c12.accepting_witnesses(family):
+    sources = chain(((w, False) for w in c12.accepting_witnesses(family)),
+                    ((w, True) for w in (blockage_reference_controls(family) if extra else ())))
+    for w, added in sources:
         with c12.capture_sites() as captured:
             try:
                 outcome = c12.suites.invoke(w)
@@ -46,7 +79,8 @@ def capture(family, keys):
             if signature in signatures[key]:
                 continue
             signatures[key].add(signature)
-            (first if len(first[key]) < c12.MAX_CONTROLS else rest)[key].append(dict(value=value, witness=w['id']))
+            # Added controls were never in the main ledger, so they are never part of its first eight.
+            (first if len(first[key]) < c12.MAX_CONTROLS and not added else rest)[key].append(dict(value=value, witness=w['id']))
     return first, rest
 
 
@@ -56,6 +90,8 @@ def main():
     parser.add_argument('--site', action='append', required=True, help='schema|definition|historical, e.g. '
                         'Plans/event_record_index_checkpoint.schema.json|checkpoint|True')
     parser.add_argument('--out', required=True, type=Path)
+    parser.add_argument('--blockage-reference', action='store_true',
+                        help='add accepting blockage controls with a payload_reference physical source')
     args = parser.parse_args()
     keys = set()
     for text in args.site:
@@ -64,8 +100,8 @@ def main():
     args.out.mkdir(parents=True, exist_ok=True)
     summary = []
     for family in args.family or c12.FAMILIES:
-        first, rest = capture(family, keys)
-        report = []
+        first, rest = capture(family, keys, extra=args.blockage_reference)
+        report, ledgers = [], []
         for key in sorted(keys, key=repr):
             covered = set().union(*(patterns(c['value']) for c in first[key])) if first[key] else set()
             novel, extra = [], set()
@@ -89,10 +125,11 @@ def main():
                                novel_controls=len(novel), controls=[dict(witness=c['witness'], sha256=c12.sha(c['value'])) for c in novel],
                                credited=len(credited), invalid=len(invalid), mirror_parity_checks=parity,
                                witnessed_clauses=clauses))
-            c12.write(args.out / (family + '.supplement-ledger.json'), dict(credited=credited, invalid=invalid))
+            ledgers.append(dict(schema=key[0], definition=key[1], historical=key[2], credited=credited, invalid=invalid))
             print(family, key, 'novel', len(novel), 'credited', len(credited), 'invalid', len(invalid),
                   'witnessed', len(clauses), flush=True)
         c12.write(args.out / (family + '.supplement.json'), report)
+        c12.write(args.out / (family + '.supplement-ledger.json'), ledgers)
         summary.append(dict(family=family, sites=report))
     c12.write(args.out / 'supplement-summary.json', dict(status='pass', families=[
         dict(family=s['family'], sites=[{k: v for k, v in r.items() if k != 'witnessed_clauses'} for r in s['sites']])

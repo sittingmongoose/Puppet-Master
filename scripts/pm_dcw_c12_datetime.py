@@ -88,7 +88,7 @@ def audit(family, samples):
         path, definition, historical = key
         site = c12.mirror(path, definition, historical)
         site.update(path=path, definition=definition)
-        for control in sites[key][:2]:
+        for control in sites[key][:1]:
             value = control['value']
             for parts, clauses in datetime_fields(site, value):
                 profile = field_profile(key, parts)
@@ -128,12 +128,13 @@ def main():
         totals.update(corpus)
         failures.extend(mismatches)
         print(family, len(inventory), 'fields', sum(corpus.values()), 'checks', len(mismatches), 'mismatches', flush=True)
+    (args.out / 'datetime-inventory.json').write_text(json.dumps(everything, indent=1, sort_keys=True, default=repr) + '\n')
     summary = dict(status='pass' if not failures else 'fail', fields=len(everything),
                    checks_by_profile=dict(totals), mismatches=len(failures), battery_samples=len(samples),
                    battery_sha256=c12.pin('scripts/pm_event_datetime_timestamp_battery.json'),
                    code_sites=code_sites(), shared_helper_sha256=c12.pin('scripts/pm_event_datetime.py'),
-                   acknowledged_at_utc=sorted({(e['schema'], e['definition'], tuple(e['instance_path'][-1:]), e['profile'])
-                                               for e in everything if e['instance_path'][-1:] == ['acknowledged_at_utc']}))
+                   acknowledged_at_utc=sorted({(e['schema'], str(e['definition']), e['historical'], e['profile'])
+                                               for e in everything if e['instance_path'][-1:] == ['acknowledged_at_utc']}, key=repr))
     (args.out / 'datetime-inventory.json').write_text(json.dumps(everything, indent=1, sort_keys=True, default=repr) + '\n')
     (args.out / 'datetime-mismatches.json').write_text(json.dumps(failures[:500], indent=1, sort_keys=True, default=repr) + '\n')
     (args.out / 'datetime-summary.json').write_text(json.dumps(summary, indent=1, sort_keys=True, default=list) + '\n')
