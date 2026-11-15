@@ -31,6 +31,7 @@ from pm_event_numbers import Refusal  # noqa: E402
 
 dr, suites = c12.dr, c12.suites
 MAX_LOCATIONS = 2
+ERASED = object()
 
 
 def family_context(row, fixtures):
@@ -73,6 +74,11 @@ def occurrences(ctx):
             return None
         if event['payload_ref'] is None:
             return None
+        # A defect the RFC 8785 body cannot carry (an integral float is written as an integer) never
+        # reaches the packed boundary: that input is not a single-defect witness there.
+        body = packs[dr.PACK_REF.fullmatch(event['payload_ref']).group(1)]['body']
+        if c12.store_digest(dr.parse_pack_body(body)[1]) != c12.store_digest(large):
+            return ERASED
         return lambda: dr.decode(row, event, packs)
 
     def envelope_route(instance):
@@ -162,8 +168,8 @@ def overlay_sites(ctx):
     path = dr.PROVIDER_HASH_PATHS.get(ctx['family'])
     if path is None:
         return []
-    return [dict(role='payload', document='overlay:' + ctx['row']['payload_schema_ref'], pointer='/provider_payload_hash',
-                 keyword='pattern', instance=path, predicate=['S03_provider_hash_overlay'],
+    return [dict(role='payload', document='overlay:' + ctx['row']['payload_schema_ref'], schema_pointer='/provider_payload_hash/allOf/1/pattern',
+                 keyword='pattern', instance=list(path), predicate=['S03_provider_hash_overlay'], rule_sha256='overlay:' + ctx['family'],
                  rule={'pattern': '^sha256:[0-9a-f]{64}$', 'minLength': 71, 'maxLength': 71, 'type': ['string', 'null']})]
 
 
@@ -237,6 +243,13 @@ def schema_part(ctx, references, out):
                                 route = route_for(mutated)
                                 if route is None:
                                     continue
+                                if route is ERASED:
+                                    boundary.append(dict(family=ctx['family'], role=occ['role'], route=route_name,
+                                                         schema_pointer=site['schema_pointer'], instance_location=record['instance_location'],
+                                                         proposal=label, expected=[c12.SCHEMA_ROW, expected, code], actual=None,
+                                                         status='NOT_A_BOUNDARY_INPUT',
+                                                         reason='the stored RFC 8785 pack body carries no defect (the mutation does not survive serialization)'))
+                                    continue
                                 result, first, _ = c12.run_route(route)
                                 expected_first = [c12.SCHEMA_ROW, expected, code]
                                 entry_b = dict(family=ctx['family'], role=occ['role'], route=route_name, schema_pointer=site['schema_pointer'],
@@ -277,6 +290,7 @@ def schema_part(ctx, references, out):
                 local_probes.append(record)
                 if isolated_ok:
                     site['status_local'] = 'LOCAL_CLAUSE_WITNESS'
+    payload_routes = occurrences(ctx)[0]['routes']
     for site in overlay_sites(ctx):
         sites.append(dict(site, kind='overlay', witnesses=[], invalid=0, locations=1))
         seed = ctx['full']['payload']
@@ -286,11 +300,30 @@ def schema_part(ctx, references, out):
         refusal = tv.refusal(mutated)
         ok, errors = c12.isolated(tv, mutated, 'pattern', 'S03_provider_hash_overlay', tuple(site['instance']), None)
         expected = ['schema.overlay', 'S03_provider_hash_overlay', c12.ROW_CODES['S03_provider_hash_overlay']]
-        record = dict(role='payload', schema_pointer=site['schema_pointer'], instance_location=list(site['instance']),
+        record = dict(role='payload', schema_pointer=site['schema_pointer'], instance_location=[str(x) for x in site['instance']],
                       target_keyword='pattern', proposal='uppercase_hex', expected=expected, actual=list(refusal) if refusal else None,
-                      isolated=ok, error_count=errors, status='CLAUSE_WITNESS' if refusal and list(refusal) == expected and ok else 'INVALID')
-        (attempts if record['status'] == 'CLAUSE_WITNESS' else invalid).append(record)
-        sites[-1]['witnesses'].append(record['status'])
+                      isolated=ok, error_count=errors, control_sha256=c12.fingerprint(seed), negative_sha256=c12.fingerprint(mutated),
+                      status='CLAUSE_WITNESS' if refusal and list(refusal) == expected and ok else 'INVALID')
+        if record['status'] == 'CLAUSE_WITNESS':
+            for route_name, route_for in payload_routes.items():
+                route = route_for(mutated)
+                if route is None or route is ERASED:
+                    continue
+                result, first, _ = c12.run_route(route)
+                entry_b = dict(family=ctx['family'], role='payload', route=route_name, schema_pointer=site['schema_pointer'],
+                               instance_location=record['instance_location'], proposal='uppercase_hex', expected=expected,
+                               actual=first, result=str(result)[:80])
+                if first != expected or c12.accepted_result(result):
+                    entry_b['status'] = 'INVALID'
+                else:
+                    cut, restored = c12.cut_and_restore(route, 'schema.overlay', 'S03_provider_hash_overlay', expected)
+                    entry_b.update(cut=cut, restored=restored, status='KILLED' if cut == 'accepted' and restored else
+                                   'COVERED_LATER' if restored else 'INVALID')
+                boundary.append(entry_b)
+            attempts.append(record)
+            sites[-1]['witnesses'].append(record['negative_sha256'][:16] + ':S03_provider_hash_overlay')
+        else:
+            invalid.append(record)
     witnessed = {(s['role'], s['document'], s['schema_pointer'].rsplit('/', 1)[0], tuple(s['instance']), s['keyword'])
                  for s in sites if s.get('witnesses')}
     for site in sites:
@@ -334,6 +367,7 @@ def schema_part(ctx, references, out):
                 boundary_killed=sum(b['status'] == 'KILLED' for b in boundary),
                 boundary_covered_later=sum(b['status'] == 'COVERED_LATER' for b in boundary),
                 boundary_invalid=sum(b['status'] == 'INVALID' for b in boundary),
+                boundary_not_input=sum(b['status'] == 'NOT_A_BOUNDARY_INPUT' for b in boundary),
                 non_keyword_sites=sum(s.get('kind') == 'non_keyword' for s in sites),
                 local_clause_witnesses=sum(r['status'] == 'LOCAL_CLAUSE_WITNESS' for r in local_probes),
                 local_invalid=sum(r['status'] == 'INVALID' for r in local_probes),
