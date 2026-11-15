@@ -652,6 +652,10 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
             break
     if best is None:
         proof = cl.contradicted_branch(info, nodes) or cl.forbidden_member(info, nodes) or cl.excluded_by_cases(info, nodes)
+        if not proof:
+            proof = case_excluded(cl, info, nodes)  # GO2 addition
+            if proof:
+                STATS['case_excluded'] += 1
         if proof:
             best = dict(cls='UNREACHABLE', proof=proof)
         else:
@@ -773,6 +777,26 @@ def self_test(args):
     assert canon('urn:top/properties/y/$defs/d/type', mapping) == 'urn:top/properties/x/$defs/d/type'
     assert canon('urn:top/properties/y/properties/a/type', mapping) == 'urn:top/properties/y/properties/a/type'
     out['duplicate_id_copies'] = dict(identical_mapped=True, inline_unmapped=True, differing_unmapped=True)
+    # 3d. case exclusion: required pinned selector whose every case contradicts the inner `then`; safety and a live case
+    import pm_goal_go_schema_closure as clm
+    def case_trial(doc, location):
+        vv = common.StrictValidator(common.runtime_schema(doc), format_checker=common.FORMATS)
+        clm.CURRENT[0] = vv
+        clm.SCOPES.clear()
+        walked = clm.walk(vv)
+        return case_excluded(clm, walked[location], walked)
+    inner = {'type': 'object', 'required': ['o', 'r'], 'properties': {'o': {'enum': ['ready', 'blocked']}, 'r': {}},
+             'allOf': [{'if': {'properties': {'o': {'const': 'blocked'}}, 'required': ['o']}, 'then': {'properties': {'r': {'const': 'x'}}}}]}
+    top = {'type': 'object', 'required': ['t', 'p'], 'properties': {'t': {'enum': ['a', 'b']}, 'p': inner},
+           'allOf': [{'if': {'properties': {'t': {'const': 'a'}}, 'required': ['t']}, 'then': {'properties': {'p': {'properties': {'o': {'const': 'ready'}}}}}},
+                     {'if': {'properties': {'t': {'const': 'b'}}, 'required': ['t']}, 'then': {'properties': {'p': {'properties': {'o': {'const': 'ready'}}}}}}]}
+    clause_node = 'anonymous/properties/p/allOf/0/then/properties/r'
+    proved = case_trial(top, clause_node)
+    live = json.loads(json.dumps(top))
+    live['allOf'][1]['then'] = {'properties': {}}  # case b no longer pins o: the branch is reachable
+    unproved = case_trial(live, clause_node)
+    assert proved and proved.startswith('case exclusion') and unproved is None, (proved, unproved)
+    out['case_exclusion'] = dict(proved=proved[:120], live_case_unproved=unproved is None)
     # 4. the 35d6 dangling-ref clauses: every authored seed validates through the embedded $ref, and a defect at
     #    original_command_outcome is refused inside CommandOutcomeRecord (the ref is evaluated, not dangling).
     if args.dump:
@@ -1428,7 +1452,14 @@ def _fill_branch(cl, v, target, branch, bres, selectors, at, donors, own=None):
             pool.append(cl.gen(sub, sres, 0, 0))
         except Exception:  # noqa: BLE001
             pass
-        mine = (own or {}).get(q, [])  # values the member's own property schemas accept come first
+        mine = (own or {}).get(q, [])
+        for n, r in mine:  # GO's realize() merge: the member's own subschema with the branch's constraint on top
+            base = cl.deref(n, r)[0]
+            if isinstance(base, dict):
+                try:
+                    pool.append(cl.gen({**{a: b for a, b in base.items() if a not in ('anyOf', 'oneOf')}, **sub}, r, 0, 0))
+                except Exception:  # noqa: BLE001
+                    pass  # values the member's own property schemas accept come first
         pool.sort(key=lambda x: not all(cl.holds(v, n, x, r) for n, r in mine))
         pick = next((x for x in pool if cl.holds(v, sub, x, sres)), NONE)
         if pick is not NONE:
@@ -1616,6 +1647,10 @@ def enter_light(cl, v, control, reach, donors, by_ipath=None):
             if isinstance(branch, dict):
                 _fill_branch(cl, v, target, branch, bres, selectors, at, donors,
                              member_schemas(cl, by_ipath, tuple(reach['ipath'][:depth])) if by_ipath is not None else None)
+            if at and by_ipath is not None:  # the parent's conditionals are steered to accept the edited object
+                parent = cl.get(value, at[:-1])
+                if isinstance(parent, dict):
+                    _steer(cl, v, parent, at[-1], tuple(reach['ipath'][:depth - 1]), at[:-1], donors, by_ipath, protect, selectors)
     return value, protect
 
 
@@ -1651,6 +1686,116 @@ def enter_branch(cl, v, control, reach, donors, budget, repair=True):
     if not cl.errors_of(v, base):
         return base
     return greedy_repair(cl, v, base, protect, donors, budget=budget)
+
+
+def _branch_pins(cl, branch, res, rel, pins):
+    """const/enum/null pins a conditional branch puts on members (nested `properties` included), by relative path."""
+    for name, sub in (branch.get('properties', {}) if isinstance(branch, dict) else {}).items():
+        sub, sres = cl.deref(sub, res)
+        if not isinstance(sub, dict):
+            continue
+        values = cl.condition_values(sub)
+        if values is not None:
+            pins[rel + (name,)] = values if rel + (name,) not in pins else pins[rel + (name,)] & values
+        if isinstance(sub.get('properties'), dict):
+            _branch_pins(cl, sub, sres, rel + (name,), pins)
+
+
+def case_excluded(cl, info, nodes):
+    """GO2 addition, a checked UNREACHABLE proof by selector cases. For every reach of the clause there is an ancestor
+    object Q (on the clause's own instance path) and a member S of Q that, in the reach's scope, is required and pinned
+    to a finite set of values; for each value s, the conditionals of Q (in scope) whose `if` s decides (s outside the
+    `if` values of S: else; the `if` reads only S: then) pin members of Q (nested members included), and those pins
+    contradict a conditional the reach itself passes below Q: a `then` whose `if` requires a present member p to take
+    values disjoint from the pinned ones, or an `else` whose `if` the pins make always true (every member it reads is
+    present and pinned into its values). No valid instance then takes the reach. GO's safety rule holds: no proof uses a
+    selector or member prefix-related to the clause's own location (a single defect there could switch the branch)."""
+    reasons = []
+    reaches = [r for r in info['reach'] if not any(c[0] in cl.APART for c in r['ctx'])]
+    if not reaches:
+        return None
+    for reach in reaches:
+        ipath = reach['ipath']
+        scope = cl.scope_of(reach, nodes)
+        inner = [(kind, depth, owner, ores) for kind, depth, _, owner, ores, _ in reach['ctx'] if kind in ('then', 'else')]
+        found = None
+        for qd in range(len(ipath)):
+            Q = tuple(ipath[:qd])
+            if any(not isinstance(x, str) or x in ('#', '*') for x in Q):
+                break
+            conds = [(n['node'], n['resolver']) for n in nodes.values() if isinstance(n['node'].get('if'), dict)
+                     and any(r['ipath'] == Q and cl.applies(r, scope) for r in n['reach'])]
+            if not conds:
+                continue
+            names = sorted({name for node, res in conds for name in cl.deref(node['if'], res)[0].get('properties', {})})
+            for S in names:
+                if cl.selector_clash(ipath, Q, {'properties': {S: {}}}) or not cl.required_at(nodes, Q, S, scope):
+                    continue
+                allowed = cl.pinned(nodes, Q + (S,), scope)
+                if not allowed:
+                    continue
+                cases = []
+                for key, value in sorted(allowed.items()):
+                    pins = {}
+                    for node, res in conds:
+                        cond = cl.deref(node['if'], res)[0]
+                        props = cond.get('properties', {})
+                        if S not in props:
+                            continue
+                        wanted = cl.condition_values(cl.deref(props[S], res)[0])
+                        if wanted is None:
+                            continue
+                        if key not in wanted:
+                            kind = 'else'
+                        elif set(props) == {S} and set(cond) - {'x-pm-oracle-id'} <= {'properties', 'required'}:
+                            kind = 'then'
+                        else:
+                            continue
+                        if isinstance(node.get(kind), dict):
+                            branch, bres = cl.deref(node[kind], res)
+                            _branch_pins(cl, branch, bres, (), pins)
+                    hit = None
+                    for kind, d, owner, ores in inner:
+                        if d < qd:
+                            continue
+                        L = tuple(ipath[:d])
+                        cond = cl.deref(owner['if'], ores)[0]
+                        props = cond.get('properties', {})
+                        if set(cond) - {'x-pm-oracle-id'} - {'properties', 'required'} or not props:
+                            continue
+                        if cl.selector_clash(ipath, L, cond):
+                            continue
+                        rel = L[qd:]
+                        if kind == 'then':
+                            for prop, sub in props.items():
+                                wanted = cl.condition_values(cl.deref(sub, ores)[0])
+                                have = pins.get(rel + (prop,))
+                                if wanted is not None and have is not None and not (wanted & have) and cl.required_at(nodes, L, prop, scope):
+                                    hit = (f'its `then` at {owner.get("x-pm-oracle-id", "")} needs `{prop}` in {sorted(wanted)} but the case '
+                                           f'pins it to {sorted(have)}')
+                                    break
+                        else:
+                            always = all(cl.condition_values(cl.deref(sub, ores)[0]) is not None and pins.get(rel + (prop,)) is not None
+                                         and pins[rel + (prop,)] <= cl.condition_values(cl.deref(sub, ores)[0])
+                                         and cl.required_at(nodes, L, prop, scope) for prop, sub in props.items())
+                            if always:
+                                hit = f'the case makes the `if` at {owner.get("x-pm-oracle-id", "")} always true, so its `else` is never taken'
+                        if hit:
+                            break
+                    if not hit:
+                        break
+                    cases.append(f'{json.dumps(value)}: {hit}')
+                else:
+                    found = (f'case exclusion: `{S}` is required at /{"/".join(Q)} and pinned to {json.dumps(list(allowed.values()))} in '
+                             'scope; ' + '; '.join(cases))
+                if found:
+                    break
+            if found:
+                break
+        if not found:
+            return None
+        reasons.append(found)
+    return reasons[0] + (f' (+{len(reasons) - 1} more reaches, each excluded)' if len(reasons) > 1 else '')
 
 
 def vacuous_go2(keyword, node):
