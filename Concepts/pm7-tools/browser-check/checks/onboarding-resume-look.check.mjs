@@ -33,6 +33,12 @@
 // the Resume chip or the bell's entry shows (the window does not open by itself); resumed, it is on the same step with its
 // drafts and look; closed unfinished and reloaded, the chip is still there; finished (Ready's Enter) and reloaded, nothing
 // shows. --set only=fo219.
+// R57 (the lead's final review of fe92b0fa07), by the app's own controls, Adjust NieR's editor included: (F1, normal surface)
+// Settings Basic Dark, Friendly Dark picked in setup and closed unfinished (saved), Settings Basic Dark again, the page
+// reloaded, resumed: the window and its Look step show Basic Dark, and closing leaves it; (F2) NieR Dark picked, Adjust
+// NieR: another background and one part switched, Done, closed unfinished: the page and Settings keep that background and
+// those parts (and a reload, normal surface); (F3) NieR Dark set in Settings, resumed, Adjust NieR changing only the
+// background, closed unfinished: Settings and the page keep it (and a reload). --set only=r57.
 // No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish, Reduced
 // Motion, reload, pick, R55 and open-reload cases; --set only=r55 runs the R55 cases alone, --set only=openreload the
 // open-reload ones.
@@ -394,9 +400,86 @@ async function fo219(t) {
 	await t.check(`${tag}: finished and reloaded, nothing shows (no window, chip or bell entry)`, !o3.open && !o3.chip && !o3.bell, JSON.stringify(o3));
 }
 
+/* R57: Adjust NieR in the window, by its own controls: the Look step's Adjust NieR, a scene tile, a part's switch, Done */
+const nierState = (f) => f.evaluate(() => { let saved = {}; try { saved = { background: String(PM51.value('general.visual.nier-background') || ''), parts: (PM51.value('general.visual.nier-parts') || []).slice().sort() }; } catch (e) { saved = { error: String(e) }; } return { page: { on: !!(window.PM_NIER && PM_NIER.on()), background: PM_NIER.background(), parts: PM_NIER.parts().slice().sort() }, saved }; });
+async function adjust(t, f, A, { background, part }) {
+	await A.click('adjustNier');
+	await f.locator('#pm-o55-onboarding .o55-nierpanel .o55nc').first().waitFor({ timeout: 15000 });
+	await sleep(600);
+	if (background) { await f.locator(`#pm-o55-onboarding .o55-nierpanel [data-o55nc-bg="${background}"]`).first().click({ timeout: 10000 }); await sleep(900); }
+	if (part) { await f.locator(`#pm-o55-onboarding .o55-nierpanel .o55nc-chip[data-o55nc-key="${part}"]`).first().click({ timeout: 10000 }); await sleep(900); }
+	await f.locator('#pm-o55-onboarding .o55-nierpanel [data-o55nc-done]').first().click({ timeout: 10000 });
+	await f.waitForFunction(() => !document.querySelector('#pm-o55-onboarding .o55-nierpanel'), null, { timeout: 15000 }).catch(() => {});
+	await sleep(800);
+}
+const otherBackground = (b) => (b === 'Desert' ? 'The Bunker' : 'Desert');
+
+/* R57 F1: the saved look a closed run notes is the one after its own save: Settings set back after it counts, over a reload */
+async function r57f1(t) {
+	const tag = 'normal: R57 F1, Friendly Dark saved by the close, Settings Basic Dark after it, reloaded';
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox: false, settleMs: 1500 });
+	let A = app(t, f);
+	await A.screen('welcome'); await A.close();
+	await A.toSettings(); await setLookBySetting(t, f, 'basic-dark');
+	await A.resume(); await A.click('start', null, 'look');
+	await pickIn(f, A, 'friendly', 'dark');
+	await A.click('next', null, 'where'); await A.close(); await sleep(1200);
+	const s0 = await savedLook(f);
+	await t.check(`${tag}: the close saved Friendly Dark`, s0.family === 'friendly' && s0.mode === 'dark', JSON.stringify(s0));
+	await A.toSettings(); await setLookBySetting(t, f, 'basic-dark');
+	const r = await freshLoad(t); A = r.A;
+	const way = await A.resume(), w = await A.windowLook();
+	await t.check(`${tag}: resumed (by ${way}), the window shows Basic Dark`, w.chosen === 'basic' && w.mode === 'dark' && !w.nier, JSON.stringify(w));
+	await A.click('back', null, 'look');
+	const st = await A.lookStep();
+	await t.check(`${tag}: its Look step starts on Basic Dark`, st.tile === 'basic' && st.mode === 'dark', JSON.stringify(st));
+	await A.close();
+	const p = await A.page();
+	await t.check(`${tag}: closed unfinished, the page is left in Basic Dark`, held('basic-dark', p), JSON.stringify(p));
+}
+/* R57 F2: NieR's background and parts chosen in the window are saved whole by the unfinished close */
+async function r57f2(t, sandbox) {
+	const tag = `${sandbox ? 'sandbox' : 'normal'}: R57 F2, NieR Dark picked, Adjust NieR's background and a part changed, closed unfinished`;
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox, settleMs: 1500 });
+	const A = app(t, f);
+	await A.screen('welcome'); await A.click('start', null, 'look');
+	await pickIn(f, A, 'nier', 'dark');
+	const n0 = await nierState(f), bg = otherBackground(n0.page.background), part = 'reboot', want = n0.page.parts.includes(part) ? n0.page.parts.filter((k) => k !== part) : n0.page.parts.concat(part).sort();
+	await adjust(t, f, A, { background: bg, part });
+	const n1 = await nierState(f);
+	await t.check(`${tag}: the window shows the background ${bg} and the part switched`, n1.page.on && n1.page.background === bg && n1.page.parts.join() === want.join(), JSON.stringify(n1.page));
+	await A.click('next', null, 'where'); await A.close(); await sleep(1500);
+	const n2 = await nierState(f), wantLabels = want.length;
+	await t.check(`${tag}: the page and Settings keep the background ${bg} and the parts`, n2.page.on && n2.page.background === bg && n2.page.parts.join() === want.join() && n2.saved.background === bg && n2.saved.parts.length === wantLabels && !n2.saved.parts.includes('Reboot moment') === !want.includes(part), JSON.stringify(n2));
+	if (sandbox) return;
+	const r = await freshLoad(t), n3 = await nierState(r.f);
+	await t.check(`${tag}: reloaded, NieR with the background ${bg} and the parts`, n3.page.on && n3.page.background === bg && n3.page.parts.join() === want.join(), JSON.stringify(n3.page));
+}
+/* R57 F3: a change made only in Adjust NieR is a choice: saved by the unfinished close */
+async function r57f3(t, sandbox) {
+	const tag = `${sandbox ? 'sandbox' : 'normal'}: R57 F3, NieR Dark set in Settings, resumed, only Adjust NieR's background changed, closed unfinished`;
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox, settleMs: 1500 });
+	const A = app(t, f);
+	await A.screen('welcome'); await A.close();
+	await A.toSettings(); await setLookBySetting(t, f, 'nier-dark');
+	await A.resume(); await A.click('start', null, 'look');
+	const n0 = await nierState(f), bg = otherBackground(n0.page.background);
+	await adjust(t, f, A, { background: bg });
+	await A.close(); await sleep(1500);
+	const n2 = await nierState(f);
+	await t.check(`${tag}: the page and Settings keep the background ${bg}`, n2.page.on && n2.page.background === bg && n2.saved.background === bg, JSON.stringify(n2));
+	if (sandbox) return;
+	const r = await freshLoad(t), n3 = await nierState(r.f);
+	await t.check(`${tag}: reloaded, NieR with the background ${bg}`, n3.page.on && n3.page.background === bg, JSON.stringify(n3.page));
+}
+
 export default async function (t) {
 	await t.viewport(1440, 960);
 	const looks = t.args.looks ? String(t.args.looks).split(',') : ALL;
+	if (t.args.only === 'r57') { for (const sf of t.app.surfaces()) { const sb = sf === 'sandbox'; if (!sb) await r57f1(t); await r57f2(t, sb); await r57f3(t, sb); } await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	if (t.args.only === 'fo219') { if (t.app.surfaces().includes('normal')) await fo219(t); return; }
 	if (t.args.only === 'openreload') { if (t.app.surfaces().includes('normal')) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); } return; }
 	if (t.args.only === 'r55') { for (const s of t.app.surfaces()) { await again(t, s === 'sandbox'); await nierBackground(t, s === 'sandbox'); } await t.emulate({ reducedMotion: 'no-preference' }); return; }
@@ -412,6 +495,8 @@ export default async function (t) {
 			await again(t, sandbox);
 			await nierBackground(t, sandbox);
 			if (!sandbox) await fo219(t);
+			if (!sandbox) await r57f1(t);
+			await r57f2(t, sandbox); await r57f3(t, sandbox);
 			if (!sandbox) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); }
 		}
 	}
