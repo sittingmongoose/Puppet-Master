@@ -16,7 +16,7 @@
 // scale and the backlight's opacity, as the page computes them; the films show the pixels). Changes: a word while
 // waiting, early in the loop and just before its end; 900 ms without a word while flowing, landing near a loop's end
 // and in its middle; Settings' Animation speed set to Fast mid-loop, then a word right after it and the quiet after
-// that, then Measured again; a word followed by a 200 ms long task before the next frame; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
+// that, then Slow (Cinematic) the same way, then Measured again; a word followed by a 200 ms long task before the next frame; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
 // so the pace turns to waiting while held), closed, then a word. For each change:
 //   - at once: a word changes data-flow and the loop's length by the frame after it; the quiet one comes 900 ms after
 //     the last word (the module's timer on the word's age; up to --set late=<ms>, default 150, plus the main thread's long tasks after it fell due);
@@ -162,6 +162,15 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 			await sleep(150);
 			await wordAt('word right after the speed change');
 			if (!(await quietAt('quiet after the speed change', 0.7))) throw new Error('quiet after speed: no change');
+			// Slow is Settings' Cinematic (1.6). Both cadences are sampled before Measured is restored, so the
+			// speed row can read each loop against the unscaled length times the factor (judgeSpeed).
+			if (!(await inLoop(0.3, 0.4))) throw new Error('slow: the loop never reached .3-.4');
+			await sleep(2); mark('Animation speed Slow (Cinematic), waiting, mid-loop', { kind: 'speed' });
+			const okSlow = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Cinematic');
+			if (!okSlow) throw new Error('Settings refused Cinematic');
+			await sleep(150);
+			await wordAt('word right after Slow');
+			if (!(await quietAt('quiet after Slow', 0.7))) throw new Error('quiet after Slow: no change');
 			if (!(await inLoop(0.3, 0.4))) throw new Error('speed back: the loop never reached .3-.4');
 			await sleep(2); mark('Animation speed Measured, waiting, mid-loop', { kind: 'speed' });
 			window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured');
@@ -430,6 +439,42 @@ function everyFrame(R) {
 	return out;
 }
 
+// Settings' Animation speed (17-look.js): Fast 0.6, Slow is Cinematic 1.6, Measured 1. The unscaled loops are
+// 2200 ms while words arrive and 3200 ms while the run waits. The last sample of each cadence between one speed
+// mark and the next is the one the speed has settled on (the mark is taken before Settings applies it).
+export const SPEED_FACTOR = { Fast: 0.6, Slow: 1.6, Cinematic: 1.6, Measured: 1 };
+export const LOOP_BASE = { flowing: 2200, waiting: 3200 };
+export function judgeSpeed(R) {
+	const marks = (R.marks || []).filter((m) => m.kind === 'speed' && m.i >= 0);
+	const bad = [];
+	const seen = [];
+	for (let s = 0; s < marks.length; s++) {
+		const m = marks[s];
+		const speed = /Fast/.test(m.name) ? 'Fast' : /Slow|Cinematic/.test(m.name) ? 'Slow' : null;
+		if (!speed) continue;
+		const factor = SPEED_FACTOR[speed];
+		const end = s + 1 < marks.length ? marks[s + 1].i : R.rows.length;
+		const last = {};
+		for (let i = m.i; i < end && i < R.rows.length; i++) {
+			const r = R.rows[i];
+			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing') || !r.g || !r.b) continue;
+			if (!(r.g.dur > 0) || !(r.b.dur > 0)) continue;
+			last[r.flow] = r;
+		}
+		seen.push(speed);
+		for (const flow of ['waiting', 'flowing']) {
+			const r = last[flow];
+			if (!r) { bad.push({ speed, flow, missing: true }); continue; }
+			for (const [layer, loop] of [['glyph', r.g], ['backlight', r.b]]) {
+				const want = LOOP_BASE[flow] * factor;
+				if (Math.abs(loop.dur - want) > 1) bad.push({ speed, flow, layer, dur: loop.dur, want });
+			}
+		}
+	}
+	if (!seen.includes('Fast') || !seen.includes('Slow')) bad.push({ missing: ['Fast', 'Slow'].filter((x) => !seen.includes(x)) });
+	return { ok: bad.length === 0, bad };
+}
+
 // Judge one look's samples at its changes.
 function judge(R, look) {
 	const out = [], frame = medianFrame(R.rows), mr = rates(R), spans = windowSpans(R, frame);
@@ -539,6 +584,11 @@ export default async function (t) {
 			const by = (m) => R.rows.find((r, i) => i >= m.i && m.ft != null && r.t > m.ft) || R.rows[R.rows.length - 1];
 			const slow = words.filter((m) => { const p = R.rows[m.i - 1], r = by(m); if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
 			await t.check(`${look}: a word turns the pace to flowing by the next frame`, words.length >= (alone ? 2 : 3) && slow.length === 0, slow.length ? slow.map((m) => `${m.name}: the frame after ${JSON.stringify(by(m).flow)} ${by(m).g && by(m).g.dur}`).join('; ') : `${words.length} words`);
+			if (!alone) {
+				const sp = judgeSpeed(R);
+				await t.check(`${look}: Animation speed Fast and Slow scale both loops by that speed's factor`, sp.ok,
+					sp.ok ? 'Fast 0.6 and Slow (Cinematic) 1.6 against the unscaled 2200 ms flowing and 3200 ms waiting' : JSON.stringify(sp.bad.slice(0, 6)));
+			}
 			const quiet = R.marks.filter((m) => m.kind === 'quiet');
 			// allowed: `late` ms after 900, plus the time the main thread was held by long tasks after the timer fell due
 			// (R32 H3; the onboarding window's restyle made it 1093 ms in NieR and the check's own 200 ms task 1075 ms)
