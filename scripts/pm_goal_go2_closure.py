@@ -689,6 +689,14 @@ def self_test(args):
                  for x in (1, 1.0, True, 1)]
     assert verdicts == reference, (verdicts, reference)
     out['memo_type_tags'] = dict(memo=verdicts, reference=reference)
+    # 3b. the GO2 vacuous rules agree with the validator's own keyword functions on varied instances
+    probes = [{}, {'a': 1}, [], [1, 1], [None, None], 'x', 7, None]
+    for schema in ({'required': []}, {'uniqueItems': False}, {'dependentRequired': {'a': []}}):
+        keyword = next(iter(schema))
+        assert vacuous_go2(keyword, schema)
+        vv = common.StrictValidator(common.runtime_schema(schema), format_checker=common.FORMATS)
+        assert all(vv.is_valid(x) for x in probes), schema
+    out['vacuous_rules'] = dict(schemas=3, probes=len(probes), all_valid=True)
     # 4. the 35d6 dangling-ref clauses: every authored seed validates through the embedded $ref, and a defect at
     #    original_command_outcome is refused inside CommandOutcomeRecord (the ref is evaluated, not dangling).
     if args.dump:
@@ -945,6 +953,21 @@ def merge_shards(args):
     return 0
 
 
+def vacuous_go2(keyword, node):
+    """GO2 addition: assertion values no instance can fail, checked on the owner node (GO's VACUOUS rule covers only
+    minItems/minLength/minProperties 0). JSON Schema 2020-12 Validation: required (6.5.3) holds when every listed name
+    is a member, so an empty list is always satisfied; uniqueItems false (6.4.3) always validates; dependentRequired
+    (6.5.4) with only empty lists likewise. The validator's own keyword functions agree (standing trial)."""
+    value = node.get(keyword)
+    if keyword == 'required' and value == []:
+        return 'required is [] on the owner node: an object holds every member of an empty list (Validation 2020-12 6.5.3), no instance fails it'
+    if keyword == 'uniqueItems' and value is False:
+        return 'uniqueItems is false on the owner node: it always validates (Validation 2020-12 6.4.3), no instance fails it'
+    if keyword == 'dependentRequired' and isinstance(value, dict) and all(x == [] for x in value.values()):
+        return 'dependentRequired lists no member on the owner node (Validation 2020-12 6.5.4), no instance fails it'
+    return None
+
+
 def common_locations():
     import pm_goal_oracle_common as common
     return common._SCHEMA_LOCATIONS
@@ -1092,6 +1115,10 @@ def close(args):
             continue
         if keyword in cl.VACUOUS and node.get(keyword) == cl.VACUOUS[keyword]:
             state['entries'][clause] = dict(cls='VACUOUS', proof=f'{keyword} is 0: no instance can fail it (checked on the owner node)')
+            continue
+        proof = vacuous_go2(keyword, node)
+        if proof:
+            state['entries'][clause] = dict(cls='VACUOUS', proof=proof, go2_rule=True)
             continue
         reaches = [r for r in info['reach'] if not any(c[0] in cl.APART for c in r['ctx'])][:6]
         t0 = cl.COUNT[0]
