@@ -19,8 +19,8 @@
   },
   "status_counts": {
     "ABSENT": 25,
-    "PARTIAL": 50,
-    "PASS": 225
+    "PARTIAL": 25,
+    "PASS": 250
   },
   "families": [
     {
@@ -282,59 +282,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-680: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-680: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-680",
-              "line_start": 32195,
-              "line_end": 32195,
-              "quote": "**Historical-read admission oracle \u2014 config.validation.failed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with r"
+              "line_start": 32475,
+              "line_end": 32475,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `config.validation.failed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-680",
-              "line_start": 32195,
-              "line_end": 32195,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:config.validation.failed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -777,80 +757,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the pre-DO-P1F-03 member payloads, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-681: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-681: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-681",
-              "line_start": 32251,
-              "line_end": 32251,
-              "quote": "**Historical-read admission oracle \u2014 crew.board_message_posted.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with "
+              "line_start": 32531,
+              "line_end": 32531,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `crew.board_message_posted` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-681",
-              "line_start": 32237,
-              "line_end": 32237,
-              "quote": "**Governed application successor (DO-A04).** Newly authored technical owner contract CV-740/SP-723 selects `AgentMessageApplicationV2@2.0.0`, `OriginalCoordinationAppendSourceV2` a"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-681",
-              "line_start": 32251,
-              "line_end": 32251,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:crew.board_message_posted"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
-            },
-            {
-              "path": "scripts/do-guards/do_board_application_source_12.py",
-              "unit": "DO guard row wrapper_record_join (sweep part 2A; was typed_tree(wrapper record) in board_source_errors)",
-              "line_start": 13,
-              "line_end": 13,
-              "quote": "return 'source_original_join' if value['typed_wrapper_record'] != value['typed_message'] else None"
-            },
-            {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3172,
-              "line_end": 3172,
-              "quote": "assert test['boundary'] == 'project_original_input_adapter'"
-            },
-            {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -1287,66 +1226,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the pre-DO-P1F-03 member payloads, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-682: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-682: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-682",
-              "line_start": 32305,
-              "line_end": 32305,
-              "quote": "**Historical-read admission oracle \u2014 crew.board_message_read.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
+              "line_start": 32585,
+              "line_end": 32585,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `crew.board_message_read` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-682",
-              "line_start": 32305,
-              "line_end": 32305,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:crew.board_message_read"
             },
             {
-              "path": "scripts/do-guards/do_board_application_source_12.py",
-              "unit": "DO guard row wrapper_record_join (sweep part 2A; was typed_tree(wrapper record) in board_source_errors)",
-              "line_start": 13,
-              "line_end": 13,
-              "quote": "return 'source_original_join' if value['typed_wrapper_record'] != value['typed_message'] else None"
-            },
-            {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -1783,66 +1695,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the pre-DO-P1F-03 member payloads, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-683: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-683: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-683",
-              "line_start": 32359,
-              "line_end": 32359,
-              "quote": "**Historical-read admission oracle \u2014 crew.board_messages_archived.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness wi"
+              "line_start": 32639,
+              "line_end": 32639,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `crew.board_messages_archived` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-683",
-              "line_start": 32359,
-              "line_end": 32359,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:crew.board_messages_archived"
             },
             {
-              "path": "scripts/do-guards/do_board_application_source_12.py",
-              "unit": "DO guard row wrapper_record_join (sweep part 2A; was typed_tree(wrapper record) in board_source_errors)",
-              "line_start": 13,
-              "line_end": 13,
-              "quote": "return 'source_original_join' if value['typed_wrapper_record'] != value['typed_message'] else None"
-            },
-            {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -2262,59 +2147,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-684: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-684: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-684",
-              "line_start": 32411,
-              "line_end": 32411,
-              "quote": "**Historical-read admission oracle \u2014 parser.error.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `reade"
+              "line_start": 32691,
+              "line_end": 32691,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `parser.error` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-684",
-              "line_start": 32411,
-              "line_end": 32411,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:parser.error"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -2733,59 +2598,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-685: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-685: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-685",
-              "line_start": 32461,
-              "line_end": 32461,
-              "quote": "**Historical-read admission oracle \u2014 phase.force_completed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with read"
+              "line_start": 32741,
+              "line_end": 32741,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `phase.force_completed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-685",
-              "line_start": 32461,
-              "line_end": 32461,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:phase.force_completed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -3204,59 +3049,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-686: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-686: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-686",
-              "line_start": 32511,
-              "line_end": 32511,
-              "quote": "**Historical-read admission oracle \u2014 subagent.budget_warning.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
+              "line_start": 32791,
+              "line_end": 32791,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.budget_warning` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-686",
-              "line_start": 32511,
-              "line_end": 32511,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.budget_warning"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -3675,59 +3500,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-687: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-687: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-687",
-              "line_start": 32561,
-              "line_end": 32561,
-              "quote": "**Historical-read admission oracle \u2014 subagent.cancelled.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader "
+              "line_start": 32841,
+              "line_end": 32841,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.cancelled` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-687",
-              "line_start": 32561,
-              "line_end": 32561,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.cancelled"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -4146,59 +3951,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-688: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-688: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-688",
-              "line_start": 32611,
-              "line_end": 32611,
-              "quote": "**Historical-read admission oracle \u2014 subagent.completed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader "
+              "line_start": 32891,
+              "line_end": 32891,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.completed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-688",
-              "line_start": 32611,
-              "line_end": 32611,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.completed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -4617,59 +4402,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-689: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-689: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-689",
-              "line_start": 32661,
-              "line_end": 32661,
-              "quote": "**Historical-read admission oracle \u2014 subagent.context_warning.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with r"
+              "line_start": 32941,
+              "line_end": 32941,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.context_warning` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-689",
-              "line_start": 32661,
-              "line_end": 32661,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.context_warning"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -5088,59 +4853,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-690: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-690: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-690",
-              "line_start": 32711,
-              "line_end": 32711,
-              "quote": "**Historical-read admission oracle \u2014 subagent.escalated.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader "
+              "line_start": 32991,
+              "line_end": 32991,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.escalated` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-690",
-              "line_start": 32711,
-              "line_end": 32711,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.escalated"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -5559,59 +5304,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-691: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-691: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-691",
-              "line_start": 32761,
-              "line_end": 32761,
-              "quote": "**Historical-read admission oracle \u2014 subagent.failed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `re"
+              "line_start": 33041,
+              "line_end": 33041,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.failed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-691",
-              "line_start": 32761,
-              "line_end": 32761,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.failed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -6030,59 +5755,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-692: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-692: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-692",
-              "line_start": 32811,
-              "line_end": 32811,
-              "quote": "**Historical-read admission oracle \u2014 subagent.message_received.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with "
+              "line_start": 33091,
+              "line_end": 33091,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.message_received` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-692",
-              "line_start": 32811,
-              "line_end": 32811,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.message_received"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -6501,59 +6206,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-693: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-693: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-693",
-              "line_start": 32861,
-              "line_end": 32861,
-              "quote": "**Historical-read admission oracle \u2014 subagent.message_sent.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with read"
+              "line_start": 33141,
+              "line_end": 33141,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.message_sent` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-693",
-              "line_start": 32861,
-              "line_end": 32861,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.message_sent"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -6972,59 +6657,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-694: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-694: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-694",
-              "line_start": 32911,
-              "line_end": 32911,
-              "quote": "**Historical-read admission oracle \u2014 subagent.model_switched.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
+              "line_start": 33191,
+              "line_end": 33191,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.model_switched` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-694",
-              "line_start": 32911,
-              "line_end": 32911,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.model_switched"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -7443,59 +7108,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-695: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-695: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-695",
-              "line_start": 32961,
-              "line_end": 32961,
-              "quote": "**Historical-read admission oracle \u2014 subagent.output_truncated.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with "
+              "line_start": 33241,
+              "line_end": 33241,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.output_truncated` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-695",
-              "line_start": 32961,
-              "line_end": 32961,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.output_truncated"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -7914,59 +7559,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-696: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-696: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-696",
-              "line_start": 33011,
-              "line_end": 33011,
-              "quote": "**Historical-read admission oracle \u2014 subagent.paused.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `re"
+              "line_start": 33291,
+              "line_end": 33291,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.paused` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-696",
-              "line_start": 33011,
-              "line_end": 33011,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.paused"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -8385,59 +8010,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-697: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-697: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-697",
-              "line_start": 33061,
-              "line_end": 33061,
-              "quote": "**Historical-read admission oracle \u2014 subagent.progress.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `"
+              "line_start": 33341,
+              "line_end": 33341,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.progress` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-697",
-              "line_start": 33061,
-              "line_end": 33061,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.progress"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -8856,59 +8461,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-698: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-698: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-698",
-              "line_start": 33111,
-              "line_end": 33111,
-              "quote": "**Historical-read admission oracle \u2014 subagent.resumed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
+              "line_start": 33391,
+              "line_end": 33391,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.resumed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-698",
-              "line_start": 33111,
-              "line_end": 33111,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.resumed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -9327,59 +8912,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-699: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-699: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-699",
-              "line_start": 33161,
-              "line_end": 33161,
-              "quote": "**Historical-read admission oracle \u2014 subagent.retried.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
+              "line_start": 33441,
+              "line_end": 33441,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.retried` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-699",
-              "line_start": 33161,
-              "line_end": 33161,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.retried"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -9798,59 +9363,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-700: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-700: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-700",
-              "line_start": 33211,
-              "line_end": 33211,
-              "quote": "**Historical-read admission oracle \u2014 subagent.spawned.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
+              "line_start": 33491,
+              "line_end": 33491,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.spawned` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-700",
-              "line_start": 33211,
-              "line_end": 33211,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.spawned"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -10269,59 +9814,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-701: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-701: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-701",
-              "line_start": 33261,
-              "line_end": 33261,
-              "quote": "**Historical-read admission oracle \u2014 subagent.started.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
+              "line_start": 33541,
+              "line_end": 33541,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.started` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-701",
-              "line_start": 33261,
-              "line_end": 33261,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.started"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -10740,59 +10265,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-702: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-702: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-702",
-              "line_start": 33311,
-              "line_end": 33311,
-              "quote": "**Historical-read admission oracle \u2014 subagent.timeout.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
+              "line_start": 33591,
+              "line_end": 33591,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.timeout` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-702",
-              "line_start": 33311,
-              "line_end": 33311,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.timeout"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -11211,59 +10716,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-703: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-703: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-703",
-              "line_start": 33361,
-              "line_end": 33361,
-              "quote": "**Historical-read admission oracle \u2014 subagent.tool_called.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reade"
+              "line_start": 33641,
+              "line_end": 33641,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.tool_called` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-703",
-              "line_start": 33361,
-              "line_end": 33361,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.tool_called"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -11682,59 +11167,39 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-704: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
+          "finding": "OSI-704: original complete checker, complete-owner-schema Method B clause coverage, gated production row cuts and checked singleton implications, independently held copy witnesses, shared scalar boundaries and authenticated original-receipt store observations pass. Native NOT_RUN; global date-time inventory is NOT_RUN_ADMISSION_REFUSED, disclosed separately.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
               "unit": "OSI-704",
-              "line_start": 33411,
-              "line_end": 33411,
-              "quote": "**Historical-read admission oracle \u2014 subagent.tool_completed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
+              "line_start": 33691,
+              "line_end": 33691,
+              "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.tool_completed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+              "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1"
             },
             {
-              "path": "Plans/orchestrator-subagent-integration.md",
-              "unit": "OSI-704",
-              "line_start": 33411,
-              "line_end": 33411,
-              "quote": "File-backed `retained_event_cases` and `retained_retries` exercise both original recipe editions for this exact family"
+              "path": "reports/event-authority-20261114/C12-DO.md",
+              "unit": "C12-DO implementation receipt",
+              "line_start": 1,
+              "line_end": 1,
+              "quote": "# C12-DO: 25 static oracle cells closed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 3035,
-              "line_end": 3035,
-              "quote": "for test in fixtures['storage_sequence_cases']:"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+              "route": "payload:subagent.tool_completed"
             },
             {
-              "path": "scripts/pm_orchestrator_event_guards.py",
-              "unit": "DO guard tables (sweep part 2A)",
-              "line_start": 144,
-              "line_end": 144,
-              "quote": "SUITES = ("
-            },
-            {
-              "path": "scripts/pm-orchestrator-guard-proof.py",
-              "unit": "DO guard proof driver (sweep part 2A)",
-              "line_start": 834,
-              "line_end": 834,
-              "quote": "UNPROVED = dict({"
-            },
-            {
-              "path": "scripts/pm-orchestrator-event-contracts.py",
-              "unit": "DO static contract checker",
-              "line_start": 431,
-              "line_end": 431,
-              "quote": "    checks += guard_table_checks(fixtures)"
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json"
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
-            "status": "PASS"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at 7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+            "status": "PARTIAL"
           },
-          "change": "downgraded",
-          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
+          "change": "upgraded",
+          "change_reason": "C12 scope permits whole-definition Method B with complete-schema enforcement, clause witnesses and covering proofs. All 25 family routes replay; no per-keyword code-cut or native claim."
         }
       },
       "remaining_gaps": [
@@ -12118,5 +11583,21 @@
   "sweep_p2b_open_items": [
     "DO-C8-N5 (three functions reconciled byte for byte with DCO; the rest of the carried coordination helper reconciles at batch-2 integration)",
     "Date-time inventory refresh for Plans/coordination_event_payloads.schema.json and Plans/storage_value_registry.json (TOOL-ISSUES T198)"
-  ]
+  ],
+  "do_c12_regrade": {
+    "implementation_commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f",
+    "criterion_only": 12,
+    "promoted_families": 25,
+    "source_receipt": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/REPORT.md",
+    "independent_review": "NOT_RUN",
+    "native": "NOT_RUN",
+    "guard_rows": 413,
+    "proved_rows": 394,
+    "entailed_singletons": 19,
+    "schema_occurrences": 5285,
+    "schema_witnesses": 4996,
+    "uncovered": 0,
+    "schema_invalid_proposals": 1480,
+    "global_datetime": "NOT_RUN_ADMISSION_REFUSED"
+  }
 }
