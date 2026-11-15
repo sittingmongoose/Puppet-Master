@@ -1274,7 +1274,8 @@ def gated_rows(guard_dir, family):
             rows[(suite['phase'], name)] = dict(
                 tool_status=suite.get('tool_status'), proved=bool(r and r.get('proved')),
                 own_negatives=sorted(r.get('own', [])) if r else [],
-                witnesses=sorted({str(negs.get(n, {}).get('description', negs.get(n, {}).get('why', n)))[:160] for n in (r or {}).get('own', [])}),
+                witnesses=sorted({str(negs.get(n, {}).get('defect', n))[:160] for n in (r or {}).get('own', [])}),
+                own_families_only=all(('(' + family + ')') in str(negs.get(n, {}).get('defect', '')) for n in (r or {}).get('own', [])),
                 cut_flips=len(r.get('flips', [])) if r else 0, stays=len(r.get('stays', [])) if r else 0,
                 restoration=[x['outcome'] for x in r.get('restoration', [])] if r else [],
                 masked=len(r.get('masked', [])) if r else 0, unrelated=len(r.get('unrelated_changes', [])) if r else 0,
@@ -1341,9 +1342,145 @@ def matrix_mode(m16, deck, out, guard_dir, entailed_path):
     return totals
 
 
+# =========================================================================== ledger
+def ledger_mode(m16, deck, out, guard_dir, evidence, derivation):
+    """Exact expected-code mutation ledger per family. Only an exact expected refusal is a kill; every other outcome
+    is INVALID and listed separately. Four categories, never summed into one total."""
+    witnesses = json.loads((evidence / 'schema-clause-witnesses.json').read_text())
+    cb_kills = json.loads((evidence / 'schema-complete-boundary-kills.json').read_text())
+    sch_invalid = json.loads((evidence / 'schema-invalid-proposals.json').read_text())
+    cb_invalid = json.loads((evidence / 'schema-complete-boundary-invalid.json').read_text())
+    corpus = json.loads((evidence / 'datetime-corpus.json').read_text())
+    derived = json.loads(Path(derivation).read_text())
+    cases = c12.fixture_cases()
+    families = {}
+    for family in FAMILIES:
+        summary, rows = gated_rows(guard_dir / ('fam-' + family), family)
+        proved = [k for k, v in rows.items() if v['proved'] and v['own_negatives']]
+        attempts = [a for a in derived['attempts'] if a['id'].split('/')[1] == family]
+        families[family] = dict(
+            checker_row_cuts=dict(rows_cut=len(proved), own_negative_flips=sum(rows[k]['cut_flips'] for k in proved),
+                                  other_negatives_kept_exact=sum(rows[k]['stays'] for k in proved),
+                                  restorations=sum(len(rows[k]['restoration']) for k in proved),
+                                  tool_status_pass=all(v['tool_status'] in (None, 'PASS') for v in rows.values())),
+            input_witnesses=dict(kills=sum(w['family'] == family for w in cases),
+                                 invalid_attempts=sum(a['status'] != 'KILL' for a in attempts)),
+            schema=dict(phase_kills=sum(w['family'] == family for w in witnesses),
+                        complete_boundary_kills=sum(w['family'] == family for w in cb_kills),
+                        invalid_proposals=sum(w['family'] == family for w in sch_invalid),
+                        complete_boundary_invalid=sum(w['family'] == family and w.get('status') == 'INVALID' for w in cb_invalid),
+                        complete_boundary_not_placeable=sum(w['family'] == family and w.get('status') == 'NOT_PLACEABLE'
+                                                            for w in cb_invalid)),
+            datetime=dict(refusal_kills=sum(r['family'] == family and not r['valid'] and r['expected'] is not None
+                                            and r['actual'] is not None and r['actual'][:2] == r['expected'] for r in corpus),
+                          valid_controls=sum(r['family'] == family and r['valid'] for r in corpus),
+                          disagreements=sum(r['family'] == family and ((r['actual'] or [None, None])[:2] != r['expected']
+                                                                      if r['expected'] else r['actual'] is not None) for r in corpus)))
+    ledger = dict(families=families, rule='only the exact expected (phase, row, code) refusal is a kill; INVALID listed '
+                  'separately; categories are never summed')
+    out('ledger.json', ledger)
+    return {f: (v['checker_row_cuts']['own_negative_flips'], v['input_witnesses']['kills'], v['schema']['complete_boundary_kills'])
+            for f, v in families.items()}
+
+
+# =========================================================================== grade
+BEFORE = 'reports/event-authority-20261104/DS15-self-grade.json'
+
+
+def json_line(path, needle_family, needle):
+    """Line of the first occurrence of needle after the family's event_type line in a JSON report."""
+    lines = (ROOT / path).read_text().splitlines()
+    start = next(i for i, ln in enumerate(lines) if f'"event_type": "{needle_family}"' in ln)
+    for i in range(start, len(lines)):
+        if needle in lines[i]:
+            return {'path': path, 'line': i + 1, 'quote': needle, 'sha256': file_sha(path)}
+    raise AssertionError((path, needle_family, needle))
+
+
+def grade_mode(m16, deck, out, evidence):
+    """Criterion-12 regrade of the seven families from the evidence summaries; every quote re-read at its line."""
+    contracts = {c['event_type']: c for c in deck.read('Plans/ds15_deck2_contracts.json')}
+    ev = {name: json.loads((evidence / name).read_text()) for name in (
+        'coverage-summary.json', 'schema-summary.json', 'datetime-corpus-summary.json', 'retained-summary.json',
+        'numbers-summary.json', 'entailed.json', 'c12-check.json', 'ledger.json')}
+    pins = {name: hashlib.sha256((evidence / name).read_bytes()).hexdigest() for name in sorted(ev)}
+    before = json.loads((ROOT / BEFORE).read_text())
+    E = 'scripts/pm-ds15-event-contracts.py'
+    D = 'scripts/pm-ds15-deck2-contracts.py'
+    rows = []
+    for family in FAMILIES:
+        c = contracts[family]
+        unit, lines = unit_lines(family, contracts)
+        prior = next(r for r in before['rows'] if r['event_type'] == family)['cells']['positive_negative_oracles']
+        cov = ev['coverage-summary.json'][family]
+        sch = ev['schema-summary.json']['totals'][family]
+        led = ev['ledger.json']['families'][family]
+        evidence_quotes = [
+            anchor(OWNER, '  Oracles: '), anchor(OWNER, 'python3 scripts/pm-ds15-deck2-contracts.py --family ' + family),
+            anchor(OWNER, '  Closed payload: Plans/' + c['payload_schema_ref'].split('/')[-1]),
+            json_line(BEFORE, family, '"status": "PARTIAL"'),
+            anchor(E, 'def claimed_range(first, last, rows):'),
+            anchor(D, "    if not retry and not context_ok(c, d.get('context')):"),
+            anchor('scripts/pm_ds15_c12_cases.py', '"""C12-DS15 own-family witnesses for the seven deck-2 families'),
+            anchor('scripts/pm-ds15-guard-tables.py', "    parser.add_argument('--family'"),
+        ]
+        # the unit's own Oracles line is the first match after the unit heading
+        oracle_line = lines['Oracles:'][0]
+        evidence_quotes[0] = {'path': OWNER, 'line': oracle_line, 'quote': '  Oracles: ', 'sha256': file_sha(OWNER)}
+        evidence_quotes[1] = {'path': OWNER, 'line': oracle_line,
+                              'quote': 'python3 scripts/pm-ds15-deck2-contracts.py --family ' + family, 'sha256': file_sha(OWNER)}
+        evidence_quotes[2] = {'path': OWNER, 'line': lines['Closed payload:'][0],
+                              'quote': '  Closed payload: ' + c['payload_schema_ref'], 'sha256': file_sha(OWNER)}
+        open_items = (cov['open'] + cov['unmapped_tables'] + cov['tool_failures']
+                      + (['masked'] if cov['masked'] else []) + (['unrelated'] if cov['unrelated'] else [])
+                      + (['lane_matrix'] if cov['lane_matrix_problems'] else [])
+                      + (['schema_whole_definition_covers'] if sch['unwitnessed'] else [])
+                      + (['datetime_disagreements'] if ev['datetime-corpus-summary.json']['disagreements'] else [])
+                      + (['number_disagreements'] if ev['numbers-summary.json']['disagreements'] else [])
+                      + (['retained_store_changed'] if ev['retained-summary.json']['changed'] else [])
+                      + (['entailment_checks'] if ev['entailed.json']['failed_checks'] else [])
+                      + (['c12_witnesses'] if ev['c12-check.json']['status'] != 'pass' else []))
+        status = 'PASS' if not open_items else 'PARTIAL'
+        finding = (f"{unit} {family}@{c['family_revision']}: every guard row the complete deck-2 checker reaches for this family "
+                   f"({cov['rows']} rows in {cov['tables']} tables) is proved by the gated tool from this family's own "
+                   f"single-defect witnesses ({cov['proved_own']} rows) or carries a checked entailment proof "
+                   f"({cov['entailed_singleton']} singleton-table rows, {cov['entailed_family']} family-constant or "
+                   f"earlier-boundary rows); {sch['sites']} evaluated schema clause sites: {sch['witnessed']} isolated or branch "
+                   f"witnesses through the real validator and phase row, {sch['cb_kills']} exact complete-boundary kills, the rest "
+                   'applicator, condition, sibling-entailed or co-asserted with named clauses; shared date-time battery, number '
+                   'corpus and edge sweep, sealed-receipt retained reads with custody snapshots, and the full original suite pass. '
+                   'Native execution NOT_RUN; membership ABSENT; independent review NOT_RUN.')
+        rows.append(dict(event_type=family, family_revision=c['family_revision'], owner_unit=unit,
+                         criterion='positive_negative_oracles', before=dict(status=prior['status'], source=BEFORE,
+                                                                           source_sha256=file_sha(BEFORE), finding=prior['finding']),
+                         after=dict(status=status, finding=finding, open=open_items),
+                         counts=dict(coverage=cov, schema=sch, ledger=led), evidence=evidence_quotes))
+    audit = []
+    for r in rows:
+        for q in r['evidence']:
+            text = (ROOT / q['path']).read_text().splitlines()[q['line'] - 1]
+            audit.append(dict(path=q['path'], line=q['line'], quote=q['quote'], match=q['quote'] in text,
+                              sha256_match=file_sha(q['path']) == q['sha256']))
+    grade = dict(schema_id='pm.pnc019.c12.ds15.self_grade.v1', lane='C12-DS15', criterion=12,
+                 assessed_tree=git_head(), native_execution='NOT_RUN', membership='ABSENT', independent_review='NOT_RUN',
+                 evidence_root='/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-ds15',
+                 evidence_sha256=pins, rows=rows,
+                 quote_audit=dict(quotes=len(audit), mismatches=[a for a in audit if not (a['match'] and a['sha256_match'])]))
+    out('C12-DS15-self-grade.json', grade)
+    return dict(families={r['event_type']: (r['before']['status'], r['after']['status'], r['after']['open']) for r in rows},
+                quotes=len(audit), quote_mismatches=len(grade['quote_audit']['mismatches']))
+
+
+def git_head():
+    import subprocess
+    return subprocess.run(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('--mode', required=True, choices=('entailed', 'schema', 'datetime', 'retained', 'numbers', 'matrix'))
+    parser.add_argument('--mode', required=True, choices=('entailed', 'schema', 'datetime', 'retained', 'numbers', 'matrix', 'ledger', 'grade'))
+    parser.add_argument('--derivation', type=Path, help='ledger: c12-derivation.json of pm_ds15_c12_cases.py --derive')
+    parser.add_argument('--evidence', type=Path, help='grade: the directory holding every mode summary')
     parser.add_argument('--guard', type=Path, help='matrix: the directory of the per-family gated runs (--family F)')
     parser.add_argument('--entailed', type=Path, help='matrix: entailed.json of --mode entailed')
     parser.add_argument('--out', type=Path, required=True)
@@ -1359,11 +1496,17 @@ def main():
     m16, deck = load()
     if args.mode == 'matrix':
         summary = matrix_mode(m16, deck, out, args.guard, args.entailed)
+    elif args.mode == 'ledger':
+        summary = ledger_mode(m16, deck, out, args.guard, args.evidence, args.derivation)
+    elif args.mode == 'grade':
+        summary = grade_mode(m16, deck, out, args.evidence)
     else:
         summary = globals()[args.mode + ('_mode' if args.mode not in ('entailed',) else '')](m16, deck, out)
     print(json.dumps(summary, sort_keys=True, default=str))
     bad = (summary.get('failed_checks') or summary.get('disagreements') or summary.get('changed')
            or summary.get('custody_changed_by_read') or summary.get('plans_custody_unchanged') is False
+           or summary.get('quote_mismatches')
+           or (args.mode == 'grade' and any(v[1] != 'PASS' for v in summary['families'].values()))
            or (args.mode == 'matrix' and any(v['open'] or v['unmapped_tables'] or v['tool_failures'] or v['masked']
                                              or v['unrelated'] or v['lane_matrix_problems'] for v in summary.values())))
     return 1 if bad else 0

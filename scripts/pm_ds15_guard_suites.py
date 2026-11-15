@@ -295,9 +295,11 @@ def collect(flips=False, progress=None):
                 k = key(observed)
                 if k not in slot['controls']:
                     slot['controls'][k] = dict(id=f'control/{phase}/{len(slot["controls"])}', value=observed,
-                                               witness=wid, family=family, accepted=not refused, families=[family])
+                                               witness=wid, family=family, accepted=not refused, families=[family],
+                                               family_witness={family: wid})
                 elif family not in slot['controls'][k]['families']:
                     slot['controls'][k]['families'].append(family)  # --family runs keep every family's own controls
+                    slot['controls'][k]['family_witness'][family] = wid
                 first_records.setdefault((wid, phase), slot['controls'][k]['id'])
         if refused:
             counts['refused'] += 1
@@ -312,12 +314,14 @@ def collect(flips=False, progress=None):
             if k not in slot['negatives']:
                 slot['negatives'][k] = dict(id=f'negative/{phase}/{len(slot["negatives"])}', value=observed, target=row,
                                             code=code, control=control, witness=wid, family=family, kind=kind_name,
-                                            aliases=[], families=[family], flips=[])
+                                            aliases=[], families=[family], flips=[],
+                                            family_witness={family: (wid, kind_name, control)})
             else:
                 entry = slot['negatives'][k]
                 entry['aliases'].append(wid)
                 if family not in entry['families']:
                     entry['families'].append(family)
+                    entry['family_witness'][family] = (wid, kind_name, control)
                 if entry['control'] is None and control is not None:
                     entry['control'] = control
             if flips:
@@ -374,9 +378,21 @@ def tool_cases(slot, negative_limit, control_limit):
 
 
 def family_slot(slot, family):
-    """The controls and negatives one family's own witnesses produced (a --family tool run uses only these)."""
-    return dict(controls={k: v for k, v in slot['controls'].items() if family in v.get('families', [v['family']])},
-                negatives={k: v for k, v in slot['negatives'].items() if family in v['families']})
+    """The controls and negatives one family's own witnesses produced (a --family tool run uses only these).
+
+    Each kept entry names this family's own first witness (and, for a negative, its kind and parent control), not the
+    first witness of any family that produced the same observation.
+    """
+    controls = {}
+    for k, v in slot['controls'].items():
+        if family in v.get('families', [v['family']]):
+            controls[k] = dict(v, witness=v.get('family_witness', {}).get(family, v['witness']), family=family)
+    negatives = {}
+    for k, v in slot['negatives'].items():
+        if family in v['families']:
+            wid, kind_name, control = v.get('family_witness', {}).get(family, (v['witness'], v['kind'], v['control']))
+            negatives[k] = dict(v, witness=wid, family=family, kind=kind_name, control=control or v['control'])
+    return dict(controls=controls, negatives=negatives)
 
 
 def suite_for(phase, slot, negative_limit=10, control_limit=10):
