@@ -12,10 +12,15 @@ checker still collects every refusing row's code in table order, so its
 error list is unchanged, while this module's Case is the tool's complete
 boundary for the phase. The later append-resolution call in current_errors
 is not in this phase and earns no credit from it.
+
+Bounded (C12-DG6A, PNC-019 quality bar: at most eight rows per gated table):
+this module holds CC01-CC08; CC09-CC11 are pm_dg6a_table_current_context__2.py.
+The checker evaluates both modules' rows in this declared order over the same
+observation, so its error list is unchanged.
 """
 import pm_guard_isolation as g
 
-FIELDS = ('authority_verified_is_true', 'permission_allowed_is_true', 'source_retained_is_true', 'owner_commit_verified_is_true', 'authenticated_action_exact', 'canonical_before_exact', 'committed_after_exact', 'owner_commit_ref_exact', 'result_ref_exact', 'dispatch_receipt_ref_exact', 'retry_body_exact')
+FIELDS = ('authority_verified_is_true', 'permission_allowed_is_true', 'source_retained_is_true', 'owner_commit_verified_is_true', 'authenticated_action_exact', 'canonical_before_exact', 'committed_after_exact', 'owner_commit_ref_exact')
 
 
 def CC01_authority_verified(value, context):
@@ -50,16 +55,7 @@ def CC08_original_owner_commit_ref(value, context):
     return 'original_owner_commit_ref' if value['owner_commit_ref_exact'] is not True else None
 
 
-def CC09_original_result_ref(value, context):
-    return 'original_result_ref' if value['result_ref_exact'] is not True else None
 
-
-def CC10_original_dispatch_receipt_ref(value, context):
-    return 'original_dispatch_receipt_ref' if value['dispatch_receipt_ref_exact'] is not True else None
-
-
-def CC11_retry_body(value, context):
-    return 'idempotency_conflict' if value['retry_body_exact'] is not True else None
 
 
 def case(value):
@@ -73,9 +69,6 @@ def case(value):
         g.Guard('CC06_canonical_before', g.Invariant('/canonical_before_exact', 'context canonical_before exactly equals the operation before state'), 'canonical_before', CC06_canonical_before),
         g.Guard('CC07_committed_after', g.Invariant('/committed_after_exact', 'context committed_after exactly equals the operation after state'), 'committed_after', CC07_committed_after),
         g.Guard('CC08_original_owner_commit_ref', g.Invariant('/owner_commit_ref_exact', 'context commit_refs owner_commit_ref exactly equals the operation ref'), 'original_owner_commit_ref', CC08_original_owner_commit_ref),
-        g.Guard('CC09_original_result_ref', g.Invariant('/result_ref_exact', 'context commit_refs result_ref exactly equals the operation ref'), 'original_result_ref', CC09_original_result_ref),
-        g.Guard('CC10_original_dispatch_receipt_ref', g.Invariant('/dispatch_receipt_ref_exact', 'context commit_refs dispatch_receipt_ref exactly equals the operation ref'), 'original_dispatch_receipt_ref', CC10_original_dispatch_receipt_ref),
-        g.Guard('CC11_retry_body', g.Invariant('/retry_body_exact', 'context retry_body exactly equals the original command'), 'idempotency_conflict', CC11_retry_body),
     ])
 
     def check(value):
@@ -87,8 +80,5 @@ def case(value):
         table.require('CC06_canonical_before', value, context)
         table.require('CC07_committed_after', value, context)
         table.require('CC08_original_owner_commit_ref', value, context)
-        table.require('CC09_original_result_ref', value, context)
-        table.require('CC10_original_dispatch_receipt_ref', value, context)
-        table.require('CC11_retry_body', value, context)
         return True
     return g.Case(table, check, context)

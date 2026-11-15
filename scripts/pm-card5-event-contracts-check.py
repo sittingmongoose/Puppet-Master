@@ -34,6 +34,7 @@ import pm_dg6a_table_decision_citation as _decision_table  # noqa: E402
 import pm_dg6a_table_storage_schema as _storage_table  # noqa: E402
 import pm_dg6a_table_current_header as _current_table  # noqa: E402
 import pm_dg6a_table_current_context as _context_table  # noqa: E402
+import pm_dg6a_table_current_context__2 as _context_table_2  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
 import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
 import pm_dg6a_p2b_witnesses as p2b_witnesses  # noqa: E402
@@ -44,7 +45,9 @@ _STORAGE_ROWS = [(name, guard.predicate) for name, guard in _storage_table.case(
 STORAGE_RECORDER = None
 _CURRENT_ROWS = [(name, guard.predicate) for name, guard in _current_table.case(None).table.guards.items()]
 CURRENT_RECORDER = None
-_CONTEXT_ROWS = [(name, guard.predicate) for name, guard in _context_table.case(None).table.guards.items()]
+# current_context is bounded (at most eight rows per gated table): CC01-CC08 then CC09-CC11, in order.
+_CONTEXT_ROWS = [(name, guard.predicate) for table in (_context_table, _context_table_2)
+                 for name, guard in table.case(None).table.guards.items()]
 CONTEXT_RECORDER = None
 
 
@@ -474,7 +477,7 @@ def current_errors(operation, context, family, schema):
     if errors:
         return errors
     # The context flags and exact original joins refuse only through
-    # scripts/pm_dg6a_table_current_context.py rows; every refusing row's
+    # scripts/pm_dg6a_table_current_context.py and _current_context__2.py rows; every refusing row's
     # code is collected in table order, as the pre-table loops appended them.
     observed = current_context_observation(operation, context)
     refused = []
