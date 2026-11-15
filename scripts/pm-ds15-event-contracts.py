@@ -1353,6 +1353,22 @@ def refuse():
     return {'result': 'REFUSE', 'effects': 0}
 
 
+def claimed_range(first, last, rows):
+    """first..last as the list the rows are compared with, never longer than the rows themselves.
+
+    C12-DS15: list(range(first, last + 1)) was materialized from the claimed Storage bounds, so a valid uint64
+    last_sequence of 2^64-1 raised OverflowError and a large one would exhaust memory before the rows refused. A
+    claimed range longer than the rows cannot equal them: it is kept as a non-list observation, unequal to every
+    row list, so each comparison refuses exactly when it did before. An empty claimed range stays [].
+    """
+    count = last - first + 1
+    if count <= 0:
+        return []
+    if count <= len(rows):
+        return list(range(first, last + 1))
+    return {'claimed_first': first, 'claimed_last': last, 'longer_than_rows': len(rows)}
+
+
 # Ordinary new-write selection stays separate from retained reads (SP-1101, batch 2 fix 1): a new append
 # ('payload', 'envelope_boundary') is written by the writer's own recipe, ds15-v1, and reads no receipt.
 NEW_WRITE_OPS = ('payload', 'envelope_boundary')
@@ -1528,7 +1544,7 @@ def evaluate(c, op, d):
                    storage_instance_id=d['storage_instance_id'], source_token=source['index_read_token'], token=token,
                    source_last_sequence=source['last_sequence'], selected_high=d['selected_high'],
                    source_sequences=[r['sequence'] for r in source_rows],
-                   expected_source_sequences=list(range(source['first_sequence'], source['last_sequence'] + 1)),
+                   expected_source_sequences=claimed_range(source['first_sequence'], source['last_sequence'], source_rows),
                    row_partitions=[r['scope_partition'] for r in source_rows],
                    expected_row_partitions=[partition_of('application' if r['scope']['kind'] == 'app' else 'project',
                                                          r['scope']['project_id']) for r in source_rows]):
@@ -1556,7 +1572,7 @@ def evaluate(c, op, d):
                     expected_rows=[r for r in source_rows if low <= r['sequence'] <= high],
                     through_sequence_id=cp['through_sequence_id'], scan_high=high, selected_high=d['selected_high'])
                 or refused('cp_range_entailed', row_sequences=[r['sequence'] for r in rows],
-                           expected_row_sequences=list(range(low, high + 1)))):
+                           expected_row_sequences=claimed_range(low, high, rows))):
             return refuse()
         if prior is not None and (
                 schema_refused('sch_prior_checkpoint', validator(read(c['checkpoint_schema_ref'])), prior)

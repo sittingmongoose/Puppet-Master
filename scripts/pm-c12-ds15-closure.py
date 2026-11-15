@@ -134,6 +134,15 @@ def entailed(m16, deck, out):
     checks['deck2_context_envelope_run_id_null'] = run_null
     checks['deck2_source_event_type_const'] = source_type
     checks['deck2_checkpoint_payload_scope_members'] = closed_scope
+    cp_slots = {}
+    for name, c in contracts.items():
+        for key, lo, hi in integer_slots(b.read(c['checkpoint_schema_ref'])):
+            cp_slots.setdefault(name, {})[key] = dict(minimum=lo, maximum=hi, authority=key in b.AUTHORITY_INTEGERS,
+                                                      bounded=key == 'through_sequence_id' or (lo == 0 and hi == 2 ** 64 - 1))
+    checks['checkpoint_integer_slots'] = {n: all(v['authority'] and v['bounded'] for v in slots.values()) for n, slots in cp_slots.items()}
+    checks['checkpoint_integer_slot_detail'] = cp_slots
+    checks['evidence_scan_low_is_storage_uint64'] = 'scan_low' in b.STORAGE_UINT64_FIELDS and 'scan_low' in integer_slot_names(
+        b.read('Plans/ds15_original_evidence.schema.json'))
     index_slots = integer_slot_names(b.read('Plans/ds15_index_inputs.schema.json'))
     checks['index_inputs_integer_slots'] = sorted(index_slots)
     checks['index_inputs_slots_are_authority_integers'] = index_slots <= set(b.AUTHORITY_INTEGERS)
@@ -206,11 +215,18 @@ def entailed(m16, deck, out):
             anchor(D, "                       expected_key=base.identity(c, p, source, recipe))")],
              proof='as ID_FIELDS_V1_schema, and the deck-2 payload schemas declare no number slot',
              mechanical=['deck2_payload_has_no_number_slot']),
-        dict(table='sch_index_inputs_n', row='INDEX_INPUTS_numbers', anchors=[
-            anchor(E, "AUTHORITY_INTEGERS = frozenset({"), anchor(E, "    if not authority_types_ok(d):")],
-             proof='every integer slot of the index inputs schema is a named authority integer, which the authority type walk '
-                   '(AT02/AT03) refuses first over the whole operation input',
-             mechanical=['index_inputs_integer_slots', 'index_inputs_slots_are_authority_integers']),
+        dict(table='cp_prior_entailed', row='CN06_prior_storage', anchors=[
+            anchor(E, "                or not token_matches_storage(prior['index_read_token'], d['storage_instance_id'])"),
+            anchor(E, "                or not token_matches_storage(token, d['storage_instance_id'])")],
+             proof='TK01 binds the checkpoint token (earlier in the same branch) and then the prior token to the event Storage '
+                   'instance, so their Storage instances are equal before CN06'),
+        dict(table='sch_prior_checkpoint_n', row='PRIOR_CHECKPOINT_numbers', anchors=[
+            anchor(E, "AUTHORITY_INTEGERS = frozenset({"), anchor(E, "        if (refused('cp_range', scan_low=low, expected_low=start, index_rows=rows,")],
+             proof='every integer slot of the deck-2 checkpoint schemas is a named authority integer (AT02 refuses a non-integer '
+                   'over the whole input first); every slot but through_sequence_id carries the stock bounds 0..2^64-1, so the '
+                   'stock verdict row refuses out-of-range values first; a prior through_sequence_id past 2^64-1 needs scan_low '
+                   '= through + 1 for CN01, which runs before the prior checks, and scan_low is a Storage uint64 slot of the '
+                   'original evidence schema (EVIDENCE_numbers at entry)', mechanical=['checkpoint_integer_slots']),
         dict(table='rd_resolve_entailed_sx03', row='SX03_original_sealed', anchors=[
             anchor(E, "    sealed = custody['sealed'].get((self.storage_instance_id, original_ref))"),
             anchor(E, "    return [entry for entry in original_custody()['sealed'].get((storage_instance_id, ref), [])")],
@@ -244,8 +260,8 @@ def entailed(m16, deck, out):
     required = ('custody_manifests_current', 'sealed_entries_name_known_families', 'sealed_bindings_match_their_key',
                 'installed_recipes_cover_every_family', 'resolve_passes_no_override_and_discloses',
                 'deck2_payload_has_no_number_slot', 'deck2_context_envelope_run_id_null', 'deck2_source_event_type_const',
-                'index_inputs_slots_are_authority_integers', 'identity_field_patterns_exclude_lone_surrogates',
-                'payload_strings_patterned')
+                'identity_field_patterns_exclude_lone_surrogates', 'payload_strings_patterned', 'checkpoint_integer_slots',
+                'evidence_scan_low_is_storage_uint64')
     failed = [k for k in required if checks[k] is False or (isinstance(checks[k], dict) and False in checks[k].values())]
     failed += [k for k, v in closed_scope.items() if not v['closed']]
     failed += ['commitment_call_sites'] if len(checks['commitment_call_sites']) != 3 else []
@@ -421,6 +437,39 @@ def worst_case_size(b, schema):
     return b.physical_size(value) if isinstance(value, dict) else None
 
 
+def integer_leaves(value, path=()):
+    if isinstance(value, dict):
+        for k, v in value.items():
+            yield from integer_leaves(v, path + (k,))
+    elif isinstance(value, list):
+        for i, v in enumerate(value):
+            yield from integer_leaves(v, path + (i,))
+    elif type(value) is int:
+        yield path
+
+
+def integer_slots(schema):
+    out = set()
+
+    def walk(node, key=None):
+        if isinstance(node, dict):
+            kinds = node.get('type')
+            kinds = kinds if isinstance(kinds, list) else [kinds]
+            if 'integer' in kinds and key:
+                out.add((key, node.get('minimum'), node.get('maximum')))
+            for k, v in node.items():
+                if k == 'properties':
+                    for name, sub in v.items():
+                        walk(sub, name)
+                elif isinstance(v, (dict, list)):
+                    walk(v, key if k in ('anyOf', 'oneOf', 'allOf', 'items') else None)
+        elif isinstance(node, list):
+            for v in node:
+                walk(v, key)
+    walk(schema)
+    return sorted(out, key=repr)
+
+
 def integer_slot_names(schema):
     names = set()
 
@@ -470,8 +519,19 @@ def locate(data, instance):
     walk(data, ())
     if id(instance) in paths:
         return ('node', paths[id(instance)])
+    if isinstance(data, dict) and isinstance(instance, dict) and instance and set(instance) <= set(data) and all(
+            data[k] is v if isinstance(v, (dict, list)) else data[k] == v for k, v in instance.items()):
+        # the original-evidence carrier: the operation input less the members it does not carry (owner_records)
+        return ('carrier', sorted(set(data) - set(instance)))
     if isinstance(instance, dict) and instance and all(isinstance(v, (dict, list)) and id(v) in paths for v in instance.values()):
         return ('projection', {k: paths[id(v)] for k, v in instance.items()})
+    if isinstance(data, dict) and isinstance(data.get('owner_records'), dict):
+        for ref, text in data['owner_records'].items():
+            try:
+                if isinstance(text, str) and json.loads(text) == instance:
+                    return ('record_text', ref)
+            except ValueError:
+                pass
     return None
 
 
@@ -677,18 +737,21 @@ def schema_mode(m16, deck, out):
                 key = (phase, sha(v.original.schema))
                 place = locate(data, instance)
                 entry = contexts.setdefault(key, dict(phase=phase, v=v, seeds=[]))
-                if len(entry['seeds']) < 6:
+                if len(entry['seeds']) < 8 and sha(instance) not in {sha(x['instance']) for x in entry['seeds']}:
                     entry['seeds'].append(dict(base=base, op=op, data=data, instance=copy.deepcopy(instance), place=place))
-        for policy in f.get('policy_cases', [])[:1]:
+        for policy in [z for z in f.get('policy_cases', []) if z['expected'] != 'REFUSE'][:4]:
+            carrier = {'payload': copy.deepcopy(policy['payload']), 'transition': copy.deepcopy(policy['transition'])}
             calls, restore, _ = spy_schema_calls(deck)
             try:
-                deck.catalog_request(c, copy.deepcopy(policy['payload']), copy.deepcopy(policy['transition']))
+                deck.catalog_request(c, carrier['payload'], carrier['transition'])
             finally:
                 restore()
             for phase, v, instance in calls:
                 key = (phase, sha(v.original.schema))
-                contexts.setdefault(key, dict(phase=phase, v=v, seeds=[]))['seeds'].append(
-                    dict(base=policy['id'], op='policy', data=None, instance=copy.deepcopy(instance), place=None))
+                entry = contexts.setdefault(key, dict(phase=phase, v=v, seeds=[]))
+                if len(entry['seeds']) < 8 and sha(instance) not in {sha(x['instance']) for x in entry['seeds']}:
+                    entry['seeds'].append(dict(base=policy['id'], op='policy', data=carrier, instance=copy.deepcopy(instance),
+                                               place=locate(carrier, instance)))
         fam = dict(occurrences=len(contexts), sites=0, witnessed=0, applicator=0, unwitnessed=0, cb_kills=0)
         for (phase, schema_sha), entry in sorted(contexts.items()):
             v = entry['v']
@@ -835,12 +898,31 @@ def complete_boundary(deck, c, seed, ipath, proposal, phase, row):
         return dict(status='NOT_PLACEABLE', reason='instance is derived (parsed record, request carrier) or a value copy')
     if place[0] == 'node':
         target = place[1] + tuple(ipath)
+        mutated = set_at(data, target, proposal)
+    elif place[0] == 'carrier':
+        if ipath:
+            target = tuple(ipath)
+            mutated = set_at(data, target, proposal)
+        elif not isinstance(proposal, dict):
+            return dict(status='NOT_PLACEABLE', reason='the carrier itself replaced by a non-object is the EV01 entry row')
+        else:  # a carrier-level member added or removed; the members it does not carry stay
+            target = ()
+            mutated = dict(copy.deepcopy(proposal), **{k: copy.deepcopy(data[k]) for k in place[1]})
+    elif place[0] == 'record_text':
+        record = set_at(json.loads(data['owner_records'][place[1]]), tuple(ipath), proposal)
+        mutated = copy.deepcopy(data)
+        mutated['owner_records'][place[1]] = json.dumps(record, sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+        target = ('owner_records', place[1]) + tuple(ipath)
     else:
         if not ipath or ipath[0] not in place[1]:
             return dict(status='NOT_PLACEABLE', reason='projection root member')
         target = place[1][ipath[0]] + tuple(ipath[1:])
-    mutated = set_at(data, target, proposal)
-    result, records = recorded(deck, lambda: deck.evaluate(c, seed['op'], mutated))
+        mutated = set_at(data, target, proposal)
+    if seed['op'] == 'policy':
+        result, records = recorded(deck, lambda: deck.catalog_request(c, copy.deepcopy(mutated['payload']),
+                                                                       copy.deepcopy(mutated['transition'])))
+    else:
+        result, records = recorded(deck, lambda: deck.evaluate(c, seed['op'], mutated))
     got = first_refusal(records)
     status = 'KILLED' if got is not None and got[:2] == [phase, row] and c12.refused_result(result) else 'INVALID'
     return dict(status=status, operation=seed['op'], base=seed['base'], path='/'.join(map(str, target)),
@@ -1060,17 +1142,210 @@ def numbers_mode(m16, deck, out):
                 routes.append(row)
                 if got != expected:
                     disagreements.append(row)
+    # A valid 4,400-digit integer (CV-1100 sets no global cap) at every complete-boundary place one can stand: it must
+    # give the checker's own refusal or acceptance, never an exception (the crash DX, DS15, DF, DM and DCO found).
+    big = 10 ** 4399
+    places = (('payload', 'envelope/producer_sequence_id'), ('payload', 'envelope/payload/c12_number'),
+              ('read', 'envelope/payload/c12_number'), ('withdraw_writer', 'admitted_sequence'),
+              ('checkpoint', 'checkpoint/through_sequence_id'), ('read', 'receipt/segment_generation'))
+    crashes = []
+    for family in FAMILIES:
+        c, f = c12.contract(deck, family), c12.fixture(deck, family)
+        for op, path in places:
+            data = copy.deepcopy(f['bases']['project'])
+            deck.base.patch(data, {path: big})
+            result, records = recorded(deck, lambda: deck.evaluate(c, op, data))
+            row = dict(family=family, route='long_integer_4400', operation=op, path=path, digits=4400,
+                       expected='no exception', actual=result.get('result') if isinstance(result, dict) else repr(result),
+                       first_refusal=first_refusal(records))
+            routes.append(row)
+            if isinstance(result, tuple):
+                crashes.append(row)
+                disagreements.append(row)
+    # Every integer leaf of every family's project and application bases at the uint64/int64 edges, 2^64 and a 4,400-digit
+    # value, through every complete operation: the checker's own result, never an exception. C12-DS15 found one class
+    # here: selected_source.last_sequence = 2^64-1 (a valid Storage uint64) raised OverflowError in the checkpoint and
+    # rebuild source contiguity observation (claimed_range now bounds it; the input refuses at CS03, two rows by
+    # construction with CS04, so it is a regression check rather than a table witness).
+    edge_values = {'u64max': 2 ** 64 - 1, 'u64max+1': 2 ** 64, 'i64min-1': -(2 ** 63) - 1, 'big4400': big, 'zero': 0}
+    sweep_runs, sweep_crashes, regression = 0, [], []
+    for family in FAMILIES:
+        c, f = c12.contract(deck, family), c12.fixture(deck, family)
+        for bname in [n for n in ('project', 'application') if n in f['bases']]:
+            base = f['bases'][bname]
+            for path in integer_leaves(base):
+                for vname, val in edge_values.items():
+                    data = copy.deepcopy(base)
+                    deck.base.patch(data, {'/'.join(map(str, path)): val})
+                    for op in OPS:
+                        sweep_runs += 1
+                        result, records = recorded(deck, lambda: deck.evaluate(c, op, copy.deepcopy(data)))
+                        if isinstance(result, tuple):
+                            sweep_crashes.append(dict(family=family, base=bname, operation=op, path='/'.join(map(str, path)),
+                                                      value=vname, error=result[1]))
+                        if path == ('selected_source', 'last_sequence') and vname == 'u64max' and op in ('checkpoint', 'rebuild'):
+                            regression.append(dict(family=family, base=bname, operation=op,
+                                                   result=result.get('result') if isinstance(result, dict) else repr(result),
+                                                   first_refusal=first_refusal(records)))
+    out('numbers-edge-sweep.json', dict(runs=sweep_runs, exceptions=sweep_crashes, overflow_regression=regression))
+    disagreements += sweep_crashes
+    disagreements += [r for r in regression if r['first_refusal'] is None or r['first_refusal'][1] != 'CS03_source_high']
     summary = dict(values=len(values), long_values=len(long_values), route_runs=len(routes), disagreements=len(disagreements),
+                   long_integer_4400_runs=len(FAMILIES) * len(places), long_integer_4400_exceptions=len(crashes),
+                   edge_sweep_runs=sweep_runs, edge_sweep_exceptions=len(sweep_crashes), overflow_regression=len(regression),
                    accepted=sum(1 for r in routes if r['actual'] is True), refused=sum(1 for r in routes if r['actual'] is False),
+                   self_test='run separately: python3 scripts/pm_event_numbers.py --self-test --scope numbers',
                    routes=sorted({r['route'] for r in routes}))
     out('numbers-routes.json', routes)
     out('numbers-summary.json', summary)
     return summary
 
 
+# =========================================================================== matrix
+OWNER = 'Plans/Section15_MVP_Promoted_Features_Spec.md'
+# (clause id, paragraph label in the family's owner unit, exact sentence fragment quoted from it, guard tables)
+CLAUSES = [
+    ('producer-transition', 'Producer:', 'Producer:',
+     ['d2_pl_gate', 'd2_pl_gate_entailed', 'd2_tr_browser', 'd2_grants', 'd2_tr_catalog_a', 'd2_tr_catalog_b', 'd2_tr_update',
+      'd2_tr_remove', 'd2_tr_skipped', 'd2_tr_skipped_origin']),
+    ('listed-uses', 'Exact approved listed uses', 'Exact approved listed uses', ['d2_request', 'sch_d2_transition']),
+    ('scope-identity', 'Scope and identity:', 'Original event_id is allocated once and retained.',
+     ['env_identity', 'id_input', 'id_scope', 'id_scope_entailed', 'id_preimage', 'sch_id_fields', 'sch_id_fields_n',
+      'sch_id_fields_v1', 'sch_id_fields_v1_n', 'd2_env_d', 'd2_env_b', 'd2_env_b_entailed', 'env_retry', 'cp_scope']),
+    ('closed-payload', 'Closed payload:', 'Unknown version/field fails closed.' if False else 'Closed payload:',
+     ['sch_payload', 'sch_payload_v1', 'sch_d2_context', 'sch_d2_context_retained', 'sch_d2_context_v1', 'schema_references',
+      'raw_ingress', 'ev_input', 'authority_types']),
+    ('numbers', 'Closed payload:', 'Numbers (sweep 2026-11-08): current inputs follow CV-1100 and SP-1100',
+     ['sch_payload_n', 'sch_payload_v1_n', 'sch_envelope_n', 'sch_envelope_v1_n', 'sch_original_event_n', 'sch_receipt_n',
+      'sch_custody_n', 'sch_result_n', 'sch_evidence_n', 'sch_index_inputs_n', 'sch_checkpoint_n', 'sch_prior_checkpoint_n',
+      'env_producer', 'wd_gate']),
+    ('retained-sp1101', 'Closed payload:', 'Retained originals keep the frozen ds15-v1 profile they were written under, selected only through SP-1101',
+     ['rd_recipe', 'rd_resolve', 'rd_resolve_entailed_sx03', 'rd_resolve_entailed_sx04', 'rd_resolve_entailed_sx06',
+      'rd_resolve_entailed_sx07', 'cm_domain', 'cm_value', 'ev_outcome_domain']),
+    ('timestamps', 'Closed payload:', 'Timestamps follow CV-1101 through the shared predicate',
+     ['sch_envelope', 'sch_envelope_v1', 'sch_original_event']),
+    ('inline-size', 'Closed payload:', 'SP-337 resolves bodies over the 16384-byte inline boundary',
+     ['d2_env_storage', 'd2_env_storage_entailed', 'cp_size']),
+    ('original-source-custody', 'Original source and custody:', 'outcome_ref resolves independently retained owning-component record bytes',
+     ['d2_or_bytes', 'd2_ev_bank', 'sch_d2_owner_records', 'sch_d2_source', 'd2_env_c', 'd2_env_c_entailed', 'rc_copies',
+      'rc_commitment_copies', 'rc_commitment', 'rc_custody', 'sch_receipt', 'sch_custody', 'sch_result', 'sch_evidence',
+      'ev_outcome', 'ev_original_copies', 'ev_original_ids', 'ev_original_ids_entailed', 'ev_outcome_ref']),
+    ('read-recheck', 'Original source and custody:', 'are rechecked on read; a checkpoint grants no access',
+     ['ev_disclosure', 'ev_disclosure_owner']),
+    ('replay', 'Replay and transitions:', 'Current writer/retry refuses projector_replay_only as replay_only_not_appendable',
+     ['replay_only', 'ev_append_recovery', 'ev_publish', 'ev_receipt_pending']),
+    ('consumer-checkpoint', 'Consumer and checkpoint:', 'Advance by atomic CAS of complete prior and new checkpoint',
+     ['sch_checkpoint', 'sch_prior_checkpoint', 'sch_index_inputs', 'cp_guard', 'cp_matches', 'cp_prior', 'cp_prior_entailed',
+      'cp_range', 'cp_range_entailed', 'cp_row', 'cp_row_entailed', 'cp_source', 'tk_storage', 'ev_rebuild']),
+    ('compatibility-withdrawal', 'Compatibility and withdrawal:', 'exact 1.0.0 writer/reader/schema only',
+     ['d2_env_a', 'ev_reader']),
+]
+
+
+def unit_lines(family, contracts):
+    """{paragraph label: (line number, line text)} of the family's owner unit, at the current text."""
+    unit = contracts[family]['semantic_owner'].split('#')[1]
+    lines = (ROOT / OWNER).read_text().splitlines()
+    start = next(i for i, ln in enumerate(lines) if ln.startswith('### ' + unit + ' '))
+    end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith('### ')), len(lines))
+    out = {}
+    for i in range(start, end):
+        for _, label, _, _ in CLAUSES:
+            if lines[i].startswith('  ' + label):
+                out.setdefault(label, (i + 1, lines[i]))
+    return unit, out
+
+
+def gated_rows(guard_dir, family):
+    """{(phase, row): evidence} from this family's own gated tool run (--family F)."""
+    import gzip
+    summary = json.loads((guard_dir / ('summary-' + family + '.json')).read_text())
+    rows = {}
+    for suite in summary['suites']:
+        report = None
+        if suite.get('report'):
+            path = guard_dir / suite['report']
+            report = json.loads(gzip.open(path, 'rt').read())
+            assert hashlib.sha256(path.read_bytes()).hexdigest() == suite['report_sha256']
+        by_row = {r['id']: r for r in (report or {}).get('rows', [])}
+        negs = {n['id']: n for n in (report or {}).get('negatives', [])} if report else {}
+        for name in suite['rows']:
+            r = by_row.get(name)
+            rows[(suite['phase'], name)] = dict(
+                tool_status=suite.get('tool_status'), proved=bool(r and r.get('proved')),
+                own_negatives=sorted(r.get('own', [])) if r else [],
+                witnesses=sorted({str(negs.get(n, {}).get('description', negs.get(n, {}).get('why', n)))[:160] for n in (r or {}).get('own', [])}),
+                cut_flips=len(r.get('flips', [])) if r else 0, stays=len(r.get('stays', [])) if r else 0,
+                restoration=[x['outcome'] for x in r.get('restoration', [])] if r else [],
+                masked=len(r.get('masked', [])) if r else 0, unrelated=len(r.get('unrelated_changes', [])) if r else 0,
+                report=suite.get('report'), report_sha256=suite.get('report_sha256'),
+                lane_matrix_problems=len(suite.get('lane_matrix', [])), family_negatives=suite.get('row_negatives', {}).get(name, 0))
+    return summary, rows
+
+
+def matrix_mode(m16, deck, out, guard_dir, entailed_path):
+    contracts = {c['event_type']: c for c in deck.read('Plans/ds15_deck2_contracts.json')}
+    ent = json.loads(Path(entailed_path).read_text())
+    tool_ent = {(r['table'], r['row']): r for r in ent['tool_unproved']}
+    fam_ent = {}
+    for r in ent['family']:
+        for f in r['families']:
+            fam_ent[(f, r['table'], r['row'])] = r
+    table_clause = {}
+    for cid, _, _, tables in CLAUSES:
+        for t in tables:
+            table_clause.setdefault(t, []).append(cid)
+    result, totals = {}, {}
+    for family in FAMILIES:
+        unit, lines = unit_lines(family, contracts)
+        summary, rows = gated_rows(guard_dir / ('fam-' + family), family)
+        reached = sorted(rows)
+        clauses = []
+        for cid, label, fragment, tables in CLAUSES:
+            if label not in lines:
+                continue  # the paragraph is not in this family's unit (catalog listed uses)
+            line, text = lines[label]
+            assert fragment in text, (family, cid, fragment)
+            entries = []
+            for phase, row in reached:
+                if phase not in tables:
+                    continue
+                ev = rows[(phase, row)]
+                if ev['proved'] and ev['own_negatives']:
+                    status = 'PROVED_BY_OWN_WITNESSES'
+                elif (phase, row) in tool_ent:
+                    status = 'ENTAILED_SINGLETON'
+                elif (family, phase, row) in fam_ent:
+                    status = 'ENTAILED_FOR_FAMILY'
+                else:
+                    status = 'OPEN'
+                entries.append(dict(table=phase, row=row, status=status, **ev))
+            clauses.append(dict(clause=cid, owner=dict(path=OWNER, unit=unit, line=line, quote=fragment,
+                                                       sha256=file_sha(OWNER)), rows=entries))
+        unmapped = sorted({p for p, _ in reached if p not in table_clause})
+        statuses = [e['status'] for c in clauses for e in c['rows']]
+        mapped = {(e['table'], e['row']) for c in clauses for e in c['rows']}
+        totals[family] = dict(tables=len({p for p, _ in reached}), rows=len(reached), mapped_rows=len(mapped),
+                              proved_own=sum(1 for p in reached if rows[p]['proved'] and rows[p]['own_negatives']),
+                              entailed_singleton=sum(1 for p in reached if p in tool_ent),
+                              entailed_family=sum(1 for p in reached if (family,) + p in fam_ent and not (rows[p]['proved'] and rows[p]['own_negatives'])),
+                              open=sorted(f'{e["table"]}:{e["row"]}' for c in clauses for e in c['rows'] if e['status'] == 'OPEN'),
+                              unmapped_tables=unmapped, tool_failures=sorted({s['phase'] for s in summary['suites']
+                                                                             if s.get('tool_status') not in (None, 'PASS')}),
+                              masked=sum(rows[p]['masked'] for p in reached), unrelated=sum(rows[p]['unrelated'] for p in reached),
+                              lane_matrix_problems=sum(len(s.get('lane_matrix', [])) for s in summary['suites']),
+                              cut_flips=sum(rows[p]['cut_flips'] for p in reached))
+        result[family] = clauses
+    out('coverage-matrix.json', result)
+    out('coverage-summary.json', totals)
+    return totals
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('--mode', required=True, choices=('entailed', 'schema', 'datetime', 'retained', 'numbers'))
+    parser.add_argument('--mode', required=True, choices=('entailed', 'schema', 'datetime', 'retained', 'numbers', 'matrix'))
+    parser.add_argument('--guard', type=Path, help='matrix: the directory of the per-family gated runs (--family F)')
+    parser.add_argument('--entailed', type=Path, help='matrix: entailed.json of --mode entailed')
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--family', action='append', help='restrict to these families (default: all seven)')
     args = parser.parse_args()
@@ -1082,10 +1357,15 @@ def main():
     def out(name, value):
         (args.out / name).write_text(json.dumps(value, indent=1, sort_keys=True, ensure_ascii=True, default=str) + '\n')
     m16, deck = load()
-    summary = globals()[args.mode + ('_mode' if args.mode not in ('entailed',) else '')](m16, deck, out)
+    if args.mode == 'matrix':
+        summary = matrix_mode(m16, deck, out, args.guard, args.entailed)
+    else:
+        summary = globals()[args.mode + ('_mode' if args.mode not in ('entailed',) else '')](m16, deck, out)
     print(json.dumps(summary, sort_keys=True, default=str))
     bad = (summary.get('failed_checks') or summary.get('disagreements') or summary.get('changed')
-           or summary.get('custody_changed_by_read') or summary.get('plans_custody_unchanged') is False)
+           or summary.get('custody_changed_by_read') or summary.get('plans_custody_unchanged') is False
+           or (args.mode == 'matrix' and any(v['open'] or v['unmapped_tables'] or v['tool_failures'] or v['masked']
+                                             or v['unrelated'] or v['lane_matrix_problems'] for v in summary.values())))
     return 1 if bad else 0
 
 

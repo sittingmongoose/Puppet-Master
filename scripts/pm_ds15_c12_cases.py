@@ -410,6 +410,10 @@ def directed(family, bases, c=None):
         ('project', 'withdraw_writer', {'admitted_sequence': 2 ** 64}, [], ['wd_gate', 'WD02_admitted_uint64']),
         ('project', 'withdraw_writer', {'withdrawal_frontier': 2 ** 64}, [], ['wd_gate', 'WD03_frontier_uint64']),
         ('project', 'payload', {'envelope/sequence_id': 2 ** 64}, [], ['sch_envelope_n', 'ENVELOPE_numbers']),
+        # Storage uint64 at the index inputs: past 2^64-1 the stock schema (no maximum) and the authority type walk admit
+        # it and only the number rule refuses (the inherited 'entailed' claim for this row was wrong)
+        ('project', 'checkpoint', {'index_rows/0/sequence': 2 ** 64}, [], ['sch_index_inputs_n', 'INDEX_INPUTS_numbers']),
+        ('project', 'checkpoint', {'checkpoint/through_sequence_id': 2 ** 64}, [], ['sch_checkpoint_n', 'CHECKPOINT_numbers']),
         # Frozen ds15-v1 integer domain on retained records: a float where no authority key is (an integral float at
         # an integer slot passes the stock integer type, so only the ds15-v1 domain refuses it)
         ('project', 'read', {'envelope/payload/c12_number': 1.5}, [], ['sch_envelope_v1_n', 'ENVELOPE_V1_numbers']),

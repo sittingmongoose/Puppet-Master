@@ -907,6 +907,22 @@
  {
   "base": "project",
   "changes": {
+   "index_rows/0/sequence": 18446744073709551616
+  },
+  "donor": null,
+  "family": "browser.context_share_revoked",
+  "id": "c12/browser.context_share_revoked/directed/INDEX_INPUTS_numbers",
+  "maintain": [],
+  "method": "directed",
+  "operation": "checkpoint",
+  "target": [
+   "sch_index_inputs_n",
+   "INDEX_INPUTS_numbers"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
    "envelope/payload/c12_number": 1.5
   },
   "donor": null,
@@ -3621,6 +3637,22 @@
  {
   "base": "project",
   "changes": {
+   "index_rows/0/sequence": 18446744073709551616
+  },
+  "donor": null,
+  "family": "browser.context_shared",
+  "id": "c12/browser.context_shared/directed/INDEX_INPUTS_numbers",
+  "maintain": [],
+  "method": "directed",
+  "operation": "checkpoint",
+  "target": [
+   "sch_index_inputs_n",
+   "INDEX_INPUTS_numbers"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
    "envelope/payload/c12_number": 1.5
   },
   "donor": null,
@@ -6279,6 +6311,22 @@
   "target": [
    "sch_envelope_n",
    "ENVELOPE_numbers"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "index_rows/0/sequence": 18446744073709551616
+  },
+  "donor": null,
+  "family": "catalog.remove.completed",
+  "id": "c12/catalog.remove.completed/directed/INDEX_INPUTS_numbers",
+  "maintain": [],
+  "method": "directed",
+  "operation": "checkpoint",
+  "target": [
+   "sch_index_inputs_n",
+   "INDEX_INPUTS_numbers"
   ]
  },
  {
@@ -9012,6 +9060,22 @@
  {
   "base": "project",
   "changes": {
+   "index_rows/0/sequence": 18446744073709551616
+  },
+  "donor": null,
+  "family": "catalog.remove.started",
+  "id": "c12/catalog.remove.started/directed/INDEX_INPUTS_numbers",
+  "maintain": [],
+  "method": "directed",
+  "operation": "checkpoint",
+  "target": [
+   "sch_index_inputs_n",
+   "INDEX_INPUTS_numbers"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
    "envelope/payload/c12_number": 1.5
   },
   "donor": null,
@@ -11740,6 +11804,22 @@
  {
   "base": "project",
   "changes": {
+   "index_rows/0/sequence": 18446744073709551616
+  },
+  "donor": null,
+  "family": "catalog.update.completed",
+  "id": "c12/catalog.update.completed/directed/INDEX_INPUTS_numbers",
+  "maintain": [],
+  "method": "directed",
+  "operation": "checkpoint",
+  "target": [
+   "sch_index_inputs_n",
+   "INDEX_INPUTS_numbers"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
    "envelope/payload/c12_number": 1.5
   },
   "donor": null,
@@ -14453,6 +14533,22 @@
  {
   "base": "project",
   "changes": {
+   "index_rows/0/sequence": 18446744073709551616
+  },
+  "donor": null,
+  "family": "catalog.update.started",
+  "id": "c12/catalog.update.started/directed/INDEX_INPUTS_numbers",
+  "maintain": [],
+  "method": "directed",
+  "operation": "checkpoint",
+  "target": [
+   "sch_index_inputs_n",
+   "INDEX_INPUTS_numbers"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
    "envelope/payload/c12_number": 1.5
   },
   "donor": null,
@@ -16866,6 +16962,22 @@
   "target": [
    "sch_envelope_n",
    "ENVELOPE_numbers"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "index_rows/0/sequence": 18446744073709551616
+  },
+  "donor": null,
+  "family": "tool.custom_headless.skipped",
+  "id": "c12/tool.custom_headless.skipped/directed/INDEX_INPUTS_numbers",
+  "maintain": [],
+  "method": "directed",
+  "operation": "checkpoint",
+  "target": [
+   "sch_index_inputs_n",
+   "INDEX_INPUTS_numbers"
   ]
  },
  {
