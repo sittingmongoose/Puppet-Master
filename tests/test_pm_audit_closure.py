@@ -8,6 +8,7 @@ import io
 import json
 import subprocess
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -385,6 +386,77 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
                 self.assertTrue(report["errors"], report)
                 self.assertEqual(report["superseded_row_count"], 0, report)
 
+    def record_author_time(self) -> str:
+        """The author date of the commit that added the re-audit record file, in registry form."""
+        stamp = self.git("log", "--diff-filter=A", "--format=%at", "--", pm_audit_closure.rel(self.records))
+        return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(int(stamp)))
+
+    def validated_rows(self, rows: list[dict]) -> dict:
+        pm_audit_closure.write_jsonl(self.registry, rows)
+        return pm_audit_closure.validate_registry(self.registry)
+
+    def test_self_excluding_timestamps_are_bound_to_the_record_commit(self) -> None:
+        # T218 (t203 review r2): both timestamps edited together to one valid string must not pass.
+        self.prepare_record()
+        code, appended = self.append()
+        self.assertEqual((code, appended["appended"], appended["errors"]), (0, 1, []))
+        original = pm_audit_closure.read_jsonl(self.registry, [])
+        self.assertEqual((original[-1]["created_at"], original[-1]["updated_at"]),
+                         (self.record_author_time(), self.record_author_time()))
+        for stamp in ("2000-01-01T00:00:00Z", "2099-12-31T23:59:59Z"):
+            with self.subTest(stamp=stamp):
+                rows = copy.deepcopy(original)
+                rows[-1]["created_at"] = rows[-1]["updated_at"] = stamp
+                report = self.validated_rows(rows)
+                self.assertTrue(any("generated fields differ" in error and "created_at" in error for error in report["errors"]), report)
+                self.assertEqual(report["superseded_row_count"], 0, report)
+        self.assertEqual(self.validated_rows(original)["errors"], [])
+
+    def test_self_exclusion_mode_is_bound_to_the_record(self) -> None:
+        # T219 (t203 Astra max finding 1): the marker cannot be dropped to leave the rebuild.
+        self.prepare_record()
+        self.assertEqual(self.append()[0], 0)
+        original = pm_audit_closure.read_jsonl(self.registry, [])
+        downgrades = {
+            "marker, audit_ids and reason": lambda row: (
+                row["hashes"].pop("registry_self_anchor"),
+                row.update(audit_ids=[row["closed_by_audit_id"]], closure_reason="An unreviewed fabricated closure reason.")),
+            "marker only": lambda row: row["hashes"].pop("registry_self_anchor"),
+            "marker and timestamps": lambda row: (
+                row["hashes"].pop("registry_self_anchor"), row.update(created_at="2000-01-01T00:00:00Z", updated_at="2000-01-01T00:00:00Z")),
+        }
+        for name, downgrade in downgrades.items():
+            with self.subTest(downgrade=name):
+                rows = copy.deepcopy(original)
+                downgrade(rows[-1])
+                report = self.validated_rows(rows)
+                self.assertTrue(any("so the row must carry registry_self_anchor" in error for error in report["errors"]), report)
+                self.assertEqual(report["superseded_row_count"], 0, report)
+        self.assertEqual(self.validated_rows(original)["errors"], [])
+
+    def test_listed_pre_marker_record_keeps_its_unmarked_row_but_is_rebuilt(self) -> None:
+        # The seven pre-marker records may keep unmarked rows; their generated fields are still rebuilt.
+        self.prepare_record()
+        record = json.loads(self.records.read_text(encoding="utf-8").splitlines()[0])
+        digest = pm_audit_closure.reaudit_record_sha256(record)
+        legacy = patch.object(pm_audit_closure, "LEGACY_UNMARKED_SELF_DEPENDENT_RECORDS", frozenset({digest}), create=True)
+        legacy.start()
+        self.addCleanup(legacy.stop)
+        self.assertEqual(self.append()[0], 0)
+        original = pm_audit_closure.read_jsonl(self.registry, [])
+        unmarked = copy.deepcopy(original)
+        unmarked[-1]["hashes"].pop("registry_self_anchor")
+        unmarked[-1]["created_at"] = unmarked[-1]["updated_at"] = "2026-11-04T00:00:00Z"
+        report = self.validated_rows(unmarked)
+        # Like registry rows 963 and 968: the edge holds, and the row's own set is stale.
+        self.assertEqual(report["superseded_row_count"], 1, report)
+        self.assertTrue(report["errors"] and all(self.anchor in error and "is stale" in error for error in report["errors"]), report)
+        narrowed = copy.deepcopy(unmarked)
+        narrowed[-1].update(audit_ids=[narrowed[-1]["closed_by_audit_id"]], closure_reason="An unreviewed fabricated closure reason.")
+        report = self.validated_rows(narrowed)
+        self.assertTrue(any("generated fields differ" in error for error in report["errors"]), report)
+        self.assertEqual(report["superseded_row_count"], 0, report)
+
     def test_stale_set_at_later_recheck_uses_self_exclusion(self) -> None:
         self.prepare_record()
         self.assertEqual(self.append()[0], 0)
@@ -636,6 +708,12 @@ class PmAuditClosureTerminalStateTests(unittest.TestCase):
 
 
 
+# The provenance every supplemental_closure_pass record carries (T230); reviews may still be pending.
+PASS_DECISION = {"decision_record": "Plans/Decision_Log.md#DL-511", "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+                 "source": "fixture decision (test)"}
+PASS_REVIEWS_PENDING = "pending: blind reviews (test)"
+
+
 def replacement_identity(finding: dict, **changes) -> dict:
     """The finding's identity fields with `changes` applied, keyed deterministically."""
     row = {field: copy.deepcopy(finding[field]) for field in (
@@ -721,6 +799,8 @@ class PmAuditClosureMatrixReplacementTests(unittest.TestCase):
                 "schema_id": "pm.audit_supplemental_closure_pass.v1",
                 "pass_id": spec["pass_id"],
                 "audit_id": "audit-replace",
+                "decision": PASS_DECISION,
+                "reviews": PASS_REVIEWS_PENDING,
                 "matrix": {
                     "path": "repair_closure_matrix.jsonl",
                     "original_rows": pinned,
@@ -894,6 +974,93 @@ class PmAuditClosureMatrixReplacementTests(unittest.TestCase):
         self.assertTrue(self.frozen_link_error(report))
         self.assertTrue(any("replacement_reason must be non-empty" in error for error in self.refusals(report)))
 
+    def test_lone_cr_row_separator_is_refused_without_crashing(self) -> None:
+        # T228 (pls026 review r2): a lone CR splits rows for read_jsonl but not for the LF byte split.
+        self.write([self.frozen, self.replacing_row()])
+        matrix = self.audit_dir / "repair_closure_matrix.jsonl"
+        matrix.write_bytes(matrix.read_bytes().replace(b"\n", b"\r", 1))
+        report = self.validate()
+        self.assertNotIn("matrix_replacements", report)
+        self.assertTrue(self.frozen_link_error(report), report["errors"])
+        self.assertTrue(any("separates rows with a lone CR" in error for error in report["errors"]), report["errors"])
+
+    def test_replacement_cannot_borrow_an_unrelated_finding_identity(self) -> None:
+        # T229 (pls026 Astra max finding 1, Sol max finding 2): another finding's complete, self-consistent
+        # identity and closure, closed by the same audit, is not a correction of this finding.
+        unrelated = replacement_identity(self.finding, finding_family="owner_routing", detail_keys=["heading_lineage"],
+                                         owner_docs=["Plans/Planning_Ledger_System.md"], plan_unit_ids=["PLS-012"])
+        self.registry_rows.append({**registry_row(self.audit_refs, unrelated, "closure-unrelated-002"), **unrelated})
+        self.write([self.frozen, self.replacing_row(**unrelated, registry_closure_id="closure-unrelated-002")])
+        report = self.validate()
+        self.assertTrue(self.frozen_link_error(report), report["errors"])
+        self.assertNotIn("matrix_replacements", report)
+        self.assertTrue(any("may change only the owner fields" in error and "detail_keys" in error and "finding_family" in error
+                            for error in self.refusals(report)), report["errors"])
+
+    def test_pass_record_needs_its_pass_id_and_provenance(self) -> None:
+        # T230 (pls026 Sol max finding 1): absent or null pass IDs never match, and a record names its decision
+        # and reviews. A pending review state is a recorded state.
+        def row_without_pass_id(row: dict) -> None:
+            row["supplemental_pass"].pop("pass_id")
+
+        def row_with_null_pass_id(row: dict) -> None:
+            row["supplemental_pass"]["pass_id"] = None
+
+        cases = {
+            "pass_id absent on both sides": (row_without_pass_id, lambda record: record.pop("pass_id"), "pass_id"),
+            "pass_id null on both sides": (row_with_null_pass_id, lambda record: record.update(pass_id=None), "pass_id"),
+            "record decision absent": (None, lambda record: record.pop("decision"), "must record its decision"),
+            "record decision source null": (None, lambda record: record["decision"].update(source=None), "must record its decision"),
+            "record reviews absent": (None, lambda record: record.pop("reviews"), "must record its reviews"),
+            "record reviews blank": (None, lambda record: record.update(reviews=" "), "must record its reviews"),
+        }
+        for name, (change_row, change_record, expected) in cases.items():
+            with self.subTest(case=name):
+                replacing = self.replacing_row()
+                if change_row:
+                    change_row(replacing)
+                self.write([self.frozen, replacing])
+                record_path = self.audit_dir / self.RECORD
+                record = json.loads(record_path.read_text(encoding="utf-8"))
+                change_record(record)
+                record_path.write_text(json.dumps(record), encoding="utf-8")
+                report = self.validate()
+                self.assertTrue(self.frozen_link_error(report), report["errors"])
+                self.assertNotIn("matrix_replacements", report)
+                self.assertTrue(any(expected in error for error in self.refusals(report)), report["errors"])
+        for reviews in (PASS_REVIEWS_PENDING, {"sol": "PASS"}, [{"model": "astra", "verdict": "PASS"}]):
+            with self.subTest(reviews=reviews):
+                self.write([self.frozen, self.replacing_row()])
+                record_path = self.audit_dir / self.RECORD
+                record = json.loads(record_path.read_text(encoding="utf-8"))
+                record["reviews"] = reviews
+                record_path.write_text(json.dumps(record), encoding="utf-8")
+                self.assertEqual(self.validate()["errors"], [])
+
+    def test_schema_invalid_replacing_row_is_not_honored(self) -> None:
+        # T231 (pls026 Sol max finding 3): a replacing row that fails its own row checks replaces nothing.
+        cases = {
+            "closure_evidence absent": ({}, ("closure_evidence",), "missing required fields ['closure_evidence']"),
+            "closure_reason blank": ({"closure_reason": " "}, (), "closure_reason must be non-empty"),
+            "baseline_ref absent": ({}, ("baseline_ref",), "missing required ref field baseline_ref"),
+            "owner_docs not a list": ({"owner_docs": "Plans/Corrected.md"}, (), "owner_docs must be a list"),
+            "evidence missing": ({"closure_evidence": ["Plans/Missing-evidence.md"]}, (), "missing evidence ref"),
+        }
+        for name, (changes, removed, expected) in cases.items():
+            with self.subTest(case=name):
+                replacing = self.replacing_row(**changes)
+                for field in removed:
+                    replacing.pop(field)
+                self.write([self.frozen, replacing])
+                report = self.validate()
+                self.assertTrue(self.frozen_link_error(report), report["errors"])
+                self.assertNotIn("matrix_replacements", report)
+                self.assertTrue(any("must meet the full matrix-row schema" in error and expected in error
+                                    for error in self.refusals(report)), report["errors"])
+                # The row's own diagnostics still stand as before.
+                self.assertTrue(any(":2: " in error and expected in error and "does not replace" not in error
+                                    for error in report["errors"]), report["errors"])
+
 
 class PmAuditClosureLegacyReplacementCoverageTests(unittest.TestCase):
     """A replacing row stands in for its frozen row: it adds no over-coverage of a non-actionable source row."""
@@ -941,6 +1108,8 @@ class PmAuditClosureLegacyReplacementCoverageTests(unittest.TestCase):
             "schema_id": "pm.audit_supplemental_closure_pass.v1",
             "pass_id": "legacy-replace-pass",
             "audit_id": self.NAME,
+            "decision": PASS_DECISION,
+            "reviews": PASS_REVIEWS_PENDING,
             "matrix": {"path": "repair_closure_matrix.jsonl", "original_rows": 1,
                        "original_sha256": pm_audit_closure.sha256_text(frozen_line + "\n")},
             "closures": [{"appended_line": 2, "appended_row_sha256": pm_audit_closure.sha256_text(lines[-1]),
