@@ -131,7 +131,8 @@ def signature(v, value, cut=frozenset()):
 
 MEMO_TYPES = ()
 STATS = collections.Counter()
-MEMO_RSS_MB = [1100]  # clear the memo tables (always safe) when the process grows past this
+MEMO_RSS_MB = [1650]  # safety valve: clear the memo tables (always safe) when the process grows past this
+MEMO_ENTRIES = [2500000]  # normal trigger: memo table entries
 
 
 def rss_mb():
@@ -227,9 +228,15 @@ def memo_class(base):
             return
         interner.begin()
         STATS['top_level'] += 1
-        if STATS['top_level'] % 500 == 0 and rss_mb() > MEMO_RSS_MB[0]:
+        if STATS['top_level'] % 500 == 0 and (len(valid) + len(invalid) + len(interner.table) > MEMO_ENTRIES[0]
+                                                or rss_mb() > MEMO_RSS_MB[0]):
+            # Clearing is always safe (only time is lost). RSS rarely falls after a clear (the allocator keeps the
+            # arenas), so the entry count is the normal trigger and RSS only a safety valve near the 2 GB scope.
             valid.clear(), invalid.clear(), interner.table.clear(), keep.clear()
+            import gc
+            gc.collect()
             STATS['memo_cleared'] += 1
+            MEMO_RSS_MB[0] = max(MEMO_RSS_MB[0], rss_mb() + 150)
 
     class Memo(base):
         def begin(self):
@@ -694,6 +701,72 @@ def self_test(args):
     return 0
 
 
+def verify(args):
+    """Replay every GO2 witness (a clause entry with a replay token) on the reference validator, with no memo:
+    the control is accepted; control + (path, edit) rebuilds an input with the recorded sha256; the input is refused
+    and the clause is among the refusing locations; KILLED: with only the clause cut it is accepted and restored it is
+    refused again; COVERED_LATER: with the clause cut it is still refused, by the clauses named."""
+    import gzip
+    import pm_goal_go_schema_closure as cl
+    import pm_goal_oracle_common as common
+    report = json.loads(Path(args.report).read_text())
+    store = pickle.loads(gzip.decompress(Path(str(args.report) + '.controls.pkl.gz').read_bytes()))
+    data = load(args.dump, [report['root']])
+    (root, entry), = data['roots'].items()
+    ref = rebuild(entry)
+    accepted_controls = {}
+    rows = [(c, x) for c, x in sorted(report['clauses'].items()) if x.get('replay') and x['cls'] in ('KILLED', 'COVERED_LATER')]
+    part, total = map(int, args.shard.split('/'))
+    rows = rows[part::total]
+    results = collections.Counter()
+    failures = []
+    start = time.monotonic()
+    for number, (clause, x) in enumerate(rows):
+        problem = None
+        control = store.get(x['control_sha256'])
+        if control is None:
+            problem = 'control not in store'
+        else:
+            if x['control_sha256'] not in accepted_controls:
+                accepted_controls[x['control_sha256']] = not cl.errors_of(ref, control)
+            if not accepted_controls[x['control_sha256']]:
+                problem = 'control refused by the reference validator'
+        if problem is None:
+            path, edit = pickle.loads(base64.b64decode(x['replay']))
+            mutated = cl.apply(control, path, edit)
+            ident = common.guard_for_location(clause)
+            if mutated is None or sha(mutated) != x['input_sha256']:
+                problem = 'rebuilt input sha256 differs'
+            else:
+                errs = cl.errors_of(ref, mutated)
+                if not errs or clause not in cl.locations(errs):
+                    problem = 'input not refused at the clause'
+                else:
+                    cut = cl.errors_of(ref, mutated, {ident})
+                    if x['cls'] == 'KILLED':
+                        if cut:
+                            problem = 'cut does not accept'
+                        elif not cl.errors_of(ref, mutated):
+                            problem = 'restoration does not refuse'
+                    elif not cut:
+                        problem = 'COVERED_LATER but the cut accepts'
+                    elif not set(x['still_refused_by']) <= cl.locations(cut):
+                        problem = 'COVERED_LATER: named clauses not among the remaining refusals'
+        results['fail' if problem else 'pass'] += 1
+        results[x['cls'] + ('_fail' if problem else '_pass')] += 1
+        if problem:
+            failures.append(dict(clause=clause, cls=x['cls'], problem=problem))
+        if number % 200 == 0:
+            print(f'{number}/{len(rows)} {dict(results)} {time.monotonic() - start:.0f}s', file=sys.stderr, flush=True)
+    out = dict(tool_sha256=TOOL_SHA256, report=str(args.report), report_sha256=hashlib.sha256(Path(args.report).read_bytes()).hexdigest(),
+               root=root, shard=args.shard, validator='reference (no memo): ' + entry['cls'], witnesses=len(rows),
+               controls_checked=len(accepted_controls), controls_accepted=sum(accepted_controls.values()), results=dict(results),
+               failures=failures, seconds=round(time.monotonic() - start, 1))
+    Path(args.out).write_text(json.dumps(out, indent=1, sort_keys=True) + '\n')
+    print(json.dumps({k: v for k, v in out.items() if k != 'failures'}))
+    return 1 if failures else 0
+
+
 def common_locations():
     import pm_goal_oracle_common as common
     return common._SCHEMA_LOCATIONS
@@ -781,8 +854,10 @@ def close(args):
     checkpoint = Path(str(args.out) + '.ckpt')
     if args.resume and checkpoint.exists():
         state = pickle.loads(checkpoint.read_bytes())
+        state['seconds'] = state.get('seconds_at_checkpoint', state['seconds'])
         CONTROL_STORE.update(state.get('store', {}))
         print(f'resumed {len(state["entries"])} clauses', file=sys.stderr, flush=True)
+    state.setdefault('tool_history', []).append(dict(tool_sha256=TOOL_SHA256, at_clauses=len(state['entries'])))
     controls = state['controls']
     known = {sha(c) for c in controls}
     budget = 10**12  # GO's runs used --per-clause 900, so the root budget never bound; the per-clause cap does
@@ -833,6 +908,7 @@ def close(args):
             last = time.monotonic()
             state['validations'] = cl.COUNT[0] - root0
             state['store'] = CONTROL_STORE
+            state['seconds_at_checkpoint'] = state['seconds'] + time.monotonic() - started
             tmp = checkpoint.with_suffix('.tmp')
             tmp.write_bytes(pickle.dumps(state, protocol=5))
             tmp.replace(checkpoint)
@@ -850,7 +926,8 @@ def close(args):
                   branch_controls=state['branch_controls'], validations=cl.COUNT[0] - root0,
                   ordering=dict(ORDERING), memo_stats=dict(STATS), counts=dict(counts), clauses=state['entries'],
                   sampled_agreement=dict(SAMPLED, mismatches=MISMATCHES[:50], every=args.sample_every),
-                  unresolved_refs=list(cl.UNRESOLVED), seconds=round(state['seconds'] + time.monotonic() - started, 1))
+                  unresolved_refs=list(cl.UNRESOLVED), seconds=round(state['seconds'] + time.monotonic() - started, 1),
+                  tool_history=state['tool_history'])
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
     store = Path(str(args.out) + '.controls.pkl.gz')
     import gzip
@@ -888,11 +965,16 @@ def main():
     c.add_argument('--reference', action='store_true', help='run on the reference validator (no memo)')
     c.add_argument('--no-reorder', action='store_true')
     c.add_argument('--sample-every', type=int, default=400, help='compare every Nth memo validation with the reference')
+    w = sub.add_parser('verify')
+    w.add_argument('--dump', type=Path, required=True)
+    w.add_argument('--report', type=Path, required=True)
+    w.add_argument('--out', type=Path, required=True)
+    w.add_argument('--shard', default='0/1')
     t = sub.add_parser('self-test')
     t.add_argument('--dump', type=Path)
     t.add_argument('--out', type=Path)
     args = parser.parse_args()
-    return dict(dump=dump, agree=agree, bench=bench, close=close, **{'self-test': self_test})[args.cmd](args)
+    return dict(dump=dump, agree=agree, bench=bench, close=close, verify=verify, **{'self-test': self_test})[args.cmd](args)
 
 
 if __name__ == '__main__':
