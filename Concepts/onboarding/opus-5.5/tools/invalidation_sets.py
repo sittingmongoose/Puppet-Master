@@ -56,13 +56,33 @@ def strip_comments(css: str) -> str:
 _DESKTOP = {'hover': 'hover', 'any-hover': 'hover', 'pointer': 'fine', 'forced-colors': 'none'}
 
 
+# CSS escapes (PM7PERF-LINT-ESCAPED-STATE): `.pmh\-on`, `:hov\65 r` and `[aria\-selected]` name .pmh-on, :hover and
+# [aria-selected] to Chrome, so names are decoded before they are matched. A hex escape is 1-6 hex digits and may end
+# with one whitespace character, which belongs to the escape (it never separates compounds).
+_ESC_IDENT = r'(?:\\[0-9a-fA-F]{1,6}(?:\r\n|[ \t\r\n\f])?|\\.|[\w-])+'
+
+
+def _esc_len(text: str, i: int) -> int:
+    """The length of the escape that starts at text[i] (a backslash)."""
+    m = re.match(r'\\(?:[0-9a-fA-F]{1,6}(?:\r\n|[ \t\r\n\f])?|.)', text[i:], re.S)
+    return m.end() if m else 1
+
+
+def css_unescape(name: str) -> str:
+    def hexchar(m):
+        v = int(m.group(1), 16)
+        return '\ufffd' if v == 0 or v > 0x10FFFF or 0xD800 <= v <= 0xDFFF else chr(v)
+    name = re.sub(r'\\([0-9a-fA-F]{1,6})(?:\r\n|[ \t\r\n\f])?', hexchar, name)
+    return re.sub(r'\\(.)', r'\1', name, flags=re.S)
+
+
 def _top_parts(text: str, separator: str) -> list[str]:
     """Split at an unquoted, unescaped separator outside () and []; words need token boundaries."""
     out, start, i, depth, quote = [], 0, 0, 0, None
     while i < len(text):
         c = text[i]
         if c == '\\':
-            i += 2
+            i += _esc_len(text, i)
             continue
         if quote:
             if c == quote:
@@ -221,8 +241,9 @@ def compounds(sel: str) -> list[tuple[str, str]]:
     while i < len(sel):
         c = sel[i]
         if c == '\\':
-            cur += sel[i:i + 2]
-            i += 2
+            k = _esc_len(sel, i)
+            cur += sel[i:i + k]
+            i += k
             continue
         if quote:
             cur += c
@@ -260,21 +281,22 @@ def simples(comp: str) -> list[tuple[str, str, str]]:
             i += m.end() if m else 1
             continue
         if re.match(r'[A-Za-z_\\-]', c) and not out:
-            m = re.match(r'(?:[\w-]+\|)?((?:\\.|[\w-])+)', comp[i:])
+            m = re.match(r'(?:[\w-]+\|)?(' + _ESC_IDENT + ')', comp[i:])
             if not m:
                 i += 1
                 continue
-            out.append(('tag', m.group(1).lower() if not re.search(r'[A-Z]', m.group(1)) else m.group(1), ''))
+            tag = css_unescape(m.group(1))
+            out.append(('tag', tag.lower() if not re.search(r'[A-Z]', tag) else tag, ''))
             i += m.end()
             continue
         if c == '#':
-            m = re.match(r'#((?:\\.|[\w-])+)', comp[i:])
-            out.append(('id', m.group(1) if m else '', ''))
+            m = re.match(r'#(' + _ESC_IDENT + ')', comp[i:])
+            out.append(('id', css_unescape(m.group(1)) if m else '', ''))
             i += m.end() if m else 1
             continue
         if c == '.':
-            m = re.match(r'\.((?:\\.|[\w-])+)', comp[i:])
-            out.append(('class', m.group(1) if m else '', ''))
+            m = re.match(r'\.(' + _ESC_IDENT + ')', comp[i:])
+            out.append(('class', css_unescape(m.group(1)) if m else '', ''))
             i += m.end() if m else 1
             continue
         if c == '[':
@@ -292,14 +314,14 @@ def simples(comp: str) -> list[tuple[str, str, str]]:
                     depth -= 1
                 j += 1
             inner = comp[i + 1:j - 1]
-            m = re.match(r'\s*(?:[\w-]*\|)?([\w-]+)', inner)
-            out.append(('attr', m.group(1).lower() if m else inner, inner))
+            m = re.match(r'\s*(?:[\w-]*\|)?(' + _ESC_IDENT + ')', inner)
+            out.append(('attr', css_unescape(m.group(1)).lower() if m else inner, inner))
             i = j
             continue
         if c == ':':
             element = comp[i:i + 2] == '::'
-            m = re.match(r'::?([\w-]+)', comp[i:])
-            name = m.group(1).lower() if m else ''
+            m = re.match(r'::?(' + _ESC_IDENT + ')', comp[i:])
+            name = css_unescape(m.group(1)).lower() if m else ''
             j = i + (m.end() if m else 1)
             arg = ''
             if j < n and comp[j] == '(':

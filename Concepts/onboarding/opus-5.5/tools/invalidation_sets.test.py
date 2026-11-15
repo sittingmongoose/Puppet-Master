@@ -77,6 +77,14 @@ class InvalidationSetsTests(unittest.TestCase):
         self.assertEqual(len(self.problems('@media screen, not print and (hover:none) { .card:hover * {color:red} }')), 1)
         self.assertEqual(self.problems('@media not screen, print { .card:hover * {color:red} }'), [])
 
+    # PM7PERF-LINT-ESCAPED-STATE (R12-2): escaped names are the names Chrome keys its sets on
+    def test_escaped_state_names(self):
+        self.assertEqual(len(self.problems(r'.card:hov\65 r * { color:red }')), 1)
+        self.assertEqual(len(self.problems(r'.card:HOVER * { color:red }')), 1)
+        self.assertEqual(len(self.problems(r'.card.pmh\-on * { color:red }')), 1)
+        self.assertEqual(len(self.problems(r'[aria\-selected="true"] * { color:red }')), 1)
+        self.assertEqual(len(self.problems(r'.card:hover .t\69 tle { color:red }')), 0)  # keyed on .title, escaped
+
 
 if __name__ == '__main__':
     unittest.main()
