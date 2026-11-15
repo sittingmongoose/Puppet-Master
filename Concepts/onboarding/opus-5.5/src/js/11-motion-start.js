@@ -363,8 +363,10 @@
      { queued, dropped, backoffMs, lateRun, stopped, session, off, running, lateCount, waiting: the gate that held the
      last try ('idle', 'frames', 'input', 'animation', ...) }; window.__pmWarmLog (also PM_WARM.log): the last 200
      { owner, name, t, at (the step's frame), cpuMs, frameMs, late, outcome, watched: false on a GPU step judged without
-     its watch, steadyMs / slowMs (the adaptive watch bars, rounded to 0.1 ms), watchReset: true on the first row after
-     an interval that no row shows set the count of steady watches back to zero (watchClean, below) }. 'pm-warm-done' on window when the queue empties, at the session stop, and after an add skipped with
+     its watch, steadyMs / slowMs (the adaptive watch bars, rounded to 0.1 ms), slow1 / steady1 and slow2 / steady2
+     (the slow bar and the steady bar in effect when the step's two intervals, d1 and d2, were judged, rounded to
+     0.1 ms), resetAt (0, or 1 or 2 for the interval that set the steady-watch count back to zero), watchReset: true
+     on the first row after an interval that no row shows set that count back to zero (watchClean, below) }. 'pm-warm-done' on window when the queue empties, at the session stop, and after an add skipped with
      nothing queued (warming off), so an owner that waits for it never waits on a software-rendered computer */
   const warmFlag = (v) => { try { return new RegExp('(?:^|[?&])pm-warm=' + v + '(?:&|$)').test(location.search); } catch (_) { return false; } };
   const warmOff = warmFlag('0'), warmForce = warmFlag('force');
@@ -470,12 +472,22 @@
   };
   /* Log-only snapshots: no gate, timer or watch decision reads these. */
   let watchSteadyLog = null, watchSlowLog = null;
+  let slow1Log = null, steady1Log = null, slow2Log = null, steady2Log = null, resetAtLog = 0;
   const lateMs = () => Math.max(40, 3 * median());
   const onTime = (d) => d <= 1.5 * median();
-  const note = (d) => {
+  /* which is 1 or 2 when this interval is the step's d1 or d2; admission frames and watch frames omit it */
+  const note = (d, which) => {
     watchSlowLog = lateMs(); // the slow bar before this noted interval enters the rolling median
+    if (which === 1 || which === 2) {
+      const steadyBar = Math.max(STEADY_MS, 1.5 * median());
+      if (which === 1) { slow1Log = watchSlowLog; steady1Log = steadyBar; }
+      else { slow2Log = watchSlowLog; steady2Log = steadyBar; }
+    }
     /* over the slow bar: the watch is needed again (watchClean, below) */
-    if (d > lateMs()) { warmLateAt = performance.now(); watchClean = 0; watchResets++; }
+    if (d > lateMs()) {
+      warmLateAt = performance.now(); watchClean = 0; watchResets++;
+      if ((which === 1 || which === 2) && resetAtLog === 0) resetAtLog = which;
+    }
     warmD1 = warmD2; warmD2 = d;
     warmDeltas.push(d); if (warmDeltas.length > 30) warmDeltas.shift();
   };
@@ -502,7 +514,16 @@
       row.steadyMs = Math.round((watchSteadyLog == null ? Math.max(STEADY_MS, 1.5 * median()) : watchSteadyLog) * 10) / 10;
       row.slowMs = Math.round((watchSlowLog == null ? lateMs() : watchSlowLog) * 10) / 10;
     }
-    watchSteadyLog = watchSlowLog = null;
+    /* the bars d1 and d2 were judged against, and which of them reset the count; absent on a row that judged neither */
+    if (slow1Log != null && steady1Log != null && slow2Log != null && steady2Log != null) {
+      row.slow1 = Math.round(slow1Log * 10) / 10;
+      row.steady1 = Math.round(steady1Log * 10) / 10;
+      row.slow2 = Math.round(slow2Log * 10) / 10;
+      row.steady2 = Math.round(steady2Log * 10) / 10;
+      row.resetAt = resetAtLog;
+    }
+    watchSteadyLog = watchSlowLog = slow1Log = steady1Log = slow2Log = steady2Log = null;
+    resetAtLog = 0;
     /* a GPU step judged without its watch (watching(), below) */
     if (st.unwatched) row.watched = false;
     /* the count of steady watches set back to zero by an interval no row shows (watchUnseen, at WATCH_KEEP below) */
@@ -634,7 +655,12 @@
      holds the word until the next row. steadyMs captures the bar at watched(); slowMs captures note()'s latest slow
      bar before inserting that interval. Rows without those decisions report the current bars. Both are rounded to
      0.1 ms for replay: the later display-rate sample cannot stand in for this rolling 30-interval median.
-     watchSteadyLog / watchSlowLog are log-only; the existing decisions below read their existing expressions. */
+     A step's row also records the slow bar and the steady bar in effect when its d1 and its d2 were judged
+     (slow1, steady1, slow2, steady2) and resetAt, 0 or the interval (1 or 2) whose comparison set the count back
+     to zero. The median can move between those two judgments and the row's slowMs, so the endpoint bars are not
+     a bound on the bar d1 met (R53-C4). Admission frames and the watch's later frames are not d1 or d2 and leave
+     these fields unset. watchSteadyLog / watchSlowLog / slow1Log / steady1Log / slow2Log / steady2Log / resetAtLog
+     are log-only; the existing decisions below read their existing expressions. */
   const WATCH_KEEP = 16, STEADY_MS = 25;
   const watching = () => watchClean < WATCH_KEEP;
   const watched = (frameMs) => { watchSteadyLog = Math.max(STEADY_MS, 1.5 * median()); watchClean = Math.max.apply(null, frameMs) <= Math.max(STEADY_MS, 1.5 * median()) ? watchClean + 1 : 0; };
@@ -674,7 +700,7 @@
       clean(r);
       const d1 = a - t;
       if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
-      note(d1);
+      note(d1, 1);
       if (st.light) {
         /* the owner's next light step (FIFO) in this frame, while everything holds and the chain is under its 100 ms
            turn (v3.6 item 3); then the turn passes on */
@@ -697,7 +723,7 @@
       requestAnimationFrame((b) => {
         const d2 = b - a;
         if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
-        note(d2);
+        note(d2, 2);
         /* the watch not needed: judged by the two (a d1 or d2 over the slow bar has just made it needed, so this step
            keeps it) */
         if (!watching()) { st.unwatched = true; if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], limit)) after(); return; }
@@ -716,7 +742,7 @@
     requestAnimationFrame((b) => {
       const d2 = b - a;
       if (vis !== warmVis) { judge(st, cpuMs, null, limit); after(); return; }
-      note(d2);
+      note(d2, 2);
       st.unwatched = true;
       if (!judge(st, cpuMs, [Math.round(d1), Math.round(d2)], limit)) after();
     });
@@ -741,11 +767,11 @@
       clean(r);
       if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
       const d1 = a - from;
-      note(d1);
+      note(d1, 1);
       requestAnimationFrame((b) => {
         const d2 = b - a;
         if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
-        note(d2);
+        note(d2, 2);
         if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], limit)) after();
       });
     };

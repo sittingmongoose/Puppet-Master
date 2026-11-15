@@ -2531,7 +2531,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function armComposerObserver(){
     // The keyed shell retains these nodes. Recreating the observer every render
     // delivered another initial resize callback and repeated both forced-layout probes.
-    if(!composerRO) composerRO=new ResizeObserver(()=>{
+    // A look revealed over the onboarding window covers the chat (PM_LOOK_HOLD, 11-motion-start.js).
+    // This re-measured the hidden composer in the reveal's first frame (E4 section 3: a cache miss is
+    // getComputedStyle plus one rect for each of the five tool buttons). It waits, then runs once.
+    if(!composerRO) composerRO=new ResizeObserver(function onComposerResize(){
+      if(window.PM_LOOK_HOLD&&window.PM_LOOK_HOLD.after&&window.PM_LOOK_HOLD.after(onComposerResize))return;
       if(chromeSyncFrame!==null)return;
       chromeSyncFrame=requestAnimationFrame(runChromeSync);
     });
