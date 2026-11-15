@@ -1699,6 +1699,8 @@
     document.documentElement.setAttribute('data-o55-open', 'true');
     if (window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.pause) { try { window.PM_DEMO.clock.pause(); S.pausedClock = true; } catch (_) {} }
     if (S.env.lowResource) O55.motion.setLowResource(true, 'scenario');
+    /* (the look chosen last wins, FO-216: one chosen since this run was closed is the run's now) */
+    if (resumable && !opts.fresh && S.sess.lookLeft) { if (lookChosenSince(S.sess.lookLeft)) adoptLook(); delete S.sess.lookLeft; S.save(); }
     setInert(true); reapplyLook(); syncTheme(false); layoutClass();
     if (O55.talk) O55.talk.refresh(); /* (a Project chosen since, or a mode set in Settings, is read again) */
     r.setAttribute('data-o55-ambient', 'on');
@@ -1756,6 +1758,37 @@
     Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: 'basic', theme_mode: 'dark' }));
     if (n && n.parts && n.background) S.sess.look = { nier: false, parts: n.parts().slice(), background: n.background() };
   }
+  /* FO-216: the look chosen last wins. A run closed unfinished leaves its look on the page (an unsaved preview lingers,
+     O55.nierLook.closed) and notes it (lookLeft): the look painted then, the look Settings had saved then, and the page
+     load it was in. Resumed, it compares: in the same page a painted look that is no longer the one it left was chosen
+     since (Settings, the title bar's look menu, another Project loaded); after a reload, which drops the lingering preview
+     and is no choice, only a saved look that has changed was. Such a look is the run's now (adoptLook): its drafts, so
+     Pick a look starts on it, and NieR in the session, so it is what reapplyLook paints and what closing again leaves.
+     Otherwise the run's own look comes back, as before (a reload painted the saved theme while the drafts kept the pick).
+     Lane Q's probe: Settings to NieR Light after a run in Basic Light, resumed, showed Basic Light, NieR off, and left it. */
+  const PAGE_LOAD = String((window.performance && performance.timeOrigin) || Date.now());
+  function paintedLook() {
+    const th = O55.theme(), n = window.PM_NIER;
+    return [askedFamily(th), th.selectedMode, !!(n && (n.wanted ? n.wanted() : n.on()))].join('|');
+  }
+  function storedLook() {
+    try {
+      const P = window.PM51; if (!P || typeof P.value !== 'function') return null;
+      return ['general.visual.theme', 'general.visual.theme-mode', 'general.visual.nier-mode'].map((id) => String(P.value(id) ?? '')).concat(window.PM_ACTIVE_PROJECT_ID || '').join('|');
+    } catch (_) { return null; }
+  }
+  function lookChosenSince(left) {
+    if (!left || typeof left !== 'object') return false;
+    if (left.page === PAGE_LOAD) return paintedLook() !== left.painted;
+    const now = storedLook();
+    return now != null && left.stored != null && now !== left.stored;
+  }
+  function adoptLook() {
+    const th = O55.theme(), n = window.PM_NIER, nier = !!(n && (n.wanted ? n.wanted() : n.on()));
+    const family = nier ? 'nier' : askedFamily(th), mode = th.selectedMode;
+    Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: family, theme_mode: mode }));
+    if (n && n.parts && n.background) S.sess.look = { nier, parts: n.parts().slice(), background: n.background() };
+  }
   /* A reopened run shows its own look again (a reload painted the saved theme while the drafts kept the pick): the
      family and mode from the drafts, and NieR Mode from the session (O55.nierLook), still previews */
   function reapplyLook() {
@@ -1780,6 +1813,8 @@
     S.root.querySelectorAll('.o55-win > .o55-toast').forEach((n) => n.remove()); /* (a toast is this run's moment) */
     if (O55.nierLook && O55.nierLook.closed) O55.nierLook.closed(reason); /* an unsaved NieR preview lingers like the look's */
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
+    /* (the look it leaves, for a resume to tell a look chosen since: lookChosenSince, FO-216) */
+    if (S.sess.status === 'closed') S.sess.lookLeft = { page: PAGE_LOAD, painted: paintedLook(), stored: storedLook() };
     S.save();
     S.open = false; S.tip = null;
     const r = S.root;
