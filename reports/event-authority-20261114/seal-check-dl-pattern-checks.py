@@ -79,8 +79,7 @@ class Fixture:
         self.put(REL, v_raw)
         probe = compile_module(self.root / REL, 's1v_probe_' + sha(v_raw)[:12])
         paths = ['Plans/Decision_Log.md', probe.HOLDING_RECEIPT, probe.POST_AUGUST_RECEIPT, probe.MULTI_FAMILY_RECEIPT,
-                 probe.RECOUNT_CHANGE, probe.DL_PATTERN_CHANGE, CHAIN] + [
-                     probe.DL_PATTERN_AUTHORITY[k]['path'] for k in ('card', 'answer')]
+                 probe.RECOUNT_CHANGE, probe.DL_PATTERN_CHANGE, CHAIN, probe.DL_PATTERN_CARD, probe.DL_PATTERN_ANSWER]
         for rel in paths:
             self.put(rel, (repo / rel).read_bytes())
         # A mutant is chained truthfully: the fifth receipt names the bytes that run, as an author would write it.
@@ -524,7 +523,7 @@ def _(f):
 
 @check('fifth_state_negative_card_copy_bytes_edited')
 def _(f):
-    rel = f.v.DL_PATTERN_AUTHORITY['card']['path']
+    rel = f.v.DL_PATTERN_CARD
     f.put(rel, (f.root / rel).read_bytes().replace(b'"key": "A"', b'"key": "B"', 1))
     if f.v.fourth_change_validator_pin() != FOURTH_AFTER:
         raise CheckFailure('fixture: byte link broken')
@@ -533,7 +532,7 @@ def _(f):
 
 @check('fifth_state_negative_answer_copy_missing')
 def _(f):
-    (f.root / f.v.DL_PATTERN_AUTHORITY['answer']['path']).unlink()
+    (f.root / f.v.DL_PATTERN_ANSWER).unlink()
     return expect_refusal(f.v.dl_pattern_change_state, kind=FileNotFoundError)
 
 
@@ -660,8 +659,10 @@ MUTANTS = {
     'fifth_state_without_lander_check': ('            or type(lander) is not str or not lander.strip()\n            or receipt.get("seal_applier_forbidden_tasks") != sorted({DL_PATTERN_AUTHOR, lander})',
                                          '            or receipt.get("seal_applier_forbidden_tasks") != sorted({DL_PATTERN_AUTHOR, lander})',
                                          ['fifth_state_negative_lander_empty', 'fifth_state_negative_lander_blank']),
-    'fifth_state_without_copy_bytes': ('            or any(sha256_file(REPO / DL_PATTERN_AUTHORITY[k]["path"]) != DL_PATTERN_AUTHORITY[k]["sha256"]\n                   for k in ("card", "answer"))\n',
-                                       '', ['fifth_state_negative_card_copy_bytes_edited', 'fifth_state_negative_answer_copy_missing']),
+    'fifth_state_without_card_bytes': ('            or sha256_file(REPO / DL_PATTERN_CARD) != DL_PATTERN_CARD_SHA\n', '',
+                                       ['fifth_state_negative_card_copy_bytes_edited']),
+    'fifth_state_without_answer_bytes': ('            or sha256_file(REPO / DL_PATTERN_ANSWER) != DL_PATTERN_ANSWER_SHA\n', '',
+                                         ['fifth_state_negative_answer_copy_missing']),
     'fifth_state_without_flags': ('            or any(receipt.get(k) is not False for k in (\n                "seal_authorized", "admission_authorized", "contract_depth_complete"))\n            or not recount_anchor(DL_PATTERN_CHANGE)',
                                   '            or not recount_anchor(DL_PATTERN_CHANGE)',
                                   ['fifth_state_negative_seal_authorized_true', 'fifth_state_negative_depth_complete_zero']),

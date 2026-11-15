@@ -819,14 +819,10 @@ VALIDATOR_RELATIVE = "Plans/.audits/event-authority-2026-08-12/independent-valid
 DL_PATTERN_CHANGE = "reports/event-authority-20261114/seal-check-dl-pattern-receipt.json"
 DL_PATTERN_AUTHOR = "claude-opus-5.5:ea-pnc-s1v-20261114"
 DL_PATTERN_BEFORE_SHA = "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72"
-DL_PATTERN_AUTHORITY = {
-    "card_label": "E9-1",
-    "selected_option": "A",
-    "card": {"path": "reports/event-authority-20261114/E9-1-card.json",
-             "sha256": "b4809cf1361cd13a4adcb09b7ffabce4ad0b56d91d8bcb9c46655daa264cefa6"},
-    "answer": {"path": "reports/event-authority-20261114/E9-1-answer.json",
-               "sha256": "64e0bb3966b9b4efe353cfc4070922e2a68ca839312a0e2a088258ee0431246f"},
-}
+DL_PATTERN_CARD = "reports/event-authority-20261114/E9-1-card.json"
+DL_PATTERN_CARD_SHA = "b4809cf1361cd13a4adcb09b7ffabce4ad0b56d91d8bcb9c46655daa264cefa6"
+DL_PATTERN_ANSWER = "reports/event-authority-20261114/E9-1-answer.json"
+DL_PATTERN_ANSWER_SHA = "64e0bb3966b9b4efe353cfc4070922e2a68ca839312a0e2a088258ee0431246f"
 
 
 def recount_json(raw, expected_type):
@@ -945,7 +941,9 @@ def dl_pattern_change_state():
     lander = receipt.get("lander_task")
     expected = {
         "schema_id": "pm.assurance.event_authority.dl_pattern_change.v1",
-        "authority": DL_PATTERN_AUTHORITY,
+        "authority": {"card_label": "E9-1", "selected_option": "A",
+                      "card": {"path": DL_PATTERN_CARD, "sha256": DL_PATTERN_CARD_SHA},
+                      "answer": {"path": DL_PATTERN_ANSWER, "sha256": DL_PATTERN_ANSWER_SHA}},
         "validator_path": VALIDATOR_RELATIVE,
         "validator_id": "pm.plans.audits.event_authority.independent_validator",
         "validator_before_sha256": DL_PATTERN_BEFORE_SHA,
@@ -955,8 +953,8 @@ def dl_pattern_change_state():
         "author_task": DL_PATTERN_AUTHOR,
     }
     if (any(type(receipt.get(k)) is not type(v) or receipt.get(k) != v for k, v in expected.items())
-            or any(sha256_file(REPO / DL_PATTERN_AUTHORITY[k]["path"]) != DL_PATTERN_AUTHORITY[k]["sha256"]
-                   for k in ("card", "answer"))
+            or sha256_file(REPO / DL_PATTERN_CARD) != DL_PATTERN_CARD_SHA
+            or sha256_file(REPO / DL_PATTERN_ANSWER) != DL_PATTERN_ANSWER_SHA
             or type(lander) is not str or not lander.strip()
             or receipt.get("seal_applier_forbidden_tasks") != sorted({DL_PATTERN_AUTHOR, lander})
             or any(receipt.get(k) is not False for k in (

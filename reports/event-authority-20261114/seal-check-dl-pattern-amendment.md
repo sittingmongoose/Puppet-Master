@@ -16,7 +16,7 @@ Card **E9-1**, option **A**: "Allow four-digit numbers (DL-1000 and up)". Jared 
 | Validator | SHA-256 |
 |---|---|
 | before (fourth change, CA-SEAL2) | `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72` |
-| after (this change) | `308728929a863eae7c2b8dab0263130e4f7aa8a4ff292a369b29db6e40eb7616` |
+| after (this change) | `b147459618e1c7f13ab1ba73ac03d270d40c8703690bd00239e3ac3d10ed3456` |
 
 1. **The pattern.** `DL_REF = DL-(?:\d{3}|[1-9][0-9]{3})` replaces `DL-\d{3}` at the only two sites that parse a decision reference:
    - `admission_record_problems`, an admission record's `decision_ref`;
