@@ -3,32 +3,62 @@
 // fails on is written in the check's header.
 export const KEEP = 16, STEADY_MS = 25;
 
-// steps: PM_WARM.log rows ({ t, owner, name, frameMs, watched, steadyMs, slowMs }), oldest first.
-// Adaptive per-row bars win; old pages without them fall back to hz, the later display-rate sample.
+// steps: PM_WARM.log rows, oldest first. A row that records slow1/steady1/slow2/steady2/resetAt (the bars its two
+// intervals were judged against, and which of them reset the count) is judged from those. An older row, which has only
+// the bar of its last interval, is bracketed between that bar and the row before it. Rows with neither fall back to
+// hz, the later display-rate sample.
 export function replayWatch(steps, hz) {
 	const gap = 1000 / hz, fallbackSteady = Math.max(STEADY_MS, 1.5 * gap), fallbackSlow = Math.max(40, 3 * gap);
- let steady = fallbackSteady, slow = fallbackSlow, adaptive = 0;
+	let steady = fallbackSteady, slow = fallbackSlow, adaptive = 0;
 	// hi and lo: the highest and the lowest value the product's counter can have here (see the header). Logged intervals
 	// are rounded to 1 ms, so a value within 1 ms of a bar counts for whichever side keeps the check from a false failure.
 	let hi = 0, lo = 0, longest = 0, gpu = 0, watched = 0, unwatched = 0, overSlow = 0, resets = 0;
 	const early = [], needless = [];
-	// PM7PERF-WARMWATCH-BAR-IN-STEP (R18-4): a row logs the slow bar of its LAST interval, and the queue's rolling median
-	// can move inside one step (a 60 ms d1 resets the count against a 40 ms bar, and the median it then holds logs 90).
-	// The bar each interval met lies between the previous row's bar and this row's, as far as the log shows, so each
-	// count is reset on the side that cannot make a false failure: the count that judges a needless watch (lo) against
-	// the lower of the two, the count that judges an early drop (hi) against the higher.
+	// PM7PERF-WARMWATCH-BAR-IN-STEP (R18-4) and R53-C4. A row without per-interval bars logs the slow bar of its LAST
+	// interval. The bar a step's d1 met can lie between that and the previous row's bar or, when the median dips and
+	// recovers inside the step, under both (R53-C4). Those rows are bracketed: lo against the lower bar, hi against
+	// the higher. A row with the per-interval fields is not bracketed: resetAt is 1 or 2 for the interval that set the
+	// count back to zero, or 0 when neither did, and slow1/slow2 are the bars that comparison used.
 	let prevSlow = null;
+	const exactRow = (e) => [e.slow1, e.steady1, e.slow2, e.steady2].every((n) => Number.isFinite(n) && n > 0)
+		&& (e.resetAt === 0 || e.resetAt === 1 || e.resetAt === 2);
 	for (const e of steps) {
-  steady = Number.isFinite(e.steadyMs) && e.steadyMs > 0 ? e.steadyMs : fallbackSteady;
-  slow = Number.isFinite(e.slowMs) && e.slowMs > 0 ? e.slowMs : fallbackSlow;
-  if (steady === e.steadyMs && slow === e.slowMs) adaptive++;
-  const slowLo = prevSlow == null ? slow : Math.min(prevSlow, slow), slowHi = prevSlow == null ? slow : Math.max(prevSlow, slow);
-  prevSlow = slow;
+		steady = Number.isFinite(e.steadyMs) && e.steadyMs > 0 ? e.steadyMs : fallbackSteady;
+		slow = Number.isFinite(e.slowMs) && e.slowMs > 0 ? e.slowMs : fallbackSlow;
+		if (steady === e.steadyMs && slow === e.slowMs) adaptive++;
+		const slowLo = prevSlow == null ? slow : Math.min(prevSlow, slow), slowHi = prevSlow == null ? slow : Math.max(prevSlow, slow);
+		prevSlow = slow;
 		// the product's own word that the counter went back to zero since the row before, by an interval no row shows (an
 		// admission frame, or a step the page's hiding left unjudged): it holds on any row, one without frameMs too
 		if (e.watchReset === true) { hi = 0; lo = 0; resets++; }
 		const fm = e.frameMs; if (!fm || !fm.length) continue;
 		const worst = Math.max(...fm);
+		if (exactRow(e)) {
+			// resetAt is the decision. An interval that is plainly over its own bar counts as a reset too, so a row
+			// whose flag and bars disagree cannot hide a watch the bar required.
+			const over = (v, bar) => v > bar + 1;
+			const reset = e.resetAt > 0 || over(fm[0], e.slow1) || (fm.length > 1 && over(fm[1], e.slow2));
+			if (e.watched === false) {
+				gpu++; unwatched++;
+				if (reset || hi < KEEP) early.push(`${e.owner}:${e.name} at ${Math.round(e.t)} ms: at most ${hi} steady watches before it${e.resetAt > 0 ? `, reset at interval ${e.resetAt}` : ''}`);
+				if (reset) { hi = 0; lo = 0; overSlow++; }
+			} else if (fm.length === 3) {
+				gpu++; watched++;
+				if (!reset && lo >= KEEP) needless.push(`${e.owner}:${e.name} at ${Math.round(e.t)} ms [${fm.join(', ')}] after ${lo} or more steady watches`);
+				if (reset || worst > slow + 1) overSlow++;
+				if (reset) { hi = 0; lo = 0; }
+				// steadyMs is the bar watched() used after the watch's later frames. steady1 and steady2 are the bars
+				// at d1 and d2, which are not that bar.
+				if (worst <= steady - 1) { hi++; lo++; }
+				else if (worst <= steady + 1) { hi++; lo = 0; }
+				else { hi = 0; lo = 0; }
+			} else if (fm.length === 2) {
+				// a cpu step. A light chain's last watched step has no d2 bar, so it is not an exact row.
+				if (reset) { hi = 0; lo = 0; overSlow++; }
+			}
+			longest = Math.max(longest, lo);
+			continue;
+		}
 		if (worst > slowHi + 1) { hi = 0; lo = 0; overSlow++; if (e.watched === false) { gpu++; unwatched++; } else if (fm.length === 3) { gpu++; watched++; } continue; }
 		if (worst >= slowLo - 1) lo = 0;
 		if (e.watched === false) {

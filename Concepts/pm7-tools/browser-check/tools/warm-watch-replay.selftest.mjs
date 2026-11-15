@@ -162,9 +162,19 @@ const CASES = [
 		assert.equal(p.last.resets, 1);
 		assert.equal(p.rows.at(-1).watched, undefined, 'the step was watched');
 		assert.deepEqual([p.rows.at(-1).frameMs, p.rows.at(-1).slowMs, p.rows.at(-1).steadyMs], [[45, 16, 16], 48, 25]);
+		assert.equal(p.rows.at(-1).resetAt, 1, 'd1 is the interval that reset the count');
+		assert.deepEqual([p.rows.at(-1).slow1, p.rows.at(-1).steady1, p.rows.at(-1).slow2, p.rows.at(-1).steady2], [40, 25, 40, 25], 'the bars d1 and d2 were judged against, under both endpoint bars');
 		console.log(`product admitted ${JSON.stringify(p.admitted)}, last ${JSON.stringify(p.last)}, row ${JSON.stringify(p.rows.at(-1))}`);
 		return p.rows;
-	}, { needless: 0, early: 0 }]
+	}, { needless: 0, early: 0 }],
+	// an old log has no slow1/steady1/slow2/steady2/resetAt. The 60 ms d1 is over the previous row's 40 ms bar and
+	// under this row's 90, so only the bracket keeps it from being called needless.
+	['old log: a bar that rose from 40 to 90 inside a step, with no per-interval fields, is still judged by the bracket',
+		() => {
+			const rows = log(watched(16).map((r) => ({ ...r, steadyMs: 25, slowMs: 40 })), step([60, 30, 30], { steadyMs: 45, slowMs: 90 }));
+			if (rows.some((r) => r.slow1 != null || r.resetAt != null)) throw new Error('this case is an old log');
+			return rows;
+		}, { needless: 0, early: 0 }]
 ];
 
 let failed = 0;
