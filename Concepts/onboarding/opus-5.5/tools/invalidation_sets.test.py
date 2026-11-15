@@ -85,6 +85,15 @@ class InvalidationSetsTests(unittest.TestCase):
         self.assertEqual(len(self.problems(r'[aria\-selected="true"] * { color:red }')), 1)
         self.assertEqual(len(self.problems(r'.card:hover .t\69 tle { color:red }')), 0)  # keyed on .title, escaped
 
+    # R51 F3: escapes decode in one pass; \5c is a literal backslash in the name, so ':\5c hover' is not :hover
+    def test_escape_decoded_once(self):
+        self.assertEqual(lint.css_unescape(r'\5c hover'), '\\hover')
+        self.assertEqual(lint.css_unescape(r'\\68 over'), '\\68 over')
+        self.assertEqual(lint.css_unescape(r'hov\65 r'), 'hover')
+        self.assertEqual(lint.css_unescape(r'pmh\-on'), 'pmh-on')
+        self.assertEqual(self.problems(r'.card:\5c hover * { color:red }'), [])
+        self.assertEqual(len(self.problems(r'.card:\68 over * { color:red }')), 1)
+
     # PM7PERF-LINT-SCOPE-ROOT (R18-2): a scope root's (and limit's) state is the state of the rules inside
     def test_scope_root_state(self):
         self.assertEqual(len(self.problems('@scope (.card:hover) { * { color:red } }')), 1)

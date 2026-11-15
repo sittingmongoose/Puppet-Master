@@ -69,11 +69,14 @@ def _esc_len(text: str, i: int) -> int:
 
 
 def css_unescape(name: str) -> str:
-    def hexchar(m):
+    """Decode hex and one-character escapes in one pass: a decoded backslash (\\5c) is a literal character and is never
+    read again as the start of another escape (R51 F3: two passes turned '\\5c hover' into 'hover')."""
+    def one(m):
+        if m.group(1) is None:
+            return m.group(2)
         v = int(m.group(1), 16)
         return '\ufffd' if v == 0 or v > 0x10FFFF or 0xD800 <= v <= 0xDFFF else chr(v)
-    name = re.sub(r'\\([0-9a-fA-F]{1,6})(?:\r\n|[ \t\r\n\f])?', hexchar, name)
-    return re.sub(r'\\(.)', r'\1', name, flags=re.S)
+    return re.sub(r'\\(?:([0-9a-fA-F]{1,6})(?:\r\n|[ \t\r\n\f])?|(.))', one, name, flags=re.S)
 
 
 def _top_parts(text: str, separator: str) -> list[str]:
