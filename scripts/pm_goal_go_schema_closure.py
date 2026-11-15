@@ -519,6 +519,32 @@ def contradicted_branch(info, nodes):
             'definition unconditionally requires it (' + first['required_by'] + ') and types it non-null (' + first['nonnull_type'] + ')')
 
 
+def forbidden_member(info, nodes):
+    """GO addition, a checked UNREACHABLE proof: every reach of the clause lies at (or under) an object member P that
+    the same definition unconditionally forbids at that object (a node reached with no conditional or union context
+    holding `not: {required: [..P..]}` and nothing else under `not`), so no valid instance has the member."""
+    reasons = []
+    for reach in info['reach']:
+        found = None
+        for depth in range(len(reach['ipath'])):
+            member, parent = reach['ipath'][depth], reach['ipath'][:depth]
+            if not isinstance(member, str):
+                continue
+            for loc, n in nodes.items():
+                negated = n['node'].get('not') if isinstance(n['node'].get('not'), dict) else None
+                if (negated and set(negated) - {'x-pm-oracle-id'} == {'required'} and member in negated['required']
+                        and any(r['ipath'] == parent and not r['ctx'] for r in n['reach'])):
+                    found = ('forbidden member: `' + member + '` is excluded unconditionally by ' + loc + '/not (required '
+                             + json.dumps(negated['required']) + '), so no valid instance reaches this clause')
+                    break
+            if found:
+                break
+        if not found:
+            return None
+        reasons.append(found)
+    return reasons[0] if reasons else None
+
+
 def error_repair(v, value, keep, rounds=16):
     """GO addition: error-guided branch-control repair. Each round fixes the deepest failing nodes the owner
     validator itself reports (a missing required member is generated from its owner subschema, an unexpected
@@ -569,28 +595,35 @@ def error_repair(v, value, keep, rounds=16):
     return value if not errors_of(v, value) else None
 
 
-def flip_repair(v, value, path, parents):
-    """GO addition: switch one boolean or enum sibling of the realized member (a branch selector), then
-    error-guided repair; returns a value the whole definition accepts, or None."""
-    if not path:
-        return None
-    parent_path, member = path[:-1], path[-1]
-    for obj_node, resolver in parents:
-        for k, sub in obj_node.get('properties', {}).items():
-            sub = deref(sub, resolver)[0]
-            choices = sub.get('enum', [])[:8] or ([True, False] if sub.get('type') == 'boolean' else [])
-            for choice in choices:
-                candidate = copy.deepcopy(value)
-                try:
-                    target = get(candidate, parent_path)
-                except (KeyError, IndexError, TypeError):
-                    return None
-                if not isinstance(target, dict) or k == member or target.get(k) == choice:
+def flip_repair(v, value, path, ipath, by_ipath, limit=48):
+    """GO addition: switch one boolean or enum member (a branch selector) of the realized member's parent object or of
+    any ancestor object, never on the realized member's own path, then error-guided repair; returns a value the
+    whole definition accepts, or None. Nearest ancestors first; at most `limit` switches."""
+    tried = 0
+    for depth in range(len(path) - 1, -1, -1):
+        prefix = path[:depth]
+        on_path = path[depth]
+        for obj_node, resolver in [(n, res) for _, n, res in by_ipath.get(tuple(ipath[:depth]), []) if 'properties' in n]:
+            for k, sub in obj_node.get('properties', {}).items():
+                if k == on_path:
                     continue
-                target[k] = copy.deepcopy(choice)
-                repaired = error_repair(v, candidate, path, rounds=8)
-                if repaired is not None:
-                    return repaired
+                sub = deref(sub, resolver)[0]
+                choices = sub.get('enum', [])[:8] or ([True, False] if sub.get('type') == 'boolean' else [])
+                for choice in choices:
+                    candidate = copy.deepcopy(value)
+                    try:
+                        target = get(candidate, prefix)
+                    except (KeyError, IndexError, TypeError):
+                        return None
+                    if not isinstance(target, dict) or target.get(k) == choice:
+                        continue
+                    target[k] = copy.deepcopy(choice)
+                    tried += 1
+                    repaired = error_repair(v, candidate, path, rounds=8)
+                    if repaired is not None:
+                        return repaired
+                    if tried >= limit:
+                        return None
     return None
 
 
@@ -662,6 +695,17 @@ def defects(keyword, node, here):
             out = [None, 'gc']
     elif keyword == 'minProperties':
         out = [{}]
+    elif keyword == 'maxProperties' and isinstance(here, dict) and here:  # GO addition
+        n = node['maxProperties']
+        grown = dict(here)
+        first = next(iter(here))
+        index = 0
+        while len(grown) <= n and index <= 64:
+            key = first[:-1] + format(index % 16, 'x') if first else 'k' + str(index)
+            index += 1
+            if key not in grown:
+                grown[key] = copy.deepcopy(here[first])
+        out = [grown]
     elif keyword == 'contains':
         out = [[]]
     elif keyword == 'multipleOf':
@@ -799,7 +843,7 @@ def close_root(root, v, seeds, budget):
                                 try:
                                     base = error_repair(v, realized, path)
                                     if base is None:
-                                        base = flip_repair(v, realized, path, parents)
+                                        base = flip_repair(v, realized, path, reach['ipath'], by_ipath)
                                 except Exception:  # noqa: BLE001 - a failed construction attempt
                                     base = None
                             if base is None:
@@ -852,7 +896,7 @@ def close_root(root, v, seeds, budget):
                 if best and best['cls'] == 'KILLED':
                     break
             if best is None:
-                proof = contradicted_branch(info, nodes)
+                proof = contradicted_branch(info, nodes) or forbidden_member(info, nodes)
                 if proof:
                     best = dict(cls='UNREACHABLE', proof=proof)
             entries[clause] = best or dict(cls='UNCOVERED', construction_attempts=attempts)
