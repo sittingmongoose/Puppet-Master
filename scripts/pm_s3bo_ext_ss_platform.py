@@ -145,7 +145,7 @@ def evaluate(ss, run):
                              selected_evidence_ref=chosen['evidence_ref'], evidence_refs=[copy.deepcopy(f['evidence']) for f in ordered])
 
 
-def expected_row(ss, run, decision, receipt):
+def expected_row(ss, run, decision, receipt, stored=None):
     request = run['request']; ident = ids(request)
     frozen = dict(request_projection(request), event_id=ident['event_id'], idempotency_key=ident['idempotency_key'], payload=decision,
                   redaction_profile='no_secrets', replay_policy='dedupe_by_idempotency_key',
@@ -161,9 +161,10 @@ def expected_row(ss, run, decision, receipt):
                                   'selected_entry': copy.deepcopy(run.get('catalog', ss['catalog'])['entries'][request['subject']['capability_ref']['capability_id']])},
             'source_decisions': [{k: copy.deepcopy(v) for k, v in f.items() if k != 'checks'} for f in facts],
             'frozen_producer_input': frozen, 'frozen_input_sha256': rjson_sha(frozen),
-            'original_storage_fields': {'sequence_id': receipt['sequence_id'], 'observed_at_utc': receipt['acknowledged_at_utc'],
-                                        'persisted_at_utc': receipt['acknowledged_at_utc']},
-            'append_receipt': copy.deepcopy(receipt), 'committed_at_utc': receipt['acknowledged_at_utc']}
+            # Storage's three original assignments join the stored event's own fields and the receipt's sequence.
+            'original_storage_fields': {'sequence_id': receipt['sequence_id'], 'observed_at_utc': (stored or {}).get('observed_at_utc'),
+                                        'persisted_at_utc': (stored or {}).get('persisted_at_utc')},
+            'append_receipt': copy.deepcopy(receipt)}
 
 
 def expected_read(ss, run):
@@ -244,7 +245,13 @@ def operands(case, put, common):
         if isinstance(resp.get('append_receipt'), dict):
             times.append((('runs', n, 'response'), resp['append_receipt'].get('acknowledged_at_utc')))
     time_errors = s.time_errors(times, w.EVENT_RECORD)
+    custody_times = [(('store', k, field), row.get(field)) for k, row in sorted(ss['store'].items()) for field in ('committed_at_utc',)]
+    custody_times += [(('store', k, 'original_storage_fields', field), (row.get('original_storage_fields') or {}).get(field))
+                      for k, row in sorted(ss['store'].items()) for field in ('observed_at_utc', 'persisted_at_utc')]
+    time_errors += s.time_errors(custody_times, w.STORAGE_UTC_Z)
     put('ss_pf_time', time_errors)
+    if time_errors:
+        return  # shared date-time owns every timestamp before the closed schemas (their format and Z patterns) are read
     schema = [['row', k] + e for k, row in sorted(ss['store'].items()) for e in sr.keyword_errors(DECISION_ROOT, row)]
     for n, run in enumerate(ss['runs']):
         if run['kind'] == 'evaluate':
@@ -278,12 +285,13 @@ def operands(case, put, common):
         env_l.append([frozen.get(k) for k in ENVELOPE] + [k in frozen for k in ('sequence_id', 'observed_at_utc', 'persisted_at_utc')])
         env_r.append([env[k] for k in ENVELOPE] + [False, False, False])
         receipt = ss['custody'].get(frozen.get('event_id'))
-        want = expected_row(ss, run, payload, receipt) if receipt else None
-        keep = ('state', 'request', 'catalog_selection', 'source_decisions', 'original_storage_fields', 'append_receipt', 'committed_at_utc',
+        want = expected_row(ss, run, payload, receipt, ss['events'].get(frozen.get('event_id'))) if receipt else None
+        keep = ('state', 'request', 'catalog_selection', 'source_decisions', 'original_storage_fields', 'append_receipt',
                 'storage_instance_id', 'schema_id', 'schema_version')
         row_l.append([{k: row.get(k) for k in keep}, ss['events'].get(frozen.get('event_id'))])
-        stored = dict(frozen, sequence_id=receipt['sequence_id'], observed_at_utc=receipt['acknowledged_at_utc'],
-                      persisted_at_utc=receipt['acknowledged_at_utc']) if receipt else None
+        assigned = ss['events'].get(frozen.get('event_id')) or {}
+        stored = dict(frozen, sequence_id=receipt['sequence_id'], observed_at_utc=assigned.get('observed_at_utc'),
+                      persisted_at_utc=assigned.get('persisted_at_utc')) if receipt else None
         row_r.append([{k: want[k] for k in keep} if want else None, stored])
     put('ss_pf_decision', dec_l, dec_r)
     put('ss_pf_ref', ref_l, ref_r)
