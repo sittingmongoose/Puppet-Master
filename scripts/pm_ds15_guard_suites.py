@@ -9,7 +9,8 @@ Every witness of both DS15 checkers runs once under the checker's observation re
 - the deck-2 cases and their bases, policy cases and schema cases of pm-ds15-deck2-contracts.py;
 - the shared NUMRULE number-corpus routes of pm-ds15-number-corpus.py;
 - the sweep part 2A witnesses of Plans/ds15_p2a_cases.json;
-- the sweep part 2B witnesses of Plans/ds15_p2b_cases.json (CV-1101 date-time, SP-1101 dispatch).
+- the sweep part 2B witnesses of Plans/ds15_p2b_cases.json (CV-1101 date-time, SP-1101 dispatch);
+- the C12-DS15 own-family witnesses of Plans/ds15_c12_cases.json and their parents (the seven deck-2 families).
 
 An accepted (or passing) phase evaluation is a control of its table. A refused invocation gives
 the observation of the phase holding its FIRST refusal as a negative, targeted at the refusing
@@ -37,6 +38,7 @@ TABLE_PREFIX = m16.TABLE_PREFIX
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 P2A_CASES = ROOT / 'Plans/ds15_p2a_cases.json'
 P2B_CASES = ROOT / 'Plans/ds15_p2b_cases.json'
+C12_CASES = ROOT / 'Plans/ds15_c12_cases.json'
 
 
 # Witnesses kept refused in the full checker but not used as table-row proof: two rows of one
@@ -225,6 +227,9 @@ def witness_calls():
     if P2B_CASES.exists():
         import pm_ds15_p2b_cases as p2b
         out.extend(p2b.witness_calls(m16, deck))
+    if C12_CASES.exists():
+        import pm_ds15_c12_cases as c12
+        out.extend(c12.witness_calls(m16, deck))
     return out
 
 
@@ -290,7 +295,9 @@ def collect(flips=False, progress=None):
                 k = key(observed)
                 if k not in slot['controls']:
                     slot['controls'][k] = dict(id=f'control/{phase}/{len(slot["controls"])}', value=observed,
-                                               witness=wid, family=family, accepted=not refused)
+                                               witness=wid, family=family, accepted=not refused, families=[family])
+                elif family not in slot['controls'][k]['families']:
+                    slot['controls'][k]['families'].append(family)  # --family runs keep every family's own controls
                 first_records.setdefault((wid, phase), slot['controls'][k]['id'])
         if refused:
             counts['refused'] += 1
@@ -364,6 +371,12 @@ def tool_cases(slot, negative_limit, control_limit):
             chosen_controls.append(by_id[n['control']])
             ids.add(n['control'])
     return chosen_controls, negatives
+
+
+def family_slot(slot, family):
+    """The controls and negatives one family's own witnesses produced (a --family tool run uses only these)."""
+    return dict(controls={k: v for k, v in slot['controls'].items() if family in v.get('families', [v['family']])},
+                negatives={k: v for k, v in slot['negatives'].items() if family in v['families']})
 
 
 def suite_for(phase, slot, negative_limit=10, control_limit=10):

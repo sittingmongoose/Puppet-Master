@@ -616,19 +616,30 @@ module('rd_resolve', 'SP-1101 authenticated original: one RetainedDispatcher res
      '(RetainedDispatcher original_verification)', 'original_refused',
      "value['dispatch_refusal'] == 'original_verification'"),
 ])
-module('rd_resolve_entailed', 'SP-1101 dispatcher refusals this composition cannot produce first (entailed).', [
+# C12-DS15: each entailed SP-1101 dispatcher row sits alone in its own table (one follower chain after rd_resolve),
+# so no unproved row shares a table; the proof of each is checked by scripts/pm-c12-ds15-closure.py --mode entailed.
+module('rd_resolve_entailed_sx03', 'SP-1101 dispatcher: original_query cannot come first (entailed by rd_recipe SX08).', [
     ('SX03_original_sealed', '/dispatch_refusal', 'this Storage instance holds a sealed original at the original ref '
      '(RetainedDispatcher original_query); entailed: rd_recipe SX08 refuses first every original without a sealed '
      'receipt at that ref with its exact commitment, which is what the sealed original owner looks up',
      'original_refused', "value['dispatch_refusal'] == 'original_query'"),
+])
+module('rd_resolve_entailed_sx04', 'SP-1101 dispatcher: original_authority cannot come first (entailed by rd_recipe SX08).', [
     ('SX04_original_authentic', '/dispatch_refusal', 'the fetched original bytes are the bytes sealed at that ref: their '
      'CV-339 full-value commitment is the sealed one (RetainedDispatcher original_authority); entailed: SX08 selects '
-     'only by that same commitment, so a fetched original whose commitment has no receipt refuses there first',
+     'only by that same commitment, so a fetched original whose commitment has no receipt refuses there first; every '
+     'sealed entry names one of the 23 DS15 families, so the owner always finds its contract',
      'original_refused', "value['dispatch_refusal'] == 'original_authority'"),
+])
+module('rd_resolve_entailed_sx06', 'SP-1101 dispatcher: recipe_unknown cannot come first (entailed by rd_recipe SX02 and current custody manifests).', [
     ('SX06_recipe_known', '/dispatch_refusal', "the original's sealed recipe tuple has an installed frozen verifier "
-     '(RetainedDispatcher recipe_unknown; no other verifier is probed); entailed: the owner returns the tuple of the '
-     'same one receipt rd_recipe selected, and SX02 refuses first a receipt whose recipe has no installed verifier',
+     '(RetainedDispatcher recipe_unknown; no other verifier is probed); entailed: SX02 refuses first a receipt whose '
+     'recipe is not installed, installed_recipes holds every DS15 family under every installed recipe, and every '
+     "custody resource manifest equals this head's recipe_resource_manifest, so the owner's tuple for the sealed "
+     "entry's family is installed whenever the selected one is",
      'original_refused', "value['dispatch_refusal'] == 'recipe_unknown'"),
+])
+module('rd_resolve_entailed_sx07', 'SP-1101 dispatcher: no other dispatcher refusal can come first (entailed).', [
     ('SX07_dispatch_other', '/dispatch_refusal', 'no other RetainedDispatcher refusal (original_binding, '
      'original_ambiguous, caller_recipe_override, recipe_selection, original_bytes_type, current_disclosure); '
      'entailed: the owner is the custody of the Storage instance read and the commitment covers every event field '

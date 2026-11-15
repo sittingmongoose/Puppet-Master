@@ -21,7 +21,7 @@ retained recipe selection (rd_recipe) or to the retained resolution (rd_resolve)
 holds it; the part 2B positives marked 'seal' are sealed as written originals (so are the owner-invalid retained originals T13 and T14,
 which Storage sealed but whose frozen verifier refuses them); and the wrong-tuple,
 older-recipe and doubly sealed originals the SX05, SX02 and SX09 witnesses need are sealed with exactly those
-recipes. The other part 2B negatives are never sealed. At check time the case under check never adds to it.
+recipes (part 2B and the C12-DS15 deck-2 retained witnesses of pm_ds15_c12_cases.py). The other part 2B negatives are never sealed. At check time the case under check never adds to it.
 """
 import copy
 import json
@@ -436,7 +436,7 @@ def build_custody():
         model.select_original_recipe = selecting(model)
     try:
         for wid, family, kind_name, pair, run_call in suites.witness_calls():
-            if wid.startswith('p2b/'):
+            if wid.startswith(('p2b/', 'c12/')):
                 continue
             reached.clear()
             suites.run_recorded(run_call)
@@ -464,6 +464,16 @@ def build_custody():
                     for event_type, recipe in [extra.get('seal_as') or (None, 'ds15-v1'), *extra.get('seal_also', [])]:
                         row = binding_row(m16, data, event_type, recipe)
                         sealed[json.dumps(row, sort_keys=True)] = row
+        # C12-DS15: the deck-2 retained witnesses that need a deliberately sealed original (SX09 sealed twice, SX02
+        # under the older recipe, SX05 under another family) are sealed with exactly those recipes; every other C12
+        # witness is a negative and is never sealed (its parent base is sealed above).
+        import pm_ds15_c12_cases as c12
+        for w in c12.retained_witnesses():
+            if w.get('seal_as'):
+                _, data, _ = c12.build(deck, w)
+                for event_type, recipe in [w['seal_as'], *w.get('seal_also', [])]:
+                    row = binding_row(m16, data, event_type, recipe)
+                    sealed[json.dumps(row, sort_keys=True)] = row
     finally:
         for model, original, select in zip(models, saved, saved_select):
             model.resolve_refusal = original

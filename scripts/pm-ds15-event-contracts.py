@@ -521,14 +521,21 @@ FOLLOWERS = {'env_scope': 'env_scope_entailed', 'tr_browser_a': 'tr_browser_a_en
              'tr_dev_a': 'tr_dev_a_entailed', 'tr_preview_b': 'tr_preview_b_entailed',
              'tr_preview_origin': 'tr_preview_origin_entailed', 'd2_env_b': 'd2_env_b_entailed',
              'd2_env_storage': 'd2_env_storage_entailed', 'd2_env_c': 'd2_env_c_entailed',
-             'd2_pl_gate': 'd2_pl_gate_entailed', 'rd_resolve': 'rd_resolve_entailed'}
+             'd2_pl_gate': 'd2_pl_gate_entailed',
+             # C12-DS15: one singleton table per entailed dispatcher row, in the former table order.
+             'rd_resolve': ('rd_resolve_entailed_sx03', 'rd_resolve_entailed_sx04', 'rd_resolve_entailed_sx06',
+                            'rd_resolve_entailed_sx07')}
 
 
 def refused(phase, **facts):
     if refusal(phase, facts) is not None:
         return True
-    follower = FOLLOWERS.get(phase)
-    return follower is not None and refusal(follower, facts) is not None
+    followers = FOLLOWERS.get(phase, ())
+    # One follower table, or a chain of singleton follower tables evaluated in order (the first refusing one stops).
+    for follower in (followers,) if isinstance(followers, str) else followers:
+        if refusal(follower, facts) is not None:
+            return True
+    return False
 
 
 def table_order_errors():

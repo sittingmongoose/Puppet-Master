@@ -1,0 +1,1093 @@
+#!/usr/bin/env python3
+"""C12-DS15 closure evidence for the seven deck-2 families (PNC-019 criterion 12).
+
+Usage: python3 scripts/pm-c12-ds15-closure.py --mode MODE --out <dir> [--guard <gated report dir>]
+
+Modes (each writes JSON under --out; nothing here decides a checker result, every verdict is the unmodified
+deck-2 checker's own, observed through its guard-row recorder):
+  entailed  proof of every row a deck-2 family reaches that no single-defect input of that family can refuse first:
+            the tool-unproved singleton tables and the family-constant / earlier-boundary rows, each with exact
+            path:line anchors and the mechanical checks that hold at this head
+  schema    every schema occurrence the complete deck-2 boundaries evaluate (payload, contexts, owner source, owner
+            bank, EventRecord current/retained/original, AppendReceipt/custody/result, original evidence, index
+            inputs, checkpoint, request transition): eager reference closure, the evaluated clause inventory, one
+            directed proposal per clause through the real DS15 validator (isolated to that clause, or INVALID), and
+            the same proposal placed in the complete operation input with its exact expected first refusal
+  datetime  every format: date-time node and Storage UTC-Z field on the deck-2 boundaries and the shared timestamp
+            battery (scripts/pm_event_datetime_timestamp_battery.json) through every site, expected outcome
+            composed from pm_event_datetime.date_time alone
+  retained  every retained route (read, checkpoint, rebuild, recover, publish, receipt boundary, writer withdrawal)
+            of every family base and case, plus the C12 retained witnesses, each with sealed-custody snapshots
+            before and after (the Plans file bytes and the composed in-memory custody); no read may change either
+  numbers   the shared number corpus through the seven families' complete routes (pm-ds15-number-corpus.py
+            routes) and the 4,400-digit integer check
+  matrix    owner clause -> guard row -> family controls / own negatives -> gated cut / restoration, per family
+"""
+import argparse
+import copy
+import hashlib
+import importlib.util
+import json
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'scripts'))
+import pm_ds15_c12_cases as c12  # noqa: E402
+
+FAMILIES = c12.FAMILIES
+OPS = ('payload', 'envelope_boundary', 'receipt_boundary', 'checkpoint_boundary', 'event_schema', 'payload_schema',
+       'index_boundary', 'recover', 'publish', 'read', 'checkpoint', 'rebuild', 'withdraw_writer')
+RETAINED_OPS = ('read', 'checkpoint', 'rebuild', 'recover', 'publish', 'receipt_boundary', 'withdraw_writer')
+ASSERTIONS = ('type', 'const', 'enum', 'required', 'additionalProperties', 'minLength', 'maxLength', 'pattern',
+              'format', 'minimum', 'maximum', 'minItems', 'maxItems', 'uniqueItems', 'anyOf', 'oneOf', 'allOf', 'not',
+              'if', 'then', 'else', '$ref', 'minProperties', 'maxProperties', 'propertyNames', 'dependentRequired')
+APPLICATORS = ('allOf', 'if', 'then', 'else', '$ref')
+
+
+def sha(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':'), default=repr).encode()).hexdigest()
+
+
+def file_sha(path):
+    return hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
+
+
+def anchor(path, text):
+    """path:line of the first line containing text (exact), with the file's SHA-256; AssertionError if absent."""
+    lines = (ROOT / path).read_text().splitlines()
+    for i, line in enumerate(lines, 1):
+        if text in line:
+            return {'path': path, 'line': i, 'quote': text, 'sha256': file_sha(path)}
+    raise AssertionError(f'anchor not found: {path}: {text!r}')
+
+
+def load():
+    m16, deck = c12.load_models()
+    return m16, deck
+
+
+def recorded(deck, call):
+    return c12.recorded(deck, call)
+
+
+def first_refusal(records):
+    first = next((r for r in records if r[2] is not None), None)
+    return None if first is None else [first[0], first[2][0], first[2][1]]
+
+
+def valid_parents(deck, family):
+    """(base, op) pairs of this family whose evaluation records no refusal and returns a non-refusing result."""
+    c, f = c12.contract(deck, family), c12.fixture(deck, family)
+    out = []
+    for base, data in f['bases'].items():
+        for op in OPS:
+            result, records = recorded(deck, lambda: deck.evaluate(c, op, copy.deepcopy(data)))
+            if c12.refused_result(result) is False and first_refusal(records) is None:
+                out.append((base, op))
+    return out
+
+
+# =========================================================================== entailed
+def entailed(m16, deck, out):
+    b = deck.base
+    E = 'scripts/pm-ds15-event-contracts.py'
+    D = 'scripts/pm-ds15-deck2-contracts.py'
+    G = 'scripts/pm-ds15-table-generate.py'
+    contracts = {c['event_type']: c for c in deck.read('Plans/ds15_deck2_contracts.json')}
+    custody = b.original_custody()
+    checks = {}
+
+    # Mechanical facts about this head's composition and owner schemas.
+    current = {name: b.recipe_resource_manifest(cc['payload_schema_ref'], b.context_schema_ref(cc))
+               for name, cc in [(n, b.contract_of(n)) for n in custody['manifests']]}
+    checks['custody_manifests_current'] = all(custody['manifests'][n] == current[n] for n in current)
+    known = {c['event_type'] for c in b.read('Plans/ds15_event_contracts.json')} | set(contracts)
+    entries = [(k, e) for k, v in custody['sealed'].items() for e in v]
+    checks['sealed_entries_name_known_families'] = all(e[1] in known for _, e in entries)
+    checks['sealed_bindings_match_their_key'] = all(
+        e[0].storage_instance_id == k[0] and e[0].event_id == k[1] and e[0].server_id == b.DS15_SERVER for k, e in entries)
+    checks['installed_recipes_cover_every_family'] = len(b.installed_recipes()) == len(known) * len(b.INSTALLED_RECIPES)
+    resolve_src = (ROOT / E).read_text()
+    checks['resolve_passes_no_override_and_discloses'] = (
+        'installed_recipes()).resolve(\n            event[\'event_id\'], expected, disclose=lambda binding: True)' in resolve_src)
+    checks['commitment_call_sites'] = sorted({ln.strip() for ln in resolve_src.splitlines()
+                                             if re.search(r'(?<![_\w])commitment\(', ln) and 'def commitment' not in ln})
+    payload_bounds, run_null, source_type, no_numbers, closed_scope = {}, {}, {}, {}, {}
+    ctx = b.read('Plans/ds15_deck2_context.schema.json')['$defs']
+    src = b.read('Plans/ds15_deck2_sources.schema.json')['$defs']
+    for name, c in contracts.items():
+        payload = b.read(c['payload_schema_ref'])
+        no_numbers[name] = not re.search(r'"(integer|number)"', json.dumps(payload))
+        payload_bounds[name] = worst_case_size(b, payload)
+        run_null[name] = ctx[name]['properties']['envelope_run_id'] in ({'type': 'null'}, {'const': None})
+        source_type[name] = src[name]['properties']['event_type'].get('const') == name
+        cp = b.read(c['checkpoint_schema_ref'])
+        closed_scope[name] = dict(checkpoint_project_id='project_id' in cp['properties'],
+                                  checkpoint_scope='scope' in cp['properties'],
+                                  payload_project_id='project_id' in payload['properties'],
+                                  payload_scope='scope' in payload['properties'],
+                                  closed=cp['additionalProperties'] is False and payload['additionalProperties'] is False)
+    checks['deck2_payload_worst_case_bytes'] = payload_bounds
+    checks['deck2_payload_has_no_number_slot'] = no_numbers
+    checks['deck2_context_envelope_run_id_null'] = run_null
+    checks['deck2_source_event_type_const'] = source_type
+    checks['deck2_checkpoint_payload_scope_members'] = closed_scope
+    index_slots = integer_slot_names(b.read('Plans/ds15_index_inputs.schema.json'))
+    checks['index_inputs_integer_slots'] = sorted(index_slots)
+    checks['index_inputs_slots_are_authority_integers'] = index_slots <= set(b.AUTHORITY_INTEGERS)
+    id_patterns = {}
+    for name, c in contracts.items():
+        props = b.read(c['payload_schema_ref'])['properties']
+        for field in c['identity_fields']:
+            pattern = props[field].get('pattern')
+            id_patterns[f'{name}/{field}'] = bool(pattern) and re.fullmatch(pattern, 'x\ud800') is None
+    checks['identity_field_patterns_exclude_lone_surrogates'] = id_patterns
+    checks['browser_families'] = {n: deck.n_is_browser(c) for n, c in contracts.items()}
+    checks['payload_strings_patterned'] = {
+        n: all(sub.get('const') is not None or (sub.get('type') == 'string' and sub.get('pattern')
+                                               and re.fullmatch(sub['pattern'], 'x\ud800') is None)
+               for sub in b.read(c['payload_schema_ref'])['properties'].values())
+        for n, c in contracts.items() if c['scope_policy'] == 'project_only'}
+
+    tool_unproved = [
+        dict(table='cm_value', row='CM02_commitment_computable', anchors=[
+            anchor(E, "    receipts = sealed_receipts(storage_instance_id, d) if sealed else None"),
+            anchor(E, "        ref, commitment = event['event_id'], full_value_commitment(event)"),
+            anchor(E, "    except (Refusal, KeyError, TypeError, AttributeError, ValueError):"),
+            anchor(E, "    if refused('cm_value', commitment_refusal=refusal_reason(full_value_commitment, event)):")],
+             proof=('commitment() runs only inside receipt_ok (and the predicate harness), after selected_recipe on the same '
+                    "operation input: select_original_recipe computes full_value_commitment of the same d['original']['event'] in "
+                    'sealed_receipts, which returns no receipt when that raises a Refusal, so rd_recipe SX08 refuses first; '
+                    'nothing changes the event between the two calls'),
+             mechanical=['commitment_call_sites']),
+        dict(table='cp_range_entailed', row='CN03_contiguous', anchors=[
+            anchor(G, "('CS04_source_contiguous', '/source_sequences'"), anchor(G, "('CN02_rows', '/index_rows'"),
+            anchor(G, "('CS03_source_high', '/source_last_sequence'"), anchor(G, "('CN05_selected_high', '/scan_high'")],
+             proof='the source rows are first..last (CS04), the index rows are exactly the source rows in low..high (CN02) and '
+                   'high is the source high (CS03, CN05), so the index row sequences are low..high'),
+        dict(table='cp_row_entailed', row='CR03_row_original_read', anchors=[
+            anchor(E, "                nested = evaluate(c, 'read', original).get('result') if original is not d else None")],
+             proof='the nested read of a matching row records its own first refusal (a row of the nested evaluation) before '
+                   'CR03 sees its result'),
+        dict(table='d2_env_b_entailed', row='DE06_scope_kind', anchors=[
+            anchor('Plans/event_record.schema.json', '"scope_kind"'), anchor(G, "('DE07_project', '/project_id'")],
+             proof='the EventRecord schema ties scope_kind application to a null project_id and project to a non-empty one, '
+                   'so a kind mismatch is a schema error first or also a project mismatch (DE07)'),
+        dict(table='d2_env_c_entailed', row='ER05_record_event_type', anchors=[
+            anchor(D, "    schema = read('Plans/ds15_deck2_sources.schema.json')['$defs'][c['event_type']]")],
+             proof="sch_d2_source validates the owner record against its own family definition, whose event_type is const the "
+                   'family name, before d2_env_c', mechanical=['deck2_source_event_type_const']),
+        dict(table='d2_env_storage_entailed', row='DE14_inline_limit', anchors=[
+            anchor(D, "    if refused('d2_env_storage', scope_partition=d['scope_partition'],")],
+             proof='every deck-2 payload schema is closed and bounds every string; the worst-case EVENT_VALUE size of a '
+                   'maximal payload (every string at its maxLength in 4-byte UTF-8, every optional member present) is below '
+                   '16,384 bytes', mechanical=['deck2_payload_worst_case_bytes']),
+        dict(table='d2_pl_gate_entailed', row='PG05_no_run', anchors=[
+            anchor(D, "    if refused('d2_pl_gate', owner_command_authorized=x['owner_command_authorized'],")],
+             proof="the deck-2 context schema fixes envelope_run_id to null for every family, and sch_d2_context runs first "
+                   '(payload_ok)', mechanical=['deck2_context_envelope_run_id_null']),
+        dict(table='ev_original_ids_entailed', row='OC04_event_payload', anchors=[
+            anchor(E, "        if refused('ev_original_copies', payload=tx(p), original_payload=tx(o['payload']), outcome_payload=tx(out['payload'])):"),
+            anchor(D, "    if refused('d2_env_b', scope_kind=e['scope_kind']")],
+             proof="the payload equals the original payload (OC01), the envelope payload equals the payload (DE08) and the "
+                   "envelope's producer digest equals the original event's (EN17 on retry; the retained envelope is the "
+                   'original on reads), so the original event payload already equals it'),
+        dict(table='id_scope_entailed', row='ID02_scope_object', anchors=[
+            anchor(E, "    if identity_fields_refused(c, payload, recipe):")],
+             proof="sch_id_fields validates every identity field and scope against its payload property schema (an object) "
+                   'before ID02'),
+        dict(table='sch_id_fields_v1', row='ID_FIELDS_V1_schema', anchors=[
+            anchor(D, "                       expected_key=base.identity(c, p, source, recipe))")],
+             proof='the retained identity is recomputed from the payload p, which sch_payload_v1 validated first with the same '
+                   'property subschemas (identity fields and scope included)'),
+        dict(table='sch_id_fields_v1_n', row='ID_FIELDS_V1_numbers', anchors=[
+            anchor(D, "                       expected_key=base.identity(c, p, source, recipe))")],
+             proof='as ID_FIELDS_V1_schema, and the deck-2 payload schemas declare no number slot',
+             mechanical=['deck2_payload_has_no_number_slot']),
+        dict(table='sch_index_inputs_n', row='INDEX_INPUTS_numbers', anchors=[
+            anchor(E, "AUTHORITY_INTEGERS = frozenset({"), anchor(E, "    if not authority_types_ok(d):")],
+             proof='every integer slot of the index inputs schema is a named authority integer, which the authority type walk '
+                   '(AT02/AT03) refuses first over the whole operation input',
+             mechanical=['index_inputs_integer_slots', 'index_inputs_slots_are_authority_integers']),
+        dict(table='rd_resolve_entailed_sx03', row='SX03_original_sealed', anchors=[
+            anchor(E, "    sealed = custody['sealed'].get((self.storage_instance_id, original_ref))"),
+            anchor(E, "    return [entry for entry in original_custody()['sealed'].get((storage_instance_id, ref), [])")],
+             proof="the owner looks up the same (Storage instance, original ref) key as rd_recipe's sealed_receipts, with the "
+                   "same d['storage_instance_id'] and event_id; an empty lookup gives no receipt, so SX08 refuses first"),
+        dict(table='rd_resolve_entailed_sx04', row='SX04_original_authentic', anchors=[
+            anchor(E, "        matches = [entry for entry in sealed if entry[0].source_commitment == self.commitment_sha256]"),
+            anchor(E, "        c = contract_of(event_type)")],
+             proof='the owner keeps the entries whose commitment equals full_value_commitment of the fetched event, exactly '
+                   "the receipts SX08 counted; every sealed entry names a DS15 family, so contract_of never fails",
+             mechanical=['sealed_entries_name_known_families']),
+        dict(table='rd_resolve_entailed_sx06', row='SX06_recipe_known', anchors=[
+            anchor(E, "        tuple_ = recipe_tuple(c, write_recipe, custody['manifests'][event_type])"),
+            anchor(E, "def installed_recipes():")],
+             proof="SX02 refuses first a selected receipt whose recipe is not installed; installed_recipes holds every DS15 "
+                   "family under every installed recipe at this head's manifests, and every custody manifest equals this "
+                   "head's, so the owner's tuple for the sealed entry's family is installed whenever SX02 passed",
+             mechanical=['custody_manifests_current', 'installed_recipes_cover_every_family']),
+        dict(table='rd_resolve_entailed_sx07', row='SX07_dispatch_other', anchors=[
+            anchor(E, "            idempotency_key=event['idempotency_key'], owner_operation_id=event['correlation_id'], source_commitment=sha)"),
+            anchor(E, "            event['event_id'], expected, disclose=lambda binding: True)")],
+             proof='original_binding: the sealed binding was recorded from the event its commitment covers, at its own '
+                   '(Storage instance, event_id) key with the DS15 server, and the expected binding is recomputed from the same '
+                   'fetched event and Storage instance; original_ambiguous: the owner matches the same receipts SX09 counted; '
+                   'caller_recipe_override: none is passed; recipe_selection: recipe_tuple always builds a RecipeTuple; '
+                   'original_bytes_type: storage_value_bytes always returns bytes; current_disclosure: disclose always holds',
+             mechanical=['sealed_bindings_match_their_key', 'resolve_passes_no_override_and_discloses']),
+    ]
+    family_rows = family_entailments(b, deck, contracts, E, D, G)
+    result = dict(checks=checks, tool_unproved=tool_unproved, family=family_rows)
+    required = ('custody_manifests_current', 'sealed_entries_name_known_families', 'sealed_bindings_match_their_key',
+                'installed_recipes_cover_every_family', 'resolve_passes_no_override_and_discloses',
+                'deck2_payload_has_no_number_slot', 'deck2_context_envelope_run_id_null', 'deck2_source_event_type_const',
+                'index_inputs_slots_are_authority_integers', 'identity_field_patterns_exclude_lone_surrogates',
+                'payload_strings_patterned')
+    failed = [k for k in required if checks[k] is False or (isinstance(checks[k], dict) and False in checks[k].values())]
+    failed += [k for k, v in closed_scope.items() if not v['closed']]
+    failed += ['commitment_call_sites'] if len(checks['commitment_call_sites']) != 3 else []
+    bound_fail = [n for n, v in payload_bounds.items() if not v or v >= 16384]
+    result['failed_checks'] = failed + (['deck2_payload_worst_case_bytes'] if bound_fail else [])
+    out('entailed.json', result)
+    return dict(tool_unproved=len(tool_unproved), family_rows=sum(len(v['families']) for v in family_rows),
+                failed_checks=result['failed_checks'])
+
+
+def family_entailments(b, deck, contracts, E, D, G):
+    """Rows a family reaches but no single-defect input of that family can refuse first."""
+    cat_update = [n for n in contracts if n.startswith('catalog.update.')]
+    cat_remove = [n for n in contracts if n.startswith('catalog.remove.')]
+    non_browser = [n for n in contracts if not n.startswith('browser.')]
+    scope_families = [n for n, c in contracts.items() if c['scope_policy'] != 'project_only']
+    project_only = [n for n, c in contracts.items() if c['scope_policy'] == 'project_only']
+    allf = sorted(contracts)
+    return [
+        dict(table='d2_pl_gate', row='PG06_session_class', families=non_browser,
+             anchors=[anchor(D, "    browser = n_is_browser(c)"), anchor(G, "('PG06_session_class', '/session_security_class'")],
+             proof="the row refuses only when browser_family is True; browser_family is n_is_browser(c), False for these families",
+             mechanical=['browser_families']),
+        dict(table='d2_tr_browser', row='TB23_existing_grant', families=['browser.context_share_revoked'],
+             anchors=[anchor(G, "    ('TB23_existing_grant', '/existing_grant'")],
+             proof="the row refuses only when family is browser.context_shared"),
+        dict(table='d2_tr_browser', row='TB24_recipient_scope', families=['browser.context_share_revoked'],
+             anchors=[anchor(G, "    ('TB24_recipient_scope', '/recipient_scope'")],
+             proof="the row refuses only when family is browser.context_shared (a revocation passes no recipient scope)"),
+        dict(table='d2_request', row='CQ02_remove_installed', families=cat_update,
+             anchors=[anchor(G, "('CQ02_remove_installed', '/installed_available'")], proof="refuses only when remove is True"),
+        dict(table='d2_request', row='CQ03_remove_not_queued', families=cat_update,
+             anchors=[anchor(G, "('CQ03_remove_not_queued', '/queued'")], proof="refuses only when remove is True"),
+        dict(table='d2_request', row='CQ04_update_verified', families=cat_remove,
+             anchors=[anchor(G, "('CQ04_update_verified', '/effective_version'")], proof="refuses only when remove is False"),
+        dict(table='d2_request', row='CQ05_update_installed', families=cat_remove,
+             anchors=[anchor(G, "('CQ05_update_installed', '/installed_available'")], proof="refuses only when remove is False"),
+        dict(table='cp_scope', row='CG10_project', families=scope_families,
+             anchors=[anchor(E, "                or refused('cp_scope', checkpoint_project_id=cp.get('project_id'), payload_project_id=p.get('project_id'),")],
+             proof='the closed checkpoint and payload schemas of these families have no project_id member, so both observations '
+                   'are None', mechanical=['deck2_checkpoint_payload_scope_members']),
+        dict(table='cp_scope', row='CG11_scope', families=project_only,
+             anchors=[anchor(E, "                       checkpoint_scope=cp.get('scope'), payload_scope=p.get('scope'))):")],
+             proof='the closed checkpoint and payload schemas of this project-only family have no scope member, so both '
+                   'observations are None', mechanical=['deck2_checkpoint_payload_scope_members']),
+        dict(table='sch_payload_n', row='PAYLOAD_numbers', families=allf,
+             anchors=[anchor(E, "    numbered = len([e for e in errors if e.validator in numbers]) if not stock else 0")],
+             proof='the closed deck-2 payload schemas declare no integer or number slot, so a number anywhere is a stock type '
+                   'error of the verdict row first', mechanical=['deck2_payload_has_no_number_slot']),
+        dict(table='sch_payload_v1_n', row='PAYLOAD_V1_numbers', families=allf,
+             anchors=[anchor(E, "    numbered = len([e for e in errors if e.validator in numbers]) if not stock else 0")],
+             proof='as PAYLOAD_numbers under the frozen ds15-v1 domain', mechanical=['deck2_payload_has_no_number_slot']),
+        dict(table='sch_id_fields', row='ID_FIELDS_schema', families=allf,
+             anchors=[anchor(D, "                       expected_key=base.identity(c, p, source, recipe))"),
+                      anchor(D, "    if not valid('sch_payload_v1' if historical else 'sch_payload', read(c['payload_schema_ref']), p, recipe):")],
+             proof="the deck-2 identity is computed from the payload p after sch_payload validated p with the same property "
+                   'subschemas (the identity fields and scope are payload properties)'),
+        dict(table='sch_id_fields_n', row='ID_FIELDS_numbers', families=allf,
+             anchors=[anchor(D, "                       expected_key=base.identity(c, p, source, recipe))")],
+             proof='as ID_FIELDS_schema; the deck-2 payload schemas declare no number slot',
+             mechanical=['deck2_payload_has_no_number_slot']),
+        dict(table='id_input', row='ID01_payload_object', families=allf,
+             anchors=[anchor(D, "                       expected_key=base.identity(c, p, source, recipe))")],
+             proof='the identity input is the payload p, an object by sch_payload (and EV03) before the identity row'),
+        dict(table='id_scope', row='ID03_application_custody', families=scope_families,
+             anchors=[anchor(D, "    if refused('d2_env_d', has_operation='operation_id' in p,")],
+             proof='for application scope d2_env_d runs first and requires the application source to equal '
+                   '{server_id, original_operation_id} of the owner record (strings by the sources schema), so a missing source '
+                   'refuses at ER09 before the identity'),
+        dict(table='id_scope', row='ID03_application_custody', families=project_only,
+             anchors=[anchor(E, "    application = bool(scoped and scope_object and payload['scope'].get('kind') == 'app')")],
+             proof='the row refuses only for an application identity; a project-only family is never scoped, so application is '
+                   'False'),
+        dict(table='id_preimage', row='ID04_preimage_encodable', families=allf,
+             anchors=[anchor(D, "               expected_partition=base.partition_of(e['scope_kind'], e['project_id']), payload_size=base.physical_size(p)):")],
+             proof='every identity field pattern excludes lone surrogates and the payload is EVENT_VALUE-encodable (DE13) '
+                   'before the identity preimage is measured', mechanical=['identity_field_patterns_exclude_lone_surrogates']),
+        dict(table='wd_gate', row='WD02_admitted_uint64', families=allf,
+             anchors=[anchor(E, "STORAGE_UINT64_FIELDS = frozenset({"), anchor(E, "    schema = dict(read('Plans/ds15_original_evidence.schema.json'), required=required)")],
+             proof='admitted_sequence is an authority integer (AT02 type, AT03 minimum 0 over the whole input first) and a '
+                   'Storage uint64 slot of the closed original evidence schema, whose number rule (storage_uint64) refuses a '
+                   'value past 2^64-1 at EVIDENCE_numbers before writer withdrawal reads it'),
+        dict(table='wd_gate', row='WD03_frontier_uint64', families=allf,
+             anchors=[anchor(E, "STORAGE_UINT64_FIELDS = frozenset({"), anchor(E, "    schema = dict(read('Plans/ds15_original_evidence.schema.json'), required=required)")],
+             proof='as WD02 for withdrawal_frontier'),
+        dict(table='d2_env_storage', row='DE13_payload_encodable', families=project_only,
+             anchors=[anchor(D, "               expected_partition=base.partition_of(e['scope_kind'], e['project_id']), payload_size=base.physical_size(p)):")],
+             proof='every string of this family payload carries the ASCII identifier pattern (no lone surrogate passes '
+                   'sch_payload) and the payload has no other member kind, so it always has an EVENT_VALUE encoding',
+             mechanical=['payload_strings_patterned']),
+        dict(table='d2_env_d', row='ER08_record_operation', families=[n for n in allf if 'operation_id' not in
+                                                                       b.read(contracts[n]['payload_schema_ref'])['properties']],
+             anchors=[anchor(D, "    if refused('d2_env_d', has_operation='operation_id' in p,")],
+             proof="the row refuses only when the payload has operation_id; this family's closed payload schema has none"),
+        dict(table='d2_env_d', row='ER09_app_source', families=project_only,
+             anchors=[anchor(D, "    application = scope['kind'] == 'app'")],
+             proof='the row refuses only for an application-scope payload; a project-only family builds a project scope'),
+        dict(table='d2_env_d', row='ER10_app_original_source', families=project_only,
+             anchors=[anchor(D, "    application = scope['kind'] == 'app'")],
+             proof='as ER09'),
+        dict(table='cm_domain', row='CM01_v1_domain', families=allf,
+             anchors=[anchor(D, "            or not valid('sch_original_event', event_schema, original, original_recipe)):"),
+                      anchor(E, "        if schema_refused('sch_original_event', validator(read('Plans/event_record.schema.json'), recipe),")],
+             proof='commitment() applies recipe_numbers_ok(ds15-v1) to the original event; at every complete boundary '
+                   'sch_original_event applies the same ds15-v1 integer domain (ds15IntegerDomain) to the same event first '
+                   '(envelope_ok before receipt_ok; the receipt boundary validates it explicitly)'),
+    ]
+
+
+def worst_case_size(b, schema):
+    """EVENT_VALUE size of a maximal instance of a closed, array-free, string-bounded schema (None if not bounded).
+
+    Every member is present at its largest value: a string at its maxLength in 4-byte UTF-8 (patterns ignored, so
+    this over-estimates), the longest const/enum literal, True for booleans. A member the object level leaves
+    unbounded counts as bounded only when allOf if/then branches bound it for every value of the enumerated
+    discriminator they test (the deck-2 scope project_id: a 256-character string for project, null for app).
+    """
+    def leaf(node):
+        if not isinstance(node, dict):
+            return None, False
+        if 'const' in node:
+            return copy.deepcopy(node['const']), True
+        if 'enum' in node:
+            return max(node['enum'], key=lambda v: len(json.dumps(v))), True
+        kinds = node.get('type')
+        kinds = kinds if isinstance(kinds, list) else [kinds]
+        if 'object' in kinds or 'properties' in node:
+            value = obj(node)
+            return value, value is not None
+        for keyword in ('anyOf', 'oneOf'):
+            if keyword in node:
+                values = [leaf(branch) for branch in node[keyword]]
+                if not all(ok for _, ok in values):
+                    return None, False
+                return max((v for v, _ in values), key=lambda v: len(json.dumps(v))), True
+        if 'array' in kinds:
+            return None, False
+        if 'string' in kinds:
+            n = node.get('maxLength')
+            return ('\U0010ffff' * n, True) if n is not None else (None, False)
+        if 'boolean' in kinds:
+            return True, True
+        if kinds == ['null']:
+            return None, True
+        return None, False
+
+    def obj(node):
+        if node.get('additionalProperties', True) is not False:
+            return None
+        out = {}
+        for key, sub in node.get('properties', {}).items():
+            value, ok = leaf(sub)
+            if not ok:
+                branches = []
+                for part in node.get('allOf', []):
+                    cond = (part.get('if') or {}).get('properties', {})
+                    then = (part.get('then') or {}).get('properties', {})
+                    if key in then and len(cond) == 1:
+                        (disc, test), = cond.items()
+                        branches.append((disc, test.get('const'), leaf(then[key])))
+                discs = {d for d, _, _ in branches}
+                if len(discs) != 1:
+                    return None
+                disc = discs.pop()
+                domain = node['properties'][disc].get('enum', [])
+                covered = {v for _, v, (_, ok2) in branches if ok2}
+                if not domain or set(domain) - covered:
+                    return None
+                value = max((val for _, _, (val, ok2) in branches if ok2), key=lambda v: len(json.dumps(v)))
+            out[key] = value
+        return out
+    value = obj(schema)
+    return b.physical_size(value) if isinstance(value, dict) else None
+
+
+def integer_slot_names(schema):
+    names = set()
+
+    def walk(node, key=None):
+        if isinstance(node, dict):
+            kinds = node.get('type')
+            kinds = kinds if isinstance(kinds, list) else [kinds]
+            if 'integer' in kinds and key:
+                names.add(key)
+            for k, v in node.items():
+                if k == 'properties':
+                    for name, sub in v.items():
+                        walk(sub, name)
+                elif isinstance(v, (dict, list)):
+                    walk(v, key if k in ('anyOf', 'oneOf', 'allOf', 'items') else None)
+        elif isinstance(node, list):
+            for v in node:
+                walk(v, key)
+    walk(schema)
+    return names
+
+
+# =========================================================================== schema
+def spy_schema_calls(deck):
+    """Record (phase, validator, instance) of every schema occurrence during one call; return a restore function."""
+    b = deck.base
+    original = b.schema_refused
+    calls = []
+
+    def spy(phase, v, instance):
+        calls.append((phase, v, instance))
+        return original(phase, v, instance)
+    b.schema_refused = spy
+    return calls, (lambda: setattr(b, 'schema_refused', original)), original
+
+
+def locate(data, instance):
+    """Path of instance inside data by identity, or a projection {key: path} when instance is a dict of data nodes."""
+    paths = {}
+
+    def walk(node, path):
+        if isinstance(node, (dict, list)):
+            paths.setdefault(id(node), path)
+            items = node.items() if isinstance(node, dict) else enumerate(node)
+            for k, v in items:
+                walk(v, path + (k,))
+    walk(data, ())
+    if id(instance) in paths:
+        return ('node', paths[id(instance)])
+    if isinstance(instance, dict) and instance and all(isinstance(v, (dict, list)) and id(v) in paths for v in instance.values()):
+        return ('projection', {k: paths[id(v)] for k, v in instance.items()})
+    return None
+
+
+def schema_path_norm(path):
+    """The error schema path of a site: jsonschema continues in the $ref target without a '$ref' element."""
+    return tuple(k for k in path if not (isinstance(k, str) and k.startswith('$ref:')))
+
+
+def site_pointer(path):
+    """Readable schema location of a site, keeping each followed $ref."""
+    return '/' + '/'.join(('{' + k[5:] + '}') if isinstance(k, str) and k.startswith('$ref:') else str(k) for k in path)
+
+
+def evaluated_sites(v, instance):
+    """Every (schema location, keyword, instance path) the validator evaluates for this instance (applicators followed)."""
+    sites = []
+    seen = set()
+
+    def walk(validator, schema, value, ipath, spath, depth):
+        if not isinstance(schema, dict) or depth > 40:
+            return
+        key = (id(schema), ipath)
+        if key in seen:
+            return
+        seen.add(key)
+        for keyword in ASSERTIONS:
+            if keyword in schema:
+                sites.append((spath, keyword, ipath, schema))
+        if '$ref' in schema:
+            resolved = validator._resolver.lookup(schema['$ref'])
+            walk(validator.evolve(schema=resolved.contents, _resolver=resolved.resolver), resolved.contents, value, ipath,
+                 spath + ('$ref:' + schema['$ref'],), depth + 1)
+        if isinstance(value, dict):
+            props = schema.get('properties', {})
+            for k, sub in props.items():
+                if k in value:
+                    walk(validator, sub, value[k], ipath + (k,), spath + ('properties', k), depth + 1)
+            for pattern, sub in schema.get('patternProperties', {}).items():
+                for k in value:
+                    if re.search(pattern, k):
+                        walk(validator, sub, value[k], ipath + (k,), spath + ('patternProperties', pattern), depth + 1)
+            extra = schema.get('additionalProperties')
+            if isinstance(extra, dict):
+                for k in value:
+                    if k not in props and not any(re.search(p, k) for p in schema.get('patternProperties', {})):
+                        walk(validator, extra, value[k], ipath + (k,), spath + ('additionalProperties',), depth + 1)
+        if isinstance(value, list):
+            items = schema.get('items')
+            for i, item in enumerate(value):
+                if isinstance(items, dict):
+                    walk(validator, items, item, ipath + (i,), spath + ('items',), depth + 1)
+        for i, sub in enumerate(schema.get('allOf', [])):
+            walk(validator, sub, value, ipath, spath + ('allOf', i), depth + 1)
+        for keyword in ('anyOf', 'oneOf'):
+            for i, sub in enumerate(schema.get(keyword, [])):
+                if validator.evolve(schema=sub).is_valid(value):
+                    walk(validator, sub, value, ipath, spath + (keyword, i), depth + 1)
+        if 'if' in schema:
+            branch = 'then' if validator.evolve(schema=schema['if']).is_valid(value) else 'else'
+            walk(validator, schema['if'], value, ipath, spath + ('if',), depth + 1)
+            if branch in schema:
+                walk(validator, schema[branch], value, ipath, spath + (branch,), depth + 1)
+        if isinstance(schema.get('not'), dict):
+            pass  # a 'not' subschema is evaluated only for its own verdict (the 'not' clause itself is the site)
+    walk(v.original, v.original.schema, instance, (), (), 0)
+    return sites
+
+
+def at_path(value, path):
+    for k in path:
+        value = value[k]
+    return value
+
+
+def set_at(value, path, new):
+    if not path:
+        return copy.deepcopy(new)
+    out = copy.deepcopy(value)
+    node = out
+    for k in path[:-1]:
+        node = node[k]
+    node[path[-1]] = copy.deepcopy(new)
+    return out
+
+
+def proposals(keyword, rule, seed):
+    """Directed clause proposals: the intended keyword is named BEFORE the validator is consulted."""
+    if keyword == 'type':
+        kinds = rule['type'] if isinstance(rule['type'], list) else [rule['type']]
+        for kind, value in (('null', None), ('object', {}), ('array', []), ('string', 'x'), ('boolean', False), ('integer', 7)):
+            if kind not in kinds and not (kind == 'integer' and 'number' in kinds):
+                yield 'wrong_' + kind, value
+    elif keyword in ('const', 'enum'):
+        if type(seed) is bool:
+            yield 'outside_literal', not seed
+        elif isinstance(seed, str):
+            yield 'outside_literal', seed + 'c12'
+        elif seed is None:
+            yield 'outside_literal', 'c12'
+        elif type(seed) is int:
+            yield 'outside_literal', seed + 1
+    elif keyword == 'required' and isinstance(seed, dict):
+        for field in rule['required']:
+            if field in seed:
+                changed = copy.deepcopy(seed)
+                del changed[field]
+                yield 'missing/' + field, changed
+    elif keyword == 'additionalProperties' and rule['additionalProperties'] is False and isinstance(seed, dict):
+        yield 'extra_property', dict(seed, c12_unexpected=True)
+    elif keyword == 'minLength' and isinstance(seed, str) and rule['minLength'] > 0:
+        yield 'below_minimum', seed[:rule['minLength'] - 1]
+    elif keyword == 'maxLength' and isinstance(seed, str):
+        yield 'above_maximum', (seed or 'a') * (rule['maxLength'] // max(1, len(seed or 'a')) + 1)
+    elif keyword == 'pattern' and isinstance(seed, str) and seed:
+        yield 'trailing_lf', seed + '\n'
+        yield 'foreign_character', '!' + seed[1:]
+    elif keyword == 'format' and isinstance(seed, str):
+        yield 'malformed_format', seed[:10] + ' ' + seed[11:] if len(seed) > 11 else 'not-a-date'
+    elif keyword == 'minimum' and type(seed) is int:
+        yield 'below_minimum', rule['minimum'] - 1
+    elif keyword == 'maximum' and type(seed) is int:
+        yield 'above_maximum', rule['maximum'] + 1
+    elif keyword == 'minItems' and isinstance(seed, list) and rule['minItems'] > 0:
+        yield 'too_few_items', seed[:rule['minItems'] - 1]
+    elif keyword == 'maxItems' and isinstance(seed, list) and seed:
+        yield 'too_many_items', seed + [copy.deepcopy(seed[0])] * (rule['maxItems'] + 1 - len(seed))
+    elif keyword == 'uniqueItems' and rule['uniqueItems'] and isinstance(seed, list) and seed:
+        yield 'duplicate_item', seed + [copy.deepcopy(seed[0])]
+    elif keyword in ('anyOf', 'oneOf'):
+        for value in (7, 'c12', [], {}, None, False):
+            yield 'no_branch/' + json.dumps(value), value
+    elif keyword == 'not' and isinstance(seed, dict) and isinstance(rule['not'], dict) and 'required' in rule['not']:
+        yield 'forbidden_members', dict(seed, **{k: 'c12' for k in rule['not']['required'] if k not in seed})
+
+
+def sibling_entailment(keyword, rule):
+    """A clause no value can violate alone because a sibling clause of the same node refuses the same values."""
+    if keyword == 'minLength' and rule.get('minLength') == 1 and isinstance(rule.get('pattern'), str):
+        if re.fullmatch(rule['pattern'], '') is None:
+            return 'minLength 1: the sibling pattern requires a first character, so the empty string violates both'
+    if keyword == 'minLength' and rule.get('minLength') == 1 and rule.get('format') == 'date-time':
+        from pm_event_datetime import date_time
+        from pm_event_numbers import Refusal
+        try:
+            date_time('')
+        except Refusal:
+            return 'minLength 1: the sibling format date-time (shared predicate) refuses the empty string too'
+    if keyword == 'type' and ('const' in rule or 'enum' in rule):
+        kinds = rule['type'] if isinstance(rule['type'], list) else [rule['type']]
+        literals = [rule['const']] if 'const' in rule else rule['enum']
+        names = {str: 'string', bool: 'boolean', type(None): 'null', dict: 'object', list: 'array', int: 'integer'}
+        if all(names.get(type(v)) in kinds for v in literals):
+            return 'type: every sibling const/enum literal has this type, so a wrong type also violates the literal set'
+    return None
+
+
+def branch_witness(errors, spath, keyword, ipath):
+    """A clause inside an anyOf/oneOf branch: the only top-level error is the enclosing applicator at this instance
+    path, and its context holds an error at exactly this clause (the branch fails at it)."""
+    norm = schema_path_norm(spath)
+    cut = max((i for i, k in enumerate(norm) if k in ('anyOf', 'oneOf')), default=None)
+    if cut is None or len(errors) != 1:
+        return None
+    e = errors[0]
+    if tuple(e.absolute_schema_path) != norm[:cut + 1] or tuple(e.absolute_path) != tuple(ipath):
+        return None
+    want = norm + (keyword,)
+    if any(tuple(x.absolute_schema_path) == want for x in (e.context or ())):
+        return '/'.join(map(str, norm[:cut + 1]))
+    return None
+
+
+def isolated(errors, spath, keyword, ipath, storage_fields):
+    """All errors are exactly at this clause: its normalized schema path and keyword, at this instance path."""
+    if not errors:
+        return False
+    want = schema_path_norm(spath) + (keyword,)
+    for e in errors:
+        if tuple(e.absolute_schema_path) == want and tuple(e.absolute_path) == tuple(ipath):
+            continue
+        if (keyword == 'format' and e.validator == 'format' and not e.absolute_schema_path and tuple(e.path) == tuple(ipath)
+                and ipath and ipath[-1] in storage_fields):
+            continue
+        return False
+    return True
+
+
+def schema_mode(m16, deck, out):
+    b = deck.base
+    inventory, witnesses, invalid, kills, cb_invalid, closure, uncovered = [], [], [], [], [], [], []
+    totals = {}
+    for family in FAMILIES:
+        c, f = c12.contract(deck, family), c12.fixture(deck, family)
+        contexts = {}
+        for base, op in valid_parents(deck, family):
+            data = copy.deepcopy(f['bases'][base])
+            calls, restore, _ = spy_schema_calls(deck)
+            try:
+                deck.evaluate(c, op, data)
+            finally:
+                restore()
+            for phase, v, instance in calls:
+                key = (phase, sha(v.original.schema))
+                place = locate(data, instance)
+                entry = contexts.setdefault(key, dict(phase=phase, v=v, seeds=[]))
+                if len(entry['seeds']) < 6:
+                    entry['seeds'].append(dict(base=base, op=op, data=data, instance=copy.deepcopy(instance), place=place))
+        for policy in f.get('policy_cases', [])[:1]:
+            calls, restore, _ = spy_schema_calls(deck)
+            try:
+                deck.catalog_request(c, copy.deepcopy(policy['payload']), copy.deepcopy(policy['transition']))
+            finally:
+                restore()
+            for phase, v, instance in calls:
+                key = (phase, sha(v.original.schema))
+                contexts.setdefault(key, dict(phase=phase, v=v, seeds=[]))['seeds'].append(
+                    dict(base=policy['id'], op='policy', data=None, instance=copy.deepcopy(instance), place=None))
+        fam = dict(occurrences=len(contexts), sites=0, witnessed=0, applicator=0, unwitnessed=0, cb_kills=0)
+        for (phase, schema_sha), entry in sorted(contexts.items()):
+            v = entry['v']
+            row = b.table_rows(phase)[0][0]
+            closure.append(dict(family=family, phase=phase, schema_sha256=schema_sha, reference_closure='verified_at_build',
+                                recipe='ds15-v1' if 'ds15IntegerDomain' in v.original.schema else 'current'))
+            site_map = {}
+            for seed in entry['seeds']:
+                for spath, keyword, ipath, rule in evaluated_sites(v, seed['instance']):
+                    site_map.setdefault((spath, keyword), dict(ipath=ipath, rule=rule, seeds=[]))['seeds'].append((seed, ipath))
+            for (spath, keyword), site in sorted(site_map.items(), key=lambda kv: json.dumps(kv[0], default=str)):
+                fam['sites'] += 1
+                record = dict(family=family, phase=phase, row=row, schema_sha256=schema_sha,
+                              schema_pointer=site_pointer(spath), keyword=keyword,
+                              instance_pointer='/' + '/'.join(map(str, site['ipath'])))
+                if keyword == 'additionalProperties' and site['rule']['additionalProperties'] is True:
+                    record['status'] = 'NO_ASSERTION'  # additionalProperties: true admits every member
+                    inventory.append(record)
+                    continue
+                if keyword in APPLICATORS or (keyword == 'additionalProperties' and isinstance(site['rule']['additionalProperties'], dict)):
+                    record['status'] = 'APPLICATOR_COVERED_BY_CHILDREN'
+                    fam['applicator'] += 1
+                    inventory.append(record)
+                    continue
+                if 'if' in schema_path_norm(spath):
+                    # A clause of an if-condition never errors itself: it selects then/else, whose clauses are sites
+                    # of their own (witnessed or covered below).
+                    record['status'] = 'CONDITION_SELECTS_BRANCH'
+                    fam['condition'] = fam.get('condition', 0) + 1
+                    inventory.append(record)
+                    continue
+                sibling = sibling_entailment(keyword, site['rule'])
+                if sibling:
+                    record['status'] = 'ENTAILED_BY_SIBLING'
+                    record['entailment'] = sibling
+                    fam['sibling'] = fam.get('sibling', 0) + 1
+                    inventory.append(record)
+                    continue
+                done = False
+                for seed, ipath in site['seeds'][:3]:
+                    try:
+                        value = at_path(seed['instance'], ipath)
+                    except (KeyError, IndexError, TypeError):
+                        continue
+                    for label, proposal in proposals(keyword, site['rule'], value):
+                        mutated = set_at(seed['instance'], ipath, proposal)
+                        errors = list(v.iter_errors(mutated))
+                        ok = isolated(errors, spath, keyword, ipath, v.storage_fields)
+                        branch = None if ok else branch_witness(errors, spath, keyword, ipath)
+                        ok = ok or bool(branch)
+                        attempt = dict(record, proposal=label, base=seed['base'], operation=seed['op'])
+                        if not ok:
+                            attempt['reason'] = 'not_isolated' if errors else 'accepted'
+                            attempt['error_paths'] = sorted({'/'.join(map(str, e.absolute_schema_path)) for e in errors})[:4]
+                            invalid.append(attempt)
+                            continue
+                        records = []
+                        b.RECORDER = records
+                        try:
+                            refused = b.schema_refused(phase, v, mutated)
+                        finally:
+                            b.RECORDER = None
+                        got = first_refusal(records)
+                        if not refused or got is None or got[1] != row:
+                            attempt['reason'] = 'phase_not_refused_at_row:' + repr(got)
+                            invalid.append(attempt)
+                            continue
+                        witness = dict(attempt, status='BRANCH_WITNESS' if branch else 'CLAUSE_WITNESS',
+                                       enclosing=branch, expected=[phase, row, got[2]], actual=got,
+                                       control_sha256=sha(seed['instance']), negative_sha256=sha(mutated))
+                        cb = complete_boundary(deck, c, seed, ipath, proposal, phase, row)
+                        witness['complete_boundary'] = cb
+                        if cb['status'] == 'KILLED':
+                            kills.append(dict(witness, complete_boundary=None, cb=cb))
+                            fam['cb_kills'] += 1
+                        else:
+                            cb_invalid.append(dict(record, proposal=label, **cb))
+                        witnesses.append(witness)
+                        done = True
+                        break
+                    if done:
+                        break
+                if not done:
+                    co = co_asserted(b, v, phase, row, site, spath, keyword)
+                    if co:
+                        record.update(co)
+                record['status'] = 'WITNESSED' if done else record.get('status', 'WHOLE_DEFINITION_COVER')
+                if done:
+                    fam['witnessed'] += 1
+                elif record['status'] == 'CO_ASSERTED':
+                    fam['co_asserted'] = fam.get('co_asserted', 0) + 1
+                else:
+                    fam['unwitnessed'] += 1
+                    uncovered.append(record)
+                inventory.append(record)
+        totals[family] = fam
+    out('schema-inventory.json', inventory)
+    out('schema-clause-witnesses.json', witnesses)
+    out('schema-invalid-proposals.json', invalid)
+    out('schema-complete-boundary-kills.json', kills)
+    out('schema-complete-boundary-invalid.json', cb_invalid)
+    out('schema-reference-closure.json', closure)
+    out('schema-whole-definition-covers.json', uncovered)
+    summary = dict(totals=totals, sites=len(inventory), clause_witnesses=len(witnesses), invalid_proposals=len(invalid),
+                   complete_boundary_kills=len(kills), complete_boundary_invalid=len(cb_invalid),
+                   whole_definition_covers=len(uncovered))
+    out('schema-summary.json', summary)
+    return summary
+
+
+def co_asserted(b, v, phase, row, site, spath, keyword):
+    """No proposal violates this clause alone: find one the full schema refuses at this clause together with other
+    clauses of the same instance location (named), refused by the real phase row."""
+    want = schema_path_norm(spath) + (keyword,)
+    for seed, ipath in site['seeds'][:3]:
+        try:
+            value = at_path(seed['instance'], ipath)
+        except (KeyError, IndexError, TypeError):
+            continue
+        for label, proposal in proposals(keyword, site['rule'], value):
+            mutated = set_at(seed['instance'], ipath, proposal)
+            errors = list(v.iter_errors(mutated))
+            paths = [tuple(e.absolute_schema_path) for e in errors]
+            inner = [tuple(x.absolute_schema_path) for e in errors if e.validator in ('anyOf', 'oneOf') for x in (e.context or ())]
+            if not errors or (want not in paths and want not in inner) or any(tuple(e.absolute_path) != tuple(ipath) for e in errors):
+                continue
+            records = []
+            b.RECORDER = records
+            try:
+                refused = b.schema_refused(phase, v, mutated)
+            finally:
+                b.RECORDER = None
+            got = first_refusal(records)
+            if refused and got and got[1] == row:
+                return dict(status='CO_ASSERTED', proposal=label, refused_at=got,
+                            co_asserted_with=sorted('/'.join(map(str, p)) for p in paths if p != want))
+    return None
+
+
+def complete_boundary(deck, c, seed, ipath, proposal, phase, row):
+    """The clause proposal placed in the complete operation input; KILLED only at exactly (phase, row)."""
+    place, data = seed['place'], seed['data']
+    if data is None or place is None:
+        return dict(status='NOT_PLACEABLE', reason='instance is derived (parsed record, request carrier) or a value copy')
+    if place[0] == 'node':
+        target = place[1] + tuple(ipath)
+    else:
+        if not ipath or ipath[0] not in place[1]:
+            return dict(status='NOT_PLACEABLE', reason='projection root member')
+        target = place[1][ipath[0]] + tuple(ipath[1:])
+    mutated = set_at(data, target, proposal)
+    result, records = recorded(deck, lambda: deck.evaluate(c, seed['op'], mutated))
+    got = first_refusal(records)
+    status = 'KILLED' if got is not None and got[:2] == [phase, row] and c12.refused_result(result) else 'INVALID'
+    return dict(status=status, operation=seed['op'], base=seed['base'], path='/'.join(map(str, target)),
+                expected=[phase, row], actual=got, result=result if isinstance(result, dict) else repr(result))
+
+
+# =========================================================================== datetime
+def datetime_mode(m16, deck, out):
+    from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time
+    from pm_event_numbers import Refusal
+    b = deck.base
+    samples = [s['value'] for s in json.loads((ROOT / 'scripts/pm_event_datetime_timestamp_battery.json').read_text())['samples']]
+
+    def ok(value, profile):
+        try:
+            date_time(value, profile=profile)
+            return True
+        except Refusal:
+            return False
+    sites = [
+        # (site id, op, path, maintenance, refusing (phase,row), field profiles)
+        ('current-envelope', 'payload', 'envelope', None, ('sch_envelope', 'ENVELOPE_schema')),
+        ('retained-envelope', 'read', 'envelope', None, ('sch_envelope_v1', 'ENVELOPE_V1_schema')),
+        ('retained-original-event', 'read', 'original/event', 'seal', ('sch_original_event', 'ORIGINAL_EVENT_schema')),
+    ]
+    fields = (('occurred_at_utc', (EVENT_RECORD,)), ('observed_at_utc', (EVENT_RECORD, STORAGE_UTC_Z)),
+              ('persisted_at_utc', (EVENT_RECORD, STORAGE_UTC_Z)))
+    results, disagreements, snapshots = [], [], []
+    plans_bytes = file_sha('Plans/ds15_original_custody.json')
+    inventory = datetime_inventory(deck)
+    for family in FAMILIES:
+        c, f = c12.contract(deck, family), c12.fixture(deck, family)
+        base = f['bases']['project']
+        for site, op, prefix, maintenance, refusing in sites:
+            for field, profiles in fields:
+                for value in samples:
+                    data = copy.deepcopy(base)
+                    node = at_path(data, tuple(prefix.split('/')))
+                    original_value = node[field]
+                    node[field] = value
+                    custody_before = None
+                    if maintenance == 'seal':
+                        c12.maintain(b, c, data, ['commitments'], {})
+                        restore, custody_before = compose_sealed(b, data)
+                    try:
+                        result, records = recorded(deck, lambda: deck.evaluate(c, op, data))
+                    finally:
+                        if maintenance == 'seal':
+                            after = sha(custody_snapshot(b))
+                            restore()
+                            snapshots.append(dict(family=family, site=site, before=custody_before, after=after))
+                    got = first_refusal(records)
+                    valid = all(ok(value, p) for p in profiles)
+                    expected = expected_datetime(b, site, field, value, original_value, valid, refusing, data, base)
+                    agree = (got[:2] == list(expected) if expected is not None and got else got is None and expected is None)
+                    row = dict(family=family, site=site, field=field, value=value, valid=valid,
+                               profiles=list(profiles), expected=list(expected) if expected else None,
+                               actual=got, result=result.get('result') if isinstance(result, dict) else repr(result))
+                    results.append(row)
+                    if not agree:
+                        disagreements.append(row)
+        # receipt acknowledged_at_utc: every receipt copy moved together (RC01/RC02 keep agreeing)
+        for value in samples:
+            data = copy.deepcopy(base)
+            for path in ('receipt', 'custody/first_append_receipt', 'issued_result/first_append_receipt'):
+                at_path(data, tuple(path.split('/')))['acknowledged_at_utc'] = value
+            result, records = recorded(deck, lambda: deck.evaluate(c, 'read', data))
+            got = first_refusal(records)
+            valid = ok(value, EVENT_RECORD)
+            expected = None if valid else ('sch_receipt', 'RECEIPT_schema')
+            row = dict(family=family, site='retained-receipt', field='acknowledged_at_utc', value=value, valid=valid,
+                       profiles=[EVENT_RECORD], expected=list(expected) if expected else None, actual=got,
+                       result=result.get('result') if isinstance(result, dict) else repr(result))
+            results.append(row)
+            if (got[:2] if got else None) != (list(expected) if expected else None):
+                disagreements.append(row)
+    changed = [s for s in snapshots if s['before'] != s['after']]
+    summary = dict(samples=len(samples), checks=len(results), disagreements=len(disagreements),
+                   accepted=sum(r['actual'] is None for r in results), refused=sum(r['actual'] is not None for r in results),
+                   sealed_scenarios=len(snapshots), custody_changed_by_read=len(changed),
+                   plans_custody_unchanged=file_sha('Plans/ds15_original_custody.json') == plans_bytes,
+                   inventory_nodes=len(inventory))
+    out('datetime-inventory.json', inventory)
+    out('datetime-corpus-disagreements.json', disagreements)
+    out('datetime-corpus-summary.json', summary)
+    out('datetime-corpus.json', results)
+    return summary
+
+
+def expected_datetime(b, site, field, value, original_value, valid, refusing, data, base):
+    """Expected first refusal composed from the shared predicate and the shared producer digest only."""
+    if not valid:
+        return refusing
+    if value == original_value:
+        return None
+    if site == 'current-envelope':
+        return None
+    # A retained read compares the CV-317 producer projection (Storage-assigned times excluded) with the original.
+    if site == 'retained-envelope':
+        same = b.recipe_producer_digest(b.V1, data['envelope']) == b.recipe_producer_digest(b.V1, base['original']['event'])
+        return None if same else ('env_retry', 'EN17_semantic_digest')
+    if site == 'retained-original-event':
+        same = b.recipe_producer_digest(b.V1, base['envelope']) == b.recipe_producer_digest(b.V1, data['original']['event'])
+        return None if same else ('env_retry', 'EN17_semantic_digest')
+    raise AssertionError(site)
+
+
+def custody_snapshot(b):
+    custody = b.original_custody()
+    return dict(stores=custody['stores'], manifests=custody['manifests'],
+                sealed={'|'.join(k): [[e[0]._asdict() if hasattr(e[0], '_asdict') else repr(e[0]), e[1], e[2]] for e in v]
+                        for k, v in sorted(custody['sealed'].items())})
+
+
+def compose_sealed(b, data):
+    """Scenario composition BEFORE a read: the committed sealed custody plus the receipt Storage sealed with this
+    original at write time. Returns (restore, snapshot sha before the read)."""
+    import pm_ds15_p2b_cases as p2b
+    from pm_event_numbers import OriginalBinding
+    composed = copy.deepcopy(b.original_custody())
+    row = p2b.binding_row(b, data)
+    key = (row['binding']['storage_instance_id'], row['original_ref'])
+    composed['sealed'].setdefault(key, []).append((OriginalBinding(**row['binding']), row['event_type'], row['write_recipe']))
+    saved = b.original_custody
+    b.original_custody = lambda: composed
+    before = sha(custody_snapshot(b))
+    return (lambda: setattr(b, 'original_custody', saved)), before
+
+
+def datetime_inventory(deck):
+    """Every format: date-time node and Storage-assigned UTC-Z field the deck-2 boundaries validate."""
+    b = deck.base
+    nodes = []
+    resources = {'Plans/event_record.schema.json': ('sch_envelope', 'sch_envelope_v1', 'sch_original_event'),
+                 'Plans/event_append_receipt_contracts.schema.json': ('sch_receipt', 'sch_custody', 'sch_result')}
+    for c in deck.read('Plans/ds15_deck2_contracts.json'):
+        for ref in (c['payload_schema_ref'], c['checkpoint_schema_ref'], 'Plans/ds15_deck2_context.schema.json',
+                    'Plans/ds15_deck2_sources.schema.json', 'Plans/ds15_original_evidence.schema.json',
+                    'Plans/ds15_index_inputs.schema.json'):
+            resources.setdefault(ref, ())
+    for ref, phases in sorted(resources.items()):
+        text = (ROOT / ref).read_text().splitlines()
+        for i, line in enumerate(text, 1):
+            if '"date-time"' in line:
+                nodes.append(dict(resource=ref, line=i, quote=line.strip(), phases=list(phases),
+                                  profile='event_record', shared_check='pm_event_datetime.date_time via format_checker'))
+    storage = b.storage_datetime_fields(b.read('Plans/event_record.schema.json'))
+    for field in storage:
+        nodes.append(dict(resource='Plans/event_record.schema.json', field=field, profile='storage_utc_z',
+                          phases=['sch_envelope', 'sch_envelope_v1', 'sch_original_event'],
+                          shared_check='pm_event_datetime.date_time(profile=STORAGE_UTC_Z) (storage_datetime_errors)'))
+    return nodes
+
+
+# =========================================================================== retained
+def retained_mode(m16, deck, out):
+    b = deck.base
+    plans = file_sha('Plans/ds15_original_custody.json')
+    observations = []
+    for family in FAMILIES:
+        c, f = c12.contract(deck, family), c12.fixture(deck, family)
+        inputs = [(f'base/{name}', op, data) for name, data in f['bases'].items() for op in RETAINED_OPS]
+        for case in f['cases']:
+            if case['operation'] in RETAINED_OPS:
+                data = copy.deepcopy(f['bases'][case['base']])
+                b.patch(data, case['changes'])
+                b.patch(data, case.get('derived_observations', {}))
+                inputs.append((f'case/{case["id"]}', case['operation'], data))
+        for w in c12.fixture_cases():
+            if w['family'] == family and w['operation'] in RETAINED_OPS:
+                _, data, _ = c12.build(deck, w)
+                inputs.append((w['id'], w['operation'], data))
+        for wid, op, data in inputs:
+            before = sha(custody_snapshot(b))
+            supplied = copy.deepcopy(data)
+            result, records = recorded(deck, lambda: deck.evaluate(c, op, data))
+            after = sha(custody_snapshot(b))
+            got = first_refusal(records)
+            selection = next((r for r in records if r[0] == 'rd_recipe'), None)
+            observations.append(dict(family=family, witness=wid, operation=op,
+                                     result=result.get('result') if isinstance(result, dict) else repr(result),
+                                     first_refusal=got, selection=selection[1] if selection else None,
+                                     resolved='rd_resolve' in {r[0] for r in records},
+                                     custody_before=before, custody_after=after, input_unchanged=supplied == data))
+    changed = [o for o in observations if o['custody_before'] != o['custody_after'] or not o['input_unchanged']]
+    summary = dict(observations=len(observations), accepted=sum(o['first_refusal'] is None for o in observations),
+                   refused=sum(o['first_refusal'] is not None for o in observations),
+                   selected=sum(o['selection'] is not None for o in observations),
+                   resolved=sum(o['resolved'] for o in observations), changed=len(changed),
+                   plans_custody_unchanged=file_sha('Plans/ds15_original_custody.json') == plans,
+                   custody_sha256=plans,
+                   by_first_row={k: sum(1 for o in observations if (o['first_refusal'] or [None, None])[1] == k)
+                                 for k in sorted({(o['first_refusal'] or [None, None])[1] for o in observations
+                                                  if o['first_refusal']} | set())})
+    out('retained-observations.json', observations)
+    out('retained-summary.json', summary)
+    return summary
+
+
+# =========================================================================== numbers
+def numbers_mode(m16, deck, out):
+    spec = importlib.util.spec_from_file_location('ds15_c12_corpus', ROOT / 'scripts/pm-ds15-number-corpus.py')
+    corpus = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(corpus)
+    values = corpus.corpus_values()
+    long_values = sorted(v for v in values if len(v.lstrip('-')) >= 4400)
+    routes, disagreements = [], []
+    contracts = {c['event_type']: c for c in deck.read('Plans/ds15_deck2_contracts.json')}
+    for family in FAMILIES:
+        for route, data, path, run, want in corpus.routes(family, contracts[family], False):
+            for spelling in sorted(values):
+                ok, candidate = corpus.with_spelling(data, path, spelling)
+                got = run(candidate) if ok else False
+                expected = want(spelling)
+                row = dict(family=family, route=route, spelling=spelling[:40] + ('...' if len(spelling) > 40 else ''),
+                           digits=len(spelling), expected=expected, actual=got)
+                routes.append(row)
+                if got != expected:
+                    disagreements.append(row)
+    summary = dict(values=len(values), long_values=len(long_values), route_runs=len(routes), disagreements=len(disagreements),
+                   accepted=sum(1 for r in routes if r['actual'] is True), refused=sum(1 for r in routes if r['actual'] is False),
+                   routes=sorted({r['route'] for r in routes}))
+    out('numbers-routes.json', routes)
+    out('numbers-summary.json', summary)
+    return summary
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument('--mode', required=True, choices=('entailed', 'schema', 'datetime', 'retained', 'numbers'))
+    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--family', action='append', help='restrict to these families (default: all seven)')
+    args = parser.parse_args()
+    args.out.mkdir(parents=True, exist_ok=True)
+    global FAMILIES
+    if args.family:
+        FAMILIES = tuple(f for f in FAMILIES if f in args.family)
+
+    def out(name, value):
+        (args.out / name).write_text(json.dumps(value, indent=1, sort_keys=True, ensure_ascii=True, default=str) + '\n')
+    m16, deck = load()
+    summary = globals()[args.mode + ('_mode' if args.mode not in ('entailed',) else '')](m16, deck, out)
+    print(json.dumps(summary, sort_keys=True, default=str))
+    bad = (summary.get('failed_checks') or summary.get('disagreements') or summary.get('changed')
+           or summary.get('custody_changed_by_read') or summary.get('plans_custody_unchanged') is False)
+    return 1 if bad else 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
