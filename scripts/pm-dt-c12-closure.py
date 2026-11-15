@@ -33,7 +33,7 @@ def main():
     inputs = dt.checker_inputs()
     if args.family:
         inputs['contracts'] = [c for c in inputs['contracts'] if c['event_type'] in args.family]
-    failures, ledger, observations, inventory = [], [], [], []
+    failures, ledger, observations, inventory, usage_checks = [], [], [], [], []
     counts = {}
     def check(ok, label):
         counts['checks'] = counts.get('checks', 0) + 1
@@ -62,6 +62,10 @@ def main():
         name = c['event_type']; f = inputs['fixtures'][name]; slug = name.replace('.', '_')
         print('C12 ' + name, file=sys.stderr, flush=True)
         dt.retained_custody_checks(c, f, inputs['schemas'], check)
+        def usage_check(ok, label):
+            usage_checks.append(dict(check=label, passed=bool(ok)))
+            check(ok, label)
+        dt.usage_first_save_checks(c, f, inputs['schemas'], usage_check)
         for case in f['semantic_negatives']:
             base, changed = dt.semantic_case(f, case)
             control = dt.source_valid(c, *base, inputs['schemas'])
@@ -119,6 +123,7 @@ def main():
           controls=[r for r in ledger if r['status']=='CONTROL'], invalid=[r for r in ledger if r['status']=='INVALID']))
     write('retained-store-observations.json', observations)
     write('datetime-inventory.json', inventory)
+    write('usage-first-save-checks.json', usage_checks)
     sources = [*ROOT.glob('scripts/pm_dt*.py'), *ROOT.glob('scripts/pm-dt*.py'),
         ROOT/'scripts/pm_guard_isolation.py', ROOT/'scripts/pm_event_numbers.py', ROOT/'scripts/pm_event_datetime.py',
         ROOT/'Plans/dt_event_contracts.schema.json', ROOT/'Plans/dt_event_contracts.json',

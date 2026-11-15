@@ -2426,6 +2426,55 @@ def retention_eligible(value):
         'held_truthy': bool(value['held']), 'dependent_truthy': bool(value['dependent'])}) is None
 
 
+def usage_retention_from_first_save(c, f, schemas, cutoff, *, held=False, dependent=False):
+    """E8-1 A: compare Usage's resolved setting cutoff to the sealed first save.
+
+    The existing Usage/Settings owner supplies the cutoff (None for unlimited).
+    This oracle does not interpret calendar-year settings, allocate a policy,
+    enable deletion or replace that owner. Event occurrence, later observations,
+    retries and pressure never supply the entry's immutable first-save anchor.
+    """
+    a, b, event = (f[key] for key in ('prepared_source', 'completed_source', 'event_record'))
+    context = dict(f['historical_reader_oracle']['context'], live_before=None)
+    if historical_read(c, a, b, event, schemas, context)['result'] != 'retained':
+        return False  # An earlier retained-boundary row already refused.
+    _, custody = resolve_original(b, event)
+    _, _, _, receipt = sealed_closure(custody)
+    anchor = receipt['acknowledged_at_utc'] if cutoff is not None else None
+    cutoff_refusal, selected = exact_instant(cutoff) if cutoff is not None else (None, None)
+    anchor_refusal, saved = exact_instant(anchor) if anchor is not None else (None, None)
+    return table_refusal('retention', {
+        'anchor_present': anchor is not None, 'now_refusal': cutoff_refusal, 'anchor_refusal': anchor_refusal,
+        'required_days': 0, 'age_days': elapsed_days(selected, saved) if selected is not None and saved is not None else None,
+        'held_truthy': bool(held), 'dependent_truthy': bool(dependent)}) is None
+
+
+def usage_first_save_checks(c, f, schemas, check):
+    """Executable E8-1 A contrasts, without enabling the pending native adapter."""
+    if c['event_type'] != 'usage.event':
+        return
+    anchor = f['first_append_receipt']['acknowledged_at_utc']
+    cases = [('unlimited', None, False, False, False),
+        ('occurrence_is_not_first_save', f['event_record']['occurred_at_utc'], False, False, False),
+        ('exact_first_save_boundary', anchor, False, False, True),
+        ('setting_selects_longer_window', '2026-11-03T00:00:00Z', False, False, False),
+        ('setting_selects_shorter_window', '2026-12-01T00:00:00Z', False, False, True),
+        ('hold_fences_retirement', '2026-12-01T00:00:00Z', True, False, False),
+        ('dependent_fences_retirement', '2026-12-01T00:00:00Z', False, True, False),
+        ('malformed_cutoff', 'not-a-date', False, False, False)]
+    for label, cutoff, held, dependent, expected in cases:
+        before = retained_store_snapshot()
+        actual = usage_retention_from_first_save(c, f, schemas, cutoff, held=held, dependent=dependent)
+        check(actual is expected, 'usage.event: E8-1 A ' + label)
+        check(before == retained_store_snapshot(), 'usage.event: E8-1 A store preserved ' + label)
+    # A genuine first save is required even if later history would otherwise be due.
+    with retained_world((f['prepared_source'], f['completed_source'], f['event_record'], None)):
+        before = retained_store_snapshot()
+        check(not usage_retention_from_first_save(c, f, schemas, '2026-12-01T00:00:00Z'),
+              'usage.event: E8-1 A no manufactured first save')
+        check(before == retained_store_snapshot(), 'usage.event: E8-1 A missing receipt preserves store')
+
+
 def projection_outcome(case):
     refusal = table_refusal('projection_retention', {'held_count': len(case['held_generations']),
                                                      'existing_generations': case['existing_generations']})
@@ -2469,6 +2518,7 @@ def family_checks(c, inputs, check):
     round6_checks(c, f, schemas, check)
     table_witness_checks(c, f, schemas, check)
     retained_custody_checks(c, f, schemas, check)
+    usage_first_save_checks(c, f, schemas, check)
     # A well-formed completed record can be supplied in the prepared role,
     # and conversely. Source-schema acceptance alone does not entail either
     # role check. These single-role substitutions reach SV12/SV13 first.
