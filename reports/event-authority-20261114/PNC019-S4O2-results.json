@@ -1,0 +1,838 @@
+{
+  "schema_id": "pm.pnc019.s4o2.oracle_results.v1",
+  "source_commit": "8c7ae0481d86a8542a96540919c9bc2a503cd429",
+  "assignment": {
+    "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/INT2/admission-readiness-final.json",
+    "source_sha256": "58566991d8f8a012b87e49afb36f0578576ed24f73122362d84ff365901507be",
+    "selection": "Sort the 187 rows with a positive_negative_oracles nonpass cell by event_type; take one-based inclusive positions 95..187.",
+    "first_position": 95,
+    "last_position": 187,
+    "family_count": 93
+  },
+  "grades": {
+    "PARTIAL": 91,
+    "NOT_APPLICABLE": 2
+  },
+  "criterion": "positive_negative_oracles",
+  "closure": "PARTIAL: stopped at the lead handoff; frozen-tool per-keyword schema adoption and other recorded boundary gaps remain.",
+  "stopped_on_lead_instruction": true,
+  "missing_do_suites": [
+    "board_application_source_14",
+    "board_application_source_15",
+    "board_application_source_16"
+  ],
+  "components": [
+    {
+      "component": "DS",
+      "reports": 170,
+      "status_PASS": 170,
+      "row_cells": 718,
+      "proved_row_cells": 718,
+      "eligible_row_cells": 718,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 718,
+      "own_flips": 718,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "gated_static_sources_current": 233,
+      "evidence": "DS-proof.tar.gz",
+      "nonpassing_reports": []
+    },
+    {
+      "component": "DG6A",
+      "reports": 95,
+      "status_PASS": 95,
+      "row_cells": 498,
+      "proved_row_cells": 498,
+      "eligible_row_cells": 313,
+      "oversized_tables": 17,
+      "exact_credited_cuts": 334,
+      "own_flips": 519,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "gated_static_sources_current": 96,
+      "evidence": "DG6A-bounded-proof.tar.gz",
+      "nonpassing_reports": []
+    },
+    {
+      "component": "DG6B",
+      "reports": 624,
+      "status_PASS": 624,
+      "row_cells": 1339,
+      "proved_row_cells": 1339,
+      "eligible_row_cells": 1339,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 2145,
+      "own_flips": 2145,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "gated_static_sources_current": 76,
+      "evidence": "DG6B-proof.tar.gz",
+      "nonpassing_reports": []
+    },
+    {
+      "component": "DT",
+      "reports": 70,
+      "status_PASS": 68,
+      "row_cells": 247,
+      "proved_row_cells": 244,
+      "eligible_row_cells": 244,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 798,
+      "own_flips": 798,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "status_FAIL": 2,
+      "gated_static_sources_current": 71,
+      "evidence": "DT-full-proof.tar.gz",
+      "nonpassing_reports": [
+        {
+          "path": "src_project_only.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "SV19_project_only_scope"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "SV19_project_only_scope"
+          ]
+        },
+        {
+          "path": "src_stage.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "SV12_prepared_stage",
+                "SV13_completed_stage"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "SV12_prepared_stage",
+            "SV13_completed_stage"
+          ]
+        }
+      ]
+    },
+    {
+      "component": "DMEM",
+      "reports": 182,
+      "status_PASS": 164,
+      "row_cells": 315,
+      "proved_row_cells": 289,
+      "eligible_row_cells": 289,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 588,
+      "own_flips": 588,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "status_FAIL": 18,
+      "gated_static_sources_current": 183,
+      "evidence": "DMEM-proof.tar.gz",
+      "nonpassing_reports": [
+        {
+          "path": "aop_cap.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "AOP02_value_cap"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "AOP02_value_cap"
+          ]
+        },
+        {
+          "path": "ap_inline.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "AP12_inline_cap"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "AP12_inline_cap"
+          ]
+        },
+        {
+          "path": "ap_payload.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "AP11_payload_schema"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "AP11_payload_schema"
+          ]
+        },
+        {
+          "path": "bd_terminal_phase.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "BD16_phase"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "BD16_phase"
+          ]
+        },
+        {
+          "path": "ck_scope.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "CK08_scope_kind"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "CK08_scope_kind"
+          ]
+        },
+        {
+          "path": "ef_access.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "EF01_permission",
+                "EF02_withdrawn"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "EF01_permission",
+            "EF02_withdrawn"
+          ]
+        },
+        {
+          "path": "opa_cap.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "OPA02_value_cap"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "OPA02_value_cap"
+          ]
+        },
+        {
+          "path": "opa_receipts.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "OPA03_started_receipt",
+                "OPA04_completed_receipt"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "OPA03_started_receipt",
+            "OPA04_completed_receipt"
+          ]
+        },
+        {
+          "path": "opa_reserve.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "OPA05_terminal_reserve"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "OPA05_terminal_reserve"
+          ]
+        },
+        {
+          "path": "opa_result.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "OPA06_result_ref",
+                "OPA07_result_digest"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "OPA06_result_ref",
+            "OPA07_result_digest"
+          ]
+        },
+        {
+          "path": "rc_access.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "RC01_permission",
+                "RC02_withdrawn"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "RC01_permission",
+            "RC02_withdrawn"
+          ]
+        },
+        {
+          "path": "rr_access.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "RR01_permission",
+                "RR02_withdrawn"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "RR01_permission",
+            "RR02_withdrawn"
+          ]
+        },
+        {
+          "path": "sel_cap.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "SEL02_value_cap"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "SEL02_value_cap"
+          ]
+        },
+        {
+          "path": "sgc_reduced.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "SGC07_reduced"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "SGC07_reduced"
+          ]
+        },
+        {
+          "path": "tgo_schema.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "TGO01_schema"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "TGO01_schema"
+          ]
+        },
+        {
+          "path": "tgoa_body.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "TGOA02_artifact_order",
+                "TGOA03_manifest",
+                "TGOA04_source",
+                "TGOA05_identity"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "TGOA02_artifact_order",
+            "TGOA03_manifest",
+            "TGOA04_source",
+            "TGOA05_identity"
+          ]
+        },
+        {
+          "path": "tgoa_schema.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "TGOA01_schema"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "TGOA01_schema"
+          ]
+        },
+        {
+          "path": "tgs_schema.json.gz",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "TGS01_schema"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "TGS01_schema"
+          ]
+        }
+      ]
+    },
+    {
+      "component": "DC",
+      "reports": 121,
+      "status_PASS": 121,
+      "row_cells": 340,
+      "proved_row_cells": 340,
+      "eligible_row_cells": 340,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 4887,
+      "own_flips": 4887,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "gated_static_sources_current": 126,
+      "evidence": "DC-proof.tar.gz",
+      "nonpassing_reports": []
+    },
+    {
+      "component": "DF",
+      "reports": 157,
+      "status_PASS": 156,
+      "row_cells": 320,
+      "proved_row_cells": 315,
+      "eligible_row_cells": 315,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 489,
+      "own_flips": 493,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "status_FAIL": 1,
+      "gated_static_sources_current": 158,
+      "evidence": "DF-proof.tar.gz",
+      "nonpassing_reports": [
+        {
+          "path": "payload_scope.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "guards": [
+                "PS02_project_copy"
+              ],
+              "kind": "unproved_guards"
+            }
+          ],
+          "unproved": [
+            "PS01_partition",
+            "PS02_project_copy",
+            "PS03_run_copy",
+            "PS04_node_id",
+            "PS05_attempt_id"
+          ]
+        }
+      ]
+    },
+    {
+      "component": "DS15",
+      "reports": 139,
+      "status_PASS": 139,
+      "row_cells": 356,
+      "proved_row_cells": 356,
+      "eligible_row_cells": 356,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 816,
+      "own_flips": 816,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "gated_static_sources_current": 246,
+      "evidence": "DS15-proof.tar.gz",
+      "nonpassing_reports": []
+    },
+    {
+      "component": "DCW",
+      "reports": 153,
+      "status_PASS": 153,
+      "row_cells": 379,
+      "proved_row_cells": 379,
+      "eligible_row_cells": 379,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 1099,
+      "own_flips": 1099,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "gated_static_sources_current": 154,
+      "evidence": "DCW-proof.tar.gz",
+      "nonpassing_reports": []
+    },
+    {
+      "component": "DR",
+      "reports": 783,
+      "status_PASS": 783,
+      "row_cells": 3040,
+      "proved_row_cells": 3040,
+      "eligible_row_cells": 3040,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 5667,
+      "own_flips": 5667,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "gated_static_sources_current": 62,
+      "evidence": "DR-proof.tar.gz",
+      "nonpassing_reports": []
+    },
+    {
+      "component": "DR_shared",
+      "reports": 2,
+      "status_PASS": 2,
+      "row_cells": 2,
+      "proved_row_cells": 2,
+      "eligible_row_cells": 2,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 3,
+      "own_flips": 3,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "gated_static_sources_current": 3,
+      "evidence": "DR-shared-proof.tar.gz",
+      "nonpassing_reports": []
+    },
+    {
+      "component": "DO",
+      "reports": 115,
+      "status_FAIL": 12,
+      "row_cells": 403,
+      "proved_row_cells": 376,
+      "eligible_row_cells": 376,
+      "oversized_tables": 0,
+      "exact_credited_cuts": 681,
+      "own_flips": 681,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "status_PASS": 103,
+      "evidence": "DO-partial-proof.tar.gz",
+      "unique_suites": 115,
+      "source_continuity": "DO-source-continuity.json",
+      "nonpassing_reports": [
+        {
+          "path": "append_join_1.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "event_type_pattern"
+              ]
+            }
+          ],
+          "unproved": [
+            "event_type_pattern"
+          ]
+        },
+        {
+          "path": "append_join_3.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "event_join_scope_kind"
+              ]
+            }
+          ],
+          "unproved": [
+            "event_join_scope_kind"
+          ]
+        },
+        {
+          "path": "checkpoint_coverage_1.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "coverage_complete"
+              ]
+            }
+          ],
+          "unproved": [
+            "coverage_complete"
+          ]
+        },
+        {
+          "path": "retry_identity_1.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "retry_same_scope_kind"
+              ]
+            }
+          ],
+          "unproved": [
+            "retry_same_scope_kind"
+          ]
+        },
+        {
+          "path": "board_application_shape_2.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "application_input_schema"
+              ]
+            }
+          ],
+          "unproved": [
+            "application_input_schema"
+          ]
+        },
+        {
+          "path": "board_application_source_2.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "source_scope_application_outer_project",
+                "source_scope_application_scope_identity",
+                "source_scope_outer_project_mismatch",
+                "source_scope_project_partition_mismatch",
+                "source_scope_server_scope_mismatch"
+              ]
+            }
+          ],
+          "unproved": [
+            "source_scope_application_outer_project",
+            "source_scope_application_scope_identity",
+            "source_scope_outer_project_mismatch",
+            "source_scope_project_partition_mismatch",
+            "source_scope_server_scope_mismatch"
+          ]
+        },
+        {
+          "path": "board_application_source_3.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "source_scope_application_thread_mismatch",
+                "source_scope_wrapper_record_scope_mismatch",
+                "source_scope_wrapper_record_server_id_mismatch",
+                "source_scope_wrapper_record_storage_instance_id_mismatch",
+                "wrapper_scope_application_scope_identity"
+              ]
+            }
+          ],
+          "unproved": [
+            "source_scope_application_thread_mismatch",
+            "source_scope_wrapper_record_scope_mismatch",
+            "source_scope_wrapper_record_server_id_mismatch",
+            "source_scope_wrapper_record_storage_instance_id_mismatch",
+            "wrapper_scope_application_scope_identity"
+          ]
+        },
+        {
+          "path": "board_application_source_4.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "wrapper_scope_application_outer_project",
+                "wrapper_scope_application_thread_mismatch",
+                "wrapper_scope_outer_project_mismatch",
+                "wrapper_scope_project_partition_mismatch",
+                "wrapper_scope_server_scope_mismatch"
+              ]
+            }
+          ],
+          "unproved": [
+            "wrapper_scope_application_outer_project",
+            "wrapper_scope_application_thread_mismatch",
+            "wrapper_scope_outer_project_mismatch",
+            "wrapper_scope_project_partition_mismatch",
+            "wrapper_scope_server_scope_mismatch"
+          ]
+        },
+        {
+          "path": "board_application_source_5.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "wrapper_scope_wrapper_record_scope_mismatch",
+                "wrapper_scope_wrapper_record_server_id_mismatch",
+                "wrapper_scope_wrapper_record_storage_instance_id_mismatch"
+              ]
+            }
+          ],
+          "unproved": [
+            "wrapper_scope_wrapper_record_scope_mismatch",
+            "wrapper_scope_wrapper_record_server_id_mismatch",
+            "wrapper_scope_wrapper_record_storage_instance_id_mismatch"
+          ]
+        },
+        {
+          "path": "board_application_source_7.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "application_source_server_id"
+              ]
+            }
+          ],
+          "unproved": [
+            "application_source_server_id"
+          ]
+        },
+        {
+          "path": "board_application_source_11.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "source_scope_join",
+                "wrapper_scope_join"
+              ]
+            }
+          ],
+          "unproved": [
+            "source_scope_join",
+            "wrapper_scope_join"
+          ]
+        },
+        {
+          "path": "board_application_source_9.json",
+          "status": "FAIL",
+          "failures": [
+            {
+              "kind": "unproved_guards",
+              "guards": [
+                "application_wrapper_server_id"
+              ]
+            }
+          ],
+          "unproved": [
+            "application_wrapper_server_id"
+          ]
+        }
+      ]
+    }
+  ],
+  "mutation_counting": "PASS reports only, <=8 inventory rows, exact baseline/cut/restoration with trace; these are report row cells across shared cohorts, not distinct guards or per-family coverage.",
+  "retained_regression": {
+    "reports": 1,
+    "status_PASS": 1,
+    "row_cells": 5,
+    "proved_row_cells": 5,
+    "eligible_row_cells": 5,
+    "oversized_tables": 0,
+    "exact_credited_cuts": 11,
+    "own_flips": 11,
+    "masked": 0,
+    "unrelated_changes": 0,
+    "distinct_guard_increment": 0,
+    "evidence": "Panel-final-proof.tar.gz"
+  },
+  "singleton_entailments": {
+    "rows": 5,
+    "method_b_mutation_credit": 0,
+    "proof": "Panel-entailed-proof.json"
+  },
+  "schema_consumer": {
+    "rows": 93,
+    "attempted": 4968,
+    "exact_kills": 4725,
+    "unproved": 243,
+    "limited_status": {
+      "PASS": 21,
+      "PARTIAL": 70,
+      "NOT_APPLICABLE": 2
+    },
+    "method_b_keyword_credit": 0,
+    "evidence": "schema-cells-final-head.json",
+    "sha256": "ce430dd990e933eaa8d2598b73c2052bdd22fd941dcb28f4ed03e9a39aadf90b"
+  },
+  "timestamps": {
+    "tested_occurrences": 68,
+    "evidence": "timestamp-bindings.json",
+    "inventory_gate": "NOT_RUN: repository-wide inventory remains an integration boundary"
+  },
+  "quote_audit": {
+    "quotes": 1327,
+    "sources": 66,
+    "status": "PASS",
+    "evidence": "quote-audit-final.json"
+  },
+  "retirement": {
+    "families": [
+      "settings.theme.updated",
+      "settings.updated"
+    ],
+    "checker": "PASS: 55,631 assertions",
+    "oracle": "NOT_APPLICABLE"
+  },
+  "membership": "NOT_REGRADED",
+  "retention": "NOT_REGRADED",
+  "native_execution": "NOT_RUN",
+  "new_ids": 0,
+  "net_plan_changes": 0,
+  "provenance": [
+    "gated-foundations.json",
+    "audits-read-input.json",
+    "static-audit-final.json",
+    "DO-source-continuity.json"
+  ]
+}
