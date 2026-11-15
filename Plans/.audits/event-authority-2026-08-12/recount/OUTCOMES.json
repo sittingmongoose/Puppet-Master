@@ -530,6 +530,10 @@
   {
    "event_type": "testing.capture.stopped",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.target_changed",
+   "outcome": "registered"
   }
  ]
 }
