@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13570
+Source lines: L13358-L13574
 
-Source SHA256: `7391039b1797c019e8e1b766c3ce0d575b3c04a40059d83525ac443732048a2e`
+Source SHA256: `2fe3092b9869d818b550333a2077b2e0eb34af2a5f504aca963c8c332df3542f`
 
 ---
 
@@ -92,15 +92,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  Puppet Master offers the script tool through whichever channel carries Puppet Master tools on that route. Under
+  Puppet Master offers the script tool through whichever channel carries Puppet Master tools on that route, and the
+  directly callable tools named in T-190 travel on every route by the same channel as the script tool. Under
   Host Tool Execution on a direct API route it is a tool in the provider's tool-call API; on a bridged CLI under the HTE strategy it, and the directly callable tools named in T-190, travel through the
-  Run_Modes hosted action loop as structured tool intents or in-band tool calls, never as a provider tool_use; under
-  the DAE strategy, where the CLI accepts projected tools, it is a projected Puppet Master tool beside the CLI's own
+  Run_Modes hosted action loop as structured tool intents where its capability entry reports structured_tool_intents
+  supported, otherwise as in-band tool calls, never as a provider tool_use; under
+  the DAE strategy, where the CLI accepts Puppet Master tools through provider-native feature projection, it is a projected Puppet Master tool beside the CLI's own
   tools, so the run is mixed. The request-selected registry tools other than the directly callable tools named
   in T-190 are described to the model as the
-  script's callable catalog under T-176 materialization, rather than as one provider tool schema each. Where the
-  selected model's Models_System tool_use capability is false, the same script tool, and the directly callable tools named in T-190, are carried as in-band tool calls
-  in an owned dialect that Tools selects for the model family and records on the run; the T-169 admission gate
+  script's callable catalog under T-176 materialization, rather than as one provider tool schema each. Wherever tool calls are carried
+  in-band, including where the selected model's Models_System tool_use capability is false, the script tool and the
+  directly callable tools named in T-190 are carried as in-band tool calls in an owned dialect that Tools selects for the model family and records on the run; the T-169 admission gate
   applies, with Puppet Master-minted call IDs standing in for provider IDs, and text in which the model
   writes a tool result itself is discarded and never enters replayable history. Where a provider keeps native tools
   that Puppet Master cannot disable, the script tool is still offered, the provider's own tool calls stay outside Code
@@ -109,13 +111,13 @@ canonical_text: >-
   Puppet Master tool call is counted for the run. A provider's own code mode, where it has one, is a provider-native feature handled
   under the provider-native feature policy and is never what makes Code Mode effective.
 gui_related: false
-gui_classification_reason: Provider request shaping and execution-tier behaviour; not GUI implementation work.
+gui_classification_reason: Provider request shaping and execution-shape behaviour; not GUI implementation work.
 depends_on: [T-169, T-176, T-188]
 unblocks: []
 acceptance_criteria:
   - Under Host Tool Execution a Code Mode request carries the script tool and does not also carry one provider tool schema per registry tool the script can call.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect, and a tool result the model wrote itself never reaches replayable history.
-  - A bridged CLI under the HTE strategy runs in Code Mode through the hosted action loop with no provider tool_use, whether or not that CLI has a code mode of its own; under the DAE strategy the run is recorded as mixed.
+  - A bridged CLI under the HTE strategy runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy the run is recorded as mixed.
   - A run on a provider that keeps native tools Puppet Master could not disable is recorded as mixed, never as Code Mode.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
@@ -167,7 +169,8 @@ canonical_text: >-
   Time spent waiting for an approval is approval_wait under the Contracts_V0 temporal taxonomy, attributed apart from
   local compute and external wait; it counts against the parent deadline, so an approval that outlasts the deadline
   ends the script with typed timeout evidence. The open approval request is then closed as expired under its HITL
-  blocked episode, and whichever of the parent deadline and the HITL approval_wait timer ends first governs. The
+  blocked episode, and whichever of the parent deadline and the HITL approval_wait timer ends first governs; if the HITL timer
+  ends first, the call returns its typed hitl_request_expired result to the script. The
   script can call only the tools selected for the request, reaches files, network and credentials only through those
   tools, and runs inside its parent deadline with bounded output; the deadline follows Tools deadline propagation, which is
   what bounds the script's nested calls, and the script's output bound and spill are the EvalSession's under Shared Integration Runtime; each nested tool's own
@@ -176,7 +179,8 @@ canonical_text: >-
   transcript shows the script and every tool call it made. Only question and task, whose
   contracts hand the turn to a person or to another agent, stay directly callable in Code Mode; they are not in the
   script's callable catalog, and calling them directly does not make the run mixed. The essential catalog search of
-  T-176 is always selected for a Code Mode request and is in the script's callable catalog.
+  T-176 is selected for every Code Mode request in which it is policy_available, and is in the script's callable
+  catalog; in Code Mode that is how T-176's directly available catalog search is reached.
 gui_related: false
 gui_classification_reason: Backend authority, limit and evidence rules for nested tool calls; not GUI implementation work.
 depends_on: [T-176, T-177, T-178, T-188]
