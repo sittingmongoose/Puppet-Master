@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24537-L24815
+Source lines: L24541-L24821
 
-Source SHA256: `1f938cea7b6add2997e3538afc0fc89e9aa954de41cee8eea0000a9ee38f4f85`
+Source SHA256: `2417968846d86c5696bc13946e3154871f1d3a2c1c2fc28d2c4771a5372e3a48`
 
 ---
 
@@ -110,6 +110,8 @@ owner_hints:
 ### SP-2207 - storage.recovery_applied aftermath consumer
 
 The "existing coordinator/projector" that performs the recovery aftermath is exactly `storage.recovery_applied.aftermath.v1`, a step of `StorageRecoveryCoordinator`. It acts only on a recovery event whose first receipt is verified, read through SP-278 `reader.storage.event_record_index@1.0.0` with DL-076's nine-field durable token joined to the live snapshot, and only under current proof that no newer block applies. It applies the event's `checkpoint_action` and `projection_action` only through the generic projector's own owner: `invalidate_and_rebuild` and `rebuild_from_survivors` make `projector.storage.event_record_index@1.0.0` publish a new generation rebuilt from surviving retained source; `translate_by_semantic_identity` and `activate_verified_target_shadow` keep the generation and translate by semantic identity. Its durable advance is that projector's existing generation and frontier compare-and-swap on `event_record_index_checkpoint.v1:{storage_instance_id}`; the aftermath of a recovery event is complete exactly when that checkpoint's frontier covers the event's sequence under a generation the action requires, so a restart recomputes pending aftermath from the checkpoint and repeats nothing. It keeps no cursor or stored value of its own and never writes another owner's checkpoint. Family readers derived from the generic index see the new generation through their own SP-278 token validation. `storage.recovery_applied.read.v1` stays passive with `action_authority=none`.
+
+**2026-11-15 clarification (PNC-019 C12-SS).** The recovery event's closed payload fixes `checkpoint_action` and `projection_action` by action (the `oneOf` of `Plans/event_payload_storage_recovery_applied.schema.json`), and the aftermath follows that pair. `exclude_proven_range` (`invalidate_and_rebuild`, `rebuild_from_verified_survivor`) and `restore_verified_backup` (`restore_verified_checkpoint`, `rebuild_from_verified_survivor`) make the projector publish a new generation rebuilt from surviving retained source; `rebuild_from_survivors` above is this payload's `rebuild_from_verified_survivor`. `adopt_valid_tail` (`advance_to_verified_survivor`) and `truncate_unacknowledged_tail` (`preserve_verified_checkpoint`, RA-P02), both with `resume_from_verified_checkpoint`, keep the generation, and the projector's frontier advances over the event. `seal_degraded` and `block_mutation` (`hold_without_advance`, `remain_stopped`) start no projector and advance no checkpoint or frontier; their aftermath holds and has no effect. `translate_by_semantic_identity` and `activate_verified_target_shadow` are `storage.compaction_lifecycle_changed` tokens and never occur in this payload. ATS-3900 executes these three classes. No payload, action, policy or stored value changes.
 
 ```yaml
 plan_unit_id: SP-2207

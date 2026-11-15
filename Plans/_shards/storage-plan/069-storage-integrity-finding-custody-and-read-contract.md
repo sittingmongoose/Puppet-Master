@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24260-L24536
+Source lines: L24262-L24540
 
-Source SHA256: `1f938cea7b6add2997e3538afc0fc89e9aa954de41cee8eea0000a9ee38f4f85`
+Source SHA256: `2417968846d86c5696bc13946e3154871f1d3a2c1c2fc28d2c4771a5372e3a48`
 
 ---
 
@@ -136,6 +136,8 @@ A conforming production implementation must preserve the existing event semantic
 The permanent finding remains the unchanged closed schema. Transient wire observations can express unavailable prefix/header/end authority, first failed checks, actual candidate path, CRC operands and conservative sequence witnesses; they introduce no durable scan journal, raw-byte report family or new lifetime. Authenticate the separate original source owner before and after capture and before immutable publication. Historical reads require the admitted permanent finding and complete current source/index/access fence, not a rerun of disposed raw bytes.
 
 Native segment/manifest/watermark detectors, source/root/manifest/watermark authentication, actual file/directory durability, redb/CAS, fd/lease exclusion, safe sink, first receipt issuance, shared full-value adoption, crash/recovery/restore/migration and installed reader/UI behavior remain separate implementation obligations. A canonical normative rule, a schema materialization and a passing bounded static test are three different claims. None alone is event `DEPTH_PASS`, physical readiness, WorkNode admission or governance seal.
+
+**2026-11-15 amendment (PNC-019 C12-SS).** The conforming downstream adapter for the finding payload is the shared CV-1100 route itself: the qualified RFC 8785 producer-semantic digest (`producer_semantic_digest` in `scripts/pm_event_numbers.py`), with the unchanged SP-236 physical bytes and CV-339 full-value commitment. ATS-3900 executes it. A full-uint64 payload value that RFC 8785 preserves exactly, for example 2^53, 10^18 or 1.8×10^19, completes the digest, the barrier append, the first receipt and the history read with every value exact. A value it cannot preserve, including 2^53+1, 2^60 and the 18446744073709551615 of the two full-u64 wire cases, refuses before any effect under CV-1100; the durable finding stays pending under section 5, and no replacement digest, rounding or numeric cap is introduced. ATS-3900 also executes the `exact_event` route: unique UTF-8-byte-sorted `affected_event_refs`, each joined to exactly one header-verified witness and one corroborating source frame whose sequence and byte bounds lie inside the affected ranges; an advisory index row is not a source frame. The native segment, manifest and watermark detectors remain implementation obligations.
 
 ### 11. Bounded validation and outstanding authority
 
