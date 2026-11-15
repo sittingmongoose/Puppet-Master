@@ -85,6 +85,14 @@ class InvalidationSetsTests(unittest.TestCase):
         self.assertEqual(len(self.problems(r'[aria\-selected="true"] * { color:red }')), 1)
         self.assertEqual(len(self.problems(r'.card:hover .t\69 tle { color:red }')), 0)  # keyed on .title, escaped
 
+    # PM7PERF-LINT-SCOPE-ROOT (R18-2): a scope root's (and limit's) state is the state of the rules inside
+    def test_scope_root_state(self):
+        self.assertEqual(len(self.problems('@scope (.card:hover) { * { color:red } }')), 1)
+        self.assertEqual(len(self.problems('@scope (.card) { :scope:hover * { color:red } }')), 1)
+        self.assertEqual(len(self.problems('@scope (.card) to (.slot:hover) { * { color:red } }')), 1)
+        self.assertEqual(len(self.problems('.list { @scope (.card:hover) { svg { color:red } } }')), 1)
+        self.assertEqual(self.problems('@scope (.card:hover) { .title { color:red } }'), [])
+
 
 if __name__ == '__main__':
     unittest.main()

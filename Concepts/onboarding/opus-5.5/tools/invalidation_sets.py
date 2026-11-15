@@ -154,6 +154,26 @@ def media_inactive(prelude: str) -> bool:
     return _media_values(prelude[len('@media'):].strip().lower()) == {False}
 
 
+def _scoped(prelude: str, body: str, body_line: int, parent: str):
+    """`@scope (<root>) [to (<limit>)] { ... }`: a rule inside matches relative to the scope root, as if written
+    `:is(<root>) <rule>` (or with `:scope` / `&` standing for the root), so the root's state pseudo-classes write the same
+    sets a nested parent's do (PM7PERF-LINT-SCOPE-ROOT: the body was examined without its root, and `@scope (.card:hover)
+    { * {..} }` made the :hover set whole-subtree unseen). The limit's states change which elements match too, so the
+    body is examined under it as well (more sets, never fewer). With no root (a <style>'s parent) the body stands alone."""
+    m = re.match(r'@scope\s*(?:\((.*?)\))?\s*(?:to\s*\((.*)\))?\s*$', prelude, re.S | re.I)
+    roots = [x.strip() for x in (m.groups() if m else ()) if x and x.strip()]
+    if not roots:
+        yield from rules(body, body_line, parent)
+        return
+    for root in roots:
+        sels = split_top(root)
+        anchor = sels[0] if len(sels) == 1 else ':is(' + ', '.join(sels) + ')'
+        if parent:
+            anchor = parent + ' ' + anchor
+        scoped = re.sub(r':scope\b', '&', body, flags=re.I)
+        yield from rules(scoped, body_line, anchor)
+
+
 # Strings and escapes are atomic, so braces/commas/brackets inside attributes or strings are never delimiters.
 _CSS_TOKEN = re.compile(r'/\*.*?\*/|\\.|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|[{};()\[\]]', re.S)
 _AMP_TOKEN = re.compile(r'\\.|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|&', re.S)
@@ -208,7 +228,9 @@ def rules(css: str, base_line: int = 1, parent: str = ''):
             match = re.match(r'@[\w-]+', prelude)
             name = match.group() if match else ''
             if name in ('@media', '@supports', '@layer', '@container', '@scope', '@starting-style', '@document'):
-                if not (name == '@media' and media_inactive(prelude)):
+                if name == '@scope':
+                    yield from _scoped(prelude, body, body_line, parent)
+                elif not (name == '@media' and media_inactive(prelude.lower())):
                     yield from rules(body, body_line, parent)
         elif prelude and not prelude.startswith('--'):
             sels = []
