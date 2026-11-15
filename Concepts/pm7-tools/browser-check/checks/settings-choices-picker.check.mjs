@@ -25,6 +25,9 @@
 // trigger leaves the body's view, and no frame before the close overlaps the panel's sticky head; Tab and Shift+Tab
 // out of the popup close it and move focus on past the trigger (Escape still closes on it). These rows fail
 // `7beee5c8b6` (the popup rides over the head; Tab closes on the trigger).
+// FO-182 (Jared, 2026-11-13; Models_System 7.1): a model with depths is saved together with a depth chosen in the same
+// open picker, so the keys and held-press picks of a model go on through its depths (Enter, or a press on its first
+// depth, the model's own default) before the pick is judged.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-choices-picker.check.mjs --set page=<build>
 // --set looks=a,b narrows the looks; --set sizes=1390x900,740x900 the sizes; --set setting=<id> another model setting;
 // --set lists=<id,id> narrows the long lists; --set popSizes=1280x500,740x900 narrows FO-178's size sweep.
@@ -406,7 +409,12 @@ export const tests = {
 		const shown = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'); const l = c && document.getElementById(c.getAttribute('aria-controls')); return l ? [...l.querySelectorAll('[role="option"]')].filter((n) => !n.hidden).map((n) => n.textContent.trim()) : []; });
 		await t.check(`keys: typing "${word}" narrows the list to it`, shown.length >= 1 && shown.every((s) => s.toLowerCase().includes(word.toLowerCase())), JSON.stringify(shown));
 		await t.page.keyboard.press('Enter');
-		await t.page.waitForTimeout(600);
+		await t.page.waitForTimeout(400);
+		/* FO-182 (Models_System 7.1): Enter on a model with depths moves into its depths, in the same open picker; Enter
+		   there saves the model with the first, its own default depth */
+		const inDepth = await f.evaluate(() => /^Thinking depth/.test((document.activeElement && document.activeElement.getAttribute('aria-label')) || ''));
+		if (inDepth) { await t.page.keyboard.press('Enter'); await t.page.waitForTimeout(400); }
+		await t.page.waitForTimeout(200);
 		const after = await f.evaluate(([id]) => {
 			const sel = document.querySelector(`#pm-settings-root select[data-setting="${CSS.escape(id)}"]`);
 			const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]');
@@ -733,16 +741,24 @@ export const tests = {
 		await t.check('On/Off: "Your choices" keeps its two radios and no picker', b.block && b.radios === 2 && b.combos === 0, `radios ${b.radios}, combobox ${b.combos}`);
 		await closeDetails(t, f);
 		/* opus-recheck-b10d127 F2: long single-choice lists Jared did not choose stay tick lists (the picker goes on
-		   exactly the 13 model settings and the 11 he chose, by id). At least 3 of these 5 must open here. */
+		   exactly the model settings and the 11 he chose, by id). At least 3 of these 4 must open here. FO-182 (Jared,
+		   2026-11-13): the model settings are now every model_picker row of the inventory, so the Back Seat Driver's
+		   model left this set: it is a model setting and its Details shows the picker (asserted below). */
 		let others = 0;
-		for (const id of ['code.terminal.theme', 'code.terminal.font-family', 'safety.approvals.bsd-persona', 'safety.approvals.bsd-model', 'ai.accounts.soft-warning-level']) {
+		for (const id of ['code.terminal.theme', 'code.terminal.font-family', 'safety.approvals.bsd-persona', 'ai.accounts.soft-warning-level']) {
 			if (!(await openDetails(t, f, id, true))) { t.log(`${id}: no Details reachable from its page here`); continue; }
 			others++;
 			const o = await f.evaluate(() => { const i = document.querySelector('#panel-settings .detail-inspector'); return { radios: i.querySelectorAll('.o55-insp-block [role="radio"]').length, combos: i.querySelectorAll('.o55-insp-block [role="combobox"]').length }; });
 			await t.check(`${id} (not chosen by Jared): stays a tick list (${o.radios} radios)`, o.radios > 6 && o.combos === 0, `radios ${o.radios}, combobox ${o.combos}`);
 			await closeDetails(t, f);
 		}
-		await t.check(`at least 3 of the 5 long lists Jared did not choose open here (${others})`, others >= 3, `${others} opened`);
+		await t.check(`at least 3 of the 4 long lists Jared did not choose open here (${others})`, others >= 3, `${others} opened`);
+		/* FO-182: a model setting the inventory names (model_picker), here the Back Seat Driver's model, is the picker */
+		if (await openDetails(t, f, 'safety.approvals.bsd-model', true)) {
+			const m = await f.evaluate(BLOCK, 'safety.approvals.bsd-model');
+			await t.check(`FO-182 safety.approvals.bsd-model (an inventory model row): "Your choices" is the picker (${m.combos} combobox, ${m.radios} radios)`, m.combos === 1 && m.radios === 0, `combobox ${m.combos}, radios ${m.radios}`);
+			await closeDetails(t, f);
+		}
 		/* a list that takes several choices stays a tick list, however long ("Ways to fix, in order": 10) */
 		if (!(await openDetails(t, f, 'planning.verification.repair-strategies'))) return;
 		const mp = await f.evaluate(() => { const i = document.querySelector('#panel-settings .detail-inspector'); return { checks: i.querySelectorAll('.o55-insp-block [role="checkbox"]').length, combos: i.querySelectorAll('.o55-insp-block [role="combobox"]').length }; });
@@ -846,7 +862,12 @@ export const tests = {
 				if (!row) await t.check(`${where}: a row to press`, false, id ? 'no other row in view' : 'no open list');
 				else {
 					await f.locator(`${listSel(id)} [role="option"][data-index="${row.index}"]`).click({ delay: 200 });
-					await t.page.waitForTimeout(600);
+					await t.page.waitForTimeout(400);
+					/* FO-182 (Models_System 7.1): a model with depths is saved with its depth, chosen in the same open picker;
+					   a held press on its first depth (the model's own default) saves the pair */
+					const depth = f.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"]').first();
+					if (await depth.count()) { await depth.click({ delay: 200 }); await t.page.waitForTimeout(400); }
+					await t.page.waitForTimeout(200);
 					const after = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]'); return { expanded: c && c.getAttribute('aria-expanded'), focus: !!(c && document.activeElement === c), face: c ? (((c.querySelector('strong') || c).firstChild || {}).textContent || '').trim() : '', popped: !!document.querySelector('.o55-pick-pop.is-open') }; });
 					await t.check(`${where}: FO-178 a press on "${row.name}" held 200 ms picks it: the popup closes and focus is back on the picker, which names it`, after.expanded === 'false' && !after.popped && after.focus && after.face === row.name, JSON.stringify(after));
 					const reset = f.locator('#panel-settings .detail-inspector [data-action="reset-setting"]').first();
