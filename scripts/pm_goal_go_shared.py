@@ -180,6 +180,11 @@ def created_numbers(collector, created):
                 expected = set()
                 if slot in ('goal_revision', 'accepted_objective_revision') and not is_int(value):
                     expected.add('goal.created/current_integers')
+                if slot == 'first_receipt_sequence_id' and not c.same_json_value(value, copy.deepcopy(value)):
+                    # The shared value equality (Storage value bytes, same_json_value) cannot encode such a value, so the
+                    # creation receipt's copies of the publication receipt/append result cannot be shown equal.
+                    expected |= {'goal.created/result/creation_receipt/first_append_receipt',
+                                 'goal.created/result/creation_receipt/original_append_result'}
                 for row_name, container in (('goal.created/digest/original_source', r['original_source']),
                                             ('goal.created/digest/current_source', r['current_source']),
                                             ('goal.created/digest/producer_semantic', r['producer_input']),
@@ -305,30 +310,46 @@ def run_numbers(collector, run_started):
 
 
 def deleted_numbers(collector):
+    """The receipt-selected terminal append receipt sequence_id of the deleted retained read. The receipt is held
+    twice (terminal companion and terminal result rows); both carry the case and both rows are re-packed when the
+    shared Storage unsigned codec can encode them. Expectation: a value that codec refuses (float, integer outside
+    uint64) refuses at the receipt-selected uint64 profile; another non-integer refuses at the pinned frozen
+    retained-read row schema (whole-definition row of the paired-phases subject, fingerprint of its pinned bytes);
+    an in-range integer other than the original refuses at the stored receipt / surviving event identity join."""
     import pm_goal_deleted_retained_oracles as rr_module
     import pm_goal_deleted_components as components
     fs, rr, check, base = rr_module.RETAINED_CONTEXT
     profile = 'restore_point.deleted/retained/receipt-selected original uint64 physical profile'
+    schema = 'restore_point.deleted/original/schema/35d687558705f85873a00aad5c50cdae60352f0eeae7972474e5076b26759b96'
     join = 'restore_point.deleted/retained/original receipt surviving event identity'
     count = 0
     original = base['store']['model'].rows['terminal_companion']['value']['append_receipt']['sequence_id']
     for label, value in corpus():
         case = copy.deepcopy(base)
-        row = case['store']['model'].rows['terminal_companion']
-        document = copy.deepcopy(row['value'])
-        document['append_receipt']['sequence_id'] = copy.deepcopy(value)
+        rows = case['store']['model'].rows
+        documents = {}
+        for name, member in (('terminal_companion', 'append_receipt'), ('terminal_result', 'original_append_receipt')):
+            document = copy.deepcopy(rows[name]['value'])
+            document[member]['sequence_id'] = copy.deepcopy(value)
+            documents[name] = document
         try:
-            components.uint_value(document)
+            for document in documents.values():
+                components.uint_value(document)
             storable = True
         except n.Refusal:
             storable = False
-        if storable:
-            case['store']['model'].rows['terminal_companion'] = fs.packrow(row['key'], document)
+        for name, document in documents.items():
+            if storable:
+                rows[name] = fs.packrow(rows[name]['key'], document)
+            else:
+                rows[name]['value'] = document
+        if not storable:
+            ok, target = False, profile
+        elif not is_int(value):
+            ok, target = False, schema
         else:
-            row['value'] = document
-        same = is_int(value) and value == original
-        ok = storable and same
-        target = None if ok else (profile if not storable else join)
+            ok = value == original
+            target = None if ok else join
         collector.invoke('restore_point.deleted/numbers/receipt_sequence_id/' + label, check, case, ok, target=target,
                          family='restore_point.deleted')
         count += 1

@@ -475,6 +475,34 @@ def reader_world():
                 storage_instance_id=storage, project_id=project, budget=budget, cursor=None))
 
 
+# TEST_ONLY whole-v2 retained payload: produced by the schema-driven generator of
+# scripts/pm_goal_go_schema_closure.py (lane GC's gen) from Plans/goal_created_reader_contracts/retained-v2.schema.json
+# and accepted by that owner schema; identity members then set to the authored row's project and goal.
+V2_PAYLOAD = {
+    "event_name": "goal.created", "schema_version": "pm.goal_runtime_event.goal_created.schema.v2",
+    "occurred_at_utc": "2026-09-12T08:00:00Z", "project_id": "project/1", "goal_id": "goal:v2", "goal_revision": 1,
+    "actor_ref": "actor:original", "execution_role": "user", "requested_provider_ref": "gc", "effective_provider_ref": "gc",
+    "requested_model_ref": "gc", "effective_model_ref": "gc", "requested_account_ref": "gc", "effective_account_ref": "gc",
+    "correlation_id": "correlation:original", "evidence_refs": [], "artifact_refs": [],
+    "payload": {"objective": "gc", "acceptance_criteria": [{"criterion_id": "gc", "statement": "gc"}], "non_goals": [],
+                "allowed_scope": {"scope_kind": "repository", "include_refs": [], "exclude_refs": [], "write_allowed": True},
+                "constraints": [], "budget": {"max_turns": 1, "max_tokens": 1, "max_wall_time_seconds": 1, "max_parallel_agents": 0},
+                "attachment_refs": [], "model_policy": {"worker_policy_ref": "gc", "inheritance": "inherit_parent"},
+                "agent_control_envelope_ref": "gc", "agent_control_envelope_hash": "a" * 64}}
+
+
+def reader_world_v2():
+    """The same world with the matching frame carrying a whole-v2 retained original (v2 route, no body receipt)."""
+    world = reader_world()
+
+    def v2(event):
+        event['payload_schema_id'] = 'pm.goal_runtime_event.goal_created.schema.v2'
+        event['payload'] = copy.deepcopy(V2_PAYLOAD)
+        event['event_id'] = 'goal.created.v2:fixture'
+    coherent_frame(world, 1, v2)
+    return world
+
+
 def issue_cursor(world, after_index):
     """An issued private cursor bound to the world's current snapshot, positioned after frame `after_index`."""
     frames = world['source']['frames']
@@ -888,6 +916,15 @@ def main():
         coherent_frame(value, 1, mutate)
         collector.invoke('goal.created/reader/single-defect/' + label, read, value, False, target=row, family=FAMILY)
         counts['reader_witnesses'] += 1
+    world_v2 = reader_world_v2()
+    collector.invoke('goal.created/reader/control/whole_v2_route', read, world_v2, True, family=FAMILY)
+    bad = copy.deepcopy(world_v2)
+    coherent_frame(bad, 1, lambda e: e['payload'].__setitem__('fixture_extra', True))
+    collector.invoke('goal.created/reader/single-defect/v2/payload_schema', read, bad, False, target=k.payload_v2.row, family=FAMILY)
+    bad = copy.deepcopy(world_v2)
+    coherent_frame(bad, 1, lambda e: e['payload'].__setitem__('project_id', 'project/other'))
+    collector.invoke('goal.created/reader/single-defect/v2/payload_project', read, bad, False,
+                     target='goal.created/reader/observation/payload_project', family=FAMILY)
     resumed = copy.deepcopy(world)
     issue_cursor(resumed, 0)
     collector.invoke('goal.created/reader/control/resume_after_nonmatching', read, resumed, True, family=FAMILY)

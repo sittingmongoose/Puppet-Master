@@ -376,14 +376,14 @@ def install_generic_capture(dep, frozen):
     installed function; a seed is kept only from a call that returned without refusal."""
     import inspect
     seeds, active, counts = [], [False], {}
-    directory = str(Path(c.load(PLANS / 'restore_point_deleted_contract_fixtures.json')['frozen_joined_subject']['path']).parent)
+    pinned = {str(path) for path in declare.frozen_files()}  # every pinned frozen .py file, resolved
     for namespace in (vars(dep), dep.G, dep.AD, dep.C, dep.R):
         for key, fn in list(namespace.items()):
             if not inspect.isfunction(fn) or getattr(fn, '_go_capture', False):
                 continue
             inner = (fn.__kwdefaults__ or {}).get('_' + '_fn', fn)
             code = getattr(inner, '__code__', None)
-            if code is None or not code.co_filename.startswith(directory) or 'expect' not in code.co_names:
+            if code is None or str(Path(code.co_filename).resolve()) not in pinned or 'expect' not in code.co_names:
                 continue
             label = 'adoption-dependency/' + Path(code.co_filename).name + ':' + str(code.co_firstlineno)
 
@@ -397,6 +397,70 @@ def install_generic_capture(dep, frozen):
             capture._go_capture = True
             namespace[key] = capture
     return seeds, active
+
+
+def transfer_bank(collector, frozen, seeds):
+    """Replay every pinned frozen-bank defect (tests/fixtures/pnc019_goal_frozen_helper_witnesses.json, authored
+    for restore_point.deleted) whose seed function also ran inside run.started adoption calls, on that function's
+    run.started-world input: the same authored (path, operation), the bank's declared refusal as the target.
+    A defect whose path is absent from the run.started input, or whose edit cannot be built, is skipped."""
+    import inspect
+    from pm_goal_deleted_case_ops import Editor
+    pin = c.load(PLANS / 'restore_point_deleted_contract_fixtures.json')['frozen_joined_subject']
+    manifest = Path(pin['path'])
+    files = [(Path(r['path']) if Path(r['path']).is_absolute() else manifest.parent / r['path']).resolve()
+             for r in c.load(manifest)['files']]
+    by_function = {}
+    for fn, base, label in seeds:
+        code = fn.__code__
+        by_function.setdefault((str(Path(code.co_filename).resolve()), code.co_firstlineno), []).append((fn, base, label))
+    counts = dict(cases=0, matched=0, built=0)
+    bank = c.load(ROOT / 'tests/fixtures/pnc019_goal_frozen_helper_witnesses.json')['cases']
+    dep = frozen.FIXTURE_CONTEXT[0]
+    for number, case in enumerate(bank):
+        counts['cases'] += 1
+        seed = case['seed']
+        if 'manifest_file_index' not in seed:
+            continue
+        key = (str(files[seed['manifest_file_index']]), seed['function_line'])
+        for fn, base, label in by_function.get(key, [])[:2]:
+            counts['matched'] += 1
+            try:
+                operation = case['operation']
+                if operation == 'legacy_other':
+                    value = copy.deepcopy(base)
+                    parent = value
+                    for part in case['path'][:-1]:
+                        parent = parent[part]
+                    parent[case['path'][-1]] = frozen.legacy_other(parent[case['path'][-1]])
+                elif operation.startswith('generic_'):
+                    from pm_goal_deleted_generic_edits import edit
+                    value = edit(base, operation, dep.G)
+                elif operation.startswith('source_'):
+                    from pm_goal_deleted_case_ops import source_edit
+                    value = source_edit(base, operation, frozen.SOURCE_BUILDER, frozen.HASH_FUNCTIONS)
+                else:
+                    version = case.get('hash_recipe_version', 1)
+                    value = Editor(base, frozen.helper_hash_functions(version), version=version).edit(tuple(case['path']), operation)
+            except Exception:  # the authored path or operation does not exist in this input
+                continue
+            if not frozen.fixed_context_unchanged(fn, base, value):
+                continue
+            counts['built'] += 1
+            collector.invoke(f'run.started/transfer-bank/{number}/{label}', search_evaluator(fn, frozen), value, False,
+                             target=case['expected_refusal'], family=FAMILY, generated=True)
+            collector.ledger[-1]['declared_rule'] = 'bank:frozen_transfer'
+    return counts
+
+
+def search_evaluator(fn, frozen):
+    def evaluate(value):
+        try:
+            fn(*value['args'], **value['kwargs'])
+        except frozen.ExpectedRefusal as refusal:
+            return refusal.errors
+        return set()
+    return evaluate
 
 
 def main():
@@ -435,6 +499,7 @@ def main():
             finally:
                 active[0] = False
             SEEDS['dependency'] = (generic, [])
+            GO_EVIDENCE['frozen_bank_transfer'] = transfer_bank(collector, frozen, generic + SEEDS.get('adoption', ([], []))[0])
     finally:
         frozen.helper_witnesses = saved
         if env is None:
@@ -449,7 +514,7 @@ def main():
                 for label in sorted(packet['positive'])]
     try:
         # PNC019_GO_NO_SEARCH=1 only for the schema-closure root collection (pm_goal_go_schema_closure.py).
-        if os.environ.get('PNC019_GO_NO_SEARCH') != '1':
+        if os.environ.get('PNC019_GO_NO_SEARCH') != '1' and FAMILY in os.environ.get('PNC019_GO_SEARCH_FAMILIES', FAMILY):
             GO_EVIDENCE['search'] = search.run(collector, FAMILY, [SEEDS[k] for k in ('adoption', 'dependency') if k in SEEDS],
                                                frozen, complete=complete)
             GO_EVIDENCE['dependency_seeds'] = len(SEEDS.get('dependency', ([], []))[0])

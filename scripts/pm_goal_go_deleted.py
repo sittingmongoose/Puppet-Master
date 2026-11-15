@@ -192,7 +192,7 @@ def main():
     complete = [(subject.validate, dict(args=[positives[label]], kwargs={}), 'joined-validate/' + label) for label in sorted(positives)]
     try:
         # PNC019_GO_NO_SEARCH=1 only for the schema-closure root collection (pm_goal_go_schema_closure.py).
-        if os.environ.get('PNC019_GO_NO_SEARCH') != '1':
+        if os.environ.get('PNC019_GO_NO_SEARCH') != '1' and FAMILY in os.environ.get('PNC019_GO_SEARCH_FAMILIES', FAMILY):
             GO_EVIDENCE['search'] = search.run(collector, FAMILY, [SEEDS[name] for name in ('frozen', 'retained') if name in SEEDS],
                                                frozen, complete=complete)
     finally:

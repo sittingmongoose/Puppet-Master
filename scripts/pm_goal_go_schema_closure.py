@@ -361,7 +361,11 @@ def concrete(value, ipath, prefix=()):
 CURRENT = [None]  # the root validator of the definition being closed (for conditional generation)
 
 
+COUNT = [0]  # GO addition: every schema validation the closure performs (GC charged repair() a flat 8)
+
+
 def holds(v, node, value):
+    COUNT[0] += 1
     try:
         return not any(True for _ in v.evolve(schema=node).iter_errors(value))
     except Exception:  # noqa: BLE001
@@ -499,6 +503,7 @@ def defects(keyword, node, here):
     elif keyword == 'pattern':
         base = here if isinstance(here, str) else 'gc'
         out = [base + '\n', base[:-1] + '!' if base else '!', '!' + base, base.upper() if base != base.upper() else base.lower(), base + ' ']
+        out.append(base + '\ud800')  # GO addition: a lone surrogate (patterns such as ^[^\ud800-\udfff]+$)
     elif keyword == 'format':
         out = ['not-a-' + node['format'], '2026-02-30T00:00:00Z']
     elif keyword in ('minimum', 'exclusiveMinimum'):
@@ -558,6 +563,7 @@ def apply(control, path, edit):
 
 
 def errors_of(v, value, cut=frozenset()):
+    COUNT[0] += 1
     token = common._SCHEMA_CONTEXT.set(('', frozenset(cut)))
     try:
         return list(v.iter_errors(value))
@@ -611,6 +617,7 @@ def close_root(root, v, seeds, budget):
     known = {hashlib.sha256(pickle.dumps(c, protocol=5)).hexdigest() for c in controls}
     branch_controls = []
     spent = 0
+    root0 = COUNT[0]
     for location, info in nodes.items():
         node = info['node']
         for keyword in clauses_of(node):
@@ -630,14 +637,14 @@ def close_root(root, v, seeds, budget):
                 continue
             best = None
             attempts = 0
-            start = spent
+            start = COUNT[0]
             for reach in [r for r in info['reach'] if not any(c[0] in ('if', 'not') for c in r['ctx'])][:6]:
                 pools = [(c, None) for c in controls[:40]]
                 for variant in range(4):
                     for control in seeds[:6]:
                         pools.append((control, variant))
                 for control, variant in pools:
-                    if spent > budget or spent - start > 900:
+                    if COUNT[0] - root0 > budget or COUNT[0] - start > 900:
                         break
                     if variant is None:
                         paths = list(concrete(control, reach['ipath']))
@@ -707,7 +714,7 @@ def close_root(root, v, seeds, budget):
                 if best and best['cls'] == 'KILLED':
                     break
             entries[clause] = best or dict(cls='UNCOVERED', construction_attempts=attempts)
-    return entries, branch_controls, spent
+    return entries, branch_controls, COUNT[0] - root0
 
 
 def collect():

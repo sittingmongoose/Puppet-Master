@@ -99,6 +99,8 @@ def candidates(fn, base, row, sites, frozen, alternatives):
         keys.add(tail.split()[-1])
     paths = [(p, v) for p, v in nodes(base) if mutable(p)]
     relevant = [(p, v) for p, v in paths if any(k in keys for k in p if type(k) is str)]
+    if not relevant:  # the predicate names no member (e.g. v.is_valid(x)): every mutable leaf, shallow first
+        relevant = [(p, v) for p, v in paths if not isinstance(v, (dict, list))]
     relevant.sort(key=lambda item: (isinstance(item[1], (dict, list)), item[0][-1] not in keys, len(item[0]), repr(item[0])))
     for path, original in relevant:
         modes = ['coherent', 'simple', 'coherent_hash_claim', 'coherent_remove', 'remove', 'coherent_rename']

@@ -17,8 +17,12 @@ from pathlib import Path
 import pm_goal_oracle_common as c
 
 ROOT = Path(__file__).resolve().parents[1]
-SEED_CAP = 24
-ROOTS = {}   # root id -> dict(validator, seeds{sha: value}, rows set, sites set, kind)
+SEED_CAP = 8
+ROOTS = {}
+# Seeds come only from complete calls declared valid (controls); pm_goal_go_sweep.install sets this
+# around every invoke, so negatives, transfers and search edits never add a seed.
+CONTROL = [False]
+# ROOTS: root id -> dict(validator, seeds{sha: value}, rows set, sites set, kind)
 
 
 def record(root, v, value, *, row=None, site=None, kind='go'):
@@ -27,7 +31,7 @@ def record(root, v, value, *, row=None, site=None, kind='go'):
         slot['rows'].add(row)
     if site:
         slot['sites'].add(site)
-    if value is not None and len(slot['seeds']) < SEED_CAP:
+    if value is not None and CONTROL[0] and len(slot['seeds']) < SEED_CAP:
         try:
             key = hashlib.sha256(pickle.dumps(value, protocol=5)).hexdigest()
         except Exception:  # an unpicklable instance is never a seed

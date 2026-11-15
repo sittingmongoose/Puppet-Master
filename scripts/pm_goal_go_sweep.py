@@ -45,6 +45,19 @@ def install(prove):
     tables.PHASE_PREFIX = PREFIX
     tables._PREDICATES.clear()
     tables._ROWS = json.loads(MANIFEST.read_text()) if prove and MANIFEST.exists() else {}
+    if not getattr(sweep.Collector, '_go_controls', False):
+        import pm_goal_go_schema as schemas
+        invoke = sweep.Collector.invoke
+
+        def control_invoke(self, label, evaluate, value, valid=None, **kwargs):
+            saved = schemas.CONTROL[0]
+            schemas.CONTROL[0] = valid is True and not self.replaying
+            try:
+                return invoke(self, label, evaluate, value, valid, **kwargs)
+            finally:
+                schemas.CONTROL[0] = saved
+        sweep.Collector.invoke = control_invoke
+        sweep.Collector._go_controls = True
     if not getattr(sweep.Collector, '_go_cut_sites', False):
         judge = sweep.Collector._judge
 
