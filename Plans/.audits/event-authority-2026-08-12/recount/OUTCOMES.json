@@ -318,6 +318,10 @@
   {
    "event_type": "notebook.entry_committed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "notebook.entry_superseded",
+   "outcome": "registered"
   }
  ]
 }
