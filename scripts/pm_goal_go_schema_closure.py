@@ -155,12 +155,9 @@ def walk(v):
     def visit(node, resolver, ipath, ctx, steps, depth, obj=None, empty=None):
         if not isinstance(node, dict) or depth > 40:
             return
-        if depth and isinstance(node.get('$id'), str):  # GO fix: an inline document with its own $id is its own base
-            try:
-                from referencing.jsonschema import DRAFT202012
-                resolver = resolver.in_subresource(DRAFT202012.create_resource(node))
-            except Exception:  # noqa: BLE001 - keep the enclosing resolver; a dangling ref is then recorded below
-                pass
+        # The walk keeps the resolver it reached a node with (a $ref lookup switches it to the target's document), as the
+        # owner validators resolve; an inline subschema's own $id is not made a new base (the frozen validators resolve
+        # such refs against the enclosing document, and a root that switched failed with PointerToNowhere).
         location = node.get('x-pm-oracle-id', json.dumps(node, sort_keys=True))
         RESOLVERS.setdefault(id(node), resolver)
         key = (location, ipath, tuple(ctx_key(c) for c in ctx))
@@ -1531,11 +1528,14 @@ def self_test():
     p9 = pinned_proof(n9['path9'], n9, v9, 'pattern')
     print('path9 proof', p9)
     assert p9 and p9['cls'] == 'COVERED_BY_CONST'
-    # an embedded document with its own $id: repair resolves its `#/$defs/...` in that document, not in the root
-    schema10 = {"$id": "urn:go-selftest:root", "x-pm-oracle-id": "R10", "type": "object", "required": ["x"], "properties": {"x": {
-        "$id": "urn:go-selftest:inner", "x-pm-oracle-id": "X10", "type": "object", "required": ["a"],
-        "properties": {"a": {"x-pm-oracle-id": "A10", "$ref": "#/$defs/Id"}}, "$defs": {"Id": {"x-pm-oracle-id": "Id10", "type": "string", "minLength": 1}}}}}
-    v10 = jsonschema.Draft202012Validator(schema10)
+    # a document reached through a $ref: repair resolves its `#/$defs/...` in that document, not in the root
+    from referencing import Registry
+    from referencing.jsonschema import DRAFT202012
+    inner = {"$id": "urn:go-selftest:inner", "x-pm-oracle-id": "X10", "type": "object", "required": ["a"],
+             "properties": {"a": {"x-pm-oracle-id": "A10", "$ref": "#/$defs/Id"}}, "$defs": {"Id": {"x-pm-oracle-id": "Id10", "type": "string", "minLength": 1}}}
+    schema10 = {"$id": "urn:go-selftest:root", "x-pm-oracle-id": "R10", "type": "object", "required": ["x"],
+                "properties": {"x": {"x-pm-oracle-id": "x10", "$ref": "urn:go-selftest:inner"}}}
+    v10 = jsonschema.Draft202012Validator(schema10, registry=Registry().with_resource("urn:go-selftest:inner", DRAFT202012.create_resource(inner)))
     walk(v10)
     repaired = error_repair(v10, {"x": {}}, ("x", "zz"))
     print('embedded repair', repaired)
