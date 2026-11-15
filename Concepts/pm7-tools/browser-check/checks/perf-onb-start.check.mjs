@@ -21,7 +21,11 @@
 // logged: a single shape can need two programs, the lead's ruling C keeps those 50-75 ms stalls), the whole pre-draw
 // within --set pdms=4000 ms (on a quiet PC), and once done nothing left (no host, marked element or listener); Start
 // pressed while it runs: the Look screen comes in and it ends, leaving nothing; low-resource mode: it draws nothing once
-// on; Reduced Motion: it runs and changes nothing on screen (the window's pane during it and after it, the same pixels).
+// on. K-AA (the lead's ruling (a)), with and without Reduced Motion: the pane before and after the pre-draw is the same to
+// the pixel; while it runs, Chrome rasters the page with MSAA (the pre-drawn SVG paths make it switch), so only the
+// anti-aliased edges of rounded controls may differ: within 2.5 px of a curved outline, at most 40 levels, at most 120 pixels
+// a control (none inside a shape, on a straight edge, away from the controls); --set aamutant=1 paints one pixel inside Get
+// Started while it runs (the rows' red test); --set only=pixels runs these rows alone.
 // Logged: when the new screen's title was first presented (Element Timing: the check gives the title an elementtiming
 // attribute as its layer is appended; its renderTime follows the title's own staggered fade-in, so it is not the
 // screen's first frame);
@@ -31,6 +35,81 @@
 // Start shows the new screen in the click's own task (no hold, no entrance).
 // Both surfaces (--set sandbox=0 and 1). About 40 s a surface.
 import fs from 'node:fs';
+import zlib from 'node:zlib';
+
+// A screenshot's pixels (Playwright's PNGs: 8-bit RGB or RGBA, not interlaced), with nothing but zlib.
+function png(buf) {
+	let o = 8, w = 0, h = 0, ct = 0; const idat = [];
+	while (o < buf.length) {
+		const len = buf.readUInt32BE(o), type = buf.toString('latin1', o + 4, o + 8), d = buf.subarray(o + 8, o + 8 + len);
+		if (type === 'IHDR') { w = d.readUInt32BE(0); h = d.readUInt32BE(4); if (d[8] !== 8 || d[12] !== 0) throw new Error('png: 8-bit, not interlaced only'); ct = d[9]; }
+		else if (type === 'IDAT') idat.push(d); else if (type === 'IEND') break;
+		o += 12 + len;
+	}
+	const bpp = ct === 6 ? 4 : ct === 2 ? 3 : 0; if (!bpp) throw new Error('png: RGB or RGBA only');
+	const raw = zlib.inflateSync(Buffer.concat(idat)), stride = w * bpp, out = Buffer.alloc(w * h * 3), cur = Buffer.alloc(stride), prev = Buffer.alloc(stride);
+	for (let y = 0, i = 0; y < h; y++) {
+		const f = raw[i++];
+		for (let x = 0; x < stride; x++, i++) {
+			const r = raw[i], a = x >= bpp ? cur[x - bpp] : 0, u = prev[x], c = x >= bpp ? prev[x - bpp] : 0;
+			let v = r;
+			if (f === 1) v = r + a; else if (f === 2) v = r + u; else if (f === 3) v = r + ((a + u) >> 1);
+			else if (f === 4) { const pp = a + u - c, pa = Math.abs(pp - a), pb = Math.abs(pp - u), pc = Math.abs(pp - c); v = r + (pa <= pb && pa <= pc ? a : pb <= pc ? u : c); }
+			cur[x] = v & 255;
+		}
+		for (let x = 0; x < w; x++) { out[(y * w + x) * 3] = cur[x * bpp]; out[(y * w + x) * 3 + 1] = cur[x * bpp + 1]; out[(y * w + x) * 3 + 2] = cur[x * bpp + 2]; }
+		cur.copy(prev);
+	}
+	return { w, h, px: out };
+}
+// FO-206 K-AA (the lead's ruling (a)): while the Look screen's pre-draw runs, Chrome rasters the page with MSAA (the pre-drawn
+// SVG paths make it switch), and the anti-aliased edges of rounded shapes come out a little different. Allowed: a pixel that
+// differs by at most AA_MAX levels, in the anti-aliased band of one of the pane's rounded controls (within AA_BAND pixels of
+// its rounded outline, where that outline curves: a corner, or anywhere on a circle), at most AA_PER pixels a control.
+// Anything else fails: inside a shape, on a straight edge, away from every control, or over AA_MAX levels.
+const AA_MAX = 40, AA_PER = 120, AA_BAND = 2.5;
+// a pixel centre against a box's rounded outline: its signed distance (negative inside) and whether the outline curves there
+function outline(r, x, y) {
+	const hw = r.w / 2, hh = r.h / 2, rad = Math.min(r.r, hw, hh), qx = Math.abs(x + 0.5 - (r.x + hw)) - (hw - rad), qy = Math.abs(y + 0.5 - (r.y + hh)) - (hh - rad);
+	const sd = Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - rad;
+	/* (the curve's ends count to AA_BAND past the point where it meets a straight edge: the anti-aliasing there is the curve's) */
+	return { sd, curved: rad > 0 && qx > -AA_BAND && qy > -AA_BAND };
+}
+function judgeAA(beforeBuf, duringBuf, boxes) {
+	const A = png(beforeBuf), B = png(duringBuf);
+	if (A.w !== B.w || A.h !== B.h) return { ok: false, why: `sizes ${A.w}x${A.h} and ${B.w}x${B.h}` };
+	const per = new Map(), bad = { over: 0, inside: 0, straight: 0, outside: 0 }; let n = 0, worst = 0; const where = [];
+	for (let y = 0; y < A.h; y++) for (let x = 0; x < A.w; x++) {
+		const i = (y * A.w + x) * 3, d = Math.max(Math.abs(A.px[i] - B.px[i]), Math.abs(A.px[i + 1] - B.px[i + 1]), Math.abs(A.px[i + 2] - B.px[i + 2]));
+		if (!d) continue;
+		n++; worst = Math.max(worst, d);
+		let why = d > AA_MAX ? 'over' : null, hit = null;
+		if (!why) {
+			const near = boxes.map((r) => ({ r, o: outline(r, x, y) })).filter((c) => Math.abs(c.o.sd) <= AA_BAND).sort((p, q) => Math.abs(p.o.sd) - Math.abs(q.o.sd));
+			const curved = near.find((c) => c.o.curved);
+			if (curved) hit = curved.r;
+			else if (near.length) why = 'straight';
+			else why = boxes.some((r) => outline(r, x, y).sd < -AA_BAND) ? 'inside' : 'outside';
+		}
+		if (why) { bad[why]++; if (where.length < 8) where.push([x, y, d, why]); continue; }
+		per.set(hit.name, (per.get(hit.name) || 0) + 1);
+	}
+	const crowded = [...per.entries()].filter(([, c]) => c > AA_PER);
+	const ok = !bad.over && !bad.inside && !bad.straight && !bad.outside && !crowded.length;
+	return { ok, n, worst, bad, perControl: Object.fromEntries(per), crowded, where };
+}
+// the pane's rounded controls, in the screenshot's pixels
+const ROUNDED = () => {
+	const pane = document.querySelector('#pm-o55-onboarding .o55-pane'), pr = pane.getBoundingClientRect(), k = window.devicePixelRatio || 1, out = [];
+	pane.querySelectorAll('button, a, input, [role="radio"], .o55-card, .o55-tile, .o55-pill, .o55-tipq, .o55-banner, .o55-segmented').forEach((el, i) => {
+		if (el.closest('.o55-prewarm')) return;
+		const cs = getComputedStyle(el), r = el.getBoundingClientRect();
+		if (!r.width || !r.height || cs.visibility === 'hidden' || parseFloat(cs.borderTopLeftRadius) <= 0) return;
+		const rs = cs.borderTopLeftRadius, rad = /%$/.test(rs) ? Math.min(r.width, r.height) * parseFloat(rs) / 100 : parseFloat(rs);
+		out.push({ name: (el.className && String(el.className).split(' ')[0]) + '#' + i + (el.textContent ? ':' + el.textContent.trim().slice(0, 16) : ''), x: (r.left - pr.left) * k, y: (r.top - pr.top) * k, w: r.width * k, h: r.height * k, r: rad * k });
+	});
+	return out;
+};
 
 const ARM = () => {
 	if (window.__pos) return;
@@ -93,7 +172,33 @@ async function surface(t, sandbox) {
 	};
 	const pdState = (f) => f.evaluate(() => (window.O55.ui.prewarm && window.O55.ui.prewarm.state ? window.O55.ui.prewarm.state() : null));
 	const pdLeft = (f) => f.evaluate(() => document.querySelectorAll('#pm-o55-onboarding .o55-prewarm, #pm-o55-onboarding [data-pd]').length);
+	// The pane before the pre-draw (Welcome's entrance over), during it and after it (K-AA, the lead's ruling (a)): before and
+	// after the same pixels; during, only anti-aliased edges of rounded controls may differ (judgeAA). --set aamutant=1 paints
+	// one pixel inside Get Started while it runs: the rows' own red test.
+	const pixels = async (reduced) => {
+		const mode = reduced ? 'Reduced Motion' : 'motion';
+		const f = await open(reduced, { early: true });
+		const pane = f.locator('#pm-o55-onboarding .o55-pane');
+		await f.waitForFunction(() => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); return !!l && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold'); }, null, { timeout: 15000 }).catch(() => {});
+		await f.waitForTimeout(200);
+		const before = await pane.screenshot(), phase0 = (await pdState(f) || {}).phase;
+		if (phase0 !== 'none') { await t.check(`${tag}: ${mode}: the pane pictured before the pre-draw`, false, `the pre-draw had already begun (${phase0})`); return; }
+		if (!(await pdRunning(f))) { await t.check(`${tag}: ${mode}: the pre-draw was seen running`, false, JSON.stringify(await pdState(f))); return; }
+		if (t.args.aamutant) await f.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-primary'); const d = document.createElement('i'); d.id = 'aa-mutant'; d.style.cssText = 'position:absolute;left:50%;top:6px;width:1px;height:1px;background:#f0f;pointer-events:none'; d.dataset.pos = b.style.position; if (getComputedStyle(b).position === 'static') b.style.position = 'relative'; b.appendChild(d); });
+		const boxes = await f.evaluate(ROUNDED), during = await pane.screenshot();
+		if (t.args.aamutant) await f.evaluate(() => { const d = document.getElementById('aa-mutant'); if (d) { d.parentElement.style.position = d.dataset.pos || ''; d.remove(); } });
+		await f.waitForFunction(() => window.O55.ui.prewarm.state().phase === 'done', null, { timeout: 30000 }).catch(() => {});
+		await f.waitForTimeout(300);
+		const after = await pane.screenshot();
+		if (process.env.T_DIR) [['before', before], ['during', during], ['after', after]].forEach(([k, b]) => fs.writeFileSync(`${process.env.T_DIR}/aa-${tag}-${reduced ? 'rm' : 'm'}${t.args.aamutant ? '-mut' : ''}-${k}.png`, b));
+		await t.check(`${tag}: ${mode}: the pane before and after the pre-draw, the same pixels`, before.equals(after), `${before.length} and ${after.length} bytes`);
+		const j = judgeAA(before, during, boxes);
+		await t.check(`${tag}: ${mode}: while the pre-draw runs only the anti-aliased edges of rounded controls differ (Chrome rasters with MSAA then: at most ${AA_MAX} levels, ${AA_PER} pixels a control; none inside a shape or on a straight edge; within ${AA_BAND} px of a curved outline)`,
+			j.ok, JSON.stringify({ differing: j.n, worst: j.worst, failing: j.bad, perControl: j.perControl, crowded: j.crowded, where: j.where }));
+	};
 	const pdRunning = (f, ms) => f.waitForFunction(() => { const s = window.O55.ui.prewarm && window.O55.ui.prewarm.state && window.O55.ui.prewarm.state(); return !!(s && s.phase === 'running' && s.slices >= 2); }, null, { timeout: ms || 20000 }).then(() => true, () => false);
+	// --set only=pixels: the K-AA rows alone, in both motion modes
+	if (t.args.only === 'pixels') { for (const reduced of [true, false]) await pixels(reduced); await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	// FO-206 G: the Look screen drawn a piece at a time while Welcome is idle (60-ui-core.js predraw), waited for to its end
 	const predrawn = (f) => f.evaluate(async () => {
 		const st = () => (window.O55.ui.prewarm && window.O55.ui.prewarm.state ? window.O55.ui.prewarm.state() : null);
@@ -162,19 +267,7 @@ async function surface(t, sandbox) {
 		await f.evaluate(() => window.O55.motion.setLowResource(false, null));
 		// (switched on as soon as the page is up: a pre-draw already going when it came ends there, and draws no more)
 		await t.check(`${tag}: low-resource mode: no pre-draw slice once it is on, and nothing left`, !!lr && (lr.phase === 'none' || (lr.phase === 'done' && lr.slices === lr0.slices)) && lrLeft === 0, JSON.stringify({ at: { phase: lr0.phase, slices: lr0.slices }, after: { phase: lr && lr.phase, why: lr && lr.why, slices: lr && lr.slices }, left: lrLeft }));
-		// Reduced Motion: the pre-draw runs (it is not motion) and nothing visible changes: the window's pane drawn during it
-		// and once it has ended, pixel for pixel (the same PNG bytes)
-		f = await open(true, { early: true });
-		if (await pdRunning(f)) {
-			const pane = f.locator('#pm-o55-onboarding .o55-pane');
-			const during = await pane.screenshot();
-			await f.waitForFunction(() => { const s = window.O55.ui.prewarm.state(); return s.phase === 'done'; }, null, { timeout: 30000 }).catch(() => {});
-			await f.waitForTimeout(300);
-			const after = await pane.screenshot();
-			// (T_DIR set: both pictures are kept when they differ, to see where)
-			if (!during.equals(after) && process.env.T_DIR) { fs.writeFileSync(`${process.env.T_DIR}/rm-${tag}-during.png`, during); fs.writeFileSync(`${process.env.T_DIR}/rm-${tag}-after.png`, after); }
-			await t.check(`${tag}: Reduced Motion: the pre-draw changes nothing on screen (the pane during it and after it, the same pixels)`, during.equals(after), `${during.length} and ${after.length} bytes; state ${JSON.stringify(await pdState(f))}`);
-		} else await t.check(`${tag}: Reduced Motion: the pre-draw was seen running`, false, JSON.stringify(await pdState(f)));
+		for (const reduced of [true, false]) await pixels(reduced);
 	}
 	// Reduced Motion: unchanged (no hold): Start shows the new screen in the click's own task
 	f = await open(true);
