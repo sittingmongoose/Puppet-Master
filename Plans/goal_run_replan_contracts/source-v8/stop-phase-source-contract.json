@@ -1,0 +1,19 @@
+{
+  "status": "SUPERSEDING_COMPLETE_LIMITED_REVOCATION_SOURCE_NOT_INSTALLED",
+  "schema": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json",
+  "protocol": "STOP-PROTOCOL.md",
+  "replaces_only": "v1 Stop source/result selected roots and unsupported native-cancel issuance claim",
+  "original_record_cancellation": "Unchanged whole dependency declaration; not activated by this limited source. Full original NativeMutationRequest and genuine WorkNode/control/run cancellation remain necessary for later original cancel.",
+  "d06": "Original StopSource and native cancel result/origin remain mandatory; distinct RevocationResult can never satisfy them.",
+  "claimed": "Actual claimed or authentic revoked/recovering-before-prepare phase uses original coherent CurrentSource; null PublicationControl stays null.",
+  "all_original_occurrences": 323,
+  "all_prior_whole_roots_byte_identical": 18,
+  "entry_final": "Every existing occurrence additionally requires authenticated current native execution revocation and original capability enforcement.",
+  "v3_corrections": {
+    "independent_goal_stopped_acquisition": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/GoalStoppedCurrentAcquisition",
+    "separate_current_readback_union": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationReadbackSource",
+    "positive_obligations": "stop-positive-route-obligations.json",
+    "native_cancellation": "unchanged separately required; no substitution",
+    "durable_roles": "unchanged existing Slot/SlotRevision/SlotOrigin only"
+  }
+}

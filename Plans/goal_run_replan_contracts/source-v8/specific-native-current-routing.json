@@ -1,0 +1,16 @@
+{
+  "whole_standard_current_changes": [
+    {
+      "pointer": "/$defs/CompleteWorkNodeSource/properties/native_original_inputs/properties/current/$ref",
+      "before": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeCurrentSnapshot",
+      "after": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/CombinedNativeCurrentSnapshot"
+    },
+    {
+      "pointer": "/$defs/PrebirthNativeCurrent/allOf/0/$ref",
+      "before": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeCurrentSnapshot",
+      "after": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/CombinedNativeCurrentSnapshot"
+    }
+  ],
+  "d01_current_run_origin": "New CombinedPublicationOrigin only for current original run. Ordinary native mutation outputs retain complete original PublicationOrigin; no blanket relaxation.",
+  "original_core_defs": "Original WorkNodeRecord and original PublicationOrigin remain closed, full, unchanged in new whole core successor. New combined types are disjoint compositions."
+}

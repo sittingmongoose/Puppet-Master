@@ -1,0 +1,333 @@
+{
+  "nodes": [
+    "static_originals",
+    "static_authored_sources",
+    "static_profile_preimage",
+    "static_profile_digest",
+    "original_prebirth_sources",
+    "native_birth_values",
+    "native_birth_origin",
+    "combined_enrollment",
+    "slot_genesis_values",
+    "slot_genesis_origin",
+    "original_operation_identity",
+    "guard_storage_acquisition",
+    "guard_result",
+    "slot_claim_values",
+    "slot_claim_origin",
+    "original_replan_sources",
+    "replan_prepared_intent",
+    "replan_native_candidates",
+    "replan_native_outputs",
+    "replan_native_origins",
+    "replan_native_application",
+    "replan_native_application_origin",
+    "replan_finalized_producer",
+    "replan_event_append",
+    "replan_append_link",
+    "replan_completion",
+    "replan_completion_origin",
+    "replan_observer_inventory",
+    "replan_observer_origin",
+    "replan_full_readback",
+    "replan_release",
+    "cert_original_sources",
+    "cert_identity",
+    "cert_prepared_intent",
+    "cert_event_append",
+    "cert_native_outputs",
+    "cert_native_origins",
+    "cert_commit",
+    "cert_origin",
+    "cert_full_readback",
+    "cert_release",
+    "slot_advance_values",
+    "slot_advance_origin",
+    "slot_released_values",
+    "slot_released_origin",
+    "original_current_goal_stop",
+    "stop_complete_phase_source",
+    "stop_private_slot_candidate",
+    "native_execution_capability_invalidation",
+    "stop_slot_commit",
+    "native_execution_revocation_return",
+    "stop_current_readback",
+    "goal_stopped_current_acquisition",
+    "released_idle_current_sources"
+  ],
+  "edges": [
+    {
+      "from": "static_originals",
+      "to": "static_profile_preimage"
+    },
+    {
+      "from": "static_authored_sources",
+      "to": "static_profile_preimage"
+    },
+    {
+      "from": "static_profile_preimage",
+      "to": "static_profile_digest"
+    },
+    {
+      "from": "static_profile_digest",
+      "to": "native_birth_values"
+    },
+    {
+      "from": "original_prebirth_sources",
+      "to": "native_birth_values"
+    },
+    {
+      "from": "native_birth_values",
+      "to": "native_birth_origin"
+    },
+    {
+      "from": "native_birth_origin",
+      "to": "combined_enrollment"
+    },
+    {
+      "from": "static_profile_digest",
+      "to": "combined_enrollment"
+    },
+    {
+      "from": "combined_enrollment",
+      "to": "slot_genesis_values"
+    },
+    {
+      "from": "slot_genesis_values",
+      "to": "slot_genesis_origin"
+    },
+    {
+      "from": "slot_genesis_origin",
+      "to": "guard_storage_acquisition"
+    },
+    {
+      "from": "guard_storage_acquisition",
+      "to": "guard_result"
+    },
+    {
+      "from": "guard_result",
+      "to": "slot_claim_values"
+    },
+    {
+      "from": "original_operation_identity",
+      "to": "slot_claim_values"
+    },
+    {
+      "from": "slot_claim_values",
+      "to": "slot_claim_origin"
+    },
+    {
+      "from": "slot_claim_origin",
+      "to": "original_replan_sources"
+    },
+    {
+      "from": "original_replan_sources",
+      "to": "replan_prepared_intent"
+    },
+    {
+      "from": "replan_prepared_intent",
+      "to": "replan_native_candidates"
+    },
+    {
+      "from": "replan_native_candidates",
+      "to": "replan_native_outputs"
+    },
+    {
+      "from": "replan_native_outputs",
+      "to": "replan_native_origins"
+    },
+    {
+      "from": "replan_native_origins",
+      "to": "replan_native_application"
+    },
+    {
+      "from": "replan_native_application",
+      "to": "replan_native_application_origin"
+    },
+    {
+      "from": "replan_native_application_origin",
+      "to": "replan_finalized_producer"
+    },
+    {
+      "from": "replan_prepared_intent",
+      "to": "replan_finalized_producer"
+    },
+    {
+      "from": "replan_finalized_producer",
+      "to": "replan_event_append"
+    },
+    {
+      "from": "replan_event_append",
+      "to": "replan_append_link"
+    },
+    {
+      "from": "replan_native_application_origin",
+      "to": "replan_completion"
+    },
+    {
+      "from": "replan_append_link",
+      "to": "replan_completion"
+    },
+    {
+      "from": "replan_completion",
+      "to": "replan_completion_origin"
+    },
+    {
+      "from": "replan_completion_origin",
+      "to": "replan_observer_inventory"
+    },
+    {
+      "from": "replan_observer_inventory",
+      "to": "replan_observer_origin"
+    },
+    {
+      "from": "replan_observer_origin",
+      "to": "replan_full_readback"
+    },
+    {
+      "from": "replan_event_append",
+      "to": "replan_full_readback"
+    },
+    {
+      "from": "replan_full_readback",
+      "to": "replan_release"
+    },
+    {
+      "from": "slot_claim_origin",
+      "to": "cert_original_sources"
+    },
+    {
+      "from": "cert_original_sources",
+      "to": "cert_identity"
+    },
+    {
+      "from": "cert_identity",
+      "to": "cert_prepared_intent"
+    },
+    {
+      "from": "cert_prepared_intent",
+      "to": "cert_event_append"
+    },
+    {
+      "from": "cert_event_append",
+      "to": "cert_native_outputs"
+    },
+    {
+      "from": "cert_native_outputs",
+      "to": "cert_native_origins"
+    },
+    {
+      "from": "cert_native_origins",
+      "to": "cert_commit"
+    },
+    {
+      "from": "cert_commit",
+      "to": "cert_origin"
+    },
+    {
+      "from": "cert_origin",
+      "to": "cert_full_readback"
+    },
+    {
+      "from": "cert_event_append",
+      "to": "cert_full_readback"
+    },
+    {
+      "from": "cert_full_readback",
+      "to": "cert_release"
+    },
+    {
+      "from": "replan_native_application_origin",
+      "to": "slot_advance_values"
+    },
+    {
+      "from": "cert_origin",
+      "to": "slot_advance_values"
+    },
+    {
+      "from": "slot_advance_values",
+      "to": "slot_advance_origin"
+    },
+    {
+      "from": "replan_release",
+      "to": "slot_released_values"
+    },
+    {
+      "from": "cert_release",
+      "to": "slot_released_values"
+    },
+    {
+      "from": "slot_released_values",
+      "to": "slot_released_origin"
+    },
+    {
+      "from": "guard_result",
+      "to": "stop_complete_phase_source"
+    },
+    {
+      "from": "original_current_goal_stop",
+      "to": "stop_complete_phase_source"
+    },
+    {
+      "from": "stop_complete_phase_source",
+      "to": "stop_private_slot_candidate"
+    },
+    {
+      "from": "stop_private_slot_candidate",
+      "to": "native_execution_capability_invalidation"
+    },
+    {
+      "from": "native_execution_capability_invalidation",
+      "to": "stop_slot_commit"
+    },
+    {
+      "from": "stop_private_slot_candidate",
+      "to": "stop_slot_commit"
+    },
+    {
+      "from": "stop_slot_commit",
+      "to": "native_execution_revocation_return"
+    },
+    {
+      "from": "stop_slot_commit",
+      "to": "stop_current_readback"
+    },
+    {
+      "from": "original_current_goal_stop",
+      "to": "stop_current_readback"
+    },
+    {
+      "from": "original_current_goal_stop",
+      "to": "goal_stopped_current_acquisition"
+    },
+    {
+      "from": "guard_result",
+      "to": "goal_stopped_current_acquisition"
+    },
+    {
+      "from": "goal_stopped_current_acquisition",
+      "to": "stop_complete_phase_source"
+    },
+    {
+      "from": "replan_release",
+      "to": "released_idle_current_sources"
+    },
+    {
+      "from": "cert_release",
+      "to": "released_idle_current_sources"
+    },
+    {
+      "from": "original_current_goal_stop",
+      "to": "released_idle_current_sources"
+    },
+    {
+      "from": "released_idle_current_sources",
+      "to": "stop_current_readback"
+    }
+  ],
+  "lane_rule": "Certified and Replan nodes describe alternative original operations. Edges into generic slot-after nodes are per selected actual lane, not a demand for both events. Repeated guards/slot advances use strictly previous authentic revision/operation, never own future output.",
+  "original_runtime_dags": "All complete original DAG/commitment-domain files remain independently required; this added DAG describes combined dependencies, not a replacement for their full field-level proofs.",
+  "same_transaction": "Hash derivation order inside a genuine atomic native transaction does not imply prematurely published or preexisting authoritative output.",
+  "stop_commitment_rule": "Input hash excludes future lower native return. Existing complete candidate Slot/SlotRevision/SlotOrigin originals precede native return. Readback independently acquires current native originals and does not recreate historic lower return.",
+  "v3_phase_rule": "Goal-stopped current acquisition precedes first slot revocation and asserts no lower result. The two release-to-current-source edges are alternative genuine source families; released-idle readback uses current source plus independently existing immutable Stop custody, never a future lower return."
+}

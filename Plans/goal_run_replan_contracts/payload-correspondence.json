@@ -1,0 +1,111 @@
+{
+ "schema_id": "pm.goal_run_replan.payload_correspondence.v1",
+ "status": "canonical_owner_contract_prepared_without_admission",
+ "owner_refs": [
+  "Plans/Contracts_V0.md#CV-3100",
+  "Plans/Goal_Runtime_System.md#GRS-3100",
+  "Plans/Executor_Protocol.md#EP-3100"
+ ],
+ "draft": {
+  "path": "Plans/goal_run_replan_contracts/source-v8/inputs/replan-v3/goal-run-replanned-clock-split.schema.json",
+  "sha256": "0e1e3720b2ce869563be2757e0524bb8dde866e37e5e65bd870bd71e30038fa1",
+  "schema_id": "https://puppetmaster.local/drafts/goal_run_replanned_clock_split_20260921.v4.schema.json",
+  "schema_version": "pm.goal_runtime_event.goal_run_replanned.schema.v3.draft.20260921",
+  "delivery_profile": "draft.original_replan_clock_split.20260921.v3",
+  "graph_patch_source": {
+   "path": "Plans/goal_run_replan_contracts/source-v8/inputs/replan-v3/replan-source.schema.json",
+   "sha256": "696ef667fda1c828b6062b0c768f27450811f52d3fb4f8707aae771f79f03f78",
+   "schema_id": "https://puppetmaster.local/drafts/goal_run_replanned_source_20260921.v3.schema.json"
+  },
+  "owner_identity_source": {
+   "path": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+   "sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+   "pointer": "#/$defs/OwnerIdentity",
+   "binding": "the draft's composed ref .../goal_run_cancelled_consumer_schema_resources--native_consumer/26e2cfdea339...schema.json#/$defs/OwnerIdentity names this exact whole original (root-import-bindings.json original_whole_sha256 d1bc87d5...), so the inlined definition is the same grammar"
+  }
+ },
+ "canon": {
+  "path": "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json",
+  "sha256": "1e0f5508eb1e8a68857e0fad83c75a4988ba4be960e4716d32295777acb41b49",
+  "schema_id": "pm.goal_runtime_event.goal_run_replanned.schema.v3",
+  "schema_version": "pm.goal_runtime_event.goal_run_replanned.schema.v3",
+  "delivery_profile": "pm.goal_run_replanned.delivery.v3"
+ },
+ "rule": "The canon v3 payload is a restriction successor of the draft: every canon instance corresponds to exactly one draft instance that satisfies the draft's own owner rules, and the map is reversible. canon_to_draft: set expected_goal_revision := goal_revision (the draft's rule expected_goal_revision == goal_revision == the unchanged current Goal revision), leave parent_goal_id absent (GRS-075 retires child Goals; the draft's own protocol requires every parent edge empty), set schema_version to the draft const, keep every other member byte-equal. draft_to_canon: defined only when expected_goal_revision == goal_revision, parent_goal_id is absent and idempotency_key is present (the draft makes inner and outer keys byte-equal); drop expected_goal_revision and set schema_version to the canon const. Any other draft instance has no canon image and is refused, never repaired.",
+ "member_changes": [
+  {
+   "member": "/properties/expected_goal_revision",
+   "change": "removed",
+   "reason": "GoalRun envelope grammar (CV-288, GRS-079): the Goal revision is unchanged context; the draft defines it equal to goal_revision, so no information is lost."
+  },
+  {
+   "member": "/properties/parent_goal_id",
+   "change": "removed",
+   "reason": "Retired child Goal topology (GRS-075); the draft already requires every parent edge empty."
+  },
+  {
+   "member": "/required/idempotency_key",
+   "change": "added",
+   "reason": "Inner and outer keys are byte-equal in the draft (replan/protocol.md, idempotency paragraph); the canon envelope requires the inner key (GRS-079)."
+  },
+  {
+   "member": "/properties/expected_goal_run_revision/minimum",
+   "change": "0 -> 1",
+   "reason": "A replan source status is never ready (D-R19), so the native body revision before it is at least the started revision 1; every draft instance satisfying D-R19 meets it."
+  },
+  {
+   "member": "/properties/goal_run_revision/minimum",
+   "change": "0 -> 1",
+   "reason": "goal_run_revision is expected_goal_run_revision + 1 (owner predicate)."
+  },
+  {
+   "member": "/properties/schema_version/const",
+   "change": "draft const -> pm.goal_runtime_event.goal_run_replanned.schema.v3",
+   "reason": "Canon schema identity."
+  },
+  {
+   "member": "/$defs/event_payload/properties/original_graph_patch and original_graph_patch_history",
+   "change": "external $ref -> local graph_patch_* definitions",
+   "reason": "Self-contained closed root (K37-STATIC-02 convention); grammar copied from the pinned draft replan source and the canon OwnerIdentity original."
+  }
+ ],
+ "idempotency": {
+  "draft_preimage": [
+   "pm.goal-runtime-event-idempotency.v3",
+   "scope_partition",
+   "goal_run.replanned",
+   "project_id",
+   "goal_id",
+   "goal_revision",
+   "expected_goal_revision",
+   "expected_goal_run_revision",
+   "goal_run_revision",
+   "goal_run_id",
+   "replan_generation",
+   "new_workgraph_ref",
+   "next_action"
+  ],
+  "canon_preimage": [
+   "pm.goal-runtime-event-idempotency.v3",
+   "scope_partition",
+   "goal_run.replanned",
+   "project_id",
+   "goal_id",
+   "goal_revision",
+   "expected_goal_run_revision",
+   "goal_run_revision",
+   "goal_run_id",
+   "replan_generation",
+   "new_workgraph_ref",
+   "next_action"
+  ],
+  "key": "pm.goal-runtime-event.v3: + lowercase SHA-256 of CV-1100 qualified RFC 8785 JCS of canon_preimage, with each decimal member a JSON integer",
+  "reason": "The canon preimage is the GRS-079 v3 key family pattern; the draft's seventh element is always equal to the sixth, so dropping it loses no identity. Draft keys are never written by a canon writer and never accepted as canon keys."
+ },
+ "never": [
+  "select the draft payload or draft delivery profile for a canon write",
+  "treat a draft key or a v2 key as a v3 key",
+  "reinterpret a v2 expected_goal_revision as a Workflow clock",
+  "fill a missing idempotency_key or graph-patch history"
+ ]
+}
