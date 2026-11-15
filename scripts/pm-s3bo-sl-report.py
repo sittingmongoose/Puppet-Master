@@ -29,17 +29,17 @@ SL = {'storage.compaction_lifecycle_changed', 'storage.deletion_lifecycle_change
       'storage.value_quarantine_changed'}
 SP = 'Plans/storage-plan.md'
 CLAUSES = {
-    'sl_del_decision': ['Thread/project deletion: ordinary graph and failure ingress', 'admission order is fail closed', 'K37 deletion negatives (edges, holds, tombstone, generation, scope, writer)'],
+    'sl_del_decision': ['Thread/project deletion: ordinary graph and failure ingress', 'Case L-3 retry successor failed -> logically_hidden only (DL-695, E11-1 A)', 'admission order is fail closed', 'K37 deletion negatives (edges, holds, tombstone, generation, scope, writer)'],
     'sl_del_zero': ['Thread/project deletion: every refusal has zero append/mutation/projection/checkpoint/dispatch/hold clear'],
-    'sl_del_record': ['SP-2200 Producer (2) record CAS + event_refs', 'storage_deletion_record schema (purge_state, generation, hide receipt)'],
+    'sl_del_record': ['SP-2200 Producer (2) record CAS + event_refs + event_obligation in the same row', 'storage_deletion_record schema (purge_state, generation, hide receipt, event_obligation)'],
     'sl_del_order': ['SP-2200 Producer (1)-(5)', 'ATS-2200 Producer and order negatives'],
     'sl_del_effects': ['SP-2200 Producer (5) hide / purge dispatch', 'UI/command acceptance is not purge authority'],
     'sl_del_payload': ['Thread/project deletion: payload spine and state conditionals', 'CV deletion row (Contracts_V0)'],
     'sl_del_identity': ['SP-2200 Identity (component, CV-366 / storage-deletion@1 key, er_del_)'],
     'sl_del_envelope': ['SP-2200 Identity: envelope project/thread/run/attempt', 'CV-319 dual scope'],
-    'sl_del_retry': ['Thread/project deletion: retry reuses deletion_id and request identity, revalidates', 'SP-2200 next ordinal after failed'],
+    'sl_del_retry': ['Thread/project deletion: retry reuses deletion_id and request identity, revalidates holds, tombstone, scope, writer and purge/compaction authority', 'Case L-3 retry successor logically_hidden (DL-695)', 'SP-2200 next ordinal after failed'],
     'sl_del_replay': ['SP-2200 Replay', 'ATS-2200 Replay'],
-    'sl_del_resume': ['SP-2200 Producer: crash before (3) resumes; after the commit frame resolves the original receipt'],
+    'sl_del_resume': ['SP-2200 Producer: crash before (3) resumes the obligation stored in event_obligation; after the commit frame resolves the original receipt'],
     'sl_del_handler': ['SP-2200 Producer: handlers only submit', 'Remove project from list is a registry/UI tombstone', 'separately confirmed destructive intent'],
     'sl_del_reader': ['SP-2200 Consumer and checkpoint', 'ATS-2200 Consumer'],
     'sl_del_withdrawal': ['SP-2200 Compatibility and withdrawal', 'ATS-2200 Withdrawal'],
@@ -50,7 +50,7 @@ CLAUSES = {
     'sl_qtn_detect': ['SP-2201 Identity: occurrence and re-detection', 'ATS-2201 Identity'],
     'sl_qtn_decision': ['Invalid-value quarantine: closed edges, resettable-only reset, unknown schema stays recovery_blocked', 'K37 quarantine class/state pairs', 'DL-068 disposal boundary', 'SP-2211 holds still apply'],
     'sl_qtn_zero': ['K37 quarantine: each refusal has zero append/live mutation/purge/hold action'],
-    'sl_qtn_record': ['SP-2201 Producer (2)', 'storage_quarantine_record transition_receipts continuity', 'E8-5 resolution output binding'],
+    'sl_qtn_record': ['SP-2201 Producer (2) record CAS + event_obligation in the same row', 'storage_quarantine_record transition_receipts continuity and event_obligation', 'E8-5 resolution output binding'],
     'sl_qtn_order': ['Invalid-value quarantine: raw custody synchronized before live-key mutation', 'SP-2201 Producer (1)-(5)'],
     'sl_qtn_effects': ['SP-2201 Producer (5)', 'DL-068 raw content removal'],
     'sl_qtn_payload': ['SP-2201 Custody and redaction (hashes and refs only)', 'CV quarantine row'],
@@ -60,7 +60,7 @@ CLAUSES = {
     'sl_qtn_cap': ['Invalid-value quarantine: unresolved critical never cap-evicted; cap pressure blocks new mutation-capable writes'],
     'sl_qtn_disclosure': ['SP-2201 Custody and redaction: read-time recheck; protected explicit export'],
     'sl_qtn_restore': ['SP-2201 Custody: backup/restore raw custody or unavailable; never re-run a live-key effect'],
-    'sl_qtn_resume': ['SP-2201 Producer: crash never re-copies, repeats a live-key mutation or purges twice'],
+    'sl_qtn_resume': ['SP-2201 Producer: crash resumes the obligation stored in event_obligation, never re-copies, repeats a live-key mutation or purges twice'],
     'sl_qtn_withdrawal': ['SP-2201 Compatibility and withdrawal'],
     'sl_qtn_replay': ['SP-2201 Replay'],
     'sl_qtn_numbers': ['SP-2201 Numbers (CV-1100)'],
@@ -114,7 +114,7 @@ CLAUSES = {
 # Rows dropped as entailed (no independent single-defect witness can exist).
 ENTAILED = [
     {'row': 'sl_del_event_schema', 'entailed_by': 'sl_del_payload', 'proof': 'sl_del_payload compares each appended payload to the owner-derived payload, which validates under the complete registered schema in every control (extension evidence); any schema violation is therefore also a payload inequality.'},
-    {'row': 'sl_del_record_schema', 'entailed_by': 'sl_del_record / sl_del_zero', 'proof': 'Every presented record is compared whole to the owner-derived record (or to its unchanged preimage), and every derived record validates under the complete storage_deletion_record schema (extension evidence).'},
+    {'row': 'sl_del_record_schema', 'entailed_by': 'sl_del_record / sl_del_zero', 'proof': 'Every presented record is compared whole to its unchanged preimage (sl_del_zero) or, for an admitted step, to the owner-derived record without its obligation, with the stored obligation compared on its identity, payload and envelope to the owner-derived values and on every other producer field to the appended event (sl_del_record, C12-SL2). Every derived record, obligation included, validates under the complete storage_deletion_record schema (extension evidence), so a single-copy schema violation is also an inequality.'},
     {'row': 'sl_qtn_once', 'entailed_by': 'sl_qtn_identity + common quarantine_edge', 'proof': 'The event identity of a quarantine state is a function of (quarantine_id, state) and the edge set is acyclic, so a repeated state either reuses the identity (a replay, sl_qtn_replay/sl_qtn_payload count) or needs a forbidden edge.'},
 ]
 
@@ -124,7 +124,9 @@ def invalid_mutations(controls):
     out = []
     specs = [
         ('storage.deletion_lifecycle_changed/sl/project-held', 'sl_del_payload', ('sl', 'runs', 1, 'events_appended'), [],
-         'Drop the appended event of an admitted step: the payload row and the replay of that event both refuse.'),
+         'Drop the appended event of an admitted step: the payload row, the record row (its stored obligation no longer matches an appended event) and the replay of that event refuse.'),
+        ('storage.deletion_lifecycle_changed/sl/retry-hides-then-holds', 'sl_del_decision', ('sl', 'runs', 3, 'to'), 'requested',
+         'Present the admitted retry as a retry to requested (DL-695 option B, not chosen): the edge stage refuses it, so the decision and zero-effect rows refuse together with the rows built on its hidden state.'),
         ('storage.value_quarantine_changed/sl/resettable-lifecycle', 'sl_qtn_detect', ('sl', 'value', 'raw_sha256'), 'c' * 64,
          'Change the held raw hash: identity, payload and record expectations all move, so several rows refuse.'),
         ('storage.compaction_lifecycle_changed/sl/recovery-to-committed', 'sl_cmp_phase', ('sl', 'runs', 5, 'facts', 'activation'), 'incomplete',

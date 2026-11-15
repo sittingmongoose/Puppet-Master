@@ -68,9 +68,9 @@ def sl_del_deadline(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('sl_del_retry', g.Invariant('/sl_del_retry', 'A retry after failed reuses deletion_id and the request key, takes the next ordinal, revalidates every authority first and never bypasses to purge_pending or purged.'), 'sl_del_retry_refused', sl_del_retry),
+        g.Guard('sl_del_retry', g.Invariant('/sl_del_retry', 'A retry after failed reuses deletion_id and the request key, takes the next ordinal and revalidates holds, tombstone, scope, writer and purge authority before its logically_hidden successor.'), 'sl_del_retry_refused', sl_del_retry),
         g.Guard('sl_del_replay', g.Invariant('/sl_del_replay', 'Same identity and digest returns the original receipt and result; a different digest conflicts; unavailable dedupe and projector_replay_only refuse with zero effects.'), 'sl_del_replay_refused', sl_del_replay),
-        g.Guard('sl_del_resume', g.Invariant('/sl_del_resume', 'A crash before the append resumes the same obligation once; after the commit frame it resolves the original receipt and never appends, hides, purges or re-evaluates holds again.'), 'sl_del_resume_refused', sl_del_resume),
+        g.Guard('sl_del_resume', g.Invariant('/sl_del_resume', 'A crash before the append resumes the obligation stored in the record once; after the commit frame it resolves the original receipt and never appends, hides, purges or re-evaluates holds again.'), 'sl_del_resume_refused', sl_del_resume),
         g.Guard('sl_del_handler', g.Invariant('/sl_del_handler', 'Handlers only submit; remove-from-list is a registry tombstone only; Project-data deletion needs its separate confirmation.'), 'sl_del_handler_refused', sl_del_handler),
         g.Guard('sl_del_reader', g.Invariant('/sl_del_reader', 'History is available only with complete coverage and a verified token, otherwise unavailable; canonical readers use the deletion record, never the event.'), 'sl_del_reader_refused', sl_del_reader),
         g.Guard('sl_del_withdrawal', g.Invariant('/sl_del_withdrawal', 'Withdrawal resolves durable obligations by their original receipt, fences the rest, keeps every record, tombstone and receipt and never deletes, restores or un-hides.'), 'sl_del_withdrawal_refused', sl_del_withdrawal),
