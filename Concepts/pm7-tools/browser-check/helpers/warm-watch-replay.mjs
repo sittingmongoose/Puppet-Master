@@ -34,13 +34,23 @@ export function replayWatch(steps, hz) {
 		const fm = e.frameMs; if (!fm || !fm.length) continue;
 		const worst = Math.max(...fm);
 		if (exactRow(e)) {
-			// resetAt is the decision. An interval that is plainly over its own bar counts as a reset too, so a row
-			// whose flag and bars disagree cannot hide a watch the bar required.
+			// resetAt is the decision, believed only when the interval it names reached its bar (within the 1 ms
+			// rounding): a flag its own bar contradicts excuses nothing, and the row is then judged by its intervals
+			// as a row without the fields is (R58 T3-2: a reset test that fires too eagerly logs its own excuse). An
+			// interval that is plainly over its own bar counts as a reset too, so a row whose flag and bars disagree
+			// the other way cannot hide a watch the bar required.
 			const over = (v, bar) => v > bar + 1;
-			const reset = e.resetAt > 0 || over(fm[0], e.slow1) || (fm.length > 1 && over(fm[1], e.slow2));
+			const flagged = (k) => e.resetAt === k && fm.length >= k && fm[k - 1] >= (k === 1 ? e.slow1 : e.slow2) - 1;
+			const reset1 = flagged(1) || over(fm[0], e.slow1), reset2 = flagged(2) || (fm.length > 1 && over(fm[1], e.slow2));
+			const reset = reset1 || reset2;
 			if (e.watched === false) {
 				gpu++; unwatched++;
-				if (reset || hi < KEEP) early.push(`${e.owner}:${e.name} at ${Math.round(e.t)} ms: at most ${hi} steady watches before it${e.resetAt > 0 ? `, reset at interval ${e.resetAt}` : ''}`);
+				// R58 T3-1: only a d1 reset proves the watch was dropped while it was needed. A step that is not light
+				// is asked after both intervals, but a light chain's last step is asked after d1 only and notes d2
+				// afterwards (unwatched() in 11-motion-start.js), so "unwatched, reset at interval 2" is the correct
+				// queue's record, and the log does not say which kind a [d1, d2] row is. The d2 reset still sets the
+				// count back for the steps that follow.
+				if (reset1 || hi < KEEP) early.push(`${e.owner}:${e.name} at ${Math.round(e.t)} ms: at most ${hi} steady watches before it${reset1 ? ', and its first interval reset the count' : ''}`);
 				if (reset) { hi = 0; lo = 0; overSlow++; }
 			} else if (fm.length === 3) {
 				gpu++; watched++;
