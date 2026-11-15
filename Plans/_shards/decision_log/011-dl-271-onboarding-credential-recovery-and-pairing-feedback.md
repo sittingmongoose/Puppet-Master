@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L40280
+Source lines: L28747-L40279
 
-Source SHA256: `1a2c86688c576c9771d00eab52ce2ed4d58868c0edc0fed6364d299258074129`
+Source SHA256: `37604c2d195139ca0c614b202b37894213dda65d69ac2d7b76d5ae7a15fb9e4a`
 
 ---
 
@@ -11501,7 +11501,6 @@ negative_constraints:
 - No other family, validator, seal condition, retention assignment or holding bucket changes.
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
-
 
 ### DL-693 - A Restore Point Records Everything Up To Its Message, Sorted By Kind (E10-1)
 
