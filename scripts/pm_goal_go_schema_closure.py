@@ -155,9 +155,15 @@ def walk(v):
     def visit(node, resolver, ipath, ctx, steps, depth, obj=None, empty=None):
         if not isinstance(node, dict) or depth > 40:
             return
-        # The walk keeps the resolver it reached a node with (a $ref lookup switches it to the target's document), as the
-        # owner validators resolve; an inline subschema's own $id is not made a new base (the frozen validators resolve
-        # such refs against the enclosing document, and a root that switched failed with PointerToNowhere).
+        if depth and isinstance(node.get('$id'), str):
+            # GO fix: an inline subschema with its own $id is a new base, exactly as the owner validators (jsonschema
+            # Draft 2020-12, `runtime_schema` keeps $id) resolve; a ref that is dangling under that base is recorded in
+            # UNRESOLVED below, as the validator itself could never resolve it.
+            try:
+                from referencing.jsonschema import DRAFT202012
+                resolver = resolver.in_subresource(DRAFT202012.create_resource(node))
+            except Exception:  # noqa: BLE001 - keep the enclosing resolver
+                pass
         location = node.get('x-pm-oracle-id', json.dumps(node, sort_keys=True))
         RESOLVERS.setdefault(id(node), resolver)
         key = (location, ipath, tuple(ctx_key(c) for c in ctx))
@@ -1240,8 +1246,22 @@ def close_root(root, v, seeds, budget, carried=None, elsewhere=None, deadline=No
             if keyword in VACUOUS and node.get(keyword) == VACUOUS[keyword]:
                 entries[clause] = dict(cls='VACUOUS', proof=f'{keyword} is 0: no instance can fail it (checked on the owner node)')
                 continue
+            try:
+                entries[clause] = search_clause(clause, keyword, location, info, node, ident, v, nodes, seeds, controls, known,
+                                                branch_controls, by_ipath, budget, root0, deadline)
+            except Exception as exc:  # noqa: BLE001 - GO: one clause's failure is recorded on that clause, never the root
+                entries[clause] = dict(cls='UNCOVERED', error=(type(exc).__name__ + ': ' + str(exc))[:240])
+    return entries, branch_controls, COUNT[0] - root0
+
+
+def search_clause(clause, keyword, location, info, node, ident, v, nodes, seeds, controls, known, branch_controls, by_ipath,
+                  budget, root0, deadline):
+    """One clause's witness search and proofs (GC's loop body, unchanged apart from the GO additions marked)."""
+    if True:
+        if True:
             best = None
             attempts = 0
+            spent = 0
             start = COUNT[0]
             out_of_time = deadline is not None and time.monotonic() > deadline
             covered_at = None  # GO addition: once COVERED_LATER is shown, search COVERED_EXTRA more for a kill
@@ -1352,9 +1372,8 @@ def close_root(root, v, seeds, budget, carried=None, elsewhere=None, deadline=No
                     pinned = pinned_proof(info, nodes, v, keyword)
                     if pinned:
                         best = pinned
-            entries[clause] = best or (dict(cls='UNCOVERED', not_searched='wall-clock budget (--root-seconds) spent before this clause')
-                                       if out_of_time else dict(cls='UNCOVERED', construction_attempts=attempts))
-    return entries, branch_controls, COUNT[0] - root0
+            return best or (dict(cls='UNCOVERED', not_searched='wall-clock budget (--root-seconds) spent before this clause')
+                            if out_of_time else dict(cls='UNCOVERED', construction_attempts=attempts))
 
 
 SEED_POLICY = ['controls']
@@ -1550,6 +1569,16 @@ def self_test():
     p11 = pinned_proof(n11['m11'], n11, v11, 'type')
     print('m11 proof', p11)
     assert p11 and p11['cls'] == 'UNREACHABLE'
+    # an inline subschema with its own $id is a new base (Draft 2020-12, as the owner validators resolve)
+    schema12 = {"$id": "urn:go-selftest:root12", "x-pm-oracle-id": "R12", "type": "object", "required": ["x"], "properties": {"x": {
+        "$id": "urn:go-selftest:inner12", "x-pm-oracle-id": "X12", "type": "object", "required": ["a"],
+        "properties": {"a": {"x-pm-oracle-id": "A12", "$ref": "#/$defs/Id"}}, "$defs": {"Id": {"x-pm-oracle-id": "Id12", "type": "string", "minLength": 1}}}}}
+    v12 = jsonschema.Draft202012Validator(schema12)
+    assert v12.is_valid({"x": {"a": "z"}}) and not v12.is_valid({"x": {"a": ""}}), 'the validator resolves the inline base'
+    walk(v12)
+    repaired12 = error_repair(v12, {"x": {}}, ("x", "zz"))
+    print('inline-$id repair', repaired12)
+    assert repaired12 is not None and v12.is_valid(repaired12)
     print('closure self-test pass: same-depth conditionals keep their reaches; no UNREACHABLE while one reach is live; '
           'shared and implied branch pins apply; selector clash and self-pins make no claim; contradicted branches; alternative swap; ancestor pins; absent locations; embedded-document repair')
     return 0
