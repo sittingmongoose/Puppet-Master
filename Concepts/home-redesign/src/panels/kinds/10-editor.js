@@ -823,10 +823,6 @@ var SHADOW_CSS = [
   ':host([data-blink="smooth"]) .pmw-ed-caret.is-blink:where(.is-blink-alt) { animation-name: pmw-ed-fade-alt; }',
   ':host([data-blink="expand"]) .pmw-ed-caret.is-blink:where(.is-blink-alt)::before { animation-name: pmw-ed-expand-alt; }',
   ':host([data-blink="expand"]) .pmw-ed-caret.is-blink:where(.is-blink-alt)::after { animation-name: pmw-ed-fade-alt; }',
-  /* A hidden caret kept its blink running: display:none did not stop it, so a still page with the editor
-     unfocused started 8 to 15 main-thread frames a second (lead traces, E4 section 1). No animation while
-     hidden. Showing it again starts from the first frame, the same restart a move uses. */
-  ':host([data-blink]) .pmw-ed-caret[hidden].is-blink, :host([data-blink]) .pmw-ed-caret[hidden].is-blink::before, :host([data-blink]) .pmw-ed-caret[hidden].is-blink::after { animation: none; }',
   '@keyframes pmw-ed-fade { 0%, 22% { opacity: 1; } 50%, 72% { opacity: 0; } 100% { opacity: 1; } }',
   '@keyframes pmw-ed-expand { 0%, 22% { transform: scaleY(1); } 50%, 72% { transform: scaleY(0); } 100% { transform: scaleY(1); } }',
   '@keyframes pmw-ed-fade-alt { 0%, 22% { opacity: 1; } 50%, 72% { opacity: 0; } 100% { opacity: 1; } }',
@@ -2384,7 +2380,6 @@ function mountEditor(host, st, api) {
   var lastCurRow = -1, caretPx = null, typingMove = false;
   function placeCaret() {
     if (lastCurRow !== caret.r) { lastCurRow = caret.r; markCurrentRow(); }
-    var wasHidden = caretEl.hidden;
     var show = (focused || customizing) && !special && V && V.text(caret.r, side) != null;
     caretEl.hidden = !show || composing;
     if (!show) { caretPx = null; return; }
@@ -2402,9 +2397,6 @@ function mountEditor(host, st, api) {
       caretEl.classList.toggle('is-blink-alt'); caretEl.classList.add('is-blink');
       caretPx = { x: x, y: y, st: geo.st };
       if (pendingTrail && from) spawnTrail(pendingTrail.from || from, caretPx);
-    } else if (wasHidden && !caretEl.hidden) {
-      // shown again at the same place: restart the blink from its first frame, the same toggle a move uses
-      caretEl.classList.toggle('is-blink-alt'); caretEl.classList.add('is-blink');
     }
     pendingTrail = null; typingMove = false;
     var ch = (V.text(caret.r, side) || '').charAt(caret.c) || ' ';
