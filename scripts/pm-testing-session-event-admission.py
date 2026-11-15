@@ -20,6 +20,7 @@ from pm_emit_only_event_contract import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
+from pm_pnc019_currentness import event_authority_denominator_status  # noqa: E402 - the denominator state comes from the installed edition
 PAYLOAD = "Plans/testing_session_event_payloads.schema.json"
 REQUEST = "Plans/testing_session_command_contracts.schema.json"
 OWNER = "Plans/Automated_Testing_System.md#ATS-049"
@@ -267,7 +268,7 @@ def validate(*, payloads_only=False):
             "admitted_events": 0, "event_disposition": DISPOSITION,
             "event_persistence_authorized": False,
             "registry_families": len(families), "native_producer_proven": False,
-            "global_event_denominator": "UNKNOWN_OPEN", "governance_sealed": False, "failures": failures}
+            "global_event_denominator": event_authority_denominator_status(ROOT), "governance_sealed": False, "failures": failures}
 
 
 if __name__ == "__main__":
