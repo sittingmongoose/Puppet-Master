@@ -908,8 +908,10 @@ def condition_bases(site, instances, by_template):
                     settings = [dict(x, **{key: "c12_not_selected"}) for x in settings]
                 else:
                     settings = [dict(x, **{key: v}) for x in settings for v in vals[:2]]
-        outer = [a for a in by_template.get(holder_t, []) if a.keyword == "type" and not a.context[len(site.context) - 1:] == ()]
-        outer = [a for a in by_template.get(holder_t, []) if a.keyword == "type"]
+        # the enclosing object's own node in the same root branch as the clause (never another edition's node)
+        branch = tuple(c for c in site.context if c not in ("then", "else", "if", "not"))
+        outer = [a for a in by_template.get(holder_t, []) if a.keyword == "type" and tuple(a.context) == branch[:len(a.context)]
+                 and not ({"if", "then", "else", "not"} & set(a.context))]
         for _, inst in instances:
             for path, value in locations(inst, holder_t):
                 if not isinstance(value, dict):
@@ -1021,7 +1023,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
         for depth in range(len(s.template) - 1, 0, -1):
             anc_t = s.template[:depth]
             for a in by_template_all.get(anc_t, []):
-                if a.keyword == "type":
+                if a.keyword == "type" and tuple(a.context) == tuple(s.context)[:len(a.context)]:
                     base_values += [(anc_t, v) for v in pool.get(id(a.node), [])[:2] + gen_cache(a)]
         for p, inst in instances:
             if done:
