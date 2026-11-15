@@ -975,6 +975,158 @@ def condition_bases(site, instances, by_template):
     return out
 
 
+# --- owner-fixture bases (C12-DC2) ---------------------------------------------------------------------------
+# Owner-authored valid records of the Collaborative Workflows contracts (Plans/collaborative_workflows_contract_fixtures.json,
+# its valid cases and its refresh-case records). They are bases only: each is used where it is valid at the node, and every
+# base must be valid at the whole row; nothing is credited to the fixture itself.
+OWNER_FIXTURES = ("Plans/collaborative_workflows_contract_fixtures.json",)
+
+
+@lru_cache(maxsize=1)
+def _owner_fixture_records():
+    out = []
+    for rel in OWNER_FIXTURES:
+        data = json.loads((ROOT / rel).read_text(encoding="utf-8"))
+        for i, case in enumerate(data.get("valid", [])):
+            if isinstance(case, dict) and isinstance(case.get("value"), dict):
+                out.append((f"{rel}#/valid/{i}", case["value"]))
+        for i, case in enumerate(data.get("projects_refresh_cases", [])):
+            if isinstance(case, dict) and isinstance(case.get("record"), dict):
+                out.append((f"{rel}#/projects_refresh_cases/{i}", case["record"]))
+    return out
+
+
+def owner_fixture_records():
+    return [(i, copy.deepcopy(v)) for i, v in _owner_fixture_records()]
+
+
+_FIXTURE_VARIANTS = {}
+
+
+def fixture_variants(site, fixture, own):
+    """('as_is' | 'carried', value) candidates for an object node: the fixture record when valid at the node, else (only
+    when the node describes every member the record holds: the same record kind in another edition) the record with the
+    control's own value for every member whose fixture value is invalid at that member's own schema and the control's
+    own required members the fixture lacks, repaired with the record's kind frozen. Each is checked against the node;
+    the caller checks the whole row. Results are kept per node, fixture and control value."""
+    key = (id(site.node), digest(fixture), digest(own))
+    if key not in _FIXTURE_VARIANTS:
+        _FIXTURE_VARIANTS[key] = _fixture_variants(site, fixture, own)
+    return [(label, copy.deepcopy(v)) for label, v in _FIXTURE_VARIANTS[key]]
+
+
+def _fixture_variants(site, fixture, own):
+    doc, ptr = site.loc
+    out = []
+    try:
+        if node_valid(site.loc, fixture):
+            return [("as_is", fixture)]
+    except Exception:  # an unresolvable node takes no fixture
+        return []
+    if not isinstance(own, dict):
+        return out
+    props = site.node.get("properties") if isinstance(site.node.get("properties"), dict) else {}
+    if not props or not set(fixture) <= set(props):
+        return out
+    required = set(site.node.get("required", []))
+    merged = {}
+    for k, v in fixture.items():
+        ok = True
+        if k in props:
+            try:
+                ok = node_valid((doc, ptr + "/properties/" + _esc(k)), v)
+            except Exception:  # an unresolvable member keeps the control's own value
+                ok = False
+        if ok:
+            merged[k] = copy.deepcopy(v)
+        elif k in own:
+            merged[k] = copy.deepcopy(own[k])
+    for k in own:
+        if k not in merged and k in required:
+            merged[k] = copy.deepcopy(own[k])
+    try:
+        if node_valid(site.loc, merged):
+            return [("carried", merged)]
+        fixed = repaired(site.node, site.resolver, site.loc, merged, rounds=12, frozen=("kind",))
+    except Exception:  # an unrepairable value gives no base
+        fixed = None
+    return [("carried", fixed)] if fixed is not None else []
+
+
+def fixture_witness(s, probe_key, instances, by_template, validator, edition, fixtures, seen, bases_by_t, valid_base_keys):
+    """One witness for an unreached clause from an owner-fixture base, or None; returns (witness, candidate attempts).
+
+    An owner-authored valid record from the owning contract's own fixture file is placed at an enclosing object location
+    (as is, or carried into this node's edition: the control's own value for every member whose fixture value is invalid
+    there), kept only when the whole instance stays valid at the row and recorded as a constructed valid base; then the
+    clause's single-defect candidates run on that base, and (coherent) an inner member of the base is replaced by another
+    owner fixture's value at the same relative location, carried the same way. A witness must leave exactly one error
+    whose error tree holds this clause (for an inner replacement) and must be accepted by the row with the clause cut."""
+    attempts = 0
+    for depth in range(len(s.template) - 1, 0, -1):
+        anc_t = s.template[:depth]
+        anc = [a for a in by_template.get(anc_t, []) if a.keyword == "type" and a.node.get("type") == "object"
+               and tuple(a.context) == tuple(s.context)[:len(a.context)] and not ({"if", "then", "else", "not"} & set(a.context))]
+        for a in anc:
+            for p, inst in instances:
+                own = [v for _, v in locations(inst, anc_t)[:1]]
+                for fx_id, fx in fixtures:
+                    for label, val in fixture_variants(a, fx, own[0] if own else None):
+                        base = insert_at(inst, anc_t, val)
+                        if base is None or (edition is not None and (not isinstance(base, dict) or dc.edition_of(base) != edition)):
+                            continue
+                        if not validator.is_valid(base):
+                            continue
+                        db = digest(base)
+                        root = s.context[0] if s.context and s.context[0].startswith(("oneOf/", "anyOf/")) else ""
+                        slot_b = bases_by_t.setdefault((tuple(anc_t), root), [])
+                        if db not in valid_base_keys and len(slot_b) < 12:
+                            valid_base_keys.add(db)
+                            slot_b.append((p["case_id"] + "@fixture:" + fx_id + ":" + label + ":" + "/".join(map(str, anc_t)), base))
+                        # the clause's own single-defect candidates on the base, then (coherent) an inner member of
+                        # the base replaced by another owner fixture's value at the same relative location, carried
+                        # into this node's edition the same way; either must leave exactly this clause failing
+                        trials = [(path, cand, "candidate") for path, value in locations(base, s.template) for cand in candidates(s, value, base, path)]
+                        for depth2 in range(len(anc_t) + 1, len(s.template) + 1):
+                            t2 = s.template[:depth2]
+                            rel = t2[len(anc_t):]
+                            inner = [o for o in by_template.get(t2, []) if o.keyword == "type" and o.node.get("type") == "object"
+                                     and tuple(o.context) == tuple(s.context)[:len(o.context)] and not ({"if", "then", "else", "not"} & set(o.context))]
+                            own2 = [v_ for _, v_ in locations(base, t2)[:1]]
+                            for fx2_id, fx2 in fixtures:
+                                for _, sub in locations(fx2, rel)[:4]:
+                                    for o in inner[:2]:
+                                        for label2, v2 in fixture_variants(o, sub, own2[0] if own2 else None):
+                                            cand = insert_at(base, t2, v2)
+                                            if cand is not None:
+                                                trials.append((tuple(locations(cand, t2)[0][0]) if locations(cand, t2) else t2, cand,
+                                                               "inner:" + fx2_id + ":" + label2 + ":" + "/".join(map(str, t2))))
+                        for path, cand, how in trials:
+                            attempts += 1
+                            d = digest(cand)
+                            if d in seen:
+                                continue
+                            errors = list(validator.iter_errors(cand))
+                            if len(errors) != 1:
+                                continue
+                            tree, conditional = error_tree(errors[0])
+                            if how != "candidate" and probe_key not in tree:
+                                continue
+                            with Cut(s):
+                                causal = validator.is_valid(cand)
+                            if not causal:
+                                continue
+                            seen.add(d)
+                            leaves = leaf_errors(errors[0])
+                            att = error_site(leaves[0], cand) if len(leaves) == 1 else None
+                            return dict(target=s.key, attributed=att[0] if att else None, attributed_node=att[1] if att else None,
+                                        exact=bool(att and att[0] == s.key and att[1] == id(s.node)), probe=p, instance=cand,
+                                        location="/" + "/".join(map(str, path)), top_error=errors[0].validator,
+                                        tree=tree, conditional=conditional, donor_base=True, coherent=how != "candidate",
+                                        fixture_base=fx_id + ":" + label + ("" if how == "candidate" else " " + how), sole=probe_key), attempts
+    return None, attempts
+
+
 # --- per-slot driver ----------------------------------------------------------------------------------------
 
 def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool=None):
@@ -1241,6 +1393,19 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                             reached.add(witnesses[-1]["sole"])
                         done = True
                         break
+    # Owner-fixture bases (C12-DC2) for clauses still unreached (fixture_witness).
+    fixtures = owner_fixture_records()
+    for s in sites:
+        if kinds[s.key] != "clause" or not fixtures:
+            continue
+        probe_key = (id(s.node), s.keyword, s.member) if s.keyword == "required" else (id(s.node), s.keyword)
+        if probe_key in reached:
+            continue
+        w, n = fixture_witness(s, probe_key, instances, by_template, validator, edition, fixtures, seen, bases_by_t, valid_base_keys)
+        attempts += n
+        if w is not None:
+            witnesses.append(w)
+            reached.add(probe_key)
     # Complete-route baseline for every witness: first refusal must be the schema row.
     for w in witnesses:
         wp = with_instance(w["probe"], getter, w["instance"], None)
@@ -1730,6 +1895,49 @@ def _finite_domain_proofs(site, slot_sites_by_node):
     k, v = site.keyword, site.node.get(site.keyword)
     src = site.src or {}
     where = f"{src.get('path')}:{src.get('line')}"
+    # A required member whose absence makes every if that reads only that member hold (each condition holds on an
+    # object without it), where those ifs' then branches contradict each other (one requires a member another forbids,
+    # or two fix one member to different consts): every object missing the member fails one of those then branches,
+    # so the required clause is never the only failing clause and its cut admits no new instance.
+    if k == "required" and site.member and not ({"if", "then", "else", "not"} & set(site.context)):
+        from jsonschema import Draft202012Validator as _V
+        key = site.member
+        holders = [o for o in slot_sites_by_node.get(tuple(site.template), []) if o.keyword == "if"
+                   and not ({"if", "then", "else", "not"} & set(o.context)) and tuple(o.context) == tuple(site.context)[:len(o.context)]
+                   and isinstance(o.node.get("then"), dict) and _mentions_only(o.node["if"], key) and _V(o.node["if"]).is_valid({})]
+        thens = [(h, h.node["then"]) for h in holders]
+        conflict = None
+        for h1, t1 in thens:
+            for m in t1.get("required", []):
+                for h2, t2 in thens:
+                    if (t2.get("properties") or {}).get(m) is False:
+                        conflict = (m, h1, h2, "requires", "forbids")
+                        break
+                if conflict:
+                    break
+            if conflict:
+                break
+        if conflict is None:
+            for h1, t1 in thens:
+                for m, sub in (t1.get("properties") or {}).items():
+                    for h2, t2 in thens:
+                        other = (t2.get("properties") or {}).get(m)
+                        if isinstance(sub, dict) and isinstance(other, dict) and "const" in sub and "const" in other and sub["const"] != other["const"]:
+                            conflict = (m, h1, h2, f"fixes to {sub['const']!r}", f"fixes to {other['const']!r}")
+                            break
+                    if conflict:
+                        break
+                if conflict:
+                    break
+        if conflict:
+            m, h1, h2, a1, a2 = conflict
+            s1, s2 = h1.src or {}, h2.src or {}
+            return dict(kind="required_entailed_by_vacuous_conditions", proof=f"{where} required {key!r}: without {key!r}, each of the "
+                        f"{len(holders)} ifs at this object that read only {key!r} holds (each condition validates an object without it), "
+                        f"so all their then branches apply; the then of the if at {s1.get('path')}:{s1.get('line')} {a1} {m!r} and the then "
+                        f"of the if at {s2.get('path')}:{s2.get('line')} {a2} it, so every object missing {key!r} fails one of them. The "
+                        "required clause is never the only failing clause, and cutting it admits no new instance (an equivalent mutant); "
+                        "those then clauses are witnessed and cut on their own")
     # An if-condition's enum/const test of a member whose unconditional schema admits only values inside it (type
     # boolean against [true, false], for example): the test holds on every accepted instance.
     if k == "properties" and "if" in site.context and isinstance(v, dict) and v:

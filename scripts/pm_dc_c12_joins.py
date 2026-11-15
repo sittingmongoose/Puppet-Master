@@ -131,6 +131,17 @@ def _leaves(node, path=()):
         yield path, node  # scalars and sets (a reducer set is one copy)
 
 
+def _lists(node, path=()):
+    """(path, list) for every list inside node, outermost first."""
+    if isinstance(node, dict):
+        for k, v in node.items():
+            yield from _lists(v, path + (k,))
+    elif isinstance(node, list):
+        yield path, node
+        for i, v in enumerate(node):
+            yield from _lists(v, path + (i,))
+
+
 INPUT_KEYS = {"source": ("value", "source_context", "physical_key"), "prepared": ("value", "source_case", "payload_store"),
               "envelope": ("value", "payload_store"), "transition": ("value", "prestate"), "checkpoint": ("value", "context"),
               "historical": ("value", "context")}
@@ -222,6 +233,42 @@ def search(families, rows_by_phase, cap_per_side=2):
         for ref, body in (probe.get("payload_store") or {}).items():
             if isinstance(body, str):
                 variants.append(("body_length", ("payload_store", ref), _set(probe, ("payload_store", ref), body + " ")))
+        # C12-DC2: an owner-record list one item shorter, one item longer (its last item repeated) or, when empty, holding
+        # one string item, with the owner hash recomputed in value and context (and the wrapper copy, as above): a count
+        # the checker derives from the list changes while the body's stored count stays.
+        record_at = {"source": ("value",), "prepared": ("source_case", "value")}.get(probe["domain"])
+        rec = probe
+        for k in record_at or ():
+            rec = rec.get(k) if isinstance(rec, dict) else None
+        if record_at and isinstance(rec, dict) and isinstance(rec.get("owner_record"), dict):
+            for lpath, lst in _lists(rec["owner_record"], record_at + ("owner_record",)):
+                for label, new in (("list_drop", lst[:-1] if lst else None), ("list_repeat", lst + [copy.deepcopy(lst[-1])] if lst else None),
+                                   ("list_add", ["c12"] if not lst else None)):
+                    if new is None:
+                        continue
+                    m = _set(probe, lpath, new)
+                    holder = m
+                    for k in record_at:
+                        holder = holder[k]
+                    holder["owner_record_sha256"] = dc.row_sha256(holder["owner_record"])
+                    ctx = m.get("source_context") if probe["domain"] == "source" else m["source_case"].get("source_context")
+                    if isinstance(ctx, dict):
+                        ctx["owner_record_sha256"] = holder["owner_record_sha256"]
+                    if probe["domain"] == "prepared" and isinstance(m["source_case"].get("application_wrapper"), dict) \
+                            and m["source_case"]["application_wrapper"].get("record_ref") is None:
+                        m["source_case"]["application_wrapper"]["record"] = copy.deepcopy(holder["owner_record"])
+                    variants.append((label, lpath, m))
+        # C12-DC2: a contribution's attempt replaced by another attempt of the same slot in the prestate run (known,
+        # same slot, so only the current-attempt comparison can tell them apart).
+        if probe["domain"] == "transition" and isinstance(probe.get("value"), dict) and isinstance(probe["value"].get("attempt_id"), str):
+            for run in ((probe.get("prestate") or {}).get("runs") or {}).values():
+                atts = run.get("attempts") or {} if isinstance(run, dict) else {}
+                cur = atts.get(probe["value"]["attempt_id"])
+                if not isinstance(cur, dict):
+                    continue
+                for other, att in sorted(atts.items(), key=lambda x: str(x[0])):
+                    if other != probe["value"]["attempt_id"] and isinstance(att, dict) and att.get("slot") == cur.get("slot"):
+                        variants.append(("same_slot_attempt", ("value", "attempt_id"), _set(probe, ("value", "attempt_id"), other)))
         for variant, path, mutated in variants:
             if True:
                 tried += 1
@@ -260,6 +307,9 @@ def search(families, rows_by_phase, cap_per_side=2):
 # N: not a two-copy join: both fields are derived from one copy (a uniqueness count, or a value against its own
 #    canonical rendering); the row's own witnesses vary that copy.
 SIDE_REASONS = {
+    ("EV14_event_id", "expected_event_id"): ("D", "recomputed by event_id from the boundary's Storage context (the fixture storage_context's instance and recovery epoch, one value for every envelope probe), the payload's scope partition ('app', or project~ plus the project_id, whose scope kind and project are joined to the record by EV03/EV04 first) and the family's SP-460 subject; where no search witness is listed the subject is collaboration_run_id alone (brainstorm.plan_synthesized, review.artifact_finalized), which EV10 joins first, so no input of the expected side can change alone; the stored record_event_id has its own witness"),
+    ("SF29_identity_context", "participant_identity"): ("U", "the source's participant_identity holds exactly participant_slot_id and participant_id (closed object); SF27 joins the first to the body slot and SF28 the second to the record participant before SF29, so any change to it is refused there first; the captured context copy has its own witness"),
+    ("SF57_votes_unique", "distinct_reviewer_count_for_votes"): ("N", "both counts derive from the record's one reviewer_votes list (its length against its distinct reviewer ids): a uniqueness check, not two copies; the vote_count side and the row's own negatives vary that list"),
     ("EV08_attempt", "expected_attempt_id"): ("D", "recomputed from the payload's attempt subject, which PR04 (idempotency recipe) and EV14 (event id) join first"),
     ("EV12_schema_id", "expected_payload_schema_id"): ("D", "recomputed from the boundary event type and the record scope kind, joined first by EV02 and EV03"),
     ("EV04_project_id", "payload_scope_kind"): ("U", "the payload scope kind is joined to the record scope kind by EV03 first"),
