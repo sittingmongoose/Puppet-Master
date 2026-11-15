@@ -412,6 +412,29 @@ def directed(family, bases, c=None):
                              'selected_matches': []}, 'parent_maintain': ['cas', 'scan_from_prior']}),
         # the source claims to start after its first row: its rows are not first..last
         ('project', 'checkpoint', {'selected_source/first_sequence': rows[1]['sequence']}, [], ['cp_source', 'CS04_source_contiguous']),
+    ]
+    # One defect on this family's own valid prior checkpoint (through its own matching row; the zero-match suffix keeps
+    # the prior's last event), the CAS copy moved with it (expected_previous is the stored prior)
+    prior_parent = {'parent_changes': {'stored_previous': dict(copy.deepcopy(project['checkpoint']),
+                                                               through_sequence_id=rows[1]['sequence']),
+                                       'selected_matches': []}, 'parent_maintain': ['cas', 'scan_from_prior']}
+    other_generation = 'eig_' + '7' * 64
+    out += [
+        ('project', 'checkpoint', {'stored_previous/schema_version': '9.0.0'}, ['cas'],
+         ['sch_prior_checkpoint', 'PRIOR_CHECKPOINT_schema'], prior_parent),
+        ('project', 'checkpoint', {'stored_previous/index_read_token/generation_id': other_generation}, ['prior_refs'],
+         ['cp_prior', 'CN07_prior_generation'], prior_parent),
+        ('project', 'checkpoint', {'stored_previous/index_read_token/generation_anchor_sha256': '0' * 64}, ['cas'],
+         ['cp_prior', 'CN08_prior_anchor'], prior_parent),
+        ('project', 'checkpoint', {'stored_previous/state': 'withdrawn'}, ['cas'], ['cp_prior', 'CN11_prior_current'], prior_parent),
+    ]
+    if c is not None and c['scope_policy'] == 'project_only':
+        out.append(('project', 'checkpoint', {'stored_previous/project_id': 'other_project'}, ['cas'],
+                    ['cp_prior', 'CN09_prior_project'], prior_parent))
+    elif 'scope' in project['checkpoint']:
+        out.append(('project', 'checkpoint', {'stored_previous/scope/user_id': 'user:c12-other'}, ['cas'],
+                    ['cp_prior', 'CN10_prior_scope'], prior_parent))
+    out += [
         # The receipt's original event id, every receipt copy moved together (RC01/RC02 keep agreeing)
         ('project', 'read', {'receipt/event_id': 'event:' + s + ':9', 'custody/first_append_receipt/event_id': 'event:' + s + ':9',
                              'issued_result/first_append_receipt/event_id': 'event:' + s + ':9'}, [], ['rc_copies', 'RC03_receipt_event']),

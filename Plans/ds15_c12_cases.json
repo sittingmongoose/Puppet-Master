@@ -985,6 +985,336 @@
  {
   "base": "project",
   "changes": {
+   "stored_previous/schema_version": "9.0.0"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "browser.context_share_revoked",
+  "id": "c12/browser.context_share_revoked/directed/PRIOR_CHECKPOINT_schema",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.browser_context_share_revoked.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:browser_context_share_revoked:1",
+    "schema_id": "pm.ds15.browser_context_share_revoked.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "sch_prior_checkpoint",
+   "PRIOR_CHECKPOINT_schema"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_id": "eig_7777777777777777777777777777777777777777777777777777777777777777"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "browser.context_share_revoked",
+  "id": "c12/browser.context_share_revoked/directed/CN07_prior_generation",
+  "maintain": [
+   "prior_refs"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.browser_context_share_revoked.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:browser_context_share_revoked:1",
+    "schema_id": "pm.ds15.browser_context_share_revoked.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN07_prior_generation"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_anchor_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "browser.context_share_revoked",
+  "id": "c12/browser.context_share_revoked/directed/CN08_prior_anchor",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.browser_context_share_revoked.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:browser_context_share_revoked:1",
+    "schema_id": "pm.ds15.browser_context_share_revoked.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN08_prior_anchor"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/state": "withdrawn"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "browser.context_share_revoked",
+  "id": "c12/browser.context_share_revoked/directed/CN11_prior_current",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.browser_context_share_revoked.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:browser_context_share_revoked:1",
+    "schema_id": "pm.ds15.browser_context_share_revoked.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN11_prior_current"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/scope/user_id": "user:c12-other"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "browser.context_share_revoked",
+  "id": "c12/browser.context_share_revoked/directed/CN10_prior_scope",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.browser_context_share_revoked.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:browser_context_share_revoked:1",
+    "schema_id": "pm.ds15.browser_context_share_revoked.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN10_prior_scope"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
    "custody/first_append_receipt/event_id": "event:browser_context_share_revoked:9",
    "issued_result/first_append_receipt/event_id": "event:browser_context_share_revoked:9",
    "receipt/event_id": "event:browser_context_share_revoked:9"
@@ -3533,6 +3863,336 @@
  {
   "base": "project",
   "changes": {
+   "stored_previous/schema_version": "9.0.0"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "browser.context_shared",
+  "id": "c12/browser.context_shared/directed/PRIOR_CHECKPOINT_schema",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.browser_context_shared.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:browser_context_shared:1",
+    "schema_id": "pm.ds15.browser_context_shared.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "sch_prior_checkpoint",
+   "PRIOR_CHECKPOINT_schema"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_id": "eig_7777777777777777777777777777777777777777777777777777777777777777"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "browser.context_shared",
+  "id": "c12/browser.context_shared/directed/CN07_prior_generation",
+  "maintain": [
+   "prior_refs"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.browser_context_shared.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:browser_context_shared:1",
+    "schema_id": "pm.ds15.browser_context_shared.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN07_prior_generation"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_anchor_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "browser.context_shared",
+  "id": "c12/browser.context_shared/directed/CN08_prior_anchor",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.browser_context_shared.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:browser_context_shared:1",
+    "schema_id": "pm.ds15.browser_context_shared.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN08_prior_anchor"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/state": "withdrawn"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "browser.context_shared",
+  "id": "c12/browser.context_shared/directed/CN11_prior_current",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.browser_context_shared.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:browser_context_shared:1",
+    "schema_id": "pm.ds15.browser_context_shared.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN11_prior_current"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/scope/user_id": "user:c12-other"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "browser.context_shared",
+  "id": "c12/browser.context_shared/directed/CN10_prior_scope",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.browser_context_shared.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:browser_context_shared:1",
+    "schema_id": "pm.ds15.browser_context_shared.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN10_prior_scope"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
    "custody/first_append_receipt/event_id": "event:browser_context_shared:9",
    "issued_result/first_append_receipt/event_id": "event:browser_context_shared:9",
    "receipt/event_id": "event:browser_context_shared:9"
@@ -6022,6 +6682,336 @@
   "target": [
    "cp_source",
    "CS04_source_contiguous"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/schema_version": "9.0.0"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.remove.completed",
+  "id": "c12/catalog.remove.completed/directed/PRIOR_CHECKPOINT_schema",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_remove_completed.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_remove_completed:1",
+    "schema_id": "pm.ds15.catalog_remove_completed.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "sch_prior_checkpoint",
+   "PRIOR_CHECKPOINT_schema"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_id": "eig_7777777777777777777777777777777777777777777777777777777777777777"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.remove.completed",
+  "id": "c12/catalog.remove.completed/directed/CN07_prior_generation",
+  "maintain": [
+   "prior_refs"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_remove_completed.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_remove_completed:1",
+    "schema_id": "pm.ds15.catalog_remove_completed.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN07_prior_generation"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_anchor_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.remove.completed",
+  "id": "c12/catalog.remove.completed/directed/CN08_prior_anchor",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_remove_completed.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_remove_completed:1",
+    "schema_id": "pm.ds15.catalog_remove_completed.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN08_prior_anchor"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/state": "withdrawn"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.remove.completed",
+  "id": "c12/catalog.remove.completed/directed/CN11_prior_current",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_remove_completed.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_remove_completed:1",
+    "schema_id": "pm.ds15.catalog_remove_completed.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN11_prior_current"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/scope/user_id": "user:c12-other"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.remove.completed",
+  "id": "c12/catalog.remove.completed/directed/CN10_prior_scope",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_remove_completed.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_remove_completed:1",
+    "schema_id": "pm.ds15.catalog_remove_completed.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN10_prior_scope"
   ]
  },
  {
@@ -8591,6 +9581,336 @@
  {
   "base": "project",
   "changes": {
+   "stored_previous/schema_version": "9.0.0"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.remove.started",
+  "id": "c12/catalog.remove.started/directed/PRIOR_CHECKPOINT_schema",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_remove_started.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_remove_started:1",
+    "schema_id": "pm.ds15.catalog_remove_started.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "sch_prior_checkpoint",
+   "PRIOR_CHECKPOINT_schema"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_id": "eig_7777777777777777777777777777777777777777777777777777777777777777"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.remove.started",
+  "id": "c12/catalog.remove.started/directed/CN07_prior_generation",
+  "maintain": [
+   "prior_refs"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_remove_started.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_remove_started:1",
+    "schema_id": "pm.ds15.catalog_remove_started.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN07_prior_generation"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_anchor_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.remove.started",
+  "id": "c12/catalog.remove.started/directed/CN08_prior_anchor",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_remove_started.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_remove_started:1",
+    "schema_id": "pm.ds15.catalog_remove_started.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN08_prior_anchor"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/state": "withdrawn"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.remove.started",
+  "id": "c12/catalog.remove.started/directed/CN11_prior_current",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_remove_started.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_remove_started:1",
+    "schema_id": "pm.ds15.catalog_remove_started.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN11_prior_current"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/scope/user_id": "user:c12-other"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.remove.started",
+  "id": "c12/catalog.remove.started/directed/CN10_prior_scope",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_remove_started.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_remove_started:1",
+    "schema_id": "pm.ds15.catalog_remove_started.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN10_prior_scope"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
    "custody/first_append_receipt/event_id": "event:catalog_remove_started:9",
    "issued_result/first_append_receipt/event_id": "event:catalog_remove_started:9",
    "receipt/event_id": "event:catalog_remove_started:9"
@@ -11155,6 +12475,336 @@
  {
   "base": "project",
   "changes": {
+   "stored_previous/schema_version": "9.0.0"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.update.completed",
+  "id": "c12/catalog.update.completed/directed/PRIOR_CHECKPOINT_schema",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_update_completed.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_update_completed:1",
+    "schema_id": "pm.ds15.catalog_update_completed.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "sch_prior_checkpoint",
+   "PRIOR_CHECKPOINT_schema"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_id": "eig_7777777777777777777777777777777777777777777777777777777777777777"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.update.completed",
+  "id": "c12/catalog.update.completed/directed/CN07_prior_generation",
+  "maintain": [
+   "prior_refs"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_update_completed.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_update_completed:1",
+    "schema_id": "pm.ds15.catalog_update_completed.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN07_prior_generation"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_anchor_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.update.completed",
+  "id": "c12/catalog.update.completed/directed/CN08_prior_anchor",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_update_completed.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_update_completed:1",
+    "schema_id": "pm.ds15.catalog_update_completed.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN08_prior_anchor"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/state": "withdrawn"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.update.completed",
+  "id": "c12/catalog.update.completed/directed/CN11_prior_current",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_update_completed.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_update_completed:1",
+    "schema_id": "pm.ds15.catalog_update_completed.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN11_prior_current"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/scope/user_id": "user:c12-other"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.update.completed",
+  "id": "c12/catalog.update.completed/directed/CN10_prior_scope",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_update_completed.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_update_completed:1",
+    "schema_id": "pm.ds15.catalog_update_completed.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN10_prior_scope"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
    "custody/first_append_receipt/event_id": "event:catalog_update_completed:9",
    "issued_result/first_append_receipt/event_id": "event:catalog_update_completed:9",
    "receipt/event_id": "event:catalog_update_completed:9"
@@ -13703,6 +15353,336 @@
  {
   "base": "project",
   "changes": {
+   "stored_previous/schema_version": "9.0.0"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.update.started",
+  "id": "c12/catalog.update.started/directed/PRIOR_CHECKPOINT_schema",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_update_started.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_update_started:1",
+    "schema_id": "pm.ds15.catalog_update_started.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "sch_prior_checkpoint",
+   "PRIOR_CHECKPOINT_schema"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_id": "eig_7777777777777777777777777777777777777777777777777777777777777777"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.update.started",
+  "id": "c12/catalog.update.started/directed/CN07_prior_generation",
+  "maintain": [
+   "prior_refs"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_update_started.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_update_started:1",
+    "schema_id": "pm.ds15.catalog_update_started.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN07_prior_generation"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_anchor_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.update.started",
+  "id": "c12/catalog.update.started/directed/CN08_prior_anchor",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_update_started.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_update_started:1",
+    "schema_id": "pm.ds15.catalog_update_started.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN08_prior_anchor"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/state": "withdrawn"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.update.started",
+  "id": "c12/catalog.update.started/directed/CN11_prior_current",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_update_started.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_update_started:1",
+    "schema_id": "pm.ds15.catalog_update_started.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN11_prior_current"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/scope/user_id": "user:c12-other"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "catalog.update.started",
+  "id": "c12/catalog.update.started/directed/CN10_prior_scope",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.catalog_update_started.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:catalog_update_started:1",
+    "schema_id": "pm.ds15.catalog_update_started.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "scope": {
+     "computer_id": "computer:1",
+     "kind": "project",
+     "profile_id": "profile:1",
+     "project_id": "sample_project_id",
+     "user_id": "user:1"
+    },
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN10_prior_scope"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
    "custody/first_append_receipt/event_id": "event:catalog_update_started:9",
    "issued_result/first_append_receipt/event_id": "event:catalog_update_started:9",
    "receipt/event_id": "event:catalog_update_started:9"
@@ -15928,6 +17908,306 @@
   "target": [
    "cp_source",
    "CS04_source_contiguous"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/schema_version": "9.0.0"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "tool.custom_headless.skipped",
+  "id": "c12/tool.custom_headless.skipped/directed/PRIOR_CHECKPOINT_schema",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.tool_custom_headless_skipped.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:tool_custom_headless_skipped:1",
+    "project_id": "sample_project_id",
+    "schema_id": "pm.ds15.tool_custom_headless_skipped.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "sch_prior_checkpoint",
+   "PRIOR_CHECKPOINT_schema"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_id": "eig_7777777777777777777777777777777777777777777777777777777777777777"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "tool.custom_headless.skipped",
+  "id": "c12/tool.custom_headless.skipped/directed/CN07_prior_generation",
+  "maintain": [
+   "prior_refs"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.tool_custom_headless_skipped.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:tool_custom_headless_skipped:1",
+    "project_id": "sample_project_id",
+    "schema_id": "pm.ds15.tool_custom_headless_skipped.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN07_prior_generation"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/index_read_token/generation_anchor_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "tool.custom_headless.skipped",
+  "id": "c12/tool.custom_headless.skipped/directed/CN08_prior_anchor",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.tool_custom_headless_skipped.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:tool_custom_headless_skipped:1",
+    "project_id": "sample_project_id",
+    "schema_id": "pm.ds15.tool_custom_headless_skipped.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN08_prior_anchor"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/state": "withdrawn"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "tool.custom_headless.skipped",
+  "id": "c12/tool.custom_headless.skipped/directed/CN11_prior_current",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.tool_custom_headless_skipped.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:tool_custom_headless_skipped:1",
+    "project_id": "sample_project_id",
+    "schema_id": "pm.ds15.tool_custom_headless_skipped.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN11_prior_current"
+  ]
+ },
+ {
+  "base": "project",
+  "changes": {
+   "stored_previous/project_id": "other_project"
+  },
+  "defect": "single",
+  "donor": null,
+  "family": "tool.custom_headless.skipped",
+  "id": "c12/tool.custom_headless.skipped/directed/CN09_prior_project",
+  "maintain": [
+   "cas"
+  ],
+  "method": "directed",
+  "operation": "checkpoint",
+  "parent_changes": {
+   "selected_matches": [],
+   "stored_previous": {
+    "consumer_id": "reader.ds15.tool_custom_headless_skipped.v1@1.0.0",
+    "index_read_token": {
+     "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+     "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "frontier_revision": 0,
+     "frontier_sha256": "3f9a261082b08ed00443e2f1e523c9ad4fbd4d2532f119e346288ac68fec26a2",
+     "generation_anchor_sha256": "9e359d82e416c54a57884966af067cd5498b0d59d3429b0f08174580350a0b08",
+     "generation_id": "eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "index_dataset_name": "event_record_index.v2@eig_9e09d6a8a18829bd17a676f525293dc508e1e968f55495855e0702625640557e",
+     "source_selection": {
+      "current_bytes_sha256": "3867ae24512f88ab74665429364f62b7fbf0560eadc8c71eac214d8609803c4a",
+      "current_ref": "storage/seglog/CURRENT",
+      "durable_watermarks_sha256": "7c2d5d12990724d1d0b885b6cdba69b71576814f231ea6e43b23de92bd2025e7",
+      "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "manifest_bytes_sha256": "315231c4ca1a686288e2e87f947e237346a6a06da896e7f35f3a97908540f36f",
+      "manifest_generation": 11,
+      "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+      "manifest_survivor_prefix_sha256": "c35a73ae1e234d62e36062e5b3fd06ea0d1bbbd1c61b179b15f7403745453516",
+      "recovery_epoch": 0,
+      "retained_inventory_sha256": "054b9718b719657a200c1ebe92c6b3aa97b9e5272baf1d7c03067d4090762400",
+      "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+      "selected_segment_generation": 1,
+      "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+     },
+     "storage_instance_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "last_event_id": "event:tool_custom_headless_skipped:1",
+    "project_id": "sample_project_id",
+    "schema_id": "pm.ds15.tool_custom_headless_skipped.checkpoint.v1",
+    "schema_version": "1.0.0",
+    "state": "current",
+    "through_sequence_id": 2
+   }
+  },
+  "parent_maintain": [
+   "cas",
+   "scan_from_prior"
+  ],
+  "target": [
+   "cp_prior",
+   "CN09_prior_project"
   ]
  },
  {

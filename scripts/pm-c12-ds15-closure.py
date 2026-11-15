@@ -307,6 +307,14 @@ def family_entailments(b, deck, contracts, E, D, G):
              anchors=[anchor(E, "                       checkpoint_scope=cp.get('scope'), payload_scope=p.get('scope'))):")],
              proof='the closed checkpoint and payload schemas of this project-only family have no scope member, so both '
                    'observations are None', mechanical=['deck2_checkpoint_payload_scope_members']),
+        dict(table='cp_prior', row='CN09_prior_project', families=scope_families,
+             anchors=[anchor(E, "                           checkpoint_project_id=cp.get('project_id'), prior_scope=prior.get('scope'),")],
+             proof='the closed checkpoint schemas of these families have no project_id member (the prior is validated by the '
+                   'same schema first), so both observations are None', mechanical=['deck2_checkpoint_payload_scope_members']),
+        dict(table='cp_prior', row='CN10_prior_scope', families=project_only,
+             anchors=[anchor(E, "                           checkpoint_scope=cp.get('scope'), prior_state=prior['state'])):")],
+             proof='the closed checkpoint schema of this project-only family has no scope member, so both observations are None',
+             mechanical=['deck2_checkpoint_payload_scope_members']),
         dict(table='sch_payload_n', row='PAYLOAD_numbers', families=allf,
              anchors=[anchor(E, "    numbered = len([e for e in errors if e.validator in numbers]) if not stock else 0")],
              proof='the closed deck-2 payload schemas declare no integer or number slot, so a number anywhere is a stock type '
