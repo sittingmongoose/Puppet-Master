@@ -2206,13 +2206,34 @@ for _k in ('generation_id', 'frontier_revision', 'frontier_sha256'):
     row(RD, 'read', 'read_token_' + _k.replace('_sha256', '_hash'), 'token_stale', '/checkpoint/index_read_token/' + _k,
         'the stored token\'s ' + _k + ' is the current SP-278 selection\'s', 'eq',
         (lambda k: lambda w, m: EQ(CP(w)['index_read_token'][k], w['store']['selection'][k]))(_k), gates=('rd_ok',),
-        witnesses=[(lambda k: W('selection moved: ' + k, store=lambda s, c: (s['selection'].update(**{k: ('eig_' + _hex('newer')) if k == 'generation_id' else (s['selection'][k] + 1 if k == 'frontier_revision' else _hex('newer-' + k))}), s)[1]))(_k)])
+        # A selection moved to a new generation also moves checkpoint_ref and index_dataset_name (read_token joins), so
+        # the generation witness changes the stored token's generation_id alone (s4b-tokfix).
+        witnesses=[(lambda k: W('stored token generation_id: another generation', checkpoint=_set(('index_read_token', k), lambda s: 'eig_' + _hex('newer')))
+                    if k == 'generation_id' else
+                    W('selection moved: ' + k, store=lambda s, c: (s['selection'].update(**{k: s['selection'][k] + 1 if k == 'frontier_revision' else _hex('newer-' + k)}), s)[1]))(_k)])
 row(RD, 'read', 'read_coverage', 'coverage_incomplete', '/request/sequence_id',
     'coverage reaches the requested sequence', 'true', lambda w, m: V(m.get('rd_covered')), gates=('rd_ok',),
     witnesses=[W('request past coverage', request=lambda r, c: dict(r, sequence_id=43)),
                W('retained original past the checkpoint coverage', checkpoint=lambda v, c: dict(
                    v, index_through_sequence_id=40,
                    source_cursor=dict(v['source_cursor'], last_sequence_id=40, last_event_id=mixed_log(c['family'])[39]['event_id'])))])
+# SP-25xx Read: the stored token joins the current SP-278 selection. Beside the three currency fields above, each other
+# durable-token field equals the nine-field token the current selection determines (s4b-tokfix: with SP-278's exact
+# token schema, a malformed name, dataset or instance in a stored token is no longer a schema refusal; it is this join's).
+READ_TOKEN_JOIN_W = {
+    'storage_instance_id': [('foreign instance', lambda s: OTHER_STORAGE_INSTANCE_ID), ('uppercase instance', lambda s: s.upper())],
+    'checkpoint_key': [('another checkpoint key', lambda s: s + '-stale'), ('trailing LF', lambda s: s + '\n')],
+    'checkpoint_ref': [('another checkpoint ref', lambda s: s + '-stale'), ('trailing LF', lambda s: s + '\n')],
+    'generation_anchor_sha256': [('stale anchor', lambda s: _hex('stale-anchor'))],
+    'index_dataset_name': [('another dataset', lambda s: s + '-stale'), ('trailing space', lambda s: s + ' ')],
+    'source_selection': [('older manifest generation', lambda s: dict(s, manifest_generation=s['manifest_generation'] - 1))],
+}
+for _k, _alts in READ_TOKEN_JOIN_W.items():
+    row(RD, 'read_token', 'read_token_' + _k.replace('_sha256', '_hash'), 'token_stale', '/checkpoint/index_read_token/' + _k,
+        'the stored token\'s ' + _k + ' is the one the current SP-278 selection\'s nine-field durable token carries', 'eq',
+        (lambda k: lambda w, m: EQ(CP(w)['index_read_token'][k], durable_token(w['store']['selection'])[k]))(_k), gates=('rd_ok',),
+        witnesses=[(lambda k, lbl, fn: W('stored token ' + k + ': ' + lbl, checkpoint=_set(('index_read_token', k), fn)))(_k, _lbl, _fn)
+                   for _lbl, _fn in _alts])
 row(RD, 'read_access', 'read_access', 'current_disclosure', '/store/access',
     'current Project access permits the read', 'true',
     lambda w, m: V(w['store']['access'].get(w['request']['project_id']) is True), gates=('rd_ok',),

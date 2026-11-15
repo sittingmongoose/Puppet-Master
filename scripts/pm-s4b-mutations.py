@@ -125,6 +125,8 @@ MUTATIONS = [
      "            and schema_errors(CHECKPOINTS_ID, '/$defs/' + FAM[family]['slug'] + '_index_checkpoint', value) == [])", 'refused_at', 'read_token_frontier_hash'),
     ('C53', 'derived_token_full_match', "        tokens += [r.get('index_read_token') for r in retired if type(r) is dict]",
      "        pass", 'refused_at', 'derived_retired'),
+    ('C54', 'read_token_checkpoint_key', "(lambda k: lambda w, m: EQ(CP(w)['index_read_token'][k], durable_token(w['store']['selection'])[k]))(_k)",
+     "(lambda k: lambda w, m: EQ(CP(w)['index_read_token'][k], (CP(w)['index_read_token'] if k == 'checkpoint_key' else durable_token(w['store']['selection']))[k]))(_k)", 'witness', None),
 ]
 MUTATIONS = [m for m in MUTATIONS if m[4] != 'skip']
 
