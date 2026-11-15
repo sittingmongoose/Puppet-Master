@@ -761,6 +761,18 @@ def self_test(args):
         vv = common.StrictValidator(common.runtime_schema(schema), format_checker=common.FORMATS)
         assert all(vv.is_valid(x) for x in probes), schema
     out['vacuous_rules'] = dict(schemas=3, probes=len(probes), all_valid=True)
+    # 3c. duplicated-$id copies: identical copies map only under $defs, never inline; differing copies never map
+    copy = {'$id': 'urn:dup', 'type': 'object', '$defs': {'d': {'type': 'string'}}, 'properties': {'a': {'$ref': '#/$defs/d'}}}
+    other = dict(copy, properties={'a': {'type': 'integer'}})
+    doc = {'$id': 'urn:top', 'properties': {'x': copy, 'y': copy, 'z': dict(other, **{'$id': 'urn:diff'}),
+                                            'w': dict(copy, **{'$id': 'urn:diff'})}}
+    entry = dict(schema=common.runtime_schema(doc), resources={})
+    mapping, checked = copy_canon(entry)
+    assert checked['urn:dup'] == dict(copies=2, identical=True, canonical='urn:top/properties/x'), checked
+    assert checked['urn:diff']['identical'] is False and 'urn:top/properties/z' not in mapping
+    assert canon('urn:top/properties/y/$defs/d/type', mapping) == 'urn:top/properties/x/$defs/d/type'
+    assert canon('urn:top/properties/y/properties/a/type', mapping) == 'urn:top/properties/y/properties/a/type'
+    out['duplicate_id_copies'] = dict(identical_mapped=True, inline_unmapped=True, differing_unmapped=True)
     # 4. the 35d6 dangling-ref clauses: every authored seed validates through the embedded $ref, and a defect at
     #    original_command_outcome is refused inside CommandOutcomeRecord (the ref is evaluated, not dangling).
     if args.dump:
@@ -802,7 +814,13 @@ def verify(args):
     data = load(args.dump, [report['root']])
     (root, entry), = data['roots'].items()
     ref = rebuild(entry)
+    # GO2: a clause recorded under one copy of a duplicated `$id` is judged under the copy this process registered
+    mapping, _ = copy_canon(entry)
+    cl.CURRENT[0] = ref
+    walked = cl.walk(ref)
+    local = {canon(l + '/' + cl.name_of(k), mapping): l + '/' + cl.name_of(k) for l, i in walked.items() for k in cl.clauses_of(i['node'])}
     accepted_controls = {}
+    remapped = 0
     rows = [(c, x) for c, x in sorted(report['clauses'].items()) if x.get('replay') and x['cls'] in ('KILLED', 'COVERED_LATER')]
     part, total = map(int, args.shard.split('/'))
     rows = rows[part::total]
@@ -811,8 +829,10 @@ def verify(args):
     fingerprint_mismatch = []
     failures = []
     start = time.monotonic()
-    for number, (clause, x) in enumerate(rows):
+    for number, (recorded, x) in enumerate(rows):
         problem = None
+        clause = local.get(canon(recorded, mapping), recorded)
+        remapped += clause != recorded
         control = store.get(x['control_sha256'])
         if control is None:
             problem = 'control not in store'
@@ -850,17 +870,18 @@ def verify(args):
                             problem = 'restoration does not refuse'
                     elif not cut:
                         problem = 'COVERED_LATER but the cut accepts'
-                    elif not set(x['still_refused_by']) <= cl.locations(cut):
+                    elif not {canon(y, mapping) for y in x['still_refused_by']} <= {canon(y, mapping) for y in cl.locations(cut)}:
                         problem = 'COVERED_LATER: named clauses not among the remaining refusals'
         results['fail' if problem else 'pass'] += 1
         results[x['cls'] + ('_fail' if problem else '_pass')] += 1
         if problem:
-            failures.append(dict(clause=clause, cls=x['cls'], problem=problem))
+            failures.append(dict(clause=recorded, judged_as=clause, cls=x['cls'], problem=problem))
         if number % 200 == 0:
             print(f'{number}/{len(rows)} {dict(results)} {time.monotonic() - start:.0f}s', file=sys.stderr, flush=True)
     out = dict(tool_sha256=TOOL_SHA256, report=str(args.report), report_sha256=hashlib.sha256(Path(args.report).read_bytes()).hexdigest(),
                root=root, shard=args.shard, validator='reference (no memo): ' + entry['cls'], witnesses=len(rows),
                controls_checked=len(accepted_controls), controls_accepted=sum(accepted_controls.values()), results=dict(results),
+               judged_under_another_copy=remapped,
                input_fingerprints=dict(fingerprints), fingerprint_note='value: input_value_sha256 matches; pickle: GO\'s pickle '
                'input_sha256 matches; pickle_after_interning_gc: matches once equal \'gc\' strings are one object again (pickle '
                'encodes object identity); pickle_identity_mismatch: neither (validity checks still decide)',
@@ -1063,12 +1084,16 @@ def merge_shards(args):
     install_fixes(cl)
     cl.CURRENT[0] = v
     nodes = cl.walk(v)
-    root_set = {l + '/' + cl.name_of(k) for l, i in nodes.items() for k in cl.clauses_of(i['node'])}
+    mapping, copies_checked = copy_canon(entry_dump)
+    root_set = {canon(l + '/' + cl.name_of(k), mapping) for l, i in nodes.items() for k in cl.clauses_of(i['node'])}
     rank = {'KILLED': 0, 'COVERED_LATER': 1, 'COVERED_BY_CONST': 2, 'UNREACHABLE': 3, 'VACUOUS': 4, 'SELECTOR_OR_NEGATED': 5,
             'SEARCHED_ELSEWHERE': 6, 'UNCOVERED': 7}
     clauses, overlaps = {}, 0
     for name, r in zip(args.reports, reports):
-        for c, x in r['clauses'].items():
+        for c0, x in r['clauses'].items():
+            c = canon(c0, mapping)
+            if c != c0:
+                x = dict(x, recorded_as=c0)
             if c in clauses:
                 overlaps += 1
                 if rank[x['cls']] >= rank[clauses[c]['cls']]:
@@ -1094,7 +1119,8 @@ def merge_shards(args):
                  budget_args=dict(per_clause=first['args']['clause_cap'], clause_cap=first['args']['clause_cap'], root_seconds=0,
                                   seed_cap=first['dump_meta']['seed_cap']),
                  clause_set_sha256=hashlib.sha256('\n'.join(sorted(root_set)).encode()).hexdigest(), clauses_in_root=len(root_set),
-                 go2=dict(overlapping_entries=overlaps, reports=[dict(file=Path(x).name, sha256=hashlib.sha256(Path(x).read_bytes()).hexdigest(), shard=r['clause_shard'],
+                 go2=dict(overlapping_entries=overlaps, duplicate_id_copies=copies_checked, canonicalized=sum(1 for x in clauses.values() if x.get('recorded_as')),
+                          reports=[dict(file=Path(x).name, sha256=hashlib.sha256(Path(x).read_bytes()).hexdigest(), shard=r['clause_shard'],
                                         tool_history=r.get('tool_history'), validator=r['validator'], seconds=r['seconds'],
                                         sampled_agreement=r.get('sampled_agreement'), memo_stats=r.get('memo_stats'), ordering=r.get('ordering'),
                                         args=r['args']) for x, r in zip(args.reports, reports)],
@@ -1658,6 +1684,69 @@ def vacuous_go2(keyword, node):
     return None
 
 
+def copy_canon(entry):
+    """GO2: the frozen roots embed some resources several times under one `$id` (up to 17 copies of an event payload),
+    identical apart from GO's location annotation. A `$ref` into such a resource lands on whichever copy referencing's
+    registry crawl registered last, which depends on the process's string-hash order: the `$defs` of exactly one copy
+    are then evaluated (and walked), so a clause id under `<copy>/$defs/` names a different copy in different processes.
+    Clauses reached only through `$ref` (under `$defs`) are mapped to one canonical copy: the registry document when the
+    `$id` is a registry key, else the first copy by location. Checked: every copy of the `$id` has the same content
+    (sha256 of its JSON with GO's annotation removed); an `$id` whose copies differ is never mapped. Inline nodes of a
+    copy are never mapped (each is reached by its own instance paths)."""
+    def strip(x):
+        if isinstance(x, dict):
+            return {k: strip(y) for k, y in x.items() if k != 'x-pm-oracle-id'}
+        if isinstance(x, list):
+            return [strip(y) for y in x]
+        return x
+    copies = collections.defaultdict(list)  # $id -> [(prefix, content sha, is registry doc)]
+
+    def find(node, top):
+        if isinstance(node, dict):
+            if isinstance(node.get('$id'), str) and isinstance(node.get('x-pm-oracle-id'), str):
+                copies[node['$id']].append((node['x-pm-oracle-id'],
+                                            hashlib.sha256(json.dumps(strip(node), sort_keys=True).encode()).hexdigest(), top))
+            for k, x in node.items():
+                find(x, False)
+        elif isinstance(node, list):
+            for x in node:
+                find(x, False)
+    find(entry['schema'], True)
+    for uri, contents in entry['resources'].items():
+        find(contents, True)
+    mapping, checked = {}, {}
+    for uri, found in copies.items():
+        prefixes = sorted({p for p, _, _ in found})
+        if len(prefixes) < 2:
+            continue
+        same = len({h for _, h, _ in found}) == 1
+        checked[uri] = dict(copies=len(prefixes), identical=same)
+        if not same:
+            continue
+        registry = sorted(p for p, _, top in found if top and uri in entry['resources'])
+        canonical = registry[0] if registry else prefixes[0]
+        checked[uri]['canonical'] = canonical
+        for p in prefixes:
+            mapping[p] = canonical
+    return mapping, checked
+
+
+def canon(location, mapping, _cache={}):
+    key = (id(mapping), location)
+    if key not in _cache:
+        out = location
+        for _ in range(8):
+            best = None
+            for p in mapping:
+                if out.startswith(p + '/$defs/') and (best is None or len(p) > len(best)):
+                    best = p
+            if best is None or mapping[best] == best:
+                break
+            out = mapping[best] + out[len(best):]
+        _cache[key] = out
+    return _cache[key]
+
+
 def common_locations():
     import pm_goal_oracle_common as common
     return common._SCHEMA_LOCATIONS
@@ -1729,8 +1818,10 @@ def close(args):
     cl.CLAUSE_CAP[0] = args.clause_cap
     cl.CURRENT[0] = v
     cl.UNRESOLVED.clear()
-    carried = witnesses_from(args.carry, root)
-    elsewhere = {} if args.research_elsewhere else searched_elsewhere(args.distinct_from, root, entry['families'])
+    mapping, _ = copy_canon(entry)  # GO2: ids from other processes are compared by canonical id (see copy_canon)
+    carried = {canon(c, mapping): x for c, x in witnesses_from(args.carry, root).items()}
+    elsewhere = {} if args.research_elsewhere else {canon(c, mapping): x for c, x in
+                                                     searched_elsewhere(args.distinct_from, root, entry['families']).items()}
     nodes = cl.walk(v)
     by_ipath = collections.defaultdict(list)
     for location, info in nodes.items():
@@ -1739,8 +1830,8 @@ def close(args):
                 by_ipath[reach['ipath']].append((location, info['node'], info['resolver']))
     work = [(location, keyword) for location, info in nodes.items() for keyword in cl.clauses_of(info['node'])]
     if args.only:  # GO2: exactly these clause ids (the walk order can differ between processes; ids never do)
-        wanted = set(json.loads(Path(args.only).read_text()))
-        mine = [(location, keyword) for location, keyword in work if location + '/' + cl.name_of(keyword) in wanted]
+        wanted = {canon(c, mapping) for c in json.loads(Path(args.only).read_text())}
+        mine = [(location, keyword) for location, keyword in work if canon(location + '/' + cl.name_of(keyword), mapping) in wanted]
     elif ':' in args.clause_shard:  # an explicit clause range a:b of the walk order (splits a slow block without overlap)
         lo, hi = map(int, args.clause_shard.split(':'))
         mine = work[lo:hi]
@@ -1762,14 +1853,17 @@ def close(args):
         earlier = json.loads(Path(args.residual).read_text())
         if earlier['root'] != root:
             raise SystemExit('--residual report is for another root')
-        residual = earlier['clauses']
-        mine_set = {location + '/' + cl.name_of(keyword) for location, keyword in mine}
+        local = {canon(location + '/' + cl.name_of(keyword), mapping): location + '/' + cl.name_of(keyword) for location, keyword in mine}
         again = ('UNCOVERED', 'SEARCHED_ELSEWHERE') if args.research_elsewhere else ('UNCOVERED',)
-        residual = {c: x for c, x in residual.items() if x['cls'] in again}  # the clauses this pass searches
-        for clause, x in earlier['clauses'].items():
-            if x['cls'] not in again and clause not in state['entries'] and clause in mine_set:
-                state['entries'][clause] = dict(x, kept_from=dict(report=Path(args.residual).name,
-                                                                  report_sha256=hashlib.sha256(Path(args.residual).read_bytes()).hexdigest()))
+        residual = {canon(c, mapping): x for c, x in earlier['clauses'].items() if x['cls'] in again}  # this pass searches these
+        for c0, x in earlier['clauses'].items():
+            cid = canon(c0, mapping)
+            if x['cls'] not in again and cid in local and local[cid] not in state['entries']:
+                kept = dict(x, kept_from=dict(report=Path(args.residual).name,
+                                              report_sha256=hashlib.sha256(Path(args.residual).read_bytes()).hexdigest()))
+                if c0 != local[cid]:
+                    kept['recorded_as'] = c0
+                state['entries'][local[cid]] = kept
         import gzip
         store_path = Path(str(args.residual) + '.controls.pkl.gz')
         if store_path.exists():
@@ -1802,14 +1896,15 @@ def close(args):
     deadline = time.monotonic() + args.root_seconds if args.root_seconds else None
     for number, (location, keyword) in enumerate(mine):
         clause = location + '/' + cl.name_of(keyword)
-        if clause in state['entries'] or (residual and clause not in residual):
+        cid = canon(clause, mapping)
+        if clause in state['entries'] or (residual and cid not in residual):
             continue
         info, node = nodes[location], nodes[location]['node']
-        if clause in carried:
-            state['entries'][clause] = carried[clause]
+        if cid in carried:
+            state['entries'][clause] = carried[cid]
             continue
-        if clause in elsewhere:
-            state['entries'][clause] = dict(cls='SEARCHED_ELSEWHERE', closed_in=elsewhere[clause])
+        if cid in elsewhere:
+            state['entries'][clause] = dict(cls='SEARCHED_ELSEWHERE', closed_in=elsewhere[cid])
             continue
         ident = cl.common.schema_guard(node, keyword)
         if all(r['empty_domain'] for r in info['reach']):
