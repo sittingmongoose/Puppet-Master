@@ -7045,7 +7045,7 @@
         },
         {
           "id": "canonical_revision_integral_float",
-          "valid": true,
+          "valid": false,
           "input": {
             "storage_instance_id": "storage:1",
             "event_id": "goal.blocked.v1:9e675dadc388538f46cb3249dc87a4a9913e80f14d8158da0a7dcd3b7e06feb6",
@@ -7172,7 +7172,7 @@
               "goal_id": "goal:1",
               "project_id": "project:alpha",
               "thread_id": "thread:1",
-              "before_revision": 3.0,
+              "before_revision": 3,
               "revision": 4,
               "before_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
               "currentness_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
@@ -7279,7 +7279,7 @@
         },
         {
           "id": "canonical_revision_exponent",
-          "valid": true,
+          "valid": false,
           "input": {
             "storage_instance_id": "storage:1",
             "event_id": "goal.blocked.v1:9e675dadc388538f46cb3249dc87a4a9913e80f14d8158da0a7dcd3b7e06feb6",
@@ -7406,7 +7406,7 @@
               "goal_id": "goal:1",
               "project_id": "project:alpha",
               "thread_id": "thread:1",
-              "before_revision": 3.0,
+              "before_revision": 3,
               "revision": 4,
               "before_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
               "currentness_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
@@ -21388,7 +21388,7 @@
         },
         {
           "id": "canonical_revision_integral_float",
-          "valid": true,
+          "valid": false,
           "input": {
             "storage_instance_id": "storage:1",
             "event_id": "goal.completed.v1:36db5c2af4cb96a7fb514e4733b2184dfee5b96f6a92207cb6f6b9c3eba7ee27",
@@ -21517,7 +21517,7 @@
               "goal_id": "goal:1",
               "project_id": "project:alpha",
               "thread_id": "thread:1",
-              "before_revision": 3.0,
+              "before_revision": 3,
               "revision": 4,
               "before_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
               "currentness_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
@@ -21626,7 +21626,7 @@
         },
         {
           "id": "canonical_revision_exponent",
-          "valid": true,
+          "valid": false,
           "input": {
             "storage_instance_id": "storage:1",
             "event_id": "goal.completed.v1:36db5c2af4cb96a7fb514e4733b2184dfee5b96f6a92207cb6f6b9c3eba7ee27",
@@ -21755,7 +21755,7 @@
               "goal_id": "goal:1",
               "project_id": "project:alpha",
               "thread_id": "thread:1",
-              "before_revision": 3.0,
+              "before_revision": 3,
               "revision": 4,
               "before_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
               "currentness_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",

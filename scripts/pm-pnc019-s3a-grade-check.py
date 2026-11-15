@@ -31,6 +31,8 @@ def main():
                 if fh != e['file_sha256']: problems.append(f'{fam}/{c}: file hash {e["path"]}')
         if row.get('pass_count') is not None and row['pass_count'] != sum(row['cells'][c]['status'] == 'PASS' for c in ORDER):
             problems.append(f'{fam}: pass_count')
+        expected_vector = ' '.join({'PASS':'P', 'PARTIAL':'p', 'ABSENT':'A', 'CONFLICT':'C'}.get(row['cells'].get(c, {}).get('status'), '?') for c in ORDER)
+        if row.get('vector') != expected_vector: problems.append(f'{fam}: vector')
     out = dict(status='pass' if not problems else 'fail', grade=doc.get('grade'), rows=len(doc['rows']), quotes=quotes, files=len(files), problems=problems[:50])
     print(json.dumps(out, indent=1)); return 0 if not problems else 1
 if __name__ == '__main__': sys.exit(main())

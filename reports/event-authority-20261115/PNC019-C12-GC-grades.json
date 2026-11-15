@@ -1,0 +1,2112 @@
+{
+ "schema_id": "pm.pnc019.c12_gc.depth_grades.v1",
+ "grade": "after",
+ "assessed_tree": {
+  "commit": "37eb6f4f5e9e2a6c0850454bfaa68770f9588a06",
+  "branch": "plans/ea-pnc-c12-gc-20261114",
+  "note": "Grades the tree at this commit; the bundle and grade file are committed after it."
+ },
+ "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+ "criteria": [
+  "membership_version",
+  "owner_doc",
+  "producer",
+  "closed_payload_schema",
+  "scope_identity",
+  "replay_idempotency",
+  "retention",
+  "redaction_custody",
+  "transitions",
+  "consumers_checkpoints",
+  "compatibility_withdrawal",
+  "positive_negative_oracles"
+ ],
+ "status_meaning": "PASS/PARTIAL/ABSENT/CONFLICT as in the rubric; a PASS grades owner text and static oracles, never native or runtime proof. Native execution NOT_RUN.",
+ "grading_basis": "Only criterion 12 is re-graded; the other eleven cells are carried from their sources with every quote re-anchored to this tree. goal.blocked/goal.completed keep s3a's registered-row basis for criteria 4-5; goal_run.* keep s3d's prepared-successor basis (the S5b registry switch is separate).",
+ "oracle_bar": "lanes/C12-RUN.md and the s3ao conformance review (reviews/PNC019-s3ao-c12-conformance/REVIEW.md G1-G6).",
+ "rows": [
+  {
+   "event_type": "goal.blocked",
+   "family_id": "event-family-goal-blocked",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/6",
+   "scope_policy": "application_or_project",
+   "group": "goal",
+   "disposition": "CURRENT_PROJECT_SUCCESSOR_PREPARED_NOT_ADMITTED; original host source/edge/observer gaps refused",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-blocked at 2.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_blocked.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission. Membership says nothing about current emission.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+       "line_start": 1163,
+       "line_end": 1163,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_blocked.schema.v2\"",
+       "excerpt_sha256": "f5ad2e09d4b28e3aa30de1a9059bc9b79f2e08e6c78f9591d259e06da928c15d",
+       "file_sha256": "0844947203e067de9a1b23090c5e50fab16327fa1531a39a9ed6ecef5b2b4eca"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 8612,
+       "line_end": 8612,
+       "quote": "`pm.goal_runtime_event.goal_blocked.schema.v2`",
+       "excerpt_sha256": "9ac2db0ab3cb25b79da0c7029904ce51a481de6e30973bf060eef1d3beffa98a",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "line_start": 408,
+       "line_end": 408,
+       "quote": "\"family_id\": \"event-family-goal-blocked\"",
+       "excerpt_sha256": "c901ef887acf870b64c9ad57166931a7921e1b6fa1578af4d176edf8b0ab9767",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.blocked: GRS-203, SP-429, CV-422 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8522,
+       "line_end": 8522,
+       "quote": "Newly authored",
+       "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "DG-OWN-B (merged by this lane) names the exact producer owner.goal.lifecycle.blocked.v1@1.0.0, its source edition and closed method bank, and the order capture, reserve, commit_body, freeze_event, append, resolve (SP-286 first and full-value receipt), publish; post-body failure keeps the original effect. scripts/pm_goal_own_b_oracles.py passes on the integrated tree.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 9482,
+       "line_end": 9482,
+       "quote": "admission. GRS-203 adopts owner.goal.lifecycle.blocked.v1@1.0.0, source edition pm.goal.host.blocked_source.v1",
+       "excerpt_sha256": "51da0c9c64c14368e3b73f6d670630c1496b8181be5720e76fad7c0b2c61c5d1",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 9483,
+       "line_end": 9483,
+       "quote": "and method bank Plans/goal_lifecycle_host_contracts/methods.json#/goal.blocked. Its capture, reserve, commit_body,",
+       "excerpt_sha256": "586a9553a5130378688ed3cf1bca4d29ea95dd0989c190d507623952c71d6786",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45820,
+       "line_end": 45820,
+       "quote": "SP-287 and SP-286 including its v2 full-value commitment independently. Prepared without registration or admission.",
+       "excerpt_sha256": "495fecfc6f5da8a83bb6458832dba90040cd099f42d7c03d9bf30fc625aaa6b5",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 41156,
+       "line_end": 41156,
+       "quote": "canonical_text: 'Newly authored closed source/method/result bank for exactly goal.blocked, source edition pm.goal.host.blocked_source.v1.",
+       "excerpt_sha256": "a42c351a813b5e4eefe0557098f23dc21259553ed4722ef08677b76b0dbffd87",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8664,
+       "line_end": 8664,
+       "quote": "owner.goal.body.mutation@1.0.0",
+       "excerpt_sha256": "2c7941315ac1c78f2079e50a9bf084d2f0862384d9f564c49a0c4ba9b6ad60fb",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "This lane merged DG-OWN-B (plans/ea-goal-own-b-20261105 @ 62664bee88), which authors the original host source the before grade lacked."
+    },
+    "closed_payload_schema": {
+     "status": "PARTIAL",
+     "representation": "exact_normative_owner",
+     "finding": "goal.blocked: GRS-203, SP-429, CV-422 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. The registered Project selector/source adoption is still incomplete.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 26814,
+       "line_end": 26814,
+       "quote": "closed metadata",
+       "excerpt_sha256": "8b3f8dfc367944dfb4adc995b5fc8b5edce6da02522488190b6252d6f7b1e938",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "scope_identity": {
+     "status": "PARTIAL",
+     "representation": "exact_normative_owner",
+     "finding": "goal.blocked: GRS-203, SP-429, CV-422 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. The registered Project selector/source adoption is still incomplete.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45354,
+       "line_end": 45354,
+       "quote": "Identity and frozen input",
+       "excerpt_sha256": "a6f78aca1b7793cea97a4d4ec15f60d861ee4f04ef7381933df7a3faa6ca3ea1",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.blocked: GRS-203, SP-429, CV-422 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 33537,
+       "line_end": 33537,
+       "quote": "producer_semantic_digest",
+       "excerpt_sha256": "674034dd386336032c0f8822fa258a1a135d775bb5015cd7575c89c301430bd9",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.blocked: GRS-203, SP-429, CV-422 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 30593,
+       "line_end": 30593,
+       "quote": "RP-AUTHORITY-INDEFINITE",
+       "excerpt_sha256": "a009bffbf68539df571c200041e114c8efc887e799e677590bb2a7bff3b66227",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.blocked: GRS-203, SP-429, CV-422 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 25623,
+       "line_end": 25623,
+       "quote": "reject-unhandled-secrets",
+       "excerpt_sha256": "6b09c2097761a7e87b182e03b95d294883a269cf3dfe070abdafdc64a8a30cea",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.blocked: GRS-203, SP-429, CV-422 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 9179,
+       "line_end": 9179,
+       "quote": "Exact blocked predicates",
+       "excerpt_sha256": "1a1c884d20218d119006fbe26ed1374aa8697a0da588df6da727444dc43b41b2",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.blocked: GRS-203, SP-429, CV-422 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45358,
+       "line_end": 45358,
+       "quote": "Current Activity/body/history/continuation consume",
+       "excerpt_sha256": "a87d9a8d9f5768f03bfd31be801d4d2d038dae0d858f8061b7456967daa7dc72",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.blocked: GRS-203, SP-429, CV-422 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 31008,
+       "line_end": 31008,
+       "quote": "withdrawal",
+       "excerpt_sha256": "ba2df9d5cba876e7865ed21669b986c1e109c4dea8ef2aa4d19b4b1ffae74022",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_b_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 120: 100 tool-proved, 20 justified singletons, 0 open. Negative cases 309 (declared targets from the suites): {\"cut_exception\": 12, \"cut_refuses_later\": 60, \"duplicate_set_kill\": 36, \"kill\": 201}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (121 cases), sealed-receipt retained reads (18 cases; 330 store observations, 0 changed), distinct-copy joins (13 cases). Schema closure over every whole-definition root the family reaches (PNC019-C12-GC-schema-closure.json): 1206 clause occurrences KILLED (clause cut accepts, restored refuses), 258 COVERED_LATER with the later clause named, 0 uncovered. Native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 163,
+       "line_end": 163,
+       "quote": "\"open_rows\": 0",
+       "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 180,
+       "line_end": 180,
+       "quote": "\"tool_proved\": 100",
+       "excerpt_sha256": "48c6c7f1d916cdfad0711d150010c39b5d2c76461e4b39012df06192eb357027",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 161,
+       "line_end": 161,
+       "quote": "\"justified_singletons\": 20",
+       "excerpt_sha256": "353dadc2d5eaa3e3f00979db201adba812ef3479dbb208897b91025fbc403172",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 171,
+       "line_end": 171,
+       "quote": "\"retained_store_changed\": 0",
+       "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 159,
+       "line_end": 159,
+       "quote": "\"corpus_cases\": 121",
+       "excerpt_sha256": "871ac78907d95d1e0264791b27baaa0c066a1b7e356075ec96a188eda2f2ebbb",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 160,
+       "line_end": 160,
+       "quote": "\"join_cases\": 13",
+       "excerpt_sha256": "26e27d6df29f71209e2899b1b089a72b6125bd66999c1a3bb9780e3da6d22965",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 177,
+       "line_end": 177,
+       "quote": "\"schema_uncovered\": 0",
+       "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 176,
+       "line_end": 176,
+       "quote": "\"schema_clauses_killed\": 1206",
+       "excerpt_sha256": "722b5143279bba063c541ee1551b9e0f554847c772d7b09546eda03d105f62a9",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "scripts/pm-goal-gc-schema-closure.py",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "with only that clause cut it ACCEPTS",
+       "excerpt_sha256": "2a0b2e74b32b269c3bfc6e6c6dd241d693e3db0e1998b4f40beb1d9ee4f86e21",
+       "file_sha256": "b347d3118e977922ed3f03a0b20423e73d83c5ab3528c5b62a85b8486cdcb833"
+      },
+      {
+       "path": "scripts/pm-goal-gc-guard-tables.py",
+       "line_start": 13,
+       "line_end": 13,
+       "quote": "A kill is counted only when the cut complete checker ACCEPTS",
+       "excerpt_sha256": "be17b404d0791670c06b2d63e57cf7fef646caa45e0afc69aae7a8ede25f3df6",
+       "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357"
+      },
+      {
+       "path": "scripts/pm-goal-gc-guard-tables.py",
+       "line_start": 19,
+       "line_end": 19,
+       "quote": "real observation vectors: controls",
+       "excerpt_sha256": "b1818d75009acd0fbb0f6527ff7562db3394876935d08534398d9e6c1ab9ca48",
+       "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357"
+      },
+      {
+       "path": "scripts/pm_goal_gc_adapter.py",
+       "line_start": 197,
+       "line_end": 197,
+       "quote": "predicate, field = _predicate(key)",
+       "excerpt_sha256": "93198f718f884001ef4d8c3bb70e5efc5fc47ac9d975ef06f1e34c8c578d6aab",
+       "file_sha256": "f2590d8190815c0f041c3f478b2656b0626a8bc4935187f15335363e48768f7d"
+      },
+      {
+       "path": "scripts/pm_goal_own_b_oracles.py",
+       "line_start": 532,
+       "line_end": 532,
+       "quote": "adapter.retained_reason(",
+       "excerpt_sha256": "336e6ed073d987aa427fe01deae1fd4661eded9495d775dce9ddb9aecd1252e4",
+       "file_sha256": "84addf582a50316b910d47531bce82037073354197c3d9f185df88c082d164e0"
+      },
+      {
+       "path": "scripts/pm_goal_own_b_oracles.py",
+       "line_start": 1044,
+       "line_end": 1044,
+       "quote": "corpus = ",
+       "excerpt_sha256": "ad1473dfc8b4888e2f55c764a5af870d59e8d8bffc7d4b460ae2b7b1484d6c60",
+       "file_sha256": "84addf582a50316b910d47531bce82037073354197c3d9f185df88c082d164e0"
+      }
+     ],
+     "prior_status": "PARTIAL",
+     "prior_source": "reports/event-authority-20261115/PNC019-S3AO-grades-core.json"
+    }
+   },
+   "remaining_gaps": [
+    "closed_payload_schema and scope_identity: the registry still selects v2; the v3 switch is S5b under EA-P3 A after 12/12.",
+    "positive_negative_oracles: DG-OWN-B suites plus the shared sweep (guard tool, numbers, date-time, retained reads)."
+   ],
+   "notes": [],
+   "pass_count": 10,
+   "vector": "P P P p p P P P P P P P",
+   "criterion_12_before": "PARTIAL"
+  },
+  {
+   "event_type": "goal.completed",
+   "family_id": "event-family-goal-completed",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/9",
+   "scope_policy": "application_or_project",
+   "group": "goal",
+   "disposition": "CURRENT_PROJECT_SUCCESSOR_PREPARED_NOT_ADMITTED; original host source/edge/observer gaps refused",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-completed at 2.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_completed.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission. Membership says nothing about current emission.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+       "line_start": 815,
+       "line_end": 815,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_completed.schema.v2\"",
+       "excerpt_sha256": "d03e1d46755bf7ac4328cce0233eb376ee62cdd1793797b9ff15617432b1b8a3",
+       "file_sha256": "4f6df24761ac3103ddf04497b37370092a1ed310945e647214ed50a1dc46d592"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 8615,
+       "line_end": 8615,
+       "quote": "`pm.goal_runtime_event.goal_completed.schema.v2`",
+       "excerpt_sha256": "19fadece3120cdd4daf31ccb93b3084543d2564705dab5184b4a2bb593b2a20c",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "line_start": 616,
+       "line_end": 616,
+       "quote": "\"family_id\": \"event-family-goal-completed\"",
+       "excerpt_sha256": "d4c38538903fbb42746a3eff888473d91ccd1bcfe96a9f48b1bb3ffed8ed101a",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.completed: GRS-204, SP-430, CV-423 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8522,
+       "line_end": 8522,
+       "quote": "Newly authored",
+       "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "DG-OWN-B (merged by this lane) names the exact producer owner.goal.lifecycle.completed.v1@1.0.0 (and the DL-081 exception route, GRS-1122), its source edition and closed method bank, and the order capture, reserve, commit_body, freeze_event, append, resolve (SP-286 first and full-value receipt), publish; post-body failure keeps the original effect. scripts/pm_goal_own_b_oracles.py passes on the integrated tree.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 9587,
+       "line_end": 9587,
+       "quote": "prepared without admission. GRS-204 adopts owner.goal.lifecycle.completed.v1@1.0.0, pm.goal.host.completed_source.v1",
+       "excerpt_sha256": "82ed927c4c6ef7e9422345f530656e28c5cad06f7582c058ba633dbad8ea2f63",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 9589,
+       "line_end": 9589,
+       "quote": "SP-287 body transaction and SP-286 first receipt/full-value v2 resolution. It is not authorized by the blocked",
+       "excerpt_sha256": "ed1f556ae8a67416f23d77673e94492edfe80411ec811944f5616a99abc0c94b",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 9697,
+       "line_end": 9697,
+       "quote": "completion route, prepared without admission. GRS-065 and GRS-204 adopt owner.goal.lifecycle.approved_exception.v1@1.0.0,",
+       "excerpt_sha256": "b84465843672f234f72f3d2b0a331d1b78c3bade8c11c3890ecbb03aef05edf6",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8718,
+       "line_end": 8718,
+       "quote": "owner.goal.body.mutation@1.0.0",
+       "excerpt_sha256": "75ad56367b9ec79fbc062968c2f6293ae70749bcf20fc1f104366fa15480f0f1",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "This lane merged DG-OWN-B (plans/ea-goal-own-b-20261105 @ 62664bee88), which authors the original host source the before grade lacked."
+    },
+    "closed_payload_schema": {
+     "status": "PARTIAL",
+     "representation": "exact_normative_owner",
+     "finding": "goal.completed: GRS-204, SP-430, CV-423 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. The registered Project selector/source adoption is still incomplete.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 26814,
+       "line_end": 26814,
+       "quote": "closed metadata",
+       "excerpt_sha256": "8b3f8dfc367944dfb4adc995b5fc8b5edce6da02522488190b6252d6f7b1e938",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "scope_identity": {
+     "status": "PARTIAL",
+     "representation": "exact_normative_owner",
+     "finding": "goal.completed: GRS-204, SP-430, CV-423 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. The registered Project selector/source adoption is still incomplete.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45354,
+       "line_end": 45354,
+       "quote": "Identity and frozen input",
+       "excerpt_sha256": "a6f78aca1b7793cea97a4d4ec15f60d861ee4f04ef7381933df7a3faa6ca3ea1",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PARTIAL"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.completed: GRS-204, SP-430, CV-423 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 33537,
+       "line_end": 33537,
+       "quote": "producer_semantic_digest",
+       "excerpt_sha256": "674034dd386336032c0f8822fa258a1a135d775bb5015cd7575c89c301430bd9",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.completed: GRS-204, SP-430, CV-423 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 30593,
+       "line_end": 30593,
+       "quote": "RP-AUTHORITY-INDEFINITE",
+       "excerpt_sha256": "a009bffbf68539df571c200041e114c8efc887e799e677590bb2a7bff3b66227",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.completed: GRS-204, SP-430, CV-423 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 25623,
+       "line_end": 25623,
+       "quote": "reject-unhandled-secrets",
+       "excerpt_sha256": "6b09c2097761a7e87b182e03b95d294883a269cf3dfe070abdafdc64a8a30cea",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.completed: GRS-204, SP-430, CV-423 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 9241,
+       "line_end": 9241,
+       "quote": "Exact ordinary completion predicates",
+       "excerpt_sha256": "e81e7a6fae48dc868fd6c1ae832729548e50c3a425272facb3fd6a324d1534f4",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.completed: GRS-204, SP-430, CV-423 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45358,
+       "line_end": 45358,
+       "quote": "Current Activity/body/history/continuation consume",
+       "excerpt_sha256": "a87d9a8d9f5768f03bfd31be801d4d2d038dae0d858f8061b7456967daa7dc72",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "goal.completed: GRS-204, SP-430, CV-423 individually specify original scope/schema/source predicates, custody, identity, consumers, retention and withdrawal. The Project successor preserves the old whole-v2 reader and sole body CAS; unbound original host-source, paused/resolution edges  remain refused. ",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 31008,
+       "line_end": 31008,
+       "quote": "withdrawal",
+       "excerpt_sha256": "ba2df9d5cba876e7865ed21669b986c1e109c4dea8ef2aa4d19b4b1ffae74022",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_b_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 173: 149 tool-proved, 24 justified singletons, 0 open. Negative cases 703 (declared targets from the suites): {\"cut_exception\": 30, \"cut_refuses_later\": 141, \"duplicate_set_kill\": 79, \"kill\": 453}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (242 cases), sealed-receipt retained reads (36 cases; 665 store observations, 0 changed), distinct-copy joins (26 cases). Schema closure over every whole-definition root the family reaches (PNC019-C12-GC-schema-closure.json): 3075 clause occurrences KILLED (clause cut accepts, restored refuses), 646 COVERED_LATER with the later clause named, 0 uncovered. Native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 187,
+       "line_end": 187,
+       "quote": "\"open_rows\": 0",
+       "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 204,
+       "line_end": 204,
+       "quote": "\"tool_proved\": 149",
+       "excerpt_sha256": "0b96bef27b229c956207296a6f02756d9cd7b36cf4c34d8d36babb6581d1d16c",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 185,
+       "line_end": 185,
+       "quote": "\"justified_singletons\": 24",
+       "excerpt_sha256": "9c40c59afcecac68237c43ae62be8f8c2a6748be6a7427a5b736539020434dd7",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 195,
+       "line_end": 195,
+       "quote": "\"retained_store_changed\": 0",
+       "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 183,
+       "line_end": 183,
+       "quote": "\"corpus_cases\": 242",
+       "excerpt_sha256": "84ae582eb62ca21a0b73934f5e5b395a18bdaa475dbbec8e1ec020fb0372a026",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 184,
+       "line_end": 184,
+       "quote": "\"join_cases\": 26",
+       "excerpt_sha256": "818fcb7074a112d49c3e297d437b7ae67b1044aa0481544211b3e451c4cca08e",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 201,
+       "line_end": 201,
+       "quote": "\"schema_uncovered\": 0",
+       "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 200,
+       "line_end": 200,
+       "quote": "\"schema_clauses_killed\": 3075",
+       "excerpt_sha256": "69479ed2e5e12b3d7dae57a4354fda86414bb4cfb1ac378768d4fe8da999cdf3",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "scripts/pm-goal-gc-schema-closure.py",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "with only that clause cut it ACCEPTS",
+       "excerpt_sha256": "2a0b2e74b32b269c3bfc6e6c6dd241d693e3db0e1998b4f40beb1d9ee4f86e21",
+       "file_sha256": "b347d3118e977922ed3f03a0b20423e73d83c5ab3528c5b62a85b8486cdcb833"
+      },
+      {
+       "path": "scripts/pm-goal-gc-guard-tables.py",
+       "line_start": 13,
+       "line_end": 13,
+       "quote": "A kill is counted only when the cut complete checker ACCEPTS",
+       "excerpt_sha256": "be17b404d0791670c06b2d63e57cf7fef646caa45e0afc69aae7a8ede25f3df6",
+       "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357"
+      },
+      {
+       "path": "scripts/pm-goal-gc-guard-tables.py",
+       "line_start": 19,
+       "line_end": 19,
+       "quote": "real observation vectors: controls",
+       "excerpt_sha256": "b1818d75009acd0fbb0f6527ff7562db3394876935d08534398d9e6c1ab9ca48",
+       "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357"
+      },
+      {
+       "path": "scripts/pm_goal_gc_adapter.py",
+       "line_start": 197,
+       "line_end": 197,
+       "quote": "predicate, field = _predicate(key)",
+       "excerpt_sha256": "93198f718f884001ef4d8c3bb70e5efc5fc47ac9d975ef06f1e34c8c578d6aab",
+       "file_sha256": "f2590d8190815c0f041c3f478b2656b0626a8bc4935187f15335363e48768f7d"
+      },
+      {
+       "path": "scripts/pm_goal_own_b_oracles.py",
+       "line_start": 532,
+       "line_end": 532,
+       "quote": "adapter.retained_reason(",
+       "excerpt_sha256": "336e6ed073d987aa427fe01deae1fd4661eded9495d775dce9ddb9aecd1252e4",
+       "file_sha256": "84addf582a50316b910d47531bce82037073354197c3d9f185df88c082d164e0"
+      },
+      {
+       "path": "scripts/pm_goal_own_b_oracles.py",
+       "line_start": 1044,
+       "line_end": 1044,
+       "quote": "corpus = ",
+       "excerpt_sha256": "ad1473dfc8b4888e2f55c764a5af870d59e8d8bffc7d4b460ae2b7b1484d6c60",
+       "file_sha256": "84addf582a50316b910d47531bce82037073354197c3d9f185df88c082d164e0"
+      }
+     ],
+     "prior_status": "PARTIAL",
+     "prior_source": "reports/event-authority-20261115/PNC019-S3AO-grades-core.json"
+    }
+   },
+   "remaining_gaps": [
+    "closed_payload_schema and scope_identity: the registry still selects v2; the v3 switch is S5b under EA-P3 A after 12/12.",
+    "positive_negative_oracles: DG-OWN-B suites plus the shared sweep (guard tool, numbers, date-time, retained reads)."
+   ],
+   "notes": [],
+   "pass_count": 10,
+   "vector": "P P P p p P P P P P P P",
+   "criterion_12_before": "PARTIAL"
+  },
+  {
+   "event_type": "goal_run.stopped",
+   "family_id": "event-family-goal-run-stopped",
+   "family_revision": "2.0.0",
+   "successor_revision": "3.0.0 (prepared, Plans/goal_run_stop_block_contracts/prepared-registry-rows.json)",
+   "registry_pointer": "#/families/5",
+   "scope_policy": "project_only",
+   "group": "goal",
+   "disposition": "CURRENT_WRITER (v3 successor prepared, not admitted; v2 rows historical and halted by GRS-202)",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-run-stopped at 2.0.0 in registry revision 2026-11-04.1, scope_policy project_only; payload_schema_ref resolves with matching $id and closed root; no payload_versions (CV-366 keeps it Project-only). No sibling admission. Membership says nothing about current emission. The prepared 3.0.0 successor row (prepared-registry-rows.json) validates against the registry family schema and is applied only at S5b; membership of the 3.0.0 revision is that switch, graded then.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+       "line_start": 763,
+       "line_end": 763,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_run_stopped.schema.v2\"",
+       "excerpt_sha256": "a224575f313d2d1c9335d51f721fac31ade5d7a69c308d267e13c8a60b962e4d",
+       "file_sha256": "043212b8d2cdc1f65ffcac057f38f7b24ce82e7d46dc193f9975ba45ba545297"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 8627,
+       "line_end": 8627,
+       "quote": "`pm.goal_runtime_event.goal_run_stopped.schema.v2`",
+       "excerpt_sha256": "333c5463bd9d72cfba79cdd9dfbfd30e23c92f80b83b105838f296cac76eac27",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "line_start": 366,
+       "line_end": 366,
+       "quote": "\"family_id\": \"event-family-goal-run-stopped\"",
+       "excerpt_sha256": "efef9a88e06e29bf4bf06f30070d68fbb92903a7d6961cb018771a4f4a2700f1",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+       "line_start": 16,
+       "line_end": 16,
+       "quote": "\"family_revision\": \"3.0.0\"",
+       "excerpt_sha256": "0ce80ece5c1ec4f85c7135f4a1b01841fd16dbeae862c80cfefb5fe425a16ad9",
+       "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Registry anchors still reach the payload-minima row, which now routes to GRS-200, SP-426 and EP-200. The prepared row anchors GRS-200 and SP-426 directly.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 2911,
+       "line_end": 2911,
+       "quote": "Current v3 (prepared, DL-080): GRS-200",
+       "excerpt_sha256": "e0dd4ea235bfa5bdfed6949c89c389692ba680a7b73bde05f32df3e024bb69c5",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+       "line_start": 19,
+       "line_end": 19,
+       "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#GRS-200\"",
+       "excerpt_sha256": "8375f6295aeacc8c14c10d18ce4facd88e633658a5481f9987415c563deb4aa2",
+       "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "EP-200 names the writer, entrypoints and order; EP-1110 now authors the fresh all_writers.stop_block.v1 edition that lists both writers, and EP-1111 fixes admission, native commit, append with SP-286 first-receipt and full-value custody, then terminal publication. The DG-OWN-A hold is lifted: the clock issue was a technical defect (Sol F1), repaired by GRS-202 and stated in protocol.md; profile.json is prepared without admission. Installation is a genuine EP-1110 birth; native NOT_RUN does not lower the grade.",
+     "evidence": [
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "line_start": 12349,
+       "line_end": 12349,
+       "quote": "and that edition is now authored by EP-1110",
+       "excerpt_sha256": "abb4b47fb413b0327f201c1c7d7066ef1ae914c6b8d99d0b6c2f5dc2854c56bd",
+       "file_sha256": "d70296e2ebd016f379bedc3e2f784255cbcc5669e51de0219dc4f0fe1ba5f198"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "line_start": 12379,
+       "line_end": 12379,
+       "quote": "The distinct pm.executor.workflow_source.all_writers.stop_block.v1 descriptor incorporates every EP-124",
+       "excerpt_sha256": "dbb6d8e885816fdef9f206ced78fe57a32a374208782c39db335015171e51d0f",
+       "file_sha256": "d70296e2ebd016f379bedc3e2f784255cbcc5669e51de0219dc4f0fe1ba5f198"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "line_start": 12446,
+       "line_end": 12446,
+       "quote": "Append only the frozen own-family Event, resolve SP-286 original eleven-field receipt plus",
+       "excerpt_sha256": "4eebdab7125cd7c3054ba85fafd7bfb914f1fd9a18bed8413bc135095668a156",
+       "file_sha256": "d70296e2ebd016f379bedc3e2f784255cbcc5669e51de0219dc4f0fe1ba5f198"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/profile.json",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"status\": \"PREPARED_WITHOUT_ADMISSION_NATIVE_NOT_RUN\"",
+       "excerpt_sha256": "939a9794391b3900b345c28378f1a1fdc38b2751cf52954f94ac414b9840dc6f",
+       "file_sha256": "86d7ffed4ccc688f7c9f5cf4a4e2a1ee02cddd1b2611671d9d65b7d5a1f0ba15"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/protocol.md",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "The source is therefore no longer held",
+       "excerpt_sha256": "fd2747979af15de6227bf864135b0d75e3685a0bbec073794f67b5ee5a6b3f0e",
+       "file_sha256": "8b2f2d425b242110fc84d977a971ab76bfe9873c849cb818b0b48e5e0a94721a"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "DG-OWN-A merged (EP-1110..1112) and its NOT INSTALLABLE hold lifted after the F1 repair; the fresh source edition EP-200 required now exists."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Graded on the prepared successor, the contract S5b would register: the closed v3 root (goal-run-stopped.v3.schema.json, additionalProperties false at the root) on the GoalRun envelope grammar CV-288 keeps after DL-478, required by CV-420; the prepared 3.0.0 row selects it with exact_scope_and_schema_id_no_fallback. The registry still selects v2 until the S5b switch, which EA-P3 A conditions on this 12/12 assessment.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8453,
+       "line_end": 8453,
+       "quote": "Payload: pm.goal_runtime_event.goal_run_stopped.schema.v3 (CV-420) on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478",
+       "excerpt_sha256": "102065b1f33221981125ab399f6f6c61307be2f2a2b5fa1e8e22a3a20e9369db",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 23057,
+       "line_end": 23057,
+       "quote": "The GoalRun/SubagentWave/VerificationCycle family is retired as current product flow by DL-478.",
+       "excerpt_sha256": "ee448aea1cafcc825ef2421fca34868e82e4d8e2b842bbdf82c1bbc1cb6ea18f",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 23057,
+       "line_end": 23057,
+       "quote": "it imposes no current GoalRun execution, verification, repair, or completion-certification obligations.",
+       "excerpt_sha256": "ee448aea1cafcc825ef2421fca34868e82e4d8e2b842bbdf82c1bbc1cb6ea18f",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 40759,
+       "line_end": 40759,
+       "quote": "expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone",
+       "excerpt_sha256": "55e7a144c7c640b681aa4298383a24a67edb70d4f883ba9956a337a50a7531ea",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+       "line_start": 21,
+       "line_end": 21,
+       "quote": "\"payload_schema_id\": \"pm.goal_runtime_event.goal_run_stopped.schema.v3\"",
+       "excerpt_sha256": "629cb3e06f20aec7ffc37c5790d9a546d8f31b425717d09c4bf8929b26ef0787",
+       "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 40759,
+       "line_end": 40759,
+       "quote": "the prepared 3.0.0 successor row is in Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+       "excerpt_sha256": "55e7a144c7c640b681aa4298383a24a67edb70d4f883ba9956a337a50a7531ea",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The S5b switch is now a prepared, schema-valid registry row; under the successor basis the closed v3 root grades PASS (see grading_basis)."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-426 gives the event ID and idempotency recipe over storage instance, Project, Goal, run, expected revision and operation and requires the inner key; the prepared row fixes the scope policy (project_only) and the envelope joins, including run_id at /payload/payload/goal_run_id. DL-448's distinct application edition is a separate selector at its own registry checkpoint and is not part of this Project row.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27439,
+       "line_end": 27439,
+       "quote": "Identity: D = SHA256(JCS([\"pm.goal_run.stopped.v1\"",
+       "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+       "line_start": 38,
+       "line_end": 38,
+       "quote": "\"/payload/payload/goal_run_id\"",
+       "excerpt_sha256": "3450e4c51ff7e41707a3b5ad203b7500d6f0adfa02c382ab5d67f923060c355f",
+       "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The registry run_id pointer s3a was missing now exists in the prepared row."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-426 adopts SP-286 by name; same key/digest returns the original receipt, conflicts and dedupe_unavailable append nothing, lost acknowledgement resolves from retained custody.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27439,
+       "line_end": 27439,
+       "quote": "SP-286 first-AppendReceipt custody is adopted by name",
+       "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The registry assigns RP-AUTHORITY-INDEFINITE@1.0.0; the RET-K37-ASSIGNMENT-001 table lists goal_run.stopped and the catalog record resolves. The successor owns the SP-1112 projection and checkpoint, which reuse RP-PROJECTION-3GEN and its 604800-second retirement eligibility; no new policy.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "line_start": 47,
+       "line_end": 47,
+       "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\"",
+       "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "line_start": 48,
+       "line_end": 48,
+       "quote": "\"policy_version\": \"1.0.0\"",
+       "excerpt_sha256": "42ad19f2cac0b98558f527227ff8377def128614a9bb06e731c74185ee4dc978",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 18471,
+       "line_end": 18471,
+       "quote": "`goal_run.stopped`",
+       "excerpt_sha256": "a3f2e8a64a746789e32f5050152e092096625803689f58ed596b9f08cff58461",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 18471,
+       "line_end": 18471,
+       "quote": "`RP-AUTHORITY-INDEFINITE@1.0.0` | 23 |",
+       "excerpt_sha256": "a3f2e8a64a746789e32f5050152e092096625803689f58ed596b9f08cff58461",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45764,
+       "line_end": 45764,
+       "quote": "Reuse RP-PROJECTION-3GEN",
+       "excerpt_sha256": "139fab7c069664aa30a9b9d287a3cd825eace0e2ed1741cdd34244544b463060",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Status unchanged; the derived projection the successor now owns is covered by an existing policy (SP-1112)."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-426 names the original holder (seglog record and SP-286 custody row), coherent project event backup/restore and read-time access/deletion/hold checks; referenced records stay with their owners. SP-1110 binds the original operation records to coherent backup and current access/deletion/hold/restore checks.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27439,
+       "line_end": 27439,
+       "quote": "Custody: the canonical seglog record and its SP-286 custody row are the originals",
+       "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45627,
+       "line_end": 45627,
+       "quote": "Current access/deletion/hold/restore controls apply",
+       "excerpt_sha256": "9773a8d77c81382ccfe3570d210a839c7e247688656f9d897891c335bac6bad3",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "GRS-200 adopts the D-R edges over the native Workflow status set and GRS-202 carries the rows in the mandatory projection for qualifying births.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8453,
+       "line_end": 8453,
+       "quote": "Transitions adopt D-R21 over the native Workflow status set",
+       "excerpt_sha256": "102065b1f33221981125ab399f6f6c61307be2f2a2b5fa1e8e22a3a20e9369db",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "GRS-202 binds the row revision to its own native before-revision across D01-authenticated non-emitting steps (native-v7 61/65). SP-1112 names the consumer, Storage reader and sole publisher at 1.0.0 with typed methods, exact row and checkpoint keys, closed StorageProjection/StorageCheckpoint roots that now carry SP-428's row metadata, the SP-278/DL-076 nine-field token, whole-preimage CAS, rebuild and cutover. The inherited started/cancelled/certified arguments are rebound through seven fresh consumer realms (Sol F1, F3, F9 closed).",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8591,
+       "line_end": 8591,
+       "quote": "Revision relation (amended 2026-11-14 under DL-045, PNC-019 lane s3a",
+       "excerpt_sha256": "7f5f186e811e28a5044c9f5b74031e2172d3c80aae714ff7c6f0721ccd9268c1",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8591,
+       "line_end": 8591,
+       "quote": "The expected revision may exceed the last projected revision only when the original D01/native chronology authenticates every intervening body revision as a supported non-emitting native step",
+       "excerpt_sha256": "7f5f186e811e28a5044c9f5b74031e2172d3c80aae714ff7c6f0721ccd9268c1",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27577,
+       "line_end": 27577,
+       "quote": "The projected revision is the accepted row's own goal_run_revision",
+       "excerpt_sha256": "e99002b95732898e6834f1438746dd6d7457a16c0a3d7d40a2fc602952da8fcd",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "line_start": 11905,
+       "line_end": 11905,
+       "quote": "**GRS-202 revision relation (2026-11-14, PNC-019 lane s3a, under DL-045).**",
+       "excerpt_sha256": "e0b6106606c82868b0574d794b7008d5ba6c5b1ccb7138d2c719a29a058826b6",
+       "file_sha256": "36b770738bf779c9e72f8d04beec68c888bd4e38d96cda4c5a40991d940c5617"
+      },
+      {
+       "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+       "line_start": 61,
+       "line_end": 61,
+       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running\u2192running; it changes only the Workflow body revision",
+       "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
+       "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+      },
+      {
+       "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+       "line_start": 61,
+       "line_end": 61,
+       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running\u2192running; it changes only the Workflow body revision",
+       "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
+       "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+      },
+      {
+       "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+       "line_start": 65,
+       "line_end": 65,
+       "quote": "`owner.workflow.standard.publish_provisional_success.v1` requires the authentic original running Workflow",
+       "excerpt_sha256": "9799c53e247d6b138aae6dd54805dab276c5d4ddb08dd9c5c746662a69c02cfa",
+       "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27630,
+       "line_end": 27630,
+       "quote": "SP-1112's closed `StorageProjection` root stores them as `lifecycle_metadata`",
+       "excerpt_sha256": "4ec50f97a74c4b3e0f3f736a1bd70756eb8c80f479ad7b940b6242ca0c35c783",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45752,
+       "line_end": 45752,
+       "quote": "the Storage source reader owner.storage.goal_run.stop_block.read_sources.v1;",
+       "excerpt_sha256": "bd81684d3f19b05f9dd950a9747781239a80ad209f8e6d0cd981af83cb02dc74",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45759,
+       "line_end": 45759,
+       "quote": "Adopt SP-278 and DL-076 full",
+       "excerpt_sha256": "17233ed083cb13482de71e862b54ade46d1bd1ce17ce3c75d165921ad5459ca4",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/protocol.md",
+       "line_start": 61,
+       "line_end": 61,
+       "quote": "**SBP5** revision relation",
+       "excerpt_sha256": "6601a0a3757d95c9ab2e4876838f50fd467734e2315e34b982b6a63b21087521",
+       "file_sha256": "8b2f2d425b242110fc84d977a971ab76bfe9873c849cb818b0b48e5e0a94721a"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/methods.json",
+       "line_start": 193,
+       "line_end": 193,
+       "quote": "\"method\": \"owner.goal_run.stop_block.project_prefix.v1\"",
+       "excerpt_sha256": "673309fca58e53421c5c68ded6e5f5f5619a995aace73ff16809fe8cf019d6b7",
+       "file_sha256": "4c60ce56a12b3c9f87135b3bf0689c137f77112669c907a941f54f51ee12a331"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 9419,
+       "line_end": 9419,
+       "quote": "consumer-resource-bank.json and the typed methods.json consumer methods",
+       "excerpt_sha256": "d0ef0ee50a0558ab54bb3785a45210e188290845c2d126238be06f94a34c6760",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "F3 (row metadata in the closed root) and F9 (typed consumer graph over rebound consumer realms) are now closed; F1 was repaired by s3a and is now stated in the package."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-426 keeps v2 as historical reader and states writer cutoff, per-reader withdrawal and rebuild by new generation.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27439,
+       "line_end": 27439,
+       "quote": "Withdrawal: writer cutoff at the writer's final predicate, per-reader withdrawal without deletion, and rebuild fences by new generation only.",
+       "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_a_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 142: 128 tool-proved, 14 justified singletons, 0 open. Negative cases 363 (declared targets from the suites): {\"cut_exception\": 10, \"cut_refuses_later\": 49, \"duplicate_set_kill\": 73, \"harness_only\": 1, \"kill\": 230}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (126 cases), sealed-receipt retained reads (10 cases; 56 store observations, 0 changed), distinct-copy joins (18 cases). Schema closure over every whole-definition root the family reaches (PNC019-C12-GC-schema-closure.json): 1230 clause occurrences KILLED (clause cut accepts, restored refuses), 330 COVERED_LATER with the later clause named, 0 uncovered. Native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 236,
+       "line_end": 236,
+       "quote": "\"open_rows\": 0",
+       "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 254,
+       "line_end": 254,
+       "quote": "\"tool_proved\": 128",
+       "excerpt_sha256": "be4e257a2d7d52ebd2bdb3525ab3e403b1556077071bd8faedfb21b1db59ce45",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 234,
+       "line_end": 234,
+       "quote": "\"justified_singletons\": 14",
+       "excerpt_sha256": "df772be4099c82cc8e72b20e01d6f8c24a108657a294972be92e54129c251305",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 245,
+       "line_end": 245,
+       "quote": "\"retained_store_changed\": 0",
+       "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 232,
+       "line_end": 232,
+       "quote": "\"corpus_cases\": 126",
+       "excerpt_sha256": "d1e151d6b1cbf54c136f452cf0d629bb905039b6b96082ccd2ce621cefb3216b",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 233,
+       "line_end": 233,
+       "quote": "\"join_cases\": 18",
+       "excerpt_sha256": "6ae7bf8c389a22e6023d07af8fb91ff671e84e4e0693e79beb548b1224510f59",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 251,
+       "line_end": 251,
+       "quote": "\"schema_uncovered\": 0",
+       "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 250,
+       "line_end": 250,
+       "quote": "\"schema_clauses_killed\": 1230",
+       "excerpt_sha256": "d05862f5fb3a10111fafa6813b7fa5094ca438e094cfa0dcad45336a6e705254",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "scripts/pm-goal-gc-schema-closure.py",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "with only that clause cut it ACCEPTS",
+       "excerpt_sha256": "2a0b2e74b32b269c3bfc6e6c6dd241d693e3db0e1998b4f40beb1d9ee4f86e21",
+       "file_sha256": "b347d3118e977922ed3f03a0b20423e73d83c5ab3528c5b62a85b8486cdcb833"
+      },
+      {
+       "path": "scripts/pm-goal-gc-guard-tables.py",
+       "line_start": 13,
+       "line_end": 13,
+       "quote": "A kill is counted only when the cut complete checker ACCEPTS",
+       "excerpt_sha256": "be17b404d0791670c06b2d63e57cf7fef646caa45e0afc69aae7a8ede25f3df6",
+       "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357"
+      },
+      {
+       "path": "scripts/pm-goal-gc-guard-tables.py",
+       "line_start": 19,
+       "line_end": 19,
+       "quote": "real observation vectors: controls",
+       "excerpt_sha256": "b1818d75009acd0fbb0f6527ff7562db3394876935d08534398d9e6c1ab9ca48",
+       "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357"
+      },
+      {
+       "path": "scripts/pm_goal_gc_adapter.py",
+       "line_start": 197,
+       "line_end": 197,
+       "quote": "predicate, field = _predicate(key)",
+       "excerpt_sha256": "93198f718f884001ef4d8c3bb70e5efc5fc47ac9d975ef06f1e34c8c578d6aab",
+       "file_sha256": "f2590d8190815c0f041c3f478b2656b0626a8bc4935187f15335363e48768f7d"
+      },
+      {
+       "path": "scripts/pm_goal_own_a_oracles.py",
+       "line_start": 620,
+       "line_end": 620,
+       "quote": "adapter.retained_reason(",
+       "excerpt_sha256": "8cd487f997ca08a000356c9679c59f07b2e93c5f96a9803c4876d21e0fe88425",
+       "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03"
+      },
+      {
+       "path": "scripts/pm_goal_own_a_oracles.py",
+       "line_start": 1500,
+       "line_end": 1500,
+       "quote": "corpus = ",
+       "excerpt_sha256": "9880add2c1938fc71bb7a03e2d4c11b8063d824e1c260811624569363a768a68",
+       "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03"
+      }
+     ],
+     "prior_status": "PARTIAL",
+     "prior_source": "reports/event-authority-20261114/PNC019-S3D-grades.json"
+    }
+   },
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P",
+   "remaining_gaps": [
+    "positive_negative_oracles: gated-tool guard proof (scripts/pm_guard_isolation.py), shared number and date-time calls, sealed-receipt retained reads and instantiated inherited branch graphs: Goal oracle sweep, lane s3ao.",
+    "membership of 3.0.0: the S5b switch under EA-P3 A (own commit, DL entry, DL-078 bookkeeping, 12/12 assessment); the admission writer needs a lane entry for prepared-registry-rows.json.",
+    "DL-448 (E-CARDS-2 7.a A): the distinct application edition of goal_run.stopped, admitted at its own registry checkpoint; not authored by any lane yet."
+   ],
+   "notes": [
+    "Criteria 2-12 grade the prepared v3 successor; criterion 1 grades the registered 2.0.0 row. Under s3a's stricter convention (closed payload and scope PARTIAL until the S5b switch) this row is 9/12."
+   ],
+   "criterion_12_before": "PARTIAL"
+  },
+  {
+   "event_type": "goal_run.blocked",
+   "family_id": "event-family-goal-run-blocked",
+   "family_revision": "2.0.0",
+   "successor_revision": "3.0.0 (prepared, Plans/goal_run_stop_block_contracts/prepared-registry-rows.json)",
+   "registry_pointer": "#/families/0",
+   "scope_policy": "application_or_project",
+   "group": "goal",
+   "disposition": "CURRENT_WRITER (v3 successor prepared, not admitted; v2 rows historical and halted by GRS-202)",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-run-blocked at 2.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_run_blocked.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission. Membership says nothing about current emission. The prepared 3.0.0 successor row (prepared-registry-rows.json) validates against the registry family schema and is applied only at S5b; membership of the 3.0.0 revision is that switch, graded then.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+       "line_start": 787,
+       "line_end": 787,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_run_blocked.schema.v2\"",
+       "excerpt_sha256": "466f7b46a00935488c42ed3c6d46d3ce9afa26be00abdb16dcce5efe3fed3d22",
+       "file_sha256": "66400648120d8b6c60c7a47962433bd192ef942fb9b9bbced9d76e07b2790500"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 8622,
+       "line_end": 8622,
+       "quote": "`pm.goal_runtime_event.goal_run_blocked.schema.v2`",
+       "excerpt_sha256": "62eaa3df4e1986a879a635a1d9dad3bc4e5fa837460a17c3f9c486bfd5a7c906",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "line_start": 10,
+       "line_end": 10,
+       "quote": "\"family_id\": \"event-family-goal-run-blocked\"",
+       "excerpt_sha256": "6fa7a1a7c391a3c8dcf3f0e3c783a3745242118a764178c834cd9fa428ea2d5c",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+       "line_start": 118,
+       "line_end": 118,
+       "quote": "\"family_revision\": \"3.0.0\"",
+       "excerpt_sha256": "0ce80ece5c1ec4f85c7135f4a1b01841fd16dbeae862c80cfefb5fe425a16ad9",
+       "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Registry anchors still reach the payload-minima row, which now routes to GRS-201, SP-427 and EP-200. The prepared row anchors GRS-201 and SP-427 directly.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 2908,
+       "line_end": 2908,
+       "quote": "Current v3 (prepared, DL-080): GRS-201",
+       "excerpt_sha256": "a1c6b4f45c12ac5633e2687fc8c9fdfa646b5fc37556856f915fcad462e98ca5",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+       "line_start": 121,
+       "line_end": 121,
+       "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#GRS-201\"",
+       "excerpt_sha256": "6e41783b05cf933577cfea81e9dddcffde5b23fb29fe43ac437aafb5872ee4a9",
+       "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "EP-200 names the writer, entrypoints and order; EP-1110 now authors the fresh all_writers.stop_block.v1 edition that lists both writers, and EP-1112 fixes admission, native commit, append with SP-286 first-receipt and full-value custody, then terminal publication. The DG-OWN-A hold is lifted: the clock issue was a technical defect (Sol F1), repaired by GRS-202 and stated in protocol.md; profile.json is prepared without admission. Installation is a genuine EP-1110 birth; native NOT_RUN does not lower the grade.",
+     "evidence": [
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "line_start": 12349,
+       "line_end": 12349,
+       "quote": "and that edition is now authored by EP-1110",
+       "excerpt_sha256": "abb4b47fb413b0327f201c1c7d7066ef1ae914c6b8d99d0b6c2f5dc2854c56bd",
+       "file_sha256": "d70296e2ebd016f379bedc3e2f784255cbcc5669e51de0219dc4f0fe1ba5f198"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "line_start": 12379,
+       "line_end": 12379,
+       "quote": "The distinct pm.executor.workflow_source.all_writers.stop_block.v1 descriptor incorporates every EP-124",
+       "excerpt_sha256": "dbb6d8e885816fdef9f206ced78fe57a32a374208782c39db335015171e51d0f",
+       "file_sha256": "d70296e2ebd016f379bedc3e2f784255cbcc5669e51de0219dc4f0fe1ba5f198"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "line_start": 12507,
+       "line_end": 12507,
+       "quote": "obtain actual SP-286 first eleven-field",
+       "excerpt_sha256": "4284b79b97564bb098d57514814be9265e29bb45c38b461df0169e1120679a9c",
+       "file_sha256": "d70296e2ebd016f379bedc3e2f784255cbcc5669e51de0219dc4f0fe1ba5f198"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/profile.json",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"status\": \"PREPARED_WITHOUT_ADMISSION_NATIVE_NOT_RUN\"",
+       "excerpt_sha256": "939a9794391b3900b345c28378f1a1fdc38b2751cf52954f94ac414b9840dc6f",
+       "file_sha256": "86d7ffed4ccc688f7c9f5cf4a4e2a1ee02cddd1b2611671d9d65b7d5a1f0ba15"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/protocol.md",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "The source is therefore no longer held",
+       "excerpt_sha256": "fd2747979af15de6227bf864135b0d75e3685a0bbec073794f67b5ee5a6b3f0e",
+       "file_sha256": "8b2f2d425b242110fc84d977a971ab76bfe9873c849cb818b0b48e5e0a94721a"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "DG-OWN-A merged (EP-1110..1112) and its NOT INSTALLABLE hold lifted after the F1 repair; the fresh source edition EP-200 required now exists."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Graded on the prepared successor, the contract S5b would register: the closed v3 root (goal-run-blocked.v3.schema.json, additionalProperties false at the root) on the GoalRun envelope grammar CV-288 keeps after DL-478, required by CV-421; the prepared 3.0.0 row selects it with exact_scope_and_schema_id_no_fallback. The registry still selects v2 until the S5b switch, which EA-P3 A conditions on this 12/12 assessment.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8522,
+       "line_end": 8522,
+       "quote": "Payload: pm.goal_runtime_event.goal_run_blocked.schema.v3 (CV-421) on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478",
+       "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 23057,
+       "line_end": 23057,
+       "quote": "The GoalRun/SubagentWave/VerificationCycle family is retired as current product flow by DL-478.",
+       "excerpt_sha256": "ee448aea1cafcc825ef2421fca34868e82e4d8e2b842bbdf82c1bbc1cb6ea18f",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 23057,
+       "line_end": 23057,
+       "quote": "it imposes no current GoalRun execution, verification, repair, or completion-certification obligations.",
+       "excerpt_sha256": "ee448aea1cafcc825ef2421fca34868e82e4d8e2b842bbdf82c1bbc1cb6ea18f",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 40815,
+       "line_end": 40815,
+       "quote": "expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone",
+       "excerpt_sha256": "d895a6d19418616754589972a5fdf24ee285e067237e420ebfdf1ff8a354004b",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+       "line_start": 123,
+       "line_end": 123,
+       "quote": "\"payload_schema_id\": \"pm.goal_runtime_event.goal_run_blocked.schema.v3\"",
+       "excerpt_sha256": "75c7405ea14b582cf9b1be7e0f15dabcb881d4915270175f00cc5c15f0dba152",
+       "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "line_start": 40815,
+       "line_end": 40815,
+       "quote": "the prepared 3.0.0 successor row is in Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+       "excerpt_sha256": "d895a6d19418616754589972a5fdf24ee285e067237e420ebfdf1ff8a354004b",
+       "file_sha256": "db3e508be6e0e9c85a084906f6b1b958ad0ef5b967e390e74961aa4c90ecca2b"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The S5b switch is now a prepared, schema-valid registry row; under the successor basis the closed v3 root grades PASS (see grading_basis)."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-427 gives the event ID and idempotency recipe over storage instance, Project, Goal, run, expected revision and operation and requires the inner key; the prepared row fixes the scope policy (application_or_project) and the envelope joins, including run_id at /payload/payload/goal_run_id. The dormant application edition is carried unchanged.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27507,
+       "line_end": 27507,
+       "quote": "Identity: D = SHA256(JCS([\"pm.goal_run.blocked.v1\"",
+       "excerpt_sha256": "b590b41fe0655a325b9af40bfc6375ea27d1c44f2f84b84ebb6f94e76a974721",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+       "line_start": 140,
+       "line_end": 140,
+       "quote": "\"/payload/payload/goal_run_id\"",
+       "excerpt_sha256": "3450e4c51ff7e41707a3b5ad203b7500d6f0adfa02c382ab5d67f923060c355f",
+       "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The registry run_id pointer s3a was missing now exists in the prepared row."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-427 adopts SP-286 by name; same key/digest returns the original receipt, conflicts and dedupe_unavailable append nothing, lost acknowledgement resolves from retained custody.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27507,
+       "line_end": 27507,
+       "quote": "SP-286 first-AppendReceipt custody",
+       "excerpt_sha256": "b590b41fe0655a325b9af40bfc6375ea27d1c44f2f84b84ebb6f94e76a974721",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The registry assigns RP-AUTHORITY-INDEFINITE@1.0.0; the RET-K37-ASSIGNMENT-001 table lists goal_run.blocked and the catalog record resolves. The successor owns the SP-1112 projection and checkpoint, which reuse RP-PROJECTION-3GEN and its 604800-second retirement eligibility; no new policy.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27507,
+       "line_end": 27507,
+       "quote": "RP-AUTHORITY-INDEFINITE",
+       "excerpt_sha256": "b590b41fe0655a325b9af40bfc6375ea27d1c44f2f84b84ebb6f94e76a974721",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45764,
+       "line_end": 45764,
+       "quote": "Reuse RP-PROJECTION-3GEN",
+       "excerpt_sha256": "139fab7c069664aa30a9b9d287a3cd825eace0e2ed1741cdd34244544b463060",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Status unchanged; the derived projection the successor now owns is covered by an existing policy (SP-1112)."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-427 names the original holder (seglog record and SP-286 custody row), coherent project event backup/restore and read-time access/deletion/hold checks; referenced records stay with their owners. SP-1111 binds the original operation records to coherent backup and current access/deletion/hold/restore checks.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27507,
+       "line_end": 27507,
+       "quote": "Custody:",
+       "excerpt_sha256": "b590b41fe0655a325b9af40bfc6375ea27d1c44f2f84b84ebb6f94e76a974721",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45693,
+       "line_end": 45693,
+       "quote": "Current access/deletion/hold/restore controls apply",
+       "excerpt_sha256": "9773a8d77c81382ccfe3570d210a839c7e247688656f9d897891c335bac6bad3",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "GRS-201 adopts the D-R edges over the native Workflow status set and GRS-202 carries the rows in the mandatory projection for qualifying births.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8522,
+       "line_end": 8522,
+       "quote": "Transitions adopt D-R16 over the native Workflow status set",
+       "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "GRS-202 binds the row revision to its own native before-revision across D01-authenticated non-emitting steps (native-v7 61/65). SP-1112 names the consumer, Storage reader and sole publisher at 1.0.0 with typed methods, exact row and checkpoint keys, closed StorageProjection/StorageCheckpoint roots that now carry SP-428's row metadata, the SP-278/DL-076 nine-field token, whole-preimage CAS, rebuild and cutover. The inherited started/cancelled/certified arguments are rebound through seven fresh consumer realms (Sol F1, F3, F9 closed).",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8591,
+       "line_end": 8591,
+       "quote": "Revision relation (amended 2026-11-14 under DL-045, PNC-019 lane s3a",
+       "excerpt_sha256": "7f5f186e811e28a5044c9f5b74031e2172d3c80aae714ff7c6f0721ccd9268c1",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 8591,
+       "line_end": 8591,
+       "quote": "The expected revision may exceed the last projected revision only when the original D01/native chronology authenticates every intervening body revision as a supported non-emitting native step",
+       "excerpt_sha256": "7f5f186e811e28a5044c9f5b74031e2172d3c80aae714ff7c6f0721ccd9268c1",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27577,
+       "line_end": 27577,
+       "quote": "The projected revision is the accepted row's own goal_run_revision",
+       "excerpt_sha256": "e99002b95732898e6834f1438746dd6d7457a16c0a3d7d40a2fc602952da8fcd",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "line_start": 11905,
+       "line_end": 11905,
+       "quote": "**GRS-202 revision relation (2026-11-14, PNC-019 lane s3a, under DL-045).**",
+       "excerpt_sha256": "e0b6106606c82868b0574d794b7008d5ba6c5b1ccb7138d2c719a29a058826b6",
+       "file_sha256": "36b770738bf779c9e72f8d04beec68c888bd4e38d96cda4c5a40991d940c5617"
+      },
+      {
+       "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+       "line_start": 61,
+       "line_end": 61,
+       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running\u2192running; it changes only the Workflow body revision",
+       "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
+       "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+      },
+      {
+       "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+       "line_start": 61,
+       "line_end": 61,
+       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running\u2192running; it changes only the Workflow body revision",
+       "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
+       "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+      },
+      {
+       "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+       "line_start": 65,
+       "line_end": 65,
+       "quote": "`owner.workflow.standard.publish_provisional_success.v1` requires the authentic original running Workflow",
+       "excerpt_sha256": "9799c53e247d6b138aae6dd54805dab276c5d4ddb08dd9c5c746662a69c02cfa",
+       "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27630,
+       "line_end": 27630,
+       "quote": "SP-1112's closed `StorageProjection` root stores them as `lifecycle_metadata`",
+       "excerpt_sha256": "4ec50f97a74c4b3e0f3f736a1bd70756eb8c80f479ad7b940b6242ca0c35c783",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45752,
+       "line_end": 45752,
+       "quote": "the Storage source reader owner.storage.goal_run.stop_block.read_sources.v1;",
+       "excerpt_sha256": "bd81684d3f19b05f9dd950a9747781239a80ad209f8e6d0cd981af83cb02dc74",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 45759,
+       "line_end": 45759,
+       "quote": "Adopt SP-278 and DL-076 full",
+       "excerpt_sha256": "17233ed083cb13482de71e862b54ade46d1bd1ce17ce3c75d165921ad5459ca4",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/protocol.md",
+       "line_start": 61,
+       "line_end": 61,
+       "quote": "**SBP5** revision relation",
+       "excerpt_sha256": "6601a0a3757d95c9ab2e4876838f50fd467734e2315e34b982b6a63b21087521",
+       "file_sha256": "8b2f2d425b242110fc84d977a971ab76bfe9873c849cb818b0b48e5e0a94721a"
+      },
+      {
+       "path": "Plans/goal_run_stop_block_contracts/methods.json",
+       "line_start": 193,
+       "line_end": 193,
+       "quote": "\"method\": \"owner.goal_run.stop_block.project_prefix.v1\"",
+       "excerpt_sha256": "673309fca58e53421c5c68ded6e5f5f5619a995aace73ff16809fe8cf019d6b7",
+       "file_sha256": "4c60ce56a12b3c9f87135b3bf0689c137f77112669c907a941f54f51ee12a331"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "line_start": 9419,
+       "line_end": 9419,
+       "quote": "consumer-resource-bank.json and the typed methods.json consumer methods",
+       "excerpt_sha256": "d0ef0ee50a0558ab54bb3785a45210e188290845c2d126238be06f94a34c6760",
+       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "F3 (row metadata in the closed root) and F9 (typed consumer graph over rebound consumer realms) are now closed; F1 was repaired by s3a and is now stated in the package."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-427 keeps v2 as historical reader and states writer cutoff, per-reader withdrawal and rebuild by new generation.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "line_start": 27499,
+       "line_end": 27499,
+       "quote": "withdrawal",
+       "excerpt_sha256": "aced695d1365c36dc55fb460c4bd7d83635b4c25fedc64f66ed1b42875818e3c",
+       "file_sha256": "11629cc17a60301878057805cbcfd42c63b728558ae56d4009c66e7ebf382586"
+      }
+     ],
+     "prior": {
+      "source": "s3a after grade at e05abaa0c6 (reports/event-authority-20261114/PNC019-S3A-grades-after.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the s3d head; every cited quote re-found at its current line; no change in substance."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_a_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 150: 136 tool-proved, 14 justified singletons, 0 open. Negative cases 368 (declared targets from the suites): {\"cut_exception\": 10, \"cut_refuses_later\": 50, \"duplicate_set_kill\": 73, \"harness_only\": 1, \"kill\": 234}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (126 cases), sealed-receipt retained reads (10 cases; 56 store observations, 0 changed), distinct-copy joins (20 cases). Schema closure over every whole-definition root the family reaches (PNC019-C12-GC-schema-closure.json): 1236 clause occurrences KILLED (clause cut accepts, restored refuses), 332 COVERED_LATER with the later clause named, 0 uncovered. Native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 211,
+       "line_end": 211,
+       "quote": "\"open_rows\": 0",
+       "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 229,
+       "line_end": 229,
+       "quote": "\"tool_proved\": 136",
+       "excerpt_sha256": "09c1be818f555de503a4608cb87e839e12a27b144fa89297b7473b4de56d04fa",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 209,
+       "line_end": 209,
+       "quote": "\"justified_singletons\": 14",
+       "excerpt_sha256": "df772be4099c82cc8e72b20e01d6f8c24a108657a294972be92e54129c251305",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 220,
+       "line_end": 220,
+       "quote": "\"retained_store_changed\": 0",
+       "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 207,
+       "line_end": 207,
+       "quote": "\"corpus_cases\": 126",
+       "excerpt_sha256": "d1e151d6b1cbf54c136f452cf0d629bb905039b6b96082ccd2ce621cefb3216b",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 208,
+       "line_end": 208,
+       "quote": "\"join_cases\": 20",
+       "excerpt_sha256": "ef5efb245d0dcb4a9aa005d6f70df27fc246e84dc81f4522aea680aca47cd6ee",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 226,
+       "line_end": 226,
+       "quote": "\"schema_uncovered\": 0",
+       "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 225,
+       "line_end": 225,
+       "quote": "\"schema_clauses_killed\": 1236",
+       "excerpt_sha256": "09ee977fd58f6543ff7c7e67e24d264ef13082879449076381ab92b2bcf279d7",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "scripts/pm-goal-gc-schema-closure.py",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "with only that clause cut it ACCEPTS",
+       "excerpt_sha256": "2a0b2e74b32b269c3bfc6e6c6dd241d693e3db0e1998b4f40beb1d9ee4f86e21",
+       "file_sha256": "b347d3118e977922ed3f03a0b20423e73d83c5ab3528c5b62a85b8486cdcb833"
+      },
+      {
+       "path": "scripts/pm-goal-gc-guard-tables.py",
+       "line_start": 13,
+       "line_end": 13,
+       "quote": "A kill is counted only when the cut complete checker ACCEPTS",
+       "excerpt_sha256": "be17b404d0791670c06b2d63e57cf7fef646caa45e0afc69aae7a8ede25f3df6",
+       "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357"
+      },
+      {
+       "path": "scripts/pm-goal-gc-guard-tables.py",
+       "line_start": 19,
+       "line_end": 19,
+       "quote": "real observation vectors: controls",
+       "excerpt_sha256": "b1818d75009acd0fbb0f6527ff7562db3394876935d08534398d9e6c1ab9ca48",
+       "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357"
+      },
+      {
+       "path": "scripts/pm_goal_gc_adapter.py",
+       "line_start": 197,
+       "line_end": 197,
+       "quote": "predicate, field = _predicate(key)",
+       "excerpt_sha256": "93198f718f884001ef4d8c3bb70e5efc5fc47ac9d975ef06f1e34c8c578d6aab",
+       "file_sha256": "f2590d8190815c0f041c3f478b2656b0626a8bc4935187f15335363e48768f7d"
+      },
+      {
+       "path": "scripts/pm_goal_own_a_oracles.py",
+       "line_start": 620,
+       "line_end": 620,
+       "quote": "adapter.retained_reason(",
+       "excerpt_sha256": "8cd487f997ca08a000356c9679c59f07b2e93c5f96a9803c4876d21e0fe88425",
+       "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03"
+      },
+      {
+       "path": "scripts/pm_goal_own_a_oracles.py",
+       "line_start": 1500,
+       "line_end": 1500,
+       "quote": "corpus = ",
+       "excerpt_sha256": "9880add2c1938fc71bb7a03e2d4c11b8063d824e1c260811624569363a768a68",
+       "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03"
+      }
+     ],
+     "prior_status": "PARTIAL",
+     "prior_source": "reports/event-authority-20261114/PNC019-S3D-grades.json"
+    }
+   },
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P",
+   "remaining_gaps": [
+    "positive_negative_oracles: gated-tool guard proof (scripts/pm_guard_isolation.py), shared number and date-time calls, sealed-receipt retained reads and instantiated inherited branch graphs: Goal oracle sweep, lane s3ao.",
+    "membership of 3.0.0: the S5b switch under EA-P3 A (own commit, DL entry, DL-078 bookkeeping, 12/12 assessment); the admission writer needs a lane entry for prepared-registry-rows.json."
+   ],
+   "notes": [
+    "Criteria 2-12 grade the prepared v3 successor; criterion 1 grades the registered 2.0.0 row. Under s3a's stricter convention (closed payload and scope PARTIAL until the S5b switch) this row is 9/12."
+   ],
+   "criterion_12_before": "PARTIAL"
+  }
+ ]
+}

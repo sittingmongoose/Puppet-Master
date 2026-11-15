@@ -1,0 +1,1692 @@
+{
+ "own_a:append/authority": {
+  "code": "append/authority",
+  "field": "append_authority",
+  "table": "own_a_025"
+ },
+ "own_a:append/writer_withdrawal": {
+  "code": "append/writer_withdrawal",
+  "field": "append_writer_withdrawal",
+  "table": "own_a_025"
+ },
+ "own_a:authority/permission": {
+  "code": "authority/permission",
+  "field": "authority_permission",
+  "table": "own_a_003"
+ },
+ "own_a:authority/recovery": {
+  "code": "authority/recovery",
+  "field": "authority_recovery",
+  "table": "own_a_004"
+ },
+ "own_a:authority/storage": {
+  "code": "authority/storage",
+  "field": "authority_storage",
+  "table": "own_a_005"
+ },
+ "own_a:birth/original": {
+  "code": "birth/original",
+  "field": "birth_original",
+  "table": "own_a_002"
+ },
+ "own_a:birth/profile": {
+  "code": "birth/profile",
+  "field": "birth_profile",
+  "table": "own_a_002"
+ },
+ "own_a:birth/scope": {
+  "code": "birth/scope",
+  "field": "birth_scope",
+  "table": "own_a_002"
+ },
+ "own_a:candidate/schema": {
+  "code": "candidate/schema",
+  "field": "candidate_schema",
+  "table": "own_a_060"
+ },
+ "own_a:cause/complete": {
+  "code": "cause/complete",
+  "field": "cause_complete",
+  "table": "own_a_011"
+ },
+ "own_a:cause/evidence": {
+  "code": "cause/evidence",
+  "field": "cause_evidence",
+  "table": "own_a_011"
+ },
+ "own_a:cause/exists": {
+  "code": "cause/exists",
+  "field": "cause_exists",
+  "table": "own_a_008"
+ },
+ "own_a:cause/issuer": {
+  "code": "cause/issuer",
+  "field": "cause_issuer",
+  "table": "own_a_011"
+ },
+ "own_a:cause/kind": {
+  "code": "cause/kind",
+  "field": "cause_kind",
+  "table": "own_a_011"
+ },
+ "own_a:cause/mutation_type": {
+  "code": "cause/mutation_type",
+  "field": "cause_mutation_type",
+  "table": "own_a_011"
+ },
+ "own_a:cause/operation": {
+  "code": "cause/operation",
+  "field": "cause_operation",
+  "table": "own_a_010"
+ },
+ "own_a:cause/preserved_work": {
+  "code": "cause/preserved_work",
+  "field": "cause_preserved_work",
+  "table": "own_a_068"
+ },
+ "own_a:cause/reason": {
+  "code": "cause/reason",
+  "field": "cause_reason",
+  "table": "own_a_068"
+ },
+ "own_a:cause/receipt": {
+  "code": "cause/receipt",
+  "field": "cause_receipt",
+  "table": "own_a_068"
+ },
+ "own_a:cause/required_flush": {
+  "code": "cause/required_flush",
+  "field": "cause_required_flush",
+  "table": "own_a_016"
+ },
+ "own_a:cause/revision": {
+  "code": "cause/revision",
+  "field": "cause_revision",
+  "table": "own_a_011"
+ },
+ "own_a:cause/revision_type": {
+  "code": "cause/revision_type",
+  "field": "cause_revision_type",
+  "table": "own_a_011"
+ },
+ "own_a:cause/safe_point": {
+  "code": "cause/safe_point",
+  "field": "cause_safe_point",
+  "table": "own_a_016"
+ },
+ "own_a:cause/scope": {
+  "code": "cause/scope",
+  "field": "cause_scope",
+  "table": "own_a_010"
+ },
+ "own_a:cause/settlements": {
+  "code": "cause/settlements",
+  "field": "cause_settlements",
+  "table": "own_a_016"
+ },
+ "own_a:cause/unresolved": {
+  "code": "cause/unresolved",
+  "field": "cause_unresolved",
+  "table": "own_a_011"
+ },
+ "own_a:cutover/coverage": {
+  "code": "cutover/coverage",
+  "field": "cutover_coverage",
+  "table": "own_a_052"
+ },
+ "own_a:event/digest": {
+  "code": "event/digest",
+  "field": "event_digest",
+  "table": "own_a_030"
+ },
+ "own_a:event/dispatch": {
+  "code": "event/dispatch",
+  "field": "event_dispatch",
+  "table": "own_a_012"
+ },
+ "own_a:event/envelope_schema": {
+  "code": "event/envelope_schema",
+  "field": "event_envelope_schema",
+  "table": "own_a_002"
+ },
+ "own_a:event/expected": {
+  "code": "event/expected",
+  "field": "event_expected",
+  "table": "own_a_013"
+ },
+ "own_a:event/family": {
+  "code": "event/family",
+  "field": "event_family",
+  "table": "own_a_012"
+ },
+ "own_a:event/goal_revision": {
+  "code": "event/goal_revision",
+  "field": "event_goal_revision",
+  "table": "own_a_013"
+ },
+ "own_a:event/identity": {
+  "code": "event/identity",
+  "field": "event_identity",
+  "table": "own_a_013"
+ },
+ "own_a:event/inner_key": {
+  "code": "event/inner_key",
+  "field": "event_inner_key",
+  "table": "own_a_013"
+ },
+ "own_a:event/join/actor_ref": {
+  "code": "event/join/actor_ref",
+  "field": "event_join_actor_ref",
+  "table": "own_a_014"
+ },
+ "own_a:event/join/correlation_id": {
+  "code": "event/join/correlation_id",
+  "field": "event_join_correlation_id",
+  "table": "own_a_014"
+ },
+ "own_a:event/join/effective_account_ref": {
+  "code": "event/join/effective_account_ref",
+  "field": "event_join_effective_account_ref",
+  "table": "own_a_013"
+ },
+ "own_a:event/join/occurred_at_utc": {
+  "code": "event/join/occurred_at_utc",
+  "field": "event_join_occurred_at_utc",
+  "table": "own_a_014"
+ },
+ "own_a:event/join/requested_account_ref": {
+  "code": "event/join/requested_account_ref",
+  "field": "event_join_requested_account_ref",
+  "table": "own_a_013"
+ },
+ "own_a:event/key": {
+  "code": "event/key",
+  "field": "event_key",
+  "table": "own_a_013"
+ },
+ "own_a:event/payload_run": {
+  "code": "event/payload_run",
+  "field": "event_payload_run",
+  "table": "own_a_012"
+ },
+ "own_a:event/payload_schema": {
+  "code": "event/payload_schema",
+  "field": "event_payload_schema",
+  "table": "own_a_012"
+ },
+ "own_a:event/payload_scope": {
+  "code": "event/payload_scope",
+  "field": "event_payload_scope",
+  "table": "own_a_012"
+ },
+ "own_a:event/producer_representable": {
+  "code": "event/producer_representable",
+  "field": "event_producer_representable",
+  "table": "own_a_017"
+ },
+ "own_a:event/replay_policy": {
+  "code": "event/replay_policy",
+  "field": "event_replay_policy",
+  "table": "own_a_002"
+ },
+ "own_a:event/run": {
+  "code": "event/run",
+  "field": "event_run",
+  "table": "own_a_012"
+ },
+ "own_a:event/scope": {
+  "code": "event/scope",
+  "field": "event_scope",
+  "table": "own_a_012"
+ },
+ "own_a:event/selector": {
+  "code": "event/selector",
+  "field": "event_selector",
+  "table": "own_a_012"
+ },
+ "own_a:event/storage_representable": {
+  "code": "event/storage_representable",
+  "field": "event_storage_representable",
+  "table": "own_a_018"
+ },
+ "own_a:event/successor": {
+  "code": "event/successor",
+  "field": "event_successor",
+  "table": "own_a_013"
+ },
+ "own_a:final/native": {
+  "code": "final/native",
+  "field": "final_native",
+  "table": "own_a_022"
+ },
+ "own_a:final/permission": {
+  "code": "final/permission",
+  "field": "final_permission",
+  "table": "own_a_022"
+ },
+ "own_a:final/source": {
+  "code": "final/source",
+  "field": "final_source",
+  "table": "own_a_022"
+ },
+ "own_a:generation/slots": {
+  "code": "generation/slots",
+  "field": "generation_slots",
+  "table": "own_a_059"
+ },
+ "own_a:goal/exists": {
+  "code": "goal/exists",
+  "field": "goal_exists",
+  "table": "own_a_009"
+ },
+ "own_a:goal/revision_type": {
+  "code": "goal/revision_type",
+  "field": "goal_revision_type",
+  "table": "own_a_010"
+ },
+ "own_a:goal/scope": {
+  "code": "goal/scope",
+  "field": "goal_scope",
+  "table": "own_a_010"
+ },
+ "own_a:native/d01_head": {
+  "code": "native/d01_head",
+  "field": "native_d01_head",
+  "table": "own_a_010"
+ },
+ "own_a:native/exists": {
+  "code": "native/exists",
+  "field": "native_exists",
+  "table": "own_a_007"
+ },
+ "own_a:native/revision": {
+  "code": "native/revision",
+  "field": "native_revision",
+  "table": "own_a_010"
+ },
+ "own_a:native/scope": {
+  "code": "native/scope",
+  "field": "native_scope",
+  "table": "own_a_010"
+ },
+ "own_a:native/self_evidence": {
+  "code": "native/self_evidence",
+  "field": "native_self_evidence",
+  "table": "own_a_031"
+ },
+ "own_a:native/status": {
+  "code": "native/status",
+  "field": "native_status",
+  "table": "own_a_010"
+ },
+ "own_a:native/value_revision_type": {
+  "code": "native/value_revision_type",
+  "field": "native_value_revision_type",
+  "table": "own_a_015"
+ },
+ "own_a:operation/immutable_conflict": {
+  "code": "operation/immutable_conflict",
+  "field": "operation_immutable_conflict",
+  "table": "own_a_034"
+ },
+ "own_a:part/branch": {
+  "code": "part/branch",
+  "field": "part_branch",
+  "table": "own_a_026"
+ },
+ "own_a:part/hash": {
+  "code": "part/hash",
+  "field": "part_hash",
+  "table": "own_a_075"
+ },
+ "own_a:part/inline_size": {
+  "code": "part/inline_size",
+  "field": "part_inline_size",
+  "table": "own_a_027"
+ },
+ "own_a:part/present": {
+  "code": "part/present",
+  "field": "part_present",
+  "table": "own_a_074"
+ },
+ "own_a:part/size": {
+  "code": "part/size",
+  "field": "part_size",
+  "table": "own_a_076"
+ },
+ "own_a:project/birth": {
+  "code": "project/birth",
+  "field": "project_birth",
+  "table": "own_a_046"
+ },
+ "own_a:project/cause": {
+  "code": "project/cause",
+  "field": "project_cause",
+  "table": "own_a_051"
+ },
+ "own_a:project/edge": {
+  "code": "project/edge",
+  "field": "project_edge",
+  "table": "own_a_056"
+ },
+ "own_a:project/first_custody": {
+  "code": "project/first_custody",
+  "field": "project_first_custody",
+  "table": "own_a_051"
+ },
+ "own_a:project/frame_custody": {
+  "code": "project/frame_custody",
+  "field": "project_frame_custody",
+  "table": "own_a_050"
+ },
+ "own_a:project/frame_envelope": {
+  "code": "project/frame_envelope",
+  "field": "project_frame_envelope",
+  "table": "own_a_051"
+ },
+ "own_a:project/identity": {
+  "code": "project/identity",
+  "field": "project_identity",
+  "table": "own_a_051"
+ },
+ "own_a:project/inherited_original": {
+  "code": "project/inherited_original",
+  "field": "project_inherited_original",
+  "table": "own_a_054"
+ },
+ "own_a:project/native_after": {
+  "code": "project/native_after",
+  "field": "project_native_after",
+  "table": "own_a_057"
+ },
+ "own_a:project/native_chronology": {
+  "code": "project/native_chronology",
+  "field": "project_native_chronology",
+  "table": "own_a_052"
+ },
+ "own_a:project/native_d01": {
+  "code": "project/native_d01",
+  "field": "project_native_d01",
+  "table": "own_a_051"
+ },
+ "own_a:project/native_floor": {
+  "code": "project/native_floor",
+  "field": "project_native_floor",
+  "table": "own_a_058"
+ },
+ "own_a:project/new_evidence": {
+  "code": "project/new_evidence",
+  "field": "project_new_evidence",
+  "table": "own_a_062"
+ },
+ "own_a:project/original_result": {
+  "code": "project/original_result",
+  "field": "project_original_result",
+  "table": "own_a_051"
+ },
+ "own_a:project/payload_schema": {
+  "code": "project/payload_schema",
+  "field": "project_payload_schema",
+  "table": "own_a_051"
+ },
+ "own_a:project/registration": {
+  "code": "project/registration",
+  "field": "project_registration",
+  "table": "own_a_046"
+ },
+ "own_a:project/request": {
+  "code": "project/request",
+  "field": "project_request",
+  "table": "own_a_046"
+ },
+ "own_a:project/request_scope": {
+  "code": "project/request_scope",
+  "field": "project_request_scope",
+  "table": "own_a_046"
+ },
+ "own_a:project/selection": {
+  "code": "project/selection",
+  "field": "project_selection",
+  "table": "own_a_051"
+ },
+ "own_a:project/token_current": {
+  "code": "project/token_current",
+  "field": "project_token_current",
+  "table": "own_a_049"
+ },
+ "own_a:project/token_schema": {
+  "code": "project/token_schema",
+  "field": "project_token_schema",
+  "table": "own_a_047"
+ },
+ "own_a:project/token_storage": {
+  "code": "project/token_storage",
+  "field": "project_token_storage",
+  "table": "own_a_048"
+ },
+ "own_a:project/unsupported": {
+  "code": "project/unsupported",
+  "field": "project_unsupported",
+  "table": "own_a_053"
+ },
+ "own_a:project/v2_row": {
+  "code": "project/v2_row",
+  "field": "project_v2_row",
+  "table": "own_a_055"
+ },
+ "own_a:publish/candidate": {
+  "code": "publish/candidate",
+  "field": "publish_candidate",
+  "table": "own_a_046"
+ },
+ "own_a:publish/candidate_schema": {
+  "code": "publish/candidate_schema",
+  "field": "publish_candidate_schema",
+  "table": "own_a_061"
+ },
+ "own_a:publish/cas_generic": {
+  "code": "publish/cas_generic",
+  "field": "publish_cas_generic",
+  "table": "own_a_046"
+ },
+ "own_a:publish/cas_root": {
+  "code": "publish/cas_root",
+  "field": "publish_cas_root",
+  "table": "own_a_046"
+ },
+ "own_a:publish/cas_row": {
+  "code": "publish/cas_row",
+  "field": "publish_cas_row",
+  "table": "own_a_046"
+ },
+ "own_a:read/current_frontier": {
+  "code": "read/current_frontier",
+  "field": "read_current_frontier",
+  "table": "own_a_067"
+ },
+ "own_a:read/current_native": {
+  "code": "read/current_native",
+  "field": "read_current_native",
+  "table": "own_a_067"
+ },
+ "own_a:read/frontier": {
+  "code": "read/frontier",
+  "field": "read_frontier",
+  "table": "own_a_063"
+ },
+ "own_a:read/root": {
+  "code": "read/root",
+  "field": "read_root",
+  "table": "own_a_064"
+ },
+ "own_a:read/row": {
+  "code": "read/row",
+  "field": "read_row",
+  "table": "own_a_063"
+ },
+ "own_a:read/withdrawal": {
+  "code": "read/withdrawal",
+  "field": "read_withdrawal",
+  "table": "own_a_063"
+ },
+ "own_a:reader/claim": {
+  "code": "reader/claim",
+  "field": "reader_claim",
+  "table": "own_a_044"
+ },
+ "own_a:reader/current_native": {
+  "code": "reader/current_native",
+  "field": "reader_current_native",
+  "table": "own_a_045"
+ },
+ "own_a:reader/first_custody": {
+  "code": "reader/first_custody",
+  "field": "reader_first_custody",
+  "table": "own_a_042"
+ },
+ "own_a:reader/original_result": {
+  "code": "reader/original_result",
+  "field": "reader_original_result",
+  "table": "own_a_038"
+ },
+ "own_a:reader/present": {
+  "code": "reader/present",
+  "field": "reader_present",
+  "table": "own_a_040"
+ },
+ "own_a:reader/receipt": {
+  "code": "reader/receipt",
+  "field": "reader_receipt",
+  "table": "own_a_043"
+ },
+ "own_a:reader/retained/caller_recipe_override": {
+  "code": "reader/retained/caller_recipe_override",
+  "field": "reader_retained_caller_recipe_override",
+  "table": "own_a_039"
+ },
+ "own_a:reader/retained/current_disclosure": {
+  "code": "reader/retained/current_disclosure",
+  "field": "reader_retained_current_disclosure",
+  "table": "own_a_039"
+ },
+ "own_a:reader/retained/original_binding": {
+  "code": "reader/retained/original_binding",
+  "field": "reader_retained_original_binding",
+  "table": "own_a_038"
+ },
+ "own_a:reader/retained/original_receipt_ambiguous": {
+  "code": "reader/retained/original_receipt_ambiguous",
+  "field": "reader_retained_original_receipt_ambiguous",
+  "table": "own_a_038"
+ },
+ "own_a:reader/retained/original_receipt_missing": {
+  "code": "reader/retained/original_receipt_missing",
+  "field": "reader_retained_original_receipt_missing",
+  "table": "own_a_038"
+ },
+ "own_a:reader/retained/original_receipt_seal": {
+  "code": "reader/retained/original_receipt_seal",
+  "field": "reader_retained_original_receipt_seal",
+  "table": "own_a_038"
+ },
+ "own_a:reader/retained/original_receipt_shape": {
+  "code": "reader/retained/original_receipt_shape",
+  "field": "reader_retained_original_receipt_shape",
+  "table": "own_a_038"
+ },
+ "own_a:reader/retained/original_verification": {
+  "code": "reader/retained/original_verification",
+  "field": "reader_retained_original_verification",
+  "table": "own_a_039"
+ },
+ "own_a:reader/retained/recipe_catalog": {
+  "code": "reader/retained/recipe_catalog",
+  "field": "reader_retained_recipe_catalog",
+  "table": "own_a_039"
+ },
+ "own_a:reader/retained/recipe_unknown": {
+  "code": "reader/retained/recipe_unknown",
+  "field": "reader_retained_recipe_unknown",
+  "table": "own_a_038"
+ },
+ "own_a:reader/whole_value": {
+  "code": "reader/whole_value",
+  "field": "reader_whole_value",
+  "table": "own_a_041"
+ },
+ "own_a:reader/withdrawal": {
+  "code": "reader/withdrawal",
+  "field": "reader_withdrawal",
+  "table": "own_a_038"
+ },
+ "own_a:receipt/original": {
+  "code": "receipt/original",
+  "field": "receipt_original",
+  "table": "own_a_037"
+ },
+ "own_a:receipt/schema": {
+  "code": "receipt/schema",
+  "field": "receipt_schema",
+  "table": "own_a_028"
+ },
+ "own_a:receipt/type": {
+  "code": "receipt/type",
+  "field": "receipt_type",
+  "table": "own_a_036"
+ },
+ "own_a:recovery/frozen": {
+  "code": "recovery/frozen",
+  "field": "recovery_frozen",
+  "table": "own_a_032"
+ },
+ "own_a:recovery/operation": {
+  "code": "recovery/operation",
+  "field": "recovery_operation",
+  "table": "own_a_032"
+ },
+ "own_a:recovery/original_custody": {
+  "code": "recovery/original_custody",
+  "field": "recovery_original_custody",
+  "table": "own_a_033"
+ },
+ "own_a:registration/profile": {
+  "code": "registration/profile",
+  "field": "registration_profile",
+  "table": "own_a_002"
+ },
+ "own_a:registration/writer": {
+  "code": "registration/writer",
+  "field": "registration_writer",
+  "table": "own_a_002"
+ },
+ "own_a:request/schema": {
+  "code": "request/schema",
+  "field": "request_schema",
+  "table": "own_a_001"
+ },
+ "own_a:retry/replay_policy": {
+  "code": "retry/replay_policy",
+  "field": "retry_replay_policy",
+  "table": "own_a_035"
+ },
+ "own_a:retry/semantic": {
+  "code": "retry/semantic",
+  "field": "retry_semantic",
+  "table": "own_a_035"
+ },
+ "own_a:root/StorageBlockControl": {
+  "code": "root/StorageBlockControl",
+  "field": "root_StorageBlockControl",
+  "table": "own_a_070"
+ },
+ "own_a:root/StorageBlockIntent": {
+  "code": "root/StorageBlockIntent",
+  "field": "root_StorageBlockIntent",
+  "table": "own_a_069"
+ },
+ "own_a:root/StorageBlockNativeResult": {
+  "code": "root/StorageBlockNativeResult",
+  "field": "root_StorageBlockNativeResult",
+  "table": "own_a_071"
+ },
+ "own_a:root/StorageBlockOrigin": {
+  "code": "root/StorageBlockOrigin",
+  "field": "root_StorageBlockOrigin",
+  "table": "own_a_072"
+ },
+ "own_a:root/StorageBlockResult": {
+  "code": "root/StorageBlockResult",
+  "field": "root_StorageBlockResult",
+  "table": "own_a_073"
+ },
+ "own_a:root/StorageCheckpoint": {
+  "code": "root/StorageCheckpoint",
+  "field": "root_StorageCheckpoint",
+  "table": "own_a_066"
+ },
+ "own_a:root/StorageStopControl": {
+  "code": "root/StorageStopControl",
+  "field": "root_StorageStopControl",
+  "table": "own_a_021"
+ },
+ "own_a:root/StorageStopIntent": {
+  "code": "root/StorageStopIntent",
+  "field": "root_StorageStopIntent",
+  "table": "own_a_019"
+ },
+ "own_a:root/StorageStopNativeResult": {
+  "code": "root/StorageStopNativeResult",
+  "field": "root_StorageStopNativeResult",
+  "table": "own_a_023"
+ },
+ "own_a:root/StorageStopOrigin": {
+  "code": "root/StorageStopOrigin",
+  "field": "root_StorageStopOrigin",
+  "table": "own_a_024"
+ },
+ "own_a:root/StorageStopResult": {
+  "code": "root/StorageStopResult",
+  "field": "root_StorageStopResult",
+  "table": "own_a_029"
+ },
+ "own_a:route": {
+  "code": "route",
+  "field": "route",
+  "table": "own_a_002"
+ },
+ "own_a:storage/semantic_body": {
+  "code": "storage/semantic_body",
+  "field": "storage_semantic_body",
+  "table": "own_a_065"
+ },
+ "own_a:wrapper/size": {
+  "code": "wrapper/size",
+  "field": "wrapper_size",
+  "table": "own_a_020"
+ },
+ "own_a:writer/withdrawal": {
+  "code": "writer/withdrawal",
+  "field": "writer_withdrawal",
+  "table": "own_a_006"
+ },
+ "own_b:access/disclosure": {
+  "code": "access/disclosure",
+  "field": "access_disclosure",
+  "table": "own_b_012"
+ },
+ "own_b:authority/cancellation": {
+  "code": "authority/cancellation",
+  "field": "authority_cancellation",
+  "table": "own_b_015"
+ },
+ "own_b:authority/generation": {
+  "code": "authority/generation",
+  "field": "authority_generation",
+  "table": "own_b_015"
+ },
+ "own_b:authority/permission": {
+  "code": "authority/permission",
+  "field": "authority_permission",
+  "table": "own_b_015"
+ },
+ "own_b:authority/stop": {
+  "code": "authority/stop",
+  "field": "authority_stop",
+  "table": "own_b_015"
+ },
+ "own_b:blocked/changed": {
+  "code": "blocked/changed",
+  "field": "blocked_changed",
+  "table": "own_b_019"
+ },
+ "own_b:blocked/edge": {
+  "code": "blocked/edge",
+  "field": "blocked_edge",
+  "table": "own_b_019"
+ },
+ "own_b:blocked/reason": {
+  "code": "blocked/reason",
+  "field": "blocked_reason",
+  "table": "own_b_019"
+ },
+ "own_b:body/accepted_history": {
+  "code": "body/accepted_history",
+  "field": "body_accepted_history",
+  "table": "own_b_016"
+ },
+ "own_b:body/control": {
+  "code": "body/control",
+  "field": "body_control",
+  "table": "own_b_016"
+ },
+ "own_b:body/currentness": {
+  "code": "body/currentness",
+  "field": "body_currentness",
+  "table": "own_b_016"
+ },
+ "own_b:body/identity": {
+  "code": "body/identity",
+  "field": "body_identity",
+  "table": "own_b_017"
+ },
+ "own_b:body/intent": {
+  "code": "body/intent",
+  "field": "body_intent",
+  "table": "own_b_025"
+ },
+ "own_b:body/preimage": {
+  "code": "body/preimage",
+  "field": "body_preimage",
+  "table": "own_b_016"
+ },
+ "own_b:body/preserve/active_run_ref": {
+  "code": "body/preserve/active_run_ref",
+  "field": "body_preserve_active_run_ref",
+  "table": "own_b_017"
+ },
+ "own_b:body/preserve/created_at": {
+  "code": "body/preserve/created_at",
+  "field": "body_preserve_created_at",
+  "table": "own_b_017"
+ },
+ "own_b:body/preserve/goal_id": {
+  "code": "body/preserve/goal_id",
+  "field": "body_preserve_goal_id",
+  "table": "own_b_016"
+ },
+ "own_b:body/preserve/objective_text": {
+  "code": "body/preserve/objective_text",
+  "field": "body_preserve_objective_text",
+  "table": "own_b_017"
+ },
+ "own_b:body/preserve/project_id": {
+  "code": "body/preserve/project_id",
+  "field": "body_preserve_project_id",
+  "table": "own_b_016"
+ },
+ "own_b:body/preserve/thread_id": {
+  "code": "body/preserve/thread_id",
+  "field": "body_preserve_thread_id",
+  "table": "own_b_017"
+ },
+ "own_b:body/reservation_preimage": {
+  "code": "body/reservation_preimage",
+  "field": "body_reservation_preimage",
+  "table": "own_b_025"
+ },
+ "own_b:body/reserved": {
+  "code": "body/reserved",
+  "field": "body_reserved",
+  "table": "own_b_024"
+ },
+ "own_b:body/revision": {
+  "code": "body/revision",
+  "field": "body_revision",
+  "table": "own_b_016"
+ },
+ "own_b:body/unreserved": {
+  "code": "body/unreserved",
+  "field": "body_unreserved",
+  "table": "own_b_022"
+ },
+ "own_b:completed/edge": {
+  "code": "completed/edge",
+  "field": "completed_edge",
+  "table": "own_b_065"
+ },
+ "own_b:completed/evidence": {
+  "code": "completed/evidence",
+  "field": "completed_evidence",
+  "table": "own_b_065"
+ },
+ "own_b:completed/exception_evidence": {
+  "code": "completed/exception_evidence",
+  "field": "completed_exception_evidence",
+  "table": "own_b_093"
+ },
+ "own_b:completed/internal": {
+  "code": "completed/internal",
+  "field": "completed_internal",
+  "table": "own_b_066"
+ },
+ "own_b:completed/plan": {
+  "code": "completed/plan",
+  "field": "completed_plan",
+  "table": "own_b_066"
+ },
+ "own_b:completed/recovery": {
+  "code": "completed/recovery",
+  "field": "completed_recovery",
+  "table": "own_b_066"
+ },
+ "own_b:completed/required_todo_members": {
+  "code": "completed/required_todo_members",
+  "field": "completed_required_todo_members",
+  "table": "own_b_065"
+ },
+ "own_b:completed/required_todo_set": {
+  "code": "completed/required_todo_set",
+  "field": "completed_required_todo_set",
+  "table": "own_b_065"
+ },
+ "own_b:completed/skip": {
+  "code": "completed/skip",
+  "field": "completed_skip",
+  "table": "own_b_079"
+ },
+ "own_b:completed/skip_actor": {
+  "code": "completed/skip_actor",
+  "field": "completed_skip_actor",
+  "table": "own_b_079"
+ },
+ "own_b:completed/skip_origin": {
+  "code": "completed/skip_origin",
+  "field": "completed_skip_origin",
+  "table": "own_b_078"
+ },
+ "own_b:completed/skip_scope": {
+  "code": "completed/skip_scope",
+  "field": "completed_skip_scope",
+  "table": "own_b_079"
+ },
+ "own_b:completed/todo_original": {
+  "code": "completed/todo_original",
+  "field": "completed_todo_original",
+  "table": "own_b_065"
+ },
+ "own_b:completed/todo_required_flag": {
+  "code": "completed/todo_required_flag",
+  "field": "completed_todo_required_flag",
+  "table": "own_b_065"
+ },
+ "own_b:completed/todo_scope": {
+  "code": "completed/todo_scope",
+  "field": "completed_todo_scope",
+  "table": "own_b_065"
+ },
+ "own_b:completed/todo_status": {
+  "code": "completed/todo_status",
+  "field": "completed_todo_status",
+  "table": "own_b_080"
+ },
+ "own_b:completed/work_original": {
+  "code": "completed/work_original",
+  "field": "completed_work_original",
+  "table": "own_b_065"
+ },
+ "own_b:completed/work_settled": {
+  "code": "completed/work_settled",
+  "field": "completed_work_settled",
+  "table": "own_b_066"
+ },
+ "own_b:dispatch/method": {
+  "code": "dispatch/method",
+  "field": "dispatch_method",
+  "table": "own_b_001"
+ },
+ "own_b:event/body_committed": {
+  "code": "event/body_committed",
+  "field": "event_body_committed",
+  "table": "own_b_027"
+ },
+ "own_b:event/pending": {
+  "code": "event/pending",
+  "field": "event_pending",
+  "table": "own_b_032"
+ },
+ "own_b:event/producer_representable": {
+  "code": "event/producer_representable",
+  "field": "event_producer_representable",
+  "table": "own_b_036"
+ },
+ "own_b:event/receipt_digest": {
+  "code": "event/receipt_digest",
+  "field": "event_receipt_digest",
+  "table": "own_b_035"
+ },
+ "own_b:event/reference_codec": {
+  "code": "event/reference_codec",
+  "field": "event_reference_codec",
+  "table": "own_b_058"
+ },
+ "own_b:event/replay_only": {
+  "code": "event/replay_only",
+  "field": "event_replay_only",
+  "table": "own_b_033"
+ },
+ "own_b:event/selector": {
+  "code": "event/selector",
+  "field": "event_selector",
+  "table": "own_b_033"
+ },
+ "own_b:event/semantic": {
+  "code": "event/semantic",
+  "field": "event_semantic",
+  "table": "own_b_033"
+ },
+ "own_b:event/size": {
+  "code": "event/size",
+  "field": "event_size",
+  "table": "own_b_033"
+ },
+ "own_b:event/storage_representable": {
+  "code": "event/storage_representable",
+  "field": "event_storage_representable",
+  "table": "own_b_037"
+ },
+ "own_b:exception/approval_origin": {
+  "code": "exception/approval_origin",
+  "field": "exception_approval_origin",
+  "table": "own_b_088"
+ },
+ "own_b:exception/approval_provenance": {
+  "code": "exception/approval_provenance",
+  "field": "exception_approval_provenance",
+  "table": "own_b_088"
+ },
+ "own_b:exception/approved": {
+  "code": "exception/approved",
+  "field": "exception_approved",
+  "table": "own_b_088"
+ },
+ "own_b:exception/certification_original": {
+  "code": "exception/certification_original",
+  "field": "exception_certification_original",
+  "table": "own_b_091"
+ },
+ "own_b:exception/certification_target": {
+  "code": "exception/certification_target",
+  "field": "exception_certification_target",
+  "table": "own_b_088"
+ },
+ "own_b:exception/complete_checks": {
+  "code": "exception/complete_checks",
+  "field": "exception_complete_checks",
+  "table": "own_b_089"
+ },
+ "own_b:exception/current_children": {
+  "code": "exception/current_children",
+  "field": "exception_current_children",
+  "table": "own_b_088"
+ },
+ "own_b:exception/currentness": {
+  "code": "exception/currentness",
+  "field": "exception_currentness",
+  "table": "own_b_089"
+ },
+ "own_b:exception/dispositions": {
+  "code": "exception/dispositions",
+  "field": "exception_dispositions",
+  "table": "own_b_089"
+ },
+ "own_b:exception/expired": {
+  "code": "exception/expired",
+  "field": "exception_expired",
+  "table": "own_b_089"
+ },
+ "own_b:exception/graph_origin": {
+  "code": "exception/graph_origin",
+  "field": "exception_graph_origin",
+  "table": "own_b_088"
+ },
+ "own_b:exception/original_workflow": {
+  "code": "exception/original_workflow",
+  "field": "exception_original_workflow",
+  "table": "own_b_090"
+ },
+ "own_b:exception/person": {
+  "code": "exception/person",
+  "field": "exception_person",
+  "table": "own_b_089"
+ },
+ "own_b:exception/revoked": {
+  "code": "exception/revoked",
+  "field": "exception_revoked",
+  "table": "own_b_089"
+ },
+ "own_b:exception/risks": {
+  "code": "exception/risks",
+  "field": "exception_risks",
+  "table": "own_b_089"
+ },
+ "own_b:exception/source": {
+  "code": "exception/source",
+  "field": "exception_source",
+  "table": "own_b_092"
+ },
+ "own_b:exception/source_inputs": {
+  "code": "exception/source_inputs",
+  "field": "exception_source_inputs",
+  "table": "own_b_088"
+ },
+ "own_b:exception/target": {
+  "code": "exception/target",
+  "field": "exception_target",
+  "table": "own_b_088"
+ },
+ "own_b:fence/continuation_epoch": {
+  "code": "fence/continuation_epoch",
+  "field": "fence_continuation_epoch",
+  "table": "own_b_014"
+ },
+ "own_b:fence/deletion_epoch": {
+  "code": "fence/deletion_epoch",
+  "field": "fence_deletion_epoch",
+  "table": "own_b_015"
+ },
+ "own_b:fence/hold_epoch": {
+  "code": "fence/hold_epoch",
+  "field": "fence_hold_epoch",
+  "table": "own_b_015"
+ },
+ "own_b:fence/maintenance_epoch": {
+  "code": "fence/maintenance_epoch",
+  "field": "fence_maintenance_epoch",
+  "table": "own_b_015"
+ },
+ "own_b:fence/manual_stop_latched": {
+  "code": "fence/manual_stop_latched",
+  "field": "fence_manual_stop_latched",
+  "table": "own_b_014"
+ },
+ "own_b:fence/owner_epoch": {
+  "code": "fence/owner_epoch",
+  "field": "fence_owner_epoch",
+  "table": "own_b_014"
+ },
+ "own_b:fence/permission": {
+  "code": "fence/permission",
+  "field": "fence_permission",
+  "table": "own_b_014"
+ },
+ "own_b:fence/root_generation": {
+  "code": "fence/root_generation",
+  "field": "fence_root_generation",
+  "table": "own_b_014"
+ },
+ "own_b:fence/secret_epoch": {
+  "code": "fence/secret_epoch",
+  "field": "fence_secret_epoch",
+  "table": "own_b_015"
+ },
+ "own_b:fence/user_stop_epoch": {
+  "code": "fence/user_stop_epoch",
+  "field": "fence_user_stop_epoch",
+  "table": "own_b_014"
+ },
+ "own_b:fence/writer_epoch": {
+  "code": "fence/writer_epoch",
+  "field": "fence_writer_epoch",
+  "table": "own_b_014"
+ },
+ "own_b:physical/available": {
+  "code": "physical/available",
+  "field": "physical_available",
+  "table": "own_b_006"
+ },
+ "own_b:physical/bytes": {
+  "code": "physical/bytes",
+  "field": "physical_bytes",
+  "table": "own_b_005"
+ },
+ "own_b:physical/key": {
+  "code": "physical/key",
+  "field": "physical_key",
+  "table": "own_b_005"
+ },
+ "own_b:physical/partition": {
+  "code": "physical/partition",
+  "field": "physical_partition",
+  "table": "own_b_007"
+ },
+ "own_b:physical/read_size": {
+  "code": "physical/read_size",
+  "field": "physical_read_size",
+  "table": "own_b_008"
+ },
+ "own_b:receipt/body_available": {
+  "code": "receipt/body_available",
+  "field": "receipt_body_available",
+  "table": "own_b_028"
+ },
+ "own_b:receipt/body_join": {
+  "code": "receipt/body_join",
+  "field": "receipt_body_join",
+  "table": "own_b_030"
+ },
+ "own_b:receipt/body_original": {
+  "code": "receipt/body_original",
+  "field": "receipt_body_original",
+  "table": "own_b_030"
+ },
+ "own_b:receipt/event_available": {
+  "code": "receipt/event_available",
+  "field": "receipt_event_available",
+  "table": "own_b_040"
+ },
+ "own_b:receipt/event_join": {
+  "code": "receipt/event_join",
+  "field": "receipt_event_join",
+  "table": "own_b_042"
+ },
+ "own_b:receipt/event_original": {
+  "code": "receipt/event_original",
+  "field": "receipt_event_original",
+  "table": "own_b_042"
+ },
+ "own_b:receipt/full_result": {
+  "code": "receipt/full_result",
+  "field": "receipt_full_result",
+  "table": "own_b_042"
+ },
+ "own_b:receipt/full_value": {
+  "code": "receipt/full_value",
+  "field": "receipt_full_value",
+  "table": "own_b_042"
+ },
+ "own_b:reference/available": {
+  "code": "reference/available",
+  "field": "reference_available",
+  "table": "own_b_060"
+ },
+ "own_b:reference/hash": {
+  "code": "reference/hash",
+  "field": "reference_hash",
+  "table": "own_b_061"
+ },
+ "own_b:reference/shape": {
+  "code": "reference/shape",
+  "field": "reference_shape",
+  "table": "own_b_059"
+ },
+ "own_b:reference/size": {
+  "code": "reference/size",
+  "field": "reference_size",
+  "table": "own_b_059"
+ },
+ "own_b:resolver/available": {
+  "code": "resolver/available",
+  "field": "resolver_available",
+  "table": "own_b_039"
+ },
+ "own_b:result/available": {
+  "code": "result/available",
+  "field": "result_available",
+  "table": "own_b_050"
+ },
+ "own_b:result/event_committed": {
+  "code": "result/event_committed",
+  "field": "result_event_committed",
+  "table": "own_b_048"
+ },
+ "own_b:result/no_effect_proof": {
+  "code": "result/no_effect_proof",
+  "field": "result_no_effect_proof",
+  "table": "own_b_057"
+ },
+ "own_b:result/origin": {
+  "code": "result/origin",
+  "field": "result_origin",
+  "table": "own_b_051"
+ },
+ "own_b:result/original_receipts": {
+  "code": "result/original_receipts",
+  "field": "result_original_receipts",
+  "table": "own_b_054"
+ },
+ "own_b:result/original_source": {
+  "code": "result/original_source",
+  "field": "result_original_source",
+  "table": "own_b_051"
+ },
+ "own_b:result/physical": {
+  "code": "result/physical",
+  "field": "result_physical",
+  "table": "own_b_051"
+ },
+ "own_b:result/terminal_immutable": {
+  "code": "result/terminal_immutable",
+  "field": "result_terminal_immutable",
+  "table": "own_b_056"
+ },
+ "own_b:result/terminal_kind": {
+  "code": "result/terminal_kind",
+  "field": "result_terminal_kind",
+  "table": "own_b_055"
+ },
+ "own_b:retained/caller_recipe_override": {
+  "code": "retained/caller_recipe_override",
+  "field": "retained_caller_recipe_override",
+  "table": "own_b_044"
+ },
+ "own_b:retained/current_disclosure": {
+  "code": "retained/current_disclosure",
+  "field": "retained_current_disclosure",
+  "table": "own_b_046"
+ },
+ "own_b:retained/original_binding": {
+  "code": "retained/original_binding",
+  "field": "retained_original_binding",
+  "table": "own_b_044"
+ },
+ "own_b:retained/original_receipt_ambiguous": {
+  "code": "retained/original_receipt_ambiguous",
+  "field": "retained_original_receipt_ambiguous",
+  "table": "own_b_044"
+ },
+ "own_b:retained/original_receipt_missing": {
+  "code": "retained/original_receipt_missing",
+  "field": "retained_original_receipt_missing",
+  "table": "own_b_044"
+ },
+ "own_b:retained/original_receipt_seal": {
+  "code": "retained/original_receipt_seal",
+  "field": "retained_original_receipt_seal",
+  "table": "own_b_044"
+ },
+ "own_b:retained/original_receipt_shape": {
+  "code": "retained/original_receipt_shape",
+  "field": "retained_original_receipt_shape",
+  "table": "own_b_044"
+ },
+ "own_b:retained/original_verification": {
+  "code": "retained/original_verification",
+  "field": "retained_original_verification",
+  "table": "own_b_044"
+ },
+ "own_b:retained/recipe_catalog": {
+  "code": "retained/recipe_catalog",
+  "field": "retained_recipe_catalog",
+  "table": "own_b_045"
+ },
+ "own_b:retained/recipe_unknown": {
+  "code": "retained/recipe_unknown",
+  "field": "retained_recipe_unknown",
+  "table": "own_b_044"
+ },
+ "own_b:schema/AppendReceipt": {
+  "code": "schema/AppendReceipt",
+  "field": "schema_AppendReceipt",
+  "table": "own_b_043"
+ },
+ "own_b:schema/approval_request": {
+  "code": "schema/approval_request",
+  "field": "schema_approval_request",
+  "table": "own_b_084"
+ },
+ "own_b:schema/approval_resolution": {
+  "code": "schema/approval_resolution",
+  "field": "schema_approval_resolution",
+  "table": "own_b_085"
+ },
+ "own_b:schema/approval_resolve_request": {
+  "code": "schema/approval_resolve_request",
+  "field": "schema_approval_resolve_request",
+  "table": "own_b_104"
+ },
+ "own_b:schema/blocked_append_request": {
+  "code": "schema/blocked_append_request",
+  "field": "schema_blocked_append_request",
+  "table": "own_b_031"
+ },
+ "own_b:schema/blocked_capture_request": {
+  "code": "schema/blocked_capture_request",
+  "field": "schema_blocked_capture_request",
+  "table": "own_b_002"
+ },
+ "own_b:schema/blocked_commit_body_request": {
+  "code": "schema/blocked_commit_body_request",
+  "field": "schema_blocked_commit_body_request",
+  "table": "own_b_023"
+ },
+ "own_b:schema/blocked_freeze_event_request": {
+  "code": "schema/blocked_freeze_event_request",
+  "field": "schema_blocked_freeze_event_request",
+  "table": "own_b_026"
+ },
+ "own_b:schema/blocked_inspect_request": {
+  "code": "schema/blocked_inspect_request",
+  "field": "schema_blocked_inspect_request",
+  "table": "own_b_049"
+ },
+ "own_b:schema/blocked_publish_request": {
+  "code": "schema/blocked_publish_request",
+  "field": "schema_blocked_publish_request",
+  "table": "own_b_047"
+ },
+ "own_b:schema/blocked_reserve_request": {
+  "code": "schema/blocked_reserve_request",
+  "field": "schema_blocked_reserve_request",
+  "table": "own_b_021"
+ },
+ "own_b:schema/blocked_resolve_request": {
+  "code": "schema/blocked_resolve_request",
+  "field": "schema_blocked_resolve_request",
+  "table": "own_b_038"
+ },
+ "own_b:schema/blocked_result": {
+  "code": "schema/blocked_result",
+  "field": "schema_blocked_result",
+  "table": "own_b_052"
+ },
+ "own_b:schema/blocked_source": {
+  "code": "schema/blocked_source",
+  "field": "schema_blocked_source",
+  "table": "own_b_010"
+ },
+ "own_b:schema/caller_decision": {
+  "code": "schema/caller_decision",
+  "field": "schema_caller_decision",
+  "table": "own_b_013"
+ },
+ "own_b:schema/completed_append_request": {
+  "code": "schema/completed_append_request",
+  "field": "schema_completed_append_request",
+  "table": "own_b_071"
+ },
+ "own_b:schema/completed_capture_request": {
+  "code": "schema/completed_capture_request",
+  "field": "schema_completed_capture_request",
+  "table": "own_b_062"
+ },
+ "own_b:schema/completed_commit_body_request": {
+  "code": "schema/completed_commit_body_request",
+  "field": "schema_completed_commit_body_request",
+  "table": "own_b_069"
+ },
+ "own_b:schema/completed_freeze_event_request": {
+  "code": "schema/completed_freeze_event_request",
+  "field": "schema_completed_freeze_event_request",
+  "table": "own_b_070"
+ },
+ "own_b:schema/completed_inspect_request": {
+  "code": "schema/completed_inspect_request",
+  "field": "schema_completed_inspect_request",
+  "table": "own_b_074"
+ },
+ "own_b:schema/completed_publish_request": {
+  "code": "schema/completed_publish_request",
+  "field": "schema_completed_publish_request",
+  "table": "own_b_073"
+ },
+ "own_b:schema/completed_reserve_request": {
+  "code": "schema/completed_reserve_request",
+  "field": "schema_completed_reserve_request",
+  "table": "own_b_068"
+ },
+ "own_b:schema/completed_resolve_request": {
+  "code": "schema/completed_resolve_request",
+  "field": "schema_completed_resolve_request",
+  "table": "own_b_072"
+ },
+ "own_b:schema/completed_result": {
+  "code": "schema/completed_result",
+  "field": "schema_completed_result",
+  "table": "own_b_075"
+ },
+ "own_b:schema/completed_source": {
+  "code": "schema/completed_source",
+  "field": "schema_completed_source",
+  "table": "own_b_064"
+ },
+ "own_b:schema/disposition": {
+  "code": "schema/disposition",
+  "field": "schema_disposition",
+  "table": "own_b_077"
+ },
+ "own_b:schema/envelope": {
+  "code": "schema/envelope",
+  "field": "schema_envelope",
+  "table": "own_b_033"
+ },
+ "own_b:schema/exception": {
+  "code": "schema/exception",
+  "field": "schema_exception",
+  "table": "own_b_086"
+ },
+ "own_b:schema/exception_append_request": {
+  "code": "schema/exception_append_request",
+  "field": "schema_exception_append_request",
+  "table": "own_b_097"
+ },
+ "own_b:schema/exception_capture_request": {
+  "code": "schema/exception_capture_request",
+  "field": "schema_exception_capture_request",
+  "table": "own_b_081"
+ },
+ "own_b:schema/exception_commit_body_request": {
+  "code": "schema/exception_commit_body_request",
+  "field": "schema_exception_commit_body_request",
+  "table": "own_b_095"
+ },
+ "own_b:schema/exception_freeze_event_request": {
+  "code": "schema/exception_freeze_event_request",
+  "field": "schema_exception_freeze_event_request",
+  "table": "own_b_096"
+ },
+ "own_b:schema/exception_inspect_request": {
+  "code": "schema/exception_inspect_request",
+  "field": "schema_exception_inspect_request",
+  "table": "own_b_100"
+ },
+ "own_b:schema/exception_publish_request": {
+  "code": "schema/exception_publish_request",
+  "field": "schema_exception_publish_request",
+  "table": "own_b_099"
+ },
+ "own_b:schema/exception_reserve_request": {
+  "code": "schema/exception_reserve_request",
+  "field": "schema_exception_reserve_request",
+  "table": "own_b_094"
+ },
+ "own_b:schema/exception_resolve_request": {
+  "code": "schema/exception_resolve_request",
+  "field": "schema_exception_resolve_request",
+  "table": "own_b_098"
+ },
+ "own_b:schema/exception_result": {
+  "code": "schema/exception_result",
+  "field": "schema_exception_result",
+  "table": "own_b_101"
+ },
+ "own_b:schema/exception_source": {
+  "code": "schema/exception_source",
+  "field": "schema_exception_source",
+  "table": "own_b_083"
+ },
+ "own_b:schema/exception_workflow_inputs": {
+  "code": "schema/exception_workflow_inputs",
+  "field": "schema_exception_workflow_inputs",
+  "table": "own_b_087"
+ },
+ "own_b:schema/full_value_result": {
+  "code": "schema/full_value_result",
+  "field": "schema_full_value_result",
+  "table": "own_b_041"
+ },
+ "own_b:schema/origin": {
+  "code": "schema/origin",
+  "field": "schema_origin",
+  "table": "own_b_016"
+ },
+ "own_b:schema/payload": {
+  "code": "schema/payload",
+  "field": "schema_payload",
+  "table": "own_b_034"
+ },
+ "own_b:schema/receipt": {
+  "code": "schema/receipt",
+  "field": "schema_receipt",
+  "table": "own_b_029"
+ },
+ "own_b:schema/request": {
+  "code": "schema/request",
+  "field": "schema_request",
+  "table": "own_b_003"
+ },
+ "own_b:schema/revision": {
+  "code": "schema/revision",
+  "field": "schema_revision",
+  "table": "own_b_018"
+ },
+ "own_b:schema/storage_blocked_result": {
+  "code": "schema/storage_blocked_result",
+  "field": "schema_storage_blocked_result",
+  "table": "own_b_053"
+ },
+ "own_b:schema/storage_blocked_source": {
+  "code": "schema/storage_blocked_source",
+  "field": "schema_storage_blocked_source",
+  "table": "own_b_009"
+ },
+ "own_b:schema/storage_completed_result": {
+  "code": "schema/storage_completed_result",
+  "field": "schema_storage_completed_result",
+  "table": "own_b_076"
+ },
+ "own_b:schema/storage_completed_source": {
+  "code": "schema/storage_completed_source",
+  "field": "schema_storage_completed_source",
+  "table": "own_b_063"
+ },
+ "own_b:schema/storage_exception_result": {
+  "code": "schema/storage_exception_result",
+  "field": "schema_storage_exception_result",
+  "table": "own_b_102"
+ },
+ "own_b:schema/storage_exception_source": {
+  "code": "schema/storage_exception_source",
+  "field": "schema_storage_exception_source",
+  "table": "own_b_082"
+ },
+ "own_b:schema/stored_envelope": {
+  "code": "schema/stored_envelope",
+  "field": "schema_stored_envelope",
+  "table": "own_b_042"
+ },
+ "own_b:schema/todo": {
+  "code": "schema/todo",
+  "field": "schema_todo",
+  "table": "own_b_067"
+ },
+ "own_b:schema/workflow_exception_issue_response": {
+  "code": "schema/workflow_exception_issue_response",
+  "field": "schema_workflow_exception_issue_response",
+  "table": "own_b_103"
+ },
+ "own_b:source/available": {
+  "code": "source/available",
+  "field": "source_available",
+  "table": "own_b_004"
+ },
+ "own_b:source/caller": {
+  "code": "source/caller",
+  "field": "source_caller",
+  "table": "own_b_013"
+ },
+ "own_b:source/caller_context": {
+  "code": "source/caller_context",
+  "field": "source_caller_context",
+  "table": "own_b_013"
+ },
+ "own_b:source/continuation_cas": {
+  "code": "source/continuation_cas",
+  "field": "source_continuation_cas",
+  "table": "own_b_013"
+ },
+ "own_b:source/continuation_tuple": {
+  "code": "source/continuation_tuple",
+  "field": "source_continuation_tuple",
+  "table": "own_b_013"
+ },
+ "own_b:source/decision": {
+  "code": "source/decision",
+  "field": "source_decision",
+  "table": "own_b_014"
+ },
+ "own_b:source/edition": {
+  "code": "source/edition",
+  "field": "source_edition",
+  "table": "own_b_005"
+ },
+ "own_b:source/final_original": {
+  "code": "source/final_original",
+  "field": "source_final_original",
+  "table": "own_b_020"
+ },
+ "own_b:source/host": {
+  "code": "source/host",
+  "field": "source_host",
+  "table": "own_b_013"
+ },
+ "own_b:source/operation": {
+  "code": "source/operation",
+  "field": "source_operation",
+  "table": "own_b_005"
+ },
+ "own_b:source/origin": {
+  "code": "source/origin",
+  "field": "source_origin",
+  "table": "own_b_005"
+ },
+ "own_b:source/original_epochs": {
+  "code": "source/original_epochs",
+  "field": "source_original_epochs",
+  "table": "own_b_013"
+ },
+ "own_b:source/physical": {
+  "code": "source/physical",
+  "field": "source_physical",
+  "table": "own_b_005"
+ },
+ "own_b:source/target": {
+  "code": "source/target",
+  "field": "source_target",
+  "table": "own_b_011"
+ },
+ "own_b:writer/available": {
+  "code": "writer/available",
+  "field": "writer_available",
+  "table": "own_b_013"
+ }
+}

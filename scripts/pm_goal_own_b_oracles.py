@@ -10,6 +10,9 @@ from __future__ import annotations
 import argparse
 import base64
 import copy
+import decimal
+import pickle
+import re
 import hashlib
 import importlib.util
 import json
@@ -21,8 +24,10 @@ import blake3
 import msgpack
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
-from pm_goal_oracle_common import ROOT, canonical, validator, semantic_digest, revision_text
+from pm_goal_oracle_common import ROOT, canonical, semantic_digest
+import pm_goal_oracle_common as common
 from pm_goal_lifecycle_successor_oracles import identity
+import pm_goal_gc_adapter as adapter
 
 PACKAGE = ROOT / 'Plans/goal_lifecycle_host_contracts'
 CONTRACT = 'https://puppetmaster.local/schemas/goal_lifecycle_host/1.0.0/contracts.schema.json'
@@ -30,6 +35,8 @@ BODY = 'https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_cus
 EVENT = 'https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json'
 RECEIPTS = 'https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0'
 ROUTES = ('blocked', 'completed', 'exception')
+PAYLOAD_RESOURCES = {'goal.blocked': 'Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json',
+                     'goal.completed': 'Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json'}
 METHODS = ('capture', 'reserve', 'commit_body', 'freeze_event', 'append', 'resolve', 'publish', 'inspect')
 BOUNDARIES = ('entry', 'before_helper', 'after_helper', 'final')
 NOW = '2026-11-05T00:00:00Z'
@@ -43,12 +50,17 @@ def physical_bytes(value):
 
 
 def physical_value(raw):
+    """Canonical MessagePack only. Every refusal goes through the gated row (PNC-019 GC: the former except path
+    refused outside any table); with the row cut an undecodable value has no value, so the reader raises."""
     try:
         value=msgpack.unpackb(raw,raw=False,strict_map_key=True)
-        need('physical/bytes',physical_bytes(value)==raw)
-        return value
+        canonical_bytes=physical_bytes(value)==raw
     except (ValueError,TypeError,msgpack.UnpackException):
-        raise Refused('physical/bytes')
+        value,canonical_bytes=None,False
+    need('physical/bytes',canonical_bytes)
+    if value is None and not canonical_bytes:
+        raise ValueError('undecodable physical value (reachable only with physical/bytes cut)')
+    return value
 
 
 def full_commitment(event):
@@ -79,7 +91,8 @@ class Refused(Exception):
 
 
 def need(code, condition):
-    if not condition:
+    """One named owner predicate; under the GC runner only its gated table decides (pm_goal_gc_adapter)."""
+    if adapter.gated(code, condition) is not None:
         raise Refused(code)
 
 
@@ -96,7 +109,7 @@ class Schemas:
             raw = (ROOT / row['path']).read_bytes()
             need('resource/hash', sha(raw) == row['sha256'])
             doc = json.loads(raw)
-            resource = Resource.from_contents(doc, default_specification=DRAFT202012)
+            resource = Resource.from_contents(common.runtime_schema(doc), default_specification=DRAFT202012)
             for name in {row['id'], *row.get('aliases', [])}:
                 self.docs[name] = resource
         self.registry = Registry().with_resources(self.docs.items())
@@ -129,16 +142,29 @@ class Schemas:
         self.validators = {}
         self.checked = {}
 
-    def check(self, root, value, code='schema'):
+    def check(self, root, value, code=None):
+        """The whole owner definition (W3H whole-definition row): every keyword, owner formats, shared date-time
+        profiles, CV-1100 current integers and ECMA patterns (pm_goal_gc_adapter.validator)."""
+        if code is None:
+            code = 'schema/' + root.rsplit('/', 1)[-1]  # one row per definition, never one shared 'schema' row
+        if not code.startswith('assert/'):
+            adapter.root_row(root, code)
         if root not in self.validators:
-            self.validators[root] = validator({'$ref': root}, self.registry)
-        cache_key=(root,json.dumps(value,sort_keys=True,ensure_ascii=False))
+            self.validators[root] = adapter.validator({'$ref': root}, self.registry)
+        # The cache key keeps JSON types apart (1, 1.0 and true are different instances here).
+        cache_key=(root,pickle.dumps(value,protocol=5))
         if cache_key not in self.checked:
-            self.checked[cache_key]=not list(self.validators[root].iter_errors(value))
-        need(code,self.checked[cache_key])
+            errors=list(self.validators[root].iter_errors(value))
+            self.checked[cache_key]=(not errors,sorted(set(adapter.clause_locations(errors))))
+        ok,clauses=self.checked[cache_key]
+        if not ok and adapter.RECORDER is not None and adapter.RECORDER.active is not None:
+            adapter.SCHEMA_CLAUSES.append((root,clauses))
+        elif ok and not code.startswith('assert/'):
+            adapter.seed(root,self.validators[root],value)
+        need(code,ok)
 
-    def own(self, name, value):
-        self.check(CONTRACT + '#/$defs/' + name, value, 'schema/' + name)
+    def own(self, name, value, code=None):
+        self.check(CONTRACT + '#/$defs/' + name, value, code or 'schema/' + name)
 
 
 class Realm:
@@ -247,6 +273,24 @@ class Realm:
         self.request = dict(operation_id=source['operation_id'], source_ref=self.source_ref, source_sha256=sha(raw))
         self.owner_snapshots = copy.deepcopy(dict(todo=self.todo, work=self.work, plan=self.plan, recovery=self.recovery, internal=self.internal))
 
+    def inject_source(self, source):
+        """TEST_ONLY: place a source in custody without the issuer's own validation, so the host's stored-source
+        read boundary is the first boundary that sees it."""
+        source=copy.deepcopy(source)
+        source['caller_context']=self.caller_context()
+        if self.route!='blocked':source.update(todo_snapshot=copy.deepcopy(self.todo),required_todo_ids=copy.deepcopy(self.caller['required_todo_ids']),admitted_work_snapshot=copy.deepcopy(self.work),bound_plan_snapshot=copy.deepcopy(self.plan),recovery_snapshot=copy.deepcopy(self.recovery),internal_predicate_snapshot=copy.deepcopy(self.internal))
+        raw=canonical(source)
+        self.sources[self.source_ref]=raw
+        wrapper=dict(schema_id='pm.storage_value.goal_lifecycle_'+self.route+'_source.v1',schema_version='1.0.0',record=source)
+        if len(physical_bytes(wrapper))>16384:
+            body=physical_bytes(source);h=blake3.blake3(body).hexdigest();self.packs[h]=body
+            wrapper['record']={'content_ref':dict(blake3=h,byte_size=len(body),media_type='application/msgpack')}
+        self.physical_rows['source']=physical_bytes(wrapper)
+        self.physical_keys['source']=self.physical_key('source')
+        self.origins[self.source_ref]=dict(sha256=sha(raw),source_id=self.source_id,target=copy.deepcopy(self.target))
+        self.request=dict(operation_id=source['operation_id'],source_ref=self.source_ref,source_sha256=sha(raw))
+        self.owner_snapshots=copy.deepcopy(dict(todo=self.todo,work=self.work,plan=self.plan,recovery=self.recovery,internal=self.internal))
+
     def source(self, request, retained=False):
         self.schemas.own('request', request)
         if retained:need('resolver/available',self.original_resolver_available is True)
@@ -290,7 +334,7 @@ class Realm:
         self.schemas.own('exception', self.workflow)
         self.schemas.own('exception_workflow_inputs',self.workflow_source_inputs)
         native_receipt=dict(schema_id='pm.workflow.approved_verification_exception_receipt.v1',schema_version='1.0.0',target=copy.deepcopy(self.target),receipt_id='exception-receipt:1',original_source=copy.deepcopy(self.workflow_source_inputs),original_result=copy.deepcopy(self.workflow_original),original_approval=copy.deepcopy(self.approval))
-        self.schemas.own('workflow_exception_receipt',native_receipt)
+        self.schemas.own('workflow_exception_receipt',native_receipt,'assert/write/workflow_exception_receipt')
         self.store_workflow_receipt(native_receipt)
         need('exception/approval_provenance',equal(self.approval_request['original_provenance'],self.request_provenance) and equal(self.approval['original_provenance'],self.resolution_provenance))
         need('exception/original_workflow', equal(self.workflow,self.workflow_original))
@@ -381,10 +425,10 @@ class Realm:
         intent['intent_sha256']=sha(b'pm.goal.body_intent.v1\n'+canonical(intent))
         reserved_control=copy.deepcopy(self.control);reserved_control.update(pending=copy.deepcopy(intent),control_epoch=self.control['control_epoch']+1)
         self.reservation=dict(reserved_control_sha256=digest(reserved_control),source_ref=self.source_ref,source_sha256=self.request['source_sha256'],operation_id=source['operation_id'],target=source['target'],before_control_sha256=digest(self.control),intent=intent)
-        self.schemas.own(self.route+'_reservation',self.reservation)
+        self.schemas.own(self.route+'_reservation',self.reservation,'assert/write/'+self.route+'_reservation')
         self.last_helper('reserve',source)
         self.control=reserved_control
-        self.schemas.check('https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2',self.control)
+        self.schemas.check('https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2',self.control,'assert/write/BodyControlV2')
         self.store_part('reservation',self.reservation)
         self.phase='reserved'
         self.shared_custody()
@@ -396,7 +440,7 @@ class Realm:
         p=self.reservation['intent']
         need('body/intent',p['intent_sha256']==sha(b'pm.goal.body_intent.v1\n'+canonical({k:v for k,v in p.items() if k!='intent_sha256'})) and equal(p['after_record'],source['body_after']))
         receipt=dict(schema_id='pm.goal.body_mutation_receipt.v1',**{k:source['target'][k] for k in ('storage_instance_id','project_id','thread_id','goal_id')},operation_id=source['operation_id'],intent_sha256=p['intent_sha256'],owner_ref=p['owner_ref'],authority_ref=self.source_ref,before_revision=p['expected_revision'],before_currentness_hash=p['expected_currentness_hash'],after_revision=source['body_after']['revision'],after_currentness_hash=source['body_after']['currentness_hash'],accepted_objective_revision=None,accepted_revision_hash=None,committed_at=NOW)
-        self.schemas.check(BODY+'#/$defs/receipt',receipt)
+        self.schemas.check(BODY+'#/$defs/receipt',receipt,'assert/write/receipt')
         self.last_helper('commit_body',source)
         self.body_predicates(source)
         # One TEST_ONLY transaction models the required atomic body/control/receipt/pending cut.
@@ -442,6 +486,9 @@ class Realm:
             payload=self.unpack(self.event['payload_ref'])
         self.schemas.check(selected['payload_schema_id'],payload,'schema/payload')
         need('event/receipt_digest',payload['body_receipt_sha256']==digest(self.resolve_body(source)))
+        representable=adapter.representable({**self.event,'payload':payload,'payload_ref':None})
+        need('event/producer_representable',representable!='producer')
+        need('event/storage_representable',representable!='storage')
         expected=self.make_event(source)
         need('event/semantic',semantic_digest({**self.event,'payload':payload,'payload_ref':None})==semantic_digest(expected))
         need('event/size',len(physical_bytes(self.event['payload']))<=16384)
@@ -452,17 +499,20 @@ class Realm:
         self.last_helper('append',source)
         event=copy.deepcopy(self.event);event.update(sequence_id=41,observed_at_utc=NOW,persisted_at_utc=NOW)
         first=dict(event_id=event['event_id'],sequence_id=41,segment_generation=7,segment_name='seg-7',byte_offset=100,commit_group_id='group:1',durability_class='barrier',durable_end_offset=1000,durability_state='synced',manifest_generation=7,acknowledged_at_utc=NOW)
-        self.schemas.check(RECEIPTS+'#/$defs/AppendReceipt',first)
+        self.schemas.check(RECEIPTS+'#/$defs/AppendReceipt',first,'assert/write/AppendReceipt')
         self.append_custody[event['event_id']]=dict(event=canonical(event),first=canonical(first),producer_digest=semantic_digest(self.frozen),value_sha256=full_commitment(event),source_id=source['schema_id'],selection=copy.deepcopy(self.admitted_selection),storage_instance_id=self.target['storage_instance_id'])
         commitment=dict(schema_id='pm.storage.original_event_value_commitment.v1',schema_version='1.0.0',codec='pm.seglog_frame_v2.event_value.canonical_msgpack.v1',domain='pm.storage.original_event_value_commitment.v1',event_schema_id='pm.event.v0',event_schema_version='2.0.0',sha256=full_commitment(event))
         full=dict(first_append_receipt=first,original_segment_ref='segment:7',original_event_value_commitment=commitment)
-        self.schemas.check(RECEIPTS+'#/$defs/full_value_result',full)
+        self.schemas.check(RECEIPTS+'#/$defs/full_value_result',full,'assert/write/full_value_result')
         self.append_custody[event['event_id']]['full_result']=canonical(full)
+        sealed,installed=adapter.issue(event,self.target['storage_instance_id'],first,PAYLOAD_RESOURCES[self.family])
+        self.sealed_receipts=getattr(self,'sealed_receipts',[])+[sealed]
+        self.installed_recipes=[installed]
         self.first=copy.deepcopy(first);self.stored_event=copy.deepcopy(event);self.phase='event_committed';self.appends+=1
         self.pending.update(phase=self.phase,event_input=self.frozen,first_receipt=first)
         self.store_part('pending',self.pending)
 
-    def resolve_event(self, source):
+    def resolve_event(self, source, retained=False):
         self.resolve_body(source)
         need('receipt/event_available',self.frozen['event_id'] in self.append_custody)
         custody=self.append_custody[self.frozen['event_id']]
@@ -475,6 +525,14 @@ class Realm:
         need('receipt/event_original',equal(first,self.first) and equal(actual,self.stored_event))
         need('receipt/full_value',full_commitment(actual)==custody['value_sha256'] and semantic_digest(actual)==custody['producer_digest']==semantic_digest(self.frozen))
         need('receipt/event_join',first['event_id']==actual['event_id']==self.frozen['event_id'] and equal(first['sequence_id'],actual['sequence_id']) and custody['storage_instance_id']==source['target']['storage_instance_id'] and custody['source_id']==source['schema_id'] and equal(custody['selection'],self.admitted_selection))
+        if retained:
+            # Retained reads select the original only through its independently sealed receipt and installed recipe.
+            snapshot=dict(sealed_receipts=getattr(self,'sealed_receipts',[]),installed_recipes=getattr(self,'installed_recipes',[]),
+                          original_value=actual,custody=first,content_permitted=self.content_visible is True)
+            reason=adapter.retained_reason(snapshot,actual,getattr(self,'retained_storage_instance_id',self.target['storage_instance_id']),
+                                           recipe_override=getattr(self,'recipe_override',None))
+            for code in adapter.RETAINED_REASONS:
+                need('retained/'+code,reason!=code)
         return actual,first
 
     def publish(self, source):
@@ -482,7 +540,7 @@ class Realm:
         actual,first=self.resolve_event(source)
         self.last_helper('publish',source)
         result=dict(source_ref=self.source_ref,source_sha256=self.request['source_sha256'],operation_id=source['operation_id'],target=source['target'],status='published',body_receipt_sha256=digest(self.body_receipt),event_id=actual['event_id'],event_value_sha256=full_commitment(actual),first_receipt_sha256=digest(first),truthful_label='blocked' if self.route=='blocked' else 'completed_with_approved_verification_exception' if self.route=='exception' else 'completed',approval_ref='approval:1' if self.route=='exception' else None,approver_ref=self.approval['approver'] if self.route=='exception' else None,residual_risk_refs=['risk:1'] if self.route=='exception' else [])
-        self.schemas.own(self.route+'_result',result)
+        self.schemas.own(self.route+'_result',result,'assert/write/'+self.route+'_result')
         self.result=canonical(result);self.issued_result_sha256=sha(self.result);self.phase='published'
         self.store_part('result',result)
         return result
@@ -494,7 +552,7 @@ class Realm:
         need('result/physical',equal(result,self.read_part('result')))
         need('result/original_source',result['source_sha256']==self.request['source_sha256'] and result['source_ref']==self.source_ref and result['operation_id']==source['operation_id'] and equal(result['target'],source['target']))
         if result['status']=='published':
-            actual,first=self.resolve_event(source)
+            actual,first=self.resolve_event(source,retained=True)
             need('result/original_receipts',result['body_receipt_sha256']==digest(self.body_receipt) and result['event_value_sha256']==full_commitment(actual) and result['first_receipt_sha256']==digest(first) and result['event_id']==actual['event_id'])
         self.last_helper('inspect',source,True)
         return result
@@ -507,7 +565,7 @@ class Realm:
         if not retained and method in ('capture','reserve','commit_body'):self.body_predicates(actual)
 
     def resolve(self, source):
-        value=self.resolve_event(source) if self.phase in ('event_committed','published') else {'status':'pending','phase':self.phase}
+        value=self.resolve_event(source,retained=True) if self.phase in ('event_committed','published') else {'status':'pending','phase':self.phase}
         self.last_helper('resolve',source,True)
         return value
 
@@ -520,7 +578,7 @@ class Realm:
         value=self.guarded(method,req,actions[method],hook,retained)
         response=dict(operation_id=req['operation_id'],source_ref=req['source_ref'],status='published' if self.phase=='published' else 'pending',result=json.loads(self.result) if self.result is not None else None)
         if self.result is not None:response['status']=response['result']['status']
-        self.schemas.check(self.method_bank['methods'][method]['result_root'],response,'schema/'+self.route+'_'+method+'_response')
+        self.schemas.check(self.method_bank['methods'][method]['result_root'],response,'assert/write/'+self.route+'_'+method+'_response')
         return response
 
     def run(self, stop=None, hook=None):
@@ -540,7 +598,7 @@ class Realm:
         if len(physical_bytes(wrapper))>16384:
             ref=self.pack(value,'application/msgpack');_,h,n,media=ref.split(':',3)
             wrapper['record']={'content_ref':dict(blake3=h,byte_size=int(n),media_type=media)}
-        self.schemas.own('storage_workflow_exception_receipt',wrapper)
+        self.schemas.own('storage_workflow_exception_receipt',wrapper,'assert/write/storage_workflow_exception_receipt')
         need('test/workflow_receipt_size',len(physical_bytes(wrapper))<=16384)
         return wrapper
 
@@ -565,19 +623,19 @@ class Realm:
                 ref=self.pack(value,'application/msgpack');_,h,n,media=ref.split(':',3)
                 wrapper['record']={'content_ref':dict(blake3=h,byte_size=int(n),media_type=media)}
                 need('test/shared_reference_roundtrip',equal(self.unpack(ref),value))
-            self.schemas.own(root,wrapper)
+            self.schemas.own(root,wrapper,'assert/write/'+root)
             raw=physical_bytes(wrapper);need('test/shared_transport_size',len(raw)<=16384 and equal(physical_value(raw),wrapper))
             output.append(raw)
         return output
 
     def store_part(self, role, value):
-        self.schemas.own(self.route+'_'+role,value)
+        self.schemas.own(self.route+'_'+role,value,'assert/write/'+self.route+'_'+role)
         wrapper=dict(schema_id='pm.storage_value.goal_lifecycle_'+self.route+'_'+role+'.v1',schema_version='1.0.0',record=value)
         if len(physical_bytes(wrapper))>16384:
             raw=physical_bytes(value);h=blake3.blake3(raw).hexdigest();self.packs[h]=raw
             wrapper['record']={'content_ref':dict(blake3=h,byte_size=len(raw),media_type='application/msgpack')}
-        self.schemas.own('storage_'+self.route+'_'+role,wrapper)
-        need('physical/size',len(physical_bytes(wrapper))<=16384)
+        self.schemas.own('storage_'+self.route+'_'+role,wrapper,'assert/write/storage_'+self.route+'_'+role)
+        need('assert/write/physical_size',len(physical_bytes(wrapper))<=16384)
         self.physical_rows[role]=physical_bytes(wrapper)
         self.physical_keys[role]=self.physical_key(role)
 
@@ -598,7 +656,7 @@ class Realm:
         need('result/no_effect_proof',status!='no_effect' or (self.body_effect_resolution=='none' and self.effects==0 and not self.original_receipts and self.phase in (None,'reserved')))
         source=self.source(self.request)
         result=dict(source_ref=self.source_ref,source_sha256=self.request['source_sha256'],operation_id=source['operation_id'],target=source['target'],status=status,body_receipt_sha256=digest(self.body_receipt) if self.effects else None,event_id=None,event_value_sha256=None,first_receipt_sha256=None,truthful_label=status,approval_ref='approval:1' if self.route=='exception' else None,approver_ref=self.approval['approver'] if self.route=='exception' else None,residual_risk_refs=['risk:1'] if self.route=='exception' else [])
-        self.schemas.own(self.route+'_result',result)
+        self.schemas.own(self.route+'_result',result,'assert/write/'+self.route+'_result')
         self.result=canonical(result);self.issued_result_sha256=sha(self.result);self.phase=status;self.store_part('result',result)
         return result
 
@@ -617,11 +675,30 @@ class Realm:
         return json.loads(raw) if parts[3]=='application/json' else physical_value(raw)
 
 
+class DisclosureHook:
+    """Owner disclosure withdrawn at one boundary (a data value, so the complete call input is sealed)."""
+    def __init__(self, boundary):
+        self.boundary = boundary
+
+    def __call__(self, realm, method, boundary):
+        if boundary == self.boundary:
+            realm.content_visible = False
+
+
+class TodoRevisionHook:
+    """The owner ToDo list advances after the last helper of commit_body."""
+    def __call__(self, realm, method, boundary):
+        if method == 'commit_body' and boundary == 'after_last_helper':
+            realm.todo['revision'] += 1
+            realm.todo['items'][0]['revision'] += 1
+
+
 def vectors(schemas):
     """One-defect fixture construction. No removal or isolation claims."""
     cases=[]
     def case(name,route,run,expected=None):
         realm=Realm(schemas,route)
+        adapter.begin_case(route+'/'+name)
         try:
             run(realm)
             result=None
@@ -629,6 +706,7 @@ def vectors(schemas):
             result=str(e)
         except Exception as e:
             result='UNEXPECTED '+type(e).__name__+': '+str(e)
+        adapter.end_case(route+'/'+name,expected,result)
         cases.append(dict(id=route+'/'+name,route=route,expected=expected,observed=result,pass_=result==expected))
     for route in ROUTES:
         case('unregistered_method',route,lambda r:r.call('foreign'),'dispatch/method')
@@ -664,9 +742,7 @@ def vectors(schemas):
                     if method=='inspect':r.run()
                     else:
                         for earlier in order[:order.index(method)]:r.call(earlier)
-                    def hook(x,m,b):
-                        if b==boundary:x.content_visible=False
-                    r.call(method,hook=hook,retained=method=='inspect')
+                    r.call(method,hook=DisclosureHook(boundary),retained=method=='inspect')
                 case(method+'_'+boundary+'_disclosure',route,final_change,'access/disclosure')
         case('forged_source_digest',route,lambda r:r.call('capture',{**r.request,'source_sha256':'a'*64}),'source/origin')
         case('missing_original_source',route,lambda r:(r.origins.clear(),r.call('capture')),'source/available')
@@ -874,15 +950,15 @@ def vectors(schemas):
             case('accepted_skip_stale_revision',route,lambda r:skip_case(r,True),'completed/skip')
             for defect in ('origin','scope','actor'):
                 case('accepted_skip_'+defect,route,lambda r,defect=defect:skip_case(r,defect=defect),'completed/skip_'+defect)
-            for bad in (True,1,1.0,None,[],[False],{}, {'value':False},'', 'skip\n','false','0'):
+            # 1.0 cannot exist at rest (the physical codec forbids floats), so it has no stored-source witness.
+            for bad in (True,1,None,[],[False],{}, {'value':False},'', 'skip\n','false','0'):
                 def bad_skip(r,bad=bad):
-                    r.todo['items'][0].update(status='skipped',accepted_skip_ref=bad);r.owner_snapshots['todo']=copy.deepcopy(r.todo);r.install(json.loads(r.sources[r.source_ref]));r.run()
-                expected='schema/disposition' if bad is None or bad in ('false','0') else 'schema/'+route+'_source'
+                    r.todo['items'][0].update(status='skipped',accepted_skip_ref=bad);r.owner_snapshots['todo']=copy.deepcopy(r.todo);r.inject_source(json.loads(r.sources[r.source_ref]));r.run()
+                # A malformed source reaches the host only by bypassing its issuer; the stored wrapper read refuses it.
+                expected='schema/disposition' if bad is None or bad in ('false','0') else 'schema/storage_'+route+'_source'
                 case('skip_wrong_type_'+repr(bad),route,bad_skip,expected)
             def after_helper_todo_revision(r):
-                def hook(x,m,b):
-                    if m=='commit_body' and b=='after_last_helper':x.todo['revision']+=1;x.todo['items'][0]['revision']+=1
-                r.run(hook=hook)
+                r.run(hook=TodoRevisionHook())
             case('todo_changed_after_last_helper',route,after_helper_todo_revision,'completed/todo_original')
             case('foreign_completion_evidence',route,lambda r:(r.evidence[next(iter(r.evidence))].update(owner='foreign'),r.run()),'completed/evidence')
             case('unmet_internal_owner',route,lambda r:(r.internal.update(result='unmet'),r.owner_snapshots.update(internal=copy.deepcopy(r.internal)),r.install(json.loads(r.sources[r.source_ref])),r.run()),'completed/internal')
@@ -955,16 +1031,217 @@ def vectors(schemas):
             case('exception_missing_required_check',route,missing_verifier,'exception/complete_checks')
             for field,change,expected in [('person',lambda r:r.approval.update(approver='worker'),'exception/person'),('denied',lambda r:r.approval.update(status='denied'),'exception/approved'),('revoked',lambda r:r.approval_current.update(revoked=True),'exception/revoked'),('expired',lambda r:r.approval_current.update(expired=True),'exception/expired'),('new_risk',lambda r:r.approval.update(risk_refs=['risk:other']),'exception/risks'),('stale_graph',lambda r:r.approval_current.update(graph_revision=2),'exception/currentness'),('arbitrary_request_digest',lambda r:r.approval.update(request_sha256='a'*64),'exception/approval_origin'),('ordinary_as_exception',lambda r:r.workflow.update(decision='certified'),'schema/exception')]:
                 case('exception_'+field,route,lambda r,change=change:(change(r),r.run()),expected)
+    gc_vectors(case, schemas)
     return cases
+
+
+def gc_vectors(case, schemas):
+    """PNC-019 lane GC additions: the shared number and date-time corpus at the complete host boundary, sealed
+    original receipt selection at the retained readers, and distinct-copy join witnesses. Declared targets come
+    from the owner schema and the predicate each case defeats, never from the observed refusal."""
+    import pm_event_numbers_corpus as corpus_codec
+    import pm_event_numbers as numbers
+    corpus = json.loads((ROOT / 'Plans/event_number_recipe_corpus.json').read_text())
+    integers = [x for x in corpus['cases'] if x['op'] == 'integer' and 'value' in x]
+    stamps = [x for x in corpus['cases'] if x['op'] == 'datetime' and x.get('profile') is None]
+    storage_ok = lambda x: x.get('error') is None and type(x['value']) is str and re.fullmatch(r'[0-9-]+T[0-9:.]+Z', x['value']) is not None
+    fence_minimum = schemas.docs[CONTRACT].contents['$defs']['fence']['properties']['user_stop_epoch']['minimum']
+    for route in ROUTES:
+        # Corpus values reach the host by custody injection (the issuer would refuse an unlawful one itself); the
+        # first host boundary that reads the stored source is its storage wrapper.
+        source_row = 'schema/storage_' + route + '_source'
+        def epoch(r, value):
+            s = json.loads(r.sources[r.source_ref]); s['fence']['user_stop_epoch'] = value
+            r.fence['user_stop_epoch'] = value; r.caller['captured_stop_epoch'] = value
+            r.inject_source(s); r.run()
+        physical = lambda value: not isinstance(value, (float, decimal.Decimal))  # the physical codec forbids these at rest
+        for x in integers:
+            value = corpus_codec._value(x['value'])
+            lawful = type(value) is int and value >= fence_minimum
+            if physical(value):
+                case('numbers/user_stop_epoch/' + x['id'], route, lambda r, value=value: epoch(r, value), None if lawful else source_row)
+            # The owner caller record is a live value: every corpus spelling reaches the host's caller_decision boundary.
+            same = lawful and value == Realm(schemas, route).caller['captured_stop_epoch']
+            case('numbers/caller_stop_epoch/' + x['id'], route, lambda r, value=value: (r.caller.update(captured_stop_epoch=value), r.run()),
+                 None if same else 'source/original_epochs' if lawful else 'schema/caller_decision')
+        # Past 2^53 the original source cannot exist: its own owner recipe (canonical JCS custody) refuses
+        # jcs_binary64 when the source is issued, upstream of this writer, so no complete-call witness exists.
+        for label, value in [('float_integral', 2.0), ('exponent_spelling', json.loads('2e0')), ('negative_zero', json.loads('-0.0'))]:
+            case('numbers/caller_stop_epoch/' + label, route, lambda r, value=value: (r.caller.update(captured_stop_epoch=value), r.run()), 'schema/caller_decision')
+        case('numbers/user_stop_epoch/2^53', route, lambda r: epoch(r, 1 << 53), None)
+        def sequence(r, value):
+            r.caller['producer_sequence_id'] = value; r.inject_source(json.loads(r.sources[r.source_ref])); r.run()
+        for label, value, expected in [('zero', 0, None), ('2^53', 1 << 53, None), ('negative', -1, source_row), ('boolean', True, source_row)]:
+            case('numbers/producer_sequence_id/' + label, route, lambda r, value=value: sequence(r, value), expected)
+        case('numbers/caller_producer_sequence_id/float_integral', route, lambda r: (r.caller.update(producer_sequence_id=1.0), r.run()), 'schema/caller_decision')
+        # -- shared date-time corpus: the caller's occurred_at_utc (EventRecord profile) through source, decision and envelope
+        def occurred(r, value):
+            r.caller['occurred_at_utc'] = value; r.inject_source(json.loads(r.sources[r.source_ref])); r.run()
+        for x in stamps:
+            case('datetime/occurred_at_utc/' + x['id'], route, lambda r, v=x['value']: occurred(r, v), None if x.get('error') is None else source_row)
+        # -- Storage-assigned clocks on the stored original (Storage UTC-Z), re-cohered with its custody and sealed receipt
+        def stored_clock(r, field, value):
+            r.run()
+            row = r.append_custody[r.frozen['event_id']]
+            event = json.loads(row['event']); event[field] = value
+            row['event'] = canonical(event); row['value_sha256'] = full_commitment(event)
+            full = json.loads(row['full_result']); full['original_event_value_commitment']['sha256'] = full_commitment(event); row['full_result'] = canonical(full)
+            r.stored_event = copy.deepcopy(event)
+            value_hash = full_commitment(event)
+            result = json.loads(r.result); result['event_value_sha256'] = value_hash
+            r.result = canonical(result); r.issued_result_sha256 = sha(r.result); r.store_part('result', result)
+            sealed, installed = adapter.issue(event, r.target['storage_instance_id'], r.first, PAYLOAD_RESOURCES[r.family])
+            r.sealed_receipts = [sealed]; r.installed_recipes = [installed]
+            r.call('inspect', retained=True)
+        for x in stamps:
+            for field in ('observed_at_utc', 'persisted_at_utc'):
+                case(f'datetime/stored_{field}/' + x['id'], route, lambda r, f=field, v=x['value']: stored_clock(r, f, v),
+                     None if storage_ok(x) else 'schema/stored_envelope')
+        # -- acknowledged_at_utc takes the EventRecord profile (E5-2); first receipt and its full-result copy re-cohered
+        def acknowledged(r, value):
+            r.run()
+            row = r.append_custody[r.frozen['event_id']]
+            first = json.loads(row['first']); first['acknowledged_at_utc'] = value
+            row['first'] = canonical(first); r.first = copy.deepcopy(first)
+            full = json.loads(row['full_result']); full['first_append_receipt'] = copy.deepcopy(first); row['full_result'] = canonical(full)
+            result = json.loads(r.result); result['first_receipt_sha256'] = digest(first)
+            r.result = canonical(result); r.issued_result_sha256 = sha(r.result); r.store_part('result', result)
+            event = json.loads(row['event'])
+            sealed, installed = adapter.issue(event, r.target['storage_instance_id'], first, PAYLOAD_RESOURCES[r.family])
+            r.sealed_receipts = [sealed]; r.installed_recipes = [installed]
+            r.call('inspect', retained=True)
+        for x in stamps:
+            case('datetime/acknowledged_at_utc/' + x['id'], route, lambda r, v=x['value']: acknowledged(r, v),
+                 None if x.get('error') is None else 'schema/full_value_result')
+        # -- sealed original receipt selection at the retained reader; every refused read keeps the whole store
+        def reseal_other(r):
+            row = r.sealed_receipts[0]
+            foreign = copy.deepcopy(r.stored_event); foreign['correlation_id'] = 'correlation:other-original'
+            row['original']['record_bytes'] = numbers.storage_value_bytes(foreign)
+            original = numbers.OriginalCustody(numbers.OriginalBinding(**row['original']['binding']), numbers.RecipeTuple(**row['original']['recipe']),
+                                               row['original']['record_bytes'], row['original']['result_bytes'], row['original']['receipt_bytes'])
+            row['seal'] = adapter.retained.seal(original)
+        retained_cases = [
+            ('missing', lambda r: setattr(r, 'sealed_receipts', []), 'original_receipt_missing'),
+            ('ambiguous', lambda r: setattr(r, 'sealed_receipts', r.sealed_receipts * 2), 'original_receipt_ambiguous'),
+            ('bad_seal', lambda r: r.sealed_receipts[0].update(seal='0' * 64), 'original_receipt_seal'),
+            ('bad_shape', lambda r: r.sealed_receipts[0].update(original={'binding': {'event_id': r.frozen['event_id']}}), 'original_receipt_shape'),
+            ('foreign_storage', lambda r: setattr(r, 'retained_storage_instance_id', 'storage:foreign'), 'original_binding'),
+            ('unknown_recipe', lambda r: setattr(r, 'installed_recipes', []), 'recipe_unknown'),
+            ('recipe_catalog_malformed', lambda r: setattr(r, 'installed_recipes', [{'recipe': 'caller'}]), 'recipe_catalog'),
+            ('resealed_other_original', reseal_other, 'original_verification'),
+            ('caller_recipe_override', lambda r: setattr(r, 'recipe_override', 'caller-selected'), 'caller_recipe_override'),
+        ]
+        for method in ('inspect', 'resolve'):
+            case(f'retained/{method}/receipt_selected_original', route, lambda r, m=method: (r.run(), r.call(m, retained=True)))
+            for label, edit, reason in retained_cases:
+                case(f'retained/{method}/{label}', route, lambda r, m=method, edit=edit: (r.run(), edit(r), r.call(m, retained=True)), 'retained/' + reason)
+        # -- distinct-copy joins: the original source copy and the owner caller record, each changed alone
+        def source_only(r, edit):
+            s = json.loads(r.sources[r.source_ref]); edit(s); r.install(s); r.run()
+        case('join/decision/caller_copy', route, lambda r: (r.caller.update(decision='pause' if r.route == 'blocked' else 'continue'), r.run()), 'source/decision')
+        # The source copy of decision/completion_route is a per-route const in the source schema; only the
+        # caller copy can differ lawfully.
+        case('join/stop_epoch/caller_copy', route, lambda r: (r.caller.update(captured_stop_epoch=r.caller['captured_stop_epoch'] + 1), r.run()), 'source/original_epochs')
+        case('join/next_attempt/caller_copy', route, lambda r: (r.caller.update(next_attempt_ref='attempt:other-copy'), r.run()), 'source/continuation_tuple')
+        case('join/next_attempt/source_copy', route, lambda r: source_only(r, lambda s: s.update(next_attempt_ref='attempt:other-copy')), 'source/continuation_tuple')
+        case('join/goal_revision/caller_copy', route, lambda r: (r.caller.update(goal_revision=r.caller['goal_revision'] + 1), r.run()), 'source/continuation_cas')
+        # The original source's fence copy against the owner's live fence: the source copy changed alone (the live
+        # fence keeps authority, so only the join refuses). The live copy changed alone is the changed_<field> case.
+        # (owner_epoch, continuation_epoch and user_stop_epoch also join the caller's captured epochs first.)
+        for field, value in [('manual_stop_latched', True), ('permission', 'deny'), ('writer_epoch', 2),
+                             ('root_generation', 8), ('maintenance_epoch', 1), ('deletion_epoch', 1), ('hold_epoch', 1), ('secret_epoch', 1)]:
+            case(f'join/fence/{field}/source_copy', route, lambda r, f=field, v=value: source_only(r, lambda s: s['fence'].update({f: v})), 'fence/' + field)
+        def cancellation(r):
+            s = json.loads(r.sources[r.source_ref]); s['control_before']['cancellation_receipt_ref'] = 'cancel:1'
+            r.control['cancellation_receipt_ref'] = 'cancel:1'; r.install(s); r.run()
+        case('coherent/cancellation_recorded', route, cancellation, 'authority/cancellation')
+        # -- one witness for each input-side whole-definition row (an extra member breaks the closed definition)
+        order = ('capture', 'reserve', 'commit_body', 'freeze_event', 'append', 'resolve', 'publish', 'inspect')
+        def method_request(r, method):
+            if method == 'inspect':
+                r.run()
+            else:
+                for earlier in order[:order.index(method)]:
+                    r.call(earlier)
+            r.call(method, {**r.request, 'admitted': True}, retained=method == 'inspect')
+        for method in order[1:]:
+            case(f'schema_witness/{method}_request_extra_member', route, lambda r, m=method: method_request(r, m), f'schema/{route}_{method}_request')
+        case('schema_witness/revision_extra_member', route, lambda r: (r.history[0].update(extra='x'), r.run()), 'schema/revision')
+        case('schema_witness/origin_extra_member', route, lambda r: (r.objective_origin.update(extra='x'), r.run()), 'schema/origin')
+        def stored_body_receipt(r):
+            r.run(stop='commit_body'); value = json.loads(r.original_receipts['operation:1']); value['extra'] = 'x'
+            r.original_receipts['operation:1'] = canonical(value); r.call('freeze_event')
+        case('schema_witness/stored_body_receipt_extra_member', route, stored_body_receipt, 'schema/receipt')
+        case('schema_witness/pending_envelope_version', route, lambda r: (r.run(stop='freeze_event'), r.event.update(schema_version='9.9.9'), r.call('append')), 'schema/envelope')
+        case('schema_witness/pending_payload_extra_member', route, lambda r: (r.run(stop='freeze_event'), r.event['payload'].update(extra='x'), r.call('append')), 'schema/payload')
+        def issued_result(r):
+            r.run(); value = json.loads(r.result); value['extra'] = 'x'
+            r.result = canonical(value); r.issued_result_sha256 = sha(r.result); r.call('inspect', retained=True)
+        case('schema_witness/issued_result_extra_member', route, issued_result, f'schema/{route}_result')
+        def stored_result_wrapper(r):
+            r.run(); wrapper = physical_value(r.physical_rows['result']); wrapper['extra'] = 'x'
+            r.physical_rows['result'] = physical_bytes(wrapper); r.call('inspect', retained=True)
+        case('schema_witness/stored_result_wrapper_extra_member', route, stored_result_wrapper, f'schema/storage_{route}_result')
+        def large_malformed_source(r):
+            s = json.loads(r.sources[r.source_ref])
+            refs = (['exception-receipt:1'] if route == 'exception' else []) + ['evidence:' + str(i) + ':' + 'x' * 180 for i in range(100)]
+            if route == 'blocked':
+                s['blocker_evidence_after'] = refs; r.caller['blocker_evidence'] = refs
+            else:
+                s['evidence_refs'] = refs; r.caller['evidence_refs'] = refs
+                r.evidence = {ref: dict(owner='caller:1', revision=1, target=copy.deepcopy(r.target)) for ref in refs}
+            s['schema_version'] = '9.9.9'  # violates only the closed source definition; no later join reads it
+            r.inject_source(s); r.run()
+        case('schema_witness/referenced_source_value', route, large_malformed_source, f'schema/{route}_source')
+        def stored_source_version(r):
+            s = json.loads(r.sources[r.source_ref]); s['schema_version'] = '9.9.9'; r.inject_source(s); r.run()
+        case('schema_witness/stored_source_version', route, stored_source_version, f'schema/storage_{route}_source')
+        if route != 'blocked':
+            case('schema_witness/todo_extra_member', route, lambda r: (r.todo.update(extra='x'), r.run()), 'schema/todo')
+        if route == 'exception':
+            case('schema_witness/approval_request_extra_member', route, lambda r: (r.approval_request.update(extra='x'), r.run()), 'schema/approval_request')
+            case('schema_witness/workflow_inputs_extra_member', route, lambda r: (r.workflow_source_inputs.update(extra='x'), r.run()), 'schema/exception_workflow_inputs')
 
 
 def main(argv=None):
     parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path);args=parser.parse_args(argv)
-    schemas=Schemas();rows=vectors(schemas)
+    global _SCHEMAS
+    schemas=_SCHEMAS=Schemas();rows=vectors(schemas)
     result=dict(status='pass' if all(r['pass_'] for r in rows) else 'fail',activation='TEST_ONLY_PREPARED_WITHOUT_ADMISSION',native_execution='NOT_RUN',cases=len(rows),positives=sum(r['expected'] is None for r in rows),negatives=sum(r['expected'] is not None for r in rows),failures=[r for r in rows if not r['pass_']],schema_resources=len(schemas.resources),schema_references=schemas.reference_count,rows=rows,guard_isolation='SHARED_TOOL_SWEEP_NOT_RUN',number_and_format_sweep='NOT_RUN')
     if args.output:args.output.write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({k:v for k,v in result.items() if k!='rows'},indent=2))
     return 0 if result['status']=='pass' else 1
+
+
+_SCHEMAS = None
+_READS = ('resolve', 'inspect')
+
+
+def _realm_state(realm):
+    return {k: v for k, v in realm.__dict__.items() if k not in ('schemas', 'method_bank')}
+
+
+def _realm_restore(data):
+    realm = Realm.__new__(Realm)
+    realm.__dict__.update(data)
+    realm.schemas = _SCHEMAS
+    key = 'goal.blocked' if realm.route == 'blocked' else 'goal.completed.approved_exception' if realm.route == 'exception' else 'goal.completed'
+    realm.method_bank = _SCHEMAS.methods[key]
+    return realm
+
+
+def _realm_store(args):
+    return {k: v for k, v in args[0].__dict__.items() if k not in ('schemas', 'method_bank', 'active_hook', 'active_request')}
+
+
+# PNC-019 GC: each top-level Realm method call and each top-level schema-boundary call is one complete call.
+# The Realm is turned into data (its whole owner store and request); resolve/inspect are retained reads whose
+# whole store is recorded before and after.
+Realm.call = adapter.complete_entry(Realm.call, 'own_b', Refused, state=_realm_state, restore=_realm_restore,
+                                    store=_realm_store, is_read=lambda args: len(args) > 1 and args[1] in _READS)
+Realm.terminal = adapter.complete_entry(Realm.terminal, 'own_b', Refused, state=_realm_state, restore=_realm_restore)
+Schemas.check = adapter.complete_entry(Schemas.check, 'own_b', Refused, state=lambda schemas: None, restore=lambda data: _SCHEMAS)
 
 
 if __name__=='__main__':

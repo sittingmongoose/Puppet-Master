@@ -17,7 +17,8 @@ from pathlib import Path
 
 try:
     import jsonschema
-    from pm_goal_oracle_common import Audit, Gates, FORMATS, StrictValidator, schema_registry, print_result, load, append_result, append_guards, sha, validator, revision_text, integer_number
+    from pm_goal_oracle_common import Audit, Gates, FORMATS, StrictValidator, schema_registry, print_result, load, append_result, append_guards, sha, current_revision_text, revision_text, current_integer_number as integer_number
+    from pm_goal_gc_adapter import validator  # CV-1100 current integers and ECMA patterns (PNC-019 GC)
 except ImportError as exc:  # pragma: no cover
     print(json.dumps({"status": "error", "reason": f"missing dependency: {exc}"}))
     sys.exit(2)
@@ -40,9 +41,17 @@ FORMAT_CHECKER = FORMATS
 
 def recipe(family: str, inputs: dict) -> tuple[str, str]:
     order = ["storage_instance_id", "project_id", "goal_id", "goal_run_id", "expected_goal_run_revision", "operation_id"]
-    vals = [revision_text(inputs[k]) if k == "expected_goal_run_revision" else inputs[k] for k in order]
+    vals = [current_revision_text(inputs[k]) if k == "expected_goal_run_revision" else inputs[k] for k in order]
     blob = json.dumps([DOMAINS[family], "project"] + vals, separators=(",", ":"), ensure_ascii=False).encode()
     digest = hashlib.sha256(blob).hexdigest()
+    return f"{family}.v1:{digest}", f"{family}.writer.v1:{digest}"
+
+
+def retained_recipe(family: str, inputs: dict) -> tuple[str, str]:
+    """The pre-CV-1100 recipe (retained integer grammar), reachable only when the grammar row is cut."""
+    order = ["storage_instance_id", "project_id", "goal_id", "goal_run_id", "expected_goal_run_revision", "operation_id"]
+    vals = [revision_text(inputs[k]) if k == "expected_goal_run_revision" else inputs[k] for k in order]
+    digest = hashlib.sha256(json.dumps([DOMAINS[family], "project"] + vals, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
     return f"{family}.v1:{digest}", f"{family}.writer.v1:{digest}"
 
 
@@ -138,7 +147,7 @@ def main() -> int:
             failures.append(label)
 
     for family, f in doc["families"].items():
-        v = validator(json.loads((ROOT / f["payload_schema"]).read_text(encoding="utf-8")))
+        v = validator(json.loads((ROOT / f["payload_schema"]).read_text(encoding="utf-8")), schema_registry([ROOT/x["payload_schema"] for x in doc["families"].values()]))
         for case in f["payload_cases"]:
             valid = not list(v.iter_errors(case["value"]))
             if valid:
@@ -154,10 +163,17 @@ def main() -> int:
         for case in f['semantic_payload_cases']:
             audit.case(family+'/payload_semantics/'+case['id'],lambda value,disabled,family=family:payload_semantics(family,value,disabled),case['value'],case['valid'])
         for case in f["identity_cases"]:
-            ev, key = recipe(family, case["inputs"])
-            check((case["event_id"] == ev and case["idempotency_key"] == key) == case["valid"], f"{family} identity:{case['id']}")
+            # CV-1100 / SP-426..427 "written as canonical decimal": the recipe input is a current integer.
+            current = integer_number(case["inputs"]["expected_goal_run_revision"])
+            ev, key = recipe(family, case["inputs"]) if current else (None, None)
+            check((current and case["event_id"] == ev and case["idempotency_key"] == key) == case["valid"], f"{family} identity:{case['id']}")
             def identity(value,disabled,family=family):
-                g=Gates(disabled);event,key=recipe(family,value['inputs'])
+                g=Gates(disabled)
+                current=integer_number(value['inputs']['expected_goal_run_revision'])
+                g.require('identity/'+family+'/revision_current_integer',current)
+                if g.errors:return g.errors
+                # Only with the grammar row removed does a float reach the recipe: the pre-CV-1100 spelling applies.
+                event,key=recipe(family,value['inputs']) if current else retained_recipe(family,value['inputs'])
                 g.require('identity/'+family+'/event',value['event_id']==event)
                 g.require('identity/'+family+'/key',value['idempotency_key']==key)
                 return g.errors

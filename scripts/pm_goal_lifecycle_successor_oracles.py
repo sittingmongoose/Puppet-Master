@@ -5,11 +5,14 @@ import hashlib
 import json
 import re
 import sys
-from pm_goal_oracle_common import ROOT, Audit, Gates, load, validator, schema_registry, canonical, revision_text, integer_number, append_result, append_guards, print_result
+from pm_goal_oracle_common import ROOT, Audit, Gates, load, schema_registry, canonical, current_revision_text, revision_text, current_integer_number as integer_number, append_result, append_guards, print_result
+from pm_goal_gc_adapter import validator  # CV-1100 current integers and ECMA patterns (PNC-019 GC)
 
 def identity(family,v):
+ """SP-429/SP-1121 recipe. The payload schema (current integers, CV-1100) refuses a non-integer revision first;
+ only when that schema row is removed does a float reach here, and the pre-CV-1100 decimal spelling applies."""
  fields=['storage_instance_id','project_id','thread_id','goal_id']
- values=[v[k] for k in fields]+[revision_text(v['before_revision']),v['continuation_id'],v['owning_run_id'],v['next_attempt_ref']]
+ values=[v[k] for k in fields]+[(current_revision_text if integer_number(v['before_revision']) else revision_text)(v['before_revision']),v['continuation_id'],v['owning_run_id'],v['next_attempt_ref']]
  d=hashlib.sha256(json.dumps(['pm.'+family+'.lifecycle.v1','project']+values,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
  return family+'.v1:'+d,family+'.lifecycle.v1:'+d
 
@@ -17,6 +20,7 @@ def predicates(family,c,v,disabled=()):
  g=Gates(disabled);p=c['payload'];before=c['before'];after=c['after'];source=c['source']
  g.schema(v,p,family+'/schema')
  if g.errors:return g.errors
+ # CV-1100: these are current v3 writes, so every owner integer is a current integer (no 3.0, 3e0 or true).
  for field in ('project_id','thread_id','goal_id'):
   g.require('lifecycle/identity/'+field,p[field]==before[field]==after[field]==source[field])
  g.require('lifecycle/revision_cas',integer_number(before['revision']) and p['before_revision']==before['revision'])

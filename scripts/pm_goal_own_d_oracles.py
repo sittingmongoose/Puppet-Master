@@ -17,7 +17,12 @@ import json
 from pathlib import Path
 import zlib
 import struct
+import pickle
+from dataclasses import asdict
 import blake3
+import pm_event_numbers as numbers
+import pm_goal_retained as retained
+import pm_goal_guard_tables as tables
 
 import pm_goal_own_d_event_value_codec as wire
 from pm_goal_oracle_common import (
@@ -53,12 +58,12 @@ def exact(left, right):
 
 def commitment(event):
     """Reuse CV-339's existing full-value tuple and unmodified physical codec."""
-    wire.pack(event, max_bytes=wire.MAX_PAYLOAD)  # Existing full-value recipe's FrameV2 bound.
+    numbers.storage_value_bytes(event)  # Shared SP-1100 physical recipe, preserving number types.
     preimage = [DOMAIN, '1.0.0', CODEC, event['schema_id'], event['schema_version'], event]
     return dict(schema_id=DOMAIN, schema_version='1.0.0', codec=CODEC,
                 domain=DOMAIN, event_schema_id=event['schema_id'],
                 event_schema_version=event['schema_version'],
-                sha256=hashlib.sha256(wire.pack(preimage)).hexdigest())
+                sha256=hashlib.sha256(numbers.storage_value_bytes(preimage)).hexdigest())
 
 
 def partition(event):
@@ -135,7 +140,9 @@ def logical_store(key, protocol):
     if key == 'tool_check_recorded':
         provenance = {f: body[f] for f in ('tool_call_id', 'tool_name', 'check_kind', 'check_result', 'policy_decision')}
     original_protocol = {field: clone(protocol[field]) for field in ('source', 'original')}
-    return dict(key=key, protocol=original_protocol, custody=custody,
+    return dict(key=key, storage_instance_id=custody['storage_instance_id'],protocol=original_protocol, custody=custody,
+                sealed_receipts=[retained.issue(ev, custody['storage_instance_id'], custody)],
+                installed_recipes=[asdict(retained.recipe(ev))],
                 editions={admission['owner_unit']: edition},
                 checkpoints={admission['registry_checkpoint']: clone(edition)},
                 frame=dict(cursor=[3, 'fixture-original.seg', 48, ev['sequence_id']],
@@ -298,6 +305,7 @@ def branch_originals(key, base):
 
 class ReaderOracles:
     def __init__(self):
+        self._established = {}
         self.paths = [OUT_SCHEMA, ER_SCHEMA, CKPT_SCHEMA,
                       PLANS / 'event_append_receipt_contracts.schema.json']
         self.paths += [PLANS / 'event_payloads/goal_runtime' /
@@ -327,6 +335,14 @@ class ReaderOracles:
         source = store['source']
         inaccessible = not store['content_permitted'] or any(source.get(f) is not True for f in
             ('authorized', 'retained', 'reader_available', 'secret_safe', 'frame_verified', 'translation_verified'))
+        try:
+            original = retained.Owner(store).authenticated_original(store['selector']['event_id'])
+            installed = [numbers.RecipeTuple(**row) for row in store['installed_recipes']]
+            if original.binding.storage_instance_id != store['storage_instance_id'] or original.recipe not in installed:
+                raise numbers.Refusal('recipe_unknown')
+        except numbers.Refusal:
+            # Unsupported/missing/ambiguous originals preserve bytes and disclose nothing.
+            inaccessible = True
         # Each existing reader owns its own unavailable/unresolved disposition.
         if inaccessible or ('original_admission' in missing and FAMILIES[key][2] == 'unavailable'):
             answer.update(kind='unavailable', original_event=None, read_token=None,
@@ -344,6 +360,9 @@ class ReaderOracles:
         expected = self.expected(key, store)
         g.require('request/selector', same_json_value(presented['answer']['selector'], store['selector']))
         g.require('request/binding', presented['answer']['reader_binding'] == store['installed_binding'])
+        if expected['kind'] != 'unavailable':
+            g.require('request/family_dispatch', store['original_value']['event_type'] == FAMILIES[key][0])
+        if g.errors:return expected,g.errors
         g.schema(self.answers[key], expected, key + '/independent_answer')
         if expected['kind'] == 'unavailable':
             return expected, g.errors
@@ -352,6 +371,8 @@ class ReaderOracles:
         actual = store['original_value']
         g.schema(self.payloads[key], actual['payload'], key + '/actual_original_payload')
         g.require('references/complete_roles', set(store['references']) == self.roles[key])
+        if g.errors:
+            return expected,g.errors
         body = actual['payload']['payload']
         provenance = store['provenance']
         required_provenance = {
@@ -384,22 +405,23 @@ class ReaderOracles:
             for field, value in provenance.items():
                 g.require(key + '/original/' + field, exact(body.get(field), value))
         for ref, body in store['referenced_bodies'].items():
-            g.require('reference/ref/' + ref, body['ref'] == ref)
-            g.require('reference/declared/' + ref,
+            g.require('reference/ref', body['ref'] == ref)
+            g.require('reference/declared',
                       ref in {r['requested_ref'] for r in store['references'].values()})
-            g.require('reference/owner/' + ref,
+            g.require('reference/owner',
                       body['owner_ref'] == store['references']['source_contract']['owner_ref'])
-            g.require('reference/size/' + ref, type(body['byte_size']) is int and body['byte_size'] == len(body['bytes']))
-            g.require('reference/blake3/' + ref, body['blake3'] == blake3.blake3(body['bytes']).hexdigest())
-            g.require('reference/media_type/' + ref, body['media_type'] == 'text/plain; charset=utf-8')
-            g.require('reference/access/' + ref, body['authorized'] is True)
-            g.require('reference/retained/' + ref, body['retained'] is True)
+            g.require('reference/size', type(body['byte_size']) is int and body['byte_size'] == len(body['bytes']))
+            g.require('reference/blake3', body['blake3'] == blake3.blake3(body['bytes']).hexdigest())
+            g.require('reference/media_type', body['media_type'] == 'text/plain; charset=utf-8')
+            g.require('reference/access', body['authorized'] is True)
+            g.require('reference/retained', body['retained'] is True)
         # Each source field has a complete independent owner value, not a supplied
         # all-true descriptor. Every nested member participates in exact comparison.
         g.require('source/owner/members', set(presented['source']) == set(source))
         for field in source:
             g.require('source/owner/' + field, same_json_value(presented['source'].get(field), source[field]))
         g.require('source/full_original', exact(source['event'], actual))
+        if g.errors:return expected,g.errors
         raw = store['frame']['value']
         g.require('frame/crc32', zlib.crc32(raw) == store['frame']['crc32'])
         decoded = wire.unpack(raw)
@@ -447,6 +469,7 @@ class ReaderOracles:
         if 'original_admission' not in expected['unresolved_obligations']:
             g.require('admission/accepted_edition', edition is not None)
             g.require('admission/approved_checkpoint', checkpoint is not None)
+            if g.errors:return expected,g.errors
             if edition is not None and checkpoint is not None:
                 for field, value in [('owner_unit', admission['owner_unit']),
                                      ('registry_checkpoint', admission['registry_checkpoint']),
@@ -467,6 +490,14 @@ class ReaderOracles:
             actual_protocol['original']['resolved_records'] = clone(store['references'])
             g.errors.update(history_guards(actual_protocol, self.payloads[key], self.answers[key]))
         g.schema(self.answers[key], expected, key + '/independent_answer')
+        if not g.errors and expected['kind'] == 'verified_historical':
+            try:
+                issued = retained.Owner(store).authenticated_original(store['selector']['event_id'])
+                retained.resolve(store,numbers.decode_storage_value(issued.record_bytes),store['storage_instance_id'])
+                verified = True
+            except numbers.Refusal:
+                verified = False
+            g.require('retained/verified_original',verified)
         return expected, g.errors
 
     def _guarded(self, stage, key, presented, store, helper=None):
@@ -479,10 +510,18 @@ class ReaderOracles:
         if stage not in STAGES:
             raise ValueError(stage)
         before = clone(store)
-        try:
-            expected, errors = self.establish(key, presented, before)
-        except (KeyError, TypeError, ValueError, wire.WireError) as exc:
-            return {'errors': ['malformed_input/' + type(exc).__name__], 'answer': None}
+        # This TEST_ONLY adapter has no external IO: the complete owner
+        # snapshot is the input. Reuse only byte-identical immutable
+        # inputs, separately for every guard cut. Final live owner/output
+        # comparisons below always execute after the helper.
+        cache_key = (key, tables.CUT, hashlib.sha256(pickle.dumps((presented,before),protocol=5)).digest())
+        if cache_key not in self._established:
+            if len(self._established) >= 256:
+                self._established.clear()
+            answer, refusal = self.establish(key, presented, before)
+            self._established[cache_key] = (clone(answer),set(refusal))
+        answer, refusal = self._established[cache_key]
+        expected, errors = clone(answer), set(refusal)
         if errors:
             return {'errors': sorted(errors), 'answer': None}
         candidate = clone(presented['answer'])
@@ -490,15 +529,15 @@ class ReaderOracles:
             helper(candidate, presented, store)
         # Pure final comparisons. In production these run under the actual
         # owner's exclusion/lease; this fixture models the logical obligation.
-        errors = []
-        if not exact(candidate, expected):
-            errors.append(stage + '/final_candidate')
+        final = Gates()
+        final.require(stage + '/final_candidate', exact(candidate, expected))
         # Present Goal lifecycle/writer state is not original history or read
         # permission. Actual access, installed READER and all source fences stay
         # in this comparison; only the explicitly separate live runtime does not.
-        if not exact({k: v for k, v in store.items() if k != 'current_runtime'},
-                     {k: v for k, v in before.items() if k != 'current_runtime'}):
-            errors.append(stage + '/final_owner_fence')
+        final.require(stage + '/final_owner_fence', exact(
+            {k: v for k, v in store.items() if k != 'current_runtime'},
+            {k: v for k, v in before.items() if k != 'current_runtime'}))
+        errors = sorted(final.errors)
         if errors:
             return {'errors': errors, 'answer': None}
         return {'errors': [], 'answer': candidate}
@@ -522,6 +561,11 @@ class ReaderOracles:
         return self._guarded('disclosure', key, presented, store, helper)
 
     def boundary(self, stage, key, presented, store, helper=None):
+        if tables.COLLECTOR is not None and tables.COLLECTOR.active is None:
+            return tables.COLLECTOR.invoke(
+                f'own_d/{key}/{stage}/{tables.COLLECTOR.calls}',
+                lambda value: self._guarded(stage, key, value['presented'], value['store'], helper),
+                dict(presented=presented, store=store))
         return getattr(self, stage)(key, presented, store, helper)
 
 
@@ -566,6 +610,10 @@ def run(output=None):
         ok = not result['errors']
         if ok != valid:
             failures.append(dict(case=name, expected=valid, errors=result['errors']))
+        if not valid and guard is not None and guard not in result['errors']:
+            failures.append(dict(case=name,expected_refusal=guard,actual=result['errors']))
+            if tables.COLLECTOR is not None:
+                tables.COLLECTOR.failures.append(failures[-1])
         observations.append(dict(case=name, valid=valid, errors=result['errors']))
         if not valid:
             for actual_guard in result['errors']:
@@ -614,7 +662,7 @@ def run(output=None):
                     label = '/'.join(map(str, path))
                     check(f'{key}/{stage}/presented_{top}/{label}',
                           suite.boundary(stage, key, forged, clone(store)), False,
-                          top + '/owner/' + str(path[0]))
+                          top + '/owner/' + ('references' if top == 'original' and path[0] == 'resolved_records' else str(path[0])))
                 forged = clone(base)
                 forged[top]['foreign_member'] = 'forged'
                 check(f'{key}/{stage}/presented_{top}/foreign_member',
@@ -632,7 +680,7 @@ def run(output=None):
                 replace(forged['answer'], path, different(item))
                 check(f'{key}/{stage}/input/{label}',
                       suite.boundary(stage, key, forged, clone(store)), False,
-                      stage + '/final_candidate')
+                      'request/binding' if path[0]=='reader_binding' else 'request/selector' if path[0]=='selector' else stage + '/final_candidate')
                 def poison(candidate, presented, current, path=path, item=item):
                     replace(candidate, path, different(item))
                 check(f'{key}/{stage}/last_helper/{label}',
@@ -711,6 +759,8 @@ def run(output=None):
         legacy = clone(store)
         legacy['custody'].pop('original_event_value_commitment')
         legacy['custody'].update(schema_id='pm.storage_value.event_append_receipt_custody.v1', schema_version='1.0.0')
+        legacy['sealed_receipts'] = [retained.issue(legacy['original_value'],
+            legacy['custody']['storage_instance_id'], legacy['custody'])]
         for stage in STAGES:
             check(f'{key}/{stage}/retained_v1_receipt',
                   suite.boundary(stage, key, clone(base), clone(legacy)), True)
@@ -761,14 +811,14 @@ def run(output=None):
                     body['byte_size'] = len(body['bytes'])
                 check(f'{key}/{stage}/reference/{field}',
                       suite.boundary(stage, key, clone(base), mutated), False,
-                      'reference/' + ('blake3' if field == 'bytes' else field) + '/' + ref)
+                      'reference/' + {'bytes':'blake3','owner_ref':'owner','byte_size':'size','authorized':'access'}.get(field,field))
             foreign = clone(large)
             body = foreign['referenced_bodies'].pop(ref)
             body['ref'] = 'foreign:source'
             foreign['referenced_bodies']['foreign:source'] = body
             check(f'{key}/{stage}/reference/foreign',
                   suite.boundary(stage, key, clone(base), foreign), False,
-                  'reference/declared/foreign:source')
+                  'reference/declared')
             # Every new original-source guard has a direct full-path witness.
             for field in ('storage_instance_id', 'event_id', 'scope_partition', 'event_type', 'idempotency_key'):
                 changed = clone(store)
@@ -798,7 +848,7 @@ def run(output=None):
                 changed = clone(store)
                 if field == 'cursor':
                     changed['frame'][field][2] += 1
-                    guard = 'frame/full_cursor'
+                    guard = 'frame/selected_cursor'
                 else:
                     changed['frame'][field] += 1
                     guard = 'frame/' + ('durable_end' if field == 'durable_end_offset' else field)
