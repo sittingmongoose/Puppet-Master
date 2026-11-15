@@ -12,6 +12,8 @@ import copy
 import sys
 from pathlib import Path
 from pm_goal_oracle_common import Audit, Gates, ROOT, load, validator, schema_registry, sha, semantic_digest, print_result, materialize_cases, retained_integer_number as integer_number, same_json_value
+import pm_goal_c12_targets as targets
+from pm_event_numbers import Refusal
 
 PLANS = ROOT / 'Plans'
 OUT_SCHEMA = PLANS / 'goal_history_reader_outputs.schema.json'
@@ -60,12 +62,19 @@ def history_guards(case,pv,av,disabled=()):
  g=Gates(disabled);a=case['answer'];ev=a.get('original_event')
  g.schema(av,a,pv.schema['$id']+'/protocol_answer')
  if g.errors or not isinstance(ev,dict): return g.errors
- g.schema(pv,ev['payload'],pv.schema['$id']+'/protocol_payload');joins(a,g)
+ # Structural precondition (justified, C12-GH1): later rows index payload
+ # members the owner schema guarantees; only a decided refusal stops here.
+ if g.schema(pv,ev['payload'],pv.schema['$id']+'/protocol_payload'):return g.errors
+ joins(a,g)
  s=case['source']; p=ev['payload']; old=case['original']; token=a['read_token']
  for field in ('authorized','retained','reader_available','secret_safe','frame_verified','translation_verified'):
   g.require('source/'+field,s[field] is True)
  part='project~'+base64.urlsafe_b64encode(ev['project_id'].encode()).decode().rstrip('=')
- g.require('source/index_key',s['index_key']==f"event_record_index.v2:{part}:{ev['sequence_id']:020d}:{ev['event_id']}")
+ # Total (C12-GH1 G6): only a Storage u64 sequence forms an index key; any
+ # other value refuses here instead of raising in the formatter.
+ sequence=ev['sequence_id']
+ key=f"event_record_index.v2:{part}:{sequence:020d}:{ev['event_id']}" if type(sequence) is int and 0<=sequence<(1<<64) else None
+ g.require('source/index_key',key is not None and s['index_key']==key)
  receipt=old['first_receipt']; admission=old['admission']
  for field,value in [('storage_instance_id',token['storage_instance_id']),('event_id',ev['event_id']),('event_type',ev['event_type']),('payload_schema_id',ev['payload_schema_id']),('idempotency_key',ev['idempotency_key'])]:
   g.require('original/first_receipt/'+field,receipt.get(field)==value)
@@ -84,8 +93,14 @@ def history_guards(case,pv,av,disabled=()):
   g.require('original/record/'+role,record['requested_ref']==record['resolved_ref'] and record['owner_ref']==record['resolved_owner_ref'] and same_json_value(record['revision_at_append'],record['accepted_revision']))
  for field in ('actor_ref','execution_role','requested_provider_ref','effective_provider_ref','requested_model_ref','effective_model_ref','requested_account_ref','effective_account_ref'):
   g.require('original/runtime/'+field,old['runtime'][field]==p[field])
- g.require('original/semantic_digest',old['producer_digest']==semantic_digest(ev))
- original_row_guards(ev,p,old,g)
+ # Total (C12-GH1 G6): an original whose producer digest cannot exist (a
+ # number JCS cannot represent) can never match its recorded digest.
+ try:digest=semantic_digest(ev)
+ except Refusal:digest=None
+ g.require('original/semantic_digest',digest is not None and old['producer_digest']==digest)
+ # The reader applies its own family's original rows (C12-GH1): never a row
+ # set selected by the presented original's event_type.
+ original_row_guards(ev,p,old,g,family=reader_family(pv))
  # The complete disclosure predicate follows every returning validation/hash helper.
  current=case['source']
  g.require('source/unchanged_event',same_json_value(ev,current['event']))
@@ -93,8 +108,14 @@ def history_guards(case,pv,av,disabled=()):
  g.require('source/final_fence',s['captured_fence']==current['final_fence'])
  return g.errors
 
-def original_row_guards(ev,p,old,g):
- f=ev['event_type'];b=p['payload'];facts=old['facts'];pre=facts['state_before'];post=facts['state_after']
+def reader_family(pv):
+ schema_id=pv.schema.get('$id','')
+ for key,(family,_,_) in FAMILIES.items():
+  if 'pm.goal_runtime_event.'+PAYLOAD_FILE.get(key,'goal_'+key)+'.schema.' in schema_id:return family
+ return None
+
+def original_row_guards(ev,p,old,g,family=None):
+ f=family or ev['event_type'];b=p['payload'];facts=old['facts'];pre=facts['state_before'];post=facts['state_after']
  terminal={'completed','cancelled','failed'}
  if f=='goal.child_status_changed':
   g.require('row/child_parent_nonterminal',pre not in terminal)
@@ -194,11 +215,11 @@ def main():
   def payload(value,disabled,pv=pv,key=key):
    g=Gates(disabled);g.schema(pv,value,key+'/payload');return g.errors
   def answer(value,disabled,pv=pv,av=av,key=key):
-   g=Gates(disabled);g.schema(av,value,key+'/answer')
-   if g.errors:return g.errors
+   g=Gates(disabled)
+   # Structural precondition (as history_guards): a decided answer refusal stops.
+   if g.schema(av,value,key+'/answer'):return g.errors
    if isinstance(value.get('original_event'),dict):
-    g.schema(pv,value['original_event']['payload'],key+'/answer_payload')
-    if not g.errors:joins(value,g)
+    if not g.schema(pv,value['original_event']['payload'],key+'/answer_payload'):joins(value,g)
    return g.errors
   for c in fx['schema_cases']:audit.case(f'{key}/schema/{c["id"]}',payload,c['value'],c['valid'])
   for c in fx.get('token_schema_cases', []):
@@ -216,13 +237,15 @@ def main():
    elif c.get('boundary')=='identity_joins':
     def identity_join(value,disabled):
      g=Gates(disabled);joins(value,g);return g.errors
-    audit.case(f'{key}/answer_joins/{c["id"]}',identity_join,c['answer'],c['valid'])
+    audit.case(f'{key}/answer_joins/{c["id"]}',identity_join,c['answer'],c['valid'],
+               target=None if c['valid'] else targets.identity_join_target(key,c))
    elif c.get('boundary')=='answer_schema':
     def shape(value,disabled,av=av,key=key):
      g=Gates(disabled);g.schema(av,value,key+'/answer');return g.errors
     audit.case(f'{key}/answer/{c["id"]}',shape,c['answer'],c['valid'])
    else:audit.case(f'{key}/answer/{c["id"]}',answer,c['answer'],c['valid'])
-  for c in fx.get('join_cases',[]):audit.case(f'{key}/join/{c["id"]}',answer,c['answer'],c['join_valid'])
+  for c in fx.get('join_cases',[]):audit.case(f'{key}/join/{c["id"]}',answer,c['answer'],c['join_valid'],
+                                               target=None if c['join_valid'] else targets.join_target(key,c))
   for c in fx.get('current_canon_cases',[]):
    if canon_admissible(outcome,c['answer'])!=c['current_canon_admissible']:audit.failures.append(key+'/canon/'+c['id'])
   for c in materialize_cases(fx['protocol_cases']):
@@ -239,8 +262,10 @@ def main():
      globals()['semantic_digest']=intercepted
      return history_guards(value,pv,av,disabled)
     finally:globals()['semantic_digest']=original
-   audit.case(f'{key}/protocol/{c["id"]}',protocol,c['input'],c['valid'],base=c.get('base'))
-  for c in fx['refusal_cases']:audit.case(f'{key}/refusal/{c["id"]}',append_guards,c['input'],False,base={'mode':'read'})
+   audit.case(f'{key}/protocol/{c["id"]}',protocol,c['input'],c['valid'],base=c.get('base'),
+              target=None if c['valid'] else targets.protocol_target(key,c))
+  for c in fx['refusal_cases']:audit.case(f'{key}/refusal/{c["id"]}',append_guards,c['input'],False,base={'mode':'read'},
+                                          target=targets.refusal_target(key,c))
   counts[family]=len(fx['protocol_cases'])
  # Exercise actual eager reference resolution, including unused definitions.
  import pm_goal_oracle_common as common

@@ -19,6 +19,13 @@ from pm_goal_history_reader_fixtures import FAMILIES
 from pm_goal_own_d_oracles import logical_store, provenance_original
 
 ROOT = Path(__file__).resolve().parents[1]
+# Declared SP-1101 refusal for each authored retained-read defect (C12-GH1, G4):
+# fixed from the dispatcher's owner semantics, never from an observed result.
+READ_TARGETS = dict(missing='original_receipt_missing', ambiguous='original_receipt_ambiguous',
+    another_original='original_receipt_missing', bad_seal='original_receipt_seal',
+    bad_shape='original_receipt_shape', wrong_original_bytes='original_verification',
+    unknown_recipe='recipe_unknown', foreign_store='original_binding',
+    override='caller_recipe_override', access='current_disclosure')
 REASONS = ('original_receipt_missing','original_receipt_ambiguous','original_receipt_seal',
            'original_receipt_shape','original_binding','recipe_unknown','original_verification',
            'caller_recipe_override','current_disclosure')
@@ -136,7 +143,7 @@ def main():
         raise RuntimeError('Run through pm_goal_guard_sweep.py --source pm_goal_shared_oracles')
     start = len(collector.failures)
     for family, base in originals():
-        collector.invoke(family+'/receipt/valid', check_read, base, True)
+        collector.invoke(family+'/receipt/valid', check_read, base, True, family=family)
         for kind in ('missing','ambiguous','another_original','bad_seal','bad_shape','wrong_original_bytes',
                      'unknown_recipe','foreign_store','override','access'):
             value = copy.deepcopy(base)
@@ -161,7 +168,8 @@ def main():
                 value['recipe_override'] = 'caller-selected'
             elif kind == 'access':
                 store['content_permitted'] = False
-            collector.invoke(family+'/receipt/'+kind, check_read, value, False)
+            collector.invoke(family+'/receipt/'+kind, check_read, value, False,
+                             target='retained/'+READ_TARGETS[kind], family=family)
     run = c.load(ROOT/'Plans/run_started_consumer_contract_fixtures.json')['base']['event']
     corpus = c.load(ROOT/'Plans/event_number_recipe_corpus.json')
     from pm_event_numbers_corpus import _value
@@ -178,20 +186,24 @@ def main():
                 expected = True
             if op == 'integer' and type(value) is int and value < 0:
                 expected = False
-            collector.invoke('shared-corpus/'+field+'/'+case['id'], current_number,dict(event=ev,field=field),expected)
+            target = None if expected else 'numbers/'+field+'/'+(case.get('error') or 'integer_range')
+            collector.invoke('shared-corpus/'+field+'/'+case['id'], current_number,dict(event=ev,field=field),expected,
+                             target=target, family='run.started')
     event = copy.deepcopy(run)
     event['producer_sequence_id'] = (1<<53)+1
     collector.invoke('shared-corpus/producer_sequence_id/jcs_loss_within_physical_range',current_number,
-                     dict(event=event,field='producer_sequence_id'),False)
+                     dict(event=event,field='producer_sequence_id'),False,target='numbers/producer_representable',family='run.started')
     huge = n.current_integer_token('9'*4400)
     for field in ('sequence_id','producer_sequence_id'):
         event = copy.deepcopy(run)
         event[field] = huge
-        collector.invoke('shared-corpus/'+field+'/4400_digits',current_number,dict(event=event,field=field),False)
+        collector.invoke('shared-corpus/'+field+'/4400_digits',current_number,dict(event=event,field=field),False,
+                         target='numbers/sequence_id/integer_range' if field=='sequence_id' else 'numbers/producer_representable',
+                         family='run.started')
     event = copy.deepcopy(run)
     event['producer_sequence_id'] = 10**20
     collector.invoke('shared-corpus/producer_sequence_id/physical_overflow_after_jcs',current_number,
-                     dict(event=event,field='producer_sequence_id'),False)
+                     dict(event=event,field='producer_sequence_id'),False,target='numbers/storage_representable',family='run.started')
     values = [
         ('utc','2026-11-14T12:00:00Z',True,True),
         ('offset','2026-11-14T12:00:00+05:30',True,False),
@@ -204,7 +216,9 @@ def main():
     for field in ('occurred_at_utc','observed_at_utc','persisted_at_utc','acknowledged_at_utc'):
         for label, text, event, storage in values:
             expected = storage if field in ('observed_at_utc','persisted_at_utc') else event
-            collector.invoke('datetime/'+field+'/'+label,timestamp,dict(field=field,value=text),expected)
+            profile = dt.STORAGE_UTC_Z if field in ('observed_at_utc','persisted_at_utc') else dt.EVENT_RECORD
+            collector.invoke('datetime/'+field+'/'+label,timestamp,dict(field=field,value=text),expected,
+                             target=None if expected else 'datetime/'+field+'/'+profile, family='shared')
     # Exercise the actual scheduling chronology helper, including the
     # spellings that Python datetime cannot represent or truncates.
     from pm_goal_history_reader_fixtures import original_row_guards
@@ -221,5 +235,6 @@ def main():
         value=dict(event=copy.deepcopy(sample['source']['event']),original=copy.deepcopy(sample['original']))
         value['event']['payload']['payload']['eligible_at_utc']=before
         value['event']['observed_at_utc']=after
-        collector.invoke('datetime/scheduled-chronology/'+label,chronology,value,valid)
+        collector.invoke('datetime/scheduled-chronology/'+label,chronology,value,valid,
+                         target=None if valid else 'row/scheduled_time', family='goal.scheduled')
     return int(len(collector.failures)>start)

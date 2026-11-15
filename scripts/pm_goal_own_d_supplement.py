@@ -1,8 +1,24 @@
-"""Single-copy witnesses for adopted historical helper predicates; TEST_ONLY."""
+"""Single-copy witnesses for adopted historical helper predicates; TEST_ONLY.
+
+C12-GH1: every witness declares its target before it runs. The edition and
+checkpoint witnesses keep the presented and owner copies coherent (admission
+and first receipt together), so only the edition/checkpoint lookup refuses.
+The source witness is a declared duplicate set: the disclosed source event is
+compared with the authenticated original both at own-D establish
+(source/full_original) and in the history row validator (source/unchanged_event).
+"""
 import copy
 import pm_goal_guard_tables as tables
 import pm_goal_oracle_common as c
 import pm_goal_own_d_oracles as d
+
+
+DEFECTS = [
+    ('source', ('source/full_original', 'source/unchanged_event')),
+    ('edition', 'admission/accepted_edition'),
+    ('checkpoint', 'admission/approved_checkpoint'),
+    ('receipt', 'retained/verified_original'),
+]
 
 
 def main():
@@ -17,9 +33,8 @@ def main():
     for stage in d.STAGES:
         def evaluate(value,s=stage):return suite._guarded(s,key,value['presented'],value['store'])
         value=dict(presented=copy.deepcopy(base),store=copy.deepcopy(store))
-        collector.invoke('own-d-supplement/'+stage+'/control',evaluate,value,True)
-        for defect,expected in [('source','source/full_original'),('edition','admission/accepted_edition'),
-                                ('checkpoint','admission/approved_checkpoint'),('receipt','retained/verified_original')]:
+        collector.invoke('own-d-supplement/'+stage+'/control',evaluate,value,True,family='goal.child_status_changed')
+        for defect,expected in DEFECTS:
             value=dict(presented=copy.deepcopy(base),store=copy.deepcopy(store))
             p,s=value['presented'],value['store']
             if defect=='source':
@@ -27,11 +42,15 @@ def main():
                 p['source']['event']=copy.deepcopy(s['source']['event'])
             elif defect in ('edition','checkpoint'):
                 field='owner_unit' if defect=='edition' else 'registry_checkpoint'
-                p['original']['admission'][field]+=':other'
-                s['protocol']['original']['admission'][field]=p['original']['admission'][field]
+                receipt_field='writer_owner_unit' if defect=='edition' else 'registry_checkpoint'
+                for original in (p['original'], s['protocol']['original']):
+                    original['admission'][field]+=':other'
+                    original['first_receipt'][receipt_field]=original['admission'][field]
             else:
                 s['custody']['first_append_receipt']['acknowledged_at_utc']='2026-11-14T12:00:00Z'
-            result=collector.invoke('own-d-supplement/'+stage+'/'+defect,evaluate,value,False)
-            if set(result['errors'])!={expected}:
-                collector.failures.append(dict(case=stage+'/'+defect,expected=expected,actual=result['errors']))
+            result=collector.invoke('own-d-supplement/'+stage+'/'+defect,evaluate,value,False,target=expected,
+                                    family='goal.child_status_changed')
+            wanted=set(expected) if isinstance(expected,tuple) else {expected}
+            if set(result['errors'])!=wanted:
+                collector.failures.append(dict(case=stage+'/'+defect,expected=sorted(wanted),actual=result['errors']))
     return int(len(collector.failures)>start)
