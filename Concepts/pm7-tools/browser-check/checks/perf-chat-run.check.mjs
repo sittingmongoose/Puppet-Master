@@ -7,7 +7,14 @@
 // roomFrame 52 -> 15, script 256 -> 63 ms a second, a frame's median 9.4 -> 6.4 ms, dropped frames 32 -> 11 a second.
 // Here, on Home, with a run restarted (PM56_DEMO.startWorking()) and nobody touching the page, counted over the WHOLE
 // run (its phases differ: a 4 s window gave 83 to 221 a second before and 24 to 56 after, depending on where it fell):
-//   - the frame callbacks asked for by roomFrame and kickFollow together are at most --set loops (default 80) a second.
+//   - the frame callbacks asked for by roomFrame and kickFollow together are at most --set share (default 2/3) per
+//     refresh of the display (PM7PERF-CHATRUN-FRAMECAP-FLAP): both ask once a frame while something moves, so a count a
+//     second grows with the refresh rate. The cap was 80 a second, set and passed on 120 Hz hosts (80/120 = 2/3); on
+//     Alexis at 238 Hz main's own page read 82.7 (Retro Dark) and flapped. Measured per refresh: main's page lg1
+//     0.14-0.42 (Alexis 238 Hz, 2 runs per surface x 10 looks, 2026-11-15: 32-91 a second, Retro, NieR and Friendly
+//     highest, where the old cap failed 2-3 looks a run); the page with lane C's fix reverted 1.35-1.40 (Alexis) and
+//     before it 1.6-1.9 (Windows main5, 190-229 a second at 120 Hz). --set loops=<n> judges an absolute count a second
+//     instead. The two loops' own shares are logged.
 //     They are told by the asking function's name AND by where it runs: the built page's script#pm56-js, #pm56-app-js
 //     and #pm56-port-js blocks (helpers/built-source.mjs). If neither name is seen at all the cell fails as not judged
 //     (a renamed loop must not pass by being invisible);
@@ -70,7 +77,9 @@ export default async function (t) {
 	const want = String(t.args.looks || 'basic-dark,glass-dark,retro-dark,nier-dark');
 	const looks = want === 'all' ? ALL : want.split(',').filter(Boolean);
 	const parts = String(t.args.parts || 'run,rest,visit').split(',');
-	const loopsMax = Number(t.args.loops || 80), hold = Number(t.args.hold || 4000);
+	// PM7PERF-CHATRUN-FRAMECAP-FLAP: the pair is judged as a share of the display's refresh rate (see the header), or
+	// against an absolute --set loops=<per second> when one is given
+	const loopsShare = Number(t.args.share || 2 / 3), loopsAbs = t.args.loops ? Number(t.args.loops) : null, hold = Number(t.args.hold || 4000);
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
@@ -141,7 +150,10 @@ export default async function (t) {
 				t.log(`${look} run: card records ${dw.places.card.records} (${(dw.places.card.records / dw.secs).toFixed(1)}/s), same-value ${dw.places.card.same}`);
 				const seen = room > 0 || follow > 0;
 				await t.check(`${look} run: the room's and the follow's loops are seen by name`, seen, seen ? `roomFrame ${room.toFixed(1)}/s, kickFollow ${follow.toFixed(1)}/s` : `neither roomFrame nor kickFollow asked for a frame from the chat's blocks: could not judge (${show(chat, cb.secs)})`);
-				if (seen) await t.check(`${look} run: over the whole run roomFrame and kickFollow ask for at most ${loopsMax} frame callbacks a second`, pair <= loopsMax, `${pair.toFixed(1)}/s (roomFrame ${room.toFixed(1)}, kickFollow ${follow.toFixed(1)}) over ${cb.secs.toFixed(1)} s`);
+				const per = (x) => (x / hz).toFixed(3), loopsMax = loopsAbs ?? loopsShare * hz;
+				t.log(`${look} run: per refresh at ${hz.toFixed(0)} Hz: the pair ${per(pair)}, roomFrame ${per(room)}, kickFollow ${per(follow)}`);
+				if (seen && !(hz > 20 && hz < 400)) await t.check(`${look} run: the display's refresh rate could be read`, false, `${hz.toFixed(1)} Hz: could not judge`);
+				else if (seen) await t.check(`${look} run: over the whole run roomFrame and kickFollow ask for at most ${loopsAbs != null ? loopsAbs + ' frame callbacks a second' : (Math.round(loopsShare * 1000) / 1000) + ' frame callbacks per refresh'}`, pair <= loopsMax, `${pair.toFixed(1)}/s = ${per(pair)} per refresh at ${hz.toFixed(0)} Hz (roomFrame ${room.toFixed(1)}/s ${per(room)}, kickFollow ${follow.toFixed(1)}/s ${per(follow)}) over ${cb.secs.toFixed(1)} s; bound ${loopsMax.toFixed(1)}/s`);
 				await t.check(`${look} run: the card is being written (the run shows its progress)`, dw.places.card.found > 0 && dw.places.card.records > 0, `${dw.places.card.records} records in ${dw.secs.toFixed(1)} s`);
 				if (v0.gap != null && v0.gap <= 24) await t.check(`${look} run: a following transcript is still at the bottom half-way through the run`, !!vMid && vMid.gap <= 24, vMid ? `gap ${v0.gap} px at the start, ${vMid.gap} px at 12 s of the run's clock` : 'the run never reached 12 s on its clock: could not judge');
 			}
