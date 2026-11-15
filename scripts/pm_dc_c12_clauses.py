@@ -500,9 +500,9 @@ def candidates(site, value, control_instance, path):
     elif k == "contains" and isinstance(value, list):
         put([])
     if k in ("type", "const", "enum", "anyOf", "oneOf"):
-        # values another control holds where another schema node applies at this location (valid there, so a
-        # value-clause witness need not also break that node)
-        for v2 in SIBLING_VALUES.get(site.template, []):
+        # values another control holds where another schema node applies at this location, or values generated valid
+        # at those nodes (so a value-clause witness need not also break that node)
+        for v2 in SIBLING_VALUES.get(site.template, []) + GEN_AT(site.template):
             if v2 != value:
                 put(copy.deepcopy(v2))
     return out
@@ -955,6 +955,22 @@ def condition_bases(site, instances, by_template):
                             r = None
                         if r is not None:
                             out.append((holder_t, r))
+                            # the same base with an empty array member filled with one item valid at its node
+                            items_node = a.node.get("properties", {}) if isinstance(a.node.get("properties"), dict) else {}
+                            for key, val_ in r.items():
+                                sub = items_node.get(key)
+                                if val_ == [] and isinstance(sub, dict):
+                                    sub_loc = (a.loc[0], a.loc[1] + "/properties/" + _esc(key))
+                                    for arr in generate(sub, a.resolver, sub_loc)[:3]:
+                                        if isinstance(arr, list) and arr:
+                                            r2 = dict(r, **{key: arr})
+                                            try:
+                                                ok2 = node_valid(a.loc, r2)
+                                            except Exception:  # an unresolvable fill is simply not a base
+                                                ok2 = False
+                                            if ok2:
+                                                out.append((holder_t, r2))
+                                                break
                             break
     return out
 
@@ -1081,6 +1097,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
             _gen[id(a.node)] = generated_values(a)
         return _gen[id(a.node)]
     reached = set()
+    _cond_cache = {}
     bases_by_t, valid_base_keys = {}, set()
     for w in witnesses:
         if w.get("sole"):
@@ -1107,11 +1124,28 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
             for a in by_template_all.get(anc_t, []):
                 if a.keyword == "type" and tuple(a.context) == tuple(s.context)[:len(a.context)]:
                     base_values += [(anc_t, v) for v in pool.get(id(a.node), [])[:2] + gen_cache(a)]
+        leaf_values = (pool.get(id(s.node), []) + generated_values(s) + GEN_AT(s.template))[:6]
+        for depth_ in range(len(s.template) - 1, -1, -1):
+            for o in by_template_all.get(s.template[:depth_], []):
+                if ("then" in o.context or "else" in o.context) and o.keyword in ("type", "const", "required", "properties"):
+                    if id(o) not in _cond_cache:
+                        _cond_cache[id(o)] = condition_bases(o, instances, by_template_all)[:2]
+                    for at_c, v_c in _cond_cache[id(o)]:
+                        for lv in leaf_values:
+                            base_values.append(("two_step", (at_c, v_c, lv)))
         for p, inst in instances:
             if done:
                 break
             for at, donor in base_values:
-                base = insert_at(inst, at, donor)
+                if at == "two_step":
+                    at_c, v_c, lv = donor
+                    first_ = insert_at(inst, at_c, v_c)
+                    base = insert_at(first_, s.template, lv) if first_ is not None else None
+                    if base is None and first_ is not None and len(s.template) >= 1 and s.template[-1] == "*":
+                        base = insert_at(first_, s.template[:-1], [lv])
+                    at = s.template
+                else:
+                    base = insert_at(inst, at, donor)
                 if base is None or not validator.is_valid(base):
                     continue
                 db = digest(base)
