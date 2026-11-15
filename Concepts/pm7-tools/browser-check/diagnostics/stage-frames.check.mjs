@@ -6,6 +6,7 @@
 //   --set variants= (default base,blink,tip,quiet)   --set frames= (frames drawn frozen before a capture, default 90)
 //   --set motion=reduce (the system's Reduced Motion, emulated) or motion=app (the app's own, data-motion="reduced")
 //   --set repaint=1 (the stage rastered afresh before each capture: its root on a layer of its own for 6 frames, then off)
+//   --set nudge=1 (Pip's hand moved half a unit for 4 frames and back before each capture, as at rest)
 // How a state is frozen (the hooks the motion clock and the stage already have):
 //   - O55.motion.setTimeScale(0): the motion clock stops, so the stage's loop goes on drawing every frame with dt 0 (its
 //     time, Pip's physics, the typers and the faces stand still); Retro's stepped draw is let through every frame
@@ -81,6 +82,9 @@ const FREEZE = (o) => {
 	st.lastZ = st.sleepZ ? T0 - 1 : T0;
 	st.tgtT = T0 - 5; st.lockT = null; st.sliceT = null; st.coT = T0 - 1;
 	st.bubbleRel = null; st.bubbleRelT = 0; st.bubbleSide = null; st.bubbleClaim = null; st.bubbleKeepOff = null;
+	/* (and stream F's later memory of it, FO-189/191/214/215: whether it talked on this screen, held its usual place, or
+	   was placed for where Pip is going; on pages without them these are new, unread fields) */
+	st.bubbleTalked = false; st.bubbleScreen = null; st.bubbleOver = false; st.bubbleFor = false; st.bubbleBoxT = null;
 	st.tipXY = null; st.swT = T0;
 	// every frozen frame drawn, Retro's stepped draw too, for o.frames frames; then the capture
 	return new Promise((resolve) => {
@@ -90,6 +94,12 @@ const FREEZE = (o) => {
 			if (n === 2) park();
 			/* (repaint: the stage root on a layer of its own for a few frames, then off it, so its whole picture is rastered
 			   afresh before the capture; telling a picture left from earlier frames from one drawn differently) */
+			/* (nudge: Pip's hand half a unit right for a few frames and back, as its sway moves it in every frame at rest, so what
+			   hangs on Pip (its strings, NieR's leader and label, Basic's protractor) is drawn afresh in either build before the
+			   capture: frozen, the branch draws them once and main in every frame, and Chrome's choice of LCD or greyscale text
+			   at that one raster showed as a difference in NieR Dark's label) */
+			if (o.nudge && n === o.frames - 10) { st.__nudgeX = st.ps.C.x; st.ps.C.x += .5; }
+			if (o.nudge && n === o.frames - 6) { st.ps.C.x = st.__nudgeX; delete st.__nudgeX; }
 			if (o.repaint && n === o.frames - 12) st.root.style.willChange = 'transform';
 			if (o.repaint && n === o.frames - 6) st.root.style.willChange = '';
 			if (++n < o.frames) requestAnimationFrame(tick); else requestAnimationFrame(() => requestAnimationFrame(() => resolve('')));
@@ -177,7 +187,7 @@ export default async function (t) {
 			for (const v of variants) {
 				if (v === 'quiet') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.say('', null, true); });
 				if (v === 'tip') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.tip({ id: 'stage-frames-tip', title: 'A note on this', text: 'What this choice means, written out in a few words.' }, true); });
-				const err = await f.evaluate(FREEZE, { t: 40, blink: v === 'blink', frames, cssT, repaint: t.args.repaint === '1' || t.args.repaint === 1 });
+				const err = await f.evaluate(FREEZE, { t: 40, blink: v === 'blink', frames, cssT, repaint: t.args.repaint === '1' || t.args.repaint === 1, nudge: t.args.nudge === '1' || t.args.nudge === 1 });
 				if (err) { await t.check(`${look} ${name} ${v}: frozen`, false, err); await f.evaluate(THAW); continue; }
 				const info = await f.evaluate(INFO), dom = await f.evaluate(DOM);
 				const file = `${String(++n).padStart(2, '0')}-${name}-${v}`;
