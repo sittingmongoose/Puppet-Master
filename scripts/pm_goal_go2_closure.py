@@ -1193,6 +1193,7 @@ def _force(cl, v, target, condition, resolver, want, donors, prefix, member_sche
             if 'const' in sub or 'enum' in sub:
                 target[prop] = copy.deepcopy(sub['const'] if 'const' in sub else sub['enum'][0])
             elif isinstance(sub.get('properties'), dict) and isinstance(target.get(prop), dict):
+                target[prop] = copy.deepcopy(target[prop])  # never edit a subtree shared with the control
                 inner = _force(cl, v, target[prop], sub, sub_res, True, donors, prefix + (prop,))
                 if inner is None:
                     return None
@@ -1218,7 +1219,7 @@ def _force(cl, v, target, condition, resolver, want, donors, prefix, member_sche
             pool += list(cl.deref(n, r)[0].get('enum', []))[:8]
         ranked = sorted(pool, key=lambda x: not fits_own(x)) + ['__remove__']
         for candidate in ranked:
-            trial = copy.deepcopy(target)
+            trial = dict(target)  # only this object's own members change
             if candidate == '__remove__':
                 if prop not in trial:
                     continue
@@ -1473,11 +1474,14 @@ def enter_light(cl, v, control, reach, donors, by_ipath=None):
     """GO2: the members on the way are created as GO's realize() creates them (generated from the step's subschema when
     missing or null), without re-applying every conditional of every object; then each conditional of the reach that is
     not yet taken is entered by _force. Returns (value, protected paths) or None."""
-    value = copy.deepcopy(control)
+    value = copy.copy(control)  # GO2: copy only the containers on the reach's path (each is copied before it is edited)
     path = ()
     steps = reach['steps']
     for number, (segment, child, resolver) in enumerate(steps):
         here = cl.get(value, path)
+        if number:
+            here = copy.copy(here)
+            value = cl.put(value, path, here) if path else here
         last = number == len(steps) - 1
         if segment == '#':
             if not isinstance(here, list):
