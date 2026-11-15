@@ -1,4 +1,5 @@
 """PERF-R5 exceptions accept only main's restored tags under the approved carriers."""
+import copy
 import json
 from pathlib import Path
 import unittest
@@ -32,6 +33,23 @@ class CursorRestoreGuard(unittest.TestCase):
 
     def test_restored_tag_lists_are_pinned(self):
         self.assertEqual(lint._RESTORED_CURSOR_TAGS, PINNED_TAGS)
+
+    def test_changed_carrier_gets_no_exception(self):
+        # PM7PERF-LINT-CARRIERS-FROM-JSON (R26 F5): a carrier added to the JSON's prefix must not move the exception with it
+        for rid in (0, 1, 2, 6):
+            with self.subTest(rule=rid):
+                mutated = copy.deepcopy(RULES)
+                r = next(x for x in mutated['rules'] if x['rule'] == rid)
+                prefix, arms = r['replacement'].rsplit(':where(', 1)
+                widened = prefix.replace(':is(', ':is(.lane-q-added-carrier, ', 1) if ':is(' in prefix else '.lane-q-added-carrier ' + prefix
+                r['replacement'] = widened + ':where(' + arms
+                before = len(lint.CARRIER_DRIFT)
+                known = lint.restored_cursor_known(mutated)
+                self.assertFalse(any(k.startswith(widened) for k in known), 'no exception under the changed carrier')
+                self.assertEqual(len(lint.CARRIER_DRIFT), before + 1, 'and the drift is named')
+                self.assertTrue(lint.published_problems('<style>' + widened + ':where(svg){color:inherit}</style>'))
+                del lint.CARRIER_DRIFT[before:]
+        self.assertEqual(lint.restored_cursor_known(RULES).keys(), {k for k, v in lint.KNOWN.items() if 'PERF-R5' in v})
 
     def test_unrelated_carrier_still_fails(self):
         self.assertTrue(lint.published_problems('<style>.unrelated:hover :where(svg){color:inherit}</style>'))
