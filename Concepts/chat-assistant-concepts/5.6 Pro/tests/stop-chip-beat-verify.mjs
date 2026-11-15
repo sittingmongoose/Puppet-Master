@@ -101,6 +101,10 @@ const LD = evalv('var(--ss-ld)', varsOf({ ss: 'stop', flow: 'flowing' }, {}));
 // its box away (display: none). Both read from send-stop.css.
 const BL_PSEUDO = RULES.some((r) => r.decl.animation && r.sels.some((s) => /\.ss-bl::before$/.test(s) && /data-ss="stop"/.test(s)));
 const NIER_BL_GONE = RULES.some((r) => r.decl.display === 'none' && r.sels.some((s) => /^html\[data-o55-nier="on"\] \.sendstop \.ss-bl$/.test(s)));
+// A hold by marks (the onboarding window's, FO-181's 14-window-hold.js: data-o55-loop on each running loop's element,
+// and on a loop that starts later only when it starts, after its delay): whether send-stop.css holds the backlight
+// while its glyph is marked.
+const BL_FOLLOWS_MARK = RULES.some((r) => /paused/.test(r.decl['animation-play-state'] || '') && r.sels.some((s) => /^\.sendstop:has\(\.ss-g\[data-o55-loop\]\) \.ss-blg$/.test(s)));
 
 /* ---------------------------------------------------------------- the browser */
 const FRAME = 1000 / 120;
@@ -118,13 +122,15 @@ function world({ clockApi = true } = {}) {
 	const cancelAnimationFrame = (id) => { rafs = rafs.filter((x) => x.id !== id); };
 	// shown: the chip is in the document (querySelector finds it); boxless: it is, but has no box (display: none on an
 	// ancestor: the Guided Tour hides the chat with the reply still streaming), so it has no loops
-	const st = { ss: null, flow: null, flowed: false, light: false, nier: false, reduced: false, snap: false, shown: true, boxless: false, held: false };
+	const st = { ss: null, flow: null, flowed: false, light: false, nier: false, reduced: false, snap: false, shown: true, boxless: false, held: false, marks: new Set(), markOn: false };
+	// held: main's element rule (every element of the held parts); marks: the layers whose element carries a hold mark
+	const heldNow = (layer) => (st.held && (layer === 'g' || !BL_PSEUDO)) || st.marks.has(layer) || (layer === 'bl' && BL_FOLLOWS_MARK && st.marks.has('g'));
 	const attrs = new Map(), cls = new Set();
 	let anims = [];
 	class Anim {
 		constructor(layer, spec) {
 			Object.assign(this, { layer, animationName: spec.name, t: { duration: spec.duration, delay: spec.delay }, _start: W.ft, hold: null, playbackRate: 1 });
-			if (st.held && (layer === 'g' || !BL_PSEUDO)) this.hold = 0;
+			if (heldNow(layer)) this.hold = 0;
 			const self = this;
 			this.effect = {
 				getTiming: () => ({ duration: self.t.duration, delay: self.t.delay, iterations: Infinity }),
@@ -226,6 +232,7 @@ function world({ clockApi = true } = {}) {
 		flush();
 		const cbs = rafs; rafs = []; for (const x of cbs) x.cb(W.ft);
 		flush();
+		markStarted();
 		// the commit: what the square showed just before and shows just after, at this moment
 		for (const a of anims) {
 			const now = { start: a._start, hold: a.hold, d: a.t.duration, l: a.t.delay }, was = W.shown.get(a);
@@ -245,13 +252,26 @@ function world({ clockApi = true } = {}) {
 	};
 	// the onboarding window opens (on) or closes: its rule holds every loop on an element (the glyph's; the backlight's
 	// only when it is not on a ::before)
-	W.hold = (on) => {
-		st.held = on;
-		for (const a of [W.glyph(), BL_PSEUDO ? null : W.glow()]) {
-			if (!a) continue;
-			if (on && a.hold == null) a.hold = a.currentTime;
-			if (!on && a.hold != null) { a._start = W.ft - a.hold; a.hold = null; }
+	const syncHolds = () => {
+		for (const a of anims) {
+			const h = heldNow(a.layer);
+			if (h && a.hold == null) a.hold = a.currentTime;
+			if (!h && a.hold != null) { a._start = W.ft - a.hold; a.hold = null; }
 		}
+	};
+	W.hold = (on) => { st.held = on; syncHolds(); };
+	// the window's hold by marks (FO-181): every running loop's element is marked and held; off, every mark comes off
+	W.markHold = (on) => {
+		st.markOn = on;
+		if (on) for (const a of anims) st.marks.add(a.layer); else st.marks.clear();
+		syncHolds();
+	};
+	// FO-181 marks a loop that starts while it holds when it starts (animationstart: once its delay has run out)
+	const markStarted = () => {
+		if (!st.markOn) return;
+		let any = false;
+		for (const a of anims) if (a.hold == null && !st.marks.has(a.layer) && a.currentTime >= a.t.delay) { st.marks.add(a.layer); any = true; }
+		if (any) syncHolds();
 	};
 	// where the compositor shows a loop now (by what it was handed last) and where it will show it once handed this
 	W.shownNow = (a) => shown(W.shown.get(a), W.clock);
@@ -705,6 +725,28 @@ const CASES = {
 		assert.equal(pace(V), 1320, `a word after: the flowing length at Fast, ${pace(V)} ms`);
 		out.push('words stopped while hidden: waiting when shown; the next word at the speed set while hidden');
 		return out.join('; ');
+	},
+	'a backlight loop made anew under a hold by marks (FO-181) is held with its glyph from its start, and starts with it after (R40 F1, dry merge)': () => {
+		// F's FO-181 holds the app's loops by marks: those running when the window opens, and a loop that starts later
+		// only at its animationstart, once its delay has run out. Under the window over a NieR look the backlight comes
+		// back as a new loop: unheld through its delay while the glyph was held, it started on its own, and the first
+		// change after the window stepped it 0.31-0.35 of a loop (dry merge 1e316a1b43 + main + FO-181, Alexis, both
+		// surfaces). Under main's element rule (no marks) the new loop is held from its start.
+		const W = start({}, true);
+		feed(W, 1500);
+		W.set('nier', true); W.run(100);                             // NieR Mode: no backlight
+		W.markHold(true);                                            // the window opens: the glyph's element marked, held
+		W.set('nier', false); W.run(50);                             // the window over NieR: a new backlight loop
+		const i0 = W.frames.length;
+		W.until(() => W.attrs.get('data-flow') === 'waiting', 3000);  // no words: the waiting change, under the hold
+		W.run(2500);                                                 // the window stays open (the new loop's delay runs out)
+		W.markHold(false); W.run(300);                               // the window closes: every mark off
+		W.api.token('one'); W.run(300);                              // the first change after it
+		W.until(() => W.attrs.get('data-flow') === 'waiting', 3000);
+		W.until(() => W.glow() && W.glow().place() != null, 6000); W.run(100);
+		assert.ok(apart(W) < 1e-6, `the backlight is ${apart(W).toFixed(4)} of a loop from the glyph`);
+		smooth(W, i0); smooth(W, i0, 'b');
+		return `with the glyph after the window: ${apart(W).toFixed(6)} apart, no step`;
 	},
 	"another thread's words do not change the pace": () => {
 		const W = start({}, false);
