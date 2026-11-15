@@ -5034,6 +5034,7 @@
     "WS-012",
     "DL-340",
     "DL-470",
+    "DL-511",
     "PLS-027",
     "PSMERA-014",
     "DR-077",
@@ -40637,6 +40638,16 @@
       "edge_type": "depends_on",
       "from": "DL-510",
       "to": "DL-455"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-511",
+      "to": "DL-334"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-511",
+      "to": "PLS-026"
     },
     {
       "edge_type": "depends_on",
@@ -142334,7 +142345,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-14T16:55:46Z",
+  "generated_at_utc": "2026-11-14T23:22:48Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -188741,6 +188752,23 @@
         "heading_level": 3,
         "heading_line": 32524,
         "line": 32526,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "semantic_audit_closure",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-511",
+      "reasoning_tier": "high",
+      "risk_class": "governance_integrity",
+      "source_location": {
+        "heading": "DL-511 - A Supplemental Closure Row May Replace The Frozen Matrix Row It Names",
+        "heading_level": 3,
+        "heading_line": 32564,
+        "line": 32566,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -245094,8 +245122,8 @@
       "source_location": {
         "heading": "PLS-027 - Append-Only Audit Correction Records",
         "heading_level": 3,
-        "heading_line": 1721,
-        "line": 1723,
+        "heading_line": 1755,
+        "line": 1757,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -291807,10 +291835,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 23489,
+    "depends_on_edge_count": 23491,
     "downstream_blocked_node_count": 0,
-    "edge_count": 26707,
-    "node_count": 8792,
+    "edge_count": 26709,
+    "node_count": 8793,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0

@@ -2,13 +2,13 @@
 
 This generated index separates immutable historical report headers from current presentation status. Old `FINAL_REPORT.md` files are not rewritten; finding-level closure authority remains `Plans/.audits/_semantic_closure_registry.jsonl`.
 
-- Generated: `2026-11-14T04:56:20Z`
+- Generated: `2026-11-14T23:37:20Z`
 - Reports indexed: 71
 - Current blockers: 18
 - Current report blockers: 0
 - Reopened finding blockers: 18
 - Historical BLOCKED/FAIL reports indexed: 25
-- Closure registry rows: 1215
+- Closure registry rows: 1217
 
 ## Active reopened findings
 
@@ -52,7 +52,7 @@ This generated index separates immutable historical report headers from current 
 | `audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 26 |
 | `audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 0 |
 | `audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity` | `PASS_WITH_WARNINGS` | `reported_pass_or_pass_with_warnings` | false | 14 |
-| `audit-20260617-006-semantic-closure-registry-fidelity` | `PASS_WITH_WARNINGS` | `reported_pass_or_pass_with_warnings` | false | 71 |
+| `audit-20260617-006-semantic-closure-registry-fidelity` | `PASS_WITH_WARNINGS` | `reported_pass_or_pass_with_warnings` | false | 75 |
 | `audit-20260617-007-semantic-closure-registry-post-repair-fidelity` | `PASS_WITH_WARNINGS` | `reported_pass_or_pass_with_warnings` | false | 80 |
 | `audit-20260617-008-semantic-closure-registry-repair-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 34 |
 | `audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity` | `PASS_WITH_WARNINGS` | `reported_pass_or_pass_with_warnings` | false | 0 |

@@ -1,0 +1,73 @@
+{
+  "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+  "closures": [
+    {
+      "appended_line": 24,
+      "appended_registry_line": 1216,
+      "appended_registry_sha256": "68bad391310597e2f1ffc1be0c4316f0cef877a85f222c94d1a765effb32ceba",
+      "appended_row_sha256": "455f850dd1ac642ac36aa4b710f730b8f8973812c03af28cd330f17b7805c755",
+      "closes": {
+        "source_artifact": "validator_results.json",
+        "source_row": "results.pm-audit-closure validate audit-dir warning-only"
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/_semantic_closure_registry.jsonl#jsonl=closure_id=closure-audit-20260617-006-semantic-closure-registry-fidelity-022": "d748945db3b40faec2e1b48d95061b4049b123c685c39348f1d6cdbe9412b30f",
+        "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_closure_matrix.jsonl#jsonl=registry_closure_id=closure-audit-20260617-006-semantic-closure-registry-fidelity-022": "f23b9573af7333cd840d4d282a64a88c605f0319052048177480bb71d9c379c4",
+        "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/validator_results.json#json=/results/1": "7e1fa88b9671453adf7a31fb7614884dd2dd7a788e7a67c9b9072cd62f131c1f",
+        "Plans/Plan_Document_System.md#unit=PDS-014": "bd7ecf92aab486149bc0a5a4b186ba759c721f05c7617119ff8b9d013efcab5c",
+        "scripts/pm-audit-closure.py#pydef=validate_audit_dir": "d184531c08241bcf1703a330740ca28307a9ffbc05e9aedb48ef11fc5791205e"
+      },
+      "finding_key": "sfk-97f998672171c3cf4186607b",
+      "observation_commit": "39b1e10204d9637ceda752795e580ed413a96555",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261114-audit-20260617-006-semantic-closure-registry-fidelity-validator-results-json-results-pm-audit-closure-validate-audit-dir-warning-only",
+      "replaced_finding_key": "sfk-8e82e431df11de56f61cbea0",
+      "replaced_registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-022",
+      "replaced_row_sha256": "08925e96548198e3bfa932117e5cbfd10d063ff71c91d89f8176d13999c39914",
+      "replacement_reason": "Frozen line 22 declares scripts/pm-audit-closure.py as its owner (finding_key sfk-8e82e431df11de56f61cbea0), while the registry closure it names carries the corrected owner PDS-014 (sfk-97f998672171c3cf4186607b), so its registry link does not hold. This row closes the same source row with the same status under the corrected identity and links a new audit-006 registry closure; line 22 stays unchanged as history.",
+      "replaces_matrix_line": 22,
+      "route": "replace_frozen_row"
+    },
+    {
+      "appended_line": 25,
+      "appended_registry_line": 1217,
+      "appended_registry_sha256": "4f78e897eff9e6ece1f75415120e54578d1732d8d0f6921d24dacfa8201fa141",
+      "appended_row_sha256": "03616138f51318721a24745ad8b726e41fa4e166577f75a6f8fba800184f2d86",
+      "closes": {
+        "source_artifact": "validator_results.json",
+        "source_row": "results.pm-audit-closure validate registry"
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/_semantic_closure_registry.jsonl#jsonl=closure_id=closure-audit-20260617-006-semantic-closure-registry-fidelity-023": "78944a9b221b485e9f22dc72bbc0a1fa89fd2b6abd8659e510ba1aa08c32efa6",
+        "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/repair_closure_matrix.jsonl#jsonl=registry_closure_id=closure-audit-20260617-006-semantic-closure-registry-fidelity-023": "db3f6d020b78864496354faf721b740d4b40c7e5b7f456e6303da66ad4788c88",
+        "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/validator_results.json#json=/results/0": "5a177b07c6a40845ea42442a90b2b6c6cc9b680d65fa03b97a22b4fea83e9129",
+        "Plans/Planning_Ledger_System.md#unit=PLS-012": "5cd4e4125213bee140f4d185b7b83dfb9f944355d17d6b83e127276f51064a85"
+      },
+      "finding_key": "sfk-ffa281aedb68dcde7f8d9e66",
+      "observation_commit": "39b1e10204d9637ceda752795e580ed413a96555",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261114-audit-20260617-006-semantic-closure-registry-fidelity-validator-results-json-results-pm-audit-closure-validate-registry",
+      "replaced_finding_key": "sfk-0ffa1faea828f2ca3d91480d",
+      "replaced_registry_closure_id": "closure-audit-20260617-006-semantic-closure-registry-fidelity-023",
+      "replaced_row_sha256": "8ce50d26356a9196167168d194ac1ec16d323dbac3a74e4888d9ad5d5a458522",
+      "replacement_reason": "Frozen line 23 declares Plans/.audits/_semantic_closure_registry.jsonl as its owner (finding_key sfk-0ffa1faea828f2ca3d91480d), while the registry closure it names carries the corrected owner PLS-012 (sfk-ffa281aedb68dcde7f8d9e66), so its registry link does not hold. This row closes the same source row with the same status under the corrected identity and links a new audit-006 registry closure; line 23 stays unchanged as history.",
+      "replaces_matrix_line": 23,
+      "route": "replace_frozen_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-511",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "replace_frozen_row",
+    "source": "Jared, card C-A006, answer A (\"Change the rule so a correction can replace a frozen record\"), 2026-11-14T20:39:58Z, no added words; signed answer /mnt/Cursor/agent-reports/v1/answers/vm.pm-closure-lead--C-A006.json (SHA-256 ebbc55c2ed72504b9e9d2145ac92855629d9bc7e2a4553f2a594aecc0d493218)",
+    "under": "Plans/Decision_Log.md#DL-334"
+  },
+  "matrix": {
+    "original_rows": 23,
+    "original_sha256": "cec3487b33672d3d75583acf6d17a6b468a1140654fb562ec2036f299e5bc36d",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260617-006-semantic-closure-registry-fidelity-supplemental-20261114",
+  "reviews": "pending: cheap recheck, then Sol 6.1 max and Astra max, blind (stream C review rule); the re-audits of registry rows 1203, 25 and 35 follow at the landed commit",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}
