@@ -762,13 +762,33 @@ const CASES = {
 		W.render({ busy: false }); W.run(200);
 		assert.deepEqual(W.armed(), { timers: 0, rafs: 0, observing: 0 });
 		return 'ok';
+	},
+	// R40 F3, constructed: two backlight samples a second apart, place 1 -> 1.4125 at 3200 ms, and a hand-over
+	// record {layer:'bl', before:1.3125, after:1.4125}. The frame step stays inside one frame at the faster pace.
+	// The hand-over is 0.1 of a loop. Frames call this loop `b`; the record says `bl`.
+	'a backlight hand-over record is judged, not only the glyph\'s (constructed)': () => {
+		const W = {
+			k: 1,
+			frames: [
+				{ t: 0, g: { a: 1, place: 1, dur: 3200 }, b: { a: 2, place: 1, dur: 3200 } },
+				{ t: 1000, g: { a: 1, place: 1.4125, dur: 3200 }, b: { a: 2, place: 1.4125, dur: 3200 } },
+			],
+			jumps: [{ i: 1, t: 1000, layer: 'bl', before: 1.3125, after: 1.4125, d: 3200 }],
+		};
+		assert.throws(() => smooth(W, 0, 'b'), /backlight/);
+		return 'the 0.1 backlight hand-over is rejected';
 	}
 };
 
 let failed = 0;
+const clocksSeen = new Set();
 console.log(`send-stop pace model: ${ref ? `files at ${ref}` : 'this tree'}; --ss-ld ${LD} ms`);
 for (const [name, fn] of Object.entries(CASES)) {
 	try { console.log(`PASS ${name}: ${fn()}`); } catch (e) { failed++; console.log(`FAIL ${name}: ${e.message.split("\n")[0]}`); if (process.env.TRACE) console.log(e.stack); }
+}
+if (!clocksSeen.has('plain') || !clocksSeen.has('film')) {
+	failed++;
+	console.log(`FAIL both clocks: cases ran on ${[...clocksSeen].join(' and ') || 'one clock (the stub has no scale, so clockNow takes the film clock)'}`);
 }
 console.log(failed ? `${failed} of ${Object.keys(CASES).length} failed` : `all ${Object.keys(CASES).length} passed`);
 process.exit(failed ? 1 : 0);
