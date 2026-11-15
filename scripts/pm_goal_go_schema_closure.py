@@ -24,9 +24,11 @@ Clauses inside an `if` (a selector) and inside a `not` (the `not` keyword is the
 The clause cut uses the validator's own per-keyword disable context (pm_goal_oracle_common._SCHEMA_CONTEXT);
 nothing is edited. Schema-boundary controls and witnesses earn no lifecycle or row credit.
 
-Carry (GO addition): `--carry FILE@TOOL_COMMIT ...` closes the selected roots again but searches only the clauses
-that FILE left UNCOVERED; every other clause is copied with `carried_from` (report, its tool commit, its class), so a
-carried witness keeps the tool version that produced it. Provenance: `closure_tool_sha256` is the hash of this file
+Carry (GO addition): `--carry FILE@TOOL_COMMIT ...` closes the selected roots again but copies only the clauses
+FILE classified by a witness (KILLED, COVERED_LATER: a recorded input and real validations), with `carried_from`
+(report, its tool commit, its class), so a carried witness keeps the tool version that produced it. Every other
+clause (UNREACHABLE, VACUOUS, SELECTOR_OR_NEGATED, COVERED_BY_CONST, UNCOVERED) is classified again by this tool,
+because those classes quantify over the walk's reaches. Provenance: `closure_tool_sha256` is the hash of this file
 when the run imported it (the code that ran), not when the run ended.
 
 Usage: python3 scripts/pm_goal_go_schema_closure.py --out FILE [--budget N]
@@ -51,6 +53,7 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_goal_oracle_common as common  # noqa: E402
 
 TOOL_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()  # the code this process imported
+WITNESSED = ('KILLED', 'COVERED_LATER')  # classes resting on a recorded input and real validations (--carry copies only these)
 
 ASSERT = {'type', 'enum', 'const', 'required', 'minLength', 'maxLength', 'pattern', 'format', 'minimum', 'maximum',
           'exclusiveMinimum', 'exclusiveMaximum', 'multipleOf', 'minItems', 'maxItems', 'uniqueItems', 'minProperties',
@@ -139,6 +142,13 @@ def deref(node, resolver, seen=None):
 UNRESOLVED = []  # (location, ref) of $refs the root's own resolver cannot resolve (GO addition)
 
 
+def ctx_key(entry):
+    """GO fix: a context entry names its owner node, not only (kind, instance depth, index). GC's walk keyed reaches by
+    (kind, depth, index), so a node reached through two different conditionals (or unions) at the same depth kept
+    only the first: every proof that quantifies over all reaches of a clause read an incomplete list."""
+    return (entry[0], entry[1], entry[2], id(entry[3]))
+
+
 def walk(v):
     """Every schema node with: the instance path patterns that reach it and the conditions on the way."""
     nodes = {}
@@ -146,7 +156,7 @@ def walk(v):
         if not isinstance(node, dict) or depth > 40:
             return
         location = node.get('x-pm-oracle-id', json.dumps(node, sort_keys=True))
-        key = (location, ipath, tuple(c[:3] for c in ctx))
+        key = (location, ipath, tuple(ctx_key(c) for c in ctx))
         if key in seen:
             return
         seen.add(key)
@@ -611,17 +621,30 @@ def excluded_by_cases(info, nodes):
 
 
 def union_prefix(ctx, depth):
-    """The union alternatives (anyOf/oneOf entries) a reach is inside, up to an instance depth."""
-    return tuple(c[:3] for c in ctx if c[0] in ('anyOf', 'oneOf') and c[1] <= depth)
+    """The scope a reach is evaluated in, up to an instance depth: the union alternatives (anyOf/oneOf entries) it is
+    inside up to that depth, and every conditional branch (then/else entry, by owner node) it is inside."""
+    return (tuple(ctx_key(c) for c in ctx if c[0] in ('anyOf', 'oneOf') and c[1] <= depth),
+            frozenset(ctx_key(c) for c in ctx if c[0] in ('then', 'else')))
+
+
+def applies(r, scope):
+    """A node reached by r constrains every instance the scoped reach is evaluated for: r is inside exactly the same
+    union alternatives and only inside conditional branches the scoped reach is also inside (whenever the scoped
+    clause is evaluated those branches are taken, so r's node is evaluated too); never inside if/not/contains."""
+    unions, branches = scope
+    keys = [ctx_key(c) for c in r['ctx']]
+    return (tuple(k for k in keys if k[0] in ('anyOf', 'oneOf')) == unions
+            and all(k in branches for k in keys if k[0] in ('then', 'else'))
+            and not any(k[0] in APART or k[0] == 'if' for k in keys))
 
 
 def pinned(nodes, ipath, union):
-    """Allowed values at an instance location from nodes reached there inside exactly the same union alternatives and
-    no conditional: the intersection of their const/enum/null-type constraints, or None when nothing pins it."""
+    """Allowed values at an instance location from nodes whose reach there applies to the scope (see applies): the
+    intersection of their const/enum/null-type constraints, or None when nothing pins it."""
     allowed = None
     for n in nodes.values():
         for r in n['reach']:
-            if r['ipath'] != ipath or tuple(c[:3] for c in r['ctx']) != union:
+            if r['ipath'] != ipath or not applies(r, union):
                 continue
             node = n['node']
             if 'const' in node:
@@ -639,7 +662,7 @@ def pinned(nodes, ipath, union):
 
 def required_at(nodes, ipath, prop, union):
     return any(prop in (n['node'].get('required') or []) for n in nodes.values() for r in n['reach']
-               if r['ipath'] == ipath and tuple(c[:3] for c in r['ctx']) == union)
+               if r['ipath'] == ipath and applies(r, union))
 
 
 def condition_values(sub):
@@ -1190,19 +1213,70 @@ def family_roots(collector, roots):
     return out
 
 
+def self_test():
+    """GO standing trials for the reach walk and the scoped pins (run with --self-test)."""
+    import jsonschema
+    shared = {"x-pm-oracle-id": "S", "type": "string", "minLength": 3}
+    schema = {"x-pm-oracle-id": "R", "type": "object", "required": ["kind", "a"], "properties": {
+        "kind": {"x-pm-oracle-id": "K", "enum": ["x", "y"]},
+        "a": {"x-pm-oracle-id": "A", "type": "object", "required": ["k2", "v"], "properties": {"k2": {"x-pm-oracle-id": "K2", "enum": ["p", "q"]}, "v": {"x-pm-oracle-id": "V"}},
+              "allOf": [
+                  {"x-pm-oracle-id": "C0", "if": {"x-pm-oracle-id": "C0if", "properties": {"k2": {"x-pm-oracle-id": "C0ifk", "const": "p"}}}, "then": {"x-pm-oracle-id": "C0then", "properties": {"v": shared}}},
+                  {"x-pm-oracle-id": "C1", "if": {"x-pm-oracle-id": "C1if", "properties": {"k2": {"x-pm-oracle-id": "C1ifk", "const": "q"}}}, "then": {"x-pm-oracle-id": "C1then", "properties": {"v": shared}}}]}},
+        "allOf": [{"x-pm-oracle-id": "P", "properties": {"a": {"x-pm-oracle-id": "Pa", "properties": {"k2": {"x-pm-oracle-id": "Pk2", "const": "q"}}}}}]}
+    v = jsonschema.Draft202012Validator(schema)
+    nodes = walk(v)
+    reaches = nodes['S']['reach']
+    print('S reaches', len(reaches), [[(c[0], c[1], c[3].get('x-pm-oracle-id')) for c in r['ctx']] for r in reaches])
+    assert len(reaches) == 2, 'two conditionals at the same depth must give two reaches'
+    # The clause S/minLength: reach via C0 is unreachable (k2 pinned to q), via C1 reachable -> no UNREACHABLE proof allowed
+    proof = pinned_proof(nodes['S'], nodes, v)
+    print('S proof', proof)
+    assert proof is None or proof['cls'] != 'UNREACHABLE', 'must not claim UNREACHABLE: the C1 reach is live'
+    # A node only under C0: unreachable
+    schema2 = json.loads(json.dumps(schema).replace('"properties": {"v": {"x-pm-oracle-id": "S", "type": "string", "minLength": 3}}}}, {"x-pm-oracle-id": "C1"', '"properties": {"v": {"x-pm-oracle-id": "S0", "type": "string", "minLength": 3}}}}, {"x-pm-oracle-id": "C1"', 1))
+    v2 = jsonschema.Draft202012Validator(schema2)
+    n2 = walk(v2)
+    p2 = pinned_proof(n2['S0'], n2, v2)
+    print('S0 proof', p2)
+    assert p2 and p2['cls'] == 'UNREACHABLE'
+    # a pin under an else the reach is also under
+    schema3 = {"x-pm-oracle-id": "R3", "type": "object", "required": ["state", "r"], "properties": {"state": {"x-pm-oracle-id": "st", "enum": ["a", "b"]}, "r": {"x-pm-oracle-id": "r"}},
+      "if": {"x-pm-oracle-id": "if3", "properties": {"state": {"x-pm-oracle-id": "if3s", "const": "a"}}},
+      "then": {"x-pm-oracle-id": "then3", "properties": {"r": {"x-pm-oracle-id": "rnull", "type": "null"}}},
+      "else": {"x-pm-oracle-id": "else3", "properties": {"r": {"x-pm-oracle-id": "rU", "allOf": [
+          {"x-pm-oracle-id": "U", "type": "object", "required": ["cid"], "properties": {"cid": {"x-pm-oracle-id": "cid", "type": ["string", "null"]}, "kind": {"x-pm-oracle-id": "kind"}},
+           "allOf": [{"x-pm-oracle-id": "U0", "if": {"x-pm-oracle-id": "U0if", "properties": {"cid": {"x-pm-oracle-id": "U0c", "type": "null"}}}, "then": {"x-pm-oracle-id": "U0then", "properties": {"kind": {"x-pm-oracle-id": "U0kind", "const": "rej"}}}}]},
+          {"x-pm-oracle-id": "pin", "properties": {"cid": {"x-pm-oracle-id": "pincid", "const": "cmd"}}}]}}}}
+    v3 = jsonschema.Draft202012Validator(schema3)
+    n3 = walk(v3)
+    p3 = pinned_proof(n3['U0kind'], n3, v3)
+    print('U0kind proof', p3)
+    assert p3 and p3['cls'] == 'UNREACHABLE'
+    print('closure self-test pass: two same-depth conditionals keep two reaches; no UNREACHABLE while one reach is live; pins under a shared else apply')
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--out', type=Path)
+    parser.add_argument('--self-test', action='store_true', help='run the walk and pin standing trials and exit')
     parser.add_argument('--budget', type=int, default=40000, help='validations per root')
     parser.add_argument('--shard', default='0/1', help='i/n: close only the roots whose sorted index is i mod n')
     parser.add_argument('--roots', nargs='*', help='close only roots containing one of these substrings')
     parser.add_argument('--per-clause', type=int, default=0, help='raise a root budget to this many validations per clause')
     parser.add_argument('--seeds', choices=('controls', 'authored'), default='controls', help='seed policy (see collect)')
+    parser.add_argument('--skip-roots', nargs='*', default=[], help='skip roots containing one of these substrings')
     parser.add_argument('--carry', nargs='*', default=[], help='FILE@TOOL_COMMIT: for the selected roots found in FILE, '
-                        'copy every clause FILE did not leave UNCOVERED and search only the UNCOVERED ones (later files win)')
+                        'copy the clauses FILE classified by a witness (KILLED, COVERED_LATER; across files a KILLED witness wins) and '
+                        'classify every other clause again')
     parser.add_argument('--merge', nargs='*', help='merge reports into --out (no collection); FILE or FILE@TOOL_COMMIT; '
                         'later files replace earlier ones root by root')
     args = parser.parse_args()
+    if args.self_test:
+        return self_test()
+    if args.out is None:
+        parser.error('--out is required')
     if args.merge:
         return merge(args.merge, args.out)
     part, total = map(int, args.shard.split('/'))
@@ -1218,15 +1292,18 @@ def main():
                 continue
             label = dict(report=Path(path).name, report_sha256=hashlib.sha256(Path(path).read_bytes()).hexdigest(),
                          closure_tool=entry.get('closure_tool') or commit)
-            carry[root] = (label, {c: dict(x, carried_from=dict(x.get('carried_from') or label, cls=x['cls']))
-                                   for c, x in entry['clauses'].items() if x['cls'] != 'UNCOVERED'})
+            labels, kept = carry.setdefault(root, ([], {}))
+            labels.append(label)
+            for c, x in entry['clauses'].items():  # every file's witnesses join; a KILLED witness beats COVERED_LATER
+                if x['cls'] in WITNESSED and (c not in kept or (kept[c]['cls'] != 'KILLED' and x['cls'] == 'KILLED')):
+                    kept[c] = dict(x, carried_from=dict(x.get('carried_from') or label, cls=x['cls']))
     collector, roots = collect()
     families = family_roots(collector, roots)
     print(f'roots {len(roots)}; shard {part}/{total}', file=sys.stderr, flush=True)
     report = dict(method=__doc__.split('\n\n')[0], adapted_from='scripts/pm-goal-gc-schema-closure.py@c0482747da',
                   calls=collector.calls, failures=collector.failures, roots={}, native_execution='NOT_RUN')
     for number, (root, slot) in enumerate(sorted(roots.items())):
-        if number % total != part or (args.roots and not any(s in root for s in args.roots)):
+        if number % total != part or (args.roots and not any(s in root for s in args.roots)) or any(s in root for s in args.skip_roots):
             continue
         v = slot['validator']
         seeds = list(slot['seeds'].values())
@@ -1250,7 +1327,7 @@ def main():
                                      branch_controls=branch_controls, validations=spent, counts=dict(counts), clauses=entries,
                                      unresolved_refs=list(UNRESOLVED))
         if root in carry:
-            report['roots'][root]['carried'] = dict(carry[root][0], clauses=sum(1 for e in entries.values() if e.get('carried_from')))
+            report['roots'][root]['carried'] = dict(reports=carry[root][0], clauses=sum(1 for e in entries.values() if e.get('carried_from')))
         print(f'{root[:90]}: seeds={len(seeds)} {dict(counts)}', file=sys.stderr, flush=True)
         partial = dict(report, all_roots={r: sorted(families.get(r, ())) for r in sorted(roots)}, partial=True)
         args.out.with_suffix('.partial.json').write_text(json.dumps(partial, indent=1, sort_keys=True, default=str) + '\n')
