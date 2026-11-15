@@ -23438,6 +23438,7 @@
         "retention_policy_ref",
         "transition_receipts",
         "related_event_refs",
+        "event_obligation",
         "redaction_profile"
       ],
       "optional_fields": [],
@@ -23506,6 +23507,7 @@
           "retention_policy_ref",
           "transition_receipts",
           "related_event_refs",
+          "event_obligation",
           "redaction_profile"
         ],
         "properties": {
@@ -23737,6 +23739,123 @@
               "minLength": 1
             },
             "uniqueItems": true
+          },
+          "event_obligation": {
+            "description": "SP-2201: the frozen EventRecord of the latest admitted transition, stored by that transition's compare-and-swap as the durable pending event obligation in this row. It holds the EventRecord 2.0.0 fields the producer supplies; Storage adds sequence_id, observed_at_utc and persisted_at_utc at the append. It stays pending until SP-286 resolves that event's first AppendReceipt; a resumed append sends exactly this value, and only the next admitted transition's compare-and-swap replaces it.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "scope_kind",
+              "event_id",
+              "event_type",
+              "project_id",
+              "thread_id",
+              "run_id",
+              "node_id",
+              "attempt_id",
+              "actor_ref",
+              "requested_account_ref",
+              "effective_account_ref",
+              "occurred_at_utc",
+              "producer_sequence_id",
+              "correlation_id",
+              "causation_event_id",
+              "parent_event_id",
+              "idempotency_key",
+              "payload_schema_id",
+              "payload",
+              "payload_ref",
+              "redaction_profile",
+              "replay_policy",
+              "migration"
+            ],
+            "properties": {
+              "schema_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+              },
+              "schema_version": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_version"
+              },
+              "scope_kind": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/scope_kind"
+              },
+              "event_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/event_id"
+              },
+              "event_type": {
+                "const": "storage.value_quarantine_changed"
+              },
+              "project_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/project_id"
+              },
+              "thread_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/thread_id"
+              },
+              "run_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/run_id"
+              },
+              "node_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/node_id"
+              },
+              "attempt_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/attempt_id"
+              },
+              "actor_ref": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/actor_ref"
+              },
+              "requested_account_ref": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/requested_account_ref"
+              },
+              "effective_account_ref": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/effective_account_ref"
+              },
+              "occurred_at_utc": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
+              },
+              "producer_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/producer_sequence_id"
+              },
+              "correlation_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/correlation_id"
+              },
+              "causation_event_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/causation_event_id"
+              },
+              "parent_event_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/parent_event_id"
+              },
+              "idempotency_key": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/idempotency_key"
+              },
+              "payload_schema_id": {
+                "const": "https://puppetmaster.local/schemas/event_payloads/storage_value_quarantine_changed/1.0.0"
+              },
+              "payload": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/payload"
+              },
+              "payload_ref": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/payload_ref"
+              },
+              "redaction_profile": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/redaction_profile"
+              },
+              "replay_policy": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/replay_policy"
+              },
+              "migration": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/migration"
+              }
+            },
+            "allOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/0"
+              },
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/1"
+              }
+            ]
           },
           "redaction_profile": {
             "enum": [
@@ -23985,6 +24104,7 @@
         "blob_disposition",
         "backup_disposition",
         "event_refs",
+        "event_obligation",
         "redaction_profile"
       ],
       "optional_fields": [],
@@ -24044,6 +24164,7 @@
           "blob_disposition",
           "backup_disposition",
           "event_refs",
+          "event_obligation",
           "redaction_profile"
         ],
         "properties": {
@@ -24169,6 +24290,123 @@
               "minLength": 1
             },
             "uniqueItems": true
+          },
+          "event_obligation": {
+            "description": "SP-2200: the frozen EventRecord of the latest admitted transition, stored by that transition's compare-and-swap as the durable pending event obligation in this row. It holds the EventRecord 2.0.0 fields the producer supplies; Storage adds sequence_id, observed_at_utc and persisted_at_utc at the append. It stays pending until SP-286 resolves that event's first AppendReceipt; a resumed append sends exactly this value, and only the next admitted transition's compare-and-swap replaces it.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "scope_kind",
+              "event_id",
+              "event_type",
+              "project_id",
+              "thread_id",
+              "run_id",
+              "node_id",
+              "attempt_id",
+              "actor_ref",
+              "requested_account_ref",
+              "effective_account_ref",
+              "occurred_at_utc",
+              "producer_sequence_id",
+              "correlation_id",
+              "causation_event_id",
+              "parent_event_id",
+              "idempotency_key",
+              "payload_schema_id",
+              "payload",
+              "payload_ref",
+              "redaction_profile",
+              "replay_policy",
+              "migration"
+            ],
+            "properties": {
+              "schema_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+              },
+              "schema_version": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_version"
+              },
+              "scope_kind": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/scope_kind"
+              },
+              "event_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/event_id"
+              },
+              "event_type": {
+                "const": "storage.deletion_lifecycle_changed"
+              },
+              "project_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/project_id"
+              },
+              "thread_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/thread_id"
+              },
+              "run_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/run_id"
+              },
+              "node_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/node_id"
+              },
+              "attempt_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/attempt_id"
+              },
+              "actor_ref": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/actor_ref"
+              },
+              "requested_account_ref": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/requested_account_ref"
+              },
+              "effective_account_ref": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/effective_account_ref"
+              },
+              "occurred_at_utc": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
+              },
+              "producer_sequence_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/producer_sequence_id"
+              },
+              "correlation_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/correlation_id"
+              },
+              "causation_event_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/causation_event_id"
+              },
+              "parent_event_id": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/parent_event_id"
+              },
+              "idempotency_key": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/idempotency_key"
+              },
+              "payload_schema_id": {
+                "const": "https://puppetmaster.local/schemas/event_payloads/storage_deletion_lifecycle_changed/1.0.0"
+              },
+              "payload": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/payload"
+              },
+              "payload_ref": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/payload_ref"
+              },
+              "redaction_profile": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/redaction_profile"
+              },
+              "replay_policy": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/replay_policy"
+              },
+              "migration": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/migration"
+              }
+            },
+            "allOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/0"
+              },
+              {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/1"
+              }
+            ]
           },
           "redaction_profile": {
             "enum": [

@@ -161,16 +161,71 @@ def date_errors(slots):
     return out
 
 
+def _external_refs(node):
+    if isinstance(node, dict):
+        return any(k == '$ref' and isinstance(v, str) and not v.startswith('#') for k, v in node.items()) \
+            or any(_external_refs(v) for v in node.values())
+    if isinstance(node, list):
+        return any(_external_refs(v) for v in node)
+    return False
+
+
+REGISTRY_VALUE_ID = 'urn:pm:s3bo:sl:registry-value-schema'
+
+
 def keyword_errors(schema, value):
     """Every non-format keyword diagnostic of the complete owner schema; format is the shared date-time row's.
 
-    Registry value schemas carry no $id and no external $ref, so they validate
-    directly; identified schemas use the s3bo owner-resource catalogue.
+    A registry value schema without $id or external $ref validates directly.
+    Identified schemas, and registry value schemas that reference an owner
+    resource (the event_obligation member of storage_deletion_record and
+    storage_quarantine_record refers to EventRecord 2.0.0), use the s3bo
+    owner-resource catalogue; it never retrieves URLs.
     """
-    if '$id' not in schema:
+    if '$id' not in schema and not _external_refs(schema):
         from jsonschema import Draft202012Validator
         return [list(e.absolute_path) + [e.validator] for e in Draft202012Validator(schema).iter_errors(value) if e.validator != 'format']
+    if '$id' not in schema:
+        schema = dict(schema, **{'$id': REGISTRY_VALUE_ID})
     return [e for e in w.schema_errors(schema, value) if e[-1] != 'format']
+
+
+# ---------------------------------------------------------------- stored event obligation (SP-2200, SP-2201)
+
+STORAGE_ASSIGNED = ('sequence_id', 'observed_at_utc', 'persisted_at_utc')
+OWNER_DERIVED = ('event_id', 'idempotency_key', 'payload', 'scope_kind', 'project_id', 'thread_id', 'run_id',
+                 'attempt_id', 'replay_policy', 'event_type')
+OBLIGATION = 'event_obligation'
+
+
+def producer_part(event):
+    """The producer-supplied EventRecord fields: what the record CAS freezes and an append sends; Storage adds the rest."""
+    if not isinstance(event, dict):
+        return event
+    return {k: v for k, v in event.items() if k not in STORAGE_ASSIGNED}
+
+
+def record_split(record):
+    """(digest of the record without its obligation, the stored obligation or None)."""
+    if not isinstance(record, dict):
+        return cj(record), None
+    return cj({k: v for k, v in record.items() if k != OBLIGATION}), record.get(OBLIGATION)
+
+
+def obligation_owner(obligation):
+    """The owner-derived part of a stored obligation: identity, payload digest and envelope scope."""
+    if not isinstance(obligation, dict):
+        return ['not_an_object', cj(obligation)]
+    return (obligation.get('event_id'), obligation.get('idempotency_key'), cj(obligation.get('payload')),
+            (obligation.get('scope_kind'), obligation.get('project_id'), obligation.get('thread_id'), obligation.get('run_id'),
+             obligation.get('attempt_id'), obligation.get('replay_policy'), obligation.get('event_type')))
+
+
+def obligation_rest(obligation):
+    """Digest of the remaining producer fields, which the barrier append must send unchanged."""
+    if not isinstance(obligation, dict):
+        return cj(['not_an_object', obligation])
+    return cj({k: v for k, v in obligation.items() if k not in OWNER_DERIVED})
 
 
 def control(family, label, value):

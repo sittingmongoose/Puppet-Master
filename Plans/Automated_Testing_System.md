@@ -15298,7 +15298,7 @@ PNC-019 lane C12-SL adds four family-boundary extensions to the ATS-2206 checker
 
 For `storage.deletion_lifecycle_changed`, every coordinator step is admitted or refused at the first failing stage of the fail-closed admission order of Thread/project deletion: the edge and payload conditional, the durable record state and pending obligation, scope and cross-project reachability, holds, the content-free tombstone and logical hide, writer and maintenance/compaction authority, and for `purged` a verified committed successor generation. Each stage has a positive and a refusal. A refused step appends nothing and changes no record, projection, checkpoint, purge or compaction dispatch or hold. An admitted step runs admission, then one record CAS with the frozen obligation, then the barrier append and first receipt, and only then the projection hide or purge dispatch and the result. The record, payload, SP-2200 identity with the 1-based `event_refs` ordinal and envelope scope are compared exactly. The checker also covers:
 
-- **Retry after `failed`:** it reuses `deletion_id` and the request key and takes the next ordinal after revalidating holds, tombstone, scope, writer and purge authority. A retry to `purge_pending` or `purged` is refused.
+- **Retry after `failed`:** its only successor is `logically_hidden` (DL-695). It reuses `deletion_id` and the request key and takes the next ordinal after revalidating holds, tombstone, scope, writer and purge authority, and its record and payload carry the blockers found then. A retry to `requested`, `purge_pending` or `purged` is refused, and so is a retry whose revalidation is missing or fails at any of those stages; the record stays `failed`.
 - **Replay variants:** same identity and digest, Storage-assigned fields only, a changed digest (`idempotency_conflict`), unavailable dedupe (`dedupe_unavailable`) and `projector_replay_only` (`replay_only_not_appendable`).
 - **Crash cuts** at the CAS, the append and the first receipt, with resumption.
 - **The two opening handlers**, the registry-only project removal and the separate confirmation.
@@ -15307,7 +15307,7 @@ For `storage.deletion_lifecycle_changed`, every coordinator step is admitted or 
 - **Restore:** tombstones replay before visibility, and backup bytes are kept for at most 30 days unless held.
 - **The 24-hour thread deadline.**
 
-**Not closed:** the owner text says a retry "revalidates ... before a graph-valid successor" and "creates no fixed bypass from `failed` to `purge_pending` or `purged`", but it lists no edge out of `failed`. The checker records the provisional reading `logically_hidden`: the hide is kept and re-proved. `storage.deletion_lifecycle_changed` criterion 12 stays open on that owner definition. SP-2200 also stores the pending obligation "in the same row", but the closed `storage_deletion_record` schema has no member for it. The checker holds the obligation as separate custody beside the row.
+**Closed by DL-695 (lane C12-SL2, 2026-11-15):** Jared's E11-1 answer A makes `failed -> logically_hidden` the owner successor of a revalidated retry in Case L-3, and `RETRY_SUCCESSOR` in `scripts/pm_s3bo_ext_sl_deletion.py` is final. SP-2200 and SP-2201 keep the pending obligation in the record's `event_obligation` member, which both closed registry schemas now require. The deletion and quarantine checkers read the obligation from the row, compare its event identity, payload and envelope with the owner-derived values, and resume exactly that value after a crash.
 
 For `storage.value_quarantine_changed`, detection mints the `qtn_` identity with occurrence one plus the matching purged records, and a re-detection of an open record resolves to it with nothing minted. Each transition follows the closed edges and the risk-class state sets. Resolution needs its own owner evidence:
 
@@ -15362,7 +15362,7 @@ canonical_text: >-
   PNC-019 C12-SL adds executable family-boundary extensions to the ATS-2206 s3bo checker for
   storage.compaction_lifecycle_changed, storage.deletion_lifecycle_changed, storage.retention_hold_changed and
   storage.value_quarantine_changed, and runs the whole shared number and date-time corpus through each family
-  boundary. The successor of a deletion retry after failed remains an owner gap.
+  boundary. A deletion retry after failed is admitted only to logically_hidden (DL-695).
 gui_related: false
 gui_classification_reason: Static event-authority contract oracles without presentation changes.
 depends_on:
@@ -15382,17 +15382,19 @@ depends_on:
 - SP-297
 - DL-049
 - DL-068
+- DL-695
 unblocks: []
 acceptance_criteria:
 - Each family-boundary refusal is a real named table predicate with an independently labelled single-defect witness, at most eight per table.
 - The common s3bo and C12-SR table inputs are unchanged by the SL extensions, so their gated proofs are reused only after recomputing every consumed input.
 - The shared corpus runs through every common and declared boundary slot of each SL family, with expectations from corpus verdicts and owner bounds.
 - The hold identity recipes reproduce every owner fixture transition id, event id, receipt ref and result core hash.
-- The deletion retry successor after failed is reported as missing owner text, never silently decided.
+- A deletion retry after failed is admitted only to logically_hidden with full revalidation (DL-695); retries to requested, purge_pending or purged and retries with revalidation missing or failed are refused at their expected rows.
 validation_surfaces:
 - scripts/pm-s3bo-check.py
 - scripts/pm-s3bo-sl-report.py
 - reports/event-authority-20261114/depth-c12-sl-families.json
+- reports/event-authority-20261114/depth-c12-sl2-families.json
 risk_class: false_event_oracle_closure
 reasoning_tier: high
 context_scope: event_authority_pnc019_c12_sl
@@ -15416,6 +15418,7 @@ source_lineage:
 - Plans/storage-plan.md#SP-295
 - Plans/storage-plan.md#SP-296
 - Plans/storage-plan.md#SP-297
+- Plans/Decision_Log.md#DL-695
 preserved_exact_tokens:
 - RP-COMPACTION-DETAIL-7D
 - legacy_admitted_v1_protection
@@ -15424,7 +15427,7 @@ preserved_exact_tokens:
 - dedupe_unavailable
 negative_constraints:
 - Do not admit events, reseal governance or claim native execution.
-- Do not decide the deletion retry successor after failed without owner text.
+- Do not admit a deletion retry successor other than logically_hidden (DL-695).
 - Do not edit the gated guard tool or the frozen date-time files.
 ```
 

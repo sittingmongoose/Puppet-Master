@@ -14,7 +14,12 @@ held facts and every run: detection, re-detection and re-occurrence, securing,
 each class/evidence resolution branch, purge and record retirement, audit,
 cap pressure, disclosure and export, backup restore, crash cuts with
 resumption, withdrawal and replay variants. Expected outcomes are derived here
-from those inputs by the owner rules. Native execution remains NOT_RUN.
+from those inputs by the owner rules.
+
+Obligation (SP-2201, C12-SL2): the record CAS stores the frozen EventRecord's
+producer fields in the record's `event_obligation` member; the barrier append
+adds the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc.
+Native execution remains NOT_RUN.
 """
 import copy
 
@@ -47,7 +52,7 @@ ROWS = [
     ('sl_qtn_detect', 'sl_quarantine', 'equal', 'Detection mints the qtn_ identity with occurrence one plus the matching purged records; a re-detection of an open record resolves to it and mints nothing.'),
     ('sl_qtn_decision', 'sl_quarantine', 'equal', 'Each transition is admitted or refused at the first failing stage: closed edge and risk-class state, durable record state, synchronized raw custody, the outcome evidence, the Q policy cleanup clock, holds, then dependencies.'),
     ('sl_qtn_zero', 'sl_quarantine', 'equal', 'A refused transition appends nothing and leaves the record, the live key and the raw custody unchanged.'),
-    ('sl_qtn_record', 'sl_quarantine', 'equal', 'An admitted transition CASes the record state and appends its transition receipt continuing from detected, with the resolution output bound to the resolved bytes.'),
+    ('sl_qtn_record', 'sl_quarantine', 'equal', 'An admitted transition CASes the record state and appends its transition receipt continuing from detected, with the resolution output bound to the resolved bytes, and stores the frozen obligation in event_obligation: owner identity, payload and envelope, and the producer fields the append sends.'),
     ('sl_qtn_order', 'sl_quarantine', 'equal', 'Raw bytes and the manifest are synchronized before the record CAS; CAS, barrier append and first receipt precede the live-key effect or disposal.'),
     ('sl_qtn_effects', 'sl_quarantine', 'equal', 'The live-key effect is exactly that of the resolution; purged disposes the raw content once; securing and recovery_blocked touch nothing.'),
     ('sl_qtn_payload', 'sl_quarantine', 'equal', 'The payload carries the record identity, source ref, schemas, raw custody hash and ref, risk class, state and transition receipt.'),
@@ -57,7 +62,7 @@ ROWS = [
     ('sl_qtn_cap', 'sl_quarantine', 'equal', 'Cap pressure never evicts an unresolved item, and for Q-CRITICAL blocks new mutation-capable writes.'),
     ('sl_qtn_disclosure', 'sl_quarantine', 'equal', 'A viewer without read access to the source sees only that a value was quarantined; raw bytes leave only through permitted protected explicit export.'),
     ('sl_qtn_restore', 'sl_quarantine', 'equal', 'Restore brings back the raw custody with the record or reports it unavailable, and never re-runs a live-key effect.'),
-    ('sl_qtn_resume', 'sl_quarantine', 'equal', 'A crash resumes the obligation or resolves the original receipt; it never re-copies raw bytes over another capture, repeats a live-key effect, purges twice or appends twice.'),
+    ('sl_qtn_resume', 'sl_quarantine', 'equal', 'A crash resumes the obligation stored in the record or resolves the original receipt; it never re-copies raw bytes over another capture, repeats a live-key effect, purges twice or appends twice.'),
     ('sl_qtn_withdrawal', 'sl_quarantine', 'equal', 'Withdrawal resolves or fences pending obligations, keeps record, raw custody and receipts and never releases, resets or purges a value.'),
     ('sl_qtn_replay', 'sl_quarantine', 'equal', 'Same identity and digest returns the original result; a different digest conflicts; unavailable dedupe and projector_replay_only refuse with zero effects.'),
     ('sl_qtn_numbers', 'sl_quarantine', 'error', 'The byte length and the occurrence use shared current_integer with minimum 0 and 1.'),
@@ -221,8 +226,12 @@ def operands(case, put, common):
             if want['resolution'] == 'minted':
                 eid, key = ids(value, want['quarantine_id'], 'detected')
                 add('order', i, (r.get('trace'),), (expected_trace('detected'),))
-                add('record', i, (s.cj(r.get('record_after')),), (s.cj(new_record(value, want['quarantine_id'], eid)),))
                 events = r.get('events_appended') or []
+                rest, ob = s.record_split(r.get('record_after'))
+                add('record', i, (rest, s.obligation_owner(ob), s.obligation_rest(ob)),
+                    (s.record_split(new_record(value, want['quarantine_id'], eid))[0],
+                     (eid, key, s.cj(expected_payload(value, want['quarantine_id'], 'detected', r['facts'])), envelope_of(value)),
+                     s.obligation_rest(s.producer_part(events[0]) if events else None)))
                 add('payload', i, ([s.cj(e.get('payload')) for e in events],),
                     ([s.cj(expected_payload(value, want['quarantine_id'], 'detected', r['facts']))] * max(1, len(events)),))
                 add('identity', i, ([(e.get('event_id'), e.get('idempotency_key')) for e in events],), ([(eid, key)] * len(events),))
@@ -241,11 +250,15 @@ def operands(case, put, common):
                     (0, s.cj(before), [], r['facts']['raw_before']))
                 continue
             eid, key = ids(value, before['quarantine_id'], r['to'])
-            add('record', i, (s.cj(r.get('record_after')),), (s.cj(expected_record(value, before, r, eid)),))
+            events = r.get('events_appended') or []
+            rest, ob = s.record_split(r.get('record_after'))
+            add('record', i, (rest, s.obligation_owner(ob), s.obligation_rest(ob)),
+                (s.record_split(expected_record(value, before, r, eid))[0],
+                 (eid, key, s.cj(expected_payload(value, before['quarantine_id'], r['to'], r['facts'])), envelope_of(value)),
+                 s.obligation_rest(s.producer_part(events[0]) if events else None)))
             add('order', i, (r.get('trace'),), (expected_trace(r['to']),))
             raw_after = {} if r['to'] == 'purged' else r['facts']['raw_before']
             add('effects', i, (r.get('live_key_effects'), r.get('raw_after')), (LIVE.get(r['to'], []), raw_after))
-            events = r.get('events_appended') or []
             add('payload', i, (len(events), [s.cj(e.get('payload')) for e in events]),
                 (1, [s.cj(expected_payload(value, before['quarantine_id'], r['to'], r['facts']))]))
             add('identity', i, ([(e.get('event_id'), e.get('idempotency_key')) for e in events],), ([(eid, key)] * len(events),))
@@ -283,10 +296,11 @@ def operands(case, put, common):
             crash = runs[r['of']]; at = crash['crash_at']; to = crash['to']
             durable = STEP.index(at) >= STEP.index('barrier_append')
             appended = (crash.get('events_appended') or []) + (r.get('events_appended') or [])
-            add('resume', i, (r.get('trace'), len(appended), [s.physical_hex(e) for e in appended],
+            stored = s.record_split(crash.get('record_after'))[1]
+            add('resume', i, (r.get('trace'), len(appended), [s.physical_hex(s.producer_part(e)) for e in appended],
                               (crash.get('live_key_effects') or []) + (r.get('live_key_effects') or []), r.get('raw_custody_sha256')),
                 (['resume_obligation'] + (['resolve_original_receipt'] if durable else ['barrier_append', 'first_receipt']) + LIVE.get(to, []) + ['result'],
-                 1, [s.physical_hex(crash.get('obligation'))], LIVE.get(to, []), value['raw_sha256']))
+                 1, [s.physical_hex(stored)], LIVE.get(to, []), value['raw_sha256']))
         elif k == 'withdraw':
             f = r['facts']
             add('withdrawal', i, (r.get('trace'), r.get('obligations'), r.get('kept'), r.get('state_changes'), r.get('reader')),
@@ -350,7 +364,8 @@ def simulate(case, run, record):
             run['record_after'] = copy.deepcopy(record)
             return record
         e = make_event(d['quarantine_id'], 'detected', count)
-        run.update(events_appended=[e], trace=expected_trace('detected'), record_after=new_record(value, d['quarantine_id'], e['event_id']),
+        created = new_record(value, d['quarantine_id'], e['event_id']); created[s.OBLIGATION] = s.producer_part(copy.deepcopy(e))
+        run.update(events_appended=[e], trace=expected_trace('detected'), record_after=created,
                    result={'kind': 'quarantined', 'event_id': e['event_id']})
         return run['record_after']
     if k in ('transition', 'crash'):
@@ -362,7 +377,7 @@ def simulate(case, run, record):
             return record
         e = make_event(record['quarantine_id'], run['to'], count)
         after = expected_record(value, record, run, e['event_id'])
-        run['obligation'] = copy.deepcopy(e)
+        after[s.OBLIGATION] = s.producer_part(copy.deepcopy(e))
         if k == 'crash':
             n = STEP.index(run['crash_at'])
             run.update(trace=['admission'] + STEP[1:n + 1] + ['crash'], record_after=after)
@@ -378,7 +393,10 @@ def simulate(case, run, record):
         crash = case['sl']['runs'][run['of']]; durable = STEP.index(crash['crash_at']) >= STEP.index('barrier_append')
         run.update(trace=['resume_obligation'] + (['resolve_original_receipt'] if durable else ['barrier_append', 'first_receipt'])
                    + LIVE.get(crash['to'], []) + ['result'],
-                   events_appended=[] if durable else [copy.deepcopy(crash['obligation'])],
+                   events_appended=[] if durable else [dict(copy.deepcopy(crash['record_after'][s.OBLIGATION]),
+                                                            sequence_id=base['sequence_id'],
+                                                            observed_at_utc=base['observed_at_utc'],
+                                                            persisted_at_utc=base['persisted_at_utc'])],
                    live_key_effects=list(LIVE.get(crash['to'], [])), raw_custody_sha256=value['raw_sha256'])
         return record
     if k == 'retire':
@@ -563,7 +581,11 @@ def cases():
             ('sl_qtn_replay', R(A('replay-moved'), 'result'), {'kind': 'refused', 'reason_code': 'idempotency_conflict'}, 'storage-fields-conflict'),
             ('sl_qtn_replay', R(A('conflict'), 'result'), runs[0]['result'], 'changed-digest-replays'),
             ('sl_qtn_replay', R(A('dedupe-unavailable'), 'events_appended'), [runs[0]['events_appended'][0]], 'dedupe-unavailable-appends'),
-            ('sl_qtn_replay', R(A('replay-only'), 'trace'), ['dedupe_lookup', 'reject_replay_only'], 'replay-only-after-lookup')]:
+            ('sl_qtn_replay', R(A('replay-only'), 'trace'), ['dedupe_lookup', 'reject_replay_only'], 'replay-only-after-lookup'),
+            ('sl_qtn_record', R(0, 'record_after', s.OBLIGATION, 'event_id'), ids(value, qid1, 'secured')[0], 'detect-obligation-other-identity'),
+            ('sl_qtn_record', R(3, 'record_after', s.OBLIGATION, 'payload', 'state'), 'secured', 'obligation-other-state'),
+            ('sl_qtn_record', R(1, 'record_after', s.OBLIGATION, 'occurred_at_utc'), '2026-11-14T12:45:00Z', 'obligation-not-the-appended-event'),
+            ('sl_qtn_record', R(4, 'record_after', s.OBLIGATION), None, 'obligation-not-stored')]:
         negatives.append(c.mutate(life, row, path, replacement, label))
     # Numbers and times at every copy.
     def copies(label, row, change, defect):
@@ -649,8 +671,9 @@ def cases():
         for at in STEP[1:]:
             specs = prior + [dict(T(to, upgrader=True), kind='crash', crash_at=at), {'kind': 'resume', 'of': len(prior), 'facts': {}}]
             control, value_ = build('crash-' + to + '-' + at, None, 'Q-CRITICAL', specs)
-            i = len(prior) + 1; ob = value_['sl']['runs'][i - 1]['obligation']
-            negatives.append(c.mutate(control, 'sl_qtn_resume', R(i, 'events_appended'), [copy.deepcopy(ob)] * (2 if at == 'record_cas_and_obligation' else 1), 'resume-second-append'))
+            i = len(prior) + 1; crashed = value_['sl']['runs'][i - 1]
+            sent = (crashed['events_appended'] or value_['sl']['runs'][i]['events_appended'])[0]
+            negatives.append(c.mutate(control, 'sl_qtn_resume', R(i, 'events_appended'), [copy.deepcopy(sent)] * (2 if at == 'record_cas_and_obligation' else 1), 'resume-second-append'))
             negatives.append(c.mutate(control, 'sl_qtn_resume', R(i, 'raw_custody_sha256'), w.sha(b'other capture'), 'resume-recopies-raw'))
             negatives.append(c.mutate(control, 'sl_qtn_resume', R(i, 'trace'), ['admission'] + value_['sl']['runs'][i]['trace'], 'resume-reruns-admission'))
             if to == 'migrated':

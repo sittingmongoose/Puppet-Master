@@ -15,12 +15,17 @@ replay/conflict/dedupe/replay-only requests, passive history and canonical
 reads, withdrawal and backup restore. Expected outcomes are derived here from
 those inputs by the owner rules; the presented outcomes are the fixture's.
 
-Open owner point (reported, not decided by this lane): the owner text says a
-retry of a `failed` deletion "revalidates ... before a graph-valid successor"
-and "creates no fixed bypass from failed to purge_pending or purged", but no
-edge out of `failed` is listed. RETRY_SUCCESSOR records the provisional
-reading (`logically_hidden`: the hide is kept and re-proved); the question is
-in drafts/PNC019/c12-sl/REPORT.md. Native execution remains NOT_RUN.
+Retry successor (DL-695, Jared's E11-1 answer A, lane C12-SL2): Case L-3 makes
+`failed -> logically_hidden` the only edge out of `failed`. The retry reuses
+the deletion and request identity, takes the next ordinal and, before it
+records `logically_hidden`, revalidates holds, tombstone and hide, scope,
+storage-writer posture and purge/compaction authority; a retry to `requested`,
+`purge_pending` or `purged`, or one whose revalidation fails, is refused.
+
+Obligation (SP-2200, C12-SL2): the record CAS stores the frozen EventRecord's
+producer fields in the record's `event_obligation` member; the barrier append
+adds the Storage-assigned sequence_id, observed_at_utc and persisted_at_utc.
+Native execution remains NOT_RUN.
 """
 import copy
 
@@ -33,7 +38,7 @@ FAMILIES = (DEL,)
 GRAPH = (('initial', 'requested'), ('requested', 'logically_hidden'), ('logically_hidden', 'held'),
          ('logically_hidden', 'purge_pending'), ('held', 'purge_pending'), ('purge_pending', 'purged'),
          ('requested', 'failed'), ('logically_hidden', 'failed'), ('purge_pending', 'failed'))
-RETRY_SUCCESSOR = 'logically_hidden'
+RETRY_SUCCESSOR = 'logically_hidden'  # final: Case L-3 under DL-695 (E11-1 A)
 HIDDEN = ('logically_hidden', 'held', 'purge_pending', 'purged')
 REVALIDATION = ['holds', 'tombstone', 'scope', 'writer', 'purge_authority']
 STAGES = ('schema', 'record', 'scope', 'holds', 'tombstone', 'authority', 'generation')
@@ -48,17 +53,17 @@ RECORD_SCHEMA = next(r['value_schema'] for r in w.read_json('Plans/storage_value
 PAYLOAD_SCHEMA = w.schema_for(DEL)
 
 ROWS = [
-    ('sl_del_decision', 'sl_deletion', 'equal', 'Each coordinator step is admitted or refused at the first failing stage of the fixed admission order: edge and payload conditional, durable record state, scope and reachability, holds, tombstone and hide, writer and maintenance authority, verified committed successor generation.'),
+    ('sl_del_decision', 'sl_deletion', 'equal', 'Each coordinator step is admitted or refused at the first failing stage of the fixed admission order: edge (a retry after failed goes only to logically_hidden) and payload conditional, durable record state, scope and reachability, holds, tombstone and hide, writer and maintenance authority (also for a retry), verified committed successor generation.'),
     ('sl_del_zero', 'sl_deletion', 'equal', 'A refused step appends nothing and leaves the record, projections, checkpoints, purge/compaction dispatch and holds unchanged.'),
-    ('sl_del_record', 'sl_deletion', 'equal', 'An admitted step CASes the record to the new state, appends the event to event_refs and records the current blockers, hide receipt and generation.'),
+    ('sl_del_record', 'sl_deletion', 'equal', 'An admitted step CASes the record to the new state, appends the event to event_refs, records the current blockers, hide receipt and generation, and stores the frozen obligation in event_obligation: owner identity, payload and envelope, and the producer fields the append sends.'),
     ('sl_del_order', 'sl_deletion', 'equal', 'Admission, record CAS with the frozen obligation, barrier append and first receipt precede the dependent effect and the command result.'),
     ('sl_del_effects', 'sl_deletion', 'equal', 'The dependent effect is exactly projection hide for logically_hidden and purge dispatch for purge_pending; no step clears a hold.'),
     ('sl_del_payload', 'sl_deletion', 'equal', 'The payload carries the state, current blockers, deadline, tombstone, scope ref, generation only for purge states and failure reason only for failed.'),
     ('sl_del_identity', 'sl_deletion', 'equal', 'Each event id and key follows the SP-2200 recipe over deletion_id and the 1-based event_refs ordinal.'),
     ('sl_del_envelope', 'sl_deletion', 'equal', 'A thread deletion names the deleted thread, Project-data deletion has null thread; Project id null exactly when the payload omits it; run and attempt null.'),
-    ('sl_del_retry', 'sl_deletion', 'equal', 'A retry after failed reuses deletion_id and the request key, takes the next ordinal, revalidates every authority first and never bypasses to purge_pending or purged.'),
+    ('sl_del_retry', 'sl_deletion', 'equal', 'A retry after failed reuses deletion_id and the request key, takes the next ordinal and revalidates holds, tombstone, scope, writer and purge authority before its logically_hidden successor.'),
     ('sl_del_replay', 'sl_deletion', 'equal', 'Same identity and digest returns the original receipt and result; a different digest conflicts; unavailable dedupe and projector_replay_only refuse with zero effects.'),
-    ('sl_del_resume', 'sl_deletion', 'equal', 'A crash before the append resumes the same obligation once; after the commit frame it resolves the original receipt and never appends, hides, purges or re-evaluates holds again.'),
+    ('sl_del_resume', 'sl_deletion', 'equal', 'A crash before the append resumes the obligation stored in the record once; after the commit frame it resolves the original receipt and never appends, hides, purges or re-evaluates holds again.'),
     ('sl_del_handler', 'sl_deletion', 'equal', 'Handlers only submit; remove-from-list is a registry tombstone only; Project-data deletion needs its separate confirmation.'),
     ('sl_del_reader', 'sl_deletion', 'equal', 'History is available only with complete coverage and a verified token, otherwise unavailable; canonical readers use the deletion record, never the event.'),
     ('sl_del_withdrawal', 'sl_deletion', 'equal', 'Withdrawal resolves durable obligations by their original receipt, fences the rest, keeps every record, tombstone and receipt and never deletes, restores or un-hides.'),
@@ -100,7 +105,7 @@ def stage(run, record):
     if not f['tombstone'] or (to in HIDDEN and not f['hide']):
         return 'tombstone'
     if not f['writer'] or f.get('storage_mode', 'normal') != 'normal' or not f.get('family_authority', True) \
-            or (to in ('purge_pending', 'purged') and not f['maintenance']):
+            or ((to in ('purge_pending', 'purged') or run['kind'] == 'retry') and not f['maintenance']):
         return 'authority'
     succ = f.get('successor')
     if to == 'purged' and not (isinstance(succ, dict) and succ.get('verified') is True and succ.get('committed') is True
@@ -180,6 +185,9 @@ def _numbers(runs):
         rec = r.get('record_after')
         if isinstance(rec, dict):
             slots.append(('run%d/record' % i, rec.get('compaction_generation'), 0, None))
+            ob = rec.get(s.OBLIGATION)
+            if isinstance(ob, dict):
+                slots.append(('run%d/obligation' % i, (ob.get('payload') or {}).get('compaction_generation'), 0, None))
     return s.number_errors(slots)
 
 
@@ -190,6 +198,8 @@ def _times(deletion, runs):
         rec = r.get('record_after')
         if isinstance(rec, dict):
             slots.append(('run%d/requested_at' % i, rec.get('requested_at_utc'), w.STORAGE_UTC_Z))
+            if isinstance(rec.get(s.OBLIGATION), dict):
+                slots.append(('run%d/obligation_deadline' % i, (rec[s.OBLIGATION].get('payload') or {}).get('purge_deadline_utc'), w.EVENT_RECORD))
         for e in r.get('events_appended') or []:
             slots.append(('run%d/deadline' % i, (e.get('payload') or {}).get('purge_deadline_utc'), w.EVENT_RECORD))
     return s.date_errors(slots)
@@ -220,10 +230,14 @@ def operands(case, put, common):
             continue
         ordinal = len((before or {}).get('event_refs', [])) + 1
         eid, key = ids(deletion, ordinal)
-        rl.append((i, s.cj(r.get('record_after')))); rr.append((i, s.cj(expected_record(deletion, before, r, eid))))
+        events = r.get('events_appended') or []
+        rest, ob = s.record_split(r.get('record_after'))
+        rl.append((i, rest, s.obligation_owner(ob), s.obligation_rest(ob)))
+        rr.append((i, s.record_split(expected_record(deletion, before, r, eid))[0],
+                   (eid, key, s.cj(expected_payload(deletion, r)), expected_envelope(deletion)),
+                   s.obligation_rest(s.producer_part(events[0]) if events else None)))
         ol.append((i, r.get('trace'))); orr.append((i, expected_trace(r['to'])))
         el.append((i, r.get('effects'))); er.append((i, EFFECT.get(r['to'], [])))
-        events = r.get('events_appended') or []
         pl.append((i, len(events), [s.cj(e.get('payload')) for e in events]))
         pr.append((i, 1, [s.cj(expected_payload(deletion, r))]))
         il.append((i, [(e.get('event_id'), e.get('idempotency_key')) for e in events])); ir.append((i, [(eid, key)]))
@@ -273,9 +287,10 @@ def operands(case, put, common):
         to = crash['to']
         trace = ['resume_obligation'] + (['resolve_original_receipt'] if durable else ['barrier_append', 'first_receipt']) + EFFECT.get(to, []) + ['result']
         appended = (crash.get('events_appended') or []) + (r.get('events_appended') or [])
-        left.append((i, r.get('trace'), len(appended), [s.physical_hex(e) for e in appended], r.get('effects'),
+        stored = s.record_split(crash.get('record_after'))[1]
+        left.append((i, r.get('trace'), len(appended), [s.physical_hex(s.producer_part(e)) for e in appended], r.get('effects'),
                      (crash.get('effects') or []) + (r.get('effects') or [])))
-        right.append((i, trace, 1, [s.physical_hex(crash.get('obligation'))], EFFECT.get(to, []), EFFECT.get(to, [])))
+        right.append((i, trace, 1, [s.physical_hex(stored)], EFFECT.get(to, []), EFFECT.get(to, [])))
     put('sl_del_resume', left, right, ok)
     # Handlers.
     left = []; right = []
@@ -379,7 +394,7 @@ def simulate(case, run, record):
         env = dict(scope_kind=deletion['scope_kind_envelope'], project_id=deletion['project_id'], thread_id=deletion['thread_id'],
                    run_id=None, attempt_id=None, sequence_id=41 + ordinal)
         frozen = s.event(base, expected_payload(deletion, run), eid, key, **env)
-        run['obligation'] = copy.deepcopy(frozen)
+        after[s.OBLIGATION] = s.producer_part(copy.deepcopy(frozen))
         receipt = dict(copy.deepcopy(case['receipt']), event_id=eid, sequence_id=41 + ordinal)
         if kind == 'crash':
             n = STEP.index(run['crash_at'])
@@ -397,7 +412,9 @@ def simulate(case, run, record):
         durable = STEP.index(crash['crash_at']) >= STEP.index('barrier_append')
         run['trace'] = ['resume_obligation'] + (['resolve_original_receipt'] if durable else ['barrier_append', 'first_receipt']) \
             + EFFECT.get(crash['to'], []) + ['result']
-        run['events_appended'] = [] if durable else [copy.deepcopy(crash['obligation'])]
+        sent = dict(copy.deepcopy(crash['record_after'][s.OBLIGATION]), sequence_id=crash['receipt']['sequence_id'],
+                    observed_at_utc=base['observed_at_utc'], persisted_at_utc=base['persisted_at_utc'])
+        run['events_appended'] = [] if durable else [sent]
         run['effects'] = list(EFFECT.get(crash['to'], []))
         return record
     if kind == 'replay':
@@ -557,6 +574,63 @@ def cases():
         control = s.control(DEL, label, value); controls.append(control)
         return control, value
 
+    # DL-695 (E11-1 A, lane C12-SL2): the only retry successor after failed is logically_hidden. These come
+    # first so that the gated proof consumes the retry-edge witnesses.
+    # A retry to requested (option B, not chosen) is refused at the edge stage and the record stays failed.
+    to_requested, _ = build('retry-to-requested', None, 'thread',
+                            [T('requested'), T('logically_hidden'), T('failed', failure_reason='purge worker crashed'),
+                             {'kind': 'retry', 'to': 'requested', 'facts': facts()}])
+    negatives.append(c.mutate(to_requested, 'sl_del_decision', R(3, 'decision'), 'appended', 'retry-to-requested-admitted'))
+    negatives.append(c.mutate(to_requested, 'sl_del_zero', R(3, 'record_after', 'purge_state'), 'requested', 'retry-records-requested'))
+    # Accepted: a deletion that failed before its hide is retried; the retry hides, proves a fresh hide receipt and
+    # records the blocker found then; holds and purge then run through the ordinary graph.
+    again, av = build('retry-hides-then-holds', w.PROJECT, 'thread',
+                      [{'kind': 'submit', 'command': 'cmd.chat.delete', 'facts': {}},
+                       T('requested'), T('failed', failure_reason='hide index unavailable'),
+                       {'kind': 'retry', 'to': RETRY_SUCCESSOR, 'facts': facts(holds=['hold-R'], hide_receipt='hide-receipt-R')},
+                       T('held', holds=['hold-R']), T('purge_pending', pending_generation=9),
+                       T('purged', successor={'generation': 9, 'verified': True, 'committed': True})])
+    again_deletion = av['sl']['deletion']
+    for row, path, replacement, label in [
+            ('sl_del_decision', R(3, 'decision'), 'refused', 'lawful-retry-refused'),
+            ('sl_del_record', R(3, 'record_after', 'purge_state'), 'requested', 'retry-recorded-as-requested'),
+            ('sl_del_record', R(3, 'record_after', 'hold_blocker_refs'), [], 'retry-drops-blocker-found-then'),
+            ('sl_del_record', R(3, 'record_after', 'logical_hide_receipt_ref'), 'tombstone-A', 'retry-hide-not-reproved'),
+            ('sl_del_record', R(3, 'record_after', s.OBLIGATION, 'payload', 'state'), 'requested', 'retry-obligation-other-state'),
+            ('sl_del_record', R(3, 'record_after', s.OBLIGATION, 'occurred_at_utc'), '2026-11-14T12:45:00Z', 'obligation-not-the-appended-event'),
+            ('sl_del_record', R(6, 'record_after', s.OBLIGATION), None, 'obligation-not-stored'),
+            ('sl_del_order', R(3, 'trace'), STEP[:2] + ['projection_hide', 'barrier_append', 'first_receipt', 'result'], 'retry-hides-before-append'),
+            ('sl_del_effects', R(3, 'effects'), [], 'retry-skips-hide'),
+            ('sl_del_payload', R(3, 'events_appended', 0, 'payload', 'state'), 'requested', 'retry-event-says-requested'),
+            ('sl_del_payload', R(3, 'events_appended', 0, 'payload', 'hold_blockers'), [], 'retry-payload-hides-blocker'),
+            ('sl_del_identity', R(3, 'events_appended', 0, 'event_id'), ids(again_deletion, 2)[0], 'retry-reuses-failed-identity'),
+            ('sl_del_retry', R(3, 'ordinal'), 2, 'retry-takes-failed-ordinal'),
+            ('sl_del_record', R(4, 'record_after', 'hold_blocker_refs'), [], 'held-after-retry-drops-blockers'),
+            ('sl_del_decision', R(5, 'decision'), 'refused', 'purge-after-retry-refused')] + [
+            ('sl_del_retry', R(3, 'revalidated'), [x for x in REVALIDATION if x != item], 'retry-skips-' + item) for item in REVALIDATION]:
+        negatives.append(c.mutate(again, row, path, replacement, label))
+    # Refused retries: a bypass, a retry not from failed, and each revalidation that does not hold. Nothing changes.
+    def retry_spec(**change):
+        return {'kind': 'retry', 'to': RETRY_SUCCESSOR, 'facts': facts(**change)}
+    failed_path = [T('requested'), T('logically_hidden'), T('failed', failure_reason='compaction lease lost')]
+    for label, specs, want in [
+            ('retry-to-purge-pending', failed_path + [{'kind': 'retry', 'to': 'purge_pending', 'facts': facts()}], 'schema'),
+            ('retry-to-purged', failed_path + [{'kind': 'retry', 'to': 'purged', 'facts': facts(successor=GEN)}], 'schema'),
+            ('retry-not-from-failed', [T('requested'), T('logically_hidden'), retry_spec()], 'schema'),
+            ('retry-stale-view', failed_path + [dict(retry_spec(), seen='logically_hidden')], 'record'),
+            ('retry-obligation-pending', failed_path + [retry_spec(obligation_pending=True)], 'record'),
+            ('retry-scope-not-current', failed_path + [retry_spec(scope_current=False)], 'scope'),
+            ('retry-ambiguous-reachability', failed_path + [retry_spec(reachability='ambiguous')], 'scope'),
+            ('retry-missing-tombstone', failed_path + [retry_spec(tombstone=False)], 'tombstone'),
+            ('retry-hide-not-proved', failed_path + [retry_spec(hide=False)], 'tombstone'),
+            ('retry-no-writer', failed_path + [retry_spec(writer=False)], 'authority'),
+            ('retry-viewer-storage', failed_path + [retry_spec(storage_mode='viewer')], 'authority'),
+            ('retry-no-purge-authority', failed_path + [retry_spec(maintenance=False)], 'authority')]:
+        control, value = build('refuse-' + label, None, 'thread', specs)
+        i = len(specs) - 1
+        assert value['sl']['runs'][i]['stage'] == want, (label, value['sl']['runs'][i]['stage'])
+        negatives.append(c.mutate(control, 'sl_del_decision', R(i, 'stage'), 'record' if want != 'record' else 'scope', 'other-stage'))
+        negatives.append(c.mutate(control, 'sl_del_zero', R(i, 'effects'), ['projection_hide'], 'refusal-effect'))
     # Complete Project-data deletion through the held branch, with the canonical and tail reads.
     held, hv = build('project-held', w.PROJECT, 'project_data',
                      [{'kind': 'submit', 'command': 'cmd.project.delete_data', 'facts': {'confirmed': True}},
@@ -648,7 +722,7 @@ def cases():
         negatives.append(c.negative(held, row, label, changed, defect))
     def gen(v, x):
         r = v['sl']['runs'][5]; r['facts']['successor']['generation'] = x; r['record_after']['compaction_generation'] = x
-        r['events_appended'][0]['payload']['compaction_generation'] = x
+        r['events_appended'][0]['payload']['compaction_generation'] = x; r['record_after'][s.OBLIGATION]['payload']['compaction_generation'] = x
     def req(v, x):
         v['sl']['deletion']['requested_at_utc'] = x
         for r in v['sl']['runs']:
@@ -659,17 +733,19 @@ def cases():
         for r in v['sl']['runs']:
             for e in r.get('events_appended') or []:
                 e['payload']['purge_deadline_utc'] = x
-    copies(hv, 'generation-negative', 'sl_del_numbers', lambda v: gen(v, -1), {'copies': 'fact, record, payload', 'value': -1})
-    copies(hv, 'generation-boolean', 'sl_del_numbers', lambda v: gen(v, True), {'copies': 'fact, record, payload', 'value': True})
-    copies(hv, 'generation-fraction', 'sl_del_numbers', lambda v: gen(v, 4.5), {'copies': 'fact, record, payload', 'value': 4.5})
+        set_obligation_payload(v, 'purge_deadline_utc', x)
+    copies(hv, 'generation-negative', 'sl_del_numbers', lambda v: gen(v, -1), {'copies': 'fact, record, stored obligation, payload', 'value': -1})
+    copies(hv, 'generation-boolean', 'sl_del_numbers', lambda v: gen(v, True), {'copies': 'fact, record, stored obligation, payload', 'value': True})
+    copies(hv, 'generation-fraction', 'sl_del_numbers', lambda v: gen(v, 4.5), {'copies': 'fact, record, stored obligation, payload', 'value': 4.5})
     copies(hv, 'request-offset', 'sl_del_time', lambda v: req(v, '2026-11-14T12:00:00+00:00'), {'copies': 'deletion and records', 'profile': 'storage_utc_z'})
     copies(hv, 'request-impossible', 'sl_del_time', lambda v: req(v, '2026-02-30T12:00:00Z'), {'copies': 'deletion and records'})
-    copies(hv, 'deadline-impossible', 'sl_del_time', lambda v: ddl(v, '2026-02-30T12:00:00Z'), {'copies': 'deletion and payloads'})
+    copies(hv, 'deadline-impossible', 'sl_del_time', lambda v: ddl(v, '2026-02-30T12:00:00Z'), {'copies': 'deletion, payloads and stored obligations'})
     late = copy.deepcopy(rv); late['sl']['deletion']['purge_deadline_utc'] = '2026-11-15T12:00:01Z'
     for r in late['sl']['runs']:
         for e in r.get('events_appended') or []:
             e['payload']['purge_deadline_utc'] = '2026-11-15T12:00:01Z'
-    negatives.append(c.negative(retry, 'sl_del_deadline', 'deadline-past-24h', late, {'copies': 'deletion and every event payload', 'value': '24h + 1 s'}))
+    set_obligation_payload(late, 'purge_deadline_utc', '2026-11-15T12:00:01Z')
+    negatives.append(c.negative(retry, 'sl_del_deadline', 'deadline-past-24h', late, {'copies': 'deletion, every event payload and every stored obligation', 'value': '24h + 1 s'}))
     # Retry bypass and a held-to-failed attempt are refusals at the edge stage.
     bypass, bv = build('retry-bypass', None, 'thread',
                        [T('requested'), T('logically_hidden'), T('failed', failure_reason='hide index unavailable'),
@@ -695,13 +771,34 @@ def cases():
             specs = path + [{'kind': 'crash', 'to': to, 'crash_at': at, 'facts': facts()}, {'kind': 'resume', 'of': len(path), 'facts': {}}]
             control, value = build('crash-' + to + '-' + at, None, 'thread', specs)
             i = len(path) + 1
-            negatives.append(c.mutate(control, 'sl_del_resume', R(i, 'events_appended'), [copy.deepcopy(value['sl']['runs'][i - 1]['obligation'])] * (1 if at == 'barrier_append' or at == 'first_receipt' else 2), 'resume-second-append'))
+            crashed = value['sl']['runs'][i - 1]; sent = (crashed['events_appended'] or value['sl']['runs'][i]['events_appended'])[0]
+            negatives.append(c.mutate(control, 'sl_del_resume', R(i, 'events_appended'), [copy.deepcopy(sent)] * (1 if at == 'barrier_append' or at == 'first_receipt' else 2), 'resume-second-append'))
             negatives.append(c.mutate(control, 'sl_del_resume', R(i, 'effects'), EFFECT[to] * 2, 'resume-repeats-effect'))
             negatives.append(c.mutate(control, 'sl_del_resume', R(i, 'trace'), ['admission'] + value['sl']['runs'][i]['trace'], 'resume-reruns-admission'))
             if at == 'record_cas_and_obligation':
-                frozen = copy.deepcopy(value['sl']['runs'][i - 1]['obligation']); frozen['occurred_at_utc'] = '2026-11-14T12:30:00Z'
+                frozen = copy.deepcopy(sent); frozen['occurred_at_utc'] = '2026-11-14T12:30:00Z'
                 negatives.append(c.mutate(control, 'sl_del_resume', R(i, 'events_appended'), [frozen], 'resume-recaptures-obligation'))
     return controls, negatives
+
+
+def obligation_homes(run):
+    """Every place a run holds a record copy with a stored obligation (record_before/after, a canonical read's record)."""
+    homes = [(key,) for key in ('record_after', 'record_before')
+             if isinstance(run.get(key), dict) and isinstance(run[key].get(s.OBLIGATION), dict)]
+    rec = (run.get('facts') or {}).get('record')
+    if isinstance(rec, dict) and isinstance(rec.get(s.OBLIGATION), dict):
+        homes.append(('facts', 'record'))
+    return homes
+
+
+def set_obligation_payload(value, key, x, runs=None):
+    """Change one payload field in every stored obligation copy of a boundary record (corpus/negative constructor)."""
+    for r in (runs if runs is not None else value['sl']['runs']):
+        for where in obligation_homes(r):
+            node = r
+            for k in where:
+                node = node[k]
+            node[s.OBLIGATION]['payload'][key] = x
 
 
 def corpus_slots(control):
@@ -716,6 +813,7 @@ def corpus_slots(control):
         if r.get('decision') == 'appended' and r['to'] == 'purged':
             yield {'paths': [('sl', 'runs', i, 'facts', 'successor', 'generation'),
                              ('sl', 'runs', i, 'record_after', 'compaction_generation'),
+                             ('sl', 'runs', i, 'record_after', s.OBLIGATION, 'payload', 'compaction_generation'),
                              ('sl', 'runs', i, 'events_appended', 0, 'payload', 'compaction_generation')],
                    'kind': 'integer', 'row': 'sl_del_numbers', 'bounds': {'minimum': 0}, 'downstream': False,
                    'container_row': 'sl_del_numbers', 'null_rows': ['sl_del_decision', 'sl_del_zero']}
@@ -724,8 +822,9 @@ def corpus_slots(control):
         return
     deadline = [('sl', 'deletion', 'purge_deadline_utc')] + [('sl', 'runs', i, 'events_appended', j, 'payload', 'purge_deadline_utc')
                                                             for i, r in enumerate(runs) for j, _e in enumerate(r.get('events_appended') or [])]
-    deadline += [('sl', 'runs', i, key, 'payload', 'purge_deadline_utc') for i, r in enumerate(runs)
-                 for key in ('candidate', 'obligation') if isinstance(r.get(key), dict)]
+    deadline += [('sl', 'runs', i, 'candidate', 'payload', 'purge_deadline_utc') for i, r in enumerate(runs) if isinstance(r.get('candidate'), dict)]
+    deadline += [('sl', 'runs', i) + where + (s.OBLIGATION, 'payload', 'purge_deadline_utc') for i, r in enumerate(runs)
+                 for where in obligation_homes(r)]
     yield {'paths': deadline, 'kind': 'datetime', 'row': 'sl_del_time', 'profile': w.EVENT_RECORD, 'type_rows': ['sl_del_time']}
     requested = [('sl', 'deletion', 'requested_at_utc')] + [('sl', 'runs', i, key, 'requested_at_utc') for i, r in enumerate(runs)
                                                             for key in ('record_after', 'record_before') if isinstance(r.get(key), dict)]
