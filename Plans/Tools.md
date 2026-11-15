@@ -13375,17 +13375,18 @@ canonical_text: >-
   JavaScript that calls Puppet Master tools and sends it as one script tool call, instead of calling tools one provider
   tool call at a time. The script runs in a JavaScript EvalSession owned by Shared Integration Runtime, and every tool
   the script calls is a nested Puppet Master tool call on the T-178 path. Every run records its requested and effective
-  tool-calling mode. When the effective mode is not Code Mode the run uses ordinary tool calls and records one typed
-  reason; it is never a silent fallback, and Code Mode is never reported as effective for a run whose tools were
-  dispatched another way. A resumed session keeps the tool-calling mode it started with, and a change of mode on resume
-  is recorded with its typed reason.
+  tool-calling mode. Puppet Master owns the tools and the script runtime, so Code Mode does not depend on the provider
+  having a code mode of its own. The effective mode is Code Mode, mixed or ordinary tool calls. When it is not Code
+  Mode the run records one typed reason; it is never a silent fallback, and Code Mode is never reported as effective
+  for a run in which any tool was dispatched another way. A resumed session keeps the tool-calling mode it started
+  with, and a change of mode on resume is recorded with its typed reason.
 gui_related: false
 gui_classification_reason: Runtime tool-dispatch mode and its recorded truth; presentation of the mode is owned elsewhere.
 depends_on: [T-169, T-176, T-177, T-178]
 unblocks: [T-189, T-190]
 acceptance_criteria:
   - With no user action, a run on any provider route requests Code Mode, and its record shows requested and effective tool-calling mode.
-  - A run whose effective mode is ordinary tool calls carries exactly one typed reason, and no surface describes that run as Code Mode.
+  - A run whose effective mode is mixed or ordinary tool calls carries exactly one typed reason, and no surface describes that run as Code Mode.
   - Code Mode is unavailable, with a typed reason, whenever Shared Integration Runtime reports no product-approved JavaScript EvalSession for the exact Host/Environment.
   - Tools creates no second evaluator, kernel manager or script runtime for Code Mode.
 validation_surfaces:
@@ -13430,16 +13431,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  How the script tool reaches the model depends on who dispatches the run's tools. Under Host Tool Execution, where
-  Puppet Master dispatches every tool, Puppet Master offers the script tool as a provider-native tool and describes
-  the request-selected registry tools to the model as the script's callable catalog under T-176 materialization, rather
-  than as one provider tool schema each. Where the selected model has no usable provider-native tool calls, the same
-  script tool is carried as an in-band tool call in an owned dialect chosen for the model family; the T-169 admission
-  gate applies unchanged, and text in which the model writes a tool result itself is discarded and never enters
-  replayable history. Where the provider runs its own tool loop, in the Constrained and Provider-managed execution
-  tiers, Puppet Master cannot place its script tool in that loop: it projects the provider's own code-mode switch only
-  when the provider documents one and the launch qualifies, and it takes the effective mode from what the provider
-  reports, never from the switch having been set.
+  Puppet Master offers the script tool through whichever channel carries Puppet Master tools on that route. Under
+  Host Tool Execution on a direct API route it is a provider-native tool; on a bridged CLI it is a projected Puppet
+  Master tool, with the CLI's own tools disabled wherever its capability entry reports native_tools_disableable, so
+  the script tool is the model's way to act. The request-selected registry tools are described to the model as the
+  script's callable catalog under T-176 materialization, rather than as one provider tool schema each. Where the
+  selected model has no usable provider-native tool calls, the same script tool is carried as an in-band tool call in
+  an owned dialect chosen for the model family; the T-169 admission gate applies unchanged, and text in which the model
+  writes a tool result itself is discarded and never enters replayable history. Where a provider keeps native tools
+  that Puppet Master cannot disable, the script tool is still offered, the provider's own tool calls stay outside Code
+  Mode, and the run's effective mode is mixed. Where a provider accepts no Puppet Master tools at all, the effective
+  mode is ordinary tool calls. A provider's own code mode, where it has one, is a provider-native feature handled
+  under the provider-native feature policy and is never what makes Code Mode effective.
 gui_related: false
 gui_classification_reason: Provider request shaping and execution-tier behaviour; not GUI implementation work.
 depends_on: [T-169, T-176, T-188]
@@ -13447,8 +13450,8 @@ unblocks: []
 acceptance_criteria:
   - Under Host Tool Execution a Code Mode request carries the script tool and does not also carry one provider tool schema per registry tool the script can call.
   - A model without provider-native tool calls can use Code Mode through an owned in-band dialect, and a tool result the model wrote itself never reaches replayable history.
-  - A run in the Constrained or Provider-managed tier records Code Mode as effective only when the provider itself reported it.
-  - A bridged Claude Code launch started headless records ordinary tool calls with a typed reason while that provider limits its Code Mode to the interactive terminal.
+  - A bridged CLI that takes Puppet Master tools and has its own tools disabled runs in Code Mode through the projected script tool, whether or not that CLI has a code mode of its own.
+  - A run in which the provider also used native tools that Puppet Master could not disable is recorded as mixed, never as Code Mode.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
   - python3 scripts/pm-plan-index.py validate
@@ -13472,7 +13475,8 @@ preserved_exact_tokens:
   - owned dialect
 negative_constraints:
   - Do not copy a provider's or another harness's dialect list, switch name or availability rules into canon as fixed facts; they are read from the provider at run time.
-  - Do not claim Code Mode for a provider-run tool loop that Puppet Master cannot observe.
+  - Do not claim Code Mode for provider-native tool calls that Puppet Master did not dispatch.
+  - Do not make Code Mode depend on a provider's own code mode being available.
   - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
 owner_hints:
   - Plans/Tools.md
