@@ -190,6 +190,47 @@ function watchResetRows() {
   return { before, hit, hitRow, next, rows: warmLog };
  `)({ now: () => 100 });
 }
+// R62-C1, from the product: the slow bar can dip to its 40 ms floor INSIDE a watch and recover before the row is
+// written, so no bar the row logs bounds it. 15 steady watches at 8 ms (36 watch intervals each); admission
+// intervals [30 x 4, 8 x 14, 30 x 12] leave the count at 15, the median at 30 and the bar at 90. The next step's d1
+// and d2 are 30 ms; its watch is [8, 8, 41, 30 x 7]: the two 8 ms intervals pull the median to 8 (bar 40), the 41 ms
+// interval resets the count, the 30 ms ones bring the median back to 30. The row logs slow1 90, slow2 90, slowMs 90.
+function watchDipRows() {
+ const code = part('  const median = () => {', '  const pending = () =>') +
+  part('  const logStep = (st,', '  const tell = (st,') +
+  part('  const WATCH_KEEP = 16, STEADY_MS = 25;', '  /* the watch after a GPU step');
+ return new Function('performance', `
+  const warmDeltas = [], warmLog = [];
+  let warmLateAt = 0, watchClean = 0, watchResets = 0, watchUnseen = false, warmD1 = 0, warmD2 = 0;
+  ${code}
+  const gpu = (i, d1, d2, watch) => {
+   const st = { owner: 'glass', name: 'step' + i, at: i * 400 };
+   const r0 = watchResets;
+   note(d1, 1); note(d2, 2);
+   let watchWorst = 0;
+   const needs = watching();
+   if (needs) {
+    for (const w of watch) { note(w); if (w > watchWorst) watchWorst = w; }
+    const fm = [d1, d2, watchWorst];
+    watched(fm);
+    logStep(st, 0, fm, false, 'ran');
+   } else {
+    st.unwatched = true;
+    logStep(st, 0, [d1, d2], false, 'ran');
+   }
+   return { needs, resets: watchResets - r0, counter: watchClean, median: median(), bar: lateMs() };
+  };
+  const rep = (v, k) => Array.from({ length: k }, () => v);
+  for (let i = 0; i < 30; i++) note(8);
+  for (let i = 0; i < 15; i++) gpu(i, 8, 8, rep(8, 36));
+  for (const d of [...rep(30, 4), ...rep(8, 14), ...rep(30, 12)]) note(d);
+  const before = { counter: watchClean, median: median(), bar: lateMs() };
+  const hit = gpu(15, 30, 30, [8, 8, 41, ...rep(30, 7)]);
+  const hitRow = warmLog.at(-1);
+  const next = gpu(16, 30, 30, rep(30, 8));
+  return { before, hit, hitRow, next, rows: warmLog };
+ `)({ now: () => 100 });
+}
 // hand-written rows that carry the per-interval fields (120 Hz, median 8: slow bar 40, steady bar 25)
 const X = { steadyMs: 25, slowMs: 40, slow1: 40, steady1: 25, slow2: 40, steady2: 25, resetAt: 0 };
 const exact = (k) => watched(k).map((r) => ({ ...r, ...X }));
@@ -276,6 +317,15 @@ const CASES = [
 		assert.deepEqual([p.hitRow.frameMs, p.hitRow.resetAt, p.hitRow.slow1, p.hitRow.slow2, p.hitRow.steadyMs, p.hitRow.slowMs], [[8, 8, 41], 0, 40, 40, 45, 90], 'and its row names no reset');
 		assert.equal(p.next.needs, true, 'the next step is watched: the count is 2, not 16');
 		console.log(`product hit ${JSON.stringify(p.hit)}, row ${JSON.stringify(p.hitRow)}, next ${JSON.stringify(p.next)}`);
+		return p.rows;
+	}, { needless: 0, early: 0 }],
+	['R62-C1 from the product: the slow bar dips to its 40 ms floor inside the watch and recovers; no logged bar shows it', () => {
+		const p = watchDipRows();
+		assert.deepEqual([p.before.counter, p.before.median, p.before.bar], [15, 30, 90], 'before the step: 15 watches, median 30, bar 90');
+		assert.deepEqual([p.hit.needs, p.hit.resets, p.hit.counter], [true, 1, 1], 'the 41 ms watch interval met a 40 ms bar and reset the count');
+		assert.deepEqual([p.hitRow.frameMs, p.hitRow.resetAt, p.hitRow.slow1, p.hitRow.slow2, p.hitRow.steadyMs, p.hitRow.slowMs], [[30, 30, 41], 0, 90, 90, 45, 90], 'and every bar the row logs is 90');
+		assert.deepEqual([p.next.needs, p.next.counter], [true, 2], 'the next step is watched: the count is 2');
+		console.log(`product hit ${JSON.stringify(p.hit)}, row ${JSON.stringify(p.hitRow)}`);
 		return p.rows;
 	}, { needless: 0, early: 0 }],
 	['control: 17 steady watches on rows that carry the fields (the 17th was not needed)',
