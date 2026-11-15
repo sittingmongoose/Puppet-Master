@@ -1,5 +1,5 @@
 {
- "bundle_commit": "201f11feb0",
+ "bundle_commit": "3e3bcca547",
  "expected_slots": [
   "brainstorm.plan_synthesized--envelope",
   "brainstorm.plan_synthesized--payload:application",
@@ -45,6 +45,7 @@
    "joint_kill": 0,
    "killed": 721,
    "open": 0,
+   "post_run_detections": 0,
    "restoration_failures": 0,
    "sites": 1638,
    "survived": 0,
@@ -65,6 +66,7 @@
    "joint_kill": 0,
    "killed": 298,
    "open": 0,
+   "post_run_detections": 0,
    "restoration_failures": 0,
    "sites": 903,
    "survived": 0,
@@ -85,6 +87,7 @@
    "joint_kill": 0,
    "killed": 307,
    "open": 0,
+   "post_run_detections": 0,
    "restoration_failures": 0,
    "sites": 909,
    "survived": 0,
@@ -105,6 +108,7 @@
    "joint_kill": 0,
    "killed": 793,
    "open": 0,
+   "post_run_detections": 0,
    "restoration_failures": 0,
    "sites": 1814,
    "survived": 0,
@@ -125,6 +129,7 @@
    "joint_kill": 0,
    "killed": 318,
    "open": 0,
+   "post_run_detections": 0,
    "restoration_failures": 0,
    "sites": 943,
    "survived": 0,
@@ -145,6 +150,7 @@
    "joint_kill": 0,
    "killed": 342,
    "open": 0,
+   "post_run_detections": 0,
    "restoration_failures": 0,
    "sites": 963,
    "survived": 0,
@@ -164,6 +170,7 @@
    "joint_kill": 0,
    "killed": 201,
    "open": 0,
+   "post_run_detections": 0,
    "restoration_failures": 0,
    "sites": 625,
    "survived": 0,
@@ -229,6 +236,35 @@
   "review.finding_dispositioned--payload:project": "final",
   "review.finding_dispositioned--source": "final",
   "shared--checkpoint": "final"
+ },
+ "slot_search_modes": {
+  "brainstorm.plan_synthesized--envelope": "full",
+  "brainstorm.plan_synthesized--payload:application": "full",
+  "brainstorm.plan_synthesized--payload:project": "full",
+  "brainstorm.plan_synthesized--source": "full",
+  "brainstorm.plan_synthesized--wrapper:CollaborationRun": "full",
+  "brainstorm.proposal_added--envelope": "full",
+  "brainstorm.proposal_added--payload:application": "full",
+  "brainstorm.proposal_added--payload:project": "full",
+  "brainstorm.proposal_added--source": "full",
+  "brainstorm.vote_added--envelope": "full",
+  "brainstorm.vote_added--payload:application": "full",
+  "brainstorm.vote_added--payload:project": "full",
+  "brainstorm.vote_added--source": "full",
+  "review.artifact_finalized--envelope": "full",
+  "review.artifact_finalized--payload:application": "full",
+  "review.artifact_finalized--payload:project": "full",
+  "review.artifact_finalized--source": "full",
+  "review.artifact_finalized--wrapper:CollaborationRun": "full",
+  "review.finding_added--envelope": "full",
+  "review.finding_added--payload:application": "full",
+  "review.finding_added--payload:project": "full",
+  "review.finding_added--source": "full",
+  "review.finding_dispositioned--envelope": "full",
+  "review.finding_dispositioned--payload:application": "full",
+  "review.finding_dispositioned--payload:project": "full",
+  "review.finding_dispositioned--source": "full",
+  "shared--checkpoint": "full"
  },
  "slot_tool_versions": {
   "brainstorm.plan_synthesized--envelope": "201f11feb0",
@@ -495,6 +531,7 @@
    "killed": 37,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -558,6 +595,7 @@
    "raw_sha256": "ec4e148ca9e31da46e1d15d094e301c19c5184121cea8052c562239b6828037e",
    "restoration_failures": 0,
    "row": "EV01_record_schema",
+   "search_mode": "full",
    "seconds": 120.9,
    "site_kinds": {
     "annotation": 3,
@@ -567,6 +605,7 @@
    },
    "sites": 188,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 344,
@@ -636,6 +675,7 @@
    "killed": 41,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -699,6 +739,7 @@
    "raw_sha256": "c4d7c3937801ce0c3460e3194f54b74f4dd9cc934c790ea01bbb9156b984dd96",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 17.6,
    "site_kinds": {
     "applicator": 10,
@@ -706,6 +747,7 @@
    },
    "sites": 82,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 178,
@@ -782,6 +824,7 @@
    "killed": 40,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -829,6 +872,7 @@
    "raw_sha256": "0e0809c8fd86ad0863d3c66ea0c2e4807eac669e56b86494416f44de94998aeb",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 6.8,
    "site_kinds": {
     "applicator": 10,
@@ -836,6 +880,7 @@
    },
    "sites": 80,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 178,
@@ -1376,6 +1421,7 @@
    "killed": 404,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -1951,6 +1997,7 @@
    "raw_sha256": "f1567a0024d43932430d7c5a18295b740f384affe11d7b94c82cde19c9985e0e",
    "restoration_failures": 0,
    "row": "SO03_schema",
+   "search_mode": "full",
    "seconds": 1306.0,
    "site_kinds": {
     "applicator": 142,
@@ -1959,6 +2006,7 @@
    },
    "sites": 851,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 953,
@@ -2153,6 +2201,7 @@
    "killed": 199,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "enum",
@@ -2486,6 +2535,7 @@
    "raw_sha256": "25e1a7ebada910829ccced6fb3e75d81bbaa8793bcf974075ee7395df5cff041",
    "restoration_failures": 0,
    "row": "WR01_schema",
+   "search_mode": "full",
    "seconds": 2546.1,
    "site_kinds": {
     "applicator": 79,
@@ -2494,6 +2544,7 @@
    },
    "sites": 437,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 990,
@@ -2734,6 +2785,7 @@
    "killed": 37,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -2797,6 +2849,7 @@
    "raw_sha256": "3b5e01081ffe8a61b74219bcecf6bd5174576f92c7f64f44ce1643bf47174f1b",
    "restoration_failures": 0,
    "row": "EV01_record_schema",
+   "search_mode": "full",
    "seconds": 130.3,
    "site_kinds": {
     "annotation": 3,
@@ -2806,6 +2859,7 @@
    },
    "sites": 188,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 344,
@@ -2875,6 +2929,7 @@
    "killed": 34,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -2938,6 +2993,7 @@
    "raw_sha256": "a40a3b2917ddde184f1db8be0596eb06205557c83c3d92effddd845842b62884",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 17.1,
    "site_kinds": {
     "applicator": 11,
@@ -2945,6 +3001,7 @@
    },
    "sites": 80,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 168,
@@ -3021,6 +3078,7 @@
    "killed": 33,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -3068,6 +3126,7 @@
    "raw_sha256": "5b0032908be4c61a4b83d86b26eb3772ce29f187d6f95f7d0bb7d8a6c5435312",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 6.2,
    "site_kinds": {
     "applicator": 11,
@@ -3075,6 +3134,7 @@
    },
    "sites": 78,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 168,
@@ -3497,6 +3557,7 @@
    "killed": 194,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -3776,6 +3837,7 @@
    "raw_sha256": "d097a4e24e9c63fe6e340587cb9ba4183b209ce91599c60123120d648f76a922",
    "restoration_failures": 0,
    "row": "SO03_schema",
+   "search_mode": "full",
    "seconds": 371.5,
    "site_kinds": {
     "applicator": 90,
@@ -3783,6 +3845,7 @@
    },
    "sites": 557,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 711,
@@ -4023,6 +4086,7 @@
    "killed": 37,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -4086,6 +4150,7 @@
    "raw_sha256": "9797c2b911f08364fe7711261045887861ce902ba4c9616c52231c2f354a51ed",
    "restoration_failures": 0,
    "row": "EV01_record_schema",
+   "search_mode": "full",
    "seconds": 86.2,
    "site_kinds": {
     "annotation": 3,
@@ -4095,6 +4160,7 @@
    },
    "sites": 188,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 344,
@@ -4165,6 +4231,7 @@
    "killed": 40,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -4236,6 +4303,7 @@
    "raw_sha256": "8cc8ef1d3b5437947513c533bc7cee47315c71b5d69038e61a7288a232483719",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 25.5,
    "site_kinds": {
     "applicator": 15,
@@ -4243,6 +4311,7 @@
    },
    "sites": 99,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 194,
@@ -4320,6 +4389,7 @@
    "killed": 39,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -4375,6 +4445,7 @@
    "raw_sha256": "33602fce44c3eb2363787a0f66866756f839ddc03837505ab1366460412b8e65",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 8.7,
    "site_kinds": {
     "applicator": 15,
@@ -4382,6 +4453,7 @@
    },
    "sites": 97,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 194,
@@ -4805,6 +4877,7 @@
    "killed": 191,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -5100,6 +5173,7 @@
    "raw_sha256": "8718bfb2fb32ee9c5e06e88d4c9fa53d9069ed01143c5176c5547be0380b45dd",
    "restoration_failures": 0,
    "row": "SO03_schema",
+   "search_mode": "full",
    "seconds": 358.6,
    "site_kinds": {
     "applicator": 78,
@@ -5107,6 +5181,7 @@
    },
    "sites": 525,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 699,
@@ -5347,6 +5422,7 @@
    "killed": 37,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -5410,6 +5486,7 @@
    "raw_sha256": "d8bb66b35aec10554ad1b898225da5520c7cfd555a2478e6d3cced520794081a",
    "restoration_failures": 0,
    "row": "EV01_record_schema",
+   "search_mode": "full",
    "seconds": 131.7,
    "site_kinds": {
     "annotation": 3,
@@ -5419,6 +5496,7 @@
    },
    "sites": 188,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 344,
@@ -5577,6 +5655,7 @@
    "killed": 57,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -5688,6 +5767,7 @@
    "raw_sha256": "d3ab2be342b61d8b3bb1230ec4f75fc665850c38c37d6ddedd2841de0cb1fb55",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 51.2,
    "site_kinds": {
     "applicator": 19,
@@ -5696,6 +5776,7 @@
    },
    "sites": 126,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 243,
@@ -5861,6 +5942,7 @@
    "killed": 56,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -5956,6 +6038,7 @@
    "raw_sha256": "1ca4dea6a99481a79d334ff342ac172fa13df05edb7bd5f2ac241a1098fec14e",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 36.4,
    "site_kinds": {
     "applicator": 19,
@@ -5964,6 +6047,7 @@
    },
    "sites": 124,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 243,
@@ -6604,6 +6688,7 @@
    "killed": 445,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -7275,6 +7360,7 @@
    "raw_sha256": "5baaa53a7413352eb5b9585b0db42fdd0645e4fe1ea6b96b6963e1f883df4147",
    "restoration_failures": 0,
    "row": "SO03_schema",
+   "search_mode": "full",
    "seconds": 1767.4,
    "site_kinds": {
     "applicator": 160,
@@ -7283,6 +7369,7 @@
    },
    "sites": 939,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 1037,
@@ -7491,6 +7578,7 @@
    "killed": 198,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "enum",
@@ -7824,6 +7912,7 @@
    "raw_sha256": "7871cf839970092b1b9485a2cfe0f6408f20fcffbb216d4301836ad131600970",
    "restoration_failures": 0,
    "row": "WR01_schema",
+   "search_mode": "full",
    "seconds": 2279.1,
    "site_kinds": {
     "applicator": 79,
@@ -7832,6 +7921,7 @@
    },
    "sites": 437,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 986,
@@ -8072,6 +8162,7 @@
    "killed": 37,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -8135,6 +8226,7 @@
    "raw_sha256": "422124d471f34a28135eb878841e6e3aae5c202d17d7f4289a110f5d38a00e86",
    "restoration_failures": 0,
    "row": "EV01_record_schema",
+   "search_mode": "full",
    "seconds": 98.1,
    "site_kinds": {
     "annotation": 3,
@@ -8144,6 +8236,7 @@
    },
    "sites": 188,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 344,
@@ -8213,6 +8306,7 @@
    "killed": 39,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -8276,6 +8370,7 @@
    "raw_sha256": "884dacffc9fd40d7e1c2e27a7e572aece92951a07482934871331cb61f56525e",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 26.6,
    "site_kinds": {
     "applicator": 15,
@@ -8283,6 +8378,7 @@
    },
    "sites": 93,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 189,
@@ -8359,6 +8455,7 @@
    "killed": 38,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -8406,6 +8503,7 @@
    "raw_sha256": "e02ca897a6c0d567d3430fbf6f9e66e9836bb84b87df1e8a4eaf2e4f3d788c0d",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 15.1,
    "site_kinds": {
     "applicator": 15,
@@ -8413,6 +8511,7 @@
    },
    "sites": 91,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 189,
@@ -8803,6 +8902,7 @@
    "killed": 204,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -9082,6 +9182,7 @@
    "raw_sha256": "0d2264617f9dbc2c7f939fb6e509fe3ef7abb82784326f12de8441ffdfd47459",
    "restoration_failures": 0,
    "row": "SO03_schema",
+   "search_mode": "full",
    "seconds": 359.0,
    "site_kinds": {
     "applicator": 98,
@@ -9089,6 +9190,7 @@
    },
    "sites": 571,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 732,
@@ -9329,6 +9431,7 @@
    "killed": 37,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -9392,6 +9495,7 @@
    "raw_sha256": "64f9f7aa4ce3a670ec8d444565890718e1453344da51a6b40a05ce079c8dcb98",
    "restoration_failures": 0,
    "row": "EV01_record_schema",
+   "search_mode": "full",
    "seconds": 121.5,
    "site_kinds": {
     "annotation": 3,
@@ -9401,6 +9505,7 @@
    },
    "sites": 188,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 344,
@@ -9470,6 +9575,7 @@
    "killed": 45,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -9533,6 +9639,7 @@
    "raw_sha256": "dcd9e4a25df931d69737ff0055ca75907b470bc88891115d8c0c0542f08b22ab",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 32.3,
    "site_kinds": {
     "applicator": 14,
@@ -9540,6 +9647,7 @@
    },
    "sites": 98,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 207,
@@ -9616,6 +9724,7 @@
    "killed": 44,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -9663,6 +9772,7 @@
    "raw_sha256": "cda8763432342c6750dd2389b39ede7695a30b7c53958ff5912abf430e8fd15f",
    "restoration_failures": 0,
    "row": "PS01_payload_schema",
+   "search_mode": "full",
    "seconds": 8.8,
    "site_kinds": {
     "applicator": 14,
@@ -9670,6 +9780,7 @@
    },
    "sites": 96,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 207,
@@ -10060,6 +10171,7 @@
    "killed": 216,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "type",
@@ -10339,6 +10451,7 @@
    "raw_sha256": "0732a8f5657447998d4782ed559f78945503cd14c7085366d16698dc7a82929e",
    "restoration_failures": 0,
    "row": "SO03_schema",
+   "search_mode": "full",
    "seconds": 452.6,
    "site_kinds": {
     "applicator": 96,
@@ -10346,6 +10459,7 @@
    },
    "sites": 581,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 762,
@@ -10860,6 +10974,7 @@
    "killed": 201,
    "open": 0,
    "open_clauses": [],
+   "post_run_detections": 0,
    "proofs": [
     {
      "keyword": "minLength",
@@ -12111,6 +12226,7 @@
    "raw_sha256": "535949d3a265721056cf1c94777731640312a48721becea2c5b94b069761c1d1",
    "restoration_failures": 0,
    "row": "CK01_schema",
+   "search_mode": "full",
    "seconds": 827.3,
    "site_kinds": {
     "annotation": 6,
@@ -12120,6 +12236,7 @@
    },
    "sites": 625,
    "survived": 0,
+   "timings": null,
    "tool_commit": "201f11feb0",
    "tool_version_source": "recorded by the run at launch (.tool-commit of its frozen tree, launch pins)",
    "witnesses": 870,
@@ -12140,6 +12257,7 @@
   "joint_kill": 0,
   "killed": 2980,
   "open": 0,
+  "post_run_detections": 0,
   "restoration_failures": 0,
   "sites": 7795,
   "survived": 0,

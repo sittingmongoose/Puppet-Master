@@ -8376,7 +8376,17 @@
    },
    "source_schema:SO03_schema": {
     "aliases": 39,
-    "clause_ledger": [],
+    "clause_ledger": [
+     {
+      "boundary": "source",
+      "clauses": 802,
+      "control_detected": 105,
+      "implied": 130,
+      "invalid": 42,
+      "killed": 525,
+      "open": 0
+     }
+    ],
     "controls": 0,
     "negatives": 1
    },
@@ -8422,7 +8432,17 @@
    },
    "wrapper_shape:WR01_schema": {
     "aliases": 13,
-    "clause_ledger": [],
+    "clause_ledger": [
+     {
+      "boundary": "wrapper:CollaborationDefinition",
+      "clauses": 358,
+      "control_detected": 50,
+      "implied": 51,
+      "invalid": 8,
+      "killed": 249,
+      "open": 0
+     }
+    ],
     "controls": 0,
     "negatives": 1
    },
@@ -9040,11 +9060,11 @@
      {
       "boundary": "source",
       "clauses": 734,
-      "control_detected": 94,
-      "implied": 101,
+      "control_detected": 87,
+      "implied": 110,
       "invalid": 44,
-      "killed": 479,
-      "open": 16
+      "killed": 493,
+      "open": 0
      }
     ],
     "controls": 1,
@@ -9087,7 +9107,17 @@
    },
    "wrapper_shape:WR01_schema": {
     "aliases": 13,
-    "clause_ledger": [],
+    "clause_ledger": [
+     {
+      "boundary": "wrapper:CollaborationDefinition",
+      "clauses": 358,
+      "control_detected": 50,
+      "implied": 51,
+      "invalid": 8,
+      "killed": 249,
+      "open": 0
+     }
+    ],
     "controls": 4,
     "negatives": 1
    },
@@ -11685,7 +11715,7 @@
      {
       "boundary": "wrapper:CollaborationParticipant",
       "clauses": 260,
-      "control_detected": 27,
+      "control_detected": 29,
       "implied": 53,
       "invalid": 8,
       "killed": 170,
@@ -13680,10 +13710,10 @@
      {
       "boundary": "wrapper:CollaborationRun",
       "clauses": 251,
-      "control_detected": 8,
+      "control_detected": 7,
       "implied": 36,
       "invalid": 8,
-      "killed": 199,
+      "killed": 200,
       "open": 0
      }
     ],
@@ -13707,6 +13737,7 @@
    }
   }
  },
+ "gated_run": "fresh C12-DC2 gated run at the same checker, table and tool hashes (DC-c12-dc2/gated-proof.json)",
  "note": "clauses[family][i].rows lists phase:row ids; rows[id] holds the fresh gated-tool result for that row; family_rows[family][id] holds that family's own controls, negatives and, for schema rows, its clause ledger",
  "rows": {
   "checkpoint_cursor:CK12_cursor_context": {
