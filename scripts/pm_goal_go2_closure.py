@@ -834,6 +834,9 @@ def verify(args):
     import pm_goal_go_schema_closure as cl
     import pm_goal_oracle_common as common
     report = json.loads(Path(args.report).read_text())
+    if 'roots' in report:  # a merged GO-format report (merge-shards): its single root
+        (merged_root, merged_entry), = report['roots'].items()
+        report = dict(root=merged_root, clauses=merged_entry['clauses'])
     store = pickle.loads(gzip.decompress(Path(str(args.report) + '.controls.pkl.gz').read_bytes()))
     data = load(args.dump, [report['root']])
     (root, entry), = data['roots'].items()
