@@ -656,4 +656,6 @@ def corpus_slots(control):
         else:
             # The independent material input keeps its own value; the
             # material stays corrupt through its unequal hash either way.
-            yield {'paths': paths, 'kind': 'integer', 'row': 'sr_cor_numbers', 'bounds': {'minimum': 0, 'maximum': U64}}
+            # Nullable in corruption_evidence; null only fails the material branch.
+            yield {'paths': paths, 'kind': 'integer', 'row': 'sr_cor_numbers', 'bounds': {'minimum': 0, 'maximum': U64},
+                   'null_rows': ['sr_cor_event_schema', 'sr_cor_payload', 'sr_cor_schema']}

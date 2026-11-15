@@ -340,7 +340,11 @@ def corpus(out):
                 case=copy.deepcopy(base)
                 for path in slot['paths']:
                     c.set_path(case,path,entry['value'])
-                if slot['kind']=='integer':
+                if slot['kind']=='integer' and entry['value'] is None and 'null_rows' in slot:
+                    # null is a declared type at a nullable owner slot: the closed
+                    # schema branch (and any join on it) owns the refusal.
+                    expected=sorted(slot['null_rows'])
+                elif slot['kind']=='integer':
                     expected=_expected_number(entry,slot.get('bounds',{}),slot['row'],slot.get('downstream',False),
                                               slot.get('container_row'))
                 elif not isinstance(entry['value'],str):
