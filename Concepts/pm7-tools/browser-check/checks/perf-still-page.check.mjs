@@ -105,20 +105,31 @@ export const CENSUS = () => {
 	return out;
 };
 
-// The still state's marks in a trace's events and, per mark, the style recalcs of the page's main thread after it
-// (exported for tools/still-toggle-recalc.selftest.mjs): { marks, after(first, last) }
-// The try the frame rows judge (R51 F2): the first one that meets every judged bound ends the tries and is the one judged;
-// while none has, the quietest so far (fewest drawn plus rendered frames, then fewest starts). Ranking a passing try
-// against an earlier failing one kept (drawn 1, rendered 1, starts 80) over (2, 1, 40), and the starts row then failed
-// what one of the three tries had met. meets(r) says whether trace summary r meets every bound this view judges.
-export function stillPick(x, r, meets) {
-	if (meets(r)) return { x: r, done: true };
+// The try the frame rows judge (R51 F2): the first one that meets every bound its view judges ends the tries and is the
+// one judged; while none has, the quietest so far by the view's own ranking. Ranking a passing try against an earlier
+// failing one kept (drawn 1, rendered 1, starts 80) over (2, 1, 40), and the starts row then failed what one of the
+// three tries had met. j is stillJudged(view, bounds): { rows, meets(r), score(r) }; a smaller score (compared in
+// order) is quieter.
+export function stillPick(x, r, j) {
+	if (j.meets(r)) return { x: r, done: true };
 	if (!x) return { x: r, done: false };
-	const sum = (q) => q.drawn.perSec + q.mainFrames.renderedPerSec;
-	const quieter = sum(r) < sum(x) || (sum(r) === sum(x) && r.mainFrames.perSec < x.mainFrames.perSec);
-	return { x: quieter ? r : x, done: false };
+	const a = j.score(r), b = j.score(x);
+	const i = a.findIndex((v, k) => v !== b[k]);
+	return { x: i >= 0 && a[i] < b[i] ? r : x, done: false };
+}
+// The frame rows each view judges, and so what ends its tries (R53-C1, R54 F1): Settings judges drawn, rendered and
+// starts; Home only what the compositor draws (its widgets tick, so its main frames are logged, not judged), ranked by
+// drawn first; Usage is live data and judges none of them: its tries still stop at the first quiet one by drawn and
+// rendered frames, as before, so its logged numbers stay comparable (nothing is judged from them).
+export function stillJudged(view, { drawn = 15, main = 10, starts = 60 } = {}) {
+	const d = (q) => q.drawn.perSec, m = (q) => q.mainFrames.renderedPerSec, s = (q) => q.mainFrames.perSec;
+	if (view === 'usage') return { rows: [], meets: (q) => d(q) <= drawn && m(q) <= main, score: (q) => [d(q) + m(q), s(q)] };
+	if (view === 'dashboard') return { rows: ['drawn'], meets: (q) => d(q) <= drawn, score: (q) => [d(q), m(q), s(q)] };
+	return { rows: ['drawn', 'rendered', 'starts'], meets: (q) => d(q) <= drawn && m(q) <= main && s(q) <= starts, score: (q) => [d(q) + m(q), s(q)] };
 }
 
+// The still state's marks in a trace's events and, per mark, the style recalcs of the page's main thread after it
+// (exported for tools/still-toggle-recalc.selftest.mjs): { marks, after(first, last) }
 export function toggleRecalcs(events, keep = null) {
 	// the marks come from the page's own main thread: its style recalcs and main frames are those of the same thread
 	const marks = {}, styles = [], frames = [];
@@ -394,7 +405,7 @@ export default async function (t) {
 				const r = (await trace(cdp, { ms, url, track: framesBy, by: framesBy })).sum;
 				if (framesBy) t.log(`${at}: NOTE try ${k + 1} main frame starts by what asked for them [what, starts, nothing to update, rendered, ms]: ${JSON.stringify(r.startsBy.slice(0, 8))}`);
 				tries.push(`${r.drawn.perSec}/${rendered(r)} (starts ${r.mainFrames.perSec}, ${r.mainFrames.noUpdatePerSec} with nothing to update)${quiet ? '' : ' (a finite animation still ran)'}${r.drawn.perSec > drawnMax || rendered(r) > mainMax ? ' by ' + named(r) : ''}`);
-				const pick = stillPick(x, r, (q) => q.drawn.perSec <= drawnMax && rendered(q) <= mainMax && (!judgeStarts || q.mainFrames.perSec <= startsMax));
+				const pick = stillPick(x, r, stillJudged(view, { drawn: drawnMax, main: mainMax, starts: startsMax }));
 				x = pick.x;
 				if (pick.done) break;
 			}

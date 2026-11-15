@@ -68,6 +68,48 @@ def _esc_len(text: str, i: int) -> int:
     return m.end() if m else 1
 
 
+def _ws_parts(sel: str, collapse: bool) -> str:
+    """Trim the ends (and with collapse, turn each whitespace run into one space), keeping a hex escape's terminating
+    whitespace with its escape: never trimmed and never merged with the whitespace after it (R53-C2, R54 F2). Merged
+    with a following descendant combinator into one space, or trimmed off the end of a nesting parent or a scope root
+    that then had ' *' appended, the compound scanner read the one space left as the escape's own and lost the
+    combinator, so '.card:hove\\72  *' (an escaped :hover, then a universal descendant) was not seen."""
+    parts, i, n = [], 0, len(sel)
+    while i < n:
+        c = sel[i]
+        if c == '\\':
+            k = _esc_len(sel, i)
+            esc = sel[i:i + k]
+            if collapse and k > 2 and esc[-1].isspace() and re.match(r'\\[0-9a-fA-F]', esc):
+                esc = esc.rstrip(' \t\r\n\f') + ' '
+            parts.append((False, esc))
+            i += k
+        elif c.isspace():
+            j = i
+            while j < n and sel[j].isspace():
+                j += 1
+            parts.append((True, ' ' if collapse else sel[i:j]))
+            i = j
+        else:
+            parts.append((False, c))
+            i += 1
+    while parts and parts[0][0]:
+        parts.pop(0)
+    while parts and parts[-1][0]:
+        parts.pop()
+    return ''.join(t for _, t in parts)
+
+
+def _squash_ws(sel: str) -> str:
+    """' '.join(sel.split()), escape-aware (_ws_parts)."""
+    return _ws_parts(sel, True)
+
+
+def _trim(sel: str) -> str:
+    """sel.strip(), escape-aware (_ws_parts): a hex escape's terminator at the end stays."""
+    return _ws_parts(sel, False)
+
+
 def css_unescape(name: str) -> str:
     """Decode hex and one-character escapes in one pass: a decoded backslash (\\5c) is a literal character and is never
     read again as the start of another escape (R51 F3: two passes turned '\\5c hover' into 'hover')."""
@@ -99,12 +141,12 @@ def _top_parts(text: str, separator: str) -> list[str]:
         elif depth == 0 and text.startswith(separator, i) and (len(separator) == 1 or (
                 (i == 0 or not re.match(r'[\w-]', text[i - 1])) and
                 (i + len(separator) == len(text) or not re.match(r'[\w-]', text[i + len(separator)])))):
-            out.append(text[start:i].strip())
+            out.append(_trim(text[start:i]))
             i += len(separator)
             start = i
             continue
         i += 1
-    out.append(text[start:].strip())
+    out.append(_trim(text[start:]))
     return out
 
 
@@ -164,7 +206,7 @@ def _scoped(prelude: str, body: str, body_line: int, parent: str):
     { * {..} }` made the :hover set whole-subtree unseen). The limit's states change which elements match too, so the
     body is examined under it as well (more sets, never fewer). With no root (a <style>'s parent) the body stands alone."""
     m = re.match(r'@scope\s*(?:\((.*?)\))?\s*(?:to\s*\((.*)\))?\s*$', prelude, re.S | re.I)
-    roots = [x.strip() for x in (m.groups() if m else ()) if x and x.strip()]
+    roots = [_trim(x) for x in (m.groups() if m else ()) if x and x.strip()]
     if not roots:
         yield from rules(body, body_line, parent)
         return
@@ -213,7 +255,7 @@ def rules(css: str, base_line: int = 1, parent: str = ''):
             i = opening.end()
             continue
         j = opening.start()
-        prelude = _CSS_TOKEN.sub(lambda m: '' if m.group().startswith('/*') else m.group(), css[i:j]).strip()
+        prelude = _trim(_CSS_TOKEN.sub(lambda m: '' if m.group().startswith('/*') else m.group(), css[i:j]))
         start = i + len(css[i:j]) - len(css[i:j].lstrip())
         line = line_at(start)
         body_line = line_at(j + 1)
@@ -242,7 +284,7 @@ def rules(css: str, base_line: int = 1, parent: str = ''):
                 if parent:
                     has_amp = any(m.group() == '&' for m in _AMP_TOKEN.finditer(sel))
                     sel = _AMP_TOKEN.sub(lambda m: parent if m.group() == '&' else m.group(), sel) if has_amp else parent + ' ' + sel
-                sels.append(' '.join(sel.split()))
+                sels.append(_squash_ws(sel))
             resolved = ', '.join(sels)
             yield resolved, line
             ancestor = resolved if len(sels) == 1 else ':is(' + resolved + ')'
