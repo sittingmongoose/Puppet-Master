@@ -498,6 +498,10 @@
   {
    "event_type": "testing.capture.provenance_rejected",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.provenance_verified",
+   "outcome": "registered"
   }
  ]
 }
