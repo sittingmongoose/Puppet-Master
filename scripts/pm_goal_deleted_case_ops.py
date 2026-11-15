@@ -2,6 +2,7 @@
 import copy
 import datetime
 import hashlib
+import json
 import pickle
 import re
 from collections import defaultdict
@@ -53,21 +54,32 @@ def replacement(value,backward=False):
 
 
 class Editor:
-    def __init__(self,base,hash_functions):
+    def __init__(self,base,hash_functions,version=2):
+        self.version=version;self.immutable_matches=defaultdict(list);self.wire_fields=defaultdict(list)
         self.base=base;self.hash_functions=hash_functions;self.matches=defaultdict(list);self.hash_fields=defaultdict(list);self.old_digests={}
         for path,value in nodes(base):
             if isinstance(value,(dict,list)) and value:self.matches[typed_hash(value)].append(path)
             if type(value)is str and re.fullmatch('[0-9a-f]{64}',value):self.hash_fields[value].append(path)
+            if version>=3 and isinstance(value,dict)and {'restore_point_id','record_sha256','source_thread_id','status','hold_refs'}<=set(value):
+                self.immutable_matches[typed_hash({k:v for k,v in value.items()if k not in ('status','hold_refs')})].append(path)
+            if version>=3 and path and type(value)is str and str(path[-1]).endswith('_bytes_base64'):
+                self.wire_fields[value].append(path)
 
     def edit(self,path,mode):
-        value=copy.deepcopy(self.base);old=at(self.base,path);remove=mode.endswith('remove');rename=mode.endswith('rename');new=None if remove or rename else replacement(old,mode.endswith('backward'))
+        value=copy.deepcopy(self.base);old=at(self.base,path);remove=mode.endswith('remove');rename=mode.endswith('rename')
+        new=(json.loads(mode.split('_value:',1)[1])if '_value:'in mode else None if remove or rename else replacement(old,mode.endswith('backward')))
         edits={path}
         if mode.startswith('coherent'):
             for depth in range(1,len(path)):
                 ancestor=at(self.base,path[:depth])
                 if isinstance(ancestor,(dict,list)) and ancestor:
                     for other in self.matches[typed_hash(ancestor)]:edits.add(other+path[depth:])
-        for edit in edits:
+                    if self.version>=3 and isinstance(ancestor,dict)and {'restore_point_id','record_sha256','source_thread_id','status','hold_refs'}<=set(ancestor)and path[depth]not in ('status','hold_refs'):
+                        key=typed_hash({k:v for k,v in ancestor.items()if k not in ('status','hold_refs')})
+                        for other in self.immutable_matches[key]:edits.add(other+path[depth:])
+        if self.version>=3 and mode=='coherent_hash_claim'and type(old)is str and re.fullmatch('[0-9a-f]{64}',old):
+            edits.update(self.hash_fields[old])
+        for edit in (sorted(edits,key=repr) if self.version>=3 else edits):
             if remove:del at(value,edit[:-1])[edit[-1]]
             elif rename:
                 parent=at(value,edit[:-1]);key=edit[-1]
@@ -78,7 +90,7 @@ class Editor:
             else:put(value,edit,copy.deepcopy(new))
         if mode.startswith('coherent'):
             affected={p[:depth]for p in edits for depth in range(1,len(p))}
-            for _ in range(4):
+            for _ in range(8 if self.version>=3 else 4):
                 repaired=False
                 for parent in sorted(affected,key=lambda p:(len(p),repr(p)),reverse=True):
                     before,after=at(self.base,parent),at(value,parent)
@@ -96,6 +108,22 @@ class Editor:
                             if slot not in edits and at(value,slot)==old_hash and old_hash!=new_hash:
                                 put(value,slot,new_hash);repaired=True
                                 affected.update(slot[:depth]for depth in range(1,len(slot)))
+                    if self.version>=3 and 'native_mp'in self.hash_functions:
+                        import base64
+                        key=(parent,'native_mp')
+                        if key not in self.old_digests:
+                            try:self.old_digests[key]=self.hash_functions['native_mp'](before)
+                            except Exception:self.old_digests[key]=None
+                        raw=self.old_digests[key]
+                        if isinstance(raw,bytes):
+                            old_wire=base64.b64encode(raw).decode()
+                            if old_wire in self.wire_fields:
+                                try:new_wire=base64.b64encode(self.hash_functions['native_mp'](after)).decode()
+                                except Exception:continue
+                                for slot in self.wire_fields[old_wire]:
+                                    if slot not in edits and at(value,slot)==old_wire and old_wire!=new_wire:
+                                        put(value,slot,new_wire);repaired=True
+                                        affected.update(slot[:depth]for depth in range(1,len(slot)))
                 if not repaired:break
         return value
 

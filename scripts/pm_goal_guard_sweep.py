@@ -28,7 +28,42 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = None
 
 
+_FUNCTION_CONTEXTS = {}
+
+
 def digest(value):
+    # Pure frozen codec functions are immutable checker context. Their pickle
+    # module aliases depend on import order; bind their actual source instead.
+    if isinstance(value,dict)and set(value)=={'args','kwargs'}:
+        def context(item):
+            if not inspect.isfunction(item):return item
+            if item.__closure__ or item.__defaults__ or item.__kwdefaults__:
+                raise ValueError('callable context needs an explicit state binding')
+            if item not in _FUNCTION_CONTEXTS:
+                path=Path(item.__code__.co_filename)
+                if not path.is_file():raise ValueError('callable context has no source file')
+                _FUNCTION_CONTEXTS[item]=dict(frozen_callable_source_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+                    function=item.__qualname__,line=item.__code__.co_firstlineno)
+            return _FUNCTION_CONTEXTS[item]
+        args=[context(item)for item in value['args']]
+        kwargs={key:context(item)for key,item in value['kwargs'].items()}
+        if any(a is not b for a,b in zip(args,value['args']))or any(kwargs[k]is not v for k,v in value['kwargs'].items()):
+            def typed(item):
+                if isinstance(item,dict):
+                    return ('dict',tuple((typed(key),typed(item[key]))for key in sorted(item,key=lambda key:(type(key).__name__,repr(key)))))
+                if isinstance(item,(list,tuple)):return (type(item).__name__,tuple(typed(x)for x in item))
+                if isinstance(item,(set,frozenset)):
+                    return (type(item).__name__,sorted((typed(x)for x in item),key=lambda x:json.dumps(x,ensure_ascii=True,separators=(',',':'))))
+                if isinstance(item,str):return ('str',item)
+                if isinstance(item,bytes):return ('bytes',item.hex())
+                if item is None:return ('none',)
+                if type(item)is bool:return ('bool',item)
+                if type(item)is int:return ('int',hex(item))
+                if type(item)is float:return ('float',item.hex())
+                raise TypeError('unsupported frozen context type: '+type(item).__name__)
+            # JSON has value semantics: pickle memo identity must not make a
+            # source-bound witness depend on import-time string interning.
+            return hashlib.sha256(json.dumps(typed(dict(args=args,kwargs=kwargs)),ensure_ascii=True,separators=(',',':')).encode()).hexdigest()
     return hashlib.sha256(pickle.dumps(value, protocol=5)).hexdigest()
 
 
@@ -42,6 +77,7 @@ class Collector:
         self.candidates = {}
         self.snapshots = {}
         self.schema_seeds = {}
+        self.proof_providers = []
         self.store_snapshots = []
 
     def checkpoint(self):
@@ -233,6 +269,8 @@ def collect(sources, *, fuzz=True):
             entry=getattr(module,'main',None)or getattr(module,'run')
             with contextlib.redirect_stdout(io.StringIO()) as captured:
                 code=entry([])if 'argv'in inspect.signature(entry).parameters else entry()
+            provider=getattr(module,'earlier_clause_proof',None)
+            if provider is not None:collector.proof_providers.append(provider)
             if collector.calls==before:
                 collector.failures.append(dict(kind='source_registered_no_complete_calls',source=source))
             if code:
@@ -355,6 +393,14 @@ def prove(collector, out, only=None):
     for entry in reports:
         if entry['status']=='UNPROVED':
             proof=dominance_proof(entry['guard'],reports)
+            for provider in collector.proof_providers:
+                if proof:break
+                candidate=provider(entry['guard'],reports)
+                if candidate:
+                    earlier=candidate.get('earlier_guards',[])
+                    if not earlier or any(not any(row['guard']==name and row['status']=='PASS'for row in reports)for name in earlier):
+                        raise ValueError('earlier-clause proof lacks a proved dependency: '+entry['guard'])
+                    proof=candidate
             if proof:entry['proof']=proof
     (out/'summary.json').write_text(json.dumps(reports,indent=1,default=list)+'\n')
     return reports

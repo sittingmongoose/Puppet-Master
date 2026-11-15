@@ -176,7 +176,7 @@ def seed_ref(function,label,files):
 def replay_witnesses(collector,seeds,files):
     import ast,copy,pickle
     bank_path=ROOT/'tests/fixtures/pnc019_goal_frozen_helper_witnesses.json'
-    bank=json.loads(bank_path.read_text());available={}
+    bank=c.load(bank_path);available={}
     for fn,base,label in seeds:
         try:ref=seed_ref(fn,label,files)
         except (ValueError,TypeError):continue
@@ -202,9 +202,9 @@ def replay_witnesses(collector,seeds,files):
         else:
             from pm_goal_deleted_case_ops import Editor
             key=(json.dumps(case['seed'],sort_keys=True),case.get('hash_recipe_version',1))
-            if key not in editors:editors[key]=Editor(base,HELPER_HASH_FUNCTIONS if case.get('hash_recipe_version')==2 else HASH_FUNCTIONS)
+            if key not in editors:editors[key]=Editor(base,helper_hash_functions(case.get('hash_recipe_version',1)),version=case.get('hash_recipe_version',1))
             value=editors[key].edit(tuple(case['path']),case['operation'])
-        if hashlib.sha256(pickle.dumps(value,protocol=5)).hexdigest()!=case['input_sha256']:
+        if ( __import__('pm_goal_guard_sweep').digest(value)if case.get('input_digest')=='frozen_function_context_v1'else hashlib.sha256(pickle.dumps(value,protocol=5)).hexdigest())!=case['input_sha256']:
             collector.failures.append(dict(case='frozen-fixture/'+str(number),kind='input_sha256'));continue
         source='frozen-fixture/single-defect/'+str(number)
         result=collector.invoke(source,evaluate,value,False)
@@ -219,7 +219,7 @@ def replay_witnesses(collector,seeds,files):
 
 def helper_witnesses(collector,seeds,files):
     """Find first-refusal witnesses from real helper inputs; never credit crashes."""
-    import copy,os,pickle
+    import ast,copy,os,pickle
     from pm_goal_deleted_case_ops import Editor,nodes
     found=set(collector.candidates);attempted=0;skipped={};selected=[]
     limit=int(os.environ.get('PNC019_FROZEN_ATTEMPTS_PER_SEED','500'))
@@ -241,23 +241,58 @@ def helper_witnesses(collector,seeds,files):
         if inspect.ismethod(function) and isinstance(function.__self__,Schema):
             wanted={'restore_point.deleted/original/schema/'+frozen_fingerprint(function.__self__.original.schema)}-found
         if not wanted:continue
-        editor=Editor(base,HELPER_HASH_FUNCTIONS)
+        editor=Editor(base,helper_hash_functions(3),version=3)
         seed_attempts=0
-        constants=set(x for x in code.co_consts if type(x)is str)
-        paths=list(nodes(base))
-        paths.sort(key=lambda item:(item[0][-1] not in constants if item[0] else True,len(item[0]),repr(item[0])))
+        def strings(value):
+            if type(value)is str:yield value
+            elif isinstance(value,tuple):
+                for child in value:yield from strings(child)
+        constants=set(strings(code.co_consts))
+        enum_values=set(constants)
+        # Candidate alternatives come from the intact owner resources and
+        # actual predicate literals. They never replace an owner schema.
+        def enums(document):
+            if isinstance(document,dict):
+                for choice in document.get('enum',[]):
+                    if type(choice)is str:enum_values.add(choice)
+                for child in document.values():enums(child)
+            elif isinstance(document,list):
+                for child in document:enums(child)
+        for resource in RESOURCES.values():enums(resource.contents)
+        wanted_lines={site[1]for name in wanted for site in collector.rows.get(name,{}).get('sites',[])if site[0]==code.co_filename}
+        wanted_keys=set()
+        tree=ast.parse(Path(code.co_filename).read_text())
+        for node in ast.walk(tree):
+            if isinstance(node,ast.Call)and node.lineno in wanted_lines and node.args:
+                wanted_keys.update(x.value for x in ast.walk(node.args[0])if isinstance(x,ast.Constant)and type(x.value)is str)
+        # Resource graphs and codec callables are immutable checker context.
+        # Altering them is not a single defect in the candidate value.
+        parameters=list(inspect.signature(function).parameters)
+        fixed={'admission_schema','receipt_schema','routes','compat','sid','mp','bdig','schema','registry'}
+        def mutable_path(path):
+            if len(path)>1 and path[0]=='args' and type(path[1])is int and path[1]<len(parameters):
+                if parameters[path[1]]in fixed:return False
+            if len(path)>1 and path[0]=='kwargs'and path[1]in fixed:return False
+            return True
+        paths=[item for item in nodes(base)if mutable_path(item[0])]
+        paths.sort(key=lambda item:(item[0][-1]not in wanted_keys if item[0]else True,item[0][-1]not in constants if item[0]else True,len(item[0]),repr(item[0])))
         for path,original in paths:
             if not path or path[0]=='args'and len(path)<=2 or path==('kwargs',):continue
             if seed_attempts>=limit:break
             large=isinstance(original,(dict,list))and len(pickle.dumps(original,protocol=5))>20000
-            modes=['simple','coherent','remove','coherent_remove','rename','coherent_rename']
+            modes=['simple','coherent','coherent_hash_claim','remove','coherent_remove','rename','coherent_rename']
+            if type(original)is str and path[-1]in wanted_keys:
+                choices=sorted(enum_values-{original},key=lambda x:(x not in constants,len(x),x))[:24]
+                modes=[('coherent_value:'+json.dumps(x))for x in choices]+modes
+            elif isinstance(original,list)and original and path[-1]in wanted_keys:
+                modes=['coherent_value:[]']+modes
             first_by_operation={}
             if isinstance(original,str) and 'T' in original and original.endswith('Z'):modes.append('coherent_backward')
             for mode in modes:
                 if large and mode not in ('remove','rename'):continue
                 operation='remove'if mode.endswith('remove')else'rename'if mode.endswith('rename')else'replace'
                 prior=first_by_operation.get(operation)
-                if mode.startswith('coherent')and prior and ('schema'in prior.lower()or(type(original)is str and __import__('re').fullmatch('[0-9a-f]{64}',original))):continue
+                if mode.startswith('coherent')and mode!='coherent_hash_claim'and prior and ('schema'in prior.lower()or(type(original)is str and __import__('re').fullmatch('[0-9a-f]{64}',original))):continue
                 try:changed=editor.edit(path,mode)
                 except (TypeError,ValueError,KeyError,IndexError):continue
                 attempted+=1;seed_attempts+=1
@@ -276,7 +311,7 @@ def helper_witnesses(collector,seeds,files):
                 collector.invoke(source,evaluate,changed,False)
                 collector.candidates[target]=(evaluate,copy.deepcopy(changed),source)
                 collector.snapshots[target]=copy.deepcopy(changed)
-                record=dict(expected_refusal=target,seed=seed_ref(function,label,files),path=list(path),operation=mode,hash_recipe_version=2,input_sha256=hashlib.sha256(pickle.dumps(changed,protocol=5)).hexdigest())
+                record=dict(expected_refusal=target,seed=seed_ref(function,label,files),path=list(path),operation=mode,hash_recipe_version=3,input_digest='frozen_function_context_v1',input_sha256=__import__('pm_goal_guard_sweep').digest(changed))
                 selected.append(record);found.add(target);wanted.discard(target)
                 if not wanted:break
             if not wanted:break
@@ -295,6 +330,7 @@ def main():
     manifest_path = Path(pin['path'])
     if hashlib.sha256(manifest_path.read_bytes()).hexdigest() != pin['sha256']:
         raise ValueError('restore_point.deleted frozen manifest pin')
+    c.SOURCE_BINDINGS[str(manifest_path.resolve())]=pin['sha256']
     manifest = json.loads(manifest_path.read_text())
     directory = manifest_path.parent
     for row in manifest['files']:
@@ -303,6 +339,7 @@ def main():
             path = directory/path
         if hashlib.sha256(path.read_bytes()).hexdigest() != row['sha256']:
             raise ValueError('frozen resource changed: '+str(path))
+        c.SOURCE_BINDINGS[str(path.resolve())]=row['sha256']
     old_path = list(sys.path)
     old_bytecode = sys.dont_write_bytecode
     saved = []
@@ -338,6 +375,18 @@ def main():
             for key,value in list(namespace.items()):
                 if key in ('cv','iv','ev','ev1','payload_validator') and hasattr(value,'validate'):
                     patch(namespace,key,Schema(value,registry))
+                elif key == 'payload_validator' and inspect.isfunction(value):
+                    def payload_validator(*args,__fn=value,**kwargs):
+                        result=Schema(__fn(*args,**kwargs),registry)
+                        label=__fn.__code__.co_filename+':'+str(__fn.__code__.co_firstlineno)
+                        if capturing[0]and seed_counts.get(label,0)<8:
+                            value=dict(args=list(args),kwargs=kwargs)
+                            fingerprint=hashlib.sha256(pickle.dumps((label,value),protocol=5)).hexdigest()
+                            if fingerprint not in seen_inputs:
+                                seen_inputs.add(fingerprint);seed_counts[label]=seed_counts.get(label,0)+1
+                                helper_seeds.append((__fn,copy.deepcopy(value),label+'/'+str(seed_counts[label])))
+                        return result
+                    patch(namespace,key,payload_validator)
                 elif key == 'validators' and isinstance(value,dict):
                     patch(namespace,key,{k:Schema(v,registry) for k,v in value.items()})
         patch(vars(subject.SC),'require',expect)
@@ -363,12 +412,18 @@ def main():
             for key,fn in list(namespace.items()):
                 if not inspect.isfunction(fn):
                     continue
-                if not {'expect','require','validator','validate','validate_native','validate_creation_context','validate_original_result'}.intersection(fn.__code__.co_names):
+                if not {'expect','require','validator','validate','validate_native','validate_creation_context','validate_original_result'}.intersection(set(fn.__code__.co_names)|{x for x in fn.__code__.co_consts if type(x)is str}):
                     continue
                 if fn is expect or fn.__name__=='validator':continue
                 label=fn.__code__.co_filename+':'+str(fn.__code__.co_firstlineno)
                 def wrapper(*args,__fn=fn,__label=label,**kwargs):
                     result=__fn(*args,**kwargs)
+                    if __fn.__code__.co_filename.endswith('/created_domain_sp278.py')and __fn.__name__=='validate'and args and args[0]['kind']in ('native_completion','historical_completion'):
+                        # Its summary-kind guard is inactive on these accepted
+                        # branches, exactly as an inactive schema assertion is.
+                        path=Path(__fn.__code__.co_filename)
+                        line=next(i for i,text in enumerate(path.read_text().splitlines(),1)if "'result kind'"in text)
+                        tables.decide('restore_point.deleted/original/result kind',True,site=(str(path),line))
                     if capturing[0] and seed_counts.get(__label,0)<8:
                         try:
                             value=dict(args=list(args),kwargs=kwargs)
@@ -413,3 +468,37 @@ def main():
         sys.path[:] = old_path
         sys.dont_write_bytecode = old_bytecode
     return int(len(collector.failures)>start)
+
+
+def earlier_clause_proof(name,reports):
+    """Two exact implications in the immutable generic checkpoint checker."""
+    prefix='restore_point.deleted/original/'
+    required={prefix+'active checkpoint':[prefix+'unique actual current generation'],
+              prefix+'actual key+JSON-pointer generation node':[prefix+'generation/dataset identity',prefix+'row/source/immutable generation-anchor join']}
+    if name not in required:return None
+    pin=c.load(ROOT/'Plans/restore_point_deleted_contract_fixtures.json')['frozen_joined_subject']
+    directory=Path(pin['path']).parent;manifest=json.loads(Path(pin['path']).read_text())
+    record=next(row for row in manifest['files']if Path(row['path']).name=='generic_checkpoint_check.py')
+    path=Path(record['path']);path=path if path.is_absolute()else directory/path
+    raw=path.read_bytes()
+    if hashlib.sha256(raw).hexdigest()!=record['sha256']:return None
+    text=raw.decode();lines=text.splitlines()
+    if name.endswith('/active checkpoint'):
+        assertions=["states=[k for k,g in ids.items() if g['state']=='current']","expect(states==([] if curr is None else [curr]),'unique actual current generation')","if curr is None:","expect(not require_current,'no active index yet');return True","g=ids[curr]","expect(g['state']=='current','active checkpoint')"]
+        proof='The earlier equality makes the current-state key list exactly [curr] whenever curr is non-null. The null case returns before this row. g is then ids[curr], so g.state must be current. This applies to every key/state combination, not sampled fixtures.'
+    else:
+        assertions=["g['generation_id']==k","g=ids[curr]","expect(actual==expected,'row/source/immutable generation-anchor join')","'checkpoint_ref':KEY+'#/generations/'+g['generation_id']","key,ptr=ref.split('#',1)","resolved=cp","for p in parts:resolved=resolved[p]"]
+        proof='The earlier complete row equality fixes checkpoint_ref to KEY plus /generations/g.generation_id. The earlier generation identity fixes that ID to its dictionary key. g is the selected dictionary node, so resolving those exact two pointer components returns the same object g, and the parsed physical key is KEY. The closed generation-ID grammar contains no slash or pointer escape.'
+    if any(fragment not in text for fragment in assertions):return None
+    label=name[len(prefix):]
+    return dict(kind='earlier_frozen_checker_clauses',earlier_guards=required[name],owner=str(path),owner_sha256=record['sha256'],
+                line=next(i for i,line in enumerate(lines,1)if repr(label)in line),frozen_manifest_sha256=pin['sha256'],proof=proof)
+
+
+def helper_hash_functions(version):
+    if version<2:return HASH_FUNCTIONS
+    if version<3:return HELPER_HASH_FUNCTIONS
+    dependency=FIXTURE_CONTEXT[0]
+    def immutable_record_hash(value):
+        return HASH_FUNCTIONS['dig']({key:value[key]for key in dependency.immutable_fields})
+    return {**HELPER_HASH_FUNCTIONS,'immutable_record':immutable_record_hash,'native_mp':dependency.G['mp']}

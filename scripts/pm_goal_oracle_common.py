@@ -232,6 +232,12 @@ def numeric_bound(keyword):
     return check
 
 
+# Preserve retained numeric grammar while avoiding Python's diagnostic digit cap.
+StrictValidator = jsonschema.validators.extend(StrictValidator,
+    {key: _keyword_guard(key, numeric_bound(key)) for key in
+     ('minimum','maximum','exclusiveMinimum','exclusiveMaximum')})
+
+
 CurrentValidator = jsonschema.validators.extend(StrictValidator,
     {'type': _keyword_guard('type', current_type),
      **{key: _keyword_guard(key, numeric_bound(key)) for key in

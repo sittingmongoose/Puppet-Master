@@ -3275,6 +3275,667 @@
    ],
    "operation": "simple",
    "input_sha256": "cfb8cee9cf5899dc3da8447c45c6ee992896fbbf8cb50053c1f99901fda0c711"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/historical branch does not fabricate native deletion custody",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 141,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "creation_context"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "57d03b742aecb23683e2cd14b7e8e895721da67ec65d733db528837ea3d1a883"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/historical exact source admission",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 141,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "event",
+    "payload"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 2,
+   "input_sha256": "ef839fcb6a8669667238c7537e570855678320da1d165c0931c9d49f6e59c25e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/historical point/hash/status",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 141,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "event",
+    "project_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "0546bfe838be9707109fdd6ba452137330f0d7caf81ebb0261f046907d9d4fed"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/terminal read needs no lawfully removed canonical point/companions",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "creation_context"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "2e267814415f50713a2c7618f9103b2a9b4c762ae88f5310e4eeadeb265cc16a"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/summary actual unchanged canonical key",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "record_key"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "efec6370d0162b4c4544608f1fdb65f924658c207538c34670c48084816be7e2"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual summary after lifecycle and exact retired keys/bytes",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "event",
+    "occurred_at_utc"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 2,
+   "input_sha256": "94286e99d073f026f29c6c7b0c84e1be3568d43cca1b97b55a18c376d7a12548"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual source receipt journal backup joins",
+   "seed": {
+    "manifest_file_index": 85,
+    "function_line": 23,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "journal_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "01919c19cb5775f50eed1504ce6abe9d6cbbe99ad021c5c2ee9fe488fbf8eb75",
+   "input_digest": "frozen_function_context_v1"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual receipt and journal evidence bytes",
+   "seed": {
+    "manifest_file_index": 85,
+    "function_line": 23,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "receipt_bytes_base64"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "d29789200323fef8cc31a46c6dae44a9995cddc868be580a20c1e59839d7ea21",
+   "input_digest": "frozen_function_context_v1"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual migration owner Storage",
+   "seed": {
+    "manifest_file_index": 85,
+    "function_line": 23,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "actual_owner_snapshot",
+    "coordinator"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "a24412a979462bc5adc33b8383aa4af8fe2eef05e30f45669b4d84b77fa7c2a4",
+   "input_digest": "frozen_function_context_v1"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/summary target and original hash",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 230,
+    "ordinal": 8
+   },
+   "path": [
+    "args",
+    0,
+    "summary",
+    "project_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "c7dfd56a28ee440cda25cac4965dc340a7fb58649c5a48a2cf0598df8e9f7e4f"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/exact deletion summary owner codec route",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 230,
+    "ordinal": 8
+   },
+   "path": [
+    "args",
+    0,
+    "summary_codec_admission",
+    "event_type"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "527d583ccb04dcd04f3065644b4115e674495be7b7838037cd028a79a028e3ad"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual canonical summary transaction custody",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 230,
+    "ordinal": 8
+   },
+   "path": [
+    "args",
+    0,
+    "summary_resolution",
+    "storage_instance_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "a4079384bdfb92cb803518ea0b67366ad0bf59a9e3957ff4a68998361f3d49ce"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/exact no-effect result state/reason",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 2
+   },
+   "path": [
+    "args",
+    0,
+    "reason_code"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 2,
+   "input_sha256": "41c91f7ac5d71987135da608b66bc6ffb922a30f01b858e63ea64b28dde57723"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/no invented receipt/event for no-effect result",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 2
+   },
+   "path": [
+    "args",
+    2,
+    "admitted_producer_semantic_digest"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "0c48d70505b7bd5eb682d87cbff5612b48810f49c8b721daddd43d86c1c529c0"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual original no-effect error",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 2
+   },
+   "path": [
+    "args",
+    2,
+    "error_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "8157e9cce2221eee83d9af542d93137d77616e816e1c7bfb02470cf25deda598"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/exact required unique custody family set",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 182,
+    "ordinal": 4
+   },
+   "path": [
+    "args",
+    0,
+    "creation_companion_required"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "fb8bb5c95f15afa2d0ec7f9eef96cf505b2f1c337327fb239b42e141b118dfa3"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual retired encoding/disposition",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 182,
+    "ordinal": 4
+   },
+   "path": [
+    "args",
+    0,
+    "retired_custody",
+    0,
+    "canonical_encoding"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "310ed8cbb22c6d5c8537897528bea239a3e3ab8b1db3496ee866100a2b330d2b"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/exact retired family schema",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 182,
+    "ordinal": 4
+   },
+   "path": [
+    "args",
+    0,
+    "retired_custody",
+    0,
+    "value_schema_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "62dc29d95fd58e1b25046fba6d4b3a8488f415979e3e81e616171a78c9625cf3"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/command",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "command_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "d15403e2d756042fbe26e73f3ba3060761541399527719059f45951239017a5b"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/outcome_ref",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "command_outcome_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "d43b0669a3de0c4fe77153c68312f2bbe05db6fb7b1d041153d39e1de71df951"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/dispatch",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "31b0d5c981996628911fefbc4e9c974d3d119d61017c7237ca5e7e565dbe924e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/dispatch_frame",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_command_outcome",
+    "dispatch_frame_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "8d2fc31d8dc6e88a2296916a32292f6397ace79c3a5f9c2530faf39df62023f9"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/result_ref",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_command_outcome",
+    "owner_result_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "1595c3db75970d8fead1eb10eb2b7b53e89e40596e742752611da2ca01ccf637"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/result_schema",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_command_outcome",
+    "owner_result_schema_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "bed9e883f612b26d9282d47a7a34a9c4c7d8074532159a4534fdb990247d825c"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/payload_digest",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_command_outcome",
+    "payload_sha256"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "1703aded898e3a756d7b01b7df54a9366d59c107c94e1d3df48bc574af82e141"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/receipt_ref",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_command_outcome",
+    "result_receipt_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "ecb8ebb1f7645ca1f2cba976cdf61596579d55caeecf394986c9de68602b2741"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/target_generation",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_command_outcome",
+    "target_generation"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "6828b7450455e177aae3ad6146063cfa989cdb64cfbfc989849413d795d47119"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/instance",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_normalized_request",
+    "command_instance_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "2c4fa878a4c84f789a673ab5ed0b08f0ab99dd589adc22255073800c80f45af1"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/operation",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_normalized_request",
+    "operation_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "5f685cb33ec0bb98fdcaaee761b0aa2c5978af60ea88a4391572ffa733385a35"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual generation dataset",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 21,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "datasets",
+    "event_record_index.v2@eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb"
+   ],
+   "operation": "remove",
+   "hash_recipe_version": 2,
+   "input_sha256": "53a9a17d1a56f71a0858f4124d52ee58b833886f973fa69c23e481ff298da3e4"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/request_ref",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_normalized_request",
+    "request_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "2f001f39a25fffe90a11b6c8d553f5d9dee3a5ddb2123b7e18d4108cd912eb44"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/response_command",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_ui_response",
+    "command_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "6ea61bcbac4ec9723512f8fd3d708a1d44fedbe0191a2696958411b61acc5f87"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/response_instance",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_ui_response",
+    "command_instance_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "7ce71bf0764936b2445b498a47c49372c6eaf0b266fc84a4ae2417f8d77864fc"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/SP274/response_operation",
+   "seed": {
+    "adapter": "created_result",
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_ui_response",
+    "operation_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "99dfde91edf4cc75a792a7dd13b66e170c44158cb04496f4ad9585e25e965948"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/exact final predecessor and older sibling history",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 162,
+    "ordinal": 5
+   },
+   "path": [
+    "args",
+    0,
+    "checkpoint_publication",
+    "predecessor_checkpoint",
+    "publication_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "bd5663a44557302b086332a1b506d202dd772958c0e72a12de8e5200553b405b"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/lawful new generation birth",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 162,
+    "ordinal": 5
+   },
+   "path": [
+    "args",
+    0,
+    "checkpoint_publication",
+    "predecessor_checkpoint",
+    "published_at_utc"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "0f531adf2a06bc5786284816dde29ebaa58049f437828f98db5d7da723be6430"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/existing index row schema",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 162,
+    "ordinal": 6
+   },
+   "path": [
+    "args",
+    0,
+    "index",
+    "event_type"
+   ],
+   "operation": "coherent_remove",
+   "hash_recipe_version": 2,
+   "input_sha256": "a798305d54fc1746d2c6722d6bf8694cd5ff5914251aa9e897bcd7f2d47df614"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/summary and retained exact original receipt publication",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 2
+   },
+   "path": [
+    "args",
+    0,
+    "authenticated_dispatch",
+    "original_append_receipt",
+    "byte_offset"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 2,
+   "input_sha256": "cfea6d0ad7df87df4f4bdaf6dfa3ec303a02cbada85e010b4dca10e67bf76c17"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/registered external schema ID",
+   "seed": {
+    "manifest_file_index": 28,
+    "function_line": 18,
+    "ordinal": 2
+   },
+   "path": [
+    "args",
+    0,
+    "payload_schema_ref",
+    "schema_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 2,
+   "input_sha256": "62b344766fb9aeaae4bb4424dda1854080e932439ad345e41145d6b55ee897bf"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/envelope thread",
+   "seed": {
+    "manifest_file_index": 5,
+    "function_line": 1,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "event",
+    "thread_id"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 2,
+   "input_sha256": "a62079c283ded3d625b1af4f9958feab8a1c9170b78960cb766d35fa7c02b647"
   }
  ]
 }

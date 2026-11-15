@@ -187,10 +187,52 @@ def main():
     for case in retention['cases']:
         collector.invoke('run.started/retention/'+case['case_id'],eligible,
                          {k:case[k]for k in ('root','selection')},case['expected_eligible'])
+    # Exercise the four authored retention claims as complete proposed-state
+    # boundaries. The old helper's copy-preservation assertion is a harness
+    # postcondition; the independent before/after checks below are product rows.
+    root=retention['cases'][0]['root'];decision=retention['cases'][0]['selection']
+    def reservation(value):
+        g=c.Gates()
+        g.require('run.started/retention/reservation_root_schema',ns['runvals']['checkpoint'].is_valid(value))
+        if not g.errors:g.require('run.started/retention/reservation_capacity',ns['can_reserve_run_successor'](value))
+        return g.errors
+    def cleanup(value):
+        before,after,selection=(value[k]for k in ('before','after','selection'))
+        try:
+            permitted=ns['run_retention_eligible'](before,selection)
+        except frozen.ExpectedRefusal as e:return e.errors
+        g=c.Gates();g.require('run.started/retention/cleanup_eligible',permitted)
+        if g.errors:return g.errors
+        selected=selection['selected_retired_publication_id']
+        g.require('run.started/retention/cleanup_current_core',c.same_json_value(
+            {k:v for k,v in before.items()if k!='retired_generations'},
+            {k:v for k,v in after.items()if k!='retired_generations'}))
+        g.require('run.started/retention/cleanup_exact_survivors',
+            [x['publication_id']for x in after['retired_generations']]==
+            [x['publication_id']for x in before['retired_generations']if x['publication_id']!=selected])
+        if not g.errors:
+            g.require('run.started/retention/cleanup_sibling_bytes',
+                ns['mp'](after['retired_generations'])==ns['mp']([x for x in before['retired_generations']if x['publication_id']!=selected]))
+        return g.errors
+    cleaned=copy.deepcopy(root);cleaned['retired_generations']=[x for x in cleaned['retired_generations']if x['publication_id']!=decision['selected_retired_publication_id']]
+    collector.invoke('run.started/retention/three-full-slots',reservation,root,False)
+    collector.invoke('run.started/retention/cleanup-then-reserve',reservation,cleaned,True)
+    fourth=copy.deepcopy(root);fourth['retired_generations'].append(copy.deepcopy(root['retired_generations'][0]))
+    collector.invoke('run.started/retention/fourth-generation-schema',reservation,fourth,False)
+    proposed=dict(before=root,after=cleaned,selection=decision)
+    collector.invoke('run.started/retention/cleanup/control',cleanup,proposed,True)
+    for label in ('cleanup_current_core','cleanup_exact_survivors','cleanup_sibling_bytes','cleanup_eligible'):
+        value=copy.deepcopy(proposed)
+        if label=='cleanup_current_core':value['after']['updated_at_utc']='2026-09-12T20:06:00Z'
+        elif label=='cleanup_exact_survivors':value['after']['retired_generations']=[]
+        elif label=='cleanup_sibling_bytes':value['after']['retired_generations'][0]['hold_refs']=['actual-different-sibling']
+        else:value['selection']['evaluated_at_utc']='2026-09-11T20:00:00Z'
+        result=collector.invoke('run.started/retention/cleanup/'+label,cleanup,value,False)
+        if result!={'run.started/retention/'+label}:collector.failures.append(dict(case=label,actual=sorted(result)))
     files=[(Path(r['path'])if Path(r['path']).is_absolute()else directory/r['path']).resolve()for r in manifest['files']]
     bank_path=ROOT/'tests/fixtures/pnc019_goal_adoption_helper_witnesses.json'
     if bank_path.exists():
-        bank=json.loads(bank_path.read_text());available={json.dumps(frozen.seed_ref(fn,label,files),sort_keys=True):(fn,base,label)for fn,base,label in helper_seeds};editors={}
+        bank=c.load(bank_path);available={json.dumps(frozen.seed_ref(fn,label,files),sort_keys=True):(fn,base,label)for fn,base,label in helper_seeds};editors={}
         for number,case in enumerate(bank['cases']):
             key=json.dumps(case['seed'],sort_keys=True)
             if key not in available:
@@ -202,9 +244,11 @@ def main():
                 return set()
             collector.invoke('adoption-bank/control/'+str(number),check,base,True)
             from pm_goal_deleted_case_ops import Editor
-            if key not in editors:editors[key]=Editor(base,frozen.HELPER_HASH_FUNCTIONS)
-            value=editors[key].edit(tuple(case['path']),case['operation'])
-            if hashlib.sha256(pickle.dumps(value,protocol=5)).hexdigest()!=case['input_sha256']:
+            version=case.get('hash_recipe_version',2)
+            editor_key=(key,version)
+            if editor_key not in editors:editors[editor_key]=Editor(base,frozen.helper_hash_functions(version),version=version)
+            value=editors[editor_key].edit(tuple(case['path']),case['operation'])
+            if (__import__('pm_goal_guard_sweep').digest(value)if case.get('input_digest')=='frozen_function_context_v1'else hashlib.sha256(pickle.dumps(value,protocol=5)).hexdigest())!=case['input_sha256']:
                 collector.failures.append(dict(case='adoption-bank/'+str(number),kind='input_sha256'));continue
             result=collector.invoke('adoption-bank/single-defect/'+str(number),check,value,False)
             if set(result)!={case['expected_refusal']}:
