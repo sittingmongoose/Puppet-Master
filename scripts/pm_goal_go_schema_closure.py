@@ -734,6 +734,29 @@ def project(values, relative):
     return out
 
 
+def absent_under_pin(nodes, ipath, union):
+    """GO addition: an ancestor of the location is pinned (const/enum/null type, in scope) to values none of which
+    holds the location, so the location is never present in a valid instance and no clause there is evaluated."""
+    for n in nodes.values():
+        node = n['node']
+        if 'const' in node:
+            values = [node['const']]
+        elif isinstance(node.get('enum'), list):
+            values = list(node['enum'])
+        elif node.get('type') == 'null':
+            values = [None]
+        else:
+            continue
+        for r in n['reach']:
+            here = r['ipath']
+            if len(here) >= len(ipath) or ipath[:len(here)] != here or not applies(r, union):
+                continue
+            relative = ipath[len(here):]
+            if all(project([x], relative) is None for x in values):
+                return (n['node'].get('x-pm-oracle-id', '') or '?', values[:2])
+    return None
+
+
 def pinned(nodes, ipath, union, exclude=None):
     """Allowed values at an instance location from nodes whose reach there applies to the scope (see applies): the
     intersection of their const/enum/null-type constraints, or None when nothing pins it. `exclude` = (node id,
@@ -848,6 +871,11 @@ def pinned_proof(info, nodes, v, keyword=None):  # noqa: C901
             branch_reasons.append(reason)
             continue
         union = scope_of(reach, nodes)
+        absent = absent_under_pin(nodes, reach['ipath'], union)
+        if absent:
+            branch_reasons.append(f'absent location: its ancestor is pinned at {absent[0]} to values without it '
+                                  f'({json.dumps(absent[1], sort_keys=True)[:80]}), so no valid instance holds it')
+            continue
         allowed = pinned(nodes, reach['ipath'], union, exclude=(id(info['node']), keyword))
         if allowed is None or len(allowed) != 1:
             return None
@@ -1512,8 +1540,18 @@ def self_test():
     repaired = error_repair(v10, {"x": {}}, ("x", "zz"))
     print('embedded repair', repaired)
     assert repaired is not None and v10.is_valid(repaired)
+    # a member of an object whose location is pinned null is never present: UNREACHABLE
+    schema11 = {"x-pm-oracle-id": "R11", "type": "object", "properties": {"o": {"x-pm-oracle-id": "o11", "oneOf": [
+        {"x-pm-oracle-id": "o11ref", "$ref": "#/$defs/O"}, {"x-pm-oracle-id": "o11null", "type": "null"}]}},
+        "allOf": [{"x-pm-oracle-id": "pin11", "properties": {"o": {"x-pm-oracle-id": "pin11o", "type": "null"}}}],
+        "$defs": {"O": {"x-pm-oracle-id": "O11", "type": "object", "properties": {"m": {"x-pm-oracle-id": "m11", "type": "string"}}}}}
+    v11 = jsonschema.Draft202012Validator(schema11)
+    n11 = walk(v11)
+    p11 = pinned_proof(n11['m11'], n11, v11, 'type')
+    print('m11 proof', p11)
+    assert p11 and p11['cls'] == 'UNREACHABLE'
     print('closure self-test pass: same-depth conditionals keep their reaches; no UNREACHABLE while one reach is live; '
-          'shared and implied branch pins apply; selector clash and self-pins make no claim; contradicted branches; alternative swap; ancestor pins; embedded-document repair')
+          'shared and implied branch pins apply; selector clash and self-pins make no claim; contradicted branches; alternative swap; ancestor pins; absent locations; embedded-document repair')
     return 0
 
 
@@ -1530,6 +1568,8 @@ def main():
     parser.add_argument('--distinct-from', nargs='*', default=[], help='reports whose witness classes (KILLED, COVERED_LATER) '
                         'close a clause for a family: in the selected roots such a clause is recorded SEARCHED_ELSEWHERE (naming '
                         'the root) when every family of the root has that witness, and not searched again')
+    parser.add_argument('--seed-cap', type=int, default=0, help='accepted authored instances kept per root (GO schema rows '
+                        'keep 8 by default; closure only, the sweep is unchanged)')
     parser.add_argument('--clause-cap', type=int, default=900, help='per-clause search cap in validations (GC: 900)')
     parser.add_argument('--root-seconds', type=int, default=0, help='wall-clock search budget per root; clauses reached after it '
                         'still get the static classes and proofs, otherwise UNCOVERED (not searched)')
@@ -1547,6 +1587,9 @@ def main():
         return merge(args.merge, args.out)
     part, total = map(int, args.shard.split('/'))
     SEED_POLICY[0] = args.seeds
+    if args.seed_cap:
+        import pm_goal_go_schema as schema_rows
+        schema_rows.SEED_CAP = args.seed_cap
     CLAUSE_CAP[0] = args.clause_cap
     carry = {}
     for item in args.carry:
@@ -1622,7 +1665,8 @@ def main():
     for root, entry in report['roots'].items():
         entry['seed_sha256'] = sorted(roots[root]['seeds'])
         entry['seed_policy'] = args.seeds
-        entry['budget_args'] = dict(budget=args.budget, per_clause=args.per_clause, clause_cap=args.clause_cap, root_seconds=args.root_seconds)
+        entry['budget_args'] = dict(budget=args.budget, per_clause=args.per_clause, clause_cap=args.clause_cap, root_seconds=args.root_seconds,
+                                    seed_cap=args.seed_cap or 8)
     report['all_roots'] = {root: sorted(families.get(root, ())) for root in sorted(roots)}
     summarize(report)
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
