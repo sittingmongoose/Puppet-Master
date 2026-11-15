@@ -1,4 +1,4 @@
-"""W3D guard table operation_size_entailed: Operation 16 KiB inline limit (entailed, no single-defect witness).
+"""W3D guard table operation_size: Operation 16 KiB inline limit.
 
 Method B guard rows (scripts/pm_guard_isolation.py) for the W3D BSD checker. Each predicate
 reads one observation the checker derives from the complete boundary input. Predicates never
@@ -15,7 +15,7 @@ def OZ01_operation_size(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('OZ01_operation_size', g.Invariant('/OZ01_operation_size', 'The complete encoded operation value is at most 16 KiB. ENTAILED: the operation stores only redacted refs and identity (SP-1350, Plans/storage-plan.md:29614); bodies are externalized via SP-337 first. Every inline field is schema-bounded (const tags/media, sha256 digest, uint64 byte_size, safe_ref<=512 source_state_ref, enum state, null-or-AppendReceipt receipt) or an identifier joined earlier at OP03/OP04/OP05/OP06, or refused by the preceding envelope/identity phases (EN17, ID rows). No single-defect input is first refused here.'), 'operation_oversize', OZ01_operation_size),
+        g.Guard('OZ01_operation_size', g.Invariant('/OZ01_operation_size', 'The complete encoded operation value is at most 16 KiB (SP-1350). Reachable: a long authentic original source identity makes the operation (owner_operation_id plus its hex copies in event_id and idempotency_key) exceed 16 KiB while the envelope metadata stays within EN17.'), 'operation_oversize', OZ01_operation_size),
     ])
 
     def check(value):
