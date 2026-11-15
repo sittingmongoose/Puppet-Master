@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.assurance.event_authority.dl_pattern_change.v1",
+  "authority": {
+    "card_label": "E9-1",
+    "selected_option": "A",
+    "card": {
+      "path": "reports/event-authority-20261114/E9-1-card.json",
+      "sha256": "b4809cf1361cd13a4adcb09b7ffabce4ad0b56d91d8bcb9c46655daa264cefa6"
+    },
+    "answer": {
+      "path": "reports/event-authority-20261114/E9-1-answer.json",
+      "sha256": "64e0bb3966b9b4efe353cfc4070922e2a68ca839312a0e2a088258ee0431246f"
+    }
+  },
+  "owner_response": {
+    "card_id": "vm.pm-ea-lead--E9-1",
+    "question": "Let the final event check accept four-digit decision numbers?",
+    "selected_option": "A",
+    "approved_option_label": "Allow four-digit numbers (DL-1000 and up)",
+    "approved_option_text": "All additions fit. A small change to the check's number pattern, written by a separate agent, reviewed blind and pinned by the reseal, like the earlier approved check changes.",
+    "decided_by": "Jared",
+    "answered_at_utc": "2026-11-14T20:39:58.796Z",
+    "answered_via": "AI Account Center Status tab (deck), signed",
+    "signature": {
+      "alg": "ed25519",
+      "key_id": "c112b38be1d32ea0"
+    },
+    "card_sha256_in_answer": "b4809cf1361cd13a4adcb09b7ffabce4ad0b56d91d8bcb9c46655daa264cefa6",
+    "source_copies": "The card and answer under authority are byte-identical copies of /mnt/Cursor/agent-reports/v1/writers/vm.pm-ea-lead/cards/vm.pm-ea-lead--E9-1.json and /mnt/Cursor/agent-reports/v1/answers/vm.pm-ea-lead--E9-1.json. The answer's cardSha256 equals the card copy's SHA-256.",
+    "answer_record": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-9_20261114.md",
+      "sha256": "40195a39ddc086579660c2c2a65d07519e2aed32b4613c3ba5ea385a0cdfeed3",
+      "note": "Stream E's record of the answer. It will gain E9-3's answer later, so the validator reads the signed copies instead."
+    },
+    "technical_row_reading": "Not Jared's words: the card's folded row for agents reads DL-\\d{3,4}. The option Jared chose reads 'DL-1000 and up'. The implemented pattern is that row's set less the zero-padded forms DL-0000 to DL-0999, which would otherwise alias three-digit entries such as DL-077, DL-078 and DL-412 past their string exclusions."
+  },
+  "validator_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
+  "validator_id": "pm.plans.audits.event_authority.independent_validator",
+  "validator_before_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+  "validator_after_sha256": "b147459618e1c7f13ab1ba73ac03d270d40c8703690bd00239e3ac3d10ed3456",
+  "prior_receipt": {
+    "path": "reports/event-authority-20261105/seal-check-recount-receipt.json",
+    "sha256": "899661007cdeb012ec5254d63c36629d41dd1adafd958fb9de9ebdcb6b3739da"
+  },
+  "decision_ref_pattern": "DL-(?:\\d{3}|[1-9][0-9]{3})",
+  "decision_ref_pattern_before": "DL-\\d{3}",
+  "author_task": "claude-opus-5.5:ea-pnc-s1v-20261114",
+  "author_role": "The separate author DL-039 requires for a change to the frozen check: not the CA-SEAL or CA-SEAL2 author, their lander or fix workers, or pm-ea-lead.",
+  "lander_task": null,
+  "seal_applier_forbidden_tasks": [
+    "claude-opus-5.5:ea-pnc-s1v-20261114"
+  ],
+  "seal_authorized": false,
+  "admission_authorized": false,
+  "contract_depth_complete": false,
+  "changes": [
+    "DL_REF = DL-(?:\\d{3}|[1-9][0-9]{3}) replaces DL-\\d{3} at the two sites that parse a decision reference: admission_record_problems (decision_ref of an admission record) and recount_outcomes (decision_ref of a recount exclusion). No other site parses a DL reference; decision_section_bytes takes the id it is given and needs exactly one '### <id>:' heading.",
+    "fourth_change_validator_pin: the live validator SHA-256 is presented as the fourth change's after-hash 3e98a165... only when this receipt has one exact-path canonical Spec Lock anchor matching its complete bytes, its validator_after_sha256 equals the live bytes, its validator_before_sha256 is 3e98a165..., and the fourth receipt's validator_after_sha256 is still 3e98a165.... Otherwise the live hash goes on, and every earlier link fails closed as before.",
+    "third_change_validator_pin compares the fourth receipt's after-hash with the hash the fifth link presents instead of the live hash; when the fourth link breaks it still exposes the raw live hash, as DL-451 specifies. recount_change_state expects that presented hash as the fourth receipt's validator_after_sha256. The fourth receipt therefore keeps its own after-hash; nothing earlier is re-stamped.",
+    "dl_pattern_change_state: this receipt's full identity (schema, authority pins and the bytes they name, validator path, id, before and after, prior receipt bytes, pattern, author, a named lander, both as forbidden seal appliers, false seal, admission and depth flags, the anchor and the fifth byte link). recount_validation runs it beside the fourth receipt's check; a failure is dl_pattern_change_receipt_invalid and blocks the combined result like recount_change_receipt_invalid.",
+    "The check's output carries this receipt's SHA-256 at named_checks.recount.dl_pattern_change_receipt_sha256.",
+    "Documents: INDEPENDENT_EA_VALIDATOR_SPEC.md gains an E9-1 section."
+  ],
+  "relaxes": [
+    "Exactly one thing: a decision reference Plans/Decision_Log.md#DL-NNNN with a four-digit number from 1000 to 9999 is read, at the two sites above, exactly as a three-digit one was. Before this change such a reference failed decision_ref (admission records) or 'recount exclusion decision missing' (recount exclusions)."
+  ],
+  "does_not_relax": [
+    "No looser decision rule: the cited entry must still exist exactly once as a '### DL-NNNN:' heading, its section SHA-256 must match the record, and it must name the exact event type with the same boundaries. DL-077 and DL-078 cannot be cited; a step record cannot cite DL-412.",
+    "No new aliases: zero-padded four-digit forms (DL-0000 to DL-0999), five or more digits, letters, signs, spaces, an empty number or a missing prefix are refused, as before.",
+    "Three-digit references are matched by the old pattern unchanged.",
+    "No change to any other rule: one family per record, multi-family steps, twelve-of-twelve depth with Plans evidence, the Known37 list, the August pair, fingerprints, the freeze digest, census, denominator, holding bucket, exclusion, owner sheet, August checkpoint, evidence shape, oracle harness, recount custody and outcomes, or any pass predicate.",
+    "No re-stamp: the DL-077, DL-412 and fourth receipts keep their validator pins (190a86f2..., 319f6bff..., 3e98a165...). No freeze digest, closure hash, cohort pin, historical validator receipt or admission record changes."
+  ],
+  "unchanged": [
+    "Every other line of the validator.",
+    "The Step 3 and DL-077 receipts are untouched. The DL-412 and fourth (recount) receipts change only at S1: their lander fields, and the fourth receipt's prior-receipt pin."
+  ],
+  "notes": [
+    "E9-1 authorizes this change only. It admits no family, writes no Decision Log entry, grants no depth pass, applies no seal and makes no family pass by itself.",
+    "No Decision Log entry records E9-1 yet. The validator reads the signed card and answer copies by SHA-256; a later DL entry for E9-1 is not a validator input.",
+    "A fourth receipt re-stamped to the live hash (the PNC019-SCOPE finding 6 mistake one link later) makes the fourth link hold on its own, but this receipt's check then refuses, so dl_pattern_change_receipt_invalid still blocks the combined result.",
+    "Author and lander are agent tasks, not a claimed human identity. Neither may apply the seal."
+  ],
+  "landing_state": "PENDING actual lander, prior-receipt refresh after the fourth receipt's landing bytes, exact Spec Lock anchor, and blind review before and after landing",
+  "seal_applier_procedural_exclusions": [
+    "author",
+    "actual lander",
+    "claude-opus-5.5:pm-ea-lead (b29da1b5-9877-474f-8a4c-e7a57ab7f899)",
+    "CA-SEAL",
+    "CA-SEAL-FIX1 through CA-SEAL-FIX8",
+    "CA-SEAL2 (Codex)",
+    "CA-SEAL2-FIX1 through CA-SEAL2-FIX12",
+    "every other fix worker on these amendments"
+  ]
+}
