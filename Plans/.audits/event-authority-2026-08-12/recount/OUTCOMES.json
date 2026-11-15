@@ -386,6 +386,10 @@
   {
    "event_type": "session_prompt.expired",
    "outcome": "registered"
+  },
+  {
+   "event_type": "session_prompt.rejected",
+   "outcome": "registered"
   }
  ]
 }
