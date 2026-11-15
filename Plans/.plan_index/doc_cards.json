@@ -1955,10 +1955,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 145,
+        "False": 146,
         "True": 47
       },
-      "heading_count": 279,
+      "heading_count": 280,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
@@ -2111,12 +2111,17 @@
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_packet_audit_census.py",
         "scripts/pm_packet_audit_verdicts.py",
+        "scripts/pm_s3bo_ext_sl_compaction.py",
+        "scripts/pm_s3bo_ext_sl_deletion.py",
+        "scripts/pm_s3bo_ext_sl_hold.py",
+        "scripts/pm_s3bo_ext_sl_quarantine.py",
         "scripts/pm_s3bo_ext_sr_applied.py",
         "scripts/pm_s3bo_ext_sr_corrupt.py",
         "scripts/pm_s3bo_ext_sr_created.py",
         "scripts/pm_s3bo_ext_sr_expired.py",
         "scripts/pm_s3bo_ext_sr_recovery.py",
         "scripts/pm_s3bo_oracles.py",
+        "scripts/pm_s3bo_sl_common.py",
         "scripts/pm_s3bo_sr_common.py",
         "tests/fixtures/pm7_shared",
         "tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json",
@@ -2124,9 +2129,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 14540,
+      "line_count": 14676,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 192,
+      "plan_unit_count": 193,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -2319,7 +2324,8 @@
         "ATS-2204",
         "ATS-2205",
         "ATS-2206",
-        "ATS-3880"
+        "ATS-3880",
+        "ATS-3920"
       ],
       "reasoning_tiers": [
         "high",
@@ -2418,10 +2424,10 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "b140983e41f59bafc51aa27672d44777035b279666c99634c6392433287f5003",
+      "sha256": "1067932b58b62eb6d30fc0eebbfa08cdb30d5563310e56bbc4ff402febd22d15",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 190,
+        "accepted": 191,
         "draft": 1,
         "superseded": 1
       },
@@ -2436,7 +2442,7 @@
         "interface_contract": 6,
         "owner_boundary": 4,
         "owner_contract": 1,
-        "requirement": 72,
+        "requirement": 73,
         "schema_contract": 3,
         "validation_contract": 3,
         "validation_criterion": 33,
@@ -2697,6 +2703,7 @@
         "reports/event-authority-20261105/W3B-oracle-plan.json",
         "reports/event-authority-20261105/W3H-oracle-plan.json",
         "reports/event-authority-20261105/W3I-oracle-plan.json",
+        "reports/event-authority-20261114/depth-c12-sl-families.json",
         "reports/event-authority-20261114/depth-c12-sr-families.json",
         "reports/event-authority-20261114/depth-s3b-registered-families.json",
         "reports/event-authority-20261114/depth-s3bo-registered-families.json",
@@ -2710,6 +2717,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-projects-refresh-contracts.py",
         "scripts/pm-s3bo-check.py",
+        "scripts/pm-s3bo-sl-report.py",
         "scripts/pm-settings-layering-check.py",
         "scripts/pm-shard-plans.py",
         "scripts/pm7-build-check.py",
@@ -24212,7 +24220,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-15T00:26:28Z",
+  "generated_at_utc": "2026-11-15T04:50:56Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -24220,13 +24228,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 4881,
+      "False": 4882,
       "True": 3931
     },
-    "plan_unit_count": 8812,
+    "plan_unit_count": 8813,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 8532,
+      "accepted": 8533,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -24299,7 +24307,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6099,
+      "requirement": 6100,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

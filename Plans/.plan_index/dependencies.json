@@ -8091,6 +8091,7 @@
     "SQR-1565",
     "UCC-219",
     "WM-104",
+    "ATS-3920",
     "RAP-001",
     "SMPFS-152",
     "CS-079",
@@ -19537,6 +19538,86 @@
       "edge_type": "depends_on",
       "from": "ATS-3880",
       "to": "SP-275"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "ATS-2200"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "ATS-2201"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "ATS-2205"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "ATS-2206"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "ATS-3880"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "DL-049"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "DL-068"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "SP-2200"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "SP-2201"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "SP-2206"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "SP-2208"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "SP-2211"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "SP-288"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "SP-295"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "SP-296"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3920",
+      "to": "SP-297"
     },
     {
       "edge_type": "depends_on",
@@ -142859,7 +142940,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-15T00:26:28Z",
+  "generated_at_utc": "2026-11-15T04:50:56Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -159703,6 +159784,23 @@
         "heading_level": 2,
         "heading_line": 14459,
         "line": 14475,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_pnc019_c12_sl",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-3920",
+      "reasoning_tier": "high",
+      "risk_class": "false_event_oracle_closure",
+      "source_location": {
+        "heading": "ATS-3920 - Executable s3bo family boundaries for the Storage compaction, deletion, hold and quarantine families (C12-SL)",
+        "heading_level": 2,
+        "heading_line": 14542,
+        "line": 14603,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -292672,10 +292770,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 23590,
+    "depends_on_edge_count": 23606,
     "downstream_blocked_node_count": 0,
-    "edge_count": 26808,
-    "node_count": 8812,
+    "edge_count": 26824,
+    "node_count": 8813,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0
