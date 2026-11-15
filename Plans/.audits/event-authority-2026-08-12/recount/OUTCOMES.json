@@ -382,6 +382,10 @@
   {
    "event_type": "session_prompt.cancelled",
    "outcome": "registered"
+  },
+  {
+   "event_type": "session_prompt.expired",
+   "outcome": "registered"
   }
  ]
 }
