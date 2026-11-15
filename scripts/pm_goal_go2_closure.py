@@ -943,7 +943,7 @@ def donor_controls(cl, v, reach, seeds, controls, donors, by_ipath, budget_left,
         if cl.COUNT[0] - start > (2 * budget_left) // 3:
             break
         try:
-            built = enter_light(cl, v, control, reach, donors)
+            built = enter_light(cl, v, control, reach, donors, by_ipath)
         except Exception:  # noqa: BLE001 - a failed construction attempt
             built = None
         if not built:
@@ -1078,7 +1078,15 @@ def greedy_repair(cl, v, value, protect, donors, rounds=14, tries=10, budget=600
         if cl.COUNT[0] - start > budget:
             return None
         improved = False
-        for error in sorted(errs, key=lambda e: -len(e.absolute_path))[:6]:
+        leaves = []
+        def flatten(es):  # a union's refusal is repaired through the failures inside its alternatives
+            for e in es:
+                if e.context and e.validator in ('anyOf', 'oneOf'):
+                    flatten(e.context)
+                else:
+                    leaves.append(e)
+        flatten(errs)
+        for error in sorted(leaves, key=lambda e: -len(e.absolute_path))[:8]:
             where = tuple(error.absolute_path)
             node = error.schema if isinstance(error.schema, dict) else {}
             resolver = cl.RESOLVERS.get(id(node), v._resolver)
@@ -1147,7 +1155,7 @@ def greedy_repair(cl, v, value, protect, donors, rounds=14, tries=10, budget=600
     return value if not errs else None
 
 
-def _force(cl, v, target, condition, resolver, want, donors, prefix):
+def _force(cl, v, target, condition, resolver, want, donors, prefix, member_schemas=None):
     """Set the members an `if` reads so it holds (want=True) or fails (want=False). Returns the forced member paths,
     or None when no candidate does it."""
     forced = []
@@ -1175,10 +1183,17 @@ def _force(cl, v, target, condition, resolver, want, donors, prefix):
             if prop not in target:
                 return None
         return forced
-    # want False: break one member the `if` reads
+    # want False: break one member the `if` reads; values the member's own property schemas accept come first
     for prop in list(condition.get('required', [])) + [p for p in props if p not in condition.get('required', [])]:
         sub, sub_res = cl.deref(props.get(prop, {}), resolver)
-        for candidate in [None, '__remove__'] + donors.candidates(prop, 12):
+        own = [(n, r) for n, r in (member_schemas or {}).get(prop, [])]
+        def fits_own(x):
+            return not own or all(cl.holds(v, n, x, r) for n, r in own)
+        pool = donors.candidates(prop, 12) + [None]
+        for n, r in own:
+            pool += list(cl.deref(n, r)[0].get('enum', []))[:8]
+        ranked = sorted(pool, key=lambda x: not fits_own(x)) + ['__remove__']
+        for candidate in ranked:
             trial = copy.deepcopy(target)
             if candidate == '__remove__':
                 if prop not in trial:
@@ -1223,7 +1238,99 @@ def diverse(cl, controls, reach):
     return first + rest
 
 
-def enter_light(cl, v, control, reach, donors):
+def member_schemas(cl, by_ipath, ipath):
+    """name -> [(property subschema, resolver)] of every object node reached at this instance path."""
+    out = collections.defaultdict(list)
+    for _, node, res in by_ipath.get(ipath, []):
+        for name, sub in (node.get('properties', {}) if isinstance(node, dict) else {}).items():
+            out[name].append((sub, res))
+    return out
+
+
+def _fill_branch(cl, v, target, branch, bres, selectors, at, donors):
+    """The taken branch's own members that refuse their current value: a nested pin in place, else const/enum, null,
+    a donor or a generated value the member's branch subschema accepts."""
+    for q, sub in (branch.get('properties', {}) if isinstance(branch, dict) else {}).items():
+        if q not in target or at + (q,) in selectors:
+            continue
+        sub, sres = cl.deref(sub, bres)
+        if cl.holds(v, sub, target[q], sres):
+            continue
+        if isinstance(target[q], dict) and isinstance(sub.get('properties'), dict) and 'type' not in sub:
+            trial = copy.deepcopy(target[q])
+            if _force(cl, v, trial, sub, sres, True, donors, at + (q,)) is not None and cl.holds(v, sub, trial, sres):
+                target[q] = trial
+                continue
+        pool = ([sub['const']] if 'const' in sub else []) + list(sub.get('enum', []))[:4] + [None]
+        pool += [d for d in donors.candidates(q, 8)]
+        try:
+            pool.append(cl.gen(sub, sres, 0, 0))
+        except Exception:  # noqa: BLE001
+            pass
+        pick = next((x for x in pool if cl.holds(v, sub, x, sres)), NONE)
+        if pick is not NONE:
+            target[q] = copy.deepcopy(pick)
+
+
+def _enter_union(cl, v, value, reach, depth, owner, kind, index, resolver, path, donors, by_ipath, protect, selectors):
+    """GO2: a union alternative on the way that the value does not take: a real donor of that member name the
+    alternative accepts (else GO's generated alternative); then every conditional of the parent object whose branch
+    constrains that member is steered to the branch that accepts it (its selector forced, its members filled)."""
+    at = tuple(path[:depth])
+    target = cl.get(value, at)
+    alternative, ares = cl.deref(owner[kind][index], resolver)
+    kinds = alternative.get('type') if isinstance(alternative, dict) else None
+    kinds = kinds if isinstance(kinds, list) else [kinds] if kinds else []
+    same_shape = (isinstance(target, dict) and ('object' in kinds or (not kinds and 'properties' in alternative))
+                  or isinstance(target, list) and 'array' in kinds)
+    if not same_shape and not cl.holds(v, alternative, target, ares):  # a container of the alternative's shape is kept
+        pool = (donors.candidates(at[-1], 24) if at and isinstance(at[-1], str) else [])
+        for variant in (0, 1):
+            try:
+                pool.append(cl.gen(alternative, ares, 0, variant))
+            except Exception:  # noqa: BLE001
+                pass
+        pick = next((x for x in pool if cl.holds(v, alternative, x, ares)), NONE)
+        if pick is NONE:
+            return None
+        value = cl.put(value, at, copy.deepcopy(pick))
+        try:
+            cl.get(value, tuple(path))
+        except (KeyError, IndexError, TypeError):
+            return None
+    protect.add(at)
+    if not at:
+        return value
+    parent = cl.get(value, at[:-1])
+    member = at[-1]
+    if not isinstance(parent, dict):
+        return value
+    for _, node, nres in by_ipath.get(tuple(reach['ipath'][:depth - 1]), []):
+        if not isinstance(node.get('if'), dict):
+            continue
+        fits = {}
+        for branch in ('then', 'else'):
+            bnode, bres = cl.deref(node.get(branch, {}), nres) if isinstance(node.get(branch), dict) else ({}, nres)
+            sub = bnode.get('properties', {}).get(member) if isinstance(bnode, dict) else None
+            fits[branch] = True if sub is None else cl.holds(v, cl.deref(sub, bres)[0], parent[member], cl.deref(sub, bres)[1])
+        if fits['then'] == fits['else']:
+            continue
+        want = 'then' if fits['then'] else 'else'
+        condition, cres = cl.deref(node['if'], nres)
+        if cl.holds(v, condition, parent, cres) != (want == 'then'):
+            forced = _force(cl, v, parent, condition, cres, want == 'then', donors, at[:-1],
+                            member_schemas(cl, by_ipath, tuple(reach['ipath'][:depth - 1])))
+            if forced is None:
+                continue
+            protect |= set(forced)
+            selectors |= set(forced)
+        if isinstance(node.get(want), dict):
+            bnode, bres = cl.deref(node[want], nres)
+            _fill_branch(cl, v, parent, bnode, bres, selectors | {at}, at[:-1], donors)
+    return value
+
+
+def enter_light(cl, v, control, reach, donors, by_ipath=None):
     """GO2: the members on the way are created as GO's realize() creates them (generated from the step's subschema when
     missing or null), without re-applying every conditional of every object; then each conditional of the reach that is
     not yet taken is entered by _force. Returns (value, protected paths) or None."""
@@ -1253,17 +1360,28 @@ def enter_light(cl, v, control, reach, donors):
             if not isinstance(here, dict):
                 return None
             if segment not in here or (not last and here[segment] is None):
-                here[segment] = cl.gen(child, resolver, 0, 0)
+                nxt = steps[number + 1][0] if not last else None
+                pool = [d for d in donors.candidates(segment, 24)
+                        if not last and (isinstance(d, dict) and (not isinstance(nxt, str) or nxt in d or nxt == '*')
+                                         or isinstance(d, list) and nxt in ('#',) or isinstance(nxt, int) and isinstance(d, list))]
+                pool.sort(key=lambda d: not cl.holds(v, child, d, resolver))  # donors the member's subschema accepts first
+                here[segment] = copy.deepcopy(pool[0]) if pool else cl.gen(child, resolver, 0, 0)
             path += (segment,)
     protect = {path}
     selectors = set()
     for kind, depth, index, owner, resolver, obj in reach['ctx']:
         at = tuple(path[:depth])
+        if kind in ('anyOf', 'oneOf') and by_ipath is not None:
+            value = _enter_union(cl, v, value, reach, depth, owner, kind, index, resolver, path, donors, by_ipath, protect, selectors)
+            if value is None:
+                return None
+            continue
         target = cl.get(value, at)
         if kind in ('then', 'else') and isinstance(target, dict):
             condition, cres = cl.deref(owner['if'], resolver)
             if cl.holds(v, condition, target, cres) != (kind == 'then'):
-                forced = _force(cl, v, target, condition, cres, kind == 'then', donors, at)
+                forced = _force(cl, v, target, condition, cres, kind == 'then', donors, at,
+                                member_schemas(cl, by_ipath, tuple(reach['ipath'][:depth])) if by_ipath is not None else None)
                 if forced is None:
                     return None
                 protect |= set(forced)
