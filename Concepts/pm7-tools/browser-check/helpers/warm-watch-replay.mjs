@@ -12,17 +12,25 @@ export function replayWatch(steps, hz) {
 	// are rounded to 1 ms, so a value within 1 ms of a bar counts for whichever side keeps the check from a false failure.
 	let hi = 0, lo = 0, longest = 0, gpu = 0, watched = 0, unwatched = 0, overSlow = 0, resets = 0;
 	const early = [], needless = [];
+	// PM7PERF-WARMWATCH-BAR-IN-STEP (R18-4): a row logs the slow bar of its LAST interval, and the queue's rolling median
+	// can move inside one step (a 60 ms d1 resets the count against a 40 ms bar, and the median it then holds logs 90).
+	// The bar each interval met lies between the previous row's bar and this row's, as far as the log shows, so each
+	// count is reset on the side that cannot make a false failure: the count that judges a needless watch (lo) against
+	// the lower of the two, the count that judges an early drop (hi) against the higher.
+	let prevSlow = null;
 	for (const e of steps) {
   steady = Number.isFinite(e.steadyMs) && e.steadyMs > 0 ? e.steadyMs : fallbackSteady;
   slow = Number.isFinite(e.slowMs) && e.slowMs > 0 ? e.slowMs : fallbackSlow;
   if (steady === e.steadyMs && slow === e.slowMs) adaptive++;
+  const slowLo = prevSlow == null ? slow : Math.min(prevSlow, slow), slowHi = prevSlow == null ? slow : Math.max(prevSlow, slow);
+  prevSlow = slow;
 		// the product's own word that the counter went back to zero since the row before, by an interval no row shows (an
 		// admission frame, or a step the page's hiding left unjudged): it holds on any row, one without frameMs too
 		if (e.watchReset === true) { hi = 0; lo = 0; resets++; }
 		const fm = e.frameMs; if (!fm || !fm.length) continue;
 		const worst = Math.max(...fm);
-		if (worst > slow + 1) { hi = 0; lo = 0; overSlow++; if (e.watched === false) { gpu++; unwatched++; } else if (fm.length === 3) { gpu++; watched++; } continue; }
-		if (worst >= slow - 1) lo = 0;
+		if (worst > slowHi + 1) { hi = 0; lo = 0; overSlow++; if (e.watched === false) { gpu++; unwatched++; } else if (fm.length === 3) { gpu++; watched++; } continue; }
+		if (worst >= slowLo - 1) lo = 0;
 		if (e.watched === false) {
 			gpu++; unwatched++;
 			if (hi < KEEP) early.push(`${e.owner}:${e.name} at ${Math.round(e.t)} ms: at most ${hi} steady watches before it`);
@@ -30,7 +38,7 @@ export function replayWatch(steps, hz) {
 		}
 		if (fm.length === 3) {
 			gpu++; watched++;
-			if (lo >= KEEP && Math.max(fm[0], fm[1]) < slow - 1) needless.push(`${e.owner}:${e.name} at ${Math.round(e.t)} ms [${fm.join(', ')}] after ${lo} or more steady watches`);
+			if (lo >= KEEP && Math.max(fm[0], fm[1]) < slowLo - 1) needless.push(`${e.owner}:${e.name} at ${Math.round(e.t)} ms [${fm.join(', ')}] after ${lo} or more steady watches`);
 			if (worst <= steady - 1) { hi++; lo++; } else if (worst <= steady + 1) { hi++; lo = 0; } else { hi = 0; lo = 0; }
 		} else if (fm.length === 2) {
 			// a cpu step (not counted) or a light chain's last watched step (counted, or a reset when over the steady bar)
