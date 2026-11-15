@@ -313,9 +313,9 @@
     bar:     { bezel: 14, thick: 34, frost: 'light', sat: 1.6,  ca: 0.04, mag: 1,    light: 0.95, bake: true, ring: [2, 5] },
     /* lenses: no colour split and no magnifying map (the labels magnify themselves); magRest is the chosen label's
        size under the lens at rest, magLift its size while the lens is lifted and moving */
-    lens:    { bezel: 4,  thick: 10, sat: 1.1,  mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.04, magLift: 1.13 },
-    lensRow: { bezel: 5,  thick: 11, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true, magRest: 1,    magLift: 1.03 },
-    lensIcon:{ bezel: 5,  thick: 12, sat: 1.12, mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.08, magLift: 1.2 },
+    lens:    { bezel: 4,  thick: 10, sat: 1.1,  mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.04, magLift: 1.13, restSat: true },
+    lensRow: { bezel: 5,  thick: 11, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true, magRest: 1,    magLift: 1.03, restSat: true },
+    lensIcon:{ bezel: 5,  thick: 12, sat: 1.12, mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.08, magLift: 1.2, restSat: true },
     bead:    { bezel: 5,  thick: 12, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true },
     menu:    { bezel: 18, thick: 56, blur: 30, sat: 1.5, ca: 0,    mag: 1,    light: 0.95, css: true },
   };
@@ -1159,6 +1159,8 @@
     var bf = null;
     if (gpu() && k.css) bf = 'blur(' + k.blur + 'px) saturate(' + k.sat + ')';
     else if (gpu() && k.lens) { var f = lf.f; e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
+    /* a lens keeps its filter here and wears it only while it moves or is pressed (lensBend, PERF-4); restSat: its tint at rest */
+    if (k.lens) { e.__lgBf = bf; e.__lgRest = bf && k.restSat ? 'saturate(' + k.sat + ')' : null; lensBend(e); return e.__lgF; }
     if (bf) { e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important'); }
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
@@ -1733,7 +1735,7 @@
         kf.push(o);
       });
       if (!any || kf.length < 2) return;
-      out.push({ kf: kf, opts: { duration: t.duration, delay: t.delay, easing: t.easing, fill: 'backwards', iterations: 1, composite: composite }, startTime: a.startTime, currentTime: a.currentTime });
+      out.push({ kf: kf, opts: { duration: t.duration, delay: t.delay, easing: t.easing, fill: 'backwards', iterations: 1, composite: composite }, startTime: a.startTime, currentTime: a.currentTime, moves: props === RIDE_MOVE });
     }
     for (var n = target; n && n !== stop && n !== document.documentElement; n = n.parentElement) {
       n.getAnimations().forEach(function (a) {
@@ -1751,10 +1753,15 @@
       var m;
       try { m = L.lens.animate(sp.kf, sp.opts); } catch (e) { return; }
       if (sp.startTime != null) m.startTime = sp.startTime; else if (sp.currentTime != null) m.currentTime = sp.currentTime;
+      /* PERF-4 round 2 (R31 F3, R30 Finding 2): a ride that moves the lens (a mirrored transform, not the opacity one)
+         bends it while it runs; its own finish or cancel asks again */
+      if (sp.moves) { m.__lgMoves = true; m.onfinish = m.oncancel = function () { lensLive(L); }; }
       out.push(m);
     });
     L.ride = out.length ? out : null;
+    lensLive(L);
   }
+  function rideMoves(L) { return !!(L.ride && L.ride.some(function (m) { return m.__lgMoves && m.playState !== 'finished' && m.playState !== 'idle'; })); }
   /* a lens first shown in a page or window is measured while that page is still coming in, and content above a strip can
      still grow by a layout animation (a Settings manager page eases its height as its tab changes, moving every strip
      below it; no mutation or event says so). It is measured once more when entrances are over, and follows if its
@@ -1789,6 +1796,43 @@
     stopMagnify(L); stopRide(L); stopHop(L);
     if (L.glintAnim) { var g = L.glintAnim; L.glintAnim = null; g.cancel(); }
     if (L.anim) { var an = L.anim; L.anim = null; an.onfinish = null; an.cancel(); } L.reducedAnim = false;
+    lensLive(L);
+  }
+  /* PERF-4 (Jared, 2026-11-12, choice B after before/after pictures): a lens bends what is under it only while it moves
+     or is pressed. Its live SVG backdrop filter was kept while it rested, and Chrome runs that filter again for every
+     frame anything under the lens draws: the largest single cost of the Glass look (lane E, 2026-11-11). At rest a lens
+     draws the rim and tint it bakes (--lg-spec) with no backdrop filter; its bend there is at most 1.4 px
+     (buildLensMaps). Live while it moves or is pressed (Jared's words, held literally since round 2): while its travel
+     runs (not the Reduce Motion fade), while it rides its strip's entrance (a mirrored transform, not the opacity
+     mirror or the arrival fade), while it is scrubbed, and while a pointer is down on its strip; each moment that
+     changes one of those asks here, so nothing runs at rest. Measured (lane G,
+     A-B-B-A against main, Windows RTX 3090, 2026-11-13): the GPU thread 64 to 77 ms a second less at rest in Glass Dark
+     and Light (Home 85 / 81, Usage 124 / 73, Settings 84 / 72), 99 to 115 less under a pointer sweep, 95 to 108 less
+     scrolling; Basic Dark unchanged. */
+  function lensLive(L) {
+    L.lens.__lgLive = !!((L.anim && !L.reducedAnim && L.anim !== L.hopHide) || L.dragging || (L.held && L.held.size) || rideMoves(L));
+    lensBend(L.lens);
+  }
+  /* At rest every lens kind keeps the plain saturate() its live filter carries (KINDS restSat: 1.1, the icon lens 1.12), a
+     plain CSS backdrop pass with no SVG filter, and drops only the url() bend; the bead keeps its tint in CSS while it
+     shows. Over a coloured ground the saturate is most of what the filter changes: taking it off when a lens came to
+     rest stepped the whole lens's tint in one frame (the icon lens over the Activity bar's blue, Glass Dark median
+     (29,48,115) to (30,47,108); Settings' section tabs 97% of the lens interior 5 levels or more; over Prism at the 0.35
+     transparency floor the rail tabs, Usage's nav, Settings' left bar and the onboarding segments too; lane G pixels,
+     2026-11-13), and which lens steps depends on the wallpaper and the transparency (stream F's reviewer: atrium, orbs,
+     facets, bloom, channels), so the rule is uniform (the lead's ruling, round 2). At rest a lens then differs from
+     the moving lens only at its rim, by the bend: at most 3 levels in lane G's pairs, up to 7 in stream F's (the bead
+     8). The icon lens's resting pass cost 5.5 / 4.5 ms a second of the GPU thread on Home (Glass Dark / Light, paired
+     medians of 6 rounds that swing by 20 to 30). */
+  function lensBend(e) {
+    /* the filter mount() keeps (__lgBf), worn while live in a mounted Glass lens, else its resting tint (__lgRest);
+       unmount and unmountAll take an inline filter off by themselves, so one found gone is forgotten here */
+    var want = (e.__lgSig && isGlass() && (e.__lgLive && e.__lgBf || e.__lgRest)) || null;
+    if (e.__lgBfOn && !e.style.getPropertyValue('backdrop-filter')) e.__lgBfOn = null;
+    if (want === (e.__lgBfOn || null)) return;
+    e.__lgBfOn = want;
+    if (want) { e.style.setProperty('backdrop-filter', want, 'important'); e.style.setProperty('-webkit-backdrop-filter', want, 'important'); }
+    else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
   }
   function removeLensElement(e) {
     if (typeof unmount === 'function') unmount(e);
@@ -1797,6 +1841,7 @@
   }
   function disposeLens(L, keepMark) {
     var carried = false;
+    L.held = null;
     if (L.under && L.rect && L.strip.isConnected && !L.lens.isConnected) {
       carried = true;
       var carry = L.strip.__lgLast = { rect: visualRect(L) || L.rect, pending: L.pending, t: performance.now() }, cs = L.strip, mark = !!(L.cfg && L.cfg.mark);
@@ -1831,6 +1876,8 @@
      shown again when its mode comes back, so a NieR or Retro toggle inserts and removes nothing once both modes have run. */
   var parkedLenses = { over: new Map(), under: new Map() };
   function parkLens(L) {
+    /* a parked lens abandons its hold (R43 F2): a release while it is parked never reaches it, and it would come back bent */
+    L.held = null;
     if (L.pending) pressMark(L.pending, false);
     L.pending = null;
     forgetAncestors(L.strip, scrollStrips, stripAncestors);
@@ -1847,7 +1894,7 @@
     var home = P.lens.isConnected && P.layer.isConnected && (P.under ? P.layer.parentElement === strip : P.layer === lensLayer(strip));
     if (!home) { disposeLens(P, true); return null; }
     if (P.under && strip.__lgPos) strip.style.position = 'relative';
-    P.lens.style.removeProperty('visibility'); P.warm = '';
+    P.lens.style.removeProperty('visibility'); P.warm = ''; P.held = null;
     return P;
   }
   function relayerLenses() {
@@ -1876,7 +1923,7 @@
     pruneLensFilters();
   }
   function suspendLensMotion() {
-    lenses.forEach(function (L) { if (L.pending) pressMark(L.pending, false); L.pending = null; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
+    lenses.forEach(function (L) { L.held = null; if (L.pending) pressMark(L.pending, false); L.pending = null; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
     if (isGlass() && beadOn && beadOn.isConnected) { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); } else resetBead();
     menuMotions.forEach(function (M, menu) { resetMenuMorph(menu); });
   }
@@ -1956,7 +2003,8 @@
     var an = L.lens.animate(frames, { duration: dur, easing: 'linear' }); L.anim = an; L.path = { t0: performance.now(), dur: dur, rects: rects };
     try { L.glintAnim = L.lens.animate(glint, { duration: dur, easing: 'linear', pseudoElement: '::after' }); } catch (e) { L.glintAnim = null; }
     magnifyAlong(L, track, dur, o);
-    an.onfinish = function () { if (L.anim === an) L.anim = null; ownRest(L); };
+    lensLive(L);
+    an.onfinish = function () { if (L.anim === an) L.anim = null; ownRest(L); lensLive(L); };
   }
   /* A strip that is still arriving (its rows sliding in, its bar fading in: Usage's first arrival, a page's entrance)
      shows its lens as it lands, never ahead of it over a blank bar (Jared #2, 2026-10-14). The arrival is whatever
@@ -2040,6 +2088,8 @@
   function syncStrip(cfg, strip, m) {
     syncStripNow(cfg, strip, m);
     if (cfg.under) { var L = lenses.get(strip); if (L) ownRest(L); }
+    /* PERF-4: a sync can end a press (the app chose, or it was abandoned) with nothing else moving the lens */
+    var LL = lenses.get(strip); if (LL && LL.lens.__lgLive) lensLive(LL);
   }
   /* B6 packet 1 (2026-10-16): a sync of many strips read each one after the previous one's lens writes (a new lens, its
      strip's mark, its box, its optics), so every strip paid a style and a layout pass of its own: 23 style + 22 layout
@@ -2451,8 +2501,13 @@
   }
   document.addEventListener('pointerdown', function (e) {
     if (!switchOn() || e.button !== 0 || reduced()) return;
-    var hit = stripAt(e.target); if (!hit || !choosable(hit.item, hit.cfg)) return;
-    var L = lenses.get(hit.strip); if (!L || !L.rect || L.dragging) return;
+    var hit = stripAt(e.target); if (!hit) return;
+    var L = lenses.get(hit.strip); if (!L || !L.rect) return;
+    /* PERF-4 round 2 (R31 F1): PRESSED is a pointer down on any item of the strip, the chosen one included: the lens
+       bends from here until the press ends (pressOver) or is abandoned (pressAbandon), whatever the app chooses, and when.
+       Holds are kept by pointer (R43 F1): with two pointers down, the lens bends until the last one holding it ends */
+    (L.held || (L.held = new Set())).add(e.pointerId); lensLive(L);
+    if (!choosable(hit.item, hit.cfg) || L.dragging) return;
     var cur = hit.cfg.pick ? hit.cfg.pick(hit.strip) : hit.strip.querySelector(hit.cfg.items + (hit.cfg.active || '.active'));
     if (hit.item === cur) return;
     if (L.pending) pressMark(L.pending, false);
@@ -2467,6 +2522,36 @@
     });
   }, true);
   document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { pressMark(L.pending, false); L.pending = null; queueSync(L.strip); } }); }, true);
+  /* PERF-4: the press is over (after the two listeners above), or the pointer's capture went with it: no lens is held. A
+     lens resting where it was sent stops bending. One released off its item (away) stays live into the sync queued
+     above, which sends it back (dropping the bend here would leave it unbent for the frame or two between the two
+     moves); that sync re-reads it (syncStrip) */
+  function pressOver(e) {
+    /* only this pointer's hold ends (R43 F1): another pointer's release, or its lost capture, leaves a lens it holds bent */
+    var id = e && e.pointerId;
+    lenses.forEach(function (L) {
+      if (L.held) { L.held.delete(id); if (!L.held.size) L.held = null; }
+      if (L.lens.__lgLive && !(L.pending && L.pending.away)) lensLive(L);
+    });
+  }
+  document.addEventListener('pointerup', pressOver, true);
+  document.addEventListener('pointercancel', pressOver, true);
+  document.addEventListener('lostpointercapture', pressOver, true);
+  /* PERF-4 round 2 (R31 F2, R30 Finding 3): a press whose release never reaches the page (the window loses focus, the page
+     is hidden or left with the button down) ends here: every held press and scrub is abandoned, the app's own choice
+     stands, and a sync brings each lens back to it, where it rests. No lens stays bent after a release the page missed */
+  function pressAbandon() {
+    lenses.forEach(function (L) {
+      var P = L.pending, was = !!L.held || L.dragging || (P && !P.up);
+      L.held = null;
+      if (L.scrubCleanup) L.scrubCleanup();
+      if (P && !P.up) { pressMark(P, false); L.pending = null; }
+      if (was) { queueSync(L.strip); lensLive(L); }
+    });
+  }
+  window.addEventListener('blur', pressAbandon);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) pressAbandon(); });
+  window.addEventListener('pagehide', pressAbandon);
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
      each tab it passes, and drops into the nearest tab on release (which then becomes the chosen one) */
   function scrubbing(e) {
@@ -2494,7 +2579,7 @@
         if (L.scrubCleanup === cleanup) L.scrubCleanup = null;
       };
       var cleanup = function () {
-        removeListeners(); L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false;
+        removeListeners(); L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false; lensLive(L);
         if (labs) labs.forEach(function (lab) { lab.el.style.removeProperty('scale'); lab.el.style.removeProperty('translate'); });
       };
       var onUp = function (ev) {
@@ -2594,7 +2679,11 @@
      further fades out and lifts in at the new place. In the films a quick pointer crossing the side panel sent it flying
      across the panel and diving past the rail's edge on the old spring's overshoot. */
   var bead = null, beadOn = null, beadAt = null, beadRect = null, beadAnim = null, beadHide = 0;
-  function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } }
+  function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } beadBend(false); }
+  /* PERF-4: the bead bends what is under it only while it moves (lensBend): flowing to a neighbour, or lifting in (its
+     240 ms swell; round 2, R31 F4, R30 Finding 1); resting or fading out in place it draws its baked rim, and while it
+     shows its plain saturate (glass.css .lg-bead.on, the lead's R2) */
+  function beadBend(on) { if (bead) { bead.__lgLive = on; lensBend(bead); } }
   function resetBead() { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); if (bead) bead.classList.remove('on'); beadRect = null; beadOn = null; beadAt = null; }
   function beadEl() { if (bead && bead.isConnected) return bead; if (bead) { resetBead(); removeLensElement(bead); } bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
   function beadTo(t) {
@@ -2610,12 +2699,12 @@
       for (var i = 0; i < S.length; i++) { var p = S[i].x, over = (p - 1) * dist; if (over > 0) p = 1 + 2 * Math.tanh(over / 2) / Math.max(1, dist);
         var sp = Math.min(1, Math.abs(S[i].v) * dist / 2400);
         fr.push({ offset: S[i].t / S[S.length - 1].t, transform: 'translate3d(' + (dx * (1 - p)).toFixed(2) + 'px,' + (dy * (1 - p)).toFixed(2) + 'px,0) scale(' + (vert ? 1 - sp * 0.1 : 1 + sp * 0.25).toFixed(3) + ',' + (vert ? 1 + sp * 0.25 : 1 - sp * 0.1).toFixed(3) + ')' }); }
-      beadAnim = b.animate(fr, { duration: S[S.length - 1].t, easing: 'linear' });
+      beadAnim = b.animate(fr, { duration: S[S.length - 1].t, easing: 'linear' }); beadBend(true);
     } else {
       b.classList.add('on');
-      beadAnim = b.animate([{ transform: 'scale(.82)', opacity: 0 }, { transform: 'scale(1.02)', opacity: 1, offset: 0.65 }, { transform: 'scale(1)', opacity: 1 }], { duration: 240, easing: 'cubic-bezier(.3,1.1,.5,1)' });
+      beadAnim = b.animate([{ transform: 'scale(.82)', opacity: 0 }, { transform: 'scale(1.02)', opacity: 1, offset: 0.65 }, { transform: 'scale(1)', opacity: 1 }], { duration: 240, easing: 'cubic-bezier(.3,1.1,.5,1)' }); beadBend(true);
     }
-    var an = beadAnim; an.onfinish = function () { if (beadAnim === an) beadAnim = null; };
+    var an = beadAnim; an.onfinish = function () { if (beadAnim === an) { beadAnim = null; beadBend(false); } };
     beadRect = R; beadAt = t;
   }
   function beadFade(ms) {
