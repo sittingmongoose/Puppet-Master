@@ -110,14 +110,17 @@ def source_witnesses(out, family=None):
 
 
 def sealed_snapshot(custody=None):
-    """Actual protected catalogue maps the readers use, plus the sealed Stop store when given."""
-    world = dict(custody=copy.deepcopy(m.CUSTODY),
-                 receipts=[dict(store=k[0], digest=k[1], receipts=copy.deepcopy(v)) for k, v in sorted(m.RECIPE_RECEIPTS.items())],
-                 recipes=copy.deepcopy(m.RETAINED_RECIPES), installed=[dict(recipe=k, tuple=repr(v)) for k, v in sorted(m.RECIPE_TUPLES.items())])
+    """The actual protected store the reader uses.
+
+    Ordinary reads: the sealed catalogue maps, recipes and installed tuples.
+    Stop reads: the independently sealed Stop store and its one installed tuple
+    (the Stop reader never consults the ordinary catalogue).
+    """
     if custody is not None:
-        world['stop_custody'] = copy.deepcopy(custody)
-        world['stop_tuple'] = repr(stop.STOP_TUPLE)
-    return world
+        return dict(stop_custody=copy.deepcopy(custody), stop_tuple=repr(stop.STOP_TUPLE))
+    return dict(custody=copy.deepcopy(m.CUSTODY),
+                receipts=[dict(store=k[0], digest=k[1], receipts=copy.deepcopy(v)) for k, v in sorted(m.RECIPE_RECEIPTS.items())],
+                recipes=copy.deepcopy(m.RETAINED_RECIPES), installed=[dict(recipe=k, tuple=repr(v)) for k, v in sorted(m.RECIPE_TUPLES.items())])
 
 
 def retained(out, family=None):

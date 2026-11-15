@@ -327,11 +327,22 @@ def cases(selected=None):
 
 
 def checks(m):
+    selected = getattr(m, 'SELECTED_FAMILY', None)
     rows = {r['event_type']: r for r in json.loads((ROOT/'Plans/dch_event_contracts.json').read_text())['rows']}
-    for c in cases(getattr(m, 'SELECTED_FAMILY', None)):
+    for c in cases(selected):
         before = copy.deepcopy(c.originals)
         got = m.thread_event_outcome(c.record, rows[c.family], c.original_ref, c.originals)
         yield c.family + ': CH2 ' + c.name, got == c.expected and before == c.originals
+    # rt_original (CV-366): an incoming retry whose only defect is its payload edition (RT08), under each
+    # CH2 family's own retained original. The existing payload-only retry witness belongs to a CH1 family.
+    for f in json.loads((ROOT/'Plans/dch_event_contract_fixtures.json').read_text()):
+        if f['event_type'] not in FAMILIES or selected is not None and f['event_type'] != selected:
+            continue
+        retry = copy.deepcopy(f['record'])
+        retry['payload']['unexpected'] = True
+        before = copy.deepcopy(f)
+        got = m.retry_outcome(f['record'], retry, True, f['historical_source'])
+        yield f['event_type'] + ': CH2 ' + f['edition'] + ' retry payload edition refused', got == 'invalid_input_type' and before == f
 
 
 # --------------------------------------------------------------- Stop
