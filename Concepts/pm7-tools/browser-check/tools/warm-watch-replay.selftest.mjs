@@ -118,6 +118,40 @@ function dipRows() {
  `)({ now: () => 100 });
 }
 
+// R58 T3-1, from the product: 16 steady watches at 8 ms, then a light chain's last step. The queue asks whether to
+// watch after d1 only (8 ms: no) and notes d2 afterwards (unwatched(), 60 ms over the 40 ms bar), so the row is
+// frameMs [8, 60], watched false, resetAt 2: the correct queue's record. The reset is for the steps that follow.
+function lightLastRows() {
+ const code = part('  const median = () => {', '  const pending = () =>') +
+  part('  const logStep = (st,', '  const tell = (st,') +
+  part('  const WATCH_KEEP = 16, STEADY_MS = 25;', '  /* the watch after a GPU step');
+ return new Function('performance', `
+  const warmDeltas = [], warmLog = [];
+  let warmLateAt = 0, watchClean = 0, watchResets = 0, watchUnseen = false, warmD1 = 0, warmD2 = 0;
+  ${code}
+  const gpu = (i) => {
+   const st = { owner: 'glass', name: 'step' + i, at: i * 400 };
+   note(8, 1); note(8, 2);
+   const fm = [8, 8];
+   if (watching()) { for (let j = 0; j < 7; j++) note(8); fm.push(8); watched(fm); }
+   else st.unwatched = true;
+   logStep(st, 0, fm, false, 'ran');
+  };
+  for (let i = 0; i < 30; i++) note(8);
+  for (let i = 0; i < 16; i++) { note(8); note(8); gpu(i); }
+  note(8); note(8);
+  const st = { owner: 'glass', name: 'light-last', at: 16 * 400, unwatched: true };
+  note(8, 1);
+  const needs = watching();
+  note(60, 2);
+  logStep(st, 0, [8, 60], false, 'ran');
+  return { needs, counter: watchClean, rows: warmLog };
+ `)({ now: () => 100 });
+}
+// hand-written rows that carry the per-interval fields (120 Hz, median 8: slow bar 40, steady bar 25)
+const X = { steadyMs: 25, slowMs: 40, slow1: 40, steady1: 25, slow2: 40, steady2: 25, resetAt: 0 };
+const exact = (k) => watched(k).map((r) => ({ ...r, ...X }));
+
 const CASES = [
  ['R18-4 from the product: a d1 over the 40 ms bar resets the count inside the step that then logs a 90 ms bar', () => {
   const p = inStepRows();
@@ -174,7 +208,25 @@ const CASES = [
 			const rows = log(watched(16).map((r) => ({ ...r, steadyMs: 25, slowMs: 40 })), step([60, 30, 30], { steadyMs: 45, slowMs: 90 }));
 			if (rows.some((r) => r.slow1 != null || r.resetAt != null)) throw new Error('this case is an old log');
 			return rows;
-		}, { needless: 0, early: 0 }]
+		}, { needless: 0, early: 0 }],
+	['R58 T3-1 from the product: a light chain\'s last step is asked after d1 only, so its slow d2 on an unwatched row is not a dropped watch', () => {
+		const p = lightLastRows();
+		assert.equal(p.needs, false, 'after an 8 ms d1 and 16 steady watches the queue does not watch');
+		assert.deepEqual([p.rows.at(-1).frameMs, p.rows.at(-1).watched, p.rows.at(-1).resetAt, p.rows.at(-1).slow2], [[8, 60], false, 2, 40], 'the row: d2 over its 40 ms bar, unwatched, reset at interval 2');
+		assert.equal(p.counter, 0, 'and the count is back to zero for the steps that follow');
+		console.log(`product row ${JSON.stringify(p.rows.at(-1))}`);
+		return p.rows;
+	}, { needless: 0, early: 0 }],
+	['control: the step after that d2 reset is logged unwatched (the reset made the watch needed again)', () => {
+		const p = lightLastRows();
+		return [...p.rows, { t: 99999, owner: 'glass', name: 'after', frameMs: [8, 8], outcome: 'ran', ...X, watched: false }];
+	}, { needless: 0, early: 1 }],
+	['control: an unwatched step whose d1 reset the count (either kind of step is watched after that)',
+		() => log(exact(16), step([60, 8], { ...X, resetAt: 1, watched: false })), { needless: 0, early: 1 }],
+	['R58 T3-2: a reset flag its own bar contradicts (resetAt 1 on a 10 ms interval, bar 40) does not excuse a watch after 16 steady ones',
+		() => log(exact(16), step([10, 8, 8], { ...X, resetAt: 1 })), { needless: 1, early: 0 }],
+	['control: the same flag on an interval that did reach its bar (39 ms, within the 1 ms rounding) is a reset',
+		() => log(exact(16), step([39, 8, 8], { ...X, resetAt: 1 })), { needless: 0, early: 0 }]
 ];
 
 let failed = 0;
