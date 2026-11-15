@@ -94,6 +94,17 @@ class InvalidationSetsTests(unittest.TestCase):
         self.assertEqual(self.problems(r'.card:\5c hover * { color:red }'), [])
         self.assertEqual(len(self.problems(r'.card:\68 over * { color:red }')), 1)
 
+    # R53-C2, R54 F2: a hex escape's terminating space is the escape's; the whitespace after it is still a combinator
+    def test_escape_terminator_then_descendant(self):
+        self.assertEqual(len(self.problems(r'.card:hove\72  * { color:red }')), 1)
+        self.assertEqual(len(self.problems(r'.card.pmh-o\6e  * { color:red }')), 1)
+        self.assertEqual(len(self.problems('.card:hove\\72\r\n\t* { color:red }')), 1)
+        self.assertEqual(len(self.problems(r'.card:hove\72 { * { color:red } }')), 1)  # a nesting parent ending in one
+        self.assertEqual(len(self.problems(r'.card:hove\72 { & * { color:red } }')), 1)
+        self.assertEqual(len(self.problems(r'@scope (.card:hove\72 ) { * { color:red } }')), 1)  # a scope root ending in one
+        self.assertEqual(self.problems(r'.card:hove\72 x { color:red }'), [])  # one space: part of the escape, :hoverx
+        self.assertEqual(len(self.problems(r'.card:hove\72 > * { color:red }')), 1)
+
     # PM7PERF-LINT-SCOPE-ROOT (R18-2): a scope root's (and limit's) state is the state of the rules inside
     def test_scope_root_state(self):
         self.assertEqual(len(self.problems('@scope (.card:hover) { * { color:red } }')), 1)
