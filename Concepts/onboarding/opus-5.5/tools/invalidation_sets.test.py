@@ -93,6 +93,13 @@ class InvalidationSetsTests(unittest.TestCase):
         self.assertEqual(len(self.problems('.list { @scope (.card:hover) { svg { color:red } } }')), 1)
         self.assertEqual(self.problems('@scope (.card:hover) { .title { color:red } }'), [])
 
+    # PM7PERF-LINT-UPPERCASE-AT (R18-3): at-keywords are case-insensitive
+    def test_uppercase_at_rules(self):
+        self.assertEqual(len(self.problems('@MEDIA screen { .card:hover * { color:red } }')), 1)
+        self.assertEqual(len(self.problems('@Supports (display:grid) { .card:hover * { color:red } }')), 1)
+        self.assertEqual(len(self.problems('@LAYER ui { .card:hover * { color:red } }')), 1)
+        self.assertEqual(self.problems('@MEDIA (hover:none) { .card:hover * { color:red } }'), [])
+
 
 if __name__ == '__main__':
     unittest.main()

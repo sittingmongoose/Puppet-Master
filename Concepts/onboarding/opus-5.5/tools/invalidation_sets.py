@@ -226,7 +226,8 @@ def rules(css: str, base_line: int = 1, parent: str = ''):
         body = css[j + 1:end]
         if prelude.startswith('@'):
             match = re.match(r'@[\w-]+', prelude)
-            name = match.group() if match else ''
+            # at-keywords are ASCII case-insensitive (PM7PERF-LINT-UPPERCASE-AT: `@MEDIA` skipped its whole body)
+            name = match.group().lower() if match else ''
             if name in ('@media', '@supports', '@layer', '@container', '@scope', '@starting-style', '@document'):
                 if name == '@scope':
                     yield from _scoped(prelude, body, body_line, parent)
