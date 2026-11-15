@@ -70,42 +70,56 @@ def physical_hex(value):
 _INSTANT = re.compile(r'(\d{4})-(\d{2})-(\d{2})[Tt](\d{2}):(\d{2}):(\d{2})(?:\.(\d+))?([Zz]|[+-]\d{2}:\d{2})')
 
 
+def _days_from_civil(y, m, d):
+    """Proleptic Gregorian day number (Hinnant), valid for every year the shared profiles admit, including 0000."""
+    y -= m <= 2
+    era = (y if y >= 0 else y - 399) // 400
+    yoe = y - era * 400
+    doy = (153 * (m + (-3 if m > 2 else 9)) + 2) // 5 + d - 1
+    doe = yoe * 365 + yoe // 4 - yoe // 100 + doy
+    return era * 146097 + doe - 719468
+
+
 def utc(text):
-    """Comparable UTC instant of an already admitted RFC 3339 value: (datetime, fraction digits).
+    """Comparable UTC instant of an already admitted RFC 3339 value, by integer seconds plus fraction digits.
 
     The shared date_time call admits the spelling first; this only orders two
-    admitted values, with any number of fraction digits and either case.
+    admitted values (any year, offset, case, fraction length or leap second).
     """
     m = _INSTANT.fullmatch(text)
     if m is None:
         raise ValueError('not an admitted date-time: ' + text)
     y, mo, d, h, mi, sec, frac, zone = m.groups()
-    base = datetime.datetime(int(y), int(mo), int(d), int(h), int(mi), int(sec), tzinfo=datetime.timezone.utc)
+    seconds = _days_from_civil(int(y), int(mo), int(d)) * 86400 + int(h) * 3600 + int(mi) * 60 + int(sec)
     if zone not in ('Z', 'z'):
         sign = 1 if zone[0] == '+' else -1
-        base -= sign * datetime.timedelta(hours=int(zone[1:3]), minutes=int(zone[4:6]))
-    return _Instant(base, (frac or '').rstrip('0'))
+        seconds -= sign * (int(zone[1:3]) * 3600 + int(zone[4:6]) * 60)
+    return _Instant(seconds, (frac or '').rstrip('0'))
+
+
+class _Span:
+    def __init__(self, seconds):
+        self.seconds = seconds
+
+    def total_seconds(self):
+        return self.seconds
 
 
 class _Instant:
-    def __init__(self, base, frac):
-        self.base = base; self.frac = frac
+    def __init__(self, seconds, frac):
+        self.seconds = seconds; self.frac = frac
 
     def _key(self):
-        return (self.base, self.frac.ljust(32, '0'))
+        return (self.seconds, self.frac.ljust(32, '0'))
 
     def __ge__(self, other):
         return self._key() >= other._key()
 
     def __sub__(self, other):
-        return self.base - other.base
+        return _Span(self.seconds - other.seconds)
 
     def timestamp(self):
-        return self.base.timestamp()
-
-
-def plus(text, seconds):
-    return (utc(text) + datetime.timedelta(seconds=seconds)).strftime('%Y-%m-%dT%H:%M:%SZ')
+        return self.seconds
 
 
 def time_ok(text, profile):
