@@ -426,6 +426,7 @@ def bench(args):
 
 SAMPLED = collections.Counter()
 DONORS = [None]  # GO2: a Donors index in the residual pass
+REACHING = [False]  # GO2: the clause being searched has a control that reaches it
 MISMATCHES = []
 CONTROL_STORE = {}  # GO2: sha256 -> control, for every control a witness was found on (replayed on the reference validator)
 ORDERING = collections.Counter()
@@ -488,7 +489,8 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
     covered_at = None
     reaches = [r for r in info['reach'] if not any(c[0] in APART for c in r['ctx'])][:6] if not out_of_time else []
     donated = {}
-    if DONORS[0] is not None and reaches:  # GO2 addition (residual pass): donor constructions for every reach first
+    if DONORS[0] is not None and reaches and not REACHING[0]:  # GO2 addition: donor constructions for every reach first
+        # (only for a clause no existing control reaches; a reaching control goes straight to GO's defects)
         total = (2 * CLAUSE_CAP[0]) // 3  # adaptive shares: what one reach leaves unused flows to the next
         for number, reach in enumerate(reaches):
             left = total - (COUNT[0] - start)
@@ -1475,6 +1477,7 @@ def close(args):
             ordered, has_reaching = order(cl, v, controls, reaches, cache, ids) if not args.no_reorder else (list(controls), None)
             seeds_ordered, _ = order(cl, v, seeds, reaches, cache, ids) if not args.no_reorder else (seeds, None)
             before = len(ordered)
+            REACHING[0] = bool(has_reaching)
             result = search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, seeds_ordered, ordered, known,
                                    state['branch_controls'], by_ipath, budget, root0, deadline)
             controls.extend(ordered[before:])  # branch controls built for this clause join the root's pool
