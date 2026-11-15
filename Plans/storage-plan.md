@@ -475,7 +475,7 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/E
 
 #### 2.2.5 EventRecord persistence boundary
 
-`EventRecord` persistence is canonical only for the envelope owned by `Plans/Contracts_V0.md#EventRecord` and materialized by `Plans/event_record.schema.json`. New writers target `schema_id = pm.event.v0`, `schema_version = 2.0.0`; the frozen `1.0.0` envelope remains a read-only compatibility input. This section owns persistence, scope partitioning, replay, dedupe, and legacy normalization, not the envelope schema or producer semantics.
+`EventRecord` persistence is canonical only for the envelope owned by `Plans/Contracts_V0.md#EventRecord` and materialized by `Plans/event_record.schema.json`. New writers target `schema_id = pm.event.v0`, `schema_version = 2.0.0`; the frozen `1.0.0` envelope remains a read-only compatibility input. This section owns persistence, scope partitioning, replay, dedupe, and legacy normalization, not the envelope schema or producer semantics. For the registered `seglog.event_appended` family, whose registry `semantic_owner_doc` anchors here, the semantic owner is SP-270 (Seglog append observability producer and read contract; SP-2210).
 
 Rules:
 - Seglog is the authoritative append-only store for persisted `EventRecord` values. The seglog record payload is the MessagePack-encoded EventRecord envelope. No JSON or JSONL mirror exists (SP-339); JSON and JSONL are written only on request, by `pm export`, and are exports.
@@ -17824,6 +17824,159 @@ Disposal boundary after eligible cleanup (DL-068): once an item is resolved, its
 
 SourceRef: `PD-L033-01` through `PD-L033-03`, `Case-L:L-033`
 
+#### SP-2200 - Registered deletion lifecycle event: producer, identity, replay, consumer and withdrawal
+
+Newly authored owner contract under DL-045 for the registered `storage.deletion_lifecycle_changed@2.0.0` family (PNC-019 S3, 2026-11-14). It completes the parts that Thread/project deletion above, CV-319 and UCC-124 leave open: the exact emitter, the append order, the identity recipe, lost-acknowledgement replay, the event consumer and withdrawal. It changes no lifecycle edge, deletion window, hold rule, payload field or retention value, and admits nothing new.
+
+**Producer.** The sole emitter is the Storage component `storage.deletion_lifecycle.coordinator.v1`, the "storage deletion lifecycle coordinator" that the `storage_deletion_record` row of `Plans/storage_value_registry.json` names as its producer. Two existing commands open a deletion and nothing else does: `cmd.chat.delete` through `handlers::chat::delete` (a thread) and `cmd.project.delete_data` through `handlers::project::delete_data` (Project data), as `Plans/Wiring_Matrix.production.json` already binds them. Each handler only submits the request; it never appends the event or purges. Every later transition (`logically_hidden`, `held`, `purge_pending`, `purged`, `failed`) is the coordinator's own step after the admission order above. For one transition the order is exact: (1) the fail-closed admission order of Thread/project deletion; (2) one redb transaction that compares-and-swaps `storage_deletion_record` from its expected state to the new state, appends the transition to `event_refs` and stores the frozen EventRecord as a durable pending event obligation in the same row; (3) the ordinary Case L-2 append of that frozen EventRecord as `durability_class=barrier` through the SP-286/CV-339 shared append owner; (4) SP-286 first-AppendReceipt custody, read only through `storage.first_append_receipt.resolve.v2` and, where a full value is needed, `storage.first_append_receipt.resolve_full_value.v1`; (5) only then the dependent effect: projection hide for `logically_hidden`, purge dispatch for `purge_pending`, and the command result. A crash before (3) resumes the same obligation; after the commit frame is durable it resolves the original receipt and never appends again or repeats a purge, hide or hold evaluation. A pending obligation never authorizes a second transition.
+
+**Identity.** `deletion_id` is `del_` plus lowercase SHA-256 of the concatenation of each UTF-8 value preceded by its unsigned 64-bit big-endian byte length: `storage.deletion/request/v1`, the scope partition, and the initiating command's original UICommand envelope `idempotency_key`. The same key with a different normalized request digest (command ID, exact domain arguments, key, authenticated actor) fails closed before any write. The transition ordinal is the 1-based position of the transition in `event_refs`, reserved in step (2); a retry of one transition reuses its ordinal, and `failed` followed by a revalidated retry takes the next ordinal, so a repeated state never reuses an identity. The owner operation component is the UTF-8 string `storage.deletion_lifecycle_changed:` + `deletion_id` + `:` + the decimal ordinal. Application scope uses CV-366 exactly: `idempotency_key = application@1:{hex(server_id)}:{hex(component)}`. Project scope uses `storage-deletion@1:{hex(server_id)}:{hex(component)}` within the unchanged `(scope_partition, event_type, idempotency_key)` lifetime; the Project partition is `project~` plus unpadded base64url of the exact UTF-8 `project_id`, and application is `app`. `event_id` is `er_del_` plus lowercase SHA-256 of the length-prefixed UTF-8 values `storage.deletion_lifecycle_changed/event/v1`, lowercase hex of `storage_instance_id`, the scope partition and the component. Envelope `project_id` is null exactly when payload `project_id` is absent (CV-319's dual-scope rule); a thread deletion's envelope `thread_id` is the deleted thread and a Project-data deletion's is null. Run and attempt are null. Identities are reserved once in step (2) and never regenerated from retry or observation time.
+
+**Replay.** `replay_policy=dedupe_by_idempotency_key`. Before admission, dedupe lookup or any effect, reject `projector_replay_only` as `replay_only_not_appendable`; compatibility replay stays on the read and rebuild path. The producer-semantic comparison covers only the caller-supplied payload and envelope semantics and excludes Storage-assigned `sequence_id`, `observed_at_utc` and `persisted_at_utc`. Same identity and semantic digest returns the original first receipt and result with zero new effects; a different digest is `idempotency_conflict`; unavailable dedupe proof is `dedupe_unavailable` with zero append. A lost acknowledgement is resolved from the pending obligation and the SP-286 receipt, never by re-running admission against a newer state.
+
+**Consumer and checkpoint.** The only consumer of these EventRecords is `reader.storage.deletion_lifecycle_history@1.0.0`, a passive on-demand history and status view behind the deletion status that SP-237 requires on a protected surface. It adopts SP-278 by name and reads through `reader.storage.event_record_index@1.0.0` over the existing generic checkpoint (`projector.storage.event_record_index@1.0.0`, checkpoint key `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`); it has no checkpoint, cursor or stored value of its own. It adopts DL-076's nine-field durable read token (`storage_instance_id`, `checkpoint_key`, `checkpoint_ref`, `generation_id`, `generation_anchor_sha256`, `frontier_revision`, `frontier_sha256`, `index_dataset_name`, `source_selection`), never a persisted `redb_snapshot_id`, verifies complete CURRENT-selected source coverage before filtering this family, and returns unavailable rather than an empty history when the source or token does not verify. Navigation hide, compaction and backup tombstone replay are not event consumers: they read the canonical `storage_deletion_record` and its `logical_hide_receipt_ref`, as the Case L authority order makes the lifecycle EventRecord an observation. Rebuild and replay never append, purge, hide, clear a hold or dispatch.
+
+**Compatibility and withdrawal.** Dispatch is exact family, version and schema ID; an unknown successor quarantines. Withdrawal of this writer version sets a writer admission cutoff in the coordinator before new deletions are accepted under a successor, drains or fences every pending event obligation through SP-286 (resolving the original receipt where the commit frame is durable), keeps every `storage_deletion_record`, tombstone and receipt under their own policies, then fences `reader.storage.deletion_lifecycle_history@1.0.0` and invalidates its tokens. A withdrawn reader is fenced for historical events too; an authorized retained reader reads an original by the recipe recorded at its write and never compares it with today's deletion state. A successor needs owner-installed schema and version, source-backed rebuild of the generic index and fresh coverage validation before its reader activates. Withdrawal never deletes, restores or un-hides content. Restore keeps the cutoff and the original results.
+
+**Numbers and timestamps.** Integer slots (`compaction_generation`, the ordinal) use CV-1100's shared current-input admission; `purge_deadline_utc` and every Storage-assigned time use CV-1101 `date_time` with its owner profile; retained originals are read by SP-1101's authenticated dispatch from their sealed write-time receipt.
+
+Oracle plan: ATS-2200. Native execution remains NOT_RUN.
+
+```yaml
+plan_unit_id: SP-2200
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: storage.deletion_lifecycle_changed@2.0.0 has an exact emitter (storage.deletion_lifecycle.coordinator.v1),
+  record-then-append-then-effect order under SP-286, a deletion_id and per-transition identity recipe, lost-acknowledgement
+  replay, one passive SP-278 history reader and a writer-cutoff withdrawal protocol, without changing any lifecycle edge,
+  window, hold or retention value.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-237
+- SP-278
+- SP-286
+- CV-319
+- CV-339
+- CV-366
+- DL-045
+- DL-076
+unblocks: []
+acceptance_criteria:
+- Only storage.deletion_lifecycle.coordinator.v1 appends the family; handlers::chat::delete and handlers::project::delete_data only submit.
+- One redb compare-and-swap commits the transition and its pending event obligation before the barrier append; hide, purge and results wait for the first AppendReceipt.
+- deletion_id, the per-transition component, the CV-366 application key, the Project key and event_id follow the exact recipes; a failed-then-retried transition takes a new ordinal.
+- projector_replay_only is refused as replay_only_not_appendable; same identity and digest returns the original receipt; a different digest is idempotency_conflict.
+- reader.storage.deletion_lifecycle_history@1.0.0 adopts SP-278 and the DL-076 nine-field token and stores no checkpoint.
+- Withdrawal sets a writer cutoff, drains obligations through SP-286 and fences the reader without deleting or restoring content.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2200
+risk_class: deletion_event_identity_or_order_drift
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-237
+preserved_exact_tokens:
+- storage.deletion_lifecycle_changed
+- storage.deletion_lifecycle.coordinator.v1
+- reader.storage.deletion_lifecycle_history@1.0.0
+- storage-deletion@1
+negative_constraints:
+- No new lifecycle edge, deletion window, hold kind, retention value, admission or native proof.
+- No purge, hide or hold evaluation is repeated on replay or recovery.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-237, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-366
+
+#### SP-2201 - Registered value-quarantine event: producer, identity, replay, custody, consumer and withdrawal
+
+Newly authored owner contract under DL-045 for the registered `storage.value_quarantine_changed@2.0.0` family (PNC-019 S3, 2026-11-14). It completes what Invalid-value quarantine above and CV-319 leave open. It changes no state, edge, risk class, Q policy or DL-068 disposal rule.
+
+The closed states that Invalid-value quarantine lists by its transition edges are exactly `detected | secured | migrated | rebuilt | reset_to_default | restored | recovery_blocked | purged`, as the registered payload schema enumerates them.
+
+**Producer.** The sole emitter is the Storage component `storage.value_quarantine.coordinator.v1`, the "storage invalid-value quarantine coordinator" that the `storage_quarantine_record` row of `Plans/storage_value_registry.json` names. A Storage reader or migration step that finds canonical bytes failing their registered schema or version reports the finding to the coordinator and stops using the value; it never appends this family itself. For each transition the order is exact: (1) for `detected` and `secured`, write the exact `raw.bin` and closed custody manifest under same-filesystem quarantine and synchronize file and parent, before any live-key mutation (the existing rule); (2) one redb transaction that compares-and-swaps `storage_quarantine_record` to the new state, appends the transition to `transition_receipts` and stores the frozen EventRecord as a durable pending event obligation; (3) the Case L-2 append of that EventRecord as `durability_class=barrier` through the SP-286/CV-339 shared append owner; (4) SP-286 first-AppendReceipt custody through `storage.first_append_receipt.resolve.v2` (and `storage.first_append_receipt.resolve_full_value.v1` where DL-068's purge settlement needs the full value); (5) only then the live-key effect of `migrated`, `rebuilt`, `reset_to_default` or `restored`, or the DL-068 disposal after `purged`. A crash resumes the pending obligation or resolves the original receipt; it never re-copies raw bytes over a different capture, repeats a live-key mutation or purges twice.
+
+**Identity.** `quarantine_id` is `qtn_` plus lowercase SHA-256 of the length-prefixed UTF-8 values `storage.value_quarantine/detect/v1`, lowercase hex of `storage_instance_id`, `source_family_id`, `source_locator_ref`, `raw_sha256` and the decimal occurrence, where the occurrence is 1 plus the number of `purged` records with the same source family, locator and raw hash, counted under the coordinator's exclusion. While a non-terminal record for those values exists, a re-detection resolves to it and mints nothing. Because the edge set is acyclic, one state occurs at most once per `quarantine_id`; the owner operation component is `storage.value_quarantine_changed:` + `quarantine_id` + `:` + state. Application scope uses CV-366's `application@1:{hex(server_id)}:{hex(component)}`; Project scope uses `storage-quarantine@1:{hex(server_id)}:{hex(component)}` with the `project~` base64url partition. `event_id` is `er_qtn_` plus lowercase SHA-256 of the length-prefixed values `storage.value_quarantine_changed/event/v1`, hex `storage_instance_id`, the scope partition and the component. Envelope scope follows CV-319's dual-scope rule; thread, run and attempt are null unless the quarantined source value belongs to that exact thread, when the envelope `thread_id` is that thread.
+
+**Replay.** `replay_policy=dedupe_by_idempotency_key`; `projector_replay_only` is refused as `replay_only_not_appendable` before any effect. The semantic comparison excludes Storage-assigned `sequence_id`, `observed_at_utc` and `persisted_at_utc`. Same identity and digest returns the original receipt and result with zero effects; a different digest is `idempotency_conflict`; unavailable dedupe proof is `dedupe_unavailable`.
+
+**Custody and redaction.** Payload and record carry hashes, redacted locators, bounded error metadata and refs only; raw bytes stay in quarantine custody, inherit their source's permissions, stay out of routine export and leave only through the protected explicit export. Every disclosure of the event or record rechecks viewer access, scope and the source's permission at read time; a viewer who cannot read the source value sees only that a value was quarantined. Backup and restore keep `storage_quarantine_record` under its mandatory-backup recovery anchor and restore the raw custody with it or report it unavailable; a restored record never re-runs a live-key effect. What thread or Project deletion does to quarantined raw bytes and quarantine records is not decided here: Thread/project deletion purges a deleted thread's content within 24 hours unless held, while unresolved Q-CRITICAL quarantine is indefinite and never cap-evicted. That owner conflict is a contingency question for Jared (PNC-019 S3 report, question S3B-Q1). This contract adds no rule for that case, and this family's custody stays incomplete until the answer is written into Case L-3.
+
+**Consumer and checkpoint.** The only consumer of these EventRecords is `reader.storage.value_quarantine_history@1.0.0`, the passive history behind the read-only quarantine state that Settings shows. It adopts SP-278 and DL-076's nine-field durable token exactly as SP-2200's reader does and stores no checkpoint. Startup recovery, protected diagnostics and export and the janitor read the canonical `storage_quarantine_record`, not the event, and need no event checkpoint.
+
+**Compatibility and withdrawal.** Exact family, version and schema dispatch; unknown successors quarantine. Withdrawal sets a writer cutoff in the coordinator, drains or fences pending obligations through SP-286, keeps every record, raw custody and receipt under its own policy, and fences the history reader and its tokens. Withdrawal never releases, resets or purges a quarantined value.
+
+**Numbers and timestamps.** The occurrence and every integer slot use CV-1100; `detected_at_utc` and Storage-assigned times use CV-1101 `date_time`; retained originals are read through SP-1101.
+
+Oracle plan: ATS-2201. Native execution remains NOT_RUN.
+
+```yaml
+plan_unit_id: SP-2201
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: storage.value_quarantine_changed@2.0.0 has an exact emitter (storage.value_quarantine.coordinator.v1),
+  custody-then-record-then-append-then-effect order under SP-286, a quarantine_id and per-state identity recipe,
+  replay rules, read-time access checks, one passive SP-278 history reader and a writer-cutoff withdrawal protocol;
+  the interaction of thread or Project deletion with quarantined raw bytes stays an open question for Jared (S3B-Q1).
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-237
+- SP-278
+- SP-286
+- CV-319
+- CV-339
+- CV-366
+- DL-045
+- DL-068
+- DL-076
+unblocks: []
+acceptance_criteria:
+- Only storage.value_quarantine.coordinator.v1 appends the family, after raw custody is synchronized and the record transition commits.
+- quarantine_id converges on re-detection and a re-occurrence after purge takes the next occurrence; each state has one identity.
+- projector_replay_only is refused; same identity and digest returns the original receipt; a different digest is idempotency_conflict.
+- Every read of the event or record rechecks viewer access and source permission; raw bytes leave only by protected export.
+- How thread or Project deletion treats quarantined raw bytes and records stays open (S3B-Q1); no interim rule is added.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2201
+risk_class: quarantine_event_identity_or_custody_drift
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-068
+- Plans/storage-plan.md#SP-237
+preserved_exact_tokens:
+- storage.value_quarantine_changed
+- storage.value_quarantine.coordinator.v1
+- reader.storage.value_quarantine_history@1.0.0
+- storage-quarantine@1
+negative_constraints:
+- No new state, edge, risk class, Q policy, disposal rule, admission or native proof.
+- Does not decide how deletion treats quarantined raw bytes (S3B-Q1).
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-237, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-366
+
 ### Case L-4. Storage I/O, aggregate lock/viewer, root continuity, and fallback
 
 #### Closed operational vocabulary
@@ -22055,7 +22208,7 @@ Do not recursively follow metadata-about-metadata chains. New producer emission 
 
 A complete checkpoint requires the full retained range, verified gaps/removals, CURRENT generation and source joins. An unreadable potentially relevant original is not a filter skip. Proven source removal is reported honestly as source_removed; unexplained absence is source_unavailable. The reader may expose already verified partial diagnostics, but cannot claim complete healthy coverage across an unresolved join. Metadata expiry does not imply original-event loss, and metadata presence does not authorize replaying its original action.
 
-The reader adopts SP-278 reader.storage.event_record_index@1.0.0 and stores the exact closed read_token as index_read_token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and redb_snapshot_id. The ref resolves the actual checkpoints root and its generation JSON Pointer in the same redb database as the selected generation dataset; no flat-table or foreign-database fallback is allowed. Row publication locators bind the immutable birth anchor; currentness separately binds the advancing frontier. An ordinary append changes the token even when generation and older rows remain fixed. Resolve actual selected source frames and both original and metadata EventRecord envelopes; recompute existing payload and producer-semantic digests without changing their codecs. The typed joins in the frozen joined-evidence schema pinned by reports/event-authority-20260911/step-08-seglog-validation.md are decoded adapter inputs, not replacements for native owner controls or receipts. The reader writes only its filtered checkpoint in one redb transaction under unchanged full generic token, CURRENT, source/survivor, access/deletion and prior-cursor fences. Read-only joins publish after commit under that exact snapshot token and are revalidated before disclosure. They have no separate durable effect. Crash before commit leaves prior progress; after commit recomputes the same join. These three consumers cannot advance a business projector, global index checkpoint, UsageRecord, canonical state or dispatch on the basis of this metadata. The original event's owner reducer still processes its original source exactly once under its own checkpoint.
+The reader adopts SP-278 reader.storage.event_record_index@1.0.0 and stores the nine-field durable read token (DL-076; SP-2210) as index_read_token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name and source_selection. The actual redb_snapshot_id is joined at each read and is not stored. The ref resolves the actual checkpoints root and its generation JSON Pointer in the same redb database as the selected generation dataset; no flat-table or foreign-database fallback is allowed. Row publication locators bind the immutable birth anchor; currentness separately binds the advancing frontier. An ordinary append changes the token even when generation and older rows remain fixed. Resolve actual selected source frames and both original and metadata EventRecord envelopes; recompute existing payload and producer-semantic digests without changing their codecs. The typed joins in the frozen joined-evidence schema pinned by reports/event-authority-20260911/step-08-seglog-validation.md are decoded adapter inputs, not replacements for native owner controls or receipts. The reader writes only its filtered checkpoint in one redb transaction under unchanged full generic token, CURRENT, source/survivor, access/deletion and prior-cursor fences. Read-only joins publish after commit under that exact snapshot token and are revalidated before disclosure. They have no separate durable effect. Crash before commit leaves prior progress; after commit recomputes the same join. These three consumers cannot advance a business projector, global index checkpoint, UsageRecord, canonical state or dispatch on the basis of this metadata. The original event's owner reducer still processes its original source exactly once under its own checkpoint.
 
 **2026-09-24 amendment (DL-076).** `index_read_token` in the reader checkpoint, in its retired generations and in `reader_core` stores the nine-field durable read token that SP-278 defines on 2026-09-24, not the whole token: `redb_snapshot_id` is not stored. The reader still commits and discloses only under the live ten-field token of its actual read transaction.
 
@@ -23227,7 +23380,7 @@ Creation's original publication is separate from later current generic source an
 
 ### Expiry SP-278 complete index adoption
 
-This first-native expiry checkpoint is its own v1 binding, with exact required generic_read_token from canonical Plans/event_record_index_checkpoint.schema.json#/$defs/read_token. No existing checkpoint version or source-hash meaning is silently changed.
+This first-native expiry checkpoint is its own v1 binding, with exact required generic_read_token, the nine-field durable read token of SP-278 (DL-076) defined inline at Plans/restore_point_expired_contracts.schema.json#/$defs/checkpoint/properties/generic_read_token; the live read token of Plans/event_record_index_checkpoint.schema.json#/$defs/read_token adds only the read transaction's redb_snapshot_id. No existing checkpoint version or source-hash meaning is silently changed.
 
 Within one actual redb snapshot, resolve event_record_index_checkpoint.v1:{storage_instance_id}, its selected current_generation_id and actual event_record_index.v2@{generation_id} dataset. Every row's key/source identity/digests and checkpoint_ref resolve the actual generation node. publication_locator joins its immutable generation birth anchor; an old row is not required to carry the latest append manifest. Separately validate actual CURRENT/manifest/source-control bytes, recovery epoch, inventory, synced watermarks, survivor/exclusion/gap facts and the complete advancing frontier across all scopes and families. Full row cardinality/row-set hash and exact retained source coverage precede any filtering.
 
@@ -23526,6 +23679,214 @@ negative_constraints:
 owner_hints:
 - Plans/storage-plan.md
 ```
+
+## Registered restore-point application, corruption and recovery-unavailable event depth (PNC-019 S3, 2026-11-14)
+
+Newly authored owner contracts under DL-045 for three registered families whose 2026-09-24 depth grades left producer, identity, replay, custody, consumer and withdrawal cells open. They follow the restore-point deletion and expiry contracts above (the rpd_ and rpe_ recipes, SP-286 adoption, the passive history reader) and change no command, argument, payload field, lifecycle edge, reason precedence or retention value. They admit nothing new; native execution remains NOT_RUN.
+
+### SP-2202 - restore_point.applied producer, identity, result custody, consumer and withdrawal
+
+**Producer.** `cmd.chat.branch_from_restore` with its five existing domain arguments, through `handlers::chat::branch_from_restore` (ACD-086, UCC-126), is the only route; the existing UICommand envelope supplies `idempotency_key`. The sole emitter is that handler's commit step, `assistant_chat.restore_point_application.v1`. The order is exact: (1) the global Storage gate, then exact project, point, expected hash, status, permission, writer posture and the complete protecting-ref enumeration, revalidated in the same serialized restore-point admission domain as holds, retirement, deletion and expiry; (2) one redb transaction that reserves `application_id`, writes `restore_point_application_commit` in state `pending` with the normalized request, its digest, the preflight, and the reserved `new_thread_id` and `new_branch_id`; a refusal or failure decided here is written as that row's terminal `refused` or `failed` result in the same transaction, with no target IDs and no event; (3) Chat's existing thread and conversation-branch creation materializes the frozen boundary under exactly the reserved IDs, so a resumed step adopts its own creation and can never make a second branch; (4) one redb transaction that records the materialization, adds the descendant ref `application:<application_id>` to the point's protecting refs, sets the row's result to `branched` and stores the frozen EventRecord as a durable pending event obligation; (5) the Case L-2 append as `durability_class=barrier` through the SP-286/CV-339 shared append owner; (6) SP-286 first-AppendReceipt custody through `storage.first_append_receipt.resolve.v2` and `storage.first_append_receipt.resolve_full_value.v1`; (7) the command result, published only after the receipt. A crash before (4) resumes from the row and the reserved IDs; a crash after (4) resolves the obligation or the original receipt. Source thread, branch, worktree, files, Git index, queue and safe points are never touched (ACD-086).
+
+**Identity.** `application_id` is `rpa_` plus lowercase SHA-256 of the concatenation of each UTF-8 value preceded by its unsigned 64-bit big-endian byte length: `restore_point.applied/apply/v1`, `project_id`, the original envelope `idempotency_key`. `event_id` is `er_rpa_` plus the same digest, and the EventRecord `idempotency_key` is `application_id`. The same key with a different normalized request digest (command ID, the five domain arguments, key, authenticated actor) fails closed. Scope is `project_only`; the partition is `project~` plus unpadded base64url of the exact UTF-8 `project_id`, and envelope `project_id` equals payload `project_id`. Envelope `thread_id` is `new_thread_id`, the first of the registry row's two thread identity pointers; `source_thread_ref` stays in the payload. Run and attempt are null. A deliberate second branch is a new key and therefore a new `application_id`.
+
+**Replay and result custody.** `restore_point_application_commit` is the recorded result that ACD-086 replays: key `restore_point_application_commit.v1:{scope_partition}:{application_id}`, schema `Plans/restore_point_application_corruption_contracts.schema.json#/$defs/application_commit`, `redb_and_seglog`, canonical MessagePack, mandatory backup, `restore_backup_then_replay`. Replay of the same key and digest returns the row's recorded result and, for `branched`, the same target IDs and original first receipt, with no second branch or event. `replay_policy=dedupe_by_idempotency_key`; `projector_replay_only` is refused as `replay_only_not_appendable` before any effect; the semantic comparison excludes Storage-assigned `sequence_id`, `observed_at_utc` and `persisted_at_utc`; a different digest is `idempotency_conflict`; unavailable dedupe proof is `dedupe_unavailable`.
+
+**Custody and redaction.** The row and the payload hold IDs, hashes and refs only; no message body, file body, secret or stream state. Retention is `RP-AUTHORITY-INDEFINITE@1.0.0`, as for the sibling command results `restore_point_create_result` and `restore_point_delete_result` under Case L-3's receipt class. The `application:<application_id>` ref is the SP-269 descendant custody that protects the point; it is released only by the existing owner release evidence and never by age. Every read of the event or row rechecks viewer access, Project scope, deletion state and source visibility; a deleted or hidden source thread is never disclosed through the event. Restore keeps the row with the point and the new thread together or reports the application unavailable; it never re-materializes a branch.
+
+**Consumer and checkpoint.** The existing passive `reader.chat.restore_point_history@2.0.0` is explicitly adopted for this family here, as the deletion contract adopted it for `restore_point.deleted`; it gives the lineage that ACD keeps queryable. It reads through SP-278 `reader.storage.event_record_index@1.0.0` over the generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, adopts DL-076's nine-field durable read token, stores no family checkpoint or persisted `redb_snapshot_id`, and returns unavailable rather than an empty history when coverage does not verify. No other component consumes the event; the protecting ref is read from canonical custody.
+
+**Compatibility and withdrawal.** Exact family, version and schema dispatch; no aliases. Withdrawal sets a writer cutoff on `assistant_chat.restore_point_application.v1` (the command then refuses before step 2), drains or fences pending rows through SP-286, keeps every row, ref and receipt under its policy, and fences this family's use of `reader.chat.restore_point_history@2.0.0` and its tokens. A historical reader reads an original by its write-time recipe and never compares it with today's point status. Withdrawal never deletes a branch or releases a protecting ref.
+
+```yaml
+plan_unit_id: SP-2202
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: restore_point.applied@2.0.0 has an exact emitter (assistant_chat.restore_point_application.v1), a
+  reserve-then-materialize-then-append order under SP-286, the rpa_ identity, restore_point_application_commit result
+  custody, the adopted passive history reader and a writer-cutoff withdrawal protocol.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-242
+- SP-269
+- SP-278
+- SP-286
+- CV-339
+- DL-045
+- DL-076
+unblocks: []
+acceptance_criteria:
+- Only branched appends restore_point.applied, after the reserved target IDs are materialized and the commit row records them.
+- application_id, event_id and the EventRecord idempotency_key follow the rpa_ recipe; envelope thread_id is new_thread_id.
+- Replay returns the row's recorded result and target IDs with no second branch or event; projector_replay_only is refused.
+- reader.chat.restore_point_history@2.0.0 is adopted through SP-278 with the DL-076 nine-field token.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2202
+- Plans/restore_point_application_corruption_contracts.schema.json
+risk_class: duplicate_branch_or_lost_application_result
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/storage_value_registry.json
+- Plans/restore_point_application_corruption_contracts.schema.json
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-086
+preserved_exact_tokens:
+- restore_point.applied
+- assistant_chat.restore_point_application.v1
+- restore_point_application_commit
+- rpa_
+negative_constraints:
+- No new command, argument, payload field, lifecycle transition, admission or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-2203 - restore_point.corrupt producer, identity, transition order, custody, consumer and withdrawal
+
+**Producer.** The sole emitter is `assistant_chat.restore_point_corruption.v1`, the Chat restore-point lifecycle owner's corruption step. Any reader that verifies a point's record or referenced material (branch-from-restore admission, deletion and expiry preflight, the SP-281 and SP-269 readers) only reports a candidate finding; it never appends or changes status. The order is exact: (1) FileSafe attests the immutable evidence under its Known-37 corruption evidence section; (2) in the serialized restore-point admission domain, the owner re-reads the actual current point and applies the fixed reason precedence of the ACD Known-37 completion section; missing record or material and indeterminate I/O stop here; (3) one redb transaction writes `restore_point_corruption_commit` with the reason, the evidence and the frozen EventRecord as a durable pending obligation, and only if no deletion or expiry commit for the point exists; (4) the Case L-2 append as `durability_class=barrier` through the SP-286/CV-339 shared append owner; (5) first-AppendReceipt custody through `storage.first_append_receipt.resolve.v2`; (6) publication of the unavailable reason. Because the record bytes themselves may be the corrupt part, the corrupt status lives in `restore_point_corruption_commit`, not in a rewrite of the record; readers treat a point with a settled corruption commit as `corrupt`.
+
+**Transition order.** The only edge is `available -> corrupt`. Corruption, deletion (B1) and expiry (E1) admit in the same serialized domain, and each commit refuses when another terminal commit for the point exists, so exactly one terminal status wins. A corrupt point is never deleted, expired or branched afterwards; its retention follows the point's own release evidence.
+
+**Identity.** One point becomes corrupt at most once. `corruption_id` is `rpx_` plus lowercase SHA-256 of the length-prefixed UTF-8 values `restore_point.corrupt/corrupt/v1`, `project_id`, `restore_point_id`. `event_id` is `er_rpx_` plus the same digest, and the EventRecord `idempotency_key` is `corruption_id`. A re-detection resolves to the existing commit and mints nothing; the reason fixed by the first commit stands. Scope is `project_only` with the `project~` partition and envelope Project equality; envelope `thread_id` is the point's `source_thread_id` when the record is readable and null otherwise; run and attempt are null.
+
+**Replay.** `replay_policy=dedupe_by_idempotency_key`; `projector_replay_only` is refused as `replay_only_not_appendable`; Storage-assigned fields are excluded from the semantic comparison; same identity and digest returns the original receipt; a different digest is `idempotency_conflict`; unavailable dedupe proof is `dedupe_unavailable`. Recovery resolves the pending obligation or the original receipt and never re-runs detection against a newer state.
+
+**Custody and redaction.** `restore_point_corruption_commit` (key `restore_point_corruption_commit.v1:{scope_partition}:{corruption_id}`, schema `Plans/restore_point_application_corruption_contracts.schema.json#/$defs/corruption_commit`, `redb_and_seglog`, mandatory backup, `restore_backup_then_replay`) holds the FileSafe evidence as refs, lowercase SHA-256 values and lengths only, never record bodies, snapshot bytes, raw local paths or secrets. Retention is `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`, the policy the registry binds to every `restore_point.*` row and that `restore_point_deletion_commit` uses. Every read rechecks viewer access, Project scope and deletion state. Restore keeps the commit with the point or reports the status unavailable; it never turns a corrupt point back to available.
+
+**Consumer and checkpoint.** `reader.chat.restore_point_history@2.0.0` is explicitly adopted for this family exactly as SP-2202 adopts it (SP-278, generic checkpoint, DL-076 nine-field token, no family checkpoint). The SP-269 summary records a corrupt terminal status from the commit, not from the event, and is not an event consumer.
+
+**Compatibility and withdrawal.** The v2 writer and the reader-only v1 with `MIG-RESTORE-POINT-CORRUPT-PAYLOAD-001@1.0.0` stay as written. Withdrawal of v2 sets a writer cutoff on `assistant_chat.restore_point_corruption.v1`, drains or fences pending commits through SP-286, keeps commits and evidence under their policy, and fences this family's history reading and its tokens. A withdrawn reader is fenced for historical events too.
+
+```yaml
+plan_unit_id: SP-2203
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: restore_point.corrupt@2.0.0 has an exact emitter (assistant_chat.restore_point_corruption.v1), an
+  attest-then-commit-then-append order serialized with deletion and expiry, the one-per-point rpx_ identity,
+  restore_point_corruption_commit custody, the adopted passive history reader and a writer-cutoff withdrawal protocol.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-242
+- SP-269
+- SP-278
+- SP-285
+- SP-286
+- CV-339
+- DL-045
+- DL-076
+unblocks: []
+acceptance_criteria:
+- Readers only report findings; only assistant_chat.restore_point_corruption.v1 commits and appends the corrupt status.
+- Corruption, deletion and expiry serialize so exactly one terminal commit exists per point.
+- corruption_id, event_id and idempotency_key follow the rpx_ recipe; re-detection mints nothing.
+- Evidence is refs, hashes and lengths only, kept in restore_point_corruption_commit under the restore-point policy.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2203
+- Plans/restore_point_application_corruption_contracts.schema.json
+risk_class: restore_point_terminal_status_race
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/storage_value_registry.json
+- Plans/restore_point_application_corruption_contracts.schema.json
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FileSafe.md
+preserved_exact_tokens:
+- restore_point.corrupt
+- assistant_chat.restore_point_corruption.v1
+- restore_point_corruption_commit
+- rpx_
+negative_constraints:
+- No new reason, evidence kind, lifecycle edge, admission or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-2204 - safe_point.recovery_unavailable producer, establishing receipt, identity, custody, consumer and withdrawal
+
+**Producer.** The sole emitter is `filesafe.recovery_unavailable.durability_unit.v1`, the "FileSafe blocked-episode durability unit" that the `recovery_anchor_record` row names as producer. Executor supplies the episode facts (run, node, attempt, blocked sequence) and the admitted action array form under the Executor Known-37 admission section; it never appends this family. The order is exact: (1) FileSafe classifies one of the five reasons and proves `preserved_local_work=true`; (2) one redb transaction writes the blocked episode, `recovery_anchor_record` (state set, with `set_event_ref` naming this event's reserved `event_id`), the holds and the action list, and stores the frozen EventRecord as a durable pending event obligation; protection starts at this commit; (3) the Case L-2 append as `durability_class=barrier` through the SP-286/CV-339 shared append owner; (4) first-AppendReceipt custody; (5) only then are the actions offered and the episode shown. A crash resumes the obligation or resolves the original receipt; it never releases the anchor, reclassifies the reason or re-runs FileSafe's checks against a newer state.
+
+**Establishing receipt.** The "establishing receipt" of the durability unit is exactly this event's own SP-286 first AppendReceipt. The payload `receipt_ref` is its custody key `event_append_receipt_custody.v1:{storage_instance_id}:{event_id_sha256}` for this event's own `event_id`, known before the append because the identity is reserved in step (2). The unit is established when that receipt resolves. `recovery_unavailable_resolution_receipt` stays the sole resolution receipt family and is not the establishing receipt.
+
+**Identity.** One blocked episode yields one event. The owner component is the UTF-8 string `safe_point.recovery_unavailable:` + `anchor_id`. `event_id` is `er_sru_` plus lowercase SHA-256 of the length-prefixed UTF-8 values `safe_point.recovery_unavailable/establish/v1`, `project_id`, `anchor_id`, and the EventRecord `idempotency_key` is `sru_` plus the same digest. `anchor_id` is the anchor record's existing identity; a re-detection of the same episode resolves to the existing anchor and mints nothing. Envelope scope is `project_only` with the `project~` partition; envelope run and node equal the payload's; envelope attempt is null before an attempt and the exact prior attempt after one (Executor Known-37 admission).
+
+**Replay.** `replay_policy=dedupe_by_idempotency_key`; `projector_replay_only` is refused as `replay_only_not_appendable`; Storage-assigned fields are excluded from the semantic comparison; same identity and digest returns the original receipt; a different digest is `idempotency_conflict`; unavailable dedupe proof is `dedupe_unavailable` with zero effect.
+
+**Custody and redaction.** The anchor and the resolution receipts keep their existing custody (indefinite, `canonical_dual_homed`, mandatory backup, `restore_backup_then_replay`). Every disclosure of the event or the anchor to Run Graph, Runtime Artifacts, the Chat recovery UI or Executor retry admission rechecks viewer access, Project scope and the run's deletion state at read time; a deleted run's episode is shown only as unavailable. Refs only; no snapshot bytes, local paths or secrets.
+
+**Consumer and checkpoint.** The recovery UI, Run Graph actions, the Runtime Artifacts projection and Executor retry admission read canonical anchor state (`recovery_anchor_record`, the resolution receipts) and the current ordered `allowed_action_ids`, not an event checkpoint; none keeps an event cursor. The only event consumer is `reader.storage.recovery_unavailable_history@1.0.0`, a passive on-demand history view that adopts SP-278 by name, reads through `reader.storage.event_record_index@1.0.0` over the generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, adopts DL-076's nine-field durable token, stores no checkpoint of its own and returns unavailable rather than an empty history when coverage does not verify.
+
+**Compatibility and withdrawal.** The v2 writer, the v1 reader and `MIG-SAFE-POINT-RECOVERY-UNAVAILABLE-PAYLOAD-001@1.0.0` stay as written. Withdrawal of v2 sets a writer cutoff on the durability-unit writer, drains or fences pending obligations through SP-286, keeps every anchor, hold and receipt (withdrawal never releases an anchor), and fences `reader.storage.recovery_unavailable_history@1.0.0` and its tokens.
+
+Oracle plans: ATS-2202, ATS-2203 and ATS-2204.
+
+```yaml
+plan_unit_id: SP-2204
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: safe_point.recovery_unavailable@2.0.0 has an exact emitter (filesafe.recovery_unavailable.durability_unit.v1),
+  a commit-then-append order under SP-286 in which the event's own first AppendReceipt is the establishing receipt,
+  the per-anchor sru_ identity, read-time disclosure checks, canonical-state consumers with SP-278 history and a
+  writer-cutoff withdrawal protocol.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-237
+- SP-278
+- SP-286
+- CV-339
+- DL-045
+- DL-076
+unblocks: []
+acceptance_criteria:
+- Executor supplies facts; only the FileSafe durability-unit writer appends the family, after the anchor commit.
+- payload receipt_ref is the event's own SP-286 custody key; the unit is established when that receipt resolves.
+- One anchor yields one event identity; re-detection mints nothing; projector_replay_only is refused.
+- Consumers read canonical anchor state; history reads adopt SP-278 with the DL-076 nine-field token.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2204
+risk_class: recovery_anchor_event_identity_drift
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FileSafe.md
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- safe_point.recovery_unavailable
+- filesafe.recovery_unavailable.durability_unit.v1
+- recovery_unavailable_resolution_receipt
+negative_constraints:
+- No new reason, action, receipt family, release reason, admission or native proof; withdrawal never releases an anchor.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-242, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/assistant-chat-design.md#ACD-086, ContractName:Plans/FileSafe.md
 
 ## Legal-hold transition custody and passive history
 
@@ -24108,6 +24469,286 @@ owner_hints:
 
 
 <a id="platform-capability-decision-custody"></a>
+## Registered Storage, platform and seglog family depth completion (PNC-019 S3, 2026-11-14)
+
+Newly authored owner contracts under DL-045 that close the cells the 2026-09-24 depth grade left open for six registered families: post-restore admission for Boot and Hold, the event consumers of Boot, compaction and recovery, and the platform read output. Each adopts an existing shared mechanism by name (SP-286's fresh-operation admission after verified restore, SP-278's generic EventRecord index and DL-076's nine-field durable token). None changes a payload, policy value, edge, bucket or retention assignment, and none admits anything. Native execution remains NOT_RUN.
+
+### SP-2205 - storage.boot_recovery after a verified restore, and its event consumer
+
+**Post-restore transition.** After a verified terminal restore or reopen, a Boot issuance is a genuinely new owner operation of `storage.boot_recovery.publish.v1` only when SP-286's "Actual fresh-operation admission after verified restore" admits it: `StorageRecoveryCoordinator` establishes the restore occurrence and its new recovery epoch, the Boot owner accepts the new operation after the acceptance session opens, and its owner-operation identity is the `recovery_set_id` that the existing deterministic recipe derives from the post-restore work set and the new epoch. A set ID from the restored image belongs to an older epoch and can never equal it, so no restored pending Boot intent is first-minted; a surviving exact receipt is replayed as before. The transient capability, the protected group's `restore_admission` and one logical publication follow SP-286 unchanged. Floor and anchor: when the restored floor equals the external anchor, earliest completeness continues as SP-292 states; when the anchor is ahead of the restored floor (a confirmed older restore) or the anchor is absent, the instance's floor becomes the existing unavailable variant with its closed reason, the anchor is never rolled back, and later fresh issuances advance only the unavailable floor's revision. Earliest completeness is never re-established from a restored image or from later receipts, so `storage.boot_recovery.resolve_earliest.v1` then answers unavailable while new Boot events keep their own first receipts. No new floor state, reason, field or restore family is added.
+
+**Consumer and checkpoint.** `storage.boot_recovery.resolve_earliest.v1` reads SP-286 custody and the floor, not EventRecords, and stays checkpoint-free. The only consumer of the EventRecords is `reader.storage.boot_recovery_history@1.0.0`, a passive on-demand history view that adopts SP-278 by name, reads through `reader.storage.event_record_index@1.0.0` over the generic checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, adopts DL-076's nine-field durable token, stores no checkpoint, and returns unavailable rather than an empty history when coverage does not verify. CV-318's GUI disclosure, when its owner adds it, reads through this reader; no disclosure is added here.
+
+```yaml
+plan_unit_id: SP-2205
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: storage.boot_recovery admits a post-restore Boot issuance only through SP-286 fresh-operation admission
+  with the new-epoch recovery_set_id, keeps earliest completeness unavailable after an older restore without rolling
+  back the anchor, and has one passive SP-278 history reader.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- SP-291
+- SP-292
+- DL-045
+- DL-076
+unblocks: []
+acceptance_criteria:
+- A restored pending Boot intent never first-mints; a fresh post-restore issuance uses the new epoch's set ID and SP-286 restore_admission.
+- An older restore leaves the floor unavailable; later receipts advance only its revision; the anchor never rolls back.
+- reader.storage.boot_recovery_history@1.0.0 adopts SP-278 and the DL-076 nine-field token and stores no checkpoint.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2205
+risk_class: boot_continuity_restore_drift
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-292
+preserved_exact_tokens:
+- storage.boot_recovery.publish.v1
+- reader.storage.boot_recovery_history@1.0.0
+negative_constraints:
+- No new floor state, reason, field, restore family or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-2206 - storage.compaction_lifecycle_changed event consumer
+
+Compaction authority is never read from these EventRecords: the authority order of Immutable-segment compaction and publication puts the lifecycle EventRecord after synchronized CURRENT, the journal and redb, and SP-295..SP-297 drive every translation, retirement and checkpoint effect from that native custody. `storage.compaction.native_read.v1` reads journal, terminal and detail custody and stays checkpoint-free. The only consumer of the lifecycle EventRecords is `reader.storage.compaction_lifecycle_history@1.0.0`, a passive on-demand history view (the "disposable projection" of that authority order is this reader's use of the generic index): it adopts SP-278 by name, reads through `reader.storage.event_record_index@1.0.0` over the generic checkpoint, adopts DL-076's nine-field durable token, stores no checkpoint and never selects Storage authority. Replay and rebuild never append, dispatch or compact. Withdrawal of the lifecycle writer fences this reader and its tokens with it.
+
+```yaml
+plan_unit_id: SP-2206
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: storage.compaction_lifecycle_changed EventRecords are observations with one passive SP-278 history
+  reader; compaction effects are driven only by SP-295..SP-297 native custody.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-278
+- SP-295
+- SP-296
+- SP-297
+- DL-045
+- DL-076
+unblocks: []
+acceptance_criteria:
+- reader.storage.compaction_lifecycle_history@1.0.0 adopts SP-278 and the DL-076 nine-field token, stores no checkpoint and never selects authority.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2205
+risk_class: compaction_observation_used_as_authority
+reasoning_tier: medium
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- reader.storage.compaction_lifecycle_history@1.0.0
+negative_constraints:
+- No compaction effect is driven from an EventRecord.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-2207 - storage.recovery_applied aftermath consumer
+
+The "existing coordinator/projector" that performs the recovery aftermath is exactly `storage.recovery_applied.aftermath.v1`, a step of `StorageRecoveryCoordinator`. It acts only on a recovery event whose first receipt is verified, read through SP-278 `reader.storage.event_record_index@1.0.0` with DL-076's nine-field durable token joined to the live snapshot, and only under current proof that no newer block applies. It applies the event's `checkpoint_action` and `projection_action` only through the generic projector's own owner: `invalidate_and_rebuild` and `rebuild_from_survivors` make `projector.storage.event_record_index@1.0.0` publish a new generation rebuilt from surviving retained source; `translate_by_semantic_identity` and `activate_verified_target_shadow` keep the generation and translate by semantic identity. Its durable advance is that projector's existing generation and frontier compare-and-swap on `event_record_index_checkpoint.v1:{storage_instance_id}`; the aftermath of a recovery event is complete exactly when that checkpoint's frontier covers the event's sequence under a generation the action requires, so a restart recomputes pending aftermath from the checkpoint and repeats nothing. It keeps no cursor or stored value of its own and never writes another owner's checkpoint. Family readers derived from the generic index see the new generation through their own SP-278 token validation. `storage.recovery_applied.read.v1` stays passive with `action_authority=none`.
+
+```yaml
+plan_unit_id: SP-2207
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: The storage.recovery_applied aftermath consumer is storage.recovery_applied.aftermath.v1 in
+  StorageRecoveryCoordinator; it applies checkpoint and projection actions only through the generic SP-278 projector,
+  whose generation and frontier CAS is its durable advance.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-278
+- SP-286
+- SP-293
+- DL-045
+- DL-076
+unblocks: []
+acceptance_criteria:
+- Aftermath starts only after the recovery event's verified first receipt and repeats nothing on restart.
+- invalidate_and_rebuild publishes a new generation from survivors; translate_by_semantic_identity keeps the generation.
+- The aftermath stores no cursor of its own and writes no other owner's checkpoint.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2205
+risk_class: recovery_aftermath_repeat_or_skip
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-293
+preserved_exact_tokens:
+- storage.recovery_applied.aftermath.v1
+negative_constraints:
+- No new stored value, action, or native proof.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-2208 - storage.retention_hold_changed fresh admission after a verified restore
+
+The Hold-specific first-mint path that SP-288 left "unavailable until separately adopted" is adopted here against SP-286's "Actual fresh-operation admission after verified restore". A legal-hold `set` or `clear` after a verified restore is a new owner operation only when its original SIR command (SIR-047) was accepted after `StorageRecoveryCoordinator` opened the post-restore acceptance session, and its owner-operation identity is the existing SP-288 hold operation identity of that SIR command. The transient capability binds that identity, the complete accepted-operation digest, the hold EventRecord's event ID, scope partition, event type, idempotency key and producer-semantic digest, the restore occurrence, the current acceptance lease revision and one logical publication ID, exactly as SP-286 states. A restored pending Hold intent from before the restore keeps SP-288's rule: it may resolve an exact surviving original event or receipt, and receipt absence never first-mints it. No fresh-origin flag, restore family, receipt field or copied group capability is added; Hold's set/clear graph, union protection and custody are unchanged.
+
+```yaml
+plan_unit_id: SP-2208
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: storage.retention_hold_changed adopts SP-286 fresh-operation admission after verified restore for
+  legal-hold commands accepted after the post-restore acceptance session opens; restored pending Hold intents never
+  first-mint.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-286
+- SP-288
+- SIR-047
+- DL-045
+unblocks: []
+acceptance_criteria:
+- A post-restore set or clear first-mints only with a SIR command accepted after the acceptance session opened and SP-286's capability.
+- A restored pending Hold intent resolves only an exact surviving event or receipt.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2205
+risk_class: hold_restore_first_mint
+reasoning_tier: high
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-288
+preserved_exact_tokens:
+- storage.retention_hold_changed
+negative_constraints:
+- No fresh-origin flag, restore family, receipt field or Hold graph change.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-2209 - platform.capability_evaluated read output
+
+`storage.platform_capability_decision.read.v1` returns exactly `Plans/platform_capability_decision_read_output.schema.json#/$defs/read_output`: either `status=read_through` with the original retained `decision`, the complete current `read_through_marker` and `action_authority=none`, or `status=unavailable` with one closed reason and no decision. The marker is closed: `storage_instance_id`, the selected `event_id` and its `sequence_id`, the current source cursor `source_cursor_sequence_id`, `coverage_complete=true`, and the live SP-278 `read_token` of the read (all ten fields, including the transaction's `redb_snapshot_id`); it is a read result and is never persisted, so DL-076 is not engaged. The per-evaluation run-context consumer `platform.capability_run_context.consume.v1@1.0.0` keeps `checkpoint_disposition none_required`. No current consumer uses a multi-capability requirement set: N2-157 makes that use unavailable until the owning context supplies its own requirement-set contract, and a consumer that needs it must bring that contract before it reads. The catalog stays empty until build time (DL-082).
+
+```yaml
+plan_unit_id: SP-2209
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: storage.platform_capability_decision.read.v1 returns the closed read_output of
+  Plans/platform_capability_decision_read_output.schema.json with a complete, never-persisted read-through marker.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-278
+- SP-290
+- DL-045
+- DL-082
+unblocks: []
+acceptance_criteria:
+- The read output is read_through with decision, marker and action_authority none, or unavailable with one closed reason.
+validation_surfaces:
+- Plans/platform_capability_decision_read_output.schema.json
+- Plans/Automated_Testing_System.md#ATS-2205
+risk_class: platform_read_output_open_shape
+reasoning_tier: medium
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/platform_capability_decision_read_output.schema.json
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-290
+preserved_exact_tokens:
+- storage.platform_capability_decision.read.v1
+negative_constraints:
+- No catalog entry, requirement-set contract or persisted read token.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-2210 - seglog.event_appended semantic owner route and stored token
+
+The semantic owner of `seglog.event_appended` is SP-270, Seglog append observability producer and read contract; 2.2.5 EventRecord persistence boundary, the registry row's `semantic_owner_doc` anchor, routes to it. The SP-270 reader stores only the nine-field durable read token as `index_read_token` (DL-076); the actual `redb_snapshot_id` is joined at each read and never stored. Its relational oracle suite must store that nine-field token, with a stored-snapshot negative, before criterion 12 can pass.
+
+```yaml
+plan_unit_id: SP-2210
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: SP-270 is the semantic owner of seglog.event_appended, reached from 2.2.5, and its reader stores
+  only the DL-076 nine-field durable token.
+gui_related: false
+split_recommended: false
+depends_on:
+- SP-270
+- SP-278
+- DL-076
+unblocks: []
+acceptance_criteria:
+- 2.2.5 routes seglog.event_appended semantics to SP-270; no stored index_read_token carries redb_snapshot_id.
+validation_surfaces:
+- Plans/Automated_Testing_System.md#ATS-2205
+risk_class: seglog_owner_route_drift
+reasoning_tier: low
+context_scope: event_authority_pnc019_s3b
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-076
+- Plans/storage-plan.md#SP-270
+preserved_exact_tokens:
+- seglog.event_appended
+negative_constraints:
+- No registry row change.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-292, ContractName:Plans/storage-plan.md#SP-288, ContractName:Plans/storage-plan.md#SP-290, ContractName:Plans/storage-plan.md#SP-293
+
 ## Platform capability decision custody
 
 Status: `STATICALLY_MATERIALIZED`; no native installation, complete event depth or production positive admission is established.
