@@ -59,7 +59,13 @@ export function replayWatch(steps, hz) {
 				if (reset) { hi = 0; lo = 0; }
 				// steadyMs is the bar watched() used after the watch's later frames. steady1 and steady2 are the bars
 				// at d1 and d2, which are not that bar.
-				if (worst <= steady - 1) { hi++; lo++; }
+				// PM7PERF-WARMWATCH-WATCH-RESET-LOST (R60-T3-C1): a watch interval after d2 that was over the slow bar
+				// of its moment set the product's count back to zero before watched() counted the step, and no field
+				// records it (the median can rise afterwards, so the final steady bar hides it). The lowest slow bar the
+				// row knows bounds that bar from below: when the watch's worst frame reaches it, the count may be 1, so
+				// the lower bound starts again from this step. The upper bound keeps counting: only what is certain fails.
+				const watchMayReset = fm[2] >= Math.min(e.slow1, e.slow2, slow) - 1;
+				if (worst <= steady - 1) { hi++; lo = watchMayReset ? 1 : lo + 1; }
 				else if (worst <= steady + 1) { hi++; lo = 0; }
 				else { hi = 0; lo = 0; }
 			} else if (fm.length === 2) {
