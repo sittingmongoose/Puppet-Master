@@ -230,7 +230,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 81,
+   "count": 80,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "02dd85b72540",
@@ -246,7 +246,6 @@
     "1df06a42c9ab",
     "1e89965ec8c7",
     "237c1953c9a7",
-    "27428420911e",
     "2a9afa12ee0a",
     "2f5d55a27d5f",
     "30211e1a7e33",
@@ -273,6 +272,7 @@
     "6e7f4d13a6a9",
     "6f39e5925e0b",
     "74144537b3e0",
+    "7ba7abc0e17f",
     "7efb9719345a",
     "7f0fdf9fc168",
     "85b744d73149",
@@ -303,7 +303,6 @@
     "d9e287f261e5",
     "d9f6480b2d40",
     "daefa58a63a3",
-    "dd3707254603",
     "dd5519df234d",
     "e5b743d2bdde",
     "e62a59ff2641",
@@ -320,7 +319,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 18,
+   "count": 19,
    "error": "pnc019_source_hash_stale",
    "fingerprints": [
     "1ca89bc9eeff",
@@ -335,6 +334,7 @@
     "b2a73128daf8",
     "c4329d5730c3",
     "c76f768a153c",
+    "c8f1f2f901f1",
     "ce4907fd3617",
     "dcb8f2e47788",
     "e0468f29a929",
@@ -917,6 +917,16 @@
   {
    "check": "audit-governance",
    "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm_pnc019_currentness.py",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
    "error": "validator_no_output",
    "fingerprints": [
     "ca2d9bc8e006"
@@ -1064,7 +1074,7 @@
   },
   {
    "check": "run-gates",
-   "count": 31,
+   "count": 30,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "053bef1cfcc1",
@@ -1091,7 +1101,6 @@
     "a283a433fdda",
     "a56f058b4b3a",
     "b05520a9880a",
-    "bdff16237e72",
     "d5be4dc5e9b9",
     "d9e287f261e5",
     "e5b743d2bdde",
@@ -1104,7 +1113,7 @@
   },
   {
    "check": "run-gates",
-   "count": 18,
+   "count": 19,
    "error": "pnc019_source_hash_stale",
    "fingerprints": [
     "1ca89bc9eeff",
@@ -1119,6 +1128,7 @@
     "b2a73128daf8",
     "c4329d5730c3",
     "c76f768a153c",
+    "c8f1f2f901f1",
     "ce4907fd3617",
     "dcb8f2e47788",
     "e0468f29a929",
@@ -1657,11 +1667,21 @@
    ],
    "path": "scripts/pm-shared-runtime-storage-materialize.py",
    "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm_pnc019_currentness.py",
+   "subcheck": "verify_spec_lock"
   }
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 6407,
+   "failure_total": 6411,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -1674,8 +1694,8 @@
      "sampled": 100
     },
     "implementation_readiness": {
-     "exported": 131,
-     "reported": 131,
+     "exported": 134,
+     "reported": 134,
      "sampled": 100
     },
     "plan_graph": {
@@ -1684,8 +1704,8 @@
      "sampled": 100
     },
     "spec_lock": {
-     "reported": 46,
-     "sampled": 46
+     "reported": 47,
+     "sampled": 47
     },
     "usage_contract_drift": {
      "reported": 1,
@@ -1704,7 +1724,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 6408,
+   "failure_total": 6412,
    "status": "fail",
    "subchecks": {
     "json_syntax": {
@@ -1721,8 +1741,8 @@
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "exported": 131,
-     "reported": 131,
+     "exported": 134,
+     "reported": 134,
      "sampled": 50
     },
     "validate_plan_graph": {
@@ -1735,13 +1755,13 @@
      "sampled": 1
     },
     "verify_spec_lock": {
-     "reported": 46,
-     "sampled": 46
+     "reported": 47,
+     "sampled": 47
     }
    }
   }
  },
- "commit": "e87174af96d83e18d0f9ba382425ffbc9d42782f",
+ "commit": "71ece7476893d3948c8c3b9f274efa2a09342aac",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -1776,7 +1796,17 @@
   },
   {
    "check": "audit-governance",
-   "count": 101,
+   "count": 1,
+   "error": "event_authority_currentness_live_registry_drift",
+   "fingerprints": [
+    "-"
+   ],
+   "path": "",
+   "subcheck": "implementation_readiness"
+  },
+  {
+   "check": "audit-governance",
+   "count": 102,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -1828,6 +1858,7 @@
     "6e7f4d13a6a9",
     "6f39e5925e0b",
     "74144537b3e0",
+    "7ba7abc0e17f",
     "7efb9719345a",
     "7f0fdf9fc168",
     "7fea903aea1a",
@@ -1889,7 +1920,7 @@
    "count": 2,
    "error": "event_denominator_unresolved",
    "fingerprints": [
-    "a999932a65d8"
+    "33ca86573a94"
    ],
    "path": "Plans/event_family_registry.json",
    "subcheck": "implementation_readiness"
@@ -1899,7 +1930,7 @@
    "count": 2,
    "error": "event_family_contract_depth_unresolved",
    "fingerprints": [
-    "ebe72a257405"
+    "4817719d6524"
    ],
    "path": "Plans/event_family_registry.json",
    "subcheck": "implementation_readiness"
@@ -1926,7 +1957,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 18,
+   "count": 19,
    "error": "pnc019_source_hash_stale",
    "fingerprints": [
     "1ca89bc9eeff",
@@ -1941,6 +1972,7 @@
     "b2a73128daf8",
     "c4329d5730c3",
     "c76f768a153c",
+    "c8f1f2f901f1",
     "ce4907fd3617",
     "dcb8f2e47788",
     "e0468f29a929",
@@ -2019,7 +2051,17 @@
   },
   {
    "check": "run-gates",
-   "count": 101,
+   "count": 1,
+   "error": "event_authority_currentness_live_registry_drift",
+   "fingerprints": [
+    "-"
+   ],
+   "path": "",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 102,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -2071,6 +2113,7 @@
     "6e7f4d13a6a9",
     "6f39e5925e0b",
     "74144537b3e0",
+    "7ba7abc0e17f",
     "7efb9719345a",
     "7f0fdf9fc168",
     "7fea903aea1a",
@@ -2132,7 +2175,7 @@
    "count": 2,
    "error": "event_denominator_unresolved",
    "fingerprints": [
-    "a999932a65d8"
+    "33ca86573a94"
    ],
    "path": "Plans/event_family_registry.json",
    "subcheck": "validate_implementation_readiness"
@@ -2142,7 +2185,7 @@
    "count": 2,
    "error": "event_family_contract_depth_unresolved",
    "fingerprints": [
-    "ebe72a257405"
+    "4817719d6524"
    ],
    "path": "Plans/event_family_registry.json",
    "subcheck": "validate_implementation_readiness"
@@ -2169,7 +2212,7 @@
   },
   {
    "check": "run-gates",
-   "count": 18,
+   "count": 19,
    "error": "pnc019_source_hash_stale",
    "fingerprints": [
     "1ca89bc9eeff",
@@ -2184,6 +2227,7 @@
     "b2a73128daf8",
     "c4329d5730c3",
     "c76f768a153c",
+    "c8f1f2f901f1",
     "ce4907fd3617",
     "dcb8f2e47788",
     "e0468f29a929",
@@ -2251,8 +2295,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-15T09:59:53Z",
- "run_dir": "Plans/.plan_migration/pds-20261115-003-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-15T12:25:37Z",
+ "run_dir": "Plans/.plan_migration/pds-20261115-004-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
