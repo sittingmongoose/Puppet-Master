@@ -15,9 +15,11 @@
 // callback every 100 ms, as turn-stream.js and thought-stream.js release their words, the chip sampled every frame (its loops' place and length, the glyph's
 // scale and the backlight's opacity, as the page computes them; the films show the pixels). Changes: a word while
 // waiting, early in the loop and just before its end; 900 ms without a word while flowing, landing near a loop's end
-// and in its middle; Settings' Animation speed set to Fast mid-loop, then a word right after the loops show that
-// speed, and the quiet after that, then Slow (Cinematic) the same way, then Measured again (also from a finally if
-// that leg stops short, so a later cell is not left at Cinematic); a word followed by a 200 ms long task before the next frame; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
+// and in its middle; Settings' Animation speed set to Fast mid-loop, then a word right after it and the quiet after
+// that, then Measured again. Slow (Cinematic) is a Working run of its own: the demo's run ends about 33 s after it
+// starts, and on one run the chip was idle (data-ss idle, no loop) before the post-Slow .3-.4 window, which is ~3 s
+// later on a 5120 ms loop (Alexis probe, 2026-11-15, qw3 run-probe1). That run sets Fast, then Slow, then Measured,
+// and a finally sets Measured again if the leg stops short, so a later cell is not left at Cinematic. A word followed by a 200 ms long task before the next frame; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
 // so the pace turns to waiting while held), closed, then a word. For each change:
 //   - at once: a word changes data-flow and the loop's length by the frame after it; the quiet one comes 900 ms after
 //     the last word (the module's timer on the word's age; up to --set late=<ms>, default 150, plus the main thread's long tasks after it fell due);
@@ -63,7 +65,7 @@ import { traceWindow } from '../helpers/frame-trace.mjs';
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
 
 // One Working run, driven and sampled inside the page; returns every frame's sample, the marks and the flips.
-const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
+const PACE = async ({ speed, windowPart, themePart, themeOnly, speedOnly }) => {
 	const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 	const frame = () => new Promise((r) => requestAnimationFrame(r));
 	const SS = window.PM56_SENDSTOP, D = window.PM56_DEMO;
@@ -139,20 +141,7 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 		if (!ok) quietWhy = 'flow ' + snap();
 		return ok;
 	};
-	// minDur is set only for the wait after Slow. Cinematic's waiting loop is 5120 ms (3200 * 1.6,
-	// 17-look.js O55_SPEED and send-stop.css --ss-beat * --ss-speed) and its opening delay is 1280 ms
-	// (800 * 1.6, --ss-ld). place >= 1 needs that delay plus one iteration, then the .3-.4 window, and
-	// one spare iteration if a sample skips the 0.1-wide band: 14368 ms. The other waits stay at 9 s,
-	// which fits a 3200 ms loop. basic-dark's speed-back hit the 9 s cap first (Alexis, run b2-02, 2026-11-15).
-	const inLoop = (lo, hi, minDur = 0) => {
-		let ms = 9000;
-		if (minDur) {
-			const dur = Math.max(minDur, (last().g && last().g.dur > 0) ? last().g.dur : 3200);
-			const factor = dur / 3200;
-			ms = Math.max(9000, Math.ceil(800 * factor + dur + hi * dur + dur + 800));
-		}
-		return until(() => { const f = frac(); return f != null && f >= lo && f <= hi && last().g.place >= 1; }, ms);
-	};
+	const inLoop = (lo, hi) => until(() => { const f = frac(); return f != null && f >= lo && f <= hi && last().g.place >= 1; });
 	// After Settings applies a speed, wait until the loops show that factor. A fixed 150 ms still had
 	// no ss-breathe on the frame after the Slow word (glass-dark, the same run: flow "waiting", glyph
 	// undefined). NieR hides .ss-bl (send-stop.css) and the glow element lives inside it, so only the glyph is required there.
@@ -174,7 +163,7 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 		if (last().flow !== 'waiting') { await until(() => last().flow === 'waiting', 3000); }
 		// (a run of its own for the light/dark change: the demo's run ends about 33 s after it starts, before the first
 		// look's other parts are through)
-		if (!themeOnly) {
+		if (!themeOnly && !speedOnly) {
 		// a word while waiting, early in the loop; then quiet landing near the loop's end
 		if (!(await inLoop(0.2, 0.3))) throw new Error('early: the loop never reached .2-.3');
 		await wordAt('word while waiting, early in the loop');
@@ -188,11 +177,9 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 		await wordThenTask('word while waiting, then a 200 ms long task', 200);
 		if (!(await quietAt('quiet after the long task', 0.6))) throw new Error('quiet after the long task: no change');
 		}
-		if (speed) {
-			// Both cadences are sampled before Measured is restored, so the speed row can read each loop
-			// against the unscaled length times the factor (judgeSpeed). The finally puts Measured back
-			// even when a wait throws, so Reduced Motion is not left at Cinematic (that run read 3520 and
-			// 5120 ms, which is 2200 and 3200 times 1.6).
+		if (speed || speedOnly) {
+			// Measured is put back in a finally so a throw cannot leave Cinematic on for the next cell
+			// (the first failing run read 3520 and 5120 ms there, 2200 and 3200 times 1.6).
 			let speedBack = false;
 			const setMeasured = () => {
 				const okM = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured');
@@ -204,17 +191,25 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 				await sleep(2); mark('Animation speed Fast, waiting, mid-loop', { kind: 'speed' });
 				const ok = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Fast');
 				if (!ok) throw new Error('Settings refused Fast');
-				if (!(await expectDur(0.6))) throw new Error('Fast did not land (' + snap() + ')');
+				// The run of its own waits until the loops show the new length. A fixed 150 ms, on the
+				// long run, still had no glyph on the frame after Slow (glass-dark, Alexis, 2026-11-15).
+				// The run main already had keeps that 150 ms, so it judges the same Fast hand-over.
+				if (speedOnly) { if (!(await expectDur(0.6))) throw new Error('Fast did not land (' + snap() + ')'); }
+				else await sleep(150);
 				await wordAt('word right after the speed change');
 				if (!(await quietAt('quiet after the speed change', 0.7))) throw new Error('quiet after speed: no change (' + quietWhy + ')');
-				if (!(await inLoop(0.3, 0.4))) throw new Error('slow: the loop never reached .3-.4 (' + snap() + ')');
-				await sleep(2); mark('Animation speed Slow (Cinematic), waiting, mid-loop', { kind: 'speed' });
-				const okSlow = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Cinematic');
-				if (!okSlow) throw new Error('Settings refused Cinematic');
-				if (!(await expectDur(1.6))) throw new Error('Slow did not land (' + snap() + ')');
-				await wordAt('word right after Slow');
-				if (!(await quietAt('quiet after Slow', 0.7))) throw new Error('quiet after Slow: no change (' + quietWhy + ')');
-				if (!(await inLoop(0.3, 0.4, 5120))) throw new Error('speed back: the loop never reached .3-.4 (' + snap() + ')');
+				if (speedOnly) {
+					// Both cadences are sampled before Measured, for judgeSpeed. This run is the only
+					// one that sets Slow: the demo's ~33 s run has ended by then on the long pace.
+					if (!(await inLoop(0.3, 0.4))) throw new Error('slow: the loop never reached .3-.4 (' + snap() + ')');
+					await sleep(2); mark('Animation speed Slow (Cinematic), waiting, mid-loop', { kind: 'speed' });
+					const okSlow = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Cinematic');
+					if (!okSlow) throw new Error('Settings refused Cinematic');
+					if (!(await expectDur(1.6))) throw new Error('Slow did not land (' + snap() + ')');
+					await wordAt('word right after Slow');
+					if (!(await quietAt('quiet after Slow', 0.7))) throw new Error('quiet after Slow: no change (' + quietWhy + ')');
+					if (!(await inLoop(0.3, 0.4))) throw new Error('speed back: the loop never reached .3-.4 (' + snap() + ')');
+				} else if (!(await inLoop(0.3, 0.4))) throw new Error('speed back: the loop never reached .3-.4');
 				await sleep(2); mark('Animation speed Measured, waiting, mid-loop', { kind: 'speed' });
 				setMeasured();
 				await sleep(300);
@@ -671,12 +666,6 @@ export default async function (t) {
 			const by = (m) => R.rows.find((r, i) => i >= m.i && m.ft != null && r.t > m.ft) || R.rows[R.rows.length - 1];
 			const slow = words.filter((m) => { const p = R.rows[m.i - 1], r = by(m); if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
 			await t.check(`${look}: a word turns the pace to flowing by the next frame`, words.length >= (alone ? 2 : 3) && slow.length === 0, slow.length ? slow.map((m) => { const r = by(m); return `${m.name}: the frame after ${JSON.stringify(r.flow)} ${r.g ? r.g.dur : 'could not judge'}`; }).join('; ') : `${words.length} words`);
-			if (!alone) {
-				const sp = judgeSpeed(R);
-				const missed = sp.bad.some((x) => x.missing);
-				await t.check(`${look}: Animation speed Fast and Slow scale both loops by that speed's factor`, sp.ok,
-					sp.ok ? 'Fast 0.6 and Slow (Cinematic) 1.6 against the unscaled 2200 ms flowing and 3200 ms waiting' : (missed ? 'could not judge: ' : '') + JSON.stringify(sp.bad.slice(0, 6)));
-			}
 			const quiet = R.marks.filter((m) => m.kind === 'quiet');
 			// allowed: `late` ms after 900, plus the time the main thread was held by long tasks after the timer fell due
 			// (R32 H3; the onboarding window's restyle made it 1093 ms in NieR and the check's own 200 ms task 1075 ms)
@@ -684,6 +673,35 @@ export default async function (t) {
 			await t.check(`${look}: 900 ms without a word turns it to waiting (within ${late} ms after, plus any long task after it fell due)`, quiet.length >= 2 && off.length === 0, quiet.map((m) => `${m.name}: ${m.flipMs == null ? 'no change' : m.flipMs + ' ms'}${m.blockedMs ? ` (${m.blockedMs} ms of long tasks after it fell due)` : ''}`).join('; '));
 			const d = R.after.debug || {};
 			await t.check(`${look}: once the run has ended nothing of the chip's is armed`, R.after.ss !== 'stop' && d.quiet === false && d.watching === false && d.pending !== true, JSON.stringify(R.after));
+			if (!alone) {
+				// Fast and Slow on a fresh Working run. The pace above is the one main already judged
+				// (Fast, then Measured). Slow does not fit in it: the demo ends about 33 s after
+				// startWorking, and the chip was idle before the post-Slow window (run-probe1).
+				await home();
+				await parkPointer(t.page, W, H);
+				await t.page.waitForTimeout(1500);
+				const S = await f.evaluate(PACE, { speedOnly: true });
+				for (const e of S.errors) t.log(`${look} speed: ${e}`);
+				await t.check(`${look}: the speed run went through Fast, Slow and back to Measured`, S.errors.length === 0 && S.rows.length > 60, S.errors.join('; ') || `${S.rows.length} frames sampled`);
+				const srows = judge(S, look);
+				const sbad = srows.filter((r) => r.restart || r.ok === false);
+				await t.check(`${look}: Fast, Slow and Measured do not make the loop jump`, srows.length > 0 && sbad.length === 0,
+					sbad.length ? sbad.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}, value ${r.value ?? '-'}/${r.valueBound ?? '-'}`}`).join('; ') : `${srows.length} changes judged`);
+				const sev = everyFrame(S);
+				await t.check(`${look}: in every frame of the speed run, the loop is never made anew and never jumps (hand-over, main-thread place, and glyph scale / backlight opacity)`, sev.restarts.length === 0 && sev.worst <= 1,
+					`${sev.restarts.length ? 'new loops ' + sev.restarts.join(', ') + '; ' : ''}${sev.valueFails ? sev.valueFails + ' in-window scale/opacity failure' + (sev.valueFails === 1 ? '' : 's') + '; ' : ''}worst ${(sev.worst * 100).toFixed(0)}%${sev.where ? ': ' + sev.where : ''}`);
+				const spj = judgeSpeed(S);
+				const missed = spj.bad.some((x) => x.missing);
+				await t.check(`${look}: Animation speed Fast and Slow scale both loops by that speed's factor`, spj.ok,
+					spj.ok ? 'Fast 0.6 and Slow (Cinematic) 1.6 against the unscaled 2200 ms flowing and 3200 ms waiting' : (missed ? 'could not judge: ' : '') + JSON.stringify(spj.bad.slice(0, 6)));
+				const sby = (m) => S.rows.find((r, i) => i >= m.i && m.ft != null && r.t > m.ft) || S.rows[S.rows.length - 1];
+				const swords = S.marks.filter((m) => m.kind === 'word' && m.i > 0 && m.i < S.rows.length);
+				const sslow = swords.filter((m) => { const p = S.rows[m.i - 1], r = sby(m); if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
+				await t.check(`${look}: a word after Fast and after Slow turns the pace to flowing by the next frame`, swords.length >= 2 && sslow.length === 0, sslow.length ? sslow.map((m) => { const r = sby(m); return `${m.name}: the frame after ${JSON.stringify(r.flow)} ${r.g ? r.g.dur : 'could not judge'}`; }).join('; ') : `${swords.length} words`);
+				const squiet = S.marks.filter((m) => m.kind === 'quiet');
+				const soff = squiet.filter((m) => m.flipMs == null || m.flipMs < 880 || m.flipMs > 900 + late + (m.blockedMs || 0));
+				await t.check(`${look}: 900 ms without a word after Fast and after Slow turns it to waiting (within ${late} ms after, plus any long task after it fell due)`, squiet.length >= 2 && soff.length === 0, squiet.map((m) => `${m.name}: ${m.flipMs == null ? 'no change' : m.flipMs + ' ms'}${m.blockedMs ? ` (${m.blockedMs} ms of long tasks after it fell due)` : ''}`).join('; '));
+			}
 			if (!alone && n === 0 && !look.startsWith('nier')) {
 				// a light/dark change mid-run (K3), in a run of its own
 				await home(); await parkPointer(t.page, W, H); await t.page.waitForTimeout(3000);
