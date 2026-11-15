@@ -1122,6 +1122,29 @@ def retained_mode(m16, deck, out):
     return summary
 
 
+# =========================================================================== regressions
+def regressions_mode(m16, deck, out):
+    """The two complete-boundary exceptions C12-DS15 found and fixed, on every family: each input now gets the checker's
+    own refusal, never an exception. Neither is a table witness (the first parent is itself the defect; the second is
+    refused by two rows of one table by construction)."""
+    rows = []
+    for family in FAMILIES:
+        c, f = c12.contract(deck, family), c12.fixture(deck, family)
+        cases = [('history-carrier-at-envelope-boundary', 'history', 'envelope_boundary', {}, ['sch_d2_context', 'D2_CONTEXT_schema'])]
+        cases += [(f'source-last-sequence-u64max-{op}', 'project', op, {'selected_source/last_sequence': 2 ** 64 - 1},
+                   ['cp_source', 'CS03_source_high']) for op in ('checkpoint', 'rebuild')]
+        for rid, base, op, changes, expected in cases:
+            data = copy.deepcopy(f['bases'][base])
+            deck.base.patch(data, changes)
+            result, records = recorded(deck, lambda: deck.evaluate(c, op, data))
+            got = first_refusal(records)
+            rows.append(dict(family=family, regression=rid, operation=op, expected=expected, actual=got,
+                             result=result.get('result') if isinstance(result, dict) else repr(result),
+                             ok=not isinstance(result, tuple) and got is not None and got[:2] == expected))
+    out('regressions.json', rows)
+    return dict(regressions=len(rows), failed=sum(not r['ok'] for r in rows), disagreements=sum(not r['ok'] for r in rows))
+
+
 # =========================================================================== numbers
 def numbers_mode(m16, deck, out):
     spec = importlib.util.spec_from_file_location('ds15_c12_corpus', ROOT / 'scripts/pm-ds15-number-corpus.py')
@@ -1402,7 +1425,7 @@ def grade_mode(m16, deck, out, evidence):
     contracts = {c['event_type']: c for c in deck.read('Plans/ds15_deck2_contracts.json')}
     ev = {name: json.loads((evidence / name).read_text()) for name in (
         'coverage-summary.json', 'schema-summary.json', 'datetime-corpus-summary.json', 'retained-summary.json',
-        'numbers-summary.json', 'entailed.json', 'c12-check.json', 'ledger.json')}
+        'numbers-summary.json', 'entailed.json', 'c12-check.json', 'ledger.json', 'regressions.json')}
     pins = {name: hashlib.sha256((evidence / name).read_bytes()).hexdigest() for name in sorted(ev)}
     before = json.loads((ROOT / BEFORE).read_text())
     E = 'scripts/pm-ds15-event-contracts.py'
@@ -1439,7 +1462,8 @@ def grade_mode(m16, deck, out, evidence):
                       + (['number_disagreements'] if ev['numbers-summary.json']['disagreements'] else [])
                       + (['retained_store_changed'] if ev['retained-summary.json']['changed'] else [])
                       + (['entailment_checks'] if ev['entailed.json']['failed_checks'] else [])
-                      + (['c12_witnesses'] if ev['c12-check.json']['status'] != 'pass' else []))
+                      + (['c12_witnesses'] if ev['c12-check.json']['status'] != 'pass' else [])
+                      + (['regressions'] if any(not r['ok'] for r in ev['regressions.json'] if r['family'] == family) else []))
         status = 'PASS' if not open_items else 'PARTIAL'
         finding = (f"{unit} {family}@{c['family_revision']}: every guard row the complete deck-2 checker reaches for this family "
                    f"({cov['rows']} rows in {cov['tables']} tables) is proved by the gated tool from this family's own "
@@ -1478,7 +1502,7 @@ def git_head():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('--mode', required=True, choices=('entailed', 'schema', 'datetime', 'retained', 'numbers', 'matrix', 'ledger', 'grade'))
+    parser.add_argument('--mode', required=True, choices=('entailed', 'schema', 'datetime', 'retained', 'numbers', 'regressions', 'matrix', 'ledger', 'grade'))
     parser.add_argument('--derivation', type=Path, help='ledger: c12-derivation.json of pm_ds15_c12_cases.py --derive')
     parser.add_argument('--evidence', type=Path, help='grade: the directory holding every mode summary')
     parser.add_argument('--guard', type=Path, help='matrix: the directory of the per-family gated runs (--family F)')

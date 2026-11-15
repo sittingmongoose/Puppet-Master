@@ -37,7 +37,11 @@ Maintenance steps (observation copies only, never a second defect):
 
 A transplant keeps its donor's operation-specific parent (for example a lost receipt for an append recovery) as
 parent_changes / parent_maintain: the parent is the base with those applied and must itself evaluate with no refusal;
-the witness adds only the donor's own defect (changes / maintain) on top of that parent.
+the witness adds only the donor's own defect (changes / maintain) on top of that parent. After derivation every
+multi-path witness is minimized (minimize): the smallest set of one, two or three paths whose removal leaves a valid
+parent is the defect and the rest moves into parent_changes, so a witness is one changed path ('defect': 'single') or
+one fact held in two or three copies that no single path can move alone, or a scenario no split of up to three paths
+separates ('coherent_copies'), never a second independent defect (the lane matrix and the tool check single-row).
 """
 import argparse
 import copy
@@ -400,6 +404,14 @@ def directed(family, bases, c=None):
          ['cp_range', 'CN05_selected_high']),
         # a prior checkpoint through the first (non-matching) row: no earlier match precedes it
         ('project', 'checkpoint', {'stored_previous': prior}, ['cas', 'scan_from_prior'], ['cp_matches', 'CE01_prior_earlier']),
+        # a valid prior through this family's own matching row (a zero-match suffix keeps its last event); the prior's last
+        # event and the proposed checkpoint's carried copy name another event: the prior last is not the last earlier match
+        ('project', 'checkpoint', {'stored_previous/last_event_id': 'event:' + s + ':7', 'checkpoint/last_event_id': 'event:' + s + ':7'},
+         ['cas'], ['cp_matches', 'CE02_prior_last'],
+         {'parent_changes': {'stored_previous': dict(copy.deepcopy(project['checkpoint']), through_sequence_id=rows[1]['sequence']),
+                             'selected_matches': []}, 'parent_maintain': ['cas', 'scan_from_prior']}),
+        # the source claims to start after its first row: its rows are not first..last
+        ('project', 'checkpoint', {'selected_source/first_sequence': rows[1]['sequence']}, [], ['cp_source', 'CS04_source_contiguous']),
         # The receipt's original event id, every receipt copy moved together (RC01/RC02 keep agreeing)
         ('project', 'read', {'receipt/event_id': 'event:' + s + ':9', 'custody/first_append_receipt/event_id': 'event:' + s + ':9',
                              'issued_result/first_append_receipt/event_id': 'event:' + s + ':9'}, [], ['rc_copies', 'RC03_receipt_event']),
@@ -525,6 +537,30 @@ def retained_witnesses():
     return out
 
 
+def minimize(deck, w):
+    """Move every change that still leaves a valid parent into parent_changes, keeping the witness exact.
+
+    The result differs from its validated parent by the fewest source paths found by single-path splits: one path
+    (single_defect) or, when no split keeps both the parent valid and the first refusal at the target, all of them
+    (one fact held in several copies, each copy observed by a different join: coherent_copies).
+    """
+    import itertools
+    changes = w['changes']
+    if len(changes) <= 1 or '$root' in changes:
+        return dict(w, defect='single' if len(changes) <= 1 else 'root')
+    for size in (1, 2, 3):
+        if size >= len(changes):
+            break
+        for defect in itertools.combinations(list(changes), size):
+            rest = {k: v for k, v in changes.items() if k not in defect}
+            trial = dict(w, parent_changes=dict(w.get('parent_changes', {}), **rest),
+                         changes={k: changes[k] for k in defect})
+            status, _, _ = verdict(deck, trial)
+            if status == 'KILL':
+                return dict(trial, defect='single' if size == 1 else 'coherent_copies')
+    return dict(w, defect='coherent_copies')
+
+
 # --------------------------------------------------------------------------- derivation
 def own_negatives(firsts, family):
     return {(w['first'][0], w['first'][1]) for w in firsts if w['f'] == family and w['first'] and not w['excluded']}
@@ -598,6 +634,7 @@ def derive(out):
                         break
                 if target in have:
                     break
+    witnesses = [minimize(deck, w) for w in witnesses]
     FIXTURE.write_text(json.dumps(witnesses, indent=1, ensure_ascii=True, sort_keys=True) + '\n')
     out.mkdir(parents=True, exist_ok=True)
     (out / 'c12-derivation.json').write_text(json.dumps(dict(
