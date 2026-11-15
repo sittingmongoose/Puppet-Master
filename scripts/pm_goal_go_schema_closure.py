@@ -698,6 +698,30 @@ def value_key(x):
     return json.dumps(x)
 
 
+def project(values, relative):
+    """The values at a relative instance path inside each pinned value ('#' every item, '*' every member value), or
+    None when some pinned value does not hold that path (then the ancestor pin says nothing usable here)."""
+    out = []
+    for value in values:
+        frontier = [value]
+        for segment in relative:
+            nxt = []
+            for item in frontier:
+                if segment == '#' and isinstance(item, list):
+                    nxt.extend(item)
+                elif segment == '*' and isinstance(item, dict):
+                    nxt.extend(item.values())
+                elif isinstance(segment, int) and isinstance(item, list) and len(item) > segment:
+                    nxt.append(item[segment])
+                elif isinstance(segment, str) and segment not in ('#', '*') and isinstance(item, dict) and segment in item:
+                    nxt.append(item[segment])
+                else:
+                    return None
+            frontier = nxt
+        out.extend(frontier)
+    return out
+
+
 def pinned(nodes, ipath, union, exclude=None):
     """Allowed values at an instance location from nodes whose reach there applies to the scope (see applies): the
     intersection of their const/enum/null-type constraints, or None when nothing pins it. `exclude` = (node id,
@@ -705,18 +729,24 @@ def pinned(nodes, ipath, union, exclude=None):
     allowed = None
     for n in nodes.values():
         for r in n['reach']:
-            if r['ipath'] != ipath or not applies(r, union):
+            here = r['ipath']
+            if len(here) > len(ipath) or ipath[:len(here)] != here or not applies(r, union):
                 continue
+            relative = ipath[len(here):]
             node = n['node']
-            skip = exclude[1] if exclude and exclude[0] == id(node) else None
+            skip = exclude[1] if exclude and exclude[0] == id(node) and not relative else None
             if 'const' in node and skip != 'const':
                 values = [node['const']]
             elif isinstance(node.get('enum'), list) and skip != 'enum':
                 values = list(node['enum'])
-            elif node.get('type') == 'null' and skip != 'type':
+            elif node.get('type') == 'null' and skip != 'type' and not relative:
                 values = [None]
             else:
                 continue
+            if relative:  # GO addition: an ancestor pinned by const/enum pins each member to its projected values
+                values = project(values, relative)
+                if values is None:
+                    continue
             keyed = {value_key(x): x for x in values}
             allowed = keyed if allowed is None else {k: x for k, x in allowed.items() if k in keyed}
     return allowed
@@ -1444,6 +1474,15 @@ def self_test():
     swapped = swap_candidates(v8, [{"e": {"d": "u"}}], reach8)
     print('swap', swapped[:1])
     assert swapped and v8.is_valid(swapped[0]) and swapped[0]['e']['d'] == 'n'
+    # an ancestor pinned by const pins each member to its projected value: a member clause is COVERED_BY_CONST
+    schema9 = {"x-pm-oracle-id": "R9", "type": "object", "required": ["ref"], "properties": {"ref": {"x-pm-oracle-id": "ref9", "$ref": "#/$defs/Ref"}},
+               "allOf": [{"x-pm-oracle-id": "pin9", "properties": {"ref": {"x-pm-oracle-id": "pin9ref", "const": {"path": "a.json", "ptr": "#/x"}}}}],
+               "$defs": {"Ref": {"x-pm-oracle-id": "Ref9", "type": "object", "properties": {"path": {"x-pm-oracle-id": "path9", "type": "string", "pattern": "[.]json$"}, "ptr": {"x-pm-oracle-id": "ptr9", "type": "string"}}}}}
+    v9 = jsonschema.Draft202012Validator(schema9)
+    n9 = walk(v9)
+    p9 = pinned_proof(n9['path9'], n9, v9, 'pattern')
+    print('path9 proof', p9)
+    assert p9 and p9['cls'] == 'COVERED_BY_CONST'
     print('closure self-test pass: same-depth conditionals keep their reaches; no UNREACHABLE while one reach is live; '
           'shared and implied branch pins apply; selector clash and self-pins make no claim; contradicted branches; alternative swap')
     return 0
