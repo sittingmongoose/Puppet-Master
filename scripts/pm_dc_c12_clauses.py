@@ -1000,7 +1000,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
             _gen[id(a.node)] = generated_values(a)
         return _gen[id(a.node)]
     reached = set()
-    valid_bases, valid_base_keys = [], set()
+    bases_by_t, valid_base_keys = {}, set()
     for w in witnesses:
         if w.get("sole"):
             reached.add(w["sole"])
@@ -1032,11 +1032,11 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                 base = insert_at(inst, at, donor)
                 if base is None or not validator.is_valid(base):
                     continue
-                if len(valid_bases) < 300:
-                    db = digest(base)
-                    if db not in valid_base_keys:
-                        valid_base_keys.add(db)
-                        valid_bases.append((p["case_id"] + "@base:" + "/".join(map(str, at)), base))
+                db = digest(base)
+                slot_b = bases_by_t.setdefault(tuple(at), [])
+                if db not in valid_base_keys and len(slot_b) < 12:
+                    valid_base_keys.add(db)
+                    slot_b.append((p["case_id"] + "@base:" + "/".join(map(str, at)), base))
                 for path, value in locations(base, s.template):
                     for cand in candidates(s, value, base, path):
                         attempts += 1
@@ -1153,7 +1153,10 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
             # a required-member cut can only flip a witness missing that member
             ctrl_broken = [p["case_id"] for p, inst in instances if not validator.is_valid(inst)]
             # constructed valid bases (each valid at the row before the cut) refused under the cut detect it too
-            ctrl_broken += [name for name, base in valid_bases if not validator.is_valid(base)][:5]
+            # (bases built where this clause's location and the base's insertion location are nested in each other)
+            temps = {s_.template for s_ in group}
+            near = [b for at, lst in bases_by_t.items() if any(at == t[:len(at)] or t == at[:len(t)] for t in temps) for b in lst]
+            ctrl_broken += [name for name, base in near if not validator.is_valid(base)][:5]
             kills = []
             for w in sorted(flipped, key=lambda w: (not (w["target"] in entry["eval_sites"]), not w["exact"]))[:route_kills]:
                 wp = with_instance(w["probe"], getter, w["instance"], None)
@@ -1188,6 +1191,11 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                 if imp:
                     break
             entry["implication"] = imp
+            if imp is None:
+                entry["joint"] = joint_cut(s0, literal, instances, validator, getter, phase, row, edition)
+            if imp is None and not entry.get("joint") and kw == "type":
+                imp = type_entailed_under_cut(s0, instances, validator, edition)
+                entry["implication"] = imp
         entry.update(row_flips=len(flipped), own_row_flips=sum(1 for w in flipped if w["target"] in entry["eval_sites"]),
                      controls_refused_under_cut=ctrl_broken, controls_route_under_cut=ctrl_route, kills=kills,
                      restored=all(restored) if restored else None)
@@ -1432,6 +1440,85 @@ def implication(site, slot_sites_by_node, boundary):
     return None
 
 
+def type_entailed_under_cut(site, instances, validator, edition):
+    """With the type clause cut, one value of every other JSON type at the clause's location in a control: when every
+    one is still refused by the row, another clause refuses every value this type refuses (the refusing clause of each
+    sample is named), so no single-defect witness fails this type alone and its cut is equivalent here."""
+    samples = [x for x in TYPE_SAMPLES if not _json_type_ok(x, site.node.get("type"))]
+    found = []
+    with Cut(site):
+        for p, inst in instances:
+            for path, value in locations(inst, site.template)[:1]:
+                for x in samples:
+                    cand = set_at(inst, path, copy.deepcopy(x))
+                    if edition is not None and (not isinstance(cand, dict) or dc.edition_of(cand) != edition):
+                        return None
+                    errors = list(validator.iter_errors(cand))
+                    if not errors:
+                        return None
+                    leaves = []
+                    for e in errors:
+                        stack = [e]
+                        while stack:
+                            y = stack.pop()
+                            if y.context:
+                                stack.extend(y.context)
+                            elif list(y.absolute_path) == list(path):
+                                leaves.append(y.validator + " at " + "/".join(map(str, y.absolute_schema_path)))
+                    found.append(dict(sample=repr(x), refused_by=sorted(set(leaves))[:3]))
+            if found:
+                break
+    if not found or any(not f["refused_by"] for f in found):
+        return None
+    src = site.src or {}
+    return dict(kind="type_entailed_under_cut", proof=f"{src.get('path')}:{src.get('line')} type {site.node.get('type')!r}: with it cut, a value "
+                f"of every other JSON type at this location is still refused by the row, by the clause(s) named per sample "
+                f"({'; '.join(f['sample'] + ': ' + ', '.join(f['refused_by']) for f in found)}); every value this type refuses is refused "
+                "there too, so no single-defect witness fails it alone and its cut is equivalent on this boundary", samples=found)
+
+
+# --- duplicate clauses: cut individually (above), then together ---------------------------------------------
+
+def joint_cut(s0, literal, instances, validator, getter, phase, row, edition):
+    """An identical clause (same keyword and value) that another node applies at the same location: every violation
+    fails both, so neither cut alone can flip a witness. Find a witness whose errors are exactly that pair, cut both
+    together, run it through the complete checker, restore both. None when there is no such duplicate."""
+    val0 = json.dumps(s0.node.get(s0.keyword), sort_keys=True, default=str)
+    for (nid, kw, member), group in literal.items():
+        other = group[0]
+        if other.node is s0.node or kw != s0.keyword or member != s0.member or other.template != s0.template:
+            continue
+        if json.dumps(other.node.get(kw), sort_keys=True, default=str) != val0:
+            continue
+        for p, inst in instances:
+            for path, value in locations(inst, s0.template):
+                for cand in candidates(s0, value, inst, path):
+                    if edition is not None and (not isinstance(cand, dict) or dc.edition_of(cand) != edition):
+                        continue
+                    errors = list(validator.iter_errors(cand))
+                    if len(errors) != 1:
+                        continue
+                    tree, _ = error_tree(errors[0])
+                    if (id(s0.node), s0.keyword) not in tree or (id(other.node), kw) not in tree:
+                        continue
+                    with Cut(s0):
+                        alone = validator.is_valid(cand)
+                        with Cut(other):
+                            both = validator.is_valid(cand)
+                            res, first, exc = route(with_instance(p, getter, cand, None)) if both else (None, None, None)
+                    if alone or not both:
+                        continue
+                    res2, first2, exc2 = route(with_instance(p, getter, cand, None))
+                    restored = exc2 is None and first2 is not None and first2[0] == phase and first2[1] == row
+                    outcome = ("INVALID_exception" if exc else "survived" if first and first[0] == phase and first[1] == row
+                               else "kill_accepted" if res is None else "kill_refused_later")
+                    o = other.src or {}
+                    return dict(duplicate_of=dict(path=o.get("path"), line=o.get("line"), keyword=kw), witness=p["case_id"] + "@/" + "/".join(map(str, path)),
+                                outcome=outcome, refused_later=list(first) if first and outcome == "kill_refused_later" else None,
+                                exception=exc, restored=restored)
+    return None
+
+
 # --- ledger summary -----------------------------------------------------------------------------------------
 
 def cut_status(entry):
@@ -1445,6 +1532,9 @@ def cut_status(entry):
         return "survived"
     if entry["controls_refused_under_cut"]:
         return "control_detected"
+    joint = entry.get("joint")
+    if joint and joint["outcome"] in ("kill_accepted", "kill_refused_later") and joint["restored"]:
+        return "joint_kill"
     if entry.get("implication"):
         return "implied"
     return "open"
@@ -1462,6 +1552,7 @@ def summarize(r):
                 witnesses=len(r["witnesses"]), witnesses_baseline_ok=sum(w["baseline_ok"] for w in r["witnesses"]),
                 donor_witnesses=sum(1 for w in r["witnesses"] if w.get("donor_base")), coherent_witnesses=sum(1 for w in r["witnesses"] if w.get("coherent")),
                 killed=statuses["killed"], kill_first_outcomes=dict(kills), invalid=statuses["invalid"], survived=statuses["survived"],
+                joint_kill=statuses["joint_kill"],
                 control_detected=statuses["control_detected"], implied=statuses["implied"], open=statuses["open"],
                 implication_kinds=dict(collections.Counter(e["implication"]["kind"] for e in r["cuts"] if e["status"] == "implied")),
                 open_clauses=[dict(keyword=e["keyword"], member=e["member"], path=e["path"], line=e["line"], kind=e["kind"], eval_sites=e["eval_sites"][:3])

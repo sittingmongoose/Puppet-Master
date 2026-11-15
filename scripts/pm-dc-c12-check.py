@@ -70,7 +70,7 @@ def cmd_clauses(a):
         s = clauses.summarize(r)
         s["sha256"] = write(a.out / "clauses", fam + "--" + boundary.replace(":", "_"), r)
         summary.append(s)
-        print(json.dumps({k: s[k] for k in ("family", "boundary", "clauses", "killed", "control_detected", "implied", "open", "invalid")}), flush=True)
+        print(json.dumps({k: s[k] for k in ("family", "boundary", "clauses", "killed", "joint_kill", "control_detected", "implied", "open", "invalid")}), flush=True)
     data = dict(pins=pins(), slots=summary)
     write(a.out, "clauses-summary" + ("-" + "_".join(a.family) if a.family else ""), data)
     bad = [s for s in summary if s["baseline_failures"] or s["restoration_failures"] or s["control_route_failures"]]
