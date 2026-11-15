@@ -118,6 +118,15 @@ MUTATIONS = [
      "def policy_reason(w, m):\n    return reason_of(current_append_policy, 'dedupe_by_idempotency_key')", 'refused_at', 'append_replay_policy'),
     ('C50', 'append_persisted_utc_z', "    lambda w, m: V(reason_of(date_time, E(w)['persisted_at_utc'], profile=STORAGE_UTC_Z)), gates=('env_ok',),",
      "    lambda w, m: V(reason_of(date_time, E(w)['persisted_at_utc'], profile=EVENT_RECORD)), gates=('env_ok',),", 'witness', None),
+    # s4b-tokfix: the trailing-LF rule moved from the token schema (now SP-278's exact durable token) to token_full_match.
+    ('C51', 'derived_token_full_match', "        if type(value) is str and re.fullmatch(pattern, value) is None:",
+     "        if type(value) is str and re.search(pattern, value) is None:", 'refused_at', 'derived_token_generation_id'),
+    ('C52', 'read_checkpoint_valid', "            and schema_errors(CHECKPOINTS_ID, '/$defs/' + FAM[family]['slug'] + '_index_checkpoint', value) == []\n            and checkpoint_tokens_full_match(value))",
+     "            and schema_errors(CHECKPOINTS_ID, '/$defs/' + FAM[family]['slug'] + '_index_checkpoint', value) == [])", 'refused_at', 'read_token_frontier_hash'),
+    ('C53', 'derived_token_full_match', "        tokens += [r.get('index_read_token') for r in retired if type(r) is dict]",
+     "        pass", 'refused_at', 'derived_retired'),
+    ('C54', 'read_token_checkpoint_key', "(lambda k: lambda w, m: EQ(CP(w)['index_read_token'][k], durable_token(w['store']['selection'])[k]))(_k)",
+     "(lambda k: lambda w, m: EQ(CP(w)['index_read_token'][k], (CP(w)['index_read_token'] if k == 'checkpoint_key' else durable_token(w['store']['selection']))[k]))(_k)", 'witness', None),
 ]
 MUTATIONS = [m for m in MUTATIONS if m[4] != 'skip']
 

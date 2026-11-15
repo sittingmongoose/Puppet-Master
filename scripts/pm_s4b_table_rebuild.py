@@ -33,7 +33,7 @@ def rebuild_publication_new(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard("rebuild_value_valid", g.Invariant("/proposed", "the rebuilt value passes its slots, physical encoding and full owner schema (at most two retired generations)"), "checkpoint_schema", rebuild_value_valid),
+        g.Guard("rebuild_value_valid", g.Invariant("/proposed", "the rebuilt value passes its slots, physical encoding, full owner schema (at most two retired generations) and durable-token full match"), "checkpoint_schema", rebuild_value_valid),
         g.Guard("rebuild_publication_new", g.Invariant("/proposed/publication_id", "the rebuilt publication ID is new: neither the withdrawn one nor a retired one"), "publication_join", rebuild_publication_new),
     ])
 
