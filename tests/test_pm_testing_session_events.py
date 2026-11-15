@@ -18,7 +18,7 @@ spec.loader.exec_module(gate)
 
 # DL-078 moves this pin with every registration that passes the full procedure; any other
 # registry change still needs Jared's own checkpoint approval.
-APPROVED_CHECKPOINT_FAMILY_COUNT = 59  # moved under DL-078 by each registration
+APPROVED_CHECKPOINT_FAMILY_COUNT = 60  # moved under DL-078 by each registration
 
 
 def record_pinned_family_ids(families):

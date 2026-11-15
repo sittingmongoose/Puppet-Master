@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-15.13",
+  "registry_revision": "2026-11-15.14",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -4175,6 +4175,44 @@
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-COORDINATION-180D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-debug-investigation-instrumentation-state-changed",
+      "family_revision": "1.0.0",
+      "event_type": "debug.investigation.instrumentation_state_changed",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Contracts_V0.md#CV-574",
+      "payload_owner_doc": "Plans/Contracts_V0.md#CV-574",
+      "payload_schema_id": "pm.debug_investigation.instrumentation_state_changed.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/debug_investigation_event_payloads.schema.json",
+        "json_pointer": "#/$defs/instrumentation_state_changed",
+        "schema_id": "pm.debug_investigation.instrumentation_state_changed.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [],
+          "thread_id": []
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Contracts_V0.md#CV-574",
+        "Plans/debug_investigation_event_payloads.schema.json#/$defs/instrumentation_state_changed",
+        "reports/event-authority-20261104/DDBG.self-grade.json"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-OPERATIONAL-2555D",
         "policy_version": "1.0.0"
       }
     }
