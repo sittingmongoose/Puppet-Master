@@ -475,6 +475,50 @@ def repair(v, value, path, parents):
     return None
 
 
+NONNULL = {'string', 'object', 'array', 'integer', 'number', 'boolean'}
+
+
+def requires_null(sub):
+    kinds = sub.get('type')
+    return kinds == 'null' or sub.get('const', 0) is None or sub.get('enum') == [None]
+
+
+def contradicted_branch(info, nodes):
+    """GO addition, a checked UNREACHABLE proof: every reach of the clause passes a `then` whose `if` requires an
+    object member P to be null (type null / const null), while the same definition unconditionally requires P at
+    that object and types it non-null there (a node reached with no conditional or union context). No valid
+    instance can then satisfy the `if`, so the branch, and the clause, is unreachable."""
+    proofs = []
+    for reach in info['reach']:
+        found = None
+        for kind, depth, _, owner, resolver, obj in reach['ctx']:
+            if kind != 'then':
+                continue
+            condition = deref(owner.get('if', {}), resolver)[0]
+            for prop, sub in condition.get('properties', {}).items():
+                sub = deref(sub, resolver)[0]
+                if not requires_null(sub):
+                    continue
+                at = reach['ipath'][:depth] + (prop,)
+                parent = reach['ipath'][:depth]
+                typed = [loc for loc, n in nodes.items() for r in n['reach']
+                         if r['ipath'] == at and not r['ctx'] and isinstance(n['node'].get('type'), str) and n['node']['type'] in NONNULL]
+                required = [loc for loc, n in nodes.items() for r in n['reach']
+                            if r['ipath'] == parent and not r['ctx'] and prop in (n['node'].get('required') or [])]
+                if typed and required:
+                    found = dict(member=prop, null_condition=owner.get('x-pm-oracle-id', '') + '/if', nonnull_type=typed[0],
+                                 required_by=required[0])
+                    break
+            if found:
+                break
+        if not found:
+            return None
+        proofs.append(found)
+    first = proofs[0]
+    return ('contradicted branch: its `if` requires `' + first['member'] + '` null (' + first['null_condition'] + ') but the '
+            'definition unconditionally requires it (' + first['required_by'] + ') and types it non-null (' + first['nonnull_type'] + ')')
+
+
 def error_repair(v, value, keep, rounds=16):
     """GO addition: error-guided branch-control repair. Each round fixes the deepest failing nodes the owner
     validator itself reports (a missing required member is generated from its owner subschema, an unexpected
@@ -685,6 +729,7 @@ VACUOUS = {'minItems': 0, 'minLength': 0, 'minProperties': 0}
 # Clauses listed apart: inside an `if` (a selector), a `not` operand (the `not` keyword is the assertion) and,
 # GO addition, a `contains` operand (the validator reports only `contains`; operand failures never refuse).
 APART = ('if', 'not', 'contains')
+COVERED_EXTRA = 120
 
 
 def close_root(root, v, seeds, budget):
@@ -720,13 +765,15 @@ def close_root(root, v, seeds, budget):
             best = None
             attempts = 0
             start = COUNT[0]
+            covered_at = None  # GO addition: once COVERED_LATER is shown, search COVERED_EXTRA more for a kill
             for reach in [r for r in info['reach'] if not any(c[0] in APART for c in r['ctx'])][:6]:
                 pools = [(c, None) for c in controls[:40]]
                 for variant in range(4):
                     for control in seeds[:6]:
                         pools.append((control, variant))
                 for control, variant in pools:
-                    if COUNT[0] - root0 > budget or COUNT[0] - start > 900:
+                    if COUNT[0] - root0 > budget or COUNT[0] - start > 900 or (
+                            covered_at is not None and COUNT[0] - covered_at > COVERED_EXTRA):
                         break
                     if variant is None:
                         paths = list(concrete(control, reach['ipath']))
@@ -795,6 +842,7 @@ def close_root(root, v, seeds, budget):
                                 later = locations(cut)
                                 leaves = sorted(x for x in later if x.rsplit('/', 1)[-1] not in ('anyOf', 'oneOf') and not
                                                 re.search(r'/(anyOf|oneOf)/\d+/type$', x))
+                                covered_at = COUNT[0]
                                 best = dict(cls='COVERED_LATER', still_refused_by=(leaves or sorted(later))[:4],
                                             same_node=any(x.rsplit('/', 1)[0] == location for x in leaves), **witness)
                         if best and best['cls'] == 'KILLED':
@@ -803,6 +851,10 @@ def close_root(root, v, seeds, budget):
                         break
                 if best and best['cls'] == 'KILLED':
                     break
+            if best is None:
+                proof = contradicted_branch(info, nodes)
+                if proof:
+                    best = dict(cls='UNREACHABLE', proof=proof)
             entries[clause] = best or dict(cls='UNCOVERED', construction_attempts=attempts)
     return entries, branch_controls, COUNT[0] - root0
 
@@ -922,6 +974,8 @@ def main():
                                      branch_controls=branch_controls, validations=spent, counts=dict(counts), clauses=entries,
                                      unresolved_refs=list(UNRESOLVED))
         print(f'{root[:90]}: seeds={len(seeds)} {dict(counts)}', file=sys.stderr, flush=True)
+        partial = dict(report, all_roots={r: sorted(families.get(r, ())) for r in sorted(roots)}, partial=True)
+        args.out.with_suffix('.partial.json').write_text(json.dumps(partial, indent=1, sort_keys=True, default=str) + '\n')
     report['shard'] = args.shard
     report['seed_policy'] = args.seeds
     report['closure_tool_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
