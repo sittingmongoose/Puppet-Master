@@ -158,6 +158,10 @@
   {
    "event_type": "forge.mirror.detached",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.mirror.status_changed",
+   "outcome": "registered"
   }
  ]
 }
