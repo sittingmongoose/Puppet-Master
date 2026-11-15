@@ -26443,6 +26443,17 @@ At create admission, resolve the exact command identity, project, current source
 
 `context_refs` and `provenance_refs` preserve their frozen capture categories. Their unique union must equal canonical `context_provenance_refs`; attachment and citation sets match their canonical lists. Resolve each ref under authorized storage custody and verify the owner's associated hashes/content scope. Do not manufacture a category split from the merged record field. Creation time and hash come from the same durable original capture, not retry time. Ephemeral stream/queue data, workspace file bodies, secrets and credentials are forbidden. No new redaction transform is authorized; unresolved/unhandled material refuses or quarantines.
 
+#### Capture selection (DL-693)
+
+Amended 2026-11-15 (DL-693): `cmd.chat.create_restore_point` captures everything up to and including the chosen message, sorted by kind. The capture range is the persisted transcript of the resolved source conversation branch, in branch order, from its first record through the boundary message `source_message_id` inclusive. Messages after the boundary, other branches and threads, unsent composer drafts, queued messages and in-progress streams are outside the range. Chat fills each frozen category from its own kind of record in that range and from nothing else:
+
+- `context_refs`: the items in the chat's context at the boundary message, that is, each item the user added to the chat's context at or before that message and did not remove between that addition and the message, in the order of those additions.
+- `provenance_refs`: for each assistant answer in the range, the sources its tools and its model used to write it, as that answer's persisted tool-call and run records name them: its tool calls' sources in call order, then the sources its model run records as used.
+- `attachment_refs`: what is attached to each message in the range (its `attachments[]`, such as attached files), in message order.
+- `citation_refs`: the sources each assistant answer in the range cites (`citations[]`), in message order.
+
+Each list holds each ref once, at its first place in that order. A ref that plays more than one role, such as an attached file that a tool also read, appears in every list it qualifies for; other transcript records add nothing to the four lists. The canonical record's `context_provenance_refs` is `context_refs` followed by each `provenance_refs` ref not already in it, and its `attachment_refs` and `citation_refs` are those two lists unchanged, so the union and set equalities above hold exactly. A list is empty only when the range holds nothing of its kind. Selection reads refs from persisted owner records, never file bodies, and runs once, at barrier 1: retry, recovery and replay reuse the frozen capture and never reselect from a conversation that has moved on. Selection never guesses. A context item that the chat's records cannot place before or after the boundary, a selected ref that does not resolve under authorized custody, and a selected ref whose material is forbidden above are unresolved or unhandled material: creation refuses or quarantines with no record, companion or event, and nothing is dropped, rewritten or redacted to make the capture fit.
+
 #### New required creation custody and commit marker
 
 The source search inspected exact materialized candidate rows and owners. `plan_approved_outbox` is Planning-Wizard approval-only. `thread_command_outbox_record` is the cross-platform command-delivery family and stores a payload digest, not this complete frozen event. `storage_maintenance_operation` is maintenance-only. `receipt_record_baseline` is deferred. None authorizes restore-created capture storage; no such family is borrowed.
@@ -26529,6 +26540,10 @@ canonical_text: Assistant Chat defines restore-created passive consumers and nat
   adopt SP-285 retained_creation/retained_custody with authentic immutable rows and current source instead
   of disposed original controls; all action preflight remains independent.
   Creation, fresh lifecycle admission, admitted pending recovery and passive retained inspection follow their distinct SP-285 routes.
+  Under DL-693, cmd.chat.create_restore_point captures everything up to and including the chosen message,
+  sorted by kind, namely the context still in effect at the boundary, each answer's tool and model sources, message
+  attachments and answer citations, each ref once in first-appearance order; unplaceable, unresolved or
+  forbidden selected material refuses or quarantines.
 gui_related: true
 gui_classification_reason: This unit governs existing visible restore-point history and branch availability.
 split_recommended: false
@@ -26541,6 +26556,7 @@ depends_on:
 - SP-278
 - SP-285
 - SP-286
+- DL-693
 unblocks: []
 acceptance_criteria:
 - History accepts the independently typed SP-269 terminal-summary result without a present point/companion;
@@ -26559,6 +26575,8 @@ acceptance_criteria:
   rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
   unchanged generic token alone cannot authorize disclosure.
 - Original creation admission remains complete. SP-285 creation_pending_recovery uses authentic admitted pending custody and SP-286 first receipt, with final receipt resolution before the final owner-local runtime/domain guard and atomic companion/result publication. Passive readers cannot execute recovery or infer completion from pending status.
+- Under DL-693 the four frozen lists are exactly the boundary-inclusive selection of the source branch, each ref once in first-appearance order; messages after the boundary, other branches, drafts, queued messages and streams add nothing, and an earlier answer's sources count as much as the chosen message's.
+- The record's context_provenance_refs is context_refs followed by each provenance ref not already in it; unplaceable context, an unresolved ref or forbidden selected material refuses or quarantines with no record, companion or event and is never dropped or redacted.
 validation_surfaces:
 - Plans/restore_point_created_contract_fixtures.json
 - Plans/storage_value_registry.json
@@ -26583,6 +26601,7 @@ source_lineage:
 - Plans/Decision_Log.md#DL-045
 - reports/event-authority-20260911/step-08-depth-binding-work-records.md#ea-s8-restore-binding--restore-consumercheckpoint-evidence
 - Plans/storage-plan.md#run-start-and-restore-created-versioned-index-adoption
+- Plans/Decision_Log.md#DL-693
 preserved_exact_tokens:
 - restore_point.created
 - event-family-restore-point-created
@@ -26594,6 +26613,7 @@ negative_constraints:
   or governance seal.
 - No recreation of missing canonical creation custody from projections or guessed original command data.
 - No passive replay side effects, hold clearing, source resurrection or filesystem restore.
+- No capture category is guessed, inferred from the merged record field, reselected on retry or redacted to fit.
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/storage-plan.md

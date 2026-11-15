@@ -557,7 +557,7 @@
         "False": 187,
         "True": 335
       },
-      "heading_count": 752,
+      "heading_count": 753,
       "implementation_surfaces": [
         "AGENTS.md",
         "Plans/Architecture_Invariants.md",
@@ -637,7 +637,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 33346,
+      "line_count": 33366,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 522,
       "plan_unit_ids": [
@@ -1523,7 +1523,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "d6a0adb2d473eee030abd7e011b477a4066eeb8754c44d9f942999781fcdb608",
+      "sha256": "e3f399b7ab0b3835eade30c9b24a3aa71efaca27f2a10db8654b811055cbb9ff",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 518,
@@ -2111,6 +2111,7 @@
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_packet_audit_census.py",
         "scripts/pm_packet_audit_verdicts.py",
+        "scripts/pm_s3bo_ext_sr2_capture.py",
         "scripts/pm_s3bo_ext_sr_applied.py",
         "scripts/pm_s3bo_ext_sr_corrupt.py",
         "scripts/pm_s3bo_ext_sr_created.py",
@@ -2124,7 +2125,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 14540,
+      "line_count": 14547,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 192,
       "plan_unit_ids": [
@@ -2418,7 +2419,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "b140983e41f59bafc51aa27672d44777035b279666c99634c6392433287f5003",
+      "sha256": "9c912a7f1f85fdd1f9993b8b2a39691a9f04bcd4a925739a6f4b6a787f7265bc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 190,
@@ -6863,10 +6864,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 132,
+        "False": 133,
         "True": 235
       },
-      "heading_count": 607,
+      "heading_count": 608,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -7001,12 +7002,13 @@
         "scripts/pm-validate-pm7-gui-fixtures.py",
         "scripts/pm_emit_only_event_contract.py",
         "scripts/pm_pnc019_currentness.py",
+        "scripts/pm_s3bo_ext_sr2_capture.py",
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 32562,
+      "line_count": 32602,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 367,
+      "plan_unit_count": 368,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -7374,7 +7376,8 @@
         "DL-477",
         "DL-478",
         "DL-479",
-        "DL-510"
+        "DL-510",
+        "DL-693"
       ],
       "reasoning_tiers": [
         "high",
@@ -7427,6 +7430,7 @@
         "compaction_detail_retention_and_original_custody",
         "completion_state_conflation",
         "composer_chrome_stacking",
+        "conversation_restore_fidelity",
         "coordination_heartbeat_expiry_policy_drift",
         "correction_landed_in_a_shape_its_owner_did_not_choose",
         "corroboration_disagreement_outcome_drift",
@@ -7571,15 +7575,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca",
+      "sha256": "3ed92a4d0300ffc0b9e6fe718425f0842fa499bcb7016b32ae03347807ee5d12",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 367
+        "accepted": 368
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 251,
+        "decision": 252,
         "decision_record": 24,
         "requirement": 91
       },
@@ -7671,14 +7675,17 @@
         "reports/event-authority-20260911/step-08-compaction-detail-cleanup-presentation.json",
         "reports/event-authority-20260911/step-08-platform-lifetime-presentation.json",
         "reports/event-authority-20260911/step-09-procedure-20260924.md",
+        "reports/event-authority-20261114/depth-c12-sr2-created.json",
         "scripts/pm-command-payload-defs-check.py",
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plan-index.py",
+        "scripts/pm-s3bo-check.py",
         "scripts/pm-settings-layering-check.py",
         "scripts/pm-shared-runtime-storage-materialize.py",
         "scripts/pm7-build-check.py",
         "scripts/pm7-canon-check.py",
+        "scripts/pm_s3bo_ext_sr2_capture.py",
         "scripts/pm_w3b_event_oracles.py"
       ]
     },
@@ -24212,7 +24219,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-15T00:26:28Z",
+  "generated_at_utc": "2026-11-15T06:48:16Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -24220,13 +24227,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 4881,
+      "False": 4882,
       "True": 3931
     },
-    "plan_unit_count": 8812,
+    "plan_unit_count": 8813,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 8532,
+      "accepted": 8533,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -24260,7 +24267,7 @@
       "contract": 197,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 274,
+      "decision": 275,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,

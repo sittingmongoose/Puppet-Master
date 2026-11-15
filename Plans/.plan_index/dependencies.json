@@ -3259,6 +3259,7 @@
     "DL-095",
     "DL-401",
     "DL-411",
+    "DL-693",
     "GRS-060",
     "N2-217",
     "N2-219",
@@ -12876,6 +12877,11 @@
     {
       "edge_type": "depends_on",
       "from": "ACD-465",
+      "to": "DL-693"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-465",
       "to": "SP-269"
     },
     {
@@ -19517,6 +19523,11 @@
       "edge_type": "depends_on",
       "from": "ATS-3880",
       "to": "DL-076"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3880",
+      "to": "DL-693"
     },
     {
       "edge_type": "depends_on",
@@ -40812,6 +40823,11 @@
       "edge_type": "depends_on",
       "from": "DL-510",
       "to": "DL-455"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-693",
+      "to": "DL-045"
     },
     {
       "edge_type": "depends_on",
@@ -136915,6 +136931,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "DL-693",
+      "to": "ACD-465"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-693",
+      "to": "ATS-3880"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "DP-063",
       "to": "ATS-018"
     },
@@ -142859,7 +142885,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-15T00:26:28Z",
+  "generated_at_utc": "2026-11-15T06:48:16Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -151898,8 +151924,8 @@
       "source_location": {
         "heading": "ACD-464 — Deleted restore-point passive history admission",
         "heading_level": 3,
-        "heading_line": 26622,
-        "line": 26624,
+        "heading_line": 26642,
+        "line": 26644,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -151915,8 +151941,8 @@
       "source_location": {
         "heading": "ACD-465 — Restore-point created consumers",
         "heading_level": 3,
-        "heading_line": 26512,
-        "line": 26514,
+        "heading_line": 26523,
+        "line": 26525,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -151932,8 +151958,8 @@
       "source_location": {
         "heading": "ACD-466 — Expired restore-point passive history admission",
         "heading_level": 3,
-        "heading_line": 26689,
-        "line": 26691,
+        "heading_line": 26709,
+        "line": 26711,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -151949,8 +151975,8 @@
       "source_location": {
         "heading": "ACD-467 - External Research Decision Packet Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 26756,
-        "line": 26758,
+        "heading_line": 26776,
+        "line": 26778,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -151966,8 +151992,8 @@
       "source_location": {
         "heading": "ACD-469 - Turn Stage Transcript Rendering Families And Accent Budget",
         "heading_level": 3,
-        "heading_line": 26808,
-        "line": 26810,
+        "heading_line": 26828,
+        "line": 26830,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -151983,8 +152009,8 @@
       "source_location": {
         "heading": "ACD-470 - Streaming Reply Presentation And Terminal Records",
         "heading_level": 3,
-        "heading_line": 26904,
-        "line": 26906,
+        "heading_line": 26924,
+        "line": 26926,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152000,8 +152026,8 @@
       "source_location": {
         "heading": "ACD-471 - Busy Sends Steer Or Queue With Queue Default Send Now Steers Stop Holds The Queue",
         "heading_level": 3,
-        "heading_line": 26984,
-        "line": 26986,
+        "heading_line": 27004,
+        "line": 27006,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152017,8 +152043,8 @@
       "source_location": {
         "heading": "ACD-472 - Follow Along Release Rules And The Fold Height Hold",
         "heading_level": 3,
-        "heading_line": 27053,
-        "line": 27055,
+        "heading_line": 27073,
+        "line": 27075,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152034,8 +152060,8 @@
       "source_location": {
         "heading": "ACD-473 - Working Activity Behaviour Over Operation Records",
         "heading_level": 3,
-        "heading_line": 27117,
-        "line": 27119,
+        "heading_line": 27137,
+        "line": 27139,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152051,8 +152077,8 @@
       "source_location": {
         "heading": "ACD-474 - Retired historical identifier",
         "heading_level": 3,
-        "heading_line": 27198,
-        "line": 27200,
+        "heading_line": 27218,
+        "line": 27220,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "retired",
@@ -152068,8 +152094,8 @@
       "source_location": {
         "heading": "ACD-475 - Motion Voices By Theme Family And Chat Sound Cues",
         "heading_level": 3,
-        "heading_line": 27237,
-        "line": 27239,
+        "heading_line": 27257,
+        "line": 27259,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152085,8 +152111,8 @@
       "source_location": {
         "heading": "ACD-476 - Composer Dock And Per-Owner Attention Items",
         "heading_level": 3,
-        "heading_line": 27455,
-        "line": 27457,
+        "heading_line": 27475,
+        "line": 27477,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152102,8 +152128,8 @@
       "source_location": {
         "heading": "ACD-477 - Teach Capture Scope Safety Screen And Supersession",
         "heading_level": 3,
-        "heading_line": 27559,
-        "line": 27561,
+        "heading_line": 27579,
+        "line": 27581,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152119,8 +152145,8 @@
       "source_location": {
         "heading": "ACD-478 - Revert Files Row Confirm Sheet And Outcome Display",
         "heading_level": 3,
-        "heading_line": 27654,
-        "line": 27656,
+        "heading_line": 27674,
+        "line": 27676,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152136,8 +152162,8 @@
       "source_location": {
         "heading": "ACD-479 - Thread Title Attempts Title Lock And Header Title States",
         "heading_level": 3,
-        "heading_line": 27726,
-        "line": 27728,
+        "heading_line": 27746,
+        "line": 27748,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152153,8 +152179,8 @@
       "source_location": {
         "heading": "ACD-480 - Collaboration Run Views Are Editor Documents",
         "heading_level": 3,
-        "heading_line": 27803,
-        "line": 27805,
+        "heading_line": 27823,
+        "line": 27825,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152170,8 +152196,8 @@
       "source_location": {
         "heading": "ACD-481 - Teach Rule Lock And Turn Off",
         "heading_level": 3,
-        "heading_line": 27871,
-        "line": 27873,
+        "heading_line": 27891,
+        "line": 27893,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152187,8 +152213,8 @@
       "source_location": {
         "heading": "ACD-482 - Dock And Files Row Supersede The Stream Footer Summary",
         "heading_level": 3,
-        "heading_line": 27930,
-        "line": 27932,
+        "heading_line": 27950,
+        "line": 27952,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152204,8 +152230,8 @@
       "source_location": {
         "heading": "ACD-483 - Composer Source References For Sent Review Findings",
         "heading_level": 3,
-        "heading_line": 27997,
-        "line": 27999,
+        "heading_line": 28017,
+        "line": 28019,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152221,8 +152247,8 @@
       "source_location": {
         "heading": "ACD-484 - ELI5 Chat Override Project Default And App Default With Forward-Only Switching",
         "heading_level": 3,
-        "heading_line": 28057,
-        "line": 28059,
+        "heading_line": 28077,
+        "line": 28079,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152238,8 +152264,8 @@
       "source_location": {
         "heading": "ACD-485 - A Subagent Opens As A Read-Only Live Child Transcript",
         "heading_level": 3,
-        "heading_line": 28151,
-        "line": 28153,
+        "heading_line": 28171,
+        "line": 28173,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152255,8 +152281,8 @@
       "source_location": {
         "heading": "ACD-500 - What The Chat Opens Where, Its Column, Its Command Card And Teacher's Command Explanations",
         "heading_level": 3,
-        "heading_line": 28231,
-        "line": 28233,
+        "heading_line": 28251,
+        "line": 28253,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152272,8 +152298,8 @@
       "source_location": {
         "heading": "ACD-501 - What The 5.6 Pro Chat Must Meet When It Is Ported",
         "heading_level": 3,
-        "heading_line": 28484,
-        "line": 28486,
+        "heading_line": 28504,
+        "line": 28506,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152289,8 +152315,8 @@
       "source_location": {
         "heading": "ACD-502 - The Chat's Terminal Cards Hand Off To Terminal Tabs",
         "heading_level": 3,
-        "heading_line": 28611,
-        "line": 28613,
+        "heading_line": 28631,
+        "line": 28633,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152306,8 +152332,8 @@
       "source_location": {
         "heading": "ACD-503 - Grilling Rounds And What We Agreed",
         "heading_level": 3,
-        "heading_line": 28726,
-        "line": 28728,
+        "heading_line": 28746,
+        "line": 28748,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152323,8 +152349,8 @@
       "source_location": {
         "heading": "ACD-504 - The Hosted Chat Replaces The Stand-In",
         "heading_level": 3,
-        "heading_line": 28815,
-        "line": 28817,
+        "heading_line": 28835,
+        "line": 28837,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152340,8 +152366,8 @@
       "source_location": {
         "heading": "ACD-505 - Processes Activity Domain",
         "heading_level": 3,
-        "heading_line": 28916,
-        "line": 28918,
+        "heading_line": 28936,
+        "line": 28938,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152357,8 +152383,8 @@
       "source_location": {
         "heading": "ACD-506 - Full Activity Detail And Dynamic Chat Width",
         "heading_level": 3,
-        "heading_line": 28986,
-        "line": 28988,
+        "heading_line": 29006,
+        "line": 29008,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152374,8 +152400,8 @@
       "source_location": {
         "heading": "ACD-507 - Pip Hosts Faces And Orbit",
         "heading_level": 3,
-        "heading_line": 29065,
-        "line": 29067,
+        "heading_line": 29085,
+        "line": 29087,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152391,8 +152417,8 @@
       "source_location": {
         "heading": "ACD-508 - No Project Place Computer And Lazy Chat Folder",
         "heading_level": 3,
-        "heading_line": 29161,
-        "line": 29163,
+        "heading_line": 29181,
+        "line": 29183,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152408,8 +152434,8 @@
       "source_location": {
         "heading": "ACD-509 - Explicit Cross Project Reads And Thread Requests",
         "heading_level": 3,
-        "heading_line": 29249,
-        "line": 29251,
+        "heading_line": 29269,
+        "line": 29271,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152425,8 +152451,8 @@
       "source_location": {
         "heading": "ACD-510 - Two Explicit Conversion Paths And Current Preview",
         "heading_level": 3,
-        "heading_line": 29332,
-        "line": 29334,
+        "heading_line": 29352,
+        "line": 29354,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152442,8 +152468,8 @@
       "source_location": {
         "heading": "ACD-511 - Conversion Lineage Recovery Report And Undo",
         "heading_level": 3,
-        "heading_line": 29411,
-        "line": 29413,
+        "heading_line": 29431,
+        "line": 29433,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152459,8 +152485,8 @@
       "source_location": {
         "heading": "ACD-571 - Bundle Revision Requested Event Semantics",
         "heading_level": 3,
-        "heading_line": 33156,
-        "line": 33158,
+        "heading_line": 33176,
+        "line": 33178,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152476,8 +152502,8 @@
       "source_location": {
         "heading": "ACD-572 - Bundle Revision Started Event Semantics",
         "heading_level": 3,
-        "heading_line": 33204,
-        "line": 33206,
+        "heading_line": 33224,
+        "line": 33226,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152493,8 +152519,8 @@
       "source_location": {
         "heading": "ACD-573 - Bundle Revision Completed Event Semantics",
         "heading_level": 3,
-        "heading_line": 33252,
-        "line": 33254,
+        "heading_line": 33272,
+        "line": 33274,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152510,8 +152536,8 @@
       "source_location": {
         "heading": "ACD-574 - Bundle Revision Interrupted Event Semantics",
         "heading_level": 3,
-        "heading_line": 33300,
-        "line": 33302,
+        "heading_line": 33320,
+        "line": 33322,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152527,8 +152553,8 @@
       "source_location": {
         "heading": "ACD-610 — bundle.selection_forward_blocked",
         "heading_level": 3,
-        "heading_line": 31780,
-        "line": 31784,
+        "heading_line": 31800,
+        "line": 31804,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152544,8 +152570,8 @@
       "source_location": {
         "heading": "ACD-611 — bundle.selection_sent_to_chat",
         "heading_level": 3,
-        "heading_line": 31847,
-        "line": 31851,
+        "heading_line": 31867,
+        "line": 31871,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152561,8 +152587,8 @@
       "source_location": {
         "heading": "ACD-612 — chat.message",
         "heading_level": 3,
-        "heading_line": 31915,
-        "line": 31919,
+        "heading_line": 31935,
+        "line": 31939,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152578,8 +152604,8 @@
       "source_location": {
         "heading": "ACD-613 — chat.thread_archived",
         "heading_level": 3,
-        "heading_line": 32904,
-        "line": 32908,
+        "heading_line": 32924,
+        "line": 32928,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152595,8 +152621,8 @@
       "source_location": {
         "heading": "ACD-614 — chat.thread_created",
         "heading_level": 3,
-        "heading_line": 31982,
-        "line": 31986,
+        "heading_line": 32002,
+        "line": 32006,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152612,8 +152638,8 @@
       "source_location": {
         "heading": "ACD-615 — chat.thread_deleted",
         "heading_level": 3,
-        "heading_line": 32049,
-        "line": 32053,
+        "heading_line": 32069,
+        "line": 32073,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152629,8 +152655,8 @@
       "source_location": {
         "heading": "ACD-616 — chat.thread_worktree_bound",
         "heading_level": 3,
-        "heading_line": 32117,
-        "line": 32121,
+        "heading_line": 32137,
+        "line": 32141,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152646,8 +152672,8 @@
       "source_location": {
         "heading": "ACD-617 — chat.thread_worktree_create_failed",
         "heading_level": 3,
-        "heading_line": 32184,
-        "line": 32188,
+        "heading_line": 32204,
+        "line": 32208,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152663,8 +152689,8 @@
       "source_location": {
         "heading": "ACD-618 — chat.thread_worktree_merge_failed",
         "heading_level": 3,
-        "heading_line": 32251,
-        "line": 32255,
+        "heading_line": 32271,
+        "line": 32275,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152680,8 +152706,8 @@
       "source_location": {
         "heading": "ACD-619 — chat.thread_worktree_merged",
         "heading_level": 3,
-        "heading_line": 32318,
-        "line": 32322,
+        "heading_line": 32338,
+        "line": 32342,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152697,8 +152723,8 @@
       "source_location": {
         "heading": "ACD-620 — chat.thread_worktree_pr_created",
         "heading_level": 3,
-        "heading_line": 32385,
-        "line": 32389,
+        "heading_line": 32405,
+        "line": 32409,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152714,8 +152740,8 @@
       "source_location": {
         "heading": "ACD-621 — chat.thread_worktree_pr_failed",
         "heading_level": 3,
-        "heading_line": 32451,
-        "line": 32455,
+        "heading_line": 32471,
+        "line": 32475,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152731,8 +152757,8 @@
       "source_location": {
         "heading": "ACD-622 — chat.thread_worktree_pre_merge_test_failed",
         "heading_level": 3,
-        "heading_line": 32518,
-        "line": 32528,
+        "heading_line": 32538,
+        "line": 32548,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152748,8 +152774,8 @@
       "source_location": {
         "heading": "ACD-623 — chat.thread_worktree_pre_merge_test_passed",
         "heading_level": 3,
-        "heading_line": 32612,
-        "line": 32622,
+        "heading_line": 32632,
+        "line": 32642,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152765,8 +152791,8 @@
       "source_location": {
         "heading": "ACD-624 — chat.thread_worktree_pre_merge_test_started",
         "heading_level": 3,
-        "heading_line": 32701,
-        "line": 32705,
+        "heading_line": 32721,
+        "line": 32725,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152782,8 +152808,8 @@
       "source_location": {
         "heading": "ACD-625 — chat.thread_worktree_renamed",
         "heading_level": 3,
-        "heading_line": 32769,
-        "line": 32773,
+        "heading_line": 32789,
+        "line": 32793,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152799,8 +152825,8 @@
       "source_location": {
         "heading": "ACD-626 — chat.thread_worktree_unbound",
         "heading_level": 3,
-        "heading_line": 32836,
-        "line": 32840,
+        "heading_line": 32856,
+        "line": 32860,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152816,8 +152842,8 @@
       "source_location": {
         "heading": "ACD-627 — chat.response_stop_requested — request authority",
         "heading_level": 3,
-        "heading_line": 32986,
-        "line": 32994,
+        "heading_line": 33006,
+        "line": 33014,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152833,8 +152859,8 @@
       "source_location": {
         "heading": "ACD-628 — saved assistant-turn Stop outcome",
         "heading_level": 3,
-        "heading_line": 33074,
-        "line": 33082,
+        "heading_line": 33094,
+        "line": 33102,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152850,8 +152876,8 @@
       "source_location": {
         "heading": "ACD-637 - Chat Thread Lifecycle, Context Lens, Thread Worktree And Context Detail Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 29497,
-        "line": 29499,
+        "heading_line": 29517,
+        "line": 29519,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152867,8 +152893,8 @@
       "source_location": {
         "heading": "ACD-638 - Chat Message, Code-Block, Rewind Revert And Message Details Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 30557,
-        "line": 30559,
+        "heading_line": 30577,
+        "line": 30579,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152884,8 +152910,8 @@
       "source_location": {
         "heading": "ACD-639 - Chat Web Family And Stop Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 30993,
-        "line": 30995,
+        "heading_line": 31013,
+        "line": 31015,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -152901,8 +152927,8 @@
       "source_location": {
         "heading": "ACD-640 - Chat Vision Bridge Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 31475,
-        "line": 31477,
+        "heading_line": 31495,
+        "line": 31497,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -159702,7 +159728,7 @@
         "heading": "ATS-3880 - Executable s3bo family boundaries for the restore-point and recovery-unavailable families (C12-SR)",
         "heading_level": 2,
         "heading_line": 14459,
-        "line": 14475,
+        "line": 14479,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -189402,6 +189428,23 @@
         "heading_level": 3,
         "heading_line": 32524,
         "line": 32526,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_restore_point_created",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-693",
+      "reasoning_tier": "high",
+      "risk_class": "conversation_restore_fidelity",
+      "source_location": {
+        "heading": "DL-693 - A Restore Point Records Everything Up To Its Message, Sorted By Kind (E10-1)",
+        "heading_level": 3,
+        "heading_line": 32564,
+        "line": 32566,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -292672,12 +292715,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 23590,
+    "depends_on_edge_count": 23593,
     "downstream_blocked_node_count": 0,
-    "edge_count": 26808,
-    "node_count": 8812,
+    "edge_count": 26813,
+    "node_count": 8813,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3218,
+    "unblocks_edge_count": 3220,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []
