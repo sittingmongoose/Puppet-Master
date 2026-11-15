@@ -62,6 +62,10 @@ const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'gl
 const CHAT = ':is(.pm56-host, #pm56-layers, #pmw-chat56)';
 const PLACES = [['card', `${CHAT} :is(.working-card, .orbit-card)`], ['bar', `${CHAT} .status-bar`]];
 
+// Whether a visit can be judged (exported for tools/chat-visit.selftest.mjs): it opened after the arming, and a short visit
+// closed 100 ms before the delay would have been due, a long one stayed past it; a visit that overruns stays unjudged
+export const visitJudged = (kind, visit, delay) => !!visit && visit[0] > 0 && (kind === 'long' ? visit[1] > delay : visit[1] < delay - 100);
+
 export default async function (t) {
 	const want = String(t.args.looks || 'basic-dark,glass-dark,retro-dark,nier-dark');
 	const looks = want === 'all' ? ALL : want.split(',').filter(Boolean);
@@ -215,53 +219,71 @@ export default async function (t) {
 			const delay = await f.evaluate(() => { const r = window.PM56_DATA && PM56_DATA.workRuns && PM56_DATA.workRuns.orbitA; return r && r.next && r.next.run === 'orbitB' ? r.next.delayMs || 1200 : null; });
 			for (const [kind, openAt, closeAt] of [['short', 100, 250], ['long', 100, 2400]]) {
 				if (!delay || !appBlock) { await t.check(`${look} visit: the Multi Orbit chain and the chat's app block are in the page`, false, `orbitA -> orbitB delay ${delay}, app block ${appBlock ? appBlock.from : 'missing'}: could not judge`); break; }
-				const r = await f.evaluate(async ({ delay, openAt, closeAt, app }) => {
-					const D = window.PM56_DEMO, H = window.PM56_HOST, real = window.setTimeout.bind(window);
-					const sleep = (ms) => new Promise((res) => real(res, ms));
-					const works = () => D.snapshot().works || {};
-					// what the chat hears: one listener for the page's life (onRest has no removal)
-					if (!window.__c3rest) { window.__c3rest = []; H.onRest((on) => window.__c3rest.push([on, performance.now()])); }
-					const out = { arm: null, start: null, err: null, rest: null };
-					D.trigger('Multi-orbit turn');
-					for (let i = 0; i < 100 && !(works().orbitA && works().orbitA.running); i++) await sleep(50);
-					if (!(works().orbitA && works().orbitA.running)) { out.err = 'orbitA never started'; return out; }
-					const prev = window.setTimeout;
-					window.setTimeout = function (fn, ms, ...rest) {
-						if (out.arm == null && ms === delay) {
-							const m = /:(\d+):\d+/.exec(String(new Error().stack).split('\n')[2] || '');
-							if (m && +m[1] >= app.from && +m[1] <= app.to) {
-								out.arm = performance.now();
-								real(() => window.O55.ui.open(), openAt);
-								real(() => window.O55.ui.close(), closeAt);
+				// PM7PERF-CHATRUN-VISIT-SHORT-LATE: on a loaded host the window itself takes 130-420 ms to open after open() and
+				// 500-950 ms to close after close() (Alexis, 2026-11-15), so a short visit can still overrun the delay. It closes
+				// as the chat hears the window open (or at its timer, whichever comes first), and a visit that cannot be judged
+				// is run again, up to --set visitTries (3) times, before the row fails as not judged.
+				const visitTries = Number(t.args.visitTries || 3), unjudged = [];
+				for (let attempt = 0; attempt < visitTries; attempt++) {
+					const r = await f.evaluate(async ({ delay, openAt, closeAt, app, closeOnRest }) => {
+						const D = window.PM56_DEMO, H = window.PM56_HOST, real = window.setTimeout.bind(window);
+						const sleep = (ms) => new Promise((res) => real(res, ms));
+						const works = () => D.snapshot().works || {};
+						// what the chat hears: one listener for the page's life (onRest has no removal)
+						if (!window.__c3rest) { window.__c3rest = []; H.onRest((on) => window.__c3rest.push([on, performance.now()])); }
+						if (!window.__c3closer) { window.__c3closer = true; H.onRest((on) => { const c = window.__c3closeNow; if (on && c) { window.__c3closeNow = null; c(); } }); }
+						const out = { arm: null, start: null, err: null, rest: null };
+						D.trigger('Multi-orbit turn');
+						for (let i = 0; i < 100 && !(works().orbitA && works().orbitA.running); i++) await sleep(50);
+						if (!(works().orbitA && works().orbitA.running)) { out.err = 'orbitA never started'; return out; }
+						const prev = window.setTimeout;
+						window.setTimeout = function (fn, ms, ...rest) {
+							if (out.arm == null && ms === delay) {
+								const m = /:(\d+):\d+/.exec(String(new Error().stack).split('\n')[2] || '');
+								if (m && +m[1] >= app.from && +m[1] <= app.to) out.arm = performance.now();
 							}
-						}
-						return prev.call(window, fn, ms, ...rest);
-					};
-					const mark = window.__c3rest.length;
-					try {
-						for (let i = 0; i < 600 && !works().orbitA.completed; i++) D.tickOnce();
-						if (!works().orbitA.completed) { out.err = 'orbitA did not reach its end'; return out; }
-						for (let i = 0; i < 400 && out.arm == null; i++) await sleep(100);
-						if (out.arm == null) { out.err = 'the successor\'s delay was never armed'; return out; }
-						const until = performance.now() + delay + closeAt + 8000;
-						while (!works().orbitB && performance.now() < until) await sleep(4);
-						if (works().orbitB) out.start = performance.now();
-						while (document.documentElement.hasAttribute('data-o55-open') && performance.now() < until + 5000) await sleep(20);
-					} finally { window.setTimeout = prev; }
-					out.rest = window.__c3rest.slice(mark);
-					return out;
-				}, { delay, openAt, closeAt, app: { from: appBlock.from, to: appBlock.to } });
-				if (r.err || r.start == null) { await t.check(`${look} visit ${kind}: a chain's successor is armed and starts`, false, `${r.err || 'orbitB never started'}: could not judge ${JSON.stringify(r)}`); continue; }
-				// the time the window was open between the arming and the start, as the chat heard it
-				let open = 0, on = null, opened = null, closed = null;
-				for (const [o, at] of r.rest) { if (o && on == null) { on = at; if (opened == null) opened = at; } else if (!o && on != null) { open += Math.max(0, Math.min(at, r.start) - Math.max(on, r.arm)); on = null; closed = at; } }
-				if (on != null) open += Math.max(0, r.start - Math.max(on, r.arm));
-				const total = r.start - r.arm, outside = total - open;
-				const visit = opened == null || closed == null ? null : [Math.round(opened - r.arm), Math.round(closed - r.arm)];
-				t.log(`${look} visit ${kind}: delay ${delay} ms armed, window open ${JSON.stringify(visit)} ms after it, orbitB at +${Math.round(total)} ms: ${Math.round(outside)} ms outside the window`);
-				const judged = !!visit && visit[0] > 0 && (kind === 'long' ? visit[1] > delay : visit[1] < delay - 100);
-				if (!judged) { await t.check(`${look} visit ${kind}: the window opened and closed inside the delay as planned`, false, `window ${JSON.stringify(visit)} ms after the arming, delay ${delay}: could not judge`); continue; }
-				await t.check(`${look} visit ${kind}: the chain's next run starts after its delay counted outside the window (${kind === 'short' ? 'the window closed before it was due' : 'the window stayed past it'})`, outside >= delay - 40 && outside <= delay + 300, `${Math.round(outside)} ms outside the window of ${Math.round(total)} ms from the arming to orbitB's start (window ${visit[0]}-${visit[1]} ms); expected ${delay - 40} to ${delay + 300}`);
+							return prev.call(window, fn, ms, ...rest);
+						};
+						const mark = window.__c3rest.length;
+						try {
+							for (let i = 0; i < 600 && !works().orbitA.completed; i++) D.tickOnce();
+							if (!works().orbitA.completed) { out.err = 'orbitA did not reach its end'; return out; }
+							for (let i = 0; i < 400 && out.arm == null; i++) await sleep(100);
+							if (out.arm == null) { out.err = 'the successor\'s delay was never armed'; return out; }
+							// PM7PERF-CHATRUN-VISIT-SHORT-LATE: the visit's timers are set once the synchronous ticks above have
+							// returned, at the same times after the arming (set inside the ticks, they could fire only when the run of
+							// up to 600 ticks ended, 300-500 ms late on a loaded host, and the short visit could not end in time)
+							out.armLag = Math.round(performance.now() - out.arm);
+							real(() => { out.opened = Math.round(performance.now() - out.arm); window.O55.ui.open(); }, Math.max(0, openAt - out.armLag));
+							const close = () => { out.closed = Math.round(performance.now() - out.arm); window.O55.ui.close(); };
+							if (closeOnRest) window.__c3closeNow = close;
+							real(() => { if (!closeOnRest) close(); else if (window.__c3closeNow) { window.__c3closeNow = null; close(); } }, Math.max(0, closeAt - out.armLag));
+							const until = performance.now() + delay + closeAt + 8000;
+							while (!works().orbitB && performance.now() < until) await sleep(4);
+							if (works().orbitB) out.start = performance.now();
+							while (document.documentElement.hasAttribute('data-o55-open') && performance.now() < until + 5000) await sleep(20);
+						} finally { window.setTimeout = prev; window.__c3closeNow = null; }
+						out.rest = window.__c3rest.slice(mark);
+						return out;
+					}, { delay, openAt, closeAt, app: { from: appBlock.from, to: appBlock.to }, closeOnRest: kind === 'short' });
+					if (r.err || r.start == null) { await t.check(`${look} visit ${kind}: a chain's successor is armed and starts`, false, `${r.err || 'orbitB never started'}: could not judge ${JSON.stringify(r)}`); break; }
+					// the time the window was open between the arming and the start, as the chat heard it
+					let open = 0, on = null, opened = null, closed = null;
+					for (const [o, at] of r.rest) { if (o && on == null) { on = at; if (opened == null) opened = at; } else if (!o && on != null) { open += Math.max(0, Math.min(at, r.start) - Math.max(on, r.arm)); on = null; closed = at; } }
+					if (on != null) open += Math.max(0, r.start - Math.max(on, r.arm));
+					const total = r.start - r.arm, outside = total - open;
+					const visit = opened == null || closed == null ? null : [Math.round(opened - r.arm), Math.round(closed - r.arm)];
+					t.log(`${look} visit ${kind}: delay ${delay} ms armed, window open ${JSON.stringify(visit)} ms after it (open() called at +${r.opened}, close() at +${r.closed}; the ticks returned ${r.armLag} ms after the arming), orbitB at +${Math.round(total)} ms: ${Math.round(outside)} ms outside the window`);
+					const judged = visitJudged(kind, visit, delay);
+					if (!judged) {
+						unjudged.push(JSON.stringify(visit));
+						if (attempt + 1 < visitTries) continue;
+						await t.check(`${look} visit ${kind}: the window opened and closed inside the delay as planned`, false, `in ${visitTries} tries the window was ${unjudged.join(', ')} ms after the arming, delay ${delay}: could not judge`); break;
+					}
+					if (unjudged.length) t.log(`${look} visit ${kind}: NOTE ${unjudged.length} attempt(s) not judged, the window ${unjudged.join(', ')} ms after the arming`);
+					await t.check(`${look} visit ${kind}: the chain's next run starts after its delay counted outside the window (${kind === 'short' ? 'the window closed before it was due' : 'the window stayed past it'})`, outside >= delay - 40 && outside <= delay + 300, `${Math.round(outside)} ms outside the window of ${Math.round(total)} ms from the arming to orbitB's start (window ${visit[0]}-${visit[1]} ms); expected ${delay - 40} to ${delay + 300}`);
+					break;
+				}
 			}
 
 			// 2. a send flight under the window: it rests, and lands after the close
