@@ -1734,6 +1734,9 @@ def close(args):
         for path in args.donors:
             if str(path).endswith('.ckpt'):  # an earlier GO2 pass: its accepted controls (seeds and constructions)
                 lists.append(pickle.loads(Path(path).read_bytes())['controls'])
+            elif str(path).endswith('.controls.pkl.gz'):  # an earlier GO2 report's witness controls
+                import gzip
+                lists.append(list(pickle.loads(gzip.decompress(Path(path).read_bytes())).values()))
             else:
                 lists += [e['seeds'] for e in load(path)['roots'].values()]
         DONORS[0] = Donors(lists)
