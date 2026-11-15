@@ -127,7 +127,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 
 | Tool | Use |
 |---|---|
-| `tools/cursor_picker_colours.check.mjs` | The cursor pickers: `--set expect` is the hash of the page that was navigated, the full intended URL, taken from that navigation's response, so a right hash fetched from `--set server` cannot pass a different origin's page of the same name. |
+| `tools/cursor_picker_colours.check.mjs` | The cursor pickers: `--set expect` is the hash of the page that was navigated, the full intended URL, taken from that navigation's response, so a right hash fetched from `--set server` cannot pass a different origin's page of the same name. When the browser no longer holds that response (the real 40 MB page), the hash is a fetch of the loaded URL itself. |
 | `tools/scenarios.mjs <out> [--only ids] [--theme t] [--snaps]` | Acceptance scenarios by real clicks; `--snaps` photographs every screen reached. |
 | `tools/owner_fixtures.mjs` | Test-only owner-result fixtures used by the scenarios: explicit request-bound claim/bootstrap/pair/trust, GitHub terminal creation, and protected Recovery Kit/policy results. Missing or mismatched proof must stay pending. |
 | `tools/schema_check.py validate <drafts.json>` / `coverage [--check]` | jsonschema validation of captured drafts against `Plans/product_onboarding_contracts.schema.json`; coverage table. |

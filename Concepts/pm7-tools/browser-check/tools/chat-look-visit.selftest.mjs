@@ -18,7 +18,7 @@ check('asked save', () => assert.equal(lookRoute('nier-dark', null, { save: true
 check('probe nier-dark', () => assert.equal(visitRanInLook('nier-dark', { theme: 'basic-dark', nier: false }), false, 'NieR off in Basic Dark is not the look under test'));
 check('nier-dark held', () => assert.equal(visitRanInLook('nier-dark', { theme: 'basic-dark', nier: true }), true));
 check('basic-light held', () => assert.equal(visitRanInLook('basic-light', { theme: 'basic-light', nier: false }), true, 'the run\'s own look, when that is the look under test'));
-check('run look', () => assert.equal(visitRanInLook('glass-light', { theme: 'basic-light', nier: false }), false, 'a visit measured in the run\'s starting look fails'));
+check('run look', () => assert.equal(visitRanInLook('glass-light', { theme: 'basic-light', nier: false }), false, 'a visit in the run\'s own look is not the look under test (the check logs it as a note)'));
 check('no sample', () => assert.equal(visitRanInLook('nier-dark', null), false, 'no painted sample is not a pass'));
 if (misses.length) { console.error(misses.join('\n')); process.exit(1); }
 console.log('PASS a loose preview is a Settings write, and the visit\'s painted look has to be the look under test');

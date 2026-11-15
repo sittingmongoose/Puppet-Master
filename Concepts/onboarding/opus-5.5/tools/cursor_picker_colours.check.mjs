@@ -6,6 +6,7 @@
 // size and SHA-256 are logged and written to out.pages, and a page that is not the expected one fails before it is judged).
 // PM7PERF-PICKER-DIGEST-UNBOUND (R51 F4): that digest is the response of the full intended URL the check navigates to,
 // not a separate fetch of --set server while a same-named page on another origin is judged.
+// A body too large for the browser to hold (the real page) is hashed from a fetch of that same loaded URL instead.
 import {readFileSync,writeFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {installOriginalSelectorProbe} from './rail_expanded_states.mjs';
@@ -51,7 +52,15 @@ export async function loadJudgedPage(page,server,build){
  if(!sameIntendedPage(page.url(),intended))response=await page.goto(intended,{waitUntil:'load',timeout:240000});
  const loaded=String(page.url());
  if(!sameIntendedPage(loaded,intended))throw Error('page '+loaded+' is not the intended page '+intended);
- const digest=response&&typeof response.body==='function'?await digestOfResponse(response,loaded):await pageDigest(loaded);
+ // The real page is 40 MB, and Chrome drops so large a navigation body from its inspector cache: response.body() throws
+ // "Request content was evicted from inspector cache" (Alexis, 2026-11-15: the check stopped before it judged anything).
+ // The digest is then a fetch of the page's own location: the full URL just verified as the one loaded, never --set
+ // server alone. Any other error of the body, and a response that is not ok, still stops the check.
+ let digest;
+ if(response&&typeof response.body==='function'){
+  try{digest=await digestOfResponse(response,loaded);}
+  catch(e){if(!/evicted from inspector cache|Response body is not available/i.test(String(e&&e.message||e)))throw e;digest=await pageDigest(loaded);digest.from='a fetch of the loaded URL (the navigation body was no longer held)';}
+ }else digest=await pageDigest(loaded);
  return {intended,digest};
 }
 export default async function(t){
