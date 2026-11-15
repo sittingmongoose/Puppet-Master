@@ -1,0 +1,39 @@
+{
+ "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
+ "event_type": "todo.reordered",
+ "family_id": "event-family-todo-reordered",
+ "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
+ "decision_ref": "Plans/Decision_Log.md#DL-689",
+ "decision_section_sha256": "b0fd5dedb4e5465fbc23462ead7954e2d280c3a4a43d4136cb777b069b4d6cc2",
+ "registry_before": {
+  "revision": "2026-11-15.169",
+  "sha256": "5b0d6ca2983643e58ac8ddb88a385a1d4072c81ba1039d300f9cb0ac798a06ea",
+  "family_count": 215
+ },
+ "registry_after": {
+  "revision": "2026-11-15.170",
+  "sha256": "6f041b6d6c1da555a7ec52ad5e3d9c9d551f2857581ea8fd814acd8e25bf647f",
+  "family_count": 216
+ },
+ "registry_row_sha256": "715d47ee46a17847cf036ee06e15547df2dfecd4f6e66769f3d622e470abcb8d",
+ "depth_assessment": {
+  "path": "reports/event-authority-20261114/admission-merge-1/depth/todo.reordered.json",
+  "sha256": "a52a4d41b7a4a80db55358820715378becdecece5fe832a54593fd8926a1fa6e"
+ },
+ "admission_landing": {
+  "branch": "plans/ea-merge1-apply-20261115",
+  "commit": null,
+  "record": "reports/event-authority-20261114/admission-merge-1/LANDING.md",
+  "note": "The landing commit is this family's commit on the branch once the merge lands. A record cannot name the commit that contains it, so the landing record names it."
+ },
+ "criteria_not_passing_at_recording": [],
+ "status_at_recording": "complete_depth",
+ "recorded_by": "claude-opus-5.5:ea-pnc-s5w-20261114",
+ "recorded_at_utc": "2026-11-15T07:50:10Z",
+ "notes": [
+  "Admission merge 1 (EA-P2 B), written by pm-ea-admission-writer.v1 from the manifest row for this family; one commit holds the registry append, this record, its Decision Log entry, its depth assessment, its recount OUTCOMES row and the DL-078 checkpoint pins.",
+  "The decision entry is DL-689, which DL-096 makes Jared's decision entry for this family.",
+  "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
+  "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
+ ]
+}

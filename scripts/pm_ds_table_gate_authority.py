@@ -16,7 +16,7 @@ def GA01_reviewed_binding(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('GA01_reviewed_binding', g.Invariant('/GA01_reviewed_binding', "the admission row's event type has an individually reviewed binding (created or reset)"), 'complete_browser_authority_binding_missing', GA01_reviewed_binding),
+        g.Guard('GA01_reviewed_binding', g.Invariant('/GA01_reviewed_binding', "the admission row's event type has an individually reviewed binding (created, reset or one of the exact 51 Browser Program families)"), 'complete_browser_authority_binding_missing', GA01_reviewed_binding),
     ])
 
     def check(value):

@@ -1,0 +1,295 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-15.101",
+  "sha256": "395cbecd3b3f679ca667dc26d2c387b580bdc3b753326f9dc7da8579396dec45",
+  "family_count": 147,
+  "row_pointer": "#/families/146"
+ },
+ "base_commit": "03a09c66360991e5fb7b5620a84bc85b681e3635",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "goal.paused",
+   "family_id": "event-family-goal-paused",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-15.101 as #/families/146 (canonical row SHA-256 c506bd3d6f042d2e9086bb14962f91563f1c1948cd9e0f5070025a5cb0ebd1e7); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/146",
+       "line_start": 10452,
+       "line_end": 10536,
+       "quote": "\"event_type\": \"goal.paused\"",
+       "quote_line": 10455,
+       "file_sha256": "395cbecd3b3f679ca667dc26d2c387b580bdc3b753326f9dc7da8579396dec45",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact newly authored owner unit governs this family; its own CV/SP companions bind the technical contract.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 287,
+       "line_end": 287,
+       "quote": "plan_unit_id: GRS-1512",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current Project source, original body/control/receipt joins and custody consistently select StorageBodyControlV2 under main GRS-064/SP-304. Original V1 decoder is confined to authenticated historical installations/admission; application remains a separate selected graph. Native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 335,
+       "line_end": 335,
+       "quote": "**Exact control edition and fences.** Current Project writes/retries and their complete before/after control joins select Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Distinct closed Project/application selectors (where applicable) resolve; all 19 payload files pass structural schema validation and eager reference resolution.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 337,
+       "line_end": 337,
+       "quote": "**Payload and scope.** CV-1512 selects `Plans/event_authority_w3g/payloads/goal_paused.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and a",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact source/envelope/scope/subject joins and per-family immutable original operation identity/key recipes adopt CV-317/CV-366 without a local number/timestamp implementation.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 337,
+       "line_end": 337,
+       "quote": "**Payload and scope.** CV-1512 selects `Plans/event_authority_w3g/payloads/goal_paused.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.json`. Project and a",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original operation/result and first receipt replay never reexecute work; changed semantic request conflicts and historical read is separate from current append.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 339,
+       "line_end": 339,
+       "quote": "**Replay, consumer and checkpoints.** SP-1512 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original el",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Bound to {'project': 'RP-AUTHORITY-INDEFINITE@1.0.0', 'application': 'RP-AUTHORITY-INDEFINITE@1.0.0'} by DL-453 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 341,
+       "line_end": 341,
+       "quote": "SP-1512 binds retention as `RP-AUTHORITY-INDEFINITE@1.0.0` in its Project and applicati",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current Project source, original body/control/receipt joins and custody consistently select StorageBodyControlV2 under main GRS-064/SP-304. Original V1 decoder is confined to authenticated historical installations/admission; application remains a separate selected graph. Native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 335,
+       "line_end": 335,
+       "quote": "**Exact control edition and fences.** Current Project writes/retries and their complete before/after control joins select Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "An eligible nonterminal original Goal moves active or blocked to paused through the admitted lifecycle body mutation. The current Stop epoch is latched before another continuation can dispatch. Same-state pause has no second change event. Objective text and accepted objective-history head are preserved; workflow records are never cancelled by this event.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 292,
+       "line_end": 292,
+       "quote": "An eligible nonterminal original Goal moves active or blocked to paused through the admitted lifecycle",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact named passive family reader adopts SP-278 generic projector/checkpoint and full captured-range semantics. It owns no persisted filtered projection or private checkpoint.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 339,
+       "line_end": 339,
+       "quote": "reader.goal.paused.history.v1@1.0.0` is the sole newly authored family history reader for Goal Activity history; current controls still reload native Goal/Stop state. It adopts SP-278's `pro",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original recipe/edition dispatch, writer cutoff, reader withdrawal and authentic generic rebuild fences are explicit. Future/unknown/withdrawn selectors are unavailable.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 341,
+       "line_end": 341,
+       "quote": "Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cut",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Executable synthetic oracle (native NOT_RUN): 53 positives and 566 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-1512",
+       "line_start": 343,
+       "line_end": 343,
+       "quote": "**Criterion 12.** `ATS-1262` and the `goal.paused` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable fixtures and shared",
+       "quote_check": "exact",
+       "quote_scope": "unit GRS-1512, Plans/Goal_Runtime_System.md:284-346",
+       "file_sha256": "7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}

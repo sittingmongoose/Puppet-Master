@@ -124,9 +124,13 @@ export default async function (t) {
 			try { x = await traceWindow(cdp, { ms, url: f.url() }); } catch (e) { err = String(e && e.message || e); }
 			const judged = !!x && x.secs > ms / 1000 * 0.8 && hz > 20 && hz < 400;
 			if (!judged) { await t.check(`${at}: the rest trace could be judged`, false, err || `trace ${x ? x.secs + ' s' : 'missing'}, refresh ${hz.toFixed(1)} Hz`); continue; }
+			// The frames judged here are frame STARTS, and stay so (PM7PERF-STILL-FRAMES-STARTS, measured 2026-11-15 for the lead's
+			// split): on main's page of 2026-11-10, before this pass, the fault the row was written for started 130-233 main
+			// frames a second at rest (Alexis 238 Hz, Basic and Glass Dark) of which 1-14% rendered; the rest Chrome abandoned with
+			// nothing to update. A rendered count would pass that page. Rendered frames are logged beside the starts.
 			const fr = x.mainFrames.perSec, pct = fr / hz * 100, lay = x.wholeLayoutsPerSec, it = (x.dispatched && x.dispatched.animationiteration) || 0;
-			t.log(`${at}: ${hz.toFixed(0)} Hz, main frames ${fr}/s (${pct.toFixed(0)}%), frame p50 ${x.mainFrames.p50} p95 ${x.mainFrames.p95} ms, main thread ${Math.round(x.cost.main)} ms/s, layouts ${x.layoutPerSec}/s of which whole-document ${lay}/s, drawn ${x.drawn.perSec}/s`);
-			await t.check(`${at}: main-thread frames at rest are at most ${framesPct}% of the refresh rate`, pct <= framesPct, `${fr}/s of ${hz.toFixed(0)} Hz = ${pct.toFixed(0)}%`);
+			t.log(`${at}: ${hz.toFixed(0)} Hz, main frames ${fr}/s (${pct.toFixed(0)}%; rendered ${x.mainFrames.renderedPerSec}/s, ${x.mainFrames.noUpdatePerSec}/s with nothing to update), frame p50 ${x.mainFrames.p50} p95 ${x.mainFrames.p95} ms, main thread ${Math.round(x.cost.main)} ms/s, layouts ${x.layoutPerSec}/s of which whole-document ${lay}/s, drawn ${x.drawn.perSec}/s`);
+			await t.check(`${at}: main-thread frames at rest are at most ${framesPct}% of the refresh rate`, pct <= framesPct, `${fr}/s started of ${hz.toFixed(0)} Hz = ${pct.toFixed(0)}% (${x.mainFrames.renderedPerSec}/s rendered)`);
 			await t.check(`${at}: whole-document layouts at rest are at most ${layoutsMax} a second`, lay <= layoutsMax, `${lay}/s (${x.layoutPerSec}/s layouts of any kind)`);
 			await t.check(`${at}: no animationiteration event reaches a listener at rest`, it === 0, `${it} dispatched in ${x.secs} s`);
 		}

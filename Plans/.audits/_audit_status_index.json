@@ -54,16 +54,6 @@
     },
     {
       "audit_ids": [
-        "audit-20260617-008-semantic-closure-registry-repair-fidelity",
-        "closure-reaudit-20261104"
-      ],
-      "closure_id": "closure-reaudit-20261104--closure-audit-20260617-008-semantic-closure-registry-repair-fidelity-012",
-      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Lead reconcile (pm-closure-lead, FU-BRIEF item 3): not_supported, as Sol 6.1 max judged at R 77bae0c636; the worker, the cheap recheck and Astra max had said supported. Sol 6.1 max: The live registry has the corrected PDS/PLS owners, but the same finding also covered the original matrix, whose rows still declare owner_docs as scripts/pm-audit-closure.py and Plans/.audits/_semantic_closure_registry.jsonl. Their finding_keys remain sfk-8e82e431df11de56f61cbea0 and sfk-0ffa1faea828f2ca3d91480d, disagreeing with the corrected registry; current validate_audit_dir reports both linkage errors. The owner-routing repair therefore remains incomplete rather than fully closed. At R, `python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity --require-closure-matrix` reports repair_closure_matrix.jsonl:22 and :23: \"registry row finding_key does not match matrix finding_key\". The live registry rows 22/23 name PDS/PLS owners, but the frozen matrix rows still declare scripts/pm-audit-closure.py and the registry path as owner_docs, with keys that disagree. PLS-026 freezes historical matrix rows and keeps a registry link that does not hold as an error, so the frozen-row rule does not excuse it. Added anchors: the two matrix rows and validate_audit_dir that Sol named, and PLS-026 for the frozen-row rule.",
-      "finding_key": "sfk-4ba329ca6a30e090a2dc305b",
-      "line": 1203
-    },
-    {
-      "audit_ids": [
         "fable-20260706",
         "fable-20260706-pnc019-runtime-certification-currentness"
       ],
@@ -184,7 +174,7 @@
       "line": 1095
     }
   ],
-  "generated_at_utc": "2026-11-14T23:37:20Z",
+  "generated_at_utc": "2026-11-15T05:25:15Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -503,10 +493,10 @@
           "explicitly_deferred": 2,
           "not_for_plan": 9,
           "reopened": 1,
-          "repaired": 38,
+          "repaired": 40,
           "source_lineage_only": 30
         },
-        "matching_rows": 80,
+        "matching_rows": 82,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -526,10 +516,10 @@
           "explicitly_deferred": 1,
           "not_for_plan": 5,
           "reopened": 1,
-          "repaired": 15,
+          "repaired": 16,
           "source_lineage_only": 12
         },
-        "matching_rows": 34,
+        "matching_rows": 35,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1538,9 +1528,9 @@
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 1217,
-    "current_blocker_count": 18,
-    "current_reopened_finding_count": 18,
+    "closure_registry_row_count": 1220,
+    "current_blocker_count": 17,
+    "current_reopened_finding_count": 17,
     "current_report_blocker_count": 0,
     "historical_blocked_or_fail_report_count": 25,
     "report_count": 71,

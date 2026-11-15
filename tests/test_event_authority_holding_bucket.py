@@ -374,6 +374,10 @@ class PostAugustAdmissionTests(unittest.TestCase):
         self.v.ROOT = self.root / 'Plans'
         self.registry = self.v.load_json(REPO / 'Plans/event_family_registry.json')
         self.known37 = self.v.load_json(REPO / AUDIT / 'known37/KNOWN37_FROM_PLANS.json')['event_types']
+        # The fixture's own closed world: Known37, the August pair and the families it records here. Families a
+        # later admission merge registers keep their real records in the repository, not in this fixture.
+        closed = set(self.known37) | set(self.v.AUGUST) | set(self.RECORDED)
+        self.registry = dict(self.registry, families=[f for f in self.registry['families'] if f['event_type'] in closed])
         self.families = {f['event_type']: f for f in self.registry['families']}
         self.assessment_rel = 'reports/fixture-depth-assessment.json'
         self.assessment = {'rows': [{'event_type': et, 'family_id': self.families[et]['family_id'],
@@ -402,8 +406,8 @@ class PostAugustAdmissionTests(unittest.TestCase):
             'implementation_receipt_sha256': self.v.sha256_file(self.root / self.v.POST_AUGUST_RECEIPT),
             'decision_ref': 'Plans/Decision_Log.md#' + self.DECISION[et],
             'decision_section_sha256': hashlib.sha256(section).hexdigest(),
-            'registry_before': {'revision': 'r' + str(n), 'sha256': str(n) * 64, 'family_count': 39 + n},
-            'registry_after': {'revision': 'r' + str(n + 1), 'sha256': str(n + 1) * 64, 'family_count': 40 + n},
+            'registry_before': {'revision': 'r' + str(n), 'sha256': f'{n:064x}', 'family_count': 39 + n},
+            'registry_after': {'revision': 'r' + str(n + 1), 'sha256': f'{n + 1:064x}', 'family_count': 40 + n},
             'registry_row_sha256': self.v.canonical_json_sha256(self.families[et]),
             'depth_assessment': {'path': self.assessment_rel,
                                  'sha256': self.v.sha256_file(self.root / self.assessment_rel)},
@@ -633,7 +637,7 @@ class PostAugustAdmissionTests(unittest.TestCase):
 
     def run_main(self):
         self.v.RECEIPT_DIR = self.root / 'validator-receipts'
-        shutil.copyfile(REPO / 'Plans/event_family_registry.json', self.root / 'Plans/event_family_registry.json')
+        (self.root / 'Plans/event_family_registry.json').write_text(json.dumps(self.registry))
         with contextlib.redirect_stdout(io.StringIO()):
             self.v.main()
         receipt = json.loads((self.v.RECEIPT_DIR / 'event_authority_validator_receipt.json').read_text())
@@ -1591,7 +1595,7 @@ class LiveValidatorIntegrityTests(unittest.TestCase):
                     self.assertFalse(result['pass'])
                     self.assertEqual(saved, {p: p.read_bytes() for p in retained})
                     if not altered:
-                        self.assertEqual(result['named_checks']['post_august_admitted'], ['coordination.agent_registered'])
+                        self.assertIn('coordination.agent_registered', result['named_checks']['post_august_admitted'])
                         self.assertTrue(result['named_checks']['holding_bucket_valid'])
                         continue
                     self.assertEqual(result['named_checks']['post_august_admitted'], [])
@@ -1676,7 +1680,10 @@ class LiveValidatorIntegrityTests(unittest.TestCase):
                     self.assertEqual(saved, {p: p.read_bytes() for p in saved})
                     self.assertEqual(receipt.read_bytes(), observed_receipt); self.assertEqual(lock.read_bytes(), observed_lock)
                     self.assertEqual(result['named_checks']['holding_bucket_valid'], success)
-                    self.assertEqual(result['named_checks']['post_august_admitted'], ['coordination.agent_registered'] if success else [])
+                    if success:
+                        self.assertIn('coordination.agent_registered', result['named_checks']['post_august_admitted'])
+                    else:
+                        self.assertEqual(result['named_checks']['post_august_admitted'], [])
                     if not success:
                         self.assertIsNone(result['input_pins']['post_august_admission_receipt_sha256'])
                         failures = {f['error']: f for f in result['failures']}
