@@ -57,4 +57,19 @@ const nierOk = everyFrame(nierRun(false));
 assert.ok(nierOk.worst <= 1 && nierOk.restarts.length === 0, `NieR's glyph jumping with the reference must pass (worst ${nierOk.worst}; ${nierOk.where || ''})`);
 const nierLate = everyFrame(nierRun(true));
 assert.ok(nierLate.worst > 1, `a later NieR glyph jump must fail (worst ${nierLate.worst}; named: ${(nierLate.known || []).join('; ') || 'none'})`);
-console.log('stop-chip-window: 4 cases pass');
+// The reference jumps at index 5. The glyph's same 80 ms jump is the next sample. A different size there fails.
+function nierNeighbour(ms) {
+	const R = run({ later: false, withOpen: true });
+	for (let i = 0; i < R.rows.length; i++) {
+		delete R.rows[i].b;
+		R.rows[i].nier = 'on';
+		if (i === 5) R.rows[i].g.s = 0;
+		if (i >= 6) R.rows[i].g.s = -ms;
+	}
+	return R;
+}
+const nierNext = everyFrame(nierNeighbour(80));
+assert.ok(nierNext.worst <= 1 && nierNext.restarts.length === 0, `NieR's glyph jump on the next sample, the reference's size, must pass (worst ${nierNext.worst}; ${nierNext.where || ''})`);
+const nierOther = everyFrame(nierNeighbour(30));
+assert.ok(nierOther.worst > 1, `a different-sized NieR jump on the next sample must fail (worst ${nierOther.worst}; named: ${(nierOther.known || []).join('; ') || 'none'})`);
+console.log('stop-chip-window: 6 cases pass');

@@ -457,14 +457,15 @@ function windowSpans(R, frame) {
 }
 const spanOf = (spans, i) => spans.find((x) => i >= x.from && i < x.to) || null;
 // True only on the restyle's own frame. When both loops are drawn, both must jump by more than
-// one frame, by the same amount (within one frame of each other). NieR draws no glow
-// (send-stop.css: .ss-bl is display:none), so one pulse reads 0 frames with both loops and the
-// backlight half of that pair can never be true. The glyph's jump on that same frame is the
-// window's (Alexis, qw3 run-probe2: the reference jumped 570 ms and the glyph's hand-over was
-// 0.259 of the 2200 ms loop, and nothing was named). A later frame is not otherI, so it still fails.
+// one frame, by the same amount (within one frame of each other), on that frame exactly.
+// NieR draws no glow (send-stop.css: .ss-bl is display:none; one pulse reads 0 frames with both
+// loops). The glyph's jump is the window's. It is sometimes the next sample, not otherI:
+// run-s0-1 (Alexis, 2026-11-15) named nothing while the reference jumped 373 ms at +379 ms and
+// the glyph's hand-over was 0.16932 of the 2200 ms loop (372 ms). That neighbour is waived only
+// when its size is the reference's, within one frame. A later jump, or a different size, fails.
 function restyleFrame(R, i, frame, spans) {
 	const wc = spanOf(spans, i);
-	if (!wc || wc.otherI == null || i !== wc.otherI) return false;
+	if (!wc || wc.otherI == null) return false;
 	const msOf = (layer) => {
 		const row = R.rows[i][layer], prev = R.rows[i - 1][layer];
 		if (!row || !prev || !(row.dur > 0)) return null;
@@ -473,9 +474,15 @@ function restyleFrame(R, i, frame, spans) {
 		return x.hand * row.dur;
 	};
 	const g = msOf('g'), b = msOf('b');
-	if (g == null) return false;
-	if (b == null) return R.rows[i].nier === 'on' && g > frame;
-	return g > frame && b > frame && Math.abs(g - b) <= frame;
+	if (g == null || !(g > frame)) return false;
+	const glowRuns = (R.rows || []).some((r) => r && r.b && r.b.place != null && r.b.dur > 0);
+	const nierRun = (R.rows || []).some((r) => r && r.nier === 'on');
+	if (!glowRuns && nierRun && b == null) {
+		if (i === wc.otherI) return true;
+		return Math.abs(i - wc.otherI) === 1 && Math.abs(g - wc.otherMs) <= frame;
+	}
+	if (i !== wc.otherI || b == null) return false;
+	return b > frame && Math.abs(g - b) <= frame;
 }
 // Every frame from the first change to the end, not only the frames that hold a change: the loop is never made anew,
 // never jumps at a hand-over, and (outside the frames after a long task) its place never moves more than one frame at
