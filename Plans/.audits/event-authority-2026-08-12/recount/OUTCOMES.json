@@ -514,6 +514,10 @@
   {
    "event_type": "testing.capture.segment_corrupt",
    "outcome": "registered"
+  },
+  {
+   "event_type": "testing.capture.segment_finalized",
+   "outcome": "registered"
   }
  ]
 }
