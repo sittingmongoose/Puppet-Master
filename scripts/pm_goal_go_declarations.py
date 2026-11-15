@@ -7,7 +7,10 @@ written, source-bound justification that the proof run confirms. Kinds:
   presence  with the row cut, the next checker statement indexes the member the row guards and raises
             (KeyError / TypeError / IndexError / AttributeError);
   typed     with the row cut, the value reaches a shared codec or the read harness's store postcondition,
-            which refuses by raising (ValueError, n.Refusal, AssertionError).
+            which refuses by raising (ValueError, n.Refusal, AssertionError);
+  duplicate_set  the row never refuses alone (so its gated singleton table cannot run); it is a site of a
+            declared duplicate set the run killed: the joint cut makes the complete checker accept and each
+            site refuses alone with the others cut (DUPLICATE_SET_KILLED).
 
 Entries live in scripts/pm_goal_go_justifications.json, drafted from the proof run's recorded cut
 frames (drafts/PNC019/c12-go/tools/justify.py) and reviewed: each names the row, its guard site, the
