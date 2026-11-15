@@ -73,11 +73,12 @@
   ],
   "unchanged": [
     "Every other line of the validator.",
-    "The Step 3, DL-077, DL-412 and fourth (recount) receipts' bytes as committed; the lander fills only their lander fields and the fourth receipt's prior pin."
+    "The Step 3 and DL-077 receipts are untouched. The DL-412 and fourth (recount) receipts change only at S1: their lander fields, and the fourth receipt's prior-receipt pin."
   ],
   "notes": [
     "E9-1 authorizes this change only. It admits no family, writes no Decision Log entry, grants no depth pass, applies no seal and makes no family pass by itself.",
     "No Decision Log entry records E9-1 yet. The validator reads the signed card and answer copies by SHA-256; a later DL entry for E9-1 is not a validator input.",
+    "A fourth receipt re-stamped to the live hash (the PNC019-SCOPE finding 6 mistake one link later) makes the fourth link hold on its own, but this receipt's check then refuses, so dl_pattern_change_receipt_invalid still blocks the combined result.",
     "Author and lander are agent tasks, not a claimed human identity. Neither may apply the seal."
   ],
   "landing_state": "PENDING actual lander, prior-receipt refresh after the fourth receipt's landing bytes, exact Spec Lock anchor, and blind review before and after landing",
