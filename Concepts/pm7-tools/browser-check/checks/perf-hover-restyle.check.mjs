@@ -82,6 +82,12 @@ export async function trace(cdp, during, opts = {}) {
 	await cdp.send('Tracing.start', { categories: CATS + (opts.track ? ',disabled-by-default-devtools.timeline.invalidationTracking,disabled-by-default-devtools.timeline.stack' : ''), transferMode: 'ReturnAsStream' });
 	let failure;
 	try {
+		// The renderer starts recording a little after Tracing.start returns: a first input sent at once can run in a task
+		// that began before it did, which leaves its mark in no recorded RunTask and its count null (PM7PERF-HOVER-FIRST-
+		// COUNT-NULL, lane Q's runs on Alexis 2026-11-15: retro-dark title bar [null,25,25,25] with no task around mark 0).
+		// One round trip to the renderer and 150 ms before the first input.
+		await opts.frame.evaluate(() => performance.mark('jr:trace:begin'));
+		await new Promise((r) => setTimeout(r, 150));
 		await during();
 		// Node's delay does not acknowledge the renderer's last input task. This mark is outside every input window.
 		await opts.frame.evaluate(() => performance.mark('jr:trace:done'));
@@ -115,8 +121,8 @@ const DEBUG_STATE = () => {
 };
 
 // per mark named prefix*: the elements the change restyled
-function restyled(events, prefix) {
-	const marks = events.filter((e) => e.cat && e.cat.includes('blink.user_timing') && typeof e.name === 'string' && e.name.startsWith(prefix));
+function restyled(events, prefix, opts = {}) {
+	const marks = events.filter((e) => e.cat && e.cat.includes('blink.user_timing') && typeof e.name === 'string' && e.name.startsWith(prefix)).sort((a, b) => a.ts - b.ts);
 	const out = [];
 	for (const m of marks) {
 		const same = (e) => e.pid === m.pid && e.tid === m.tid;
@@ -134,12 +140,21 @@ function restyled(events, prefix) {
 			else if (e.ph === 'B') open.push(e);
 			else if (e.ph === 'E') { const b = open.pop(); if (b) ult.push({ ts: b.ts, end: e.ts, n: e.args?.elementCount ?? e.args?.endData?.elementCount ?? b.args?.elementCount ?? b.args?.endData?.elementCount ?? null }); }
 		}
-		// The animation clock is held before tracing. Keep the largest input recalc in the existing 60ms window,
-		// including the first recalc of a transition the input starts; never subtract elements by a heuristic.
+		// The animation clock is held before tracing. Keep the largest input recalc from the input's own task through
+		// 60 ms after that task ENDS, including the first recalc of a transition the input starts; never subtract
+		// elements by a heuristic. PM7PERF-HOVER-FIRST-COUNT-NULL: the window used to end 60 ms after the MARK, and on a
+		// loaded Alexis the first input's own task ran 68.8-92.2 ms with its recalc inside it at 66.4-83.8 ms after the
+		// mark (lane M, m6), so that input read null ("could not judge") although it was measured. The window never
+		// reaches the next input's mark (inputs are 250-1300 ms apart), so no other input's restyle is counted.
 		const task = tasks.filter((t) => t.start <= m.ts && t.end >= m.ts).sort((a,b) => b.start-a.start)[0];
-		if (!task) { out.push(null); continue; }
-		const win = ult.filter((u) => u.ts >= task.start && u.ts <= m.ts + 60000 && validCount(u.n));
+		if (!task) { out.push(null); if (opts.old) opts.old.push(null); if (opts.where) opts.where.push('no task'); continue; }
+		const next = marks.find((x) => x.ts > m.ts && same(x));
+		const end = Math.min(Math.max(task.end, m.ts) + 60000, next ? next.ts : Infinity);
+		const win = ult.filter((u) => u.ts >= task.start && u.ts <= end && validCount(u.n));
 		out.push(win.length ? Math.max(...win.map((u) => u.n)) : null);
+		// what the old window (mark + 60 ms) would have read, logged by the caller beside the judged count
+		if (opts.old) opts.old.push(((w) => w.length ? Math.max(...w.map((u) => u.n)) : null)(ult.filter((u) => u.ts >= task.start && u.ts <= m.ts + 60000 && validCount(u.n))));
+		if (opts.where) { const first = win.sort((a, b) => a.ts - b.ts)[0]; opts.where.push(first ? [Math.round((first.ts - m.ts) / 100) / 10, Math.round((task.end - m.ts) / 100) / 10] : null); }
 	}
 	return out;
 }
@@ -155,6 +170,9 @@ const measurementDetail = (counts, n) => {
  return `${counts.filter(validCount).length}/${n} valid, ${counts.length} marks; missing measurements at marks ${JSON.stringify(missing)}, missing marks ${Math.max(0, n - counts.length)}, extra marks ${Math.max(0, counts.length - n)}; counts ${JSON.stringify(counts)}`;
 };
 
+// Where each input's first recalc fell and where its task ended (ms after the mark), and, when they differ, what the
+// old mark + 60 ms window would have read: logged, never judged (PM7PERF-HOVER-FIRST-COUNT-NULL)
+const windowNote = (counts, old, where) => `; first recalc/task end ms ${JSON.stringify(where)}${JSON.stringify(old) !== JSON.stringify(counts) ? `; the old mark+60 ms window would read ${JSON.stringify(old)}` : ''}`;
 // in the page: mark each change from inside its own input task
 const ARM = () => {
 	if (window.__jArm) return;
@@ -240,9 +258,10 @@ async function runScenario(t, f, cdp, animationCdp, name, n, S) {
 	}, { ...traceOpts, frame: f }));
 	await f.evaluate(() => { window.__jArm.tag = null; });
 	if (sc.teardown) await f.evaluate(sc.teardown).catch(() => {});
-	const counts = restyled(ev, 'jr:' + tag + ':');
+	const old = [], where = [];
+	const counts = restyled(ev, 'jr:' + tag + ':', { old, where });
 	const med = median(counts, n);
-	return { name, judged: med != null, counts, med, why: measurementDetail(counts, n), traceFile: traceOpts.keep || undefined, debugState: traceOpts.track ? await f.evaluate(DEBUG_STATE) : undefined };
+	return { name, judged: med != null, counts, med, why: measurementDetail(counts, n) + windowNote(counts, old, where), traceFile: traceOpts.keep || undefined, debugState: traceOpts.track ? await f.evaluate(DEBUG_STATE) : undefined };
 }
 
 export default async function (t) {
@@ -273,6 +292,7 @@ export default async function (t) {
 					rows.push({ surface, look, pmlFlip4, lookState, ...r });
 					const restoredUsage = name === 'usage' ? RESTORED_USAGE_MAIN[surface]?.[look] : null;
 					const b = restoredUsage ? restoredUsage.main : BOUND[name];
+					if (/old mark\+60 ms window would read|no task/.test(r.why || '')) t.log(`${S}${look} ${name}: NOTE ${r.why}`);
 					if (report) { t.log(`${S}${look} ${name}: median ${r.med} (${r.why})`); continue; }
 					const within = restoredUsage ? r.med <= b : r.med < b;
 					await t.check(`${S}${look} ${name}: restyled by the change ${restoredUsage ? 'no worse than main ' : 'under '}${b}`, r.judged && within, r.judged ? `median ${r.med}; ${r.why}` : `could not judge: ${r.why || 'no marks'}`);
@@ -317,11 +337,13 @@ export default async function (t) {
 						}
 					}, { ...traceOpts, frame: f }));
 					await f.evaluate(() => { window.__jArm.tag = null; });
-					const counts = restyled(ev, 'jr:' + tag + ':');
+					const old = [], where = [];
+					const counts = restyled(ev, 'jr:' + tag + ':', { old, where });
 					const med = median(counts, n);
-					r = { name: 'press', judged: med != null, counts, med, why: measurementDetail(counts, n), traceFile: traceOpts.keep || undefined, debugState: traceOpts.track ? await f.evaluate(DEBUG_STATE) : undefined };
+					r = { name: 'press', judged: med != null, counts, med, why: measurementDetail(counts, n) + windowNote(counts, old, where), traceFile: traceOpts.keep || undefined, debugState: traceOpts.track ? await f.evaluate(DEBUG_STATE) : undefined };
 				}
 				rows.push({ surface, look, pmlFlip4, lookState, ...r });
+				if (/old mark\+60 ms window would read|no task/.test(r.why || '')) t.log(`${S}${look} press: NOTE ${r.why}`);
 				if (report) { t.log(`${S}${look} press: median ${r.med} (${r.why})`); continue; }
 				await t.check(`${S}${look} press: restyled by the press under ${BOUND.press}`, r.judged && r.med < BOUND.press, r.judged ? `median ${r.med}; ${r.why}` : `could not judge: ${r.why}`);
 			}
