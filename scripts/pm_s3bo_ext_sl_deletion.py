@@ -724,9 +724,12 @@ def corpus_slots(control):
         return
     deadline = [('sl', 'deletion', 'purge_deadline_utc')] + [('sl', 'runs', i, 'events_appended', j, 'payload', 'purge_deadline_utc')
                                                             for i, r in enumerate(runs) for j, _e in enumerate(r.get('events_appended') or [])]
+    deadline += [('sl', 'runs', i, key, 'payload', 'purge_deadline_utc') for i, r in enumerate(runs)
+                 for key in ('candidate', 'obligation') if isinstance(r.get(key), dict)]
     yield {'paths': deadline, 'kind': 'datetime', 'row': 'sl_del_time', 'profile': w.EVENT_RECORD, 'type_rows': ['sl_del_time']}
-    requested = [('sl', 'deletion', 'requested_at_utc')] + [('sl', 'runs', i, 'record_after', 'requested_at_utc')
-                                                            for i, r in enumerate(runs) if isinstance(r.get('record_after'), dict)]
+    requested = [('sl', 'deletion', 'requested_at_utc')] + [('sl', 'runs', i, key, 'requested_at_utc') for i, r in enumerate(runs)
+                                                            for key in ('record_after', 'record_before') if isinstance(r.get(key), dict)]
+    requested += [('sl', 'runs', i, 'facts', 'record', 'requested_at_utc') for i, r in enumerate(runs) if isinstance(r['facts'].get('record'), dict)]
     yield {'paths': requested, 'kind': 'datetime', 'row': 'sl_del_time', 'profile': w.STORAGE_UTC_Z, 'type_rows': ['sl_del_time']}
 
 

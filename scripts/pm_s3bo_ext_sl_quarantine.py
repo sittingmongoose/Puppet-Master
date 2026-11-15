@@ -194,8 +194,7 @@ def operands(case, put, common):
     value = case['sl']['value']
     numbers = s.number_errors([('byte_length', value.get('byte_length'), 0, None)]
                               + [('run%d/byte_length' % i, (r.get('record_after') or {}).get('byte_length'), 0, None)
-                                 for i, r in enumerate(runs) if isinstance(r.get('record_after'), dict)]
-                              + [('run%d/occurrence' % i, x.get('occurrence'), 1, None) for i, r in enumerate(runs)
+                                 for i, r in enumerate(runs) if isinstance(r.get('record_after'), dict)], required=True) + s.number_errors([('run%d/occurrence' % i, x.get('occurrence'), 1, None) for i, r in enumerate(runs)
                                  if r['kind'] == 'detect' for x in r['facts']['existing']])
     times = s.date_errors([('detected_at', value.get('detected_at_utc'), w.STORAGE_UTC_Z)]
                           + [('run%d/detected_at' % i, (r.get('record_after') or {}).get('detected_at_utc'), w.STORAGE_UTC_Z)

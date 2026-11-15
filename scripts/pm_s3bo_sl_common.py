@@ -130,11 +130,15 @@ def int_ok(value, minimum=0, maximum=None):
     return w.caught(w.current_integer, value, minimum=minimum, maximum=maximum) is None
 
 
-def number_errors(slots):
-    """Shared CV-1100 current_integer at each (label, value, minimum, maximum) slot; None is an absent slot."""
+def number_errors(slots, required=False):
+    """Shared CV-1100 current_integer at each (label, value, minimum, maximum) slot.
+
+    None is an absent optional slot; with required=True a null is refused like
+    any other non-integer (the owner field is a required non-null integer).
+    """
     out = []
     for label, value, minimum, maximum in slots:
-        if value is None:
+        if value is None and not required:
             continue
         error = w.caught(w.current_integer, value, minimum=minimum, maximum=maximum)
         if error:

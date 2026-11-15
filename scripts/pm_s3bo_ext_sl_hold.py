@@ -213,8 +213,6 @@ def _numbers(runs):
                 slots.append(('run%d/receipt/%s' % (i, key), rc.get(key)))
     out = []
     for label, value in slots:
-        if value is None:
-            continue
         error = w.caught(w.storage_uint64, value)
         if error:
             out.append((label, error))
