@@ -805,8 +805,10 @@
      once done leaves nothing: the host, its listeners and its frames go. 'o55:predraw' on window says when it starts and
      how it ended; O55.ui.prewarm.state() is the kit check's view of it. */
   const prewarmed = new Set();
-  /* (a check can hold the pre-draw at its boundary, ?o55pdhold=1: the host in place and nothing drawn in it yet, so the screen
-     can be pictured settled before the first slice; O55.ui.prewarm.release() lets it go, R49-T3) */
+  /* (a check can hold the pre-draw at its boundary, ?o55pdhold=1: the host built and laid out for its fonts, not yet drawn in or
+     composited (phase 'pending'), so the screen can be pictured as it is before the pre-draw; O55.ui.prewarm.release() lets it
+     go, R49-T3. Held after it is composited, the picture already showed what a composited host changes: Welcome's rounded
+     edges, K-AA) */
   let pdHold = (() => { try { return new URLSearchParams(location.search).get('o55pdhold') === '1'; } catch (_) { return false; } })();
   const NONPAINT = /^(defs|lineargradient|radialgradient|stop|clippath|mask|filter|pattern|symbol|title|desc|style|script|metadata|marker|fe[a-z]+)$/;
   const pd = { phase: 'none', listeners: 0, pieces: 0, slices: 0, worst: 0, startedAt: 0, endedAt: 0, why: '', long: [] };
@@ -829,7 +831,7 @@
       tell('end');
     };
     const live = () => S.open && S.sess.screen === from && host.isConnected && !O55.motion.lowResource;
-    const settled = () => { const l = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); return !pdHold && !S.root.classList.contains('o55-opening') && !!l && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold'); };
+    const settled = () => { const l = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); return !S.root.classList.contains('o55-opening') && !!l && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold'); };
     let i = 0, n = 1, last = 0, watch = 0, gap = 0;
     const frame = (now) => {
       if (stop) return;
@@ -875,7 +877,13 @@
       try { if (def.mounted) def.mounted(S, host, false); } catch (_) { /* a part it could not draw: its fonts are still asked */ }
       /* (document.fonts is read a frame later, after the frame's own layout has asked for the faces: its status getter
          flushes style and layout, FO-188) */
-      const next = () => { if (!host.isConnected) return; if (S.open && S.sess.screen === from && !O55.motion.lowResource) predraw(host, from); else host.remove(); };
+      /* (the test hold waits here, phase 'pending': the host built and laid out for its fonts, not yet drawn in or composited) */
+      const next = () => {
+        if (!host.isConnected) return;
+        if (!(S.open && S.sess.screen === from && !O55.motion.lowResource)) { host.remove(); if (pd.phase === 'pending') Object.assign(pd, { phase: 'done', why: 'left' }); return; }
+        if (pdHold) { pd.phase = 'pending'; O55.motion.real.setTimeout(next, 50); return; }
+        predraw(host, from);
+      };
       O55.motion.real.raf(() => O55.motion.real.raf(() => {
         const F = document.fonts;
         if (!F || F.status !== 'loading') { next(); return; }
