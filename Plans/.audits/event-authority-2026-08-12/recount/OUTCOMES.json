@@ -546,6 +546,10 @@
   {
    "event_type": "todo.dependency_changed",
    "outcome": "registered"
+  },
+  {
+   "event_type": "todo.removed_from_current_list",
+   "outcome": "registered"
   }
  ]
 }
