@@ -7576,6 +7576,8 @@ Round-two static obligations include coherent source contradictions through the 
 
 Sweep part 2B adopts the gated shared rules. Every family timestamp, EventRecord timestamp, Collaborative Workflows owner timestamp in a prepared source, checkpoint timestamp and projection timestamp is checked by CV-1101's shared `pm_event_datetime.date_time` with its owner's profile, with witnesses for hour 24, an illegitimate second 60, an impossible date, minute 60, month 13, offsets and lowercase `z` where CV-253 forbids them, and the trailing LF an unguarded owner pattern admitted, plus leap-second and long-fraction positives. Every integer slot of a current payload, EventRecord, prepared source, application wrapper and checkpoint is checked by the shared `current_integer` (Storage fields by `storage_uint64`), raw SP-337 bodies are parsed by the shared `loads_current_json`, identity preimages use the shared `qualified_jcs`, and the stored EventRecord and application wrappers use the shared `storage_value_bytes` with EVENT_VALUE and APP_PHYSICAL. Historical and checkpoint last-event reads resolve one frozen v1 recipe through the shared `RetainedDispatcher`; integral-float, negative-zero and uint64-maximum originals stay readable, while coherent forgeries, unsealed originals, an unsupported recipe tuple, a 24:00:00Z original and a disclosed write epoch that differs from custody refuse. The shared number corpus runs through the SP-337 reference route and the inline route of one event per family, with expectations composed from the shared helpers, and the 4,400-digit integer reaches every boundary without a crash. `python3 scripts/pm_event_numbers.py --self-test --scope numbers` must pass; the shared date-time inventory gate and `datetime_validator` run at batch-2 integration.
 
+Criterion-12 closure (PNC-019, lanes C12-DC1 for the twelve `collaboration.*` families and C12-DC2 for the BrainStorm and Review families) keeps every guard table and row and adds per-clause evidence for the whole-definition schema rows. Each schema occurrence (PS01 payload, SO03 prepared source, WR01 application wrapper, EV01 EventRecord, CK01 projection checkpoint) stays one row that validates the complete closed definition. `python3 scripts/pm-dc-c12-check.py clauses --out <dir>` inventories, per family and boundary, every keyword clause that row's validator evaluates, following `$ref`, with the clause's literal schema location; builds witnesses from the checker's own valid probes in which the row reports exactly one error (one value changed, or one member replaced by a value valid at its own schema node, another control's or generated, or an enclosing object set so an `if` branch applies); requires each witness's first refusal in the complete checker to be that schema row; then removes each clause in place from the schema the checker reads, reruns its witnesses and the family's controls through the complete checker, and restores it. Only disappearance of the exact expected refusal is a kill. A cut that raises is INVALID, and one that only a control detects is recorded apart. A clause no witness can isolate needs a written mechanical proof: an implying pattern, enum or const, the definition or edition the route selects, or an `if` branch a const fixes. `joins` lists, for every equality join row, a single-copy witness for each copy, from the gated collection and a lexical-class mutation search over each family's valid probes. `retained` snapshots the sealed custody store around every historical and checkpoint read and adds the missing, ambiguous and other-original receipt negatives. `datetime` runs the shared timestamp battery, with a calendar supplement, at every family timestamp field through the complete checker, with expectations composed from the owner pattern and the shared `date_time` profile.
+
 ```yaml
 plan_unit_id: ATS-230
 unit_type: verification_contract
@@ -7595,6 +7597,9 @@ canonical_text: >-
   boundaries, true-end lexical/type guards, numeric equivalents and owner-bound completion requirements.
   Timestamps use CV-1101's shared predicate with each owner's profile; current integer slots, Storage uint64
   fields and physical bytes use the shared CV-1100/SP-1100 calls; retained originals use SP-1101 dispatch.
+  Criterion-12 closure adds per-clause witnesses, clause cuts and restorations for the whole-definition schema
+  rows, copy witnesses for every join row, sealed-store snapshots for retained reads and the shared timestamp
+  battery at every family timestamp field, all through the complete checker (scripts/pm-dc-c12-check.py).
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -7608,6 +7613,10 @@ validation_surfaces:
   - "python3 scripts/pm_collaboration_events.py"
   - "python3 scripts/pm-collab-guard-tables.py --out <dir>"
   - "python3 scripts/pm_event_numbers.py --self-test --scope numbers"
+  - "python3 scripts/pm-dc-c12-check.py clauses --out <dir>"
+  - "python3 scripts/pm-dc-c12-check.py joins --collection <collection.pkl> --out <dir>"
+  - "python3 scripts/pm-dc-c12-check.py retained --out <dir>"
+  - "python3 scripts/pm-dc-c12-check.py datetime --out <dir>"
   - "Plans/collaboration_event_contract_fixtures.json"
   - "Plans/collaboration_event_payloads.schema.json"
   - "Plans/collaboration_projection_contracts.schema.json"
@@ -7623,6 +7632,11 @@ implementation_surfaces:
   - scripts/pm_collaboration_events.py
   - scripts/pm-collab-table-generate.py
   - scripts/pm-collab-guard-tables.py
+  - scripts/pm-dc-c12-check.py
+  - scripts/pm_dc_c12_clauses.py
+  - scripts/pm_dc_c12_joins.py
+  - scripts/pm_dc_c12_retained.py
+  - scripts/pm_dc_c12_datetime.py
 node_compile_hint:
   mode: owner_contract_only
   create_worknodes: false
