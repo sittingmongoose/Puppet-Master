@@ -154,6 +154,11 @@ def envelope_ok(c, d, original_recipe, retry=True, historical=False, append=Fals
         return False
     if not context_ok(c, d.get('original_context'), recipe=original_recipe):
         return False
+    # A new append joins the owner record to the CURRENT transition (d2_env_c below), so its current context first
+    # passes the same closed deck-2 context schema. C12-DS15: a retained-reader carrier (the history base) at the
+    # envelope boundary has no current transition and raised KeyError here instead of refusing.
+    if not retry and not context_ok(c, d.get('context')):
+        return False
     scope = p.get('scope', {'kind': 'project', 'project_id': p.get('project_id')})
     event_schema = read('Plans/event_record.schema.json')
     if (not valid('sch_envelope_v1' if historical else 'sch_envelope', event_schema, e, recipe)
