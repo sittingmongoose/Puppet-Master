@@ -17,6 +17,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 REVIEWED = 'ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f'
 GRADE = 'reports/event-authority-20261104/DG6A.self-grade.json'
+# C12-DG6A (PNC-019 S4): criterion 12 is PASS only with the closure report cited at an exact line.
+C12_REPORT = 'reports/event-authority-20261114/C12-DG6A.md'
 
 
 def load(path):
@@ -41,9 +43,11 @@ def audit_grade():
             assert row == old[row['event_type']], ('stopped family changed', row['event_type'])
         else:
             for criterion, cell in row['cells'].items():
-                expected = {'membership_version': 'ABSENT', 'retention': 'PARTIAL',
-                            'positive_negative_oracles': 'PARTIAL'}.get(criterion, 'PASS')
+                expected = {'membership_version': 'ABSENT', 'retention': 'PARTIAL'}.get(criterion, 'PASS')
                 assert cell['status'] == expected, (row['event_type'], criterion, cell['status'])
+                if criterion == 'positive_negative_oracles':
+                    assert any(ref['path'] == C12_REPORT for ref in cell['evidence']), (
+                        row['event_type'], 'criterion 12 PASS needs the C12-DG6A closure citation')
         refs = row['disposition_evidence'] + [ref for cell in row['cells'].values() for ref in cell['evidence']]
         for ref in refs:
             lines = (ROOT / ref['path']).read_text().splitlines()
@@ -316,8 +320,10 @@ def run_suite(output, selected=None, payload_format_only=False):
             cli(event, 'A5', 'overstated retention grade', Path(__file__).name, GRADE,
                 lambda v: next(r for r in v['families'] if r['event_type'] == event)['cells']['retention'].update(status='PASS'),
                 args=('--audit-grade-only',))
-            cli(event, 'B2-sweep', 'unproved history-shape guard cannot claim oracle PASS', Path(__file__).name, GRADE,
-                lambda v: next(r for r in v['families'] if r['event_type'] == event)['cells']['positive_negative_oracles'].update(status='PASS'),
+            cli(event, 'C12', 'oracle PASS without the C12-DG6A closure citation', Path(__file__).name, GRADE,
+                lambda v: next(r for r in v['families'] if r['event_type'] == event)['cells']['positive_negative_oracles'].update(
+                    evidence=[ref for ref in next(r for r in v['families'] if r['event_type'] == event)['cells']
+                              ['positive_negative_oracles']['evidence'] if ref['path'] != C12_REPORT]),
                 args=('--audit-grade-only',))
 
     for fid in ('shared_alert_state', 'shared_alert_rule_state'):
