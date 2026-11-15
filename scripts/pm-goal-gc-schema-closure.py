@@ -20,6 +20,7 @@ per-keyword disable context (pm_goal_oracle_common._SCHEMA_CONTEXT); nothing is 
 and witnesses earn no lifecycle or row credit; the rows themselves are gated-proved by scripts/pm-goal-gc-guard-tables.py.
 
 Usage: python3 scripts/pm-goal-gc-schema-closure.py --out FILE [--source own_a|own_b]...
+       python3 scripts/pm-goal-gc-schema-closure.py --self-test
 """
 import argparse
 import collections
@@ -124,14 +125,29 @@ def deref(node, resolver, seen=None):
     return node, resolver
 
 
-def walk(v):
-    """Every schema node with: the instance path patterns that reach it and the conditions on the way."""
+def ctx_key(entry):
+    """A reach's context entry by its owner node, not only (kind, instance depth, index).
+
+    Shared origin: lane GO found this defect in this file at c0482747da (pm-mail 1115152853-9ecb) and fixed its own
+    copy, scripts/pm_goal_go_schema_closure.py, at eb10b969cf; this is the same key (GC2 port). Keyed by
+    (kind, depth, index) alone, a node reached through two different conditionals (or unions) at the same depth kept
+    only its first reach, with that reach's steps, owners and empty domain; every class that quantifies over all of a
+    clause's reaches (the empty-domain UNREACHABLE, SELECTOR_OR_NEGATED) then read an incomplete list. GO's second
+    part, pins scoped to the branches a reach also takes, has no counterpart here: this tool keeps no value pins.
+    The owner stays alive in the reach list, so its id is never reused during a walk."""
+    return (entry[0], entry[1], entry[2], id(entry[3]))
+
+
+def walk(v, key_of=None):
+    """Every schema node with: the instance path patterns that reach it and the conditions on the way.
+    key_of replaces ctx_key only for --reach-audit, which re-walks with the c0482747da key to compare."""
+    key_of = key_of or ctx_key
     nodes = {}
     def visit(node, resolver, ipath, ctx, steps, depth, obj=None, empty=None):
         if not isinstance(node, dict) or depth > 40:
             return
         location = node.get('x-pm-oracle-id', json.dumps(node, sort_keys=True))
-        key = (location, ipath, tuple(c[:3] for c in ctx))
+        key = (location, ipath, tuple(key_of(c) for c in ctx))  # GC2: owner node in the key (shared with GO eb10b969cf)
         if key in seen:
             return
         seen.add(key)
@@ -579,6 +595,22 @@ def siblings(location, ipath, by_ipath):
 VACUOUS = {'minItems': 0, 'minLength': 0, 'minProperties': 0}
 
 
+def static_class(info, keyword):
+    """The classes that need no witness: they quantify over every reach of the clause's node (UNREACHABLE,
+    SELECTOR_OR_NEGATED) or read the owner node only (VACUOUS). None when the clause needs a witness."""
+    node = info['node']
+    if all(r['empty_domain'] for r in info['reach']):
+        return dict(cls='UNREACHABLE', reaches=len(info['reach']), proof='every instance location of the clause is an item of '
+                    'an array whose owner node has maxItems 0 (' + info['reach'][0]['empty_domain'] + '): no valid instance holds an item')
+    inside = sorted({c[0] for r in info['reach'] for c in r['ctx'] if c[0] in ('if', 'not')})
+    if inside and all(any(c[0] in ('if', 'not') for c in r['ctx']) for r in info['reach']):
+        return dict(cls='SELECTOR_OR_NEGATED', inside=inside, reaches=len(info['reach']),
+                    note='inside an `if` selector or a `not` operand: it never refuses on its own')
+    if keyword in VACUOUS and node.get(keyword) == VACUOUS[keyword]:
+        return dict(cls='VACUOUS', proof=f'{keyword} is 0: no instance can fail it (checked on the owner node)')
+    return None
+
+
 def close_root(root, v, seeds, budget):
     CURRENT[0] = v
     nodes = walk(v)
@@ -596,17 +628,9 @@ def close_root(root, v, seeds, budget):
         for keyword in clauses_of(node):
             clause = location + '/' + name_of(keyword)
             ident = common.schema_guard(node, keyword)
-            if all(r['empty_domain'] for r in info['reach']):
-                entries[clause] = dict(cls='UNREACHABLE', proof='every instance location of the clause is an item of an array '
-                                       'whose owner node has maxItems 0 (' + info['reach'][0]['empty_domain'] + '): no valid instance holds an item')
-                continue
-            inside = sorted({c[0] for r in info['reach'] for c in r['ctx'] if c[0] in ('if', 'not')})
-            if inside and all(any(c[0] in ('if', 'not') for c in r['ctx']) for r in info['reach']):
-                entries[clause] = dict(cls='SELECTOR_OR_NEGATED', inside=inside,
-                                       note='inside an `if` selector or a `not` operand: it never refuses on its own')
-                continue
-            if keyword in VACUOUS and node.get(keyword) == VACUOUS[keyword]:
-                entries[clause] = dict(cls='VACUOUS', proof=f'{keyword} is 0: no instance can fail it (checked on the owner node)')
+            static = static_class(info, keyword)
+            if static:
+                entries[clause] = static
                 continue
             best = None
             attempts = 0
@@ -712,16 +736,112 @@ def collect(source):
     return code
 
 
+def self_test():
+    """Standing trials for the reach walk (--self-test). The first is GO's (eb10b969cf): two conditionals at the same
+    instance depth reach one shared node and must give two reaches. The second is GO's standing trial in this tool's
+    UNREACHABLE terms, a negative: a clause that one live conditional reaches must not classify UNREACHABLE."""
+    import jsonschema
+    shared = {"x-pm-oracle-id": "S", "type": "string", "minLength": 3}
+    schema = {"x-pm-oracle-id": "R", "type": "object", "required": ["kind", "a"], "properties": {
+        "kind": {"x-pm-oracle-id": "K", "enum": ["x", "y"]},
+        "a": {"x-pm-oracle-id": "A", "type": "object", "required": ["k2", "v"], "properties": {"k2": {"x-pm-oracle-id": "K2", "enum": ["p", "q"]}, "v": {"x-pm-oracle-id": "V"}},
+              "allOf": [
+                  {"x-pm-oracle-id": "C0", "if": {"x-pm-oracle-id": "C0if", "properties": {"k2": {"x-pm-oracle-id": "C0ifk", "const": "p"}}}, "then": {"x-pm-oracle-id": "C0then", "properties": {"v": shared}}},
+                  {"x-pm-oracle-id": "C1", "if": {"x-pm-oracle-id": "C1if", "properties": {"k2": {"x-pm-oracle-id": "C1ifk", "const": "q"}}}, "then": {"x-pm-oracle-id": "C1then", "properties": {"v": shared}}}]}}}
+    nodes = walk(jsonschema.Draft202012Validator(schema))
+    owners = sorted(r['ctx'][-1][3]['x-pm-oracle-id'] for r in nodes['S']['reach'])
+    print('trial 1: S reaches', owners)
+    assert owners == ['C0', 'C1'], 'two conditionals at the same depth must give two reaches'
+
+    # Trial 2 (negative): the shared item clause S2/minLength sits under `then` of C0 (v is an array with maxItems 0)
+    # and under `then` of C1 (v is an array without that bound). C1 is live (k2 = q selects it), so a valid instance
+    # holds an item that S2 constrains: the clause is reachable and must not be UNREACHABLE. The defective walk kept
+    # only the C0 reach (same (then, 1, 0) key) and claimed UNREACHABLE.
+    item = {"x-pm-oracle-id": "S2", "type": "string", "minLength": 3}
+    schema2 = {"x-pm-oracle-id": "R2", "type": "object", "required": ["a"], "properties": {
+        "a": {"x-pm-oracle-id": "A2", "type": "object", "required": ["k2", "v"], "properties": {"k2": {"x-pm-oracle-id": "K22", "enum": ["p", "q"]}, "v": {"x-pm-oracle-id": "V2", "type": "array"}},
+              "allOf": [
+                  {"x-pm-oracle-id": "D0", "if": {"x-pm-oracle-id": "D0if", "properties": {"k2": {"x-pm-oracle-id": "D0ifk", "const": "p"}}}, "then": {"x-pm-oracle-id": "D0then", "properties": {"v": {"x-pm-oracle-id": "E0", "maxItems": 0, "items": item}}}},
+                  {"x-pm-oracle-id": "D1", "if": {"x-pm-oracle-id": "D1if", "properties": {"k2": {"x-pm-oracle-id": "D1ifk", "const": "q"}}}, "then": {"x-pm-oracle-id": "D1then", "properties": {"v": {"x-pm-oracle-id": "E1", "items": item}}}}]}}}
+    v2 = jsonschema.Draft202012Validator(schema2)
+    live = {"a": {"k2": "q", "v": ["abc"]}}
+    assert not list(v2.iter_errors(live)) and list(v2.iter_errors({"a": {"k2": "q", "v": ["ab"]}})), 'C1 reaches S2 live'
+    n2 = walk(v2)
+    domains = sorted(str(r['empty_domain']) for r in n2['S2']['reach'])
+    got = static_class(n2['S2'], 'minLength')
+    print('trial 2: S2 reach empty domains', domains, 'static class', got and got['cls'])
+    assert domains == ['E0', 'None'], 'both conditional reaches of the item clause must be kept'
+    assert got is None or got['cls'] != 'UNREACHABLE', 'must not claim UNREACHABLE: the D1 reach is live'
+
+    # Trial 3 (positive control): with only D0, every reach is an item of a maxItems-0 array: UNREACHABLE holds.
+    schema3 = copy.deepcopy(schema2)
+    del schema3['properties']['a']['allOf'][1]
+    n3 = walk(jsonschema.Draft202012Validator(schema3))
+    got3 = static_class(n3['S2'], 'minLength')
+    print('trial 3: D0 only, static class', got3 and got3['cls'])
+    assert got3 and got3['cls'] == 'UNREACHABLE'
+
+    # Trial 4: --reach-audit sees trial 2's defect: under the c0482747da key S2 keeps one reach and is UNREACHABLE.
+    audit = reach_audit('trial2', v2)
+    print('trial 4: reach audit static changes', audit['static_changes'])
+    assert dict(clause='S2/minLength', before='UNREACHABLE', after=None) in audit['static_changes']
+    print('closure self-test pass: two same-depth conditionals keep two reaches; no UNREACHABLE while one reach is live; '
+          'UNREACHABLE kept when every reach is an empty domain')
+    return 0
+
+
+def old_ctx_key(entry):
+    """The c0482747da key, kept only so --reach-audit can show what the owner-node key changes."""
+    return entry[:3]
+
+
+def reach_audit(root, v):
+    """Walk one root with the c0482747da key and with ctx_key: the nodes whose reach list grew, and for every
+    assertion clause of those nodes its static class under each walk (None: it needs a witness)."""
+    old, new = walk(v, old_ctx_key), walk(v)
+    grown = []
+    for location, info in sorted(new.items()):
+        before = old.get(location)
+        count = len(before['reach']) if before else 0
+        if len(info['reach']) == count:
+            continue
+        rows = []
+        for keyword in clauses_of(info['node']):
+            a = static_class(before, keyword) if before else None
+            b = static_class(info, keyword)
+            rows.append(dict(clause=location + '/' + name_of(keyword), before=a and a['cls'], after=b and b['cls']))
+        grown.append(dict(location=location, reaches_before=count, reaches_after=len(info['reach']),
+                          empty_domain_reaches_after=sum(1 for r in info['reach'] if r['empty_domain']), clauses=rows))
+    return dict(nodes=len(new), reaches_before=sum(len(i['reach']) for i in old.values()),
+                reaches_after=sum(len(i['reach']) for i in new.values()), grown_nodes=grown,
+                static_changes=[r for g in grown for r in g['clauses'] if r['before'] != r['after']])
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--out', type=Path)
+    parser.add_argument('--self-test', action='store_true', help='run the walk standing trials and exit')
+    parser.add_argument('--reach-audit', action='store_true', help='collect the roots, then compare only the walks '
+                        '(c0482747da key vs owner-node key): grown reach lists and static classes under each; no closure')
     parser.add_argument('--source', action='append', choices=('own_a', 'own_b'))
     parser.add_argument('--budget', type=int, default=40000, help='validations per root')
     args = parser.parse_args()
+    if args.self_test:
+        return self_test()
+    if args.out is None:
+        parser.error('--out is required')
     report = dict(method=__doc__.split('\n\n')[0], sources={}, native_execution='NOT_RUN')
     for source in args.source or ['own_a', 'own_b']:
         adapter.SCHEMA_SEEDS.clear(); adapter.SCHEMA_VALIDATORS.clear(); adapter.ROOT_ROWS.clear()
         code = collect(source)
+        if args.reach_audit:
+            audit = {root: reach_audit(root, v) for root, v in sorted(adapter.SCHEMA_VALIDATORS.items())}
+            report['sources'][source] = dict(suite_exit=code, roots=audit,
+                                             grown_nodes=sum(len(a['grown_nodes']) for a in audit.values()),
+                                             static_changes=sum(len(a['static_changes']) for a in audit.values()))
+            print(f'{source}: roots {len(audit)}, grown nodes {report["sources"][source]["grown_nodes"]}, '
+                  f'static class changes {report["sources"][source]["static_changes"]}', file=sys.stderr, flush=True)
+            continue
         roots = {}
         for root, v in sorted(adapter.SCHEMA_VALIDATORS.items()):
             seeds = list(adapter.SCHEMA_SEEDS.get(root, {}).values())
@@ -740,6 +860,10 @@ def main():
                                          occurrence_counts=dict(sum((collections.Counter(e['counts']) for e in roots.values()), collections.Counter())),
                                          distinct_counts=dict(collections.Counter(e['cls'] for e in distinct.values())),
                                          uncovered=sorted(c for c, e in distinct.items() if e['cls'] == 'UNCOVERED'))
+    if args.reach_audit:
+        report['method'] = 'reach audit: ' + reach_audit.__doc__.split('\n')[0]
+        args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
+        return 0
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
     print(json.dumps({s: dict(occurrences=v['occurrence_counts'], distinct=v['distinct_counts'], uncovered=len(v['uncovered']))
                       for s, v in report['sources'].items()}))
