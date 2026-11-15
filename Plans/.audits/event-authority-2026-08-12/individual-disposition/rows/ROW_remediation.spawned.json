@@ -2,68 +2,68 @@
   "event_type": "remediation.spawned",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to remediation.spawned. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to remediation.spawned. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-15.23 in admission merge 1 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-542); DL-077 admission record reports/event-authority-20260911/admission-records/remediation.spawned.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261114/admission-merge-1/depth/remediation.spawned.json (sha256 5f0163d91c9d6c1d10559db45a20a12fb9a88ee551427ca2000afff59aa0950d); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The checked authority for `remediation.spawned` does not establish an explicitly accountable owner approval for this exact event; this dimension therefore fails closed."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:34887",
+      "note": "Independent EP/CV/SP units govern the prepared exact family version."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Wiring_Matrix.md:288-292",
-      "note": "The remediation-lineage wiring explicitly assigns remediation.spawned to the executor/orchestrator remediation manager."
+      "citation": "Plans/Executor_Protocol.md:11493",
+      "note": "Exact emitter and dependency/body/append/receipt/publication ordering explicitly adopt SP-286 full-value v2 and current durability amendments."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked authority for `remediation.spawned` does not establish versioned registry membership for this exact event; this dimension therefore fails closed."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:4645-4693",
+      "note": "Registered at registry revision 2026-11-15.23 as #/families/68 (canonical row SHA-256 8d5b77e8914cb6b695e2fa56b992219e7128efb5bb0c644243afb6b3aefb16d8); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked authority for `remediation.spawned` does not establish a closed event-specific payload schema; this dimension therefore fails closed."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:34887",
+      "note": "Separate exact-version closed root schema; current known enum domains are closed. Conditional owner/source constraints remain normative and are not all schema-only predicates."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2523-2536",
-      "note": "The exact contract requires run_id, node_id, remediation root, child attempt, generation, failure class, and timestamp."
+      "citation": "Plans/Executor_Protocol.md:11518; Plans/Executor_Protocol.md:11536; Plans/storage-plan.md:38661",
+      "note": "EP-218 and SP-508 define this family's scope, hash preimage and source adapter. Complete original observations join immutable owner reads; F17 enforces primitive types at graph joins. Shared number/recipe adoption S-N1–S-N5 remains a sweep item."
     },
     "replay_idempotency": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked authority for `remediation.spawned` does not establish complete replay and idempotency rules; this dimension therefore fails closed."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38644",
+      "note": "Exact family-local hash identity and same-identity digest conflict/replay rule; timestamp cannot mint a new identity."
     },
     "retention": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked authority for `remediation.spawned` does not establish event-specific retention authority and limits; this dimension therefore fails closed."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38653",
+      "note": "Case L-3 explicitly covers runtime/run/node/attempt; source anchor, caps and holds preserved. Existing generic index/checkpoint keep their policies."
     },
     "redaction_custody": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked authority for `remediation.spawned` does not establish redaction rules and accountable custody; this dimension therefore fails closed."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38655",
+      "note": "Exact source/first-receipt custody, coherent backup/restore, linked body independence and fresh permission/deletion checks defined."
     },
     "transitions": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked authority for `remediation.spawned` does not establish complete legal and illegal transition rules; this dimension therefore fails closed."
+      "status": "PASS",
+      "citation": "Plans/Executor_Protocol.md:11538; Plans/Executor_Protocol.md:11548",
+      "note": "EP-218 defines this family's exhaustive predecessor/discriminator/successor table, actual owner predicates, post-state revision/sequence and admission/dependency/body/append/first-receipt/CAS/publication barrier; static cases check the table and rejection fences."
     },
     "consumers_checkpoints": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked authority for `remediation.spawned` names consumers and/or a storage projection, but does not define durable checkpoint identity, atomic advancement, or failure behavior for this exact event; the combined dimension fails closed."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38649",
+      "note": "Exact read-only operating consumer explicitly adopts SP-278 using existing generic projector/checkpoint/schema, actual current frontier/CAS and nine-field token; no new stored value."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2523-2527",
-      "note": "The migration rule marks run.remediation_started a deprecated alias and requires new producers to emit remediation.spawned."
+      "citation": "Plans/storage-plan.md:38657; Plans/storage-plan.md:38661",
+      "note": "Own exact-version/alias dispatch and writer cutoff, original operation reconciliation, token invalidation and source-backed successor rebuild defined."
     },
     "positive_negative_oracles": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked authority for `remediation.spawned` does not establish complete positive and negative conformance oracles; this dimension therefore fails closed."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:38644; Plans/storage-plan.md:38646; Plans/Contracts_V0.md:34889; Plans/storage-plan.md:38655; Plans/executor_event_type_fixtures.json:30100; Plans/executor_event_semantic_fixtures.json:260763; Plans/storage-plan.md:38661; Plans/executor_event_type_fixtures.json:32391; Plans/Automated_Testing_System.md:9843; scripts/pm_executor_event_semantics.py:402; scripts/pm_executor_table_post_effects.py:53; scripts/pm_executor_table_workgraph_id.py:27; scripts/pm_executor_event_semantics.py:123; scripts/pm_executor_event_semantics.py:1227; scripts/pm_executor_event_semantics.py:833; scripts/pm_executor_event_semantics.py:709; scripts/pm_executor_event_semantics.py:526; scripts/pm_executor_event_semantics.py:508; scripts/pm_executor_event_semantics.py:1167",
+      "note": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN."
     }
   },
   "citations_checked": [
