@@ -314,6 +314,15 @@ HELPER_REPO_ROOT = Path(__file__).resolve().parents[1]
 EA_HISTORICAL_INVENTORY_REL_PATH = (
     f"{EA_FROZEN_AUDIT_ROOT}/closed-world-census/CURRENT_SOURCE_INVENTORY.FRESH_20260812T0900.json"
 )
+# Fixed byte pin of the one non-canonical selector of the required source set
+# (s7 fix 2, R1-F1). The August discovery inventory sits under Plans/.audits,
+# outside canon review: an edited copy would redefine what an edition must
+# inventory, so the writer and the CLOSED consumer both refuse anything but these
+# bytes. The other selectors are canon the edition inventories itself
+# (Plans/00-plans-index.md, the registry's payload refs, the Plans/*.md glob)
+# or constants of this module (explicit inputs, derived outputs).
+EA_HISTORICAL_INVENTORY_SHA256 = "83c12ad98e218fe8c29eff60756cdbe83daf1884cc67bc87fac62fd0ede1129a"
+EA_HISTORICAL_INVENTORY_BYTES = 46241
 EA_DIRECT_PROSE_CLASS = "direct_canonical_plan_prose"
 EA_MACHINE_INPUT_CLASS = "registered_machine_input"
 EA_EXPLICIT_NEW_MACHINE_INPUTS = (
@@ -391,11 +400,35 @@ EA_EDITION_ARTIFACT_REL_PATHS = tuple(sorted(
 ))
 
 
+def event_authority_selector_pin_problem(historical_raw: bytes) -> str | None:
+    """None when the August discovery inventory is exactly its pinned bytes."""
+    if len(historical_raw) != EA_HISTORICAL_INVENTORY_BYTES or _sha256_bytes(historical_raw) != EA_HISTORICAL_INVENTORY_SHA256:
+        return (
+            f"{EA_HISTORICAL_INVENTORY_REL_PATH} is not its pinned bytes "
+            f"({len(historical_raw)} bytes, SHA-256 {_sha256_bytes(historical_raw)}; pinned "
+            f"{EA_HISTORICAL_INVENTORY_BYTES} bytes, SHA-256 {EA_HISTORICAL_INVENTORY_SHA256})"
+        )
+    return None
+
+
 def event_authority_machine_input_candidates(root: Path, *, historical_inventory: Path | None = None) -> set[str]:
-    """Machine inputs the edition must inventory, before the derived-output exclusion."""
+    """Machine inputs the edition must inventory, before the derived-output exclusion.
+
+    Refuses (ClosureInputError) unless the August discovery inventory is its pinned bytes.
+    """
     root = Path(root)
     historical = Path(historical_inventory) if historical_inventory is not None else root / EA_HISTORICAL_INVENTORY_REL_PATH
-    old = json.loads(historical.read_text(encoding="utf-8"))
+    historical_raw = historical.read_bytes()
+    problem = event_authority_selector_pin_problem(historical_raw)
+    if problem:
+        raise ClosureInputError(problem)
+    return event_authority_machine_inputs_from_selector(root, historical_raw)
+
+
+def event_authority_machine_inputs_from_selector(root: Path, historical_raw: bytes) -> set[str]:
+    """The machine-input derivation itself, over given selector bytes (callers check the pin first)."""
+    root = Path(root)
+    old = json.loads(historical_raw.decode("utf-8"))
     paths = {row["path"] for row in old["sources"] if not row["path"].endswith(".md")}
     index_text = (root / "Plans/00-plans-index.md").read_text(encoding="utf-8")
     for match in re.finditer(r"Plans/[A-Za-z0-9_./-]+\.(?:json|jsonl)", index_text):
@@ -517,6 +550,16 @@ def event_authority_closed_custody_failures(
     """A CLOSED edition's inventory, exclusions, artifact set and census, each re-derived from the live tree."""
     root = Path(root)
     failures: list[dict[str, Any]] = []
+    # The selector that defines the required set is checked before it is trusted:
+    # walking and rehashing an editable selector would only re-bind the edit.
+    selector = Path(historical_inventory) if historical_inventory is not None else root / EA_HISTORICAL_INVENTORY_REL_PATH
+    try:
+        selector_raw = selector.read_bytes()
+    except OSError as exc:
+        return [{"error": "event_authority_closure_source_selector_unpinned", "selector": EA_HISTORICAL_INVENTORY_REL_PATH, "detail": str(exc)}]
+    problem = event_authority_selector_pin_problem(selector_raw)
+    if problem:
+        return [{"error": "event_authority_closure_source_selector_unpinned", "selector": EA_HISTORICAL_INVENTORY_REL_PATH, "detail": problem}]
     try:
         required = event_authority_required_sources(root, historical_inventory=historical_inventory)
     except Exception as exc:  # noqa: BLE001 - an underivable source set never clears.

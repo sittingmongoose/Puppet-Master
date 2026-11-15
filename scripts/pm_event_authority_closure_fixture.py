@@ -30,11 +30,12 @@ DEPTH_DUPLICATE = "reports/fixture/depth-duplicate.json"
 VALIDATOR_STUB = "scripts/pm-event-authority-currentness.py"
 EVENTS_DOC = "Plans/fixture_events.md"
 # machine inputs, one per derivation route of the required source set
-HISTORICAL_INPUT = "Plans/fixture_machine_input.json"      # August inventory
+HISTORICAL_INPUT = "Plans/change_budget.schema.json"       # August inventory (a real row of the pinned selector)
 INDEX_INPUT = "Plans/fixture_index_input.json"             # Plans/00-plans-index.md
 PAYLOAD_INPUT = "Plans/fixture_payload.schema.json"        # registry payload_schema_ref
 EXPLICIT_INPUT = "Plans/runtime_integration_disposition.json"  # explicit shared-runtime input
-UNREQUIRED_FILE = "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json"
+RECEIPT_SCHEMA = "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json"
+UNREQUIRED_FILE = "Plans/.implementation_readiness/fixture_unrequired.json"   # selected by no route
 
 
 def _sha(data: bytes) -> str:
@@ -190,21 +191,26 @@ def build(root: Path, helper: ModuleType, *, closed: bool) -> None:
         helper.EA27_CANON_SHA256, helper.EA27_UNION_ROWS_CANON_SHA256, helper.EA29_CANON_SHA256))
     _write(root, "Plans/Plan_To_Node_Compilation.md", "# PNC\n\n- " + helper.EVENT_AUTHORITY_RUNTIME_BOUNDARY_BASIS_QUOTE + "\n")
     _write(root, "Plans/Decision_Log.md", "# Decisions\n\n### DL-900: fixture\n\nNothing here.\n")
-    _write(root, UNREQUIRED_FILE, '{"const": "local_deterministic_clean_room"}\n')
+    _write(root, RECEIPT_SCHEMA, '{"const": "local_deterministic_clean_room"}\n')
+    _write(root, UNREQUIRED_FILE, '{"fixture_unrequired": true}\n')
     _write(root, VALIDATOR_STUB, "# fixture stand-in for the currentness tool\n")
     # the machine-input routes, and derived outputs that every route must leave out
     _write(root, "Plans/00-plans-index.md", f"# Index\n\nMachine inputs: {INDEX_INPUT}, Plans/.plan_index/node_readiness_report.json, Plans/missing_input.json.\n")
-    for relative in (HISTORICAL_INPUT, INDEX_INPUT, EXPLICIT_INPUT):
+    for relative in (INDEX_INPUT, EXPLICIT_INPUT):
         _write(root, relative, {"fixture_machine_input": relative})
+    _write(root, HISTORICAL_INPUT, {"type": "object", "additionalProperties": False, "title": "fixture change budget"})
     _write(root, PAYLOAD_INPUT, {"type": "object", "additionalProperties": False})
     for relative in helper.EA_DERIVED_VALIDATION_OUTPUTS:
         _write(root, relative, {"derived_output": relative})
-    _write(root, helper.EA_HISTORICAL_INVENTORY_REL_PATH, {"sources": [
-        {"path": helper.EVENT_FAMILY_REGISTRY_REL_PATH},
-        {"path": HISTORICAL_INPUT},
-        {"path": "Plans/.implementation_readiness/pnc019_certification_receipt.json"},
-        {"path": EVENTS_DOC},
-    ]})
+    # The August selector is pinned by bytes, so the fixture uses the real pinned file
+    # and gives each of its machine paths a stub; the real pin then runs unchanged.
+    selector = (helper.HELPER_REPO_ROOT / helper.EA_HISTORICAL_INVENTORY_REL_PATH).read_bytes()
+    if helper.event_authority_selector_pin_problem(selector):
+        raise AssertionError("the repository's August selector is not its pinned bytes")
+    _write(root, helper.EA_HISTORICAL_INVENTORY_REL_PATH, selector)
+    for row in json.loads(selector)["sources"]:
+        if not row["path"].endswith(".md") and not (root / row["path"]).exists():
+            _write(root, row["path"], {"fixture_stub": True})
 
     frozen = helper.EA_FROZEN_AUDIT_ROOT
     cohorts = {
@@ -328,9 +334,22 @@ def build(root: Path, helper: ModuleType, *, closed: bool) -> None:
             raise AssertionError(f"pristine CLOSED fixture does not verify: {failures}")
 
 
+def _required_sources(root: Path, helper: ModuleType) -> dict[str, str]:
+    """The required source set over whatever selector bytes are on disk, without the pin check.
+
+    This is the resealer standing in for a writer that skipped its refusals; the
+    CLOSED consumer under test always applies the pin.
+    """
+    selector = (root / helper.EA_HISTORICAL_INVENTORY_REL_PATH).read_bytes()
+    machine = helper.event_authority_machine_inputs_from_selector(root, selector) - set(helper.EA_DERIVED_VALIDATION_OUTPUTS)
+    required = {path: helper.EA_MACHINE_INPUT_CLASS for path in machine}
+    required.update({p.relative_to(root).as_posix(): helper.EA_DIRECT_PROSE_CLASS for p in (root / "Plans").glob("*.md") if p.is_file()})
+    return required
+
+
 def _census(root: Path, helper: ModuleType) -> tuple[list[dict[str, Any]], bytes]:
     """The fixture's occurrence census, by the same code the generator and the CLOSED consumer use."""
-    required = helper.event_authority_required_sources(root)
+    required = _required_sources(root, helper)
     sources = {path: (root / path).read_bytes() for path in required}
     registered = {row["event_type"] for row in _read(root, helper.EVENT_FAMILY_REGISTRY_REL_PATH)["families"]}
     rows = helper.event_authority_census_rows(sources, registered)
@@ -381,7 +400,7 @@ def reseal(
     registry = json.loads(registry_raw)
     live = sorted(f["event_type"] for f in registry["families"])
     sources = []
-    for path, authority_class in sorted(helper.event_authority_required_sources(root).items()):
+    for path, authority_class in sorted(_required_sources(root, helper).items()):
         raw = (root / path).read_bytes()
         sources.append({"path": path, "authority_class": authority_class, "bytes": len(raw), "sha256": _sha(raw)})
     _write(root, paths["inventory"], {"sources": sources, "explicit_exclusions": helper.EA_SOURCE_EXCLUSIONS})
@@ -818,6 +837,32 @@ def _t_known37_family_added(root: Path, h: ModuleType) -> None:
     reseal(root, h)
 
 
+def _edit_selector(root: Path, h: ModuleType, change: Callable[[dict[str, Any]], None], *, indent: int = 2) -> None:
+    path = root / h.EA_HISTORICAL_INVENTORY_REL_PATH
+    doc = json.loads(path.read_bytes())
+    change(doc)
+    path.write_text(json.dumps(doc, indent=indent) + "\n", encoding="utf-8")
+
+
+def _t_historical_selector_row_dropped(root: Path, h: ModuleType) -> None:
+    # the reviewer's R1-F1: drop a machine input from the August selector, let it drift,
+    # and rebuild inventory, census and evidence over the edited selector
+    _edit_selector(root, h, lambda doc: doc.__setitem__("sources", [r for r in doc["sources"] if r["path"] != HISTORICAL_INPUT]))
+    _write(root, HISTORICAL_INPUT, {"tampered_schema": True})
+    reseal(root, h)
+
+
+def _t_historical_selector_row_added(root: Path, h: ModuleType) -> None:
+    _edit_selector(root, h, lambda doc: doc["sources"].append({"path": UNREQUIRED_FILE}))
+    reseal(root, h)
+
+
+def _t_historical_selector_reserialized(root: Path, h: ModuleType) -> None:
+    # the same rows in other bytes: the pin is on bytes, not on a reading of them
+    _edit_selector(root, h, lambda doc: None, indent=1)
+    reseal(root, h)
+
+
 # name -> (mutation, the one refusal that counts as its kill, predicate group)
 TAMPERS: dict[str, tuple[Callable[[Path, ModuleType], None], str, str]] = {
     "cpu_row_reopened": (_t_cpu_row_reopened, "event_authority_closure_cpu_rows_open", "denominator"),
@@ -861,6 +906,9 @@ TAMPERS: dict[str, tuple[Callable[[Path, ModuleType], None], str, str]] = {
     "evidence_unavailable": (_t_evidence_unavailable, "event_authority_closure_evidence_unavailable", "edition_binding"),
     "evidence_edited_in_place": (_t_evidence_edited_in_place, "event_authority_closure_evidence_mismatch", "edition_binding"),
     "bound_input_drift": (_t_bound_input_drift, "event_authority_closure_input_drift", "currentness"),
+    "historical_selector_row_dropped": (_t_historical_selector_row_dropped, "event_authority_closure_source_selector_unpinned", "source_set"),
+    "historical_selector_row_added": (_t_historical_selector_row_added, "event_authority_closure_source_selector_unpinned", "source_set"),
+    "historical_selector_reserialized": (_t_historical_selector_reserialized, "event_authority_closure_source_selector_unpinned", "source_set"),
     "inventory_omits_machine_input": (_t_inventory_omits_machine_input, "event_authority_closure_source_set_mismatch", "source_set"),
     "inventory_omits_registry_input": (_t_inventory_omits_registry_input, "event_authority_closure_source_set_mismatch", "source_set"),
     "inventory_omits_historical_input": (_t_inventory_omits_historical_input, "event_authority_closure_source_set_mismatch", "source_set"),

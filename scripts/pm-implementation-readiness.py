@@ -5197,6 +5197,7 @@ def event_authority_edition_triad_checks() -> dict[str, bool]:
             "bound_input_drift",
             "inventory_omits_machine_input",
             "census_token_omitted",
+            "historical_selector_row_dropped",
         ):
             mutate, expected, _group = fixture.TAMPERS[name]
             root = base / f"tamper-{name}"

@@ -792,6 +792,24 @@ def self_test() -> int:
         ea27.write_bytes(json_bytes({"union_rows": rows, "non_exact_pattern_rows": []}))
         tests["continuity_unknown_classification_rejected"] = compute_continuity_receipt(closed_root, ea27, ea29)["unmapped_rows"] == ["f.new_class"]
 
+    # Fix 2: the writer refuses an edited August discovery inventory, wherever it is located.
+    with tempfile.TemporaryDirectory(prefix="pm-ea-selector-") as td:
+        live_selector = HISTORICAL_INVENTORY.read_bytes()
+        edited = Path(td) / "selector.json"
+        doc = json.loads(live_selector)
+        doc["sources"] = [row for row in doc["sources"] if row["path"] != "Plans/change_budget.schema.json"]
+        edited.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
+        try:
+            ea_closure.event_authority_machine_input_candidates(ROOT, historical_inventory=edited)
+            refused = False
+        except ea_closure.ClosureInputError:
+            refused = True
+        tests["writer_refuses_unpinned_historical_selector"] = (
+            refused
+            and ea_closure.event_authority_selector_pin_problem(live_selector) is None
+            and "Plans/change_budget.schema.json" in machine_path_candidates()
+        )
+
     # The helper's copy of the event-verb pattern (context rules) must stay this tool's.
     tests["helper_event_verb_pattern_matches_census"] = EVENT_VERB_RE is ea_closure.EA_EVENT_VERB_RE
 
@@ -845,10 +863,15 @@ def main() -> int:
         except (EvidencePathError, OSError) as exc:
             print(json.dumps({"evidence_valid": False, "event_authority_closed": False, "error": str(exc)}))
             return 2
-    if args.command == "generate":
-        return generate(options)
-    if args.command == "validate":
-        return validate()
+    try:
+        if args.command == "generate":
+            return generate(options)
+        if args.command == "validate":
+            return validate()
+    except ea_closure.ClosureInputError as exc:
+        # e.g. the August discovery inventory is not its pinned bytes (s7 fix 2)
+        print(json.dumps({"evidence_valid": False, "event_authority_closed": False, "error": str(exc)}))
+        return 2
     return self_test()
 
 
