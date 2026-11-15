@@ -889,9 +889,11 @@ def source_steps(c, prepared, completed, event, schemas, resolved_payload, paylo
             size = None
     yield 'src_inline', {'inline': inline, 'inline_size': size}
     slug = c['event_type'].replace('.', '_')
-    source_is_app = completed['envelope_context']['scope_kind'] == 'application'
+    source_context = completed.get('envelope_context') if type(completed) is dict else None
+    source_has_scope = type(source_context) is dict and 'scope_kind' in source_context
+    source_is_app = source_context.get('scope_kind') == 'application' if source_has_scope else False
     source_definition = slug + ('_application_source' if source_is_app else '_source')
-    yield 'src_definition', {'definition_present': source_definition in schemas}
+    yield 'src_definition', {'definition_present': source_has_scope and source_definition in schemas}
     validator = lane_validator(schemas[source_definition])
     yield 'src_schema', {'prepared_errors': schema_error_count(validator, prepared), 'completed_errors': schema_error_count(validator, completed)}
     yield 'src_size', {'prepared_size': len(source_bytes(prepared)), 'completed_size': len(source_bytes(completed))}
@@ -1222,7 +1224,23 @@ def resolve_original(completed, event):
         custody = _CUSTODY['dispatcher'].resolve(original_ref(completed, event), binding, disclose=lambda b: True)
     except Refusal as refusal:
         return refusal.reason, None
+    except (KeyError, TypeError, AttributeError, ValueError):
+        # An unavailable/malformed inspected source cannot form a binding.
+        # HR13 consumes this observation; never invent a source or receipt.
+        return 'original_binding', None
     return None, custody
+
+
+def retained_source_digest(value):
+    """Observe bytes only when the inspected source has its declared codec shape.
+
+    None is an unavailable digest, never a replacement original. The HR09/HR10
+    copy predicates compare it with the independently held original's digest.
+    """
+    try:
+        return source_digest(value)
+    except (Refusal, TableRefusal, KeyError, TypeError, AttributeError, ValueError):
+        return None
 
 
 def historical_read(c, prepared, completed, event, schemas, context):
@@ -1250,8 +1268,8 @@ def historical_read(c, prepared, completed, event, schemas, context):
             'ack_refusal': ack_refusal})
         frozen = _CUSTODY['frozen'][custody.recipe.resource_manifest_sha256]
         require('hr_receipt_schema', {'receipt_errors': schema_error_count(lane_validator(frozen['receipt_schema']), receipt)})
-        require('hr_original', {'prepared_digest': source_digest(prepared), 'original_prepared_digest': source_digest(original_prepared),
-                                'completed_digest': source_digest(completed), 'original_completed_digest': source_digest(original_completed),
+        require('hr_original', {'prepared_digest': retained_source_digest(prepared), 'original_prepared_digest': source_digest(original_prepared),
+                                'completed_digest': retained_source_digest(completed), 'original_completed_digest': source_digest(original_completed),
                                 'event_digest': value_digest(event), 'original_event_digest': value_digest(original_event),
                                 'event_schema_errors': schema_error_count(EventRecordValidator(frozen['event_schema']), event)})
     except TableRefusal:
@@ -1326,6 +1344,47 @@ def retained_store_snapshot():
     return tuple(sorted((ref, entry(value)) for ref, value in _CUSTODY['worlds'][-1].items()))
 
 
+def complete_source_schema_checks(c, f, schemas, check):
+    """Required source members must refuse through rows at the complete entry point.
+
+    A source whose scope cannot be selected refuses at SV07 before any decode or
+    dereference. Every other missing required member reaches SV08/SV09. A local
+    schema-only probe alone would miss the pre-schema dereference defect.
+    """
+    variants = [dict(prepared=f['prepared_source'], completed=f['completed_source'], event=f['event_record'])]
+    variants += [v for v in f['positive_variants'] if v['event']['scope_kind'] == 'application']
+    results = []
+    for variant in variants:
+        source = c['event_type'].replace('.', '_') + ('_application_source' if variant['event']['scope_kind'] == 'application' else '_source')
+        values = [variant[key] for key in ('prepared', 'completed', 'event')]
+        control = source_valid(c, *values, schemas)
+        check(control == 'accepted', c['event_type'] + ': complete source valid control ' + source)
+        for index, stage in enumerate(('prepared', 'completed')):
+            for field in schemas[source]['required']:
+                changed = copy.deepcopy(values); del changed[index][field]
+                expected = 'scope_refused' if stage == 'completed' and field == 'envelope_context' else 'schema_refused'
+                actual = source_valid(c, *changed, schemas)
+                results.append(dict(family=c['event_type'], source=source, stage=stage, field=field,
+                                    control=control, expected=expected, actual=actual))
+                check(actual == expected,
+                      c['event_type'] + ': complete source required ' + source + '/' + stage + '/' + field)
+        for malformed in (None, False, [], 'not-an-envelope', {}):
+            changed = copy.deepcopy(values); changed[1]['envelope_context'] = malformed
+            actual = source_valid(c, *changed, schemas)
+            results.append(dict(family=c['event_type'], source=source, field='envelope_context',
+                                malformed_type=type_name(malformed), control=control, expected='scope_refused', actual=actual))
+            check(actual == 'scope_refused',
+                  c['event_type'] + ': complete source scope selection ' + source + '/' + type_name(malformed))
+        for index, expected in ((0, 'schema_refused'), (1, 'scope_refused')):
+            changed = copy.deepcopy(values); changed[index] = None
+            actual = source_valid(c, *changed, schemas)
+            results.append(dict(family=c['event_type'], source=source, stage=str(index), field='non_object',
+                                control=control, expected=expected, actual=actual))
+            check(actual == expected,
+                  c['event_type'] + ': complete source non-object ' + source + '/' + str(index))
+    return results
+
+
 def retained_custody_checks(c, f, schemas, check):
     """Complete retained boundary: independent receipts and before/after store bytes."""
     name = c['event_type']
@@ -1336,6 +1395,9 @@ def retained_custody_checks(c, f, schemas, check):
              ('missing_original', 'unavailable', 'missing', None),
              ('ambiguous_original', 'unavailable', 'ambiguous', None),
              ('other_original', 'unavailable', 'other', None),
+             ('missing_prepared_value', 'unavailable', 'prepared_value', None),
+             ('missing_completed_value', 'unavailable', 'completed_value', None),
+             ('missing_event_value', 'unavailable', 'event_value', None),
              ('missing_receipt', 'unavailable', None, None),
              ('receipt_event_copy', 'unavailable', None, dict(f['first_append_receipt'], event_id=e['event_id'] + '-foreign')),
              ('receipt_sequence_copy', 'unavailable', None, dict(f['first_append_receipt'], sequence_id=e['sequence_id'] + 1)),
@@ -1367,7 +1429,10 @@ def retained_custody_checks(c, f, schemas, check):
             elif change == 'other':
                 store[ref] = next(value for key, value in _CUSTODY['worlds'][0].items() if key != ref)
             before = retained_store_snapshot()
-            result = historical_read(c, a, b, e, schemas, context)
+            read_values = [a, b, e]
+            if change in ('prepared_value', 'completed_value', 'event_value'):
+                read_values[('prepared_value', 'completed_value', 'event_value').index(change)] = None
+            result = historical_read(c, *read_values, schemas, context)
             after = retained_store_snapshot()
             check(result['result'] == expected, name + ': sealed custody ' + label)
             check(result['external_effects'] == result['append_count'] == 0 and before == after,
@@ -2518,6 +2583,7 @@ def family_checks(c, inputs, check):
     round6_checks(c, f, schemas, check)
     table_witness_checks(c, f, schemas, check)
     retained_custody_checks(c, f, schemas, check)
+    complete_source_schema_checks(c, f, schemas, check)
     usage_first_save_checks(c, f, schemas, check)
     # A well-formed completed record can be supplied in the prepared role,
     # and conversely. Source-schema acceptance alone does not entail either

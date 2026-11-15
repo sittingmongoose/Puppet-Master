@@ -33,7 +33,7 @@ def main():
     inputs = dt.checker_inputs()
     if args.family:
         inputs['contracts'] = [c for c in inputs['contracts'] if c['event_type'] in args.family]
-    failures, ledger, observations, inventory, usage_checks = [], [], [], [], []
+    failures, ledger, observations, inventory, usage_checks, source_checks = [], [], [], [], [], []
     counts = {}
     def check(ok, label):
         counts['checks'] = counts.get('checks', 0) + 1
@@ -62,6 +62,7 @@ def main():
         name = c['event_type']; f = inputs['fixtures'][name]; slug = name.replace('.', '_')
         print('C12 ' + name, file=sys.stderr, flush=True)
         dt.retained_custody_checks(c, f, inputs['schemas'], check)
+        source_checks.extend(dt.complete_source_schema_checks(c, f, inputs['schemas'], check))
         def usage_check(ok, label):
             usage_checks.append(dict(check=label, passed=bool(ok)))
             check(ok, label)
@@ -124,6 +125,9 @@ def main():
     write('retained-store-observations.json', observations)
     write('datetime-inventory.json', inventory)
     write('usage-first-save-checks.json', usage_checks)
+    write('complete-source-required-checks.json', dict(
+        kills=[row for row in source_checks if row['control']=='accepted' and row['actual']==row['expected']],
+        invalid=[row for row in source_checks if row['control']!='accepted' or row['actual']!=row['expected']]))
     sources = [*ROOT.glob('scripts/pm_dt*.py'), *ROOT.glob('scripts/pm-dt*.py'),
         ROOT/'scripts/pm_guard_isolation.py', ROOT/'scripts/pm_event_numbers.py', ROOT/'scripts/pm_event_datetime.py',
         ROOT/'Plans/dt_event_contracts.schema.json', ROOT/'Plans/dt_event_contracts.json',
