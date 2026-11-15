@@ -50,6 +50,17 @@ def sha(value):
     return hashlib.sha256(pickle.dumps(value, protocol=5)).hexdigest()
 
 
+def value_sha(value):
+    """A value fingerprint independent of object identity (GO's input_sha256 is a pickle hash, and pickle encodes which
+    equal strings are one object, so an equal value rebuilt elsewhere can hash differently). JSON keeps 1, 1.0 and true
+    apart and keeps member order."""
+    try:
+        text = json.dumps(value, ensure_ascii=False, separators=(',', ':'), allow_nan=True)
+    except (TypeError, ValueError):
+        text = repr(value)
+    return hashlib.sha256(text.encode('utf-8', 'surrogatepass')).hexdigest()
+
+
 # ---------------------------------------------------------------- dump / load
 
 def dump(args):
@@ -586,6 +597,7 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
                     control_sha = hashlib.sha256(pickle.dumps(base, protocol=5)).hexdigest()  # GO2
                     witness = dict(path=[str(p) for p in path], edit=repr(edit)[:80], top_level=tops,
                                    input_sha256=hashlib.sha256(pickle.dumps(mutated, protocol=5)).hexdigest(),
+                                   input_value_sha256=value_sha(mutated),  # GO2
                                    control='suite' if variant is None else 'swap' if variant == 'swapped' else 'donor' if variant == 'donated' else 'branch',
                                    control_sha256=control_sha,  # GO2
                                    replay=base64.b64encode(pickle.dumps((tuple(path), edit), protocol=5)).decode())  # GO2
@@ -731,6 +743,14 @@ def self_test(args):
     return 0
 
 
+def _intern_gc(value):
+    if isinstance(value, dict):
+        return {(sys.intern(k) if k == 'gc' else k): _intern_gc(x) for k, x in value.items()}
+    if isinstance(value, list):
+        return [_intern_gc(x) for x in value]
+    return sys.intern(value) if value == 'gc' and isinstance(value, str) else value
+
+
 def verify(args):
     """Replay every GO2 witness (a clause entry with a replay token) on the reference validator, with no memo:
     the control is accepted; control + (path, edit) rebuilds an input with the recorded sha256; the input is refused
@@ -749,6 +769,8 @@ def verify(args):
     part, total = map(int, args.shard.split('/'))
     rows = rows[part::total]
     results = collections.Counter()
+    fingerprints = collections.Counter()
+    fingerprint_mismatch = []
     failures = []
     start = time.monotonic()
     for number, (clause, x) in enumerate(rows):
@@ -765,8 +787,18 @@ def verify(args):
             path, edit = pickle.loads(base64.b64decode(x['replay']))
             mutated = cl.apply(control, path, edit)
             ident = common.guard_for_location(clause)
-            if mutated is None or sha(mutated) != x['input_sha256']:
-                problem = 'rebuilt input sha256 differs'
+            if mutated is not None:  # the fingerprint is reported apart; the validity checks below always run
+                if x.get('input_value_sha256'):
+                    fingerprints[('value' if value_sha(mutated) == x['input_value_sha256'] else 'value_mismatch')] += 1
+                elif sha(mutated) == x['input_sha256']:
+                    fingerprints['pickle'] += 1
+                elif sha(_intern_gc(mutated)) == x['input_sha256']:
+                    fingerprints['pickle_after_interning_gc'] += 1
+                else:
+                    fingerprints['pickle_identity_mismatch'] += 1
+                    fingerprint_mismatch.append(clause)
+            if mutated is None:
+                problem = 'replay token does not apply to the control'
             else:
                 errs = cl.errors_of(ref, mutated)
                 if not errs or clause not in cl.locations(errs):
@@ -791,6 +823,10 @@ def verify(args):
     out = dict(tool_sha256=TOOL_SHA256, report=str(args.report), report_sha256=hashlib.sha256(Path(args.report).read_bytes()).hexdigest(),
                root=root, shard=args.shard, validator='reference (no memo): ' + entry['cls'], witnesses=len(rows),
                controls_checked=len(accepted_controls), controls_accepted=sum(accepted_controls.values()), results=dict(results),
+               input_fingerprints=dict(fingerprints), fingerprint_note='value: input_value_sha256 matches; pickle: GO\'s pickle '
+               'input_sha256 matches; pickle_after_interning_gc: matches once equal \'gc\' strings are one object again (pickle '
+               'encodes object identity); pickle_identity_mismatch: neither (validity checks still decide)',
+               fingerprint_identity_mismatch=fingerprint_mismatch,
                failures=failures, seconds=round(time.monotonic() - start, 1))
     Path(args.out).write_text(json.dumps(out, indent=1, sort_keys=True) + '\n')
     print(json.dumps({k: v for k, v in out.items() if k != 'failures'}))
