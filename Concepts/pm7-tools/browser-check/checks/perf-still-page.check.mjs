@@ -116,7 +116,9 @@ export function toggleRecalcs(events, keep = null) {
 	}
 	for (const e of events) {
 		if (e.pid !== pid || e.tid !== tid || e.ph !== 'X') continue;
-		if (e.name === 'UpdateLayoutTree') styles.push({ ts: e.ts, dur: (e.dur || 0) / 1000, n: (e.args && e.args.elementCount) || 0 });
+		// a recalc with no element count is unmeasured (null), never a measured zero (PM7PERF-STILL-MISSING-COUNT); the
+		// toggle's cost is then unjudgeable, as perf-hover-restyle treats such a sample
+		if (e.name === 'UpdateLayoutTree') { const n = e.args?.elementCount ?? e.args?.endData?.elementCount; styles.push({ ts: e.ts, dur: (e.dur || 0) / 1000, n: Number.isFinite(n) && n >= 0 ? n : null }); }
 		if (e.name === 'ProxyMain::BeginMainFrame') frames.push({ ts: e.ts, dur: (e.dur || 0) / 1000 });
 	}
 	// the style recalcs from the mark to a few frames after it: the first (the one that carries the toggle; for a wake,
@@ -132,10 +134,10 @@ export function toggleRecalcs(events, keep = null) {
 		if (!head) return { found: false, markTs: a };
 		const end = Math.max(b === undefined ? a : b, head.ts) + 60000;
 		const ss = styles.filter((x) => x.ts >= a && x.ts <= end).sort((p, q) => p.ts - q.ts);
-		const big = ss.reduce((m, x) => (x.n > m.n ? x : m), ss[0]);
+		const big = ss.reduce((m, x) => (m.n == null || (x.n != null && x.n > m.n) ? x : m), ss[0]);
 		const fr = frames.find((f) => f.ts <= ss[0].ts && f.ts + f.dur * 1000 >= ss[0].ts);
 		const r2 = (x) => Math.round(x * 100) / 100;
-		return { found: true, steps: ss.length, max: big.n, maxMs: r2(big.dur), total: ss.reduce((t2, x) => t2 + x.n, 0), totalMs: r2(ss.reduce((t2, x) => t2 + x.dur, 0)), first: ss[0].n, firstFrameMs: fr ? r2(fr.dur) : null, markTs: a, recalcTs: ss[0].ts, recalcEndTs: ss[0].ts + ss[0].dur * 1000, delayMs: r2((ss[0].ts - a) / 1000), traceFile: keep, done: b !== undefined };
+		return { found: true, steps: ss.length, max: big.n, maxMs: r2(big.dur), total: ss.some((x) => x.n == null) ? null : ss.reduce((t2, x) => t2 + x.n, 0), totalMs: r2(ss.reduce((t2, x) => t2 + x.dur, 0)), first: ss[0].n, firstFrameMs: fr ? r2(fr.dur) : null, markTs: a, recalcTs: ss[0].ts, recalcEndTs: ss[0].ts + ss[0].dur * 1000, delayMs: r2((ss[0].ts - a) / 1000), traceFile: keep, done: b !== undefined };
 	};
 	return { marks, after: spread };
 }

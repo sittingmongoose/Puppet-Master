@@ -51,4 +51,17 @@ assert.equal(forcedInToggle(noRecalc, ['f', 1005000], probe), false);
 // 5. only the marking thread's recalcs count
 const other = toggleRecalcs([mark('pm-still:on', 1000000), { ...recalc(1004000, 900), tid: 2 }, recalc(1020000, 60)]).after('pm-still:on', 'pm-still:on');
 assert.equal(other.first, 60);
-console.log('PASS the toggle\'s recalc is the first after its mark however late (84 ms read), the spread is the 60 ms after it; the control fails when the forced step is outside mark..recalc, missing, repeated or erroring');
+// 6. PM7PERF-STILL-MISSING-COUNT: a recalc with no element count is unmeasured, never a measured zero, so the toggle's
+// cost (3H+19) is unjudgeable and fails; an explicit 0 (Chrome writes it: 5 and 16 of the recalcs in two saved Home
+// traces) is a measurement. Main's check read the missing count as 0 and passed it.
+const { toggleCost } = await import('../helpers/still-toggle-cost.mjs');
+const missing = toggleRecalcs([mark('pm-still:on', 1000000), ev('UpdateLayoutTree', 1008000, { ph: 'X', dur: 900, args: {} }), recalc(1030000, 70)]).after('pm-still:on', 'pm-still:on');
+assert.equal(missing.first, null, 'no count is unmeasured');
+assert.equal(missing.total, null, 'a total over an unmeasured recalc is unmeasured');
+assert.equal(missing.max, 70, 'the largest measured recalc is still logged');
+assert.equal(toggleCost(missing.first, 24).pass, false, 'and the toggle\'s cost cannot pass');
+const zero = toggleRecalcs([mark('pm-still:on', 1000000), recalc(1008000, 0)]).after('pm-still:on', 'pm-still:on');
+assert.equal(zero.first, 0);
+assert.equal(toggleCost(zero.first, 24).pass, true, 'an explicit zero is measured');
+if (process.argv[2]) console.log(`given check: missing count read as ${toggleRecalcs([mark('pm-still:on', 1000000), ev('UpdateLayoutTree', 1008000, { ph: 'X', dur: 900, args: {} })]).after('pm-still:on', 'pm-still:on').first}`);
+console.log('PASS the toggle\'s recalc is the first after its mark however late (84 ms read), the spread is the 60 ms after it; the control fails when the forced step is outside mark..recalc, missing, repeated or erroring; a recalc with no count is unmeasured, an explicit 0 measured');
