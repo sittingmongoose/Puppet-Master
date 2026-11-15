@@ -889,6 +889,16 @@
     "input_sha256": "873050abe40773dfd3a6cb95f35337cbac0abd196fd26375eac6c6be0a1c8f20",
     "source": "frozen-fixture/single-defect/194"
   },
+  "restore_point.deleted/original/B1 changes only status preserves every ref/hold": {
+    "expected_refusal": "restore_point.deleted/original/B1 changes only status preserves every ref/hold",
+    "input_sha256": "4ebf790386a1c489f7b5143cf868ec2d1f41d01d840f22c3ca2c24a598ea47dd",
+    "source": "frozen-fixture/single-defect/262"
+  },
+  "restore_point.deleted/original/B1 exact available original point": {
+    "expected_refusal": "restore_point.deleted/original/B1 exact available original point",
+    "input_sha256": "88cedd9ac2f46cf8754c895ad99d213b68043938244f5fa7e165c95bb69b6500",
+    "source": "frozen-fixture/single-defect/261"
+  },
   "restore_point.deleted/original/B3 writes only companion and result; actual point snapshot is read-only": {
     "expected_refusal": "restore_point.deleted/original/B3 writes only companion and result; actual point snapshot is read-only",
     "input_sha256": "2f6efed6aa705289da351a2cf4b47c22936d2eb40923f5317b01678cfe6b534e",
@@ -1044,6 +1054,16 @@
     "input_sha256": "5dbb07f4eafbacefa8f0cc4901b9da28c68ad18ea608dbc96510e74a601ad0c7",
     "source": "frozen-fixture/single-defect/2"
   },
+  "restore_point.deleted/original/actual B1 pending original result protects identity": {
+    "expected_refusal": "restore_point.deleted/original/actual B1 pending original result protects identity",
+    "input_sha256": "3b80ed8d7d976b8f472859310707a84ffb78023fb8995725cc4d298d959918fd",
+    "source": "frozen-fixture/single-defect/292"
+  },
+  "restore_point.deleted/original/actual B1/B3 operation/result and immutable point snapshot": {
+    "expected_refusal": "restore_point.deleted/original/actual B1/B3 operation/result and immutable point snapshot",
+    "input_sha256": "70f3fff4a951a0869156b69c77ebb1e4036df5d903c560b87731be1150ec00bf",
+    "source": "frozen-fixture/single-defect/293"
+  },
   "restore_point.deleted/original/actual SP274 canonical result read": {
     "expected_refusal": "restore_point.deleted/original/actual SP274 canonical result read",
     "input_sha256": "969ce98eab7f0937781070ca7aba951f8fbf0c267f2d5f6fc1655f7e8d6b9c27",
@@ -1059,15 +1079,45 @@
     "input_sha256": "51c309a962a83e569eecf56ad6200ea492c39793467d62fae93838153568b379",
     "source": "frozen-fixture/single-defect/182"
   },
+  "restore_point.deleted/original/actual applicable hold scope": {
+    "expected_refusal": "restore_point.deleted/original/actual applicable hold scope",
+    "input_sha256": "a3ab46138e8d9457ef59a088d7ceed8af0ef444eead3f7d012626cb08b6b4f49",
+    "source": "run.started/retention/single-defect/hold_applicable"
+  },
+  "restore_point.deleted/original/actual applied step resolution": {
+    "expected_refusal": "restore_point.deleted/original/actual applied step resolution",
+    "input_sha256": "a98d88050756068bc2a0e51c8699b13592baa537a1b31a06f5b70de58ee19783",
+    "source": "frozen-fixture/single-defect/268"
+  },
   "restore_point.deleted/original/actual canonical summary transaction custody": {
     "expected_refusal": "restore_point.deleted/original/actual canonical summary transaction custody",
     "input_sha256": "a4079384bdfb92cb803518ea0b67366ad0bf59a9e3957ff4a68998361f3d49ce",
     "source": "frozen-fixture/single-defect/217"
   },
+  "restore_point.deleted/original/actual committed migration receipt": {
+    "expected_refusal": "restore_point.deleted/original/actual committed migration receipt",
+    "input_sha256": "c1aa99ba6964e6b6955d66d88dcf35f3c717d92e0436cd4104cc8e512d734328",
+    "source": "frozen-fixture/single-defect/269"
+  },
+  "restore_point.deleted/original/actual committed operation/result identity": {
+    "expected_refusal": "restore_point.deleted/original/actual committed operation/result identity",
+    "input_sha256": "219b419d8e64e21514a7a5521a9bec62c4aab33fff947e973bb6fbddf47f429a",
+    "source": "frozen-fixture/single-defect/288"
+  },
   "restore_point.deleted/original/actual complete current source event/index identity": {
     "expected_refusal": "restore_point.deleted/original/actual complete current source event/index identity",
     "input_sha256": "d0529958f5db335d1a3bf31b8074e2688045d49b13fb641dc90eb37be872df2a",
     "source": "restore_point.deleted/frozen/RPD2-row-rebound-to-current-manifest"
+  },
+  "restore_point.deleted/original/actual complete generic source event/index membership restore_created": {
+    "expected_refusal": "restore_point.deleted/original/actual complete generic source event/index membership restore_created",
+    "input_sha256": "e1d2717ae4034ecdb56abcbb4c6f1e6c4e2f0d2511a1a63f03015c7264d5961c",
+    "source": "adoption-bank/single-defect/13"
+  },
+  "restore_point.deleted/original/actual complete generic source event/index membership run_started": {
+    "expected_refusal": "restore_point.deleted/original/actual complete generic source event/index membership run_started",
+    "input_sha256": "13aa1767c73457f5c2f8fc66a9a9c9db0a19e76b0e29cf6d287efebe337c9481",
+    "source": "adoption-bank/single-defect/16"
   },
   "restore_point.deleted/original/actual complete original append group and acknowledgement time": {
     "expected_refusal": "restore_point.deleted/original/actual complete original append group and acknowledgement time",
@@ -1109,6 +1159,11 @@
     "input_sha256": "939aeda6038e0d2a80661f81e512569ca63809e8f7cc93d6cf302703825d3b87",
     "source": "restore_point.deleted/frozen/RPD2-historical-custody-requirement-cannot-be-inferred"
   },
+  "restore_point.deleted/original/actual historical owner provenance required": {
+    "expected_refusal": "restore_point.deleted/original/actual historical owner provenance required",
+    "input_sha256": "bd95459e3bc61a24f7773ca8c12450357b643248246315444b6fdfea60024dfc",
+    "source": "frozen-fixture/single-defect/298"
+  },
   "restore_point.deleted/original/actual historical point and source values": {
     "expected_refusal": "restore_point.deleted/original/actual historical point and source values",
     "input_sha256": "1d8435ded3232b83da41056e05856e0783477f8922bf3be8ca9e6030b5bbeb13",
@@ -1139,6 +1194,16 @@
     "input_sha256": "a98e1e629b859987d5059ab79d1c1206b6d4d3344596fe8914f1e5776448fe38",
     "source": "frozen-fixture/single-defect/48"
   },
+  "restore_point.deleted/original/actual original append barriers": {
+    "expected_refusal": "restore_point.deleted/original/actual original append barriers",
+    "input_sha256": "eb04e2332f0ef89112944b9dd2b76eedb9bdc8c13b00581b47ca2a003e3ced1c",
+    "source": "frozen-fixture/single-defect/255"
+  },
+  "restore_point.deleted/original/actual original committed canonical record/companion transaction": {
+    "expected_refusal": "restore_point.deleted/original/actual original committed canonical record/companion transaction",
+    "input_sha256": "209129323bd04cde27e2c3e5db071eb5768f2f49ae219e28dcd7055a9dafd8b8",
+    "source": "run.started/adoption/review-birth-manifest_generation"
+  },
   "restore_point.deleted/original/actual original complete preflight and before record": {
     "expected_refusal": "restore_point.deleted/original/actual original complete preflight and before record",
     "input_sha256": "b573b12112b9ca563f5aa18159b45776f9d96ac65678f3967bc36eda99dec41d",
@@ -1153,6 +1218,11 @@
     "expected_refusal": "restore_point.deleted/original/actual original hold evaluation source",
     "input_sha256": "2efd110953768af8fe670b03ed82a35e1b2f428ba43208703a0bfec0f9c487de",
     "source": "frozen-fixture/single-defect/135"
+  },
+  "restore_point.deleted/original/actual original native capture proof": {
+    "expected_refusal": "restore_point.deleted/original/actual original native capture proof",
+    "input_sha256": "2401d4b8381affee7293f9c9476360cf6f36d44586668c5284de498dcff46005",
+    "source": "frozen-fixture/single-defect/260"
   },
   "restore_point.deleted/original/actual original no-effect error": {
     "expected_refusal": "restore_point.deleted/original/actual original no-effect error",
@@ -1209,6 +1279,11 @@
     "input_sha256": "6a771936c0a6b2847da34405c55bd49dc1614fb9ba0e3307494c886c43c0d76f",
     "source": "restore_point.deleted/frozen/RPD2-codec-migration-wrong-receipt-key"
   },
+  "restore_point.deleted/original/actual registered hold key/value": {
+    "expected_refusal": "restore_point.deleted/original/actual registered hold key/value",
+    "input_sha256": "1ddf63c3ec822a87213aa6f2baebcebc6549097e93381f56d21af6970d75ae98",
+    "source": "run.started/retention/single-defect/hold_key"
+  },
   "restore_point.deleted/original/actual result logical key": {
     "expected_refusal": "restore_point.deleted/original/actual result logical key",
     "input_sha256": "80349bd1fdeebd9f1e8a45075dcbd0e2e1e6f6ba153601a5e122c652064a8cdd",
@@ -1233,6 +1308,11 @@
     "expected_refusal": "restore_point.deleted/original/actual retired encoding/disposition",
     "input_sha256": "310ed8cbb22c6d5c8537897528bea239a3e3ab8b1db3496ee866100a2b330d2b",
     "source": "frozen-fixture/single-defect/222"
+  },
+  "restore_point.deleted/original/actual run successor Storage/key transaction": {
+    "expected_refusal": "restore_point.deleted/original/actual run successor Storage/key transaction",
+    "input_sha256": "6bb171b147711f8f8a2974b8b790e46c213656d3a4ce281635d8ce4c130d129e",
+    "source": "adoption-bank/single-defect/6"
   },
   "restore_point.deleted/original/actual same-Storage transactions": {
     "expected_refusal": "restore_point.deleted/original/actual same-Storage transactions",
@@ -1269,6 +1349,11 @@
     "input_sha256": "94286e99d073f026f29c6c7b0c84e1be3568d43cca1b97b55a18c376d7a12548",
     "source": "frozen-fixture/single-defect/211"
   },
+  "restore_point.deleted/original/actual withdrawn predecessor witness": {
+    "expected_refusal": "restore_point.deleted/original/actual withdrawn predecessor witness",
+    "input_sha256": "8851e2007cfe5e02869498a21a4b74cde91859624fb4b8010d3a03ebb0de9b3b",
+    "source": "adoption-bank/single-defect/3"
+  },
   "restore_point.deleted/original/actual writer decision bound to original B1": {
     "expected_refusal": "restore_point.deleted/original/actual writer decision bound to original B1",
     "input_sha256": "08e91174dc09cd056996aa3a9a8a287475c15743933bcf7c07ccc9b5c457f69b",
@@ -1278,6 +1363,16 @@
     "expected_refusal": "restore_point.deleted/original/actual writer/permission/confirmation admission",
     "input_sha256": "0e37364f63ab227ccd6b6fa0cae3c83059fc3cc97e059fdcb2597e55ad825076",
     "source": "frozen-fixture/single-defect/183"
+  },
+  "restore_point.deleted/original/actual writer/permission/confirmation scope and request": {
+    "expected_refusal": "restore_point.deleted/original/actual writer/permission/confirmation scope and request",
+    "input_sha256": "a4752b404db47e059c2c3d228057f5c259def304223009ada80cc419930cd061",
+    "source": "frozen-fixture/single-defect/286"
+  },
+  "restore_point.deleted/original/all actual owner hold/ref classes exactly once": {
+    "expected_refusal": "restore_point.deleted/original/all actual owner hold/ref classes exactly once",
+    "input_sha256": "2de6c845ddfc46499fb81b8fad1489b17345112c258c8d6f932d90066af19c82",
+    "source": "frozen-fixture/single-defect/290"
   },
   "restore_point.deleted/original/all retained birth retirement chronology": {
     "expected_refusal": "restore_point.deleted/original/all retained birth retirement chronology",
@@ -1293,6 +1388,11 @@
     "expected_refusal": "restore_point.deleted/original/anchor range",
     "input_sha256": "56b9b4adbe54d73f7d3757bf10f822cdcb24b9ae6ea9a05d7f91832028fde041",
     "source": "frozen-fixture/single-defect/20"
+  },
+  "restore_point.deleted/original/atomic exact first withdrawal preserves prior core and repeat time": {
+    "expected_refusal": "restore_point.deleted/original/atomic exact first withdrawal preserves prior core and repeat time",
+    "input_sha256": "02cd01316672c570f0ed34dc211741c2739049d3582fc81a51abd1c28ca7f4bc",
+    "source": "run.started/adoption/run-withdrawal-mutates-final-cursor"
   },
   "restore_point.deleted/original/authenticated original domain request actor and exact args": {
     "expected_refusal": "restore_point.deleted/original/authenticated original domain request actor and exact args",
@@ -1329,6 +1429,11 @@
     "input_sha256": "8121d5991beb6f2958bd6536ef5f82104696072ee30a3e4c77c1c94941181817",
     "source": "frozen-fixture/single-defect/164"
   },
+  "restore_point.deleted/original/cleanup selects exact retired generation, never current": {
+    "expected_refusal": "restore_point.deleted/original/cleanup selects exact retired generation, never current",
+    "input_sha256": "fbe8893652d800394fdf5f55ffcc3d540849c4c25d09c74b6965824b2c35ab72",
+    "source": "run.started/retention/single-defect/selected_generation"
+  },
   "restore_point.deleted/original/closed checkpoint schema": {
     "expected_refusal": "restore_point.deleted/original/closed checkpoint schema",
     "input_sha256": "a74bc40c0df349e922c2a9a5e29374fb85b1a5c2f7443bc869fd41d4410c0552",
@@ -1353,6 +1458,11 @@
     "expected_refusal": "restore_point.deleted/original/command join",
     "input_sha256": "f0757745f5239a8db70a6e1cadd3286b24b3d8428213e1aada91cf1bf5b3288c",
     "source": "frozen-fixture/single-defect/177"
+  },
+  "restore_point.deleted/original/committed marker": {
+    "expected_refusal": "restore_point.deleted/original/committed marker",
+    "input_sha256": "9fb83a99da4633a03664993400d28119afff23e75448d8bf1414310a4edf1b25",
+    "source": "frozen-fixture/single-defect/303"
   },
   "restore_point.deleted/original/companion identity": {
     "expected_refusal": "restore_point.deleted/original/companion identity",
@@ -1409,6 +1519,16 @@
     "input_sha256": "c8423f516ec8620494c3aa504e78bae918c172ab41f5059ed3adf56d3b8d498b",
     "source": "frozen-fixture/single-defect/63"
   },
+  "restore_point.deleted/original/complete source traversal frontier restore_created": {
+    "expected_refusal": "restore_point.deleted/original/complete source traversal frontier restore_created",
+    "input_sha256": "31ff62608582d83db134b1083c4418c4fdc71e1881cc375775e4222ef11bea9a",
+    "source": "run.started/adoption/created-matching-event-as-complete-cursor"
+  },
+  "restore_point.deleted/original/complete source traversal frontier run_started": {
+    "expected_refusal": "restore_point.deleted/original/complete source traversal frontier run_started",
+    "input_sha256": "c57f2bb987e1939e39ef59d5ae2aa57089223967384dcc9a75b7856812551ebf",
+    "source": "run.started/adoption/run-birth-triple-as-current-cursor"
+  },
   "restore_point.deleted/original/created actual full frontier cursor": {
     "expected_refusal": "restore_point.deleted/original/created actual full frontier cursor",
     "input_sha256": "ef0c48e3e09a1db1e91ba83751f080b062bb1685cbe1c9f16bb893879ad5d4d3",
@@ -1424,20 +1544,50 @@
     "input_sha256": "79a7ee54073566dfbcc9ea8cbec6855ac8c64017ba78654daf6181250fec251d",
     "source": "frozen-fixture/single-defect/92"
   },
+  "restore_point.deleted/original/created checkpoint schema": {
+    "expected_refusal": "restore_point.deleted/original/created checkpoint schema",
+    "input_sha256": "63f9daf56c41a8f020ed1d843fd6ac0002788f59b8342f3e0a1177d0796b140a",
+    "source": "run.started/adoption/shapes/root-type/('restore_created', 'checkpoint')"
+  },
+  "restore_point.deleted/original/created companion schema": {
+    "expected_refusal": "restore_point.deleted/original/created companion schema",
+    "input_sha256": "99509210a2dc6f47904b9a3ecb834c81b7ad2caf047b0826d30c4c49518ef97c",
+    "source": "run.started/adoption/shapes/root-type/('restore_created', 'companion')"
+  },
   "restore_point.deleted/original/created complete original birth binding": {
     "expected_refusal": "restore_point.deleted/original/created complete original birth binding",
     "input_sha256": "9bf9409bdc09c6e7e94ea368dc6fb0ecf052565f8c22322529b49d5a39683861",
     "source": "frozen-fixture/single-defect/90"
+  },
+  "restore_point.deleted/original/created event schema": {
+    "expected_refusal": "restore_point.deleted/original/created event schema",
+    "input_sha256": "a42c08795a55c2dde2400ea768528c302f9b879211b5b973b86426188534e62c",
+    "source": "run.started/adoption/shapes/root-type/('restore_created', 'event')"
   },
   "restore_point.deleted/original/created exact source payload/value": {
     "expected_refusal": "restore_point.deleted/original/created exact source payload/value",
     "input_sha256": "a9271c8f67c5f374938936e14429601539502902925edc5d56ae1f4da89f4b3f",
     "source": "frozen-fixture/single-defect/96"
   },
+  "restore_point.deleted/original/created generation admission schema": {
+    "expected_refusal": "restore_point.deleted/original/created generation admission schema",
+    "input_sha256": "1119b0767d22f83acb880ca3b1e4d196f428036940296b0b3292e6b414e5cd57",
+    "source": "run.started/adoption/shapes/root-type/('successor_handoff', 'created_generation_admission')"
+  },
+  "restore_point.deleted/original/created index schema": {
+    "expected_refusal": "restore_point.deleted/original/created index schema",
+    "input_sha256": "8848c99923d589996c20aa7f18e11cb363cb5ee355c30a33c20b3de91cda0f3b",
+    "source": "run.started/adoption/shapes/root-type/('restore_created', 'index')"
+  },
   "restore_point.deleted/original/created original Storage": {
     "expected_refusal": "restore_point.deleted/original/created original Storage",
     "input_sha256": "a4aa8b40427299887664ef39e7bb4cfa912fa109e7c97ecdf006bd23ba7e161c",
     "source": "frozen-fixture/single-defect/91"
+  },
+  "restore_point.deleted/original/created original locator": {
+    "expected_refusal": "restore_point.deleted/original/created original locator",
+    "input_sha256": "80ab0c64f16b131c4f896de4576daef94a19fa87eba6b72c3be464bc685b4656",
+    "source": "frozen-fixture/single-defect/284"
   },
   "restore_point.deleted/original/created original source Storage": {
     "expected_refusal": "restore_point.deleted/original/created original source Storage",
@@ -1458,6 +1608,31 @@
     "expected_refusal": "restore_point.deleted/original/created original survivor",
     "input_sha256": "afe6808967ab334734d90dbd59dd380d19bdc14d56d0230de8843db3b1f6e979",
     "source": "frozen-fixture/single-defect/95"
+  },
+  "restore_point.deleted/original/created original/current immutable event": {
+    "expected_refusal": "restore_point.deleted/original/created original/current immutable event",
+    "input_sha256": "3d427f5f1fba81afd8cdf5091c3ae48cca9a2abb153990c1c573528cc32e1120",
+    "source": "frozen-fixture/single-defect/283"
+  },
+  "restore_point.deleted/original/created payload schema": {
+    "expected_refusal": "restore_point.deleted/original/created payload schema",
+    "input_sha256": "4fe6fad9657fa423b2d620c1cb9fce346282c9e32605f2b13b33d21fc4ee091e",
+    "source": "adoption-bank/single-defect/0"
+  },
+  "restore_point.deleted/original/created record schema": {
+    "expected_refusal": "restore_point.deleted/original/created record schema",
+    "input_sha256": "561425ca2e8ac157737a4552c662a0dd67aac7c1d018c52ee57deba78569a59a",
+    "source": "run.started/adoption/shapes/root-type/('restore_created', 'record')"
+  },
+  "restore_point.deleted/original/created surviving source event": {
+    "expected_refusal": "restore_point.deleted/original/created surviving source event",
+    "input_sha256": "b513c5231db7af7614a530664dbc38a5f07d703af61aafa377e03ddc51b0b912",
+    "source": "frozen-fixture/single-defect/282"
+  },
+  "restore_point.deleted/original/creation exact original source value/payload bytes": {
+    "expected_refusal": "restore_point.deleted/original/creation exact original source value/payload bytes",
+    "input_sha256": "234fd93aa5607da4e0570c599d9320274af71e585753b90f6e7dc941fad5de12",
+    "source": "adoption-bank/single-defect/14"
   },
   "restore_point.deleted/original/creation original successful outcome": {
     "expected_refusal": "restore_point.deleted/original/creation original successful outcome",
@@ -1499,6 +1674,11 @@
     "input_sha256": "a2824551a33577f85c2957b374f51315a18c944253bcbce9325a01e3118bbcaf",
     "source": "frozen-fixture/single-defect/197"
   },
+  "restore_point.deleted/original/domain request scoped identity": {
+    "expected_refusal": "restore_point.deleted/original/domain request scoped identity",
+    "input_sha256": "636c125143969ed8b7282596ee09805ee7fdfa13aba75ec667b6217803f577ed",
+    "source": "frozen-fixture/single-defect/297"
+  },
   "restore_point.deleted/original/duplicate global event ID": {
     "expected_refusal": "restore_point.deleted/original/duplicate global event ID",
     "input_sha256": "65c11cdb52823c91e1c17aec931ef4752c0e355805b4f0276cdc723b157051ff",
@@ -1533,6 +1713,11 @@
     "expected_refusal": "restore_point.deleted/original/exact admitted retirement wrapper and preserved sibling history",
     "input_sha256": "d483eecef0545c233f3f3b7482d980fd9ce4356a87b39e0ebb5399ea206fdeaa",
     "source": "frozen-fixture/single-defect/178"
+  },
+  "restore_point.deleted/original/exact canonical row set": {
+    "expected_refusal": "restore_point.deleted/original/exact canonical row set",
+    "input_sha256": "9946981683eb2ac41caff2169acb7df70a02b62bc01adcd50220c7cb91b89da3",
+    "source": "frozen-fixture/single-defect/277"
   },
   "restore_point.deleted/original/exact complete native frozen event": {
     "expected_refusal": "restore_point.deleted/original/exact complete native frozen event",
@@ -1574,6 +1759,11 @@
     "input_sha256": "41c91f7ac5d71987135da608b66bc6ffb922a30f01b858e63ea64b28dde57723",
     "source": "frozen-fixture/single-defect/218"
   },
+  "restore_point.deleted/original/exact ordered route closure": {
+    "expected_refusal": "restore_point.deleted/original/exact ordered route closure",
+    "input_sha256": "8c4a7333956497522f07eb9b5a3660f0863d0028513eb350dc245ab602929fad",
+    "source": "frozen-fixture/single-defect/270"
+  },
   "restore_point.deleted/original/exact required unique custody family set": {
     "expected_refusal": "restore_point.deleted/original/exact required unique custody family set",
     "input_sha256": "fb8bb5c95f15afa2d0ec7f9eef96cf505b2f1c337327fb239b42e141b118dfa3",
@@ -1599,6 +1789,11 @@
     "input_sha256": "0f2f9749b1fd7c5a016206aa34b827c2e5a84ddb19873e736fb548132bb03004",
     "source": "frozen-fixture/single-defect/189"
   },
+  "restore_point.deleted/original/exact typed result schema reference": {
+    "expected_refusal": "restore_point.deleted/original/exact typed result schema reference",
+    "input_sha256": "9c0da1d752a7fc744b201fd791493025222e4541686e7e3e5d44716f2df700ae",
+    "source": "frozen-fixture/single-defect/259"
+  },
   "restore_point.deleted/original/existing index row schema": {
     "expected_refusal": "restore_point.deleted/original/existing index row schema",
     "input_sha256": "a798305d54fc1746d2c6722d6bf8694cd5ff5914251aa9e897bcd7f2d47df614",
@@ -1609,10 +1804,40 @@
     "input_sha256": "461b1216971b44fa31e0ac41a6dd506bd969607cbad027cd4127306beef2820b",
     "source": "restore_point.deleted/frozen/RPD2-no-global-history-v1-fallback"
   },
+  "restore_point.deleted/original/explicit summary writer value successor": {
+    "expected_refusal": "restore_point.deleted/original/explicit summary writer value successor",
+    "input_sha256": "8ddb377209255849802de9d0fe52f0d92650a2e4af96985059791ef6969620ba",
+    "source": "frozen-fixture/single-defect/271"
+  },
+  "restore_point.deleted/original/failed exact failure mapping": {
+    "expected_refusal": "restore_point.deleted/original/failed exact failure mapping",
+    "input_sha256": "361de8d396b02cf2f12861724954c14677ea8a49c14976a5bc3aef628e81a939",
+    "source": "frozen-fixture/single-defect/275"
+  },
+  "restore_point.deleted/original/filtered exact frontier selection restore_created": {
+    "expected_refusal": "restore_point.deleted/original/filtered exact frontier selection restore_created",
+    "input_sha256": "04d504d1ce615696bb9e8c970a36599ad1d1e1286d343e8b73b20a0d8df112a2",
+    "source": "run.started/adoption/created-filtered-stale-frontier"
+  },
+  "restore_point.deleted/original/filtered exact frontier selection run_started": {
+    "expected_refusal": "restore_point.deleted/original/filtered exact frontier selection run_started",
+    "input_sha256": "e3dcef0e821cc3cfbac1a3c3676e659e6b259c04e2f56b6d3da9c7bf043b708f",
+    "source": "run.started/adoption/run-filtered-stale-frontier"
+  },
+  "restore_point.deleted/original/first initialization no fabricated history": {
+    "expected_refusal": "restore_point.deleted/original/first initialization no fabricated history",
+    "input_sha256": "38c2d64814ec4942620c510298a1015abb4ea84b9700429fd43553f2a68995e8",
+    "source": "frozen-fixture/single-defect/299"
+  },
   "restore_point.deleted/original/fixture one segment": {
     "expected_refusal": "restore_point.deleted/original/fixture one segment",
     "input_sha256": "afc8b4c75c13b1dd0e7fa2ab05d99d0940007651de24847bf90d5d95f613b544",
     "source": "frozen-fixture/single-defect/143"
+  },
+  "restore_point.deleted/original/fixture requires actual owner resolution for non-project hold scopes": {
+    "expected_refusal": "restore_point.deleted/original/fixture requires actual owner resolution for non-project hold scopes",
+    "input_sha256": "23b17913c9473229917efadf629d712660b6274b1ef5bdc84ffb81bb3c7d1303",
+    "source": "run.started/retention/single-defect/hold_scope_kind"
   },
   "restore_point.deleted/original/flat operation and command instance join full identity": {
     "expected_refusal": "restore_point.deleted/original/flat operation and command instance join full identity",
@@ -1649,6 +1874,11 @@
     "input_sha256": "5d330c0230129ed3230c49d941b240938d6381878268f022bb15625a08bb2b62",
     "source": "frozen-fixture/single-defect/42"
   },
+  "restore_point.deleted/original/full retained IdentityEnvelope equality": {
+    "expected_refusal": "restore_point.deleted/original/full retained IdentityEnvelope equality",
+    "input_sha256": "0ea962865303b1370a72e68a1ed7b17a386d0f555aa5c2754168a1fca80d3538",
+    "source": "frozen-fixture/single-defect/257"
+  },
   "restore_point.deleted/original/generation Storage identity": {
     "expected_refusal": "restore_point.deleted/original/generation Storage identity",
     "input_sha256": "7a42f11df391d40c2fe21b7b8d716061d416b7de48fb3c57fa65870694529f2d",
@@ -1663,6 +1893,16 @@
     "expected_refusal": "restore_point.deleted/original/generation/dataset identity",
     "input_sha256": "d77e43a50532f039ff78a67d998899c162db2d0a3f85a5862ac957ba03b2b773",
     "source": "frozen-fixture/single-defect/126"
+  },
+  "restore_point.deleted/original/generic row schema": {
+    "expected_refusal": "restore_point.deleted/original/generic row schema",
+    "input_sha256": "0526c58e36520301966237c8b74644f0c64d7dba20706db158deb1cb68d737a1",
+    "source": "run.started/adoption/shapes/generic-row"
+  },
+  "restore_point.deleted/original/generic schema": {
+    "expected_refusal": "restore_point.deleted/original/generic schema",
+    "input_sha256": "3a325fe6a45e3547e51c9b18a9779ea559035d578331380c11f6653d36530c2d",
+    "source": "run.started/adoption/shapes/root-type/('generic', 'checkpoint')"
   },
   "restore_point.deleted/original/historical branch does not fabricate native deletion custody": {
     "expected_refusal": "restore_point.deleted/original/historical branch does not fabricate native deletion custody",
@@ -1754,6 +1994,11 @@
     "input_sha256": "0f531adf2a06bc5786284816dde29ebaa58049f437828f98db5d7da723be6430",
     "source": "frozen-fixture/single-defect/241"
   },
+  "restore_point.deleted/original/legacy v2 adapter fence": {
+    "expected_refusal": "restore_point.deleted/original/legacy v2 adapter fence",
+    "input_sha256": "bf83bdeee2a771fdf00ba51b53da9a52156d4dd3e6c3eefa6e388c1fc8bf128e",
+    "source": "frozen-fixture/single-defect/281"
+  },
   "restore_point.deleted/original/manifest digest durable_watermarks_sha256": {
     "expected_refusal": "restore_point.deleted/original/manifest digest durable_watermarks_sha256",
     "input_sha256": "ffb47b794f348221711d0ad2d8e84a53ee118b58a4a26ae027167a2680ce81ca",
@@ -1789,6 +2034,11 @@
     "input_sha256": "9384556a516e2beb30ec3a7d0c0e1bf67ae8aa8e2b130ffa70ac137c230c9499",
     "source": "frozen-fixture/single-defect/6"
   },
+  "restore_point.deleted/original/native deterministic identity": {
+    "expected_refusal": "restore_point.deleted/original/native deterministic identity",
+    "input_sha256": "0dfa8668de15064a0b25ebfa4a9c76a76423d54b950d082d2176fd78f4857ac0",
+    "source": "frozen-fixture/single-defect/285"
+  },
   "restore_point.deleted/original/native immutable hash": {
     "expected_refusal": "restore_point.deleted/original/native immutable hash",
     "input_sha256": "c6cfaa50155f42c7a1050de68b6263ddc8cfe2673afd81f23009c50826996871",
@@ -1798,6 +2048,11 @@
     "expected_refusal": "restore_point.deleted/original/native mode",
     "input_sha256": "7c6641764f17d79d901d72addf6e6f3d716d8e9c9d4d8eaaea7d6dcd1938d3d1",
     "source": "frozen-fixture/single-defect/87"
+  },
+  "restore_point.deleted/original/native point canonical key": {
+    "expected_refusal": "restore_point.deleted/original/native point canonical key",
+    "input_sha256": "3bd9420ec58cbc896981b8787ccaefab282e8108321f728bc1f3de0fe9d39c6f",
+    "source": "frozen-fixture/single-defect/287"
   },
   "restore_point.deleted/original/no invented receipt/event for no-effect result": {
     "expected_refusal": "restore_point.deleted/original/no invented receipt/event for no-effect result",
@@ -1819,10 +2074,25 @@
     "input_sha256": "b2e7a07cf9ae59e8ca1e59c13b9d7c7df68b8b434b2d6fca3fe578e629f0f893",
     "source": "frozen-fixture/single-defect/158"
   },
+  "restore_point.deleted/original/normalized/outcome payload_sha256": {
+    "expected_refusal": "restore_point.deleted/original/normalized/outcome payload_sha256",
+    "input_sha256": "55ad2326f006a3b19c8d03b41a4949ce6178784010b4c51876fc0836c16c5a3c",
+    "source": "frozen-fixture/single-defect/258"
+  },
   "restore_point.deleted/original/normalized/outcome target_generation": {
     "expected_refusal": "restore_point.deleted/original/normalized/outcome target_generation",
     "input_sha256": "9b0e331721c55fa5a0127d325ba00e909a4a3b7d025a9fb764bd35fd2069f3fe",
     "source": "frozen-fixture/single-defect/160"
+  },
+  "restore_point.deleted/original/old raw readers unchanged": {
+    "expected_refusal": "restore_point.deleted/original/old raw readers unchanged",
+    "input_sha256": "2cb23375fb1203493241a4dd30bd3e46f88121dae090a2b616ea5bb87f6c484d",
+    "source": "frozen-fixture/single-defect/272"
+  },
+  "restore_point.deleted/original/one maintenance candidate": {
+    "expected_refusal": "restore_point.deleted/original/one maintenance candidate",
+    "input_sha256": "27d448a987c7cd36558d9ec1af1a9bb18a40a482941eb05c7c4c7408fe22a2d6",
+    "source": "frozen-fixture/single-defect/276"
   },
   "restore_point.deleted/original/operation Storage/project scope": {
     "expected_refusal": "restore_point.deleted/original/operation Storage/project scope",
@@ -1864,6 +2134,11 @@
     "input_sha256": "43053594b5248c8e0d1349540461aa0adaa83a7b558522620c9934be4d279be3",
     "source": "frozen-fixture/single-defect/102"
   },
+  "restore_point.deleted/original/original CV333 owner response": {
+    "expected_refusal": "restore_point.deleted/original/original CV333 owner response",
+    "input_sha256": "4ab61e52f46837b4e74e0ff1ac32d40ce5ee6b0c282e67f6f7868d5e93add763",
+    "source": "frozen-fixture/single-defect/295"
+  },
   "restore_point.deleted/original/original SIR payload byte digest": {
     "expected_refusal": "restore_point.deleted/original/original SIR payload byte digest",
     "input_sha256": "e5fea6b94c14101c3a4cf3a195d84a5a65e4f28848243b3c7a95a15d762312aa",
@@ -1888,6 +2163,11 @@
     "expected_refusal": "restore_point.deleted/original/original append source independent of current relocation",
     "input_sha256": "dd2683c035209480261923bd11ff4ba2925c0a77d30835c9bea8d86189d64a60",
     "source": "frozen-fixture/single-defect/44"
+  },
+  "restore_point.deleted/original/original append/current source immutable event scope identity": {
+    "expected_refusal": "restore_point.deleted/original/original append/current source immutable event scope identity",
+    "input_sha256": "21b79ad0ddcf6c30c76b2ccf5b6d8563f734d96e876b1db64f5a0606aada9d86",
+    "source": "run.started/adoption/single-defect/creation_original_observed"
   },
   "restore_point.deleted/original/original content hash codec": {
     "expected_refusal": "restore_point.deleted/original/original content hash codec",
@@ -1919,15 +2199,40 @@
     "input_sha256": "022650657737981cf95b82e70b2601643932a76c57d5a912cedf7a156bfae6e6",
     "source": "frozen-fixture/single-defect/50"
   },
+  "restore_point.deleted/original/original publication actual Storage identity": {
+    "expected_refusal": "restore_point.deleted/original/original publication actual Storage identity",
+    "input_sha256": "7f1481c42f0f0afa7bf058c6a6b546e8302cc6f98c10fa6962f15a6e0703c96a",
+    "source": "run.started/adoption/original-transaction-foreign-storage"
+  },
   "restore_point.deleted/original/original request/dispatch identity": {
     "expected_refusal": "restore_point.deleted/original/original request/dispatch identity",
     "input_sha256": "9af971ac45eb77c7543be9c41d72311585ad75b07996c83b3085a013fe5aefa0",
     "source": "frozen-fixture/single-defect/51"
   },
+  "restore_point.deleted/original/original source cursor/frame-end": {
+    "expected_refusal": "restore_point.deleted/original/original source cursor/frame-end",
+    "input_sha256": "4a622f3e1888b0b1db3f7e30e3d8552374d7a1b6098b202d5fbf165a5dc37da5",
+    "source": "run.started/adoption/single-defect/creation_original_relocated"
+  },
+  "restore_point.deleted/original/original_creation_commit_transaction schema": {
+    "expected_refusal": "restore_point.deleted/original/original_creation_commit_transaction schema",
+    "input_sha256": "61f0f653e987503b64fe7c3eb87396f565bab0c5cb2a4fddfaf9654f31502eb8",
+    "source": "run.started/adoption/shapes/root-type/('original_creation_commit_transaction',)"
+  },
+  "restore_point.deleted/original/original_creation_publication schema": {
+    "expected_refusal": "restore_point.deleted/original/original_creation_publication schema",
+    "input_sha256": "fe12728d14f5b9c975da353537362ac57f124b193f886c79be9ae8ee1544de2f",
+    "source": "run.started/adoption/shapes/root-type/('original_creation_publication',)"
+  },
   "restore_point.deleted/original/outcome project scope": {
     "expected_refusal": "restore_point.deleted/original/outcome project scope",
     "input_sha256": "6a21fd86123b8280a07fd614594f3b26de9362e0ab4f884b037f7f39d10dd103",
     "source": "frozen-fixture/single-defect/192"
+  },
+  "restore_point.deleted/original/owner preflight actual snapshot": {
+    "expected_refusal": "restore_point.deleted/original/owner preflight actual snapshot",
+    "input_sha256": "7d4760f8f49686cfaa99d57f0e9b1df36eed53843afb8f92763a5e1335656793",
+    "source": "frozen-fixture/single-defect/289"
   },
   "restore_point.deleted/original/partition join": {
     "expected_refusal": "restore_point.deleted/original/partition join",
@@ -1953,6 +2258,11 @@
     "expected_refusal": "restore_point.deleted/original/payload/envelope project identity",
     "input_sha256": "96c08d8f7d3aeec928958f2cab4de326efb8a33607724e370e9fc0c54be3435a",
     "source": "frozen-fixture/single-defect/15"
+  },
+  "restore_point.deleted/original/pre-B1 applicable owner hold scope/enumeration": {
+    "expected_refusal": "restore_point.deleted/original/pre-B1 applicable owner hold scope/enumeration",
+    "input_sha256": "a3b939be5317b9c527e83509ff6e1b2e67a8ca508cad7255c8ca32d531e56700",
+    "source": "frozen-fixture/single-defect/291"
   },
   "restore_point.deleted/original/preparation clock": {
     "expected_refusal": "restore_point.deleted/original/preparation clock",
@@ -2009,6 +2319,11 @@
     "input_sha256": "462ff2704caceded2cff04ab96c7847822fe709f8d9b6debdc23795dd0df1af8",
     "source": "frozen-fixture/single-defect/249"
   },
+  "restore_point.deleted/original/refused exact rejection mapping": {
+    "expected_refusal": "restore_point.deleted/original/refused exact rejection mapping",
+    "input_sha256": "9424a574fbcc07aa00b2e1d001a16552d1fb14766c6c2a2a61ef3373951f6091",
+    "source": "frozen-fixture/single-defect/274"
+  },
   "restore_point.deleted/original/registered external schema ID": {
     "expected_refusal": "restore_point.deleted/original/registered external schema ID",
     "input_sha256": "62b344766fb9aeaae4bb4424dda1854080e932439ad345e41145d6b55ee897bf",
@@ -2028,6 +2343,11 @@
     "expected_refusal": "restore_point.deleted/original/registered scope policy",
     "input_sha256": "f570fcad65df3824cdf14439849200d8cfcaa0f98f7843be9cc67c982c653d83",
     "source": "frozen-fixture/single-defect/13"
+  },
+  "restore_point.deleted/original/resolved exact owner adoption pointer": {
+    "expected_refusal": "restore_point.deleted/original/resolved exact owner adoption pointer",
+    "input_sha256": "76cbe1a197b9dae64cd2bd20babd1a49c8548967187448788ae8cda35d64c651",
+    "source": "frozen-fixture/single-defect/273"
   },
   "restore_point.deleted/original/response original outcome ref": {
     "expected_refusal": "restore_point.deleted/original/response original outcome ref",
@@ -2049,6 +2369,11 @@
     "input_sha256": "2fa61c03fb8c81c622b681470bca143ae7064abeaa2ef9b4857caea58d35936f",
     "source": "frozen-fixture/single-defect/151"
   },
+  "restore_point.deleted/original/result replay is content-free and does not manufacture source": {
+    "expected_refusal": "restore_point.deleted/original/result replay is content-free and does not manufacture source",
+    "input_sha256": "7ca7691712dacacc27e2222aeaf1dd09fb11556aae8fbbbe582e3ac0b6364aae",
+    "source": "frozen-fixture/single-defect/302"
+  },
   "restore_point.deleted/original/result/auth Storage and key": {
     "expected_refusal": "restore_point.deleted/original/result/auth Storage and key",
     "input_sha256": "ad5f2db83546311faec750e460107b9b6c9d0d7f45fcb9c589a3ccda9b96fbd5",
@@ -2069,6 +2394,116 @@
     "input_sha256": "84aa514bd6df124f3a0d650955867357754cccd6e2e8155c5bf4f173a75738f4",
     "source": "frozen-fixture/single-defect/22"
   },
+  "restore_point.deleted/original/run at most three logical generations": {
+    "expected_refusal": "restore_point.deleted/original/run at most three logical generations",
+    "input_sha256": "1d591d75d8d887279fd0a0cd7154952203232c4b6708e0796cf31265b0a217f2",
+    "source": "adoption-bank/single-defect/9"
+  },
+  "restore_point.deleted/original/run checkpoint schema": {
+    "expected_refusal": "restore_point.deleted/original/run checkpoint schema",
+    "input_sha256": "f71849e30164bb6abab413d9f13365d05c5aef0d037c420c502e6df7eeb83a39",
+    "source": "run.started/adoption/shapes/root-type/('run_started', 'checkpoint')"
+  },
+  "restore_point.deleted/original/run cleanup exact root preimage and Storage/key": {
+    "expected_refusal": "restore_point.deleted/original/run cleanup exact root preimage and Storage/key",
+    "input_sha256": "b0e2124ceab798301e3ac93e66ddec3cc729fdcfa25e30c345a20d4d42917262",
+    "source": "run.started/retention/single-defect/root_preimage"
+  },
+  "restore_point.deleted/original/run complete retained bounds": {
+    "expected_refusal": "restore_point.deleted/original/run complete retained bounds",
+    "input_sha256": "beca69a9f234b8c227c06b749670994cdb60e67053d140c5194b230ab0222a0e",
+    "source": "adoption-bank/single-defect/15"
+  },
+  "restore_point.deleted/original/run current publication eligibility": {
+    "expected_refusal": "restore_point.deleted/original/run current publication eligibility",
+    "input_sha256": "b4229368c0dfd56c51b6294c405a777f024d47f56d3fbc4fe7849c5f07a03923",
+    "source": "run.started/adoption/run-current-state-withdrawn-no-read"
+  },
+  "restore_point.deleted/original/run distinct generation IDs": {
+    "expected_refusal": "restore_point.deleted/original/run distinct generation IDs",
+    "input_sha256": "264922ccc37c47e11e2f4da7ade81901021446bf1227433b6a2fc90a56e90385",
+    "source": "adoption-bank/single-defect/19"
+  },
+  "restore_point.deleted/original/run event schema": {
+    "expected_refusal": "restore_point.deleted/original/run event schema",
+    "input_sha256": "59df08364951b37231b7fc203e95146047dbdbfbdbc20627bd529a730febf9bf",
+    "source": "run.started/adoption/shapes/root-type/('run_started', 'event')"
+  },
+  "restore_point.deleted/original/run exact first-withdrawal retirement anchor": {
+    "expected_refusal": "restore_point.deleted/original/run exact first-withdrawal retirement anchor",
+    "input_sha256": "0ed718df72c9cb33b6020a471533787f6c9e6b662779daf46bc9db82af078d01",
+    "source": "adoption-bank/single-defect/10"
+  },
+  "restore_point.deleted/original/run full rebuild exact source/token handoff": {
+    "expected_refusal": "restore_point.deleted/original/run full rebuild exact source/token handoff",
+    "input_sha256": "1fc12b38e83928e64a3373f44054839b2810f838f45598abf5dae56413126859",
+    "source": "adoption-bank/single-defect/2"
+  },
+  "restore_point.deleted/original/run generation admission schema": {
+    "expected_refusal": "restore_point.deleted/original/run generation admission schema",
+    "input_sha256": "3d91f9d3e9f481a366b12be57371ad1047849e30d8dd44727d65df3317964808",
+    "source": "run.started/adoption/shapes/root-type/('successor_handoff', 'run_generation_admission')"
+  },
+  "restore_point.deleted/original/run index schema": {
+    "expected_refusal": "restore_point.deleted/original/run index schema",
+    "input_sha256": "98a66fd4dfe34f8ae1e804eb8f62430e3c5d7183b6cefa3b66e2f116e1893663",
+    "source": "run.started/adoption/shapes/root-type/('run_started', 'index')"
+  },
+  "restore_point.deleted/original/run payload schema": {
+    "expected_refusal": "restore_point.deleted/original/run payload schema",
+    "input_sha256": "bf9c29b925dd4f29416af1c45deb94988c71351841069cb724323b311928375a",
+    "source": "adoption-bank/single-defect/1"
+  },
+  "restore_point.deleted/original/run predecessor and successor differ": {
+    "expected_refusal": "restore_point.deleted/original/run predecessor and successor differ",
+    "input_sha256": "657eebbfd4fe1be20f2d40fd9a8cd08eee3c709b422b99752b1a5a98ff1b202b",
+    "source": "run.started/adoption/single-defect/self-predecessor"
+  },
+  "restore_point.deleted/original/run predecessor scope": {
+    "expected_refusal": "restore_point.deleted/original/run predecessor scope",
+    "input_sha256": "16e9c1eb2827c982ee5802f7d3f3b220e40f48a2e16028a4f6cf22069530386a",
+    "source": "adoption-bank/single-defect/4"
+  },
+  "restore_point.deleted/original/run refresh observation cannot predate first publication": {
+    "expected_refusal": "restore_point.deleted/original/run refresh observation cannot predate first publication",
+    "input_sha256": "66233066c8aa40891890cb6fe44e084ad42b91e738a32b9bf81b067328b6a993",
+    "source": "adoption-bank/single-defect/7"
+  },
+  "restore_point.deleted/original/run retention root schema": {
+    "expected_refusal": "restore_point.deleted/original/run retention root schema",
+    "input_sha256": "54439688aaa173b8e48cfcd69814747f947ad1910a065eb557d4b4d767212b1b",
+    "source": "run.started/retention/single-defect/root_schema"
+  },
+  "restore_point.deleted/original/run retention selection schema": {
+    "expected_refusal": "restore_point.deleted/original/run retention selection schema",
+    "input_sha256": "d1ee9e3d34b2bfe3f03aa8d4900237307dbde882a9bab3a867d1bbf04e505afc",
+    "source": "run.started/retention/single-defect/selection_schema"
+  },
+  "restore_point.deleted/original/run retired scope and Storage identity": {
+    "expected_refusal": "restore_point.deleted/original/run retired scope and Storage identity",
+    "input_sha256": "af94902d6d8349a2b5cf627bac61fddbb4a68c213356eece1e73779d39f2da42",
+    "source": "adoption-bank/single-defect/8"
+  },
+  "restore_point.deleted/original/run selected successor ID and actual first publication": {
+    "expected_refusal": "restore_point.deleted/original/run selected successor ID and actual first publication",
+    "input_sha256": "88e9848cd235e37c07247a718e33806421bd8bf15afc0ff05ecdc483de5319f0",
+    "source": "adoption-bank/single-defect/5"
+  },
+  "restore_point.deleted/original/run snapshot schema": {
+    "expected_refusal": "restore_point.deleted/original/run snapshot schema",
+    "input_sha256": "4cb90dff3f3e0b42dd128bf08ea1c603a1cbb10f4fd9ded06705c23f8d800d3e",
+    "source": "run.started/adoption/shapes/root-type/('run_started', 'snapshot')"
+  },
+  "restore_point.deleted/original/run valid prior state": {
+    "expected_refusal": "restore_point.deleted/original/run valid prior state",
+    "input_sha256": "ca5efad33aa81cafe85b9e754d0d5b2291c41cacfdb59f5a96ad41cb4520b0a4",
+    "source": "adoption-bank/single-defect/17"
+  },
+  "restore_point.deleted/original/run withdrawal clock ordering": {
+    "expected_refusal": "restore_point.deleted/original/run withdrawal clock ordering",
+    "input_sha256": "ea41600ad8a972f67435a08185e431287d0ac74b93a5f0f03a2c0a0e39d234de",
+    "source": "adoption-bank/single-defect/20"
+  },
   "restore_point.deleted/original/safe point lineage": {
     "expected_refusal": "restore_point.deleted/original/safe point lineage",
     "input_sha256": "543b30fc92fbaa3b1c4d7e8ded2eb164709ed95caa890f51c0669a401be797ad",
@@ -2078,6 +2513,31 @@
     "expected_refusal": "restore_point.deleted/original/same committed index/checkpoint transaction",
     "input_sha256": "65c2f2dfdb5c428bf16af51678d58ec266913d9bb23da69a1161a8d97570a3a2",
     "source": "frozen-fixture/single-defect/23"
+  },
+  "restore_point.deleted/original/same source/recovery generation current_bytes_sha256": {
+    "expected_refusal": "restore_point.deleted/original/same source/recovery generation current_bytes_sha256",
+    "input_sha256": "2a42154f87a707867b241db58695ca5948f383a6a23235282b75edee4ab296a0",
+    "source": "frozen-fixture/single-defect/278"
+  },
+  "restore_point.deleted/original/same source/recovery generation recovery_epoch": {
+    "expected_refusal": "restore_point.deleted/original/same source/recovery generation recovery_epoch",
+    "input_sha256": "930f5f3145f6eb97c11dec13928a120f8e256215eacc27ec6a613316d0a124b5",
+    "source": "frozen-fixture/single-defect/280"
+  },
+  "restore_point.deleted/original/same source/recovery generation selected_segment_generation": {
+    "expected_refusal": "restore_point.deleted/original/same source/recovery generation selected_segment_generation",
+    "input_sha256": "2efcad42916a2865c64c9ec882b5190c6fcf58b4d4e50531f18b344d3823df83",
+    "source": "frozen-fixture/single-defect/279"
+  },
+  "restore_point.deleted/original/same-generation run refresh preserves identity birth and complete history": {
+    "expected_refusal": "restore_point.deleted/original/same-generation run refresh preserves identity birth and complete history",
+    "input_sha256": "db9c88990c031bf1efdf59d22975d298489a3489958906eafbade9b13afa8d49",
+    "source": "run.started/adoption/run-refresh-publication-id-changed"
+  },
+  "restore_point.deleted/original/same-row run exact prior history plus withdrawn core": {
+    "expected_refusal": "restore_point.deleted/original/same-row run exact prior history plus withdrawn core",
+    "input_sha256": "88eedd97f2cabc39308aeaa9aa185385080b4d7cba29ff4dcaafc18eedb359e5",
+    "source": "run.started/adoption/run-paired-admission-current-older-sibling-mutated"
   },
   "restore_point.deleted/original/schema/25315cf547fbd73688d124f5c9dd67846a4aeffded2f4157569bfea22c5a9fac": {
     "expected_refusal": "restore_point.deleted/original/schema/25315cf547fbd73688d124f5c9dd67846a4aeffded2f4157569bfea22c5a9fac",
@@ -2174,6 +2634,11 @@
     "input_sha256": "cdabd0016ba9d2ecb00e02b815d7e763e4bfeabc158a83c5c565f60f86d611b6",
     "source": "frozen-fixture/single-defect/98"
   },
+  "restore_point.deleted/original/separate app-root deletion result survives retirement": {
+    "expected_refusal": "restore_point.deleted/original/separate app-root deletion result survives retirement",
+    "input_sha256": "f8366e8028ae4a2a7e643e7aef1142cff3a44f6c4e37f82fcf902611b133ecfb",
+    "source": "frozen-fixture/single-defect/304"
+  },
   "restore_point.deleted/original/source Storage identity": {
     "expected_refusal": "restore_point.deleted/original/source Storage identity",
     "input_sha256": "46f9946cd7df99e7e58d16c58615bdf96a1886cea21be6deacae5e1197c2f489",
@@ -2209,10 +2674,35 @@
     "input_sha256": "92b95a21de518dba4b8a12612466903ef58300ff0412208cdc4f706400c3c439",
     "source": "frozen-fixture/single-defect/119"
   },
+  "restore_point.deleted/original/source witness original Storage identity": {
+    "expected_refusal": "restore_point.deleted/original/source witness original Storage identity",
+    "input_sha256": "b17275973505d84e3717d74a5be4e54d78c3e1346cbdcc73ff93bc024f48a97d",
+    "source": "run.started/adoption/review-birth-storage_instance_id"
+  },
+  "restore_point.deleted/original/source witness original manifest_generation": {
+    "expected_refusal": "restore_point.deleted/original/source witness original manifest_generation",
+    "input_sha256": "0b3a8bfc912dc07edc96c8e7c30deb9f48a173a517867d4b6493d25dbd1b8c9a",
+    "source": "run.started/adoption/review-paired-receipt-manifest-repaired-transaction"
+  },
+  "restore_point.deleted/original/source witness original recovery_epoch": {
+    "expected_refusal": "restore_point.deleted/original/source witness original recovery_epoch",
+    "input_sha256": "b9ce144c8beee640c6320926c2ef0d0afef32b17fae59670092130d67f854c4d",
+    "source": "run.started/adoption/review-birth-recovery_epoch"
+  },
+  "restore_point.deleted/original/source witness original survivor prefix": {
+    "expected_refusal": "restore_point.deleted/original/source witness original survivor prefix",
+    "input_sha256": "c9efb96371f1aae532e937fed765009e30cedb06491ad7445b419442ce8f479e",
+    "source": "run.started/adoption/review-birth-survivor_prefix_sha256"
+  },
   "restore_point.deleted/original/strict sequence uniqueness": {
     "expected_refusal": "restore_point.deleted/original/strict sequence uniqueness",
     "input_sha256": "045017059eb2b3475d9d4519bc3f2bf71fcefebb9cf4abcc1ae2b2cd78e0b37e",
     "source": "frozen-fixture/single-defect/147"
+  },
+  "restore_point.deleted/original/successful response exact original event": {
+    "expected_refusal": "restore_point.deleted/original/successful response exact original event",
+    "input_sha256": "ff057ca86ff1172b2e68b462cd8f9c1db764f57dfdfb22601ad69ea45545dc77",
+    "source": "frozen-fixture/single-defect/296"
   },
   "restore_point.deleted/original/successor admitted rebuild source token": {
     "expected_refusal": "restore_point.deleted/original/successor admitted rebuild source token",
@@ -2239,6 +2729,11 @@
     "input_sha256": "cfea6d0ad7df87df4f4bdaf6dfa3ec303a02cbada85e010b4dca10e67bf76c17",
     "source": "frozen-fixture/single-defect/243"
   },
+  "restore_point.deleted/original/summary complete held/ref classes": {
+    "expected_refusal": "restore_point.deleted/original/summary complete held/ref classes",
+    "input_sha256": "192fde61b4d158fc927f26b8ff6a657ccdd41f3882d540dde91d260beea16038",
+    "source": "frozen-fixture/single-defect/266"
+  },
   "restore_point.deleted/original/summary exact named surviving event": {
     "expected_refusal": "restore_point.deleted/original/summary exact named surviving event",
     "input_sha256": "3b6b36996e8cb474b9af84ea596b57070bcc45ced191c03f82db646e80f0be9c",
@@ -2259,15 +2754,55 @@
     "input_sha256": "a71c3b56ab0cbcbb8c412565db2cdf17ea03da3842c7435421321548391dcf3c",
     "source": "restore_point.deleted/frozen/RPD2-summary-retirement-before-release-window"
   },
+  "restore_point.deleted/original/summary original byte_offset": {
+    "expected_refusal": "restore_point.deleted/original/summary original byte_offset",
+    "input_sha256": "d548f42dc1cb0703dff4f52cdc505e3e2fba84c0bb45ebda97dc068a01a6b8f6",
+    "source": "frozen-fixture/single-defect/301"
+  },
+  "restore_point.deleted/original/summary original durable end": {
+    "expected_refusal": "restore_point.deleted/original/summary original durable end",
+    "input_sha256": "a9932669c338878f59e29c1107eac8852c216a6906db7d2dabebd67c8cb1e99a",
+    "source": "frozen-fixture/single-defect/265"
+  },
   "restore_point.deleted/original/summary original original_manifest_generation": {
     "expected_refusal": "restore_point.deleted/original/summary original original_manifest_generation",
     "input_sha256": "613fcd516202ea31767c8021689345d0af15eaadd12c44958b12fed68d136107",
     "source": "restore_point.deleted/frozen/RPD2-summary-terminal-original_manifest_generation"
   },
+  "restore_point.deleted/original/summary original original_recovery_epoch": {
+    "expected_refusal": "restore_point.deleted/original/summary original original_recovery_epoch",
+    "input_sha256": "c418f9f35281363dbff5b481e0c5af2071e9d299a97e2688fd9a253c41f09622",
+    "source": "frozen-fixture/single-defect/263"
+  },
+  "restore_point.deleted/original/summary original segment_generation": {
+    "expected_refusal": "restore_point.deleted/original/summary original segment_generation",
+    "input_sha256": "c51f1f8a8ff1996943497e934164562e5b185db7d6521aad8555b2f60cd4597e",
+    "source": "frozen-fixture/single-defect/300"
+  },
+  "restore_point.deleted/original/summary original segment_name": {
+    "expected_refusal": "restore_point.deleted/original/summary original segment_name",
+    "input_sha256": "af69416c9adcf93216cad2a9653b3e0367c555ca528534896dabbe2c61e8d335",
+    "source": "frozen-fixture/single-defect/264"
+  },
+  "restore_point.deleted/original/summary original terminal source evidence": {
+    "expected_refusal": "restore_point.deleted/original/summary original terminal source evidence",
+    "input_sha256": "aaa321ea4391307a6c29e8875251a4be9295c57e4fc13f4069218df87add6e02",
+    "source": "frozen-fixture/single-defect/267"
+  },
   "restore_point.deleted/original/summary target and original hash": {
     "expected_refusal": "restore_point.deleted/original/summary target and original hash",
     "input_sha256": "c7dfd56a28ee440cda25cac4965dc340a7fb58649c5a48a2cf0598df8e9f7e4f",
     "source": "frozen-fixture/single-defect/215"
+  },
+  "restore_point.deleted/original/target generation exact original topology": {
+    "expected_refusal": "restore_point.deleted/original/target generation exact original topology",
+    "input_sha256": "8cadd666fc3d6cba1370136d4e858dca28a73a2ba699d4af44b40772681e8600",
+    "source": "frozen-fixture/single-defect/294"
+  },
+  "restore_point.deleted/original/terminal original result only": {
+    "expected_refusal": "restore_point.deleted/original/terminal original result only",
+    "input_sha256": "ee413dbc7623838a278e0ab08223135ca9b6b9293400724328fc63af021f259e",
+    "source": "frozen-fixture/single-defect/256"
   },
   "restore_point.deleted/original/terminal read needs no lawfully removed canonical point/companions": {
     "expected_refusal": "restore_point.deleted/original/terminal read needs no lawfully removed canonical point/companions",
@@ -2278,6 +2813,11 @@
     "expected_refusal": "restore_point.deleted/original/three-boundary clock",
     "input_sha256": "11328292087ab8753f633e0b23518299eaf1b9de4ab88ce695982ed4c8ff1aff",
     "source": "frozen-fixture/single-defect/195"
+  },
+  "restore_point.deleted/original/typed original publication complete binding": {
+    "expected_refusal": "restore_point.deleted/original/typed original publication complete binding",
+    "input_sha256": "086c7565ada6d65d8db18fa066073d4812086f90b8d024ed6d7f74b47e4614b9",
+    "source": "run.started/adoption/original-birth-evidence-current-rebuild-manifest"
   },
   "restore_point.deleted/original/typed result resolves exact retained field": {
     "expected_refusal": "restore_point.deleted/original/typed result resolves exact retained field",
@@ -2299,10 +2839,35 @@
     "input_sha256": "746a2ca4949e18f364d7d142657b6caac4ca3f618fabd3e9061a6acc28722697",
     "source": "frozen-fixture/single-defect/125"
   },
+  "restore_point.deleted/original/unique resolved hold rows": {
+    "expected_refusal": "restore_point.deleted/original/unique resolved hold rows",
+    "input_sha256": "6ddce5f33f53fb693226e975d020ff92fc99c10cd3e0f3536483830e64ade5c0",
+    "source": "run.started/retention/single-defect/duplicate_holds"
+  },
+  "restore_point.deleted/original/v1 wrapper is new handoff custody identity, not historical birth": {
+    "expected_refusal": "restore_point.deleted/original/v1 wrapper is new handoff custody identity, not historical birth",
+    "input_sha256": "4a0153d6d3721d822e983cf3c8195e1cafa36619f93150416d78047a74e0003f",
+    "source": "adoption-bank/single-defect/11"
+  },
   "restore_point.deleted/original/v2 deleted has no invented expiry custody and coordinated admission": {
     "expected_refusal": "restore_point.deleted/original/v2 deleted has no invented expiry custody and coordinated admission",
     "input_sha256": "e73cdb08f3737a37d5d5651c278931b3b0e32c0d52528ef707e0129c5d847c99",
     "source": "restore_point.deleted/frozen/RPD2-v2-summary-no-all-reader-admission"
+  },
+  "restore_point.deleted/original/v2 original predecessor generation/holds retained": {
+    "expected_refusal": "restore_point.deleted/original/v2 original predecessor generation/holds retained",
+    "input_sha256": "7edad7a81c6358bd7d6a4f3d8c08cb318c797cd32b97db2004baeeb803d9a62d",
+    "source": "adoption-bank/single-defect/21"
+  },
+  "restore_point.deleted/original/v2 retained actual publication identity and holds": {
+    "expected_refusal": "restore_point.deleted/original/v2 retained actual publication identity and holds",
+    "input_sha256": "5e53cc9d07bc7d39881ae145db3a8fee8ed4fd9e47335b0de8d524d067a37b12",
+    "source": "adoption-bank/single-defect/12"
+  },
+  "restore_point.deleted/original/verified successor source-range/currentness handoff": {
+    "expected_refusal": "restore_point.deleted/original/verified successor source-range/currentness handoff",
+    "input_sha256": "6be10ce1a8843a17b70b52cc6727dd7fd0a16d7de6dc069415f8571eaacf32bb",
+    "source": "run.started/adoption/unverified-successor-version-substitution"
   },
   "restore_point.deleted/retained/SP274 admitted terminal project": {
     "expected_refusal": "restore_point.deleted/retained/SP274 admitted terminal project",
@@ -2444,6 +3009,11 @@
     "input_sha256": "b075b4e0f97a5aee75750e3950528e256bc6a50e461e8cda2fe839e7894c3787",
     "source": "frozen-fixture/single-defect/0"
   },
+  "restore_point.deleted/retained/complete original creation domain request": {
+    "expected_refusal": "restore_point.deleted/retained/complete original creation domain request",
+    "input_sha256": "3d59970dac197f6204bf5b014b70fb643529c518e123313c74350be471b49396",
+    "source": "restore_point.deleted/retained-phase/targeted/complete original creation domain request"
+  },
   "restore_point.deleted/retained/complete original deletion receipt retained twice": {
     "expected_refusal": "restore_point.deleted/retained/complete original deletion receipt retained twice",
     "input_sha256": "220bcb366017b01e5039910228717857c7a0c8835a5cbacaa37ede55620ba1de",
@@ -2478,6 +3048,11 @@
     "expected_refusal": "restore_point.deleted/retained/creation immutable hash identity",
     "input_sha256": "ef8dedf0446e0a2fe0055cc5907db2300e370b3611ac66f94c9a1f762f8ee657",
     "source": "frozen-fixture/single-defect/27"
+  },
+  "restore_point.deleted/retained/creation native identity recipe": {
+    "expected_refusal": "restore_point.deleted/retained/creation native identity recipe",
+    "input_sha256": "3d65f23a58e17a7fed41ba0d344b1b04237e1f836365b91b05398bf8de2c765e",
+    "source": "restore_point.deleted/retained-phase/targeted/creation native identity recipe"
   },
   "restore_point.deleted/retained/current actual disclosure permissions": {
     "expected_refusal": "restore_point.deleted/retained/current actual disclosure permissions",
@@ -2553,6 +3128,11 @@
     "expected_refusal": "restore_point.deleted/retained/full original create result target",
     "input_sha256": "49a9bc86c90efcd30e319d9adbf3ecf39f6844cd2791aefd559d39e08cbdabae",
     "source": "frozen-fixture/single-defect/55"
+  },
+  "restore_point.deleted/retained/full original immutable point value": {
+    "expected_refusal": "restore_point.deleted/retained/full original immutable point value",
+    "input_sha256": "f68de016b798745e4791e4cbf3f6266513f7a0efa73bc90a1e4af0c5a6839c8a",
+    "source": "restore_point.deleted/retained-original/late-immutable-point"
   },
   "restore_point.deleted/retained/full retained SIR IdentityEnvelope": {
     "expected_refusal": "restore_point.deleted/retained/full retained SIR IdentityEnvelope",
@@ -2659,6 +3239,11 @@
     "input_sha256": "55cfb1fe9b76627212398ff084cdb0d735591fb5cced56aac520acc8cfa1c00d",
     "source": "frozen-fixture/single-defect/46"
   },
+  "restore_point.deleted/retained/owner snapshot changed before disclosure": {
+    "expected_refusal": "restore_point.deleted/retained/owner snapshot changed before disclosure",
+    "input_sha256": "6527f847f9c3f30e6b48d5478bd172494aa9dc54a11a8d0488d9c0a9856645bf",
+    "source": "restore_point.deleted/retained-native/disclose/owner-revision"
+  },
   "restore_point.deleted/retained/receipt-selected original uint64 physical profile": {
     "expected_refusal": "restore_point.deleted/retained/receipt-selected original uint64 physical profile",
     "input_sha256": "704fe2cdafffa7fdac5d6efd594958b19cc9c131e19e8398c1a5fc777ecdbce7",
@@ -2678,6 +3263,11 @@
     "expected_refusal": "restore_point.deleted/retained/retained original terminal digest/event/time",
     "input_sha256": "0fbc77ad08b661d95a067bd70c5467ada9788e62be5ac984a496c4ea7a333877",
     "source": "frozen-fixture/single-defect/13"
+  },
+  "restore_point.deleted/retained/stored original response is not current replay wrapper": {
+    "expected_refusal": "restore_point.deleted/retained/stored original response is not current replay wrapper",
+    "input_sha256": "65da9010990b9d0f078192e1c991c9f85089aa04e51f261f92016cc7afd7e8e0",
+    "source": "restore_point.deleted/retained-phase/targeted/stored original response is not current replay wrapper"
   },
   "restore_point.deleted/retained/terminal event family/scope": {
     "expected_refusal": "restore_point.deleted/retained/terminal event family/scope",
@@ -3024,6 +3614,161 @@
     "input_sha256": "23379cbe09e25d1df5bdbf8746ba859c5b1aed45e38e0b77baea3bfcea205fdf",
     "source": "own_d/child_status/row_validator/8283"
   },
+  "run.started/adoption/domain/checkpoint_key": {
+    "expected_refusal": "run.started/adoption/domain/checkpoint_key",
+    "input_sha256": "c17fb516b37fdb4deea3382d8874569a187fcedd062a8608ff21f2637c59a3fe",
+    "source": "run.started/adoption/single-defect/checkpoint_key"
+  },
+  "run.started/adoption/domain/coverage_order": {
+    "expected_refusal": "run.started/adoption/domain/coverage_order",
+    "input_sha256": "0b9e20e6fe90ccd342ac138ae9367ece8e7c7428746444f264716571faba4a8a",
+    "source": "run.started/adoption/single-defect/coverage_order"
+  },
+  "run.started/adoption/domain/event_identity": {
+    "expected_refusal": "run.started/adoption/domain/event_identity",
+    "input_sha256": "fd31a1c07b188a16e188a5b28faed65bdb2cc53c20d403aff6863e5c99f04750",
+    "source": "run.started/adoption/single-defect/event_identity"
+  },
+  "run.started/adoption/domain/global_checkpoint_ref": {
+    "expected_refusal": "run.started/adoption/domain/global_checkpoint_ref",
+    "input_sha256": "1d29c0b080bfeaf58f1474f508f14735e482fc3417402bb5db50ff9fa4e13fb0",
+    "source": "run.started/adoption/single-defect/global_checkpoint_ref"
+  },
+  "run.started/adoption/domain/immutable_snapshot_hash": {
+    "expected_refusal": "run.started/adoption/domain/immutable_snapshot_hash",
+    "input_sha256": "19332863b340f08094251ce776be978159a51f72e730e07d5db7194924ede165",
+    "source": "run.started/adoption/single-defect/immutable_snapshot_hash"
+  },
+  "run.started/adoption/domain/immutable_snapshot_ref": {
+    "expected_refusal": "run.started/adoption/domain/immutable_snapshot_ref",
+    "input_sha256": "8dcc988eca18033f87b40638fde3e04c2f300c8afd54b47fe830869b336eeb80",
+    "source": "run.started/adoption/single-defect/immutable_snapshot_ref"
+  },
+  "run.started/adoption/domain/index_key": {
+    "expected_refusal": "run.started/adoption/domain/index_key",
+    "input_sha256": "ccb2f2963cd550b1aee5b56ee887777dfd9b88a62c8d2cd948ace0ade0b1a427",
+    "source": "run.started/adoption/single-defect/index_key"
+  },
+  "run.started/adoption/domain/new_start_id": {
+    "expected_refusal": "run.started/adoption/domain/new_start_id",
+    "input_sha256": "e7648aeda9e7678784e365ccfeddb5dc454745d887dc018c424403641bb14f64",
+    "source": "run.started/adoption/single-defect/new_start_id"
+  },
+  "run.started/adoption/domain/new_start_key": {
+    "expected_refusal": "run.started/adoption/domain/new_start_key",
+    "input_sha256": "7950e29f8daa80fb0667b51644255cbc17040871ef706ddc17e105f74df8b0d7",
+    "source": "run.started/adoption/single-defect/new_start_key"
+  },
+  "run.started/adoption/domain/producer_semantic_digest": {
+    "expected_refusal": "run.started/adoption/domain/producer_semantic_digest",
+    "input_sha256": "05deab331b074e86f010bda1f6a8784560692442d64eb3c7764bcec6e6d090d1",
+    "source": "run.started/adoption/single-defect/producer_semantic_digest"
+  },
+  "run.started/adoption/domain/project_join": {
+    "expected_refusal": "run.started/adoption/domain/project_join",
+    "input_sha256": "d2058fda05760b591489db0b0e89dbb132a1e6a807aa3c4ef232d362b31ea1b3",
+    "source": "run.started/adoption/single-defect/project_join"
+  },
+  "run.started/adoption/domain/run_lookup_join": {
+    "expected_refusal": "run.started/adoption/domain/run_lookup_join",
+    "input_sha256": "d7ed66b02a1eb3dc183f059ae312431eacb0bcbf5b2ebca8f4991c21fa51b1c1",
+    "source": "run.started/adoption/run-wrong-requested-run"
+  },
+  "run.started/adoption/domain/scope_encoding": {
+    "expected_refusal": "run.started/adoption/domain/scope_encoding",
+    "input_sha256": "8ed93b6b53f21bc07b6e85ffaa8d723588a8d675f59fb21423784b95592dc189",
+    "source": "run.started/adoption/single-defect/scope_encoding"
+  },
+  "run.started/adoption/domain/sequence_join": {
+    "expected_refusal": "run.started/adoption/domain/sequence_join",
+    "input_sha256": "47af299520054f7ba519cfe0092e924e51913f25f9401dcadd137fd481a1cc88",
+    "source": "run.started/adoption/single-defect/sequence_join"
+  },
+  "run.started/adoption/domain/snapshot_join_effective_account_id": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_effective_account_id",
+    "input_sha256": "482f85fff1e15a7ff70eef7e23ad56ef111a533d30bab2ca10b03e600b84338b",
+    "source": "run.started/adoption/single-defect/snapshot_join_effective_account_id"
+  },
+  "run.started/adoption/domain/snapshot_join_effective_mode_overlay": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_effective_mode_overlay",
+    "input_sha256": "ef9fade9d6adc2d0174bcc7a29561ac9c30084f9355c3f7d62a49f2f43c4cbe6",
+    "source": "run.started/adoption/single-defect/snapshot_join_effective_mode_overlay"
+  },
+  "run.started/adoption/domain/snapshot_join_effective_model": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_effective_model",
+    "input_sha256": "4877e57f4293b07c725f19bc9da7d4375f7029d1844838115f9498d48d6025a2",
+    "source": "run.started/adoption/single-defect/snapshot_join_effective_model"
+  },
+  "run.started/adoption/domain/snapshot_join_effective_persona": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_effective_persona",
+    "input_sha256": "7c91a15559d63bb572a4a1ab8054c53aa2e7f281e16f572af791dcf3fd0ac629",
+    "source": "run.started/adoption/single-defect/snapshot_join_effective_persona"
+  },
+  "run.started/adoption/domain/snapshot_join_effective_platform": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_effective_platform",
+    "input_sha256": "6de2e19e25925c1aad0190ee6de441aa8ccc40f4459125f37482e140add2d166",
+    "source": "run.started/adoption/single-defect/snapshot_join_effective_platform"
+  },
+  "run.started/adoption/domain/snapshot_join_requested_account_id": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_requested_account_id",
+    "input_sha256": "079766451c857d600bc4909b6733221bcf4ae00556fc24f3631beca3ce510146",
+    "source": "run.started/adoption/single-defect/snapshot_join_requested_account_id"
+  },
+  "run.started/adoption/domain/snapshot_join_requested_mode_overlay": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_requested_mode_overlay",
+    "input_sha256": "8b337556e577b368dd419b2322ecacc00ebf55ffc30b309ef67a426fb3dcc789",
+    "source": "run.started/adoption/single-defect/snapshot_join_requested_mode_overlay"
+  },
+  "run.started/adoption/domain/snapshot_join_requested_model": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_requested_model",
+    "input_sha256": "8030d26b80ce4801b1646e7868d85c7d7126344a2fc5084a6856caf00eafdb57",
+    "source": "run.started/adoption/single-defect/snapshot_join_requested_model"
+  },
+  "run.started/adoption/domain/snapshot_join_requested_persona": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_requested_persona",
+    "input_sha256": "990217aa58f9d0e2329ff04bb52a534b8d28d034f9db9b7e9a15dc335f3fbf61",
+    "source": "run.started/adoption/single-defect/snapshot_join_requested_persona"
+  },
+  "run.started/adoption/domain/snapshot_join_requested_platform": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_requested_platform",
+    "input_sha256": "662b4e4230880d78efb9830aaaa27fa0826e62c30aabb54812683fc74994196a",
+    "source": "run.started/adoption/single-defect/snapshot_join_requested_platform"
+  },
+  "run.started/adoption/domain/snapshot_join_requested_runtime_mode": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_requested_runtime_mode",
+    "input_sha256": "177eaf7fa84a778963190e2dbc7ceb9043b339166e0e60923b0f0e195dd97b0a",
+    "source": "run.started/adoption/single-defect/snapshot_join_requested_runtime_mode"
+  },
+  "run.started/adoption/domain/snapshot_join_requested_strategy": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_requested_strategy",
+    "input_sha256": "c28a5a31985ff6befe6898e9091ffd76637b07eea41c4ef9fde3fd01b841c909",
+    "source": "run.started/adoption/single-defect/snapshot_join_requested_strategy"
+  },
+  "run.started/adoption/domain/snapshot_join_runtime_mode": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_runtime_mode",
+    "input_sha256": "9835130634ddb55bd92852446e18d0310799e2d6ac6ff23255eb2744cecdf58d",
+    "source": "run.started/adoption/single-defect/snapshot_join_runtime_mode"
+  },
+  "run.started/adoption/domain/snapshot_join_strategy": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_strategy",
+    "input_sha256": "f9b3df8c7c4af89485e6e9c6816f5bfc16ab79e97c3146d04fa9c661717e93e0",
+    "source": "run.started/adoption/single-defect/snapshot_join_strategy"
+  },
+  "run.started/adoption/domain/snapshot_join_strategy_resolution_reason": {
+    "expected_refusal": "run.started/adoption/domain/snapshot_join_strategy_resolution_reason",
+    "input_sha256": "e17864d3ab53903a8a180cad19bd19058d2c1aee115442917e2afb9fd44ecbb3",
+    "source": "run.started/adoption/single-defect/snapshot_join_strategy_resolution_reason"
+  },
+  "run.started/adoption/domain/source_payload_hash": {
+    "expected_refusal": "run.started/adoption/domain/source_payload_hash",
+    "input_sha256": "11488fe6624216e9655dc85c5a8b1de475bb81ce6321665d2f59b34aafe32dd8",
+    "source": "run.started/adoption/single-defect/source_payload_hash"
+  },
+  "run.started/adoption/domain/thread_join": {
+    "expected_refusal": "run.started/adoption/domain/thread_join",
+    "input_sha256": "87d420a97f09b48cc12fe8a5d5143a39798bf245ea2b4f2af8cf191441366f0a",
+    "source": "run.started/adoption/single-defect/thread_join"
+  },
   "run.started/checkpoint_key": {
     "expected_refusal": "run.started/checkpoint_key",
     "input_sha256": "963a0921a391fb256bc244dab4893bdbb0f8170de7a9081710a78062c5c4a3f7",
@@ -3148,6 +3893,41 @@
     "expected_refusal": "run.started/publication/survivor_prefix_sha256",
     "input_sha256": "71e6e04bc2921ee8ab6eefe089e04c996773fc063f102824dc0e15ae29519d41",
     "source": "run.started/single-defect/publication/survivor_prefix_sha256"
+  },
+  "run.started/retention/cleanup_current_core": {
+    "expected_refusal": "run.started/retention/cleanup_current_core",
+    "input_sha256": "108c3410d8111e8578a6e296831c5bd35c89c544b97581c906cf01b87bbc3838",
+    "source": "run.started/retention/cleanup/cleanup_current_core"
+  },
+  "run.started/retention/cleanup_eligible": {
+    "expected_refusal": "run.started/retention/cleanup_eligible",
+    "input_sha256": "4a9cb7a1ef86e4f98b6fe49125c639bfdc32104bdfdcd078dfcfbe390d9a5dfd",
+    "source": "run.started/retention/cleanup/cleanup_eligible"
+  },
+  "run.started/retention/cleanup_exact_survivors": {
+    "expected_refusal": "run.started/retention/cleanup_exact_survivors",
+    "input_sha256": "164cdda4309514308e41f363d3138b47d74a4eb37933bf02092fd324193e5527",
+    "source": "run.started/retention/cleanup/cleanup_exact_survivors"
+  },
+  "run.started/retention/cleanup_sibling_bytes": {
+    "expected_refusal": "run.started/retention/cleanup_sibling_bytes",
+    "input_sha256": "43240b48c3cfcd828969a932f32e4a553f61479225cfb8bec464c08af6afada2",
+    "source": "run.started/retention/cleanup/cleanup_sibling_bytes"
+  },
+  "run.started/retention/eligible": {
+    "expected_refusal": "run.started/retention/eligible",
+    "input_sha256": "023c49881c4ba6a026aa27f269adefd263353833d95b851044c42d29d1414ef1",
+    "source": "run.started/retention/one-second-before-seven-days"
+  },
+  "run.started/retention/reservation_capacity": {
+    "expected_refusal": "run.started/retention/reservation_capacity",
+    "input_sha256": "968b0b3dbeed594e10e008b90b9c5b4756b30dd743c01da5385e095e3dcd08c7",
+    "source": "run.started/retention/three-full-slots"
+  },
+  "run.started/retention/reservation_root_schema": {
+    "expected_refusal": "run.started/retention/reservation_root_schema",
+    "input_sha256": "68c8f0e72d11f04929be86027e748136c02945bba0017a33cd83f0d2dfda138d",
+    "source": "run.started/retention/fourth-generation-schema"
   },
   "run.started/runtime/effective_account_id": {
     "expected_refusal": "run.started/runtime/effective_account_id",

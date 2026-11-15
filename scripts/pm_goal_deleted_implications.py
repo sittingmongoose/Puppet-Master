@@ -50,15 +50,15 @@ def proof(name,reports):
             'The earlier complete matching set contains exactly the candidate event ID and selects only source frames whose project equals the checkpoint project. The earlier global-ID uniqueness makes that frame unique. The earlier complete source-event identity equates this same unique frame to the candidate event. Its project must therefore equal the checkpoint project before this later comparison.')
     if name==old+'native completion requires committed operation':
         operation=subject.DEFS['deletion_commit'];owners=subject.OC.schemas()
-        if set(operation['properties']['state']['enum'])!={'pending','committed'}:return None
-        pending=next((x for x in operation.get('allOf',[])if x.get('if',{}).get('properties',{}).get('state',{}).get('const')=='pending'),None)
+        if set(operation['properties']['state']['enum'])!={'pending_append','committed'}:return None
+        pending=next((x for x in operation.get('allOf',[])if x.get('if',{}).get('properties',{}).get('state',{}).get('const')=='pending_append'),None)
         if pending is None or pending['then']['properties']['append_receipt'].get('type')!='null':return None
         receipt=owners['properties']['append_ack_control']['properties']['original_receipt']
         if receipt.get('type')!='object':return None
         return result('frozen_joined_subject','validate_deleted_v3.py','native completion requires committed operation',
             [schema_guard(owners),old+'full original append acknowledgement retained through command result',schema_guard(operation)],
             ['OC.check(b)',"validate_operation(op,q);expect(op['state']=='committed'"],
-            'The earlier original-owner schema requires ack.original_receipt to be an object. The earlier complete acknowledgement equality makes it equal op.append_receipt. The earlier operation schema permits only pending/committed and requires a pending operation to have a null append_receipt. Therefore every pending candidate fails one of those earlier clauses; every candidate reaching this row must be committed.',
+            'The earlier original-owner schema requires ack.original_receipt to be an object. The earlier complete acknowledgement equality makes it equal op.append_receipt. The earlier operation schema permits only pending_append/committed and requires a pending_append operation to have a null append_receipt. Therefore every pending_append candidate fails one of those earlier clauses; every candidate reaching this row must be committed.',
             schema_sha256s=[f.frozen_fingerprint(owners),f.frozen_fingerprint(operation)])
     if name in (old+'created original receipt source',old+'original append receipt publication join'):
         deleted=name==old+'created original receipt source'
