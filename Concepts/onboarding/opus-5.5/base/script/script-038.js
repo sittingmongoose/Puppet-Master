@@ -1818,7 +1818,13 @@
     // ── Worktree binding functions ──────────────────────────────────
     // The dropdowns open and close through the menu sprout, PM6_SPROUT (base/script/pm7-sprout.js).
     function closeAllWorktreeDropdowns() {
-      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { window.PM6_SPROUT.close(d); });
+      /* only the ones open or closing (FO-206, pm-fo-lead's OK): one never opened has no inline display:none, so
+         PM6_SPROUT.close took its whole closing path, and its getAnimations() flushed the page's style and layout on
+         every click anywhere in the app (337 elements and 310 objects in the onboarding window's Start, 12 ms on Alexis).
+         isOpen reads the classes only. */
+      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) {
+        if (window.PM6_SPROUT.isOpen(d) || d.classList.contains('is-closing')) window.PM6_SPROUT.close(d);
+      });
     }
     window.toggleWorktreeDropdown = function(btn) {
       var wrap = btn.closest('.wt-bind-wrap') || btn.parentElement;

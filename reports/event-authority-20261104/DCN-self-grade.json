@@ -429,7 +429,7 @@
     },
     {
       "event_type": "browser.session.state_changed",
-      "family_id": "event-family-browser-session-state_changed",
+      "family_id": "event-family-browser-session-state-changed",
       "family_revision": "1.0.0",
       "disposition": "PREPARED_WITHOUT_ADMISSION",
       "current_owner_units": [
@@ -1554,7 +1554,7 @@
     },
     {
       "event_type": "browser.session.takeover_state_changed",
-      "family_id": "event-family-browser-session-takeover_state_changed",
+      "family_id": "event-family-browser-session-takeover-state-changed",
       "family_revision": "1.0.0",
       "disposition": "PREPARED_WITHOUT_ADMISSION",
       "current_owner_units": [
@@ -1929,7 +1929,7 @@
     },
     {
       "event_type": "memory.gist_state_changed",
-      "family_id": "event-family-memory-gist_state_changed",
+      "family_id": "event-family-memory-gist-state-changed",
       "family_revision": "1.0.0",
       "disposition": "PREPARED_WITHOUT_ADMISSION",
       "current_owner_units": [
