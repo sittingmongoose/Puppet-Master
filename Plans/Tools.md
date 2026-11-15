@@ -13377,13 +13377,16 @@ canonical_text: >-
   so a script's variables live only as long as the EvalSession that run uses, and every tool
   the script calls is a nested Puppet Master tool call on the T-178 path, permitted by the
   request's permission policy snapshot; Code Mode adds no opt-in step of its own. Tools marks the JavaScript EvalSession adapter
-  supported for Code Mode, subject to the security owner. Every run records its requested and effective
+  supported for Code Mode, subject to the security owner. The script tool is offered on a run only when Shared
+  Integration Runtime reports a product-approved JavaScript EvalSession for the exact Host/Environment, the request's
+  policy admits the script tool, and the route can carry Puppet Master tools. Every run records its requested and effective
   tool-calling mode. Puppet Master owns the tools and the script runtime, so Code Mode does not depend on the provider
   having a code mode of its own. The effective mode is Code Mode, mixed or ordinary tool calls,
   where ordinary tool calls means the run was not offered the Puppet Master script tool; a run offered it that made
   no tool calls, or only the directly callable calls named in T-190, keeps Code Mode unless T-189 records the route as
-  mixed. When it is not Code
-  Mode the run records one typed reason; it is never a silent fallback, and Code Mode is never reported as effective
+  mixed. When it is not Code Mode the run records one typed reason, the first that applies
+  of the execution shape named in T-189, no approved JavaScript EvalSession, policy, and provider-kept native tools;
+  it is never a silent fallback, and Code Mode is never reported as effective
   for a run in which any tool other than the directly callable tools named in T-190 was dispatched another way. A resumed
   session requests Code Mode again like any other run, and an effective mode that differs from the session's earlier
   runs is recorded, with its typed reason when it is not Code Mode.
@@ -13454,8 +13457,8 @@ canonical_text: >-
   in-band, including where the selected model's Models_System tool_use capability is false, the script tool and the
   directly callable tools named in T-190 are carried as in-band tool calls in an owned dialect that Tools selects for the model family and records on the run; the T-169 admission gate
   applies, with Puppet Master-minted call IDs standing in for provider IDs, and text in which the model
-  writes a tool result itself is discarded and never enters replayable history. On a route that accepts the Puppet Master script tool, where a provider keeps
-  native tools that Puppet Master cannot disable, the script tool is still offered, the provider's own tool calls stay outside Code
+  writes a tool result itself is discarded and never enters replayable history. Where the script tool is offered and the provider keeps native tools that
+  Puppet Master cannot disable, the script tool is not withdrawn, the provider's own tool calls stay outside Code
   Mode, and the run's effective mode is mixed. Where a provider accepts no Puppet Master tools at all, the effective
   mode is ordinary tool calls with a typed reason naming the execution shape, delegated or reasoning-only, and no
   Puppet Master tool call is counted for the run; that execution-shape reason is the one recorded when another
@@ -13469,7 +13472,7 @@ acceptance_criteria:
   - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
   - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect, and a tool result the model wrote itself never reaches replayable history.
   - A bridged CLI under the HTE strategy on which the script tool is offered runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy with the Puppet Master script tool offered, the run is recorded as mixed. The exception changes only the effective tool-calling mode label; under HTE, RM-021 still terminates the run on a provider-originated tool_use.
-  - On a route that accepts the Puppet Master script tool, a run on a provider that keeps native tools Puppet Master could not disable is recorded as mixed, never as Code Mode.
+  - A run on which the script tool is offered, on a provider that keeps native tools Puppet Master could not disable, is recorded as mixed, never as Code Mode.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
   - python3 scripts/pm-plan-index.py validate
@@ -13533,7 +13536,7 @@ canonical_text: >-
   transcript shows the script and every tool call it made. Only question and task, whose
   contracts hand the turn to a person or to another agent, stay directly callable in Code Mode; they are not in the
   script's callable catalog, and calling them directly does not make the run mixed. The essential catalog search of
-  T-176 is selected for every Code Mode request in which it is policy_available, and is in the script's callable
+  T-176 is selected for every request on which the script tool is offered and in which it is policy_available, and is in the script's callable
   catalog; in Code Mode that is how T-176's directly available catalog search is reached.
 gui_related: false
 gui_classification_reason: Backend authority, limit and evidence rules for nested tool calls; not GUI implementation work.
