@@ -64,8 +64,7 @@
  "missing_slots": [
   "collaboration.configuration_changed--source",
   "collaboration.configuration_changed--wrapper:CollaborationDefinition",
-  "collaboration.created--wrapper:CollaborationDefinition",
-  "collaboration.started--wrapper:CollaborationRun"
+  "collaboration.created--wrapper:CollaborationDefinition"
  ],
  "per_family": {
   "collaboration.artifact_added": {
@@ -257,20 +256,20 @@
   },
   "collaboration.started": {
    "baseline_not_schema_row": 16,
-   "clauses": 940,
-   "control_detected": 95,
+   "clauses": 1191,
+   "control_detected": 103,
    "control_route_failures": 0,
    "covered_other_boundary": 8,
-   "implied": 146,
-   "invalid": 77,
+   "implied": 182,
+   "invalid": 85,
    "joint_kill": 0,
-   "killed": 614,
+   "killed": 813,
    "open": 0,
    "restoration_failures": 0,
-   "sites": 1711,
+   "sites": 2148,
    "survived": 0,
-   "witnesses": 2510,
-   "witnesses_baseline_ok": 2494
+   "witnesses": 3496,
+   "witnesses_baseline_ok": 3480
   },
   "shared": {
    "baseline_not_schema_row": 0,
@@ -346,6 +345,7 @@
   "collaboration.started--payload_application.json.gz": "94dc0d2e31d53823b57f1d77cdd6ced7ae76171dedf1649059988e27a2e2ca63",
   "collaboration.started--payload_project.json.gz": "d93490843238f3e3c7464d5b4ef4e9ea95bcbb107ba06d6d214bd10c5d1eb3ec",
   "collaboration.started--source.json.gz": "19200c496ee876b8d313480164cd19bd38b41462a535989b48a49d1fac180665",
+  "collaboration.started--wrapper_CollaborationRun.json.gz": "a3380150bb2bd46fc09b6289599967b8ca583f3e23ca18bd206d957cb7d6b96e",
   "shared--checkpoint.json.gz": "a275da87271950ce994302fa3ec2a7201ac65e8d8efcdbb54b98e1f52cbcdd8c"
  },
  "schema": "pm.pnc019.c12_dc1.clause_ledger.v1",
@@ -405,6 +405,7 @@
   "collaboration.started--payload:application": "8781a515da",
   "collaboration.started--payload:project": "8781a515da",
   "collaboration.started--source": "b960abf4d8",
+  "collaboration.started--wrapper:CollaborationRun": "b960abf4d8",
   "shared--checkpoint": "f671b9eabe"
  },
  "slots": [
@@ -30345,6 +30346,537 @@
   {
    "baseline_failures": 0,
    "baseline_not_schema_row": 0,
+   "boundary": "wrapper:CollaborationRun",
+   "clauses": 251,
+   "code": "application_wrapper_schema",
+   "coherent_witnesses": 2,
+   "control_detected": 8,
+   "control_detected_cuts": [
+    {
+     "controls": [
+      "source_collaboration_started_application:event",
+      "source_collaboration_started_application:assigned_metadata",
+      "source_collaboration_started_review_application:event"
+     ],
+     "keyword": "type",
+     "line": 13689,
+     "member": null,
+     "path": "Plans/collaborative_workflows_contracts.schema.json"
+    },
+    {
+     "controls": [
+      "source_collaboration_started_application:event@base:record"
+     ],
+     "keyword": "type",
+     "line": 4230,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json"
+    },
+    {
+     "controls": [
+      "source_collaboration_started_application:event",
+      "source_collaboration_started_application:assigned_metadata",
+      "source_collaboration_started_review_application:event"
+     ],
+     "keyword": "properties",
+     "line": 4296,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json"
+    },
+    {
+     "controls": [
+      "source_collaboration_started_application:event",
+      "source_collaboration_started_application:assigned_metadata",
+      "source_collaboration_started_review_application:event"
+     ],
+     "keyword": "const",
+     "line": 4298,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json"
+    },
+    {
+     "controls": [
+      "source_collaboration_started_application:r2:wrapper_reference",
+      "source_collaboration_started_review_application:r2:wrapper_reference",
+      "source_collaboration_started_application:r2:CollaborationRun:wrapper_16385_reference"
+     ],
+     "keyword": "properties",
+     "line": 17204,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json"
+    },
+    {
+     "controls": [
+      "source_collaboration_started_application:r2:wrapper_reference",
+      "source_collaboration_started_review_application:r2:wrapper_reference",
+      "source_collaboration_started_application:r2:CollaborationRun:wrapper_16385_reference"
+     ],
+     "keyword": "type",
+     "line": 17206,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json"
+    },
+    {
+     "controls": [
+      "source_collaboration_started_application:event",
+      "source_collaboration_started_application:assigned_metadata",
+      "source_collaboration_started_review_application:event"
+     ],
+     "keyword": "properties",
+     "line": 17223,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json"
+    },
+    {
+     "controls": [
+      "source_collaboration_started_application:event",
+      "source_collaboration_started_application:assigned_metadata",
+      "source_collaboration_started_review_application:event"
+     ],
+     "keyword": "type",
+     "line": 17225,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json"
+    }
+   ],
+   "control_route_failures": 0,
+   "covered_other_boundary": 0,
+   "covered_other_boundary_clauses": [],
+   "donor_witnesses": 160,
+   "family": "collaboration.started",
+   "implication_kinds": {
+    "combinator_entailed_by_complete_if": 1,
+    "condition_forced": 2,
+    "condition_required_restates_enclosing_required": 5,
+    "else_branch_never_selected": 8,
+    "entailed_by_forced_then": 18,
+    "enum_by_other_node_const": 1,
+    "type_entailed_under_cut": 1
+   },
+   "implied": 36,
+   "invalid": 8,
+   "invalid_cuts": [
+    {
+     "exception": "TypeError: 'NoneType' object is not subscriptable",
+     "keyword": "type",
+     "line": 17134,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "row_flips": 3
+    },
+    {
+     "exception": "KeyError: 'storage_instance_id'",
+     "keyword": "required",
+     "line": 17136,
+     "member": "storage_instance_id",
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "row_flips": 3
+    },
+    {
+     "exception": "KeyError: 'server_id'",
+     "keyword": "required",
+     "line": 17136,
+     "member": "server_id",
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "row_flips": 3
+    },
+    {
+     "exception": "KeyError: 'scope'",
+     "keyword": "required",
+     "line": 17136,
+     "member": "scope",
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "row_flips": 3
+    },
+    {
+     "exception": "KeyError: 'record_ref'",
+     "keyword": "required",
+     "line": 17136,
+     "member": "record_ref",
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "row_flips": 3
+    },
+    {
+     "exception": "TypeError: expected string or bytes-like object, got 'bool'",
+     "keyword": "anyOf",
+     "line": 17187,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "row_flips": 14
+    },
+    {
+     "exception": "TypeError: expected string or bytes-like object, got 'float'",
+     "keyword": "type",
+     "line": 17189,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "row_flips": 10
+    },
+    {
+     "exception": "TypeError: cannot use 'dict' as a dict key (unhashable type: 'dict')",
+     "keyword": "type",
+     "line": 17193,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "row_flips": 14
+    }
+   ],
+   "joint_kill": 0,
+   "kill_first_outcomes": {
+    "INVALID_exception": 1,
+    "kill_accepted": 7,
+    "kill_refused_later": 191
+   },
+   "killed": 199,
+   "open": 0,
+   "open_clauses": [],
+   "proofs": [
+    {
+     "keyword": "enum",
+     "kind": "enum_by_other_node_const",
+     "line": 2926,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2926 enum ['application', 'project'] is implied by the const ['application'] that Plans/application_workflow_contracts.schema.json:17170 applies at the same location whenever this clause applies: every value outside this enum also fails that const, so no witness fails this enum alone; that const is witnessed and cut on its own"
+    },
+    {
+     "keyword": "type",
+     "kind": "entailed_by_forced_then",
+     "line": 2932,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2932 is entailed by the then-branch const 'app' at Plans/shared_integration_runtime.schema.json:2999, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and 'app' satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "minLength",
+     "kind": "entailed_by_forced_then",
+     "line": 2933,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2933 is entailed by the then-branch const 'app' at Plans/shared_integration_runtime.schema.json:2999, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and 'app' satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "maxLength",
+     "kind": "entailed_by_forced_then",
+     "line": 2934,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2934 is entailed by the then-branch const 'app' at Plans/shared_integration_runtime.schema.json:2999, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and 'app' satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "anyOf",
+     "kind": "entailed_by_forced_then",
+     "line": 2937,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2937 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2990, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "type",
+     "kind": "entailed_by_forced_then",
+     "line": 2939,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2939 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2990, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "minLength",
+     "kind": "entailed_by_forced_then",
+     "line": 2940,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2940 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2990, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "maxLength",
+     "kind": "entailed_by_forced_then",
+     "line": 2941,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2941 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2990, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "type",
+     "kind": "entailed_by_forced_then",
+     "line": 2944,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2944 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2990, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "anyOf",
+     "kind": "entailed_by_forced_then",
+     "line": 2949,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2949 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2993, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "type",
+     "kind": "entailed_by_forced_then",
+     "line": 2951,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2951 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2993, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "minLength",
+     "kind": "entailed_by_forced_then",
+     "line": 2952,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2952 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2993, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "maxLength",
+     "kind": "entailed_by_forced_then",
+     "line": 2953,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2953 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2993, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "type",
+     "kind": "entailed_by_forced_then",
+     "line": 2956,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2956 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2993, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "anyOf",
+     "kind": "entailed_by_forced_then",
+     "line": 2961,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2961 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2996, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "type",
+     "kind": "entailed_by_forced_then",
+     "line": 2963,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2963 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2996, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "minLength",
+     "kind": "entailed_by_forced_then",
+     "line": 2964,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2964 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2996, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "maxLength",
+     "kind": "entailed_by_forced_then",
+     "line": 2965,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2965 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2996, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "type",
+     "kind": "entailed_by_forced_then",
+     "line": 2968,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2968 is entailed by the then-branch const None at Plans/shared_integration_runtime.schema.json:2996, whose if is fixed by the const at Plans/application_workflow_contracts.schema.json:17170: it applies to every instance this clause is evaluated for, and None satisfies this clause's schema, so every value that makes this clause refuse also violates it; no single-defect witness fails this clause alone"
+    },
+    {
+     "keyword": "properties",
+     "kind": "condition_forced",
+     "line": 2981,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2981 is the condition of the if at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2/allOf/0, whose condition is fixed true by the const 'application' at Plans/application_workflow_contracts.schema.json:17170; cutting it can only make the condition hold on more instances, and it already holds on all of them"
+    },
+    {
+     "keyword": "const",
+     "kind": "condition_forced",
+     "line": 2983,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:2983 is the condition of the if at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2/allOf/0, whose condition is fixed true by the const 'application' at Plans/application_workflow_contracts.schema.json:17170; cutting it can only make the condition hold on more instances, and it already holds on all of them"
+    },
+    {
+     "keyword": "type",
+     "kind": "else_branch_never_selected",
+     "line": 3006,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:3006 sits in the else branch of the if at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2/allOf/0, whose condition is fixed true by the const 'application' at Plans/application_workflow_contracts.schema.json:17170; on every instance this clause is evaluated for, the else branch never applies, so the clause can never refuse here"
+    },
+    {
+     "keyword": "minLength",
+     "kind": "else_branch_never_selected",
+     "line": 3007,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:3007 sits in the else branch of the if at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2/allOf/0, whose condition is fixed true by the const 'application' at Plans/application_workflow_contracts.schema.json:17170; on every instance this clause is evaluated for, the else branch never applies, so the clause can never refuse here"
+    },
+    {
+     "keyword": "maxLength",
+     "kind": "else_branch_never_selected",
+     "line": 3008,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:3008 sits in the else branch of the if at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2/allOf/0, whose condition is fixed true by the const 'application' at Plans/application_workflow_contracts.schema.json:17170; on every instance this clause is evaluated for, the else branch never applies, so the clause can never refuse here"
+    },
+    {
+     "keyword": "type",
+     "kind": "else_branch_never_selected",
+     "line": 3011,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:3011 sits in the else branch of the if at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2/allOf/0, whose condition is fixed true by the const 'application' at Plans/application_workflow_contracts.schema.json:17170; on every instance this clause is evaluated for, the else branch never applies, so the clause can never refuse here"
+    },
+    {
+     "keyword": "minLength",
+     "kind": "else_branch_never_selected",
+     "line": 3012,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:3012 sits in the else branch of the if at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2/allOf/0, whose condition is fixed true by the const 'application' at Plans/application_workflow_contracts.schema.json:17170; on every instance this clause is evaluated for, the else branch never applies, so the clause can never refuse here"
+    },
+    {
+     "keyword": "maxLength",
+     "kind": "else_branch_never_selected",
+     "line": 3013,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:3013 sits in the else branch of the if at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2/allOf/0, whose condition is fixed true by the const 'application' at Plans/application_workflow_contracts.schema.json:17170; on every instance this clause is evaluated for, the else branch never applies, so the clause can never refuse here"
+    },
+    {
+     "keyword": "type",
+     "kind": "else_branch_never_selected",
+     "line": 3016,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:3016 sits in the else branch of the if at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2/allOf/0, whose condition is fixed true by the const 'application' at Plans/application_workflow_contracts.schema.json:17170; on every instance this clause is evaluated for, the else branch never applies, so the clause can never refuse here"
+    },
+    {
+     "keyword": "pattern",
+     "kind": "else_branch_never_selected",
+     "line": 3017,
+     "member": null,
+     "path": "Plans/shared_integration_runtime.schema.json",
+     "proof": "Plans/shared_integration_runtime.schema.json:3017 sits in the else branch of the if at Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2/allOf/0, whose condition is fixed true by the const 'application' at Plans/application_workflow_contracts.schema.json:17170; on every instance this clause is evaluated for, the else branch never applies, so the clause can never refuse here"
+    },
+    {
+     "keyword": "type",
+     "kind": "type_entailed_under_cut",
+     "line": 4098,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "proof": "Plans/application_workflow_contracts.schema.json:4098 type 'object': with it cut, a value of every other JSON type at this location is still refused by the row, by the clause(s) named per sample (None: type at allOf/0/then/properties/record/type; True: type at allOf/0/then/properties/record/type; 7: type at allOf/0/then/properties/record/type; 0.5: type at allOf/0/then/properties/record/type; 'c12': type at allOf/0/then/properties/record/type; []: type at allOf/0/then/properties/record/type); every value this type refuses is refused there too, so no single-defect witness fails it alone and its cut is equivalent on this boundary",
+     "samples": [
+      {
+       "refused_by": [
+        "type at allOf/0/then/properties/record/type"
+       ],
+       "sample": "None"
+      },
+      {
+       "refused_by": [
+        "type at allOf/0/then/properties/record/type"
+       ],
+       "sample": "True"
+      },
+      {
+       "refused_by": [
+        "type at allOf/0/then/properties/record/type"
+       ],
+       "sample": "7"
+      },
+      {
+       "refused_by": [
+        "type at allOf/0/then/properties/record/type"
+       ],
+       "sample": "0.5"
+      },
+      {
+       "refused_by": [
+        "type at allOf/0/then/properties/record/type"
+       ],
+       "sample": "'c12'"
+      },
+      {
+       "refused_by": [
+        "type at allOf/0/then/properties/record/type"
+       ],
+       "sample": "[]"
+      }
+     ]
+    },
+    {
+     "keyword": "oneOf",
+     "kind": "combinator_entailed_by_complete_if",
+     "line": 4225,
+     "member": null,
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "proof": "Plans/application_workflow_contracts.schema.json:4225 oneOf is entailed by the complete if/then/else at Plans/application_workflow_contracts.schema.json#/$defs/CollaborationRunApplicationV1/allOf/0: its then constraint (Plans/application_workflow_contracts.schema.json:4282) and its else constraint (Plans/application_workflow_contracts.schema.json:4289) are each one of this oneOf's own branches, and one of them applies to every instance, so a value this oneOf refuses also fails the branch that applies; no single-defect witness fails it alone, and both branch constraints are witnessed and cut on their own"
+    },
+    {
+     "keyword": "required",
+     "kind": "condition_required_restates_enclosing_required",
+     "line": 4272,
+     "member": "admission_source",
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "proof": "Plans/application_workflow_contracts.schema.json:4272 the if-condition's required 'admission_source' restates the required 'admission_source' that Plans/application_workflow_contracts.schema.json:4101 imposes on every instance this if is evaluated for: an instance the row accepts always holds the member, so cutting it from the condition changes no accepted instance (an equivalent mutant), and an instance without it is refused by that enclosing required, which is witnessed and cut on its own"
+    },
+    {
+     "keyword": "required",
+     "kind": "condition_required_restates_enclosing_required",
+     "line": 4301,
+     "member": "admission_source",
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "proof": "Plans/application_workflow_contracts.schema.json:4301 the if-condition's required 'admission_source' restates the required 'admission_source' that Plans/application_workflow_contracts.schema.json:4101 imposes on every instance this if is evaluated for: an instance the row accepts always holds the member, so cutting it from the condition changes no accepted instance (an equivalent mutant), and an instance without it is refused by that enclosing required, which is witnessed and cut on its own"
+    },
+    {
+     "keyword": "required",
+     "kind": "condition_required_restates_enclosing_required",
+     "line": 4326,
+     "member": "state",
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "proof": "Plans/application_workflow_contracts.schema.json:4326 the if-condition's required 'state' restates the required 'state' that Plans/application_workflow_contracts.schema.json:4101 imposes on every instance this if is evaluated for: an instance the row accepts always holds the member, so cutting it from the condition changes no accepted instance (an equivalent mutant), and an instance without it is refused by that enclosing required, which is witnessed and cut on its own"
+    },
+    {
+     "keyword": "required",
+     "kind": "condition_required_restates_enclosing_required",
+     "line": 17201,
+     "member": "record_ref",
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "proof": "Plans/application_workflow_contracts.schema.json:17201 the if-condition's required 'record_ref' restates the required 'record_ref' that Plans/application_workflow_contracts.schema.json:17136 imposes on every instance this if is evaluated for: an instance the row accepts always holds the member, so cutting it from the condition changes no accepted instance (an equivalent mutant), and an instance without it is refused by that enclosing required, which is witnessed and cut on its own"
+    },
+    {
+     "keyword": "required",
+     "kind": "condition_required_restates_enclosing_required",
+     "line": 17220,
+     "member": "record_ref",
+     "path": "Plans/application_workflow_contracts.schema.json",
+     "proof": "Plans/application_workflow_contracts.schema.json:17220 the if-condition's required 'record_ref' restates the required 'record_ref' that Plans/application_workflow_contracts.schema.json:17136 imposes on every instance this if is evaluated for: an instance the row accepts always holds the member, so cutting it from the condition changes no accepted instance (an equivalent mutant), and an instance without it is refused by that enclosing required, which is witnessed and cut on its own"
+    }
+   ],
+   "raw": "collaboration.started--wrapper_CollaborationRun.json.gz",
+   "raw_sha256": "a3380150bb2bd46fc09b6289599967b8ca583f3e23ca18bd206d957cb7d6b96e",
+   "restoration_failures": 0,
+   "row": "WR01_schema",
+   "seconds": 1827.5,
+   "site_kinds": {
+    "applicator": 79,
+    "clause": 339,
+    "condition": 19
+   },
+   "sites": 437,
+   "survived": 0,
+   "tool_commit": "b960abf4d8",
+   "witnesses": 986,
+   "witnesses_baseline_ok": 986
+  },
+  {
+   "baseline_failures": 0,
+   "baseline_not_schema_row": 0,
    "boundary": "checkpoint",
    "clauses": 380,
    "code": "checkpoint_schema",
@@ -32117,22 +32649,22 @@
  ],
  "totals": {
   "baseline_not_schema_row": 140,
-  "clauses": 10549,
-  "control_detected": 629,
+  "clauses": 10800,
+  "control_detected": 637,
   "control_route_failures": 0,
   "covered_other_boundary": 12,
-  "first_INVALID_exception": 22,
-  "first_kill_accepted": 1246,
-  "first_kill_refused_later": 6059,
-  "implied": 1642,
-  "invalid": 923,
+  "first_INVALID_exception": 23,
+  "first_kill_accepted": 1253,
+  "first_kill_refused_later": 6250,
+  "implied": 1678,
+  "invalid": 931,
   "joint_kill": 0,
-  "killed": 7327,
+  "killed": 7526,
   "open": 16,
   "restoration_failures": 0,
-  "sites": 19103,
+  "sites": 19540,
   "survived": 0,
-  "witnesses": 27836,
-  "witnesses_baseline_ok": 27696
+  "witnesses": 28822,
+  "witnesses_baseline_ok": 28682
  }
 }

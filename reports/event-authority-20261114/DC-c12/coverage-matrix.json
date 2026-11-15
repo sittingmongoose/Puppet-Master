@@ -13676,7 +13676,17 @@
    },
    "wrapper_shape:WR01_schema": {
     "aliases": 13,
-    "clause_ledger": [],
+    "clause_ledger": [
+     {
+      "boundary": "wrapper:CollaborationRun",
+      "clauses": 251,
+      "control_detected": 8,
+      "implied": 36,
+      "invalid": 8,
+      "killed": 199,
+      "open": 0
+     }
+    ],
     "controls": 7,
     "negatives": 1
    },
