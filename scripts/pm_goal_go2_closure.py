@@ -349,7 +349,12 @@ def agree(args):
         fast = rebuild(entry, memo=True)
         rng = random.Random(args.seed)
         stream = instance_stream(ref, entry['seeds'], args.count, rng)
-        guards = sorted({g for e in stream[:40] for g in _guards(ref, e)})
+        guards = set()  # cut guards: every guard the reference reports on the first refused instances of the stream
+        for value in stream:
+            if len(guards) >= 400:
+                break
+            guards |= _guards(ref, value)
+        guards = sorted(guards)
         mismatches, accepted, refused, cuts, seed_match = [], 0, 0, 0, 0
         for number, s in enumerate(entry['seeds']):
             seed_match += signature(ref, s) == tuple(entry['reference_signatures'][number])
@@ -367,7 +372,7 @@ def agree(args):
                 refused += 1
             if bool(a) != (not fast.is_valid(value)) and not cut:
                 mismatches.append(dict(number=number, kind='is_valid', input_sha256=sha(value)))
-        report['roots'][root] = dict(instances=len(stream), accepted=accepted, refused=refused, with_clause_cut=cuts,
+        report['roots'][root] = dict(instances=len(stream), accepted=accepted, refused=refused, with_clause_cut=cuts, cut_guards=len(guards),
                                      mismatches=mismatches, seeds_match_dump=f'{seed_match}/{len(entry["seeds"])}',
                                      seconds=round(time.monotonic() - start, 1), memo_stats=dict(STATS))
         print(root[:60], json.dumps(report['roots'][root])[:400], file=sys.stderr, flush=True)
