@@ -88,9 +88,16 @@ def main():
         'subagent.cancel_requested': 'landed_exclusion',
         'browser.session.navigated': 'judgement_residue',
         'memory.gist.updated': 'judgement_residue',
-        'owner.debug.investigation.started': 'judgement_residue',
-        'emitter.wizard_opened': 'judgement_residue',
+        # Lane s6r supplement (census-adjudication/S6R-NEW-NAMES-LEDGER.jsonl):
+        # binding identifiers, retired spellings and readiness labels of existing
+        # records leave the residue; the one contingency name and the nine
+        # pending parent-merge rows stay in it.
+        'owner.debug.investigation.started': 'landed_exclusion',
+        'emitter.wizard_opened': 'landed_exclusion',
+        'forge.review.merged.publish': 'landed_exclusion',
+        'chat_run.cancelled': 'landed_exclusion',
         'config.validation.passed': 'judgement_residue',
+        'testing.receipt.recorded': 'landed_exclusion',
         'cmd.browser.workspace.create': 'command_namespace',
     }.items():
         actual = by_token.get(token, {}).get('class')
