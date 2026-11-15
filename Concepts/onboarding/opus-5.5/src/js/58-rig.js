@@ -1338,8 +1338,15 @@
          swayed under a prop still coming in sent the held bubble off a place nothing came to, FO-191) */
       const now = [], rests = [], box = (q) => { const a = this.toScreen([q[0], q[1]]), c = this.toScreen([q[2], q[3]]); return [a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]; };
       this.props.forEach((pr) => {
-        if (!pr.box) return;
         const coming = pr.state !== 'out' && !pr.settled;
+        /* (and one the held stage has not placed yet, FO-206: on a screen change its box is first measured at the first
+           render after the hold, and a line written before that, from the change's press or Pip's wake, was placed without
+           it. The bubble went where the prop then came down: it jumped 82-88 px as the palette came to the first Look
+           (FO-215), 195 px when it came to rest on Retro Dark's Look (FO-214), and the vault met it on Basic Light's
+           Review at 860 (stage-keepoff). It is measured where it will rest, its way down from the stage's top to there
+           counted. The bubble's own size, read above, has already brought the page's layout up to date, so this reads
+           only the prop's drawing; the Start press writes no line, so it measures nothing there) */
+        if (!pr.box) { const r = coming ? this.restBox(pr) : null; if (r) { rests.push(box(r)); obs.push(box([r[0], -1e4, r[2], r[3]])); } return; }
         if (pr.op > .05) now.push(box(pr.box));
         if (!coming && pr.op <= .05) return;
         let q = pr.box;
@@ -1388,17 +1395,11 @@
         at = near(cand.map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]));
         /* FO-214: a new line whose usual place, over Pip, is taken only by the ways the props take (one lifted out, one
            lowered in), not by anything there now or by where a prop will rest, keeps that place where the nearest clear one
-           is under Pip's face: there its tail pointed down, away from Pip. Retro Dark's tube, cropped to fill the pane at
-           1694x1290, left no room beside the laptop leaving Where and the palette coming to Look, so "Dress me up" went
-           under Pip's chin; the palette, not yet placed while the stage was held for the change (FO-206), was not counted,
-           and when it came to rest 0.6 s later on the bubble's place the bubble jumped 195 px up to its usual one. Here the
-           props make way instead: one leaving is held under the bubble (holdUnder), one coming in is lowered in from just
-           under it (enterUnder, bubbleOver); a prop the held stage has not placed yet is measured where it will rest now. */
-        if (fresh && tall && talking && at && at[1] + .5 >= face[3] && sideOk && fits(x, y) && !over(x, y, face) && !(bar && over(x, y, bar)) && !now.concat(rests).some((o) => over(x, y, o))) {
-          const late = [];
-          this.props.forEach((pr) => { if (!pr.box && pr.state !== 'out' && !pr.settled) { const r = this.restBox(pr); if (r) late.push(box(r)); } });
-          if (!late.some((o) => over(x, y, o))) { at = [x, y]; over0 = true; }
-        }
+           is under Pip's face, or where none is: under the face its tail pointed down, away from Pip. Retro Dark's tube,
+           cropped to fill the pane at 1694x1290, leaves no room beside the laptop leaving Where and the palette coming to
+           Look, so "Dress me up" went under Pip's chin. Here the props make way instead: one leaving is held under the
+           bubble (holdUnder), one coming in is lowered in from just under it (enterUnder, bubbleOver). */
+        if (fresh && tall && talking && (!at || at[1] + .5 >= face[3]) && sideOk && fits(x, y) && !over(x, y, face) && !(bar && over(x, y, bar)) && !now.concat(rests).some((o) => over(x, y, o))) { at = [x, y]; over0 = true; }
       }
       const claimed = this.bubbleClaim && talking && at && Math.abs(at[0] - this.bubbleClaim[0]) < 10 && Math.abs(at[1] - this.bubbleClaim[1]) < 10;
       if (!claimed) this.bubbleKeepOff = null;
