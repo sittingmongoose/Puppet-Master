@@ -158,7 +158,7 @@ const READ = () => {
 
 async function surface(t, sandbox) {
 	const tag = sandbox ? 'sandbox' : 'normal';
-	const FIRST = +(t.args.first || 100), TASK = +(t.args.task || 50), GAP = +(t.args.gap || 50), PDGAP = +(t.args.pdgap || 80), PDMS = +(t.args.pdms || 4000);
+	const FIRST = +(t.args.first || 100), TASK = +(t.args.task || 50), GAP = +(t.args.gap || 50), PDGAP = +(t.args.pdgap || 80), PDFRAMES = +(t.args.pdframes || 660);
 	const open = async (reduced, o) => {
 		await t.emulate({ reducedMotion: reduced ? 'reduce' : 'no-preference' });
 		const f = await t.app.open({ onboarding: true, query: 'o55=fresh' + (t.args.q ? '&' + t.args.q : ''), sandbox });
@@ -179,8 +179,14 @@ async function surface(t, sandbox) {
 		const mode = reduced ? 'Reduced Motion' : 'motion';
 		const f = await open(reduced, { early: true });
 		const pane = f.locator('#pm-o55-onboarding .o55-pane');
-		await f.waitForFunction(() => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); return !!l && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold'); }, null, { timeout: 15000 }).catch(() => {});
-		await f.waitForTimeout(200);
+		// (the window's opening over too: under Reduced Motion it is a 160 ms fade, slower in T3's sandbox frame, and a picture
+		// taken inside it is a level off everywhere)
+		await f.waitForFunction(() => {
+			const r = document.getElementById('pm-o55-onboarding'), l = r && r.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), w = r && r.querySelector('.o55-win');
+			const moving = [r, w].some((el) => el && el.getAnimations().some((a) => a.playState === 'running' && Number.isFinite(a.effect.getComputedTiming().endTime)));
+			return !!l && !r.classList.contains('o55-opening') && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold') && !moving;
+		}, null, { timeout: 15000 }).catch(() => {});
+		await f.waitForTimeout(400);
 		const before = await pane.screenshot(), phase0 = (await pdState(f) || {}).phase;
 		if (phase0 !== 'none') { await t.check(`${tag}: ${mode}: the pane pictured before the pre-draw`, false, `the pre-draw had already begun (${phase0})`); return; }
 		if (!(await pdRunning(f))) { await t.check(`${tag}: ${mode}: the pre-draw was seen running`, false, JSON.stringify(await pdState(f))); return; }
@@ -197,6 +203,42 @@ async function surface(t, sandbox) {
 			j.ok, JSON.stringify({ differing: j.n, worst: j.worst, failing: j.bad, perControl: j.perControl, crowded: j.crowded, where: j.where }));
 	};
 	const pdRunning = (f, ms) => f.waitForFunction(() => { const s = window.O55.ui.prewarm && window.O55.ui.prewarm.state && window.O55.ui.prewarm.state(); return !!(s && s.phase === 'running' && s.slices >= 2); }, null, { timeout: ms || 20000 }).then(() => true, () => false);
+	// R46-1: a screen's held column keeps its place, to the pixel, through a same-screen refresh: Plain English / Expert, a
+	// look picked on the screen, O55.ui.refresh (holdColumn's held top was lost when a refresh redrew the column).
+	const column = async (reduced) => {
+		const mode = reduced ? 'Reduced Motion' : 'motion';
+		// (each refresh on a page of its own, from a held column: one that lost it would hide the next one's loss)
+		const ready = async () => {
+			const f = await open(reduced, { early: true });
+			await f.waitForFunction(() => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); return !!l && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold') && l.hasAttribute('data-col-held'); }, null, { timeout: 15000 }).catch(() => {});
+			await f.waitForFunction(() => { const s = window.O55.ui.prewarm && window.O55.ui.prewarm.state && window.O55.ui.prewarm.state(); return !s || s.phase !== 'running'; }, null, { timeout: 30000 }).catch(() => {});
+			return f;
+		};
+		// (its top within its scroller, what holdColumn holds: a look's own metrics may move the scroller itself)
+		const col = (f) => f.evaluate(() => { const c = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-scroll > .o55-content'), sc = c && c.parentElement; return c ? { top: c.getBoundingClientRect().top - sc.getBoundingClientRect().top, margin: parseFloat(getComputedStyle(c).marginTop) } : null; });
+		const pickLook = async (f) => {
+			const fam = await f.evaluate(() => (window.O55.theme().chosen === 'friendly' ? 'basic' : 'friendly'));
+			await f.locator('#pm-o55-onboarding .o55-lookslot .o55-lookbtn').click();
+			await f.waitForSelector('#pm-o55-onboarding .o55-lookmenu', { timeout: 5000 });
+			await f.locator(`#pm-o55-onboarding .o55-lookmenu [data-o55-do="lookFamily"][data-arg="${fam}"]`).click();
+			await f.waitForFunction(() => !window.O55.S.vt, null, { timeout: 10000 }).catch(() => {});
+			if (await f.locator('#pm-o55-onboarding .o55-lookmenu').count()) await t.page.keyboard.press('Escape');
+		};
+		const steps = [['Plain English / Expert', (f) => f.evaluate(() => window.O55.talk.toggle('check')), (f) => f.evaluate(() => window.O55.talk.toggle('check'))],
+			['a look picked on the screen', pickLook, null], ['a refresh of the screen (O55.ui.refresh)', (f) => f.evaluate(() => window.O55.ui.refresh()), null]];
+		for (const [label, act, undo] of steps) {
+			const f = await ready();
+			const b = await col(f);
+			if (!b || !(b.margin > 0)) { await t.check(`${tag}: ${mode}: the column keeps its held top through ${label}, to the pixel`, false, `Welcome's column is not held off the top here (${JSON.stringify(b)}): the row would prove nothing`); continue; }
+			await act(f);
+			await f.waitForTimeout(700);
+			const a = await col(f);
+			await t.check(`${tag}: ${mode}: the column keeps its held top through ${label}, to the pixel`, !!a && Math.round(a.top) === Math.round(b.top) && a.margin === b.margin, `column top ${b.top} -> ${a && a.top}; held margin ${b.margin} -> ${a && a.margin}`);
+			if (undo) await undo(f);
+		}
+	};
+	// --set only=column: the R46-1 rows alone, in both motion modes
+	if (t.args.only === 'column') { for (const reduced of [true, false]) await column(reduced); await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	// --set only=pixels: the K-AA rows alone, in both motion modes
 	if (t.args.only === 'pixels') { for (const reduced of [true, false]) await pixels(reduced); await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	// FO-206 G: the Look screen drawn a piece at a time while Welcome is idle (60-ui-core.js predraw), waited for to its end
@@ -222,12 +264,16 @@ async function surface(t, sandbox) {
 	let f = await open(false);
 	const pre = await predrawn(f);
 	t.log(`${tag}: Welcome's pre-draw of the Look screen: ${JSON.stringify(pre)}`);
+	// (R46-2: a page that never pre-draws skips the rows below, so on an ordinary computer it has to have run)
+	await t.check(`${tag}: Welcome idle: the Look screen's pre-draw ran (an ordinary computer, not low-resource)`, !pre.none, JSON.stringify(pre));
 	if (!pre.none) {
 		// every stall is logged (the lead's ruling C: a cold browser keeps two or three single-shape stalls of 50-75 ms)
 		if (pre.gaps.length) t.log(`${tag}: NOTE Welcome's pre-draw: ${pre.gaps.length} frame gap(s) over 34 ms ${JSON.stringify(pre.gaps)}; long slices ${JSON.stringify(pre.long || [])}`);
 		const over = pre.gaps.filter((g) => g[1] > PDGAP);
 		await t.check(`${tag}: Welcome idle: the pre-draw of the Look screen holds no frame over ${PDGAP} ms`, over.length === 0, `${pre.slices} slices of ${pre.pieces} elements in ${pre.ms} ms, ended '${pre.why}'; frame gaps over 34 ms ${JSON.stringify(pre.gaps)}`);
-		await t.check(`${tag}: Welcome idle: the whole pre-draw takes at most ${PDMS} ms`, pre.ms <= PDMS, `${pre.ms} ms for ${pre.slices} slices (on a loaded PC it runs longer: the frames it waits on come later)`);
+		// (in frames, R46-3: a slice is one frame that draws and three that watch, so in wall time the same pre-draw took 2.7
+		// times as long at 60 Hz as at 165 Hz; a stall is one frame here, judged apart above)
+		await t.check(`${tag}: Welcome idle: the whole pre-draw takes at most ${PDFRAMES} frames (4 s at 165 Hz)`, pre.frames <= PDFRAMES, `${pre.frames} frames for ${pre.slices} slices (${pre.ms} ms)`);
 		await t.check(`${tag}: Welcome idle: the pre-draw ended and left nothing (no host, no marked element, no listener)`, pre.phase === 'done' && pre.why === 'done' && pre.left === 0 && pre.listeners === 0, JSON.stringify({ phase: pre.phase, why: pre.why, left: pre.left, listeners: pre.listeners }));
 	}
 	const s = await change(f, `${cur} [data-o55-do="start"]`);
@@ -268,6 +314,7 @@ async function surface(t, sandbox) {
 		// (switched on as soon as the page is up: a pre-draw already going when it came ends there, and draws no more)
 		await t.check(`${tag}: low-resource mode: no pre-draw slice once it is on, and nothing left`, !!lr && (lr.phase === 'none' || (lr.phase === 'done' && lr.slices === lr0.slices)) && lrLeft === 0, JSON.stringify({ at: { phase: lr0.phase, slices: lr0.slices }, after: { phase: lr && lr.phase, why: lr && lr.why, slices: lr && lr.slices }, left: lrLeft }));
 		for (const reduced of [true, false]) await pixels(reduced);
+		for (const reduced of [true, false]) await column(reduced);
 	}
 	// Reduced Motion: unchanged (no hold): Start shows the new screen in the click's own task
 	f = await open(true);
