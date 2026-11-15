@@ -29,8 +29,8 @@
 // Every frame from the first change on is judged the same way, not only the frames that hold a change.
 // The onboarding window's open and close make every loop it holds jump by about the window's page-wide restyle (its
 // pause and resume are taken by a late frame's time): the lead's call A (2026-11-13), the window's, not the chip's.
-// The check samples another loop the window holds and, within 3 s of the open and of the close, names a jump of the
-// chip no larger (in time) than that loop's largest, instead of failing on it (windowSpans below).
+// The check samples another loop the window holds and names that restyle's frame. It waives a jump only when both of
+// the chip's loops jump by the same amount in that frame (windowSpans, restyleFrame). A later jump of one loop fails.
 // What it cannot see directly is the compositor; the hand-over above is computed from the timings the page reports.
 // The Node model (tests/stop-chip-beat-verify.mjs) and lane S's films (share 2026-11-13-pm7-stop-chip-pace) judge it
 // on a model of the compositor and on pixels.
@@ -382,11 +382,11 @@ function rates(R) {
 // restyle (~240 ms on the Windows PC) in the same task: the frame after it is late, and Chrome takes the pause's hold
 // (or the resume's start) by that frame's time, from before the restyle, so EVERY held loop jumps when that frame is
 // handed over (back at the open, forward at the close) by about the restyle's length. The lead's call A (2026-11-13):
-// the window's, not the chip's (main's page shows it for the chip and another held loop alike). So within 3 s of the
-// open and of the close a jump of the chip is named, not failed, when it is no larger (in time) than the largest jump of
-// other held loops sampled in the same run (up to 12, taken before the open; pairs in which a loop's own timing
-// changed are not counted) plus a frame; any
-// other jump of the chip fails.
+// the window's, not the chip's (main's page shows it for the chip and another held loop alike). The waiver is that
+// restyle's own frame only, and only when BOTH of the chip's loops jump by the same amount there (PM7PERF-STOPCHIP-K1-WAIVER:
+// a later jump of the backlight alone used to be named along with it). Any other jump of the chip fails.
+// The reference loops (up to 12, taken before the open; pairs in which a loop's own timing changed are not counted)
+// name which frame the restyle was.
 function windowSpans(R, frame) {
 	const out = [];
 	for (const name of ['onboarding window opens (holds the glyph), no more words', 'onboarding window closes']) {
@@ -394,7 +394,7 @@ function windowSpans(R, frame) {
 		if (!m || m.i <= 0) continue;
 		const from = m.i, until = R.rows.findIndex((r, i) => i > from && r.w - R.rows[from].w > 3000);
 		const to = until < 0 ? R.rows.length : until;
-		let other = 0, otherAt = null;
+		let other = 0, otherAt = null, otherI = null;
 		// a pause or resume taken by a late frame's time moves a loop by at most the time between the two samples around
 		// it: a reference step past that (its own timing changed: NieR restyles it) is not a measure of the window's jump
 		for (let i = from; i < to; i++) {
@@ -407,33 +407,54 @@ function windowSpans(R, frame) {
 				if (!(h0 >= 0 || h1 >= 0)) continue;
 				const ms = Math.abs(h1 - h0) * b.dur;
 				if (ms > r1.w - r0.w + frame) continue;
-				if (ms > other) { other = ms; otherAt = Math.round(r1.w - R.rows[from].w); }
+				if (ms > other) { other = ms; otherAt = Math.round(r1.w - R.rows[from].w); otherI = i; }
 			}
 		}
-		out.push({ what: /opens/.test(name) ? 'open' : 'close', from, to, otherMs: other, otherAt, limitMs: other + frame });
+		out.push({ what: /opens/.test(name) ? 'open' : 'close', from, to, otherMs: other, otherAt, otherI, limitMs: other + frame });
 	}
 	return out;
 }
 const spanOf = (spans, i) => spans.find((x) => i >= x.from && i < x.to) || null;
+// True only on the restyle's own frame, and only when both chip loops jump by the same amount there
+// (within one frame of each other, and each by more than one frame).
+function restyleFrame(R, i, frame, spans) {
+	const wc = spanOf(spans, i);
+	if (!wc || wc.otherI == null || i !== wc.otherI) return false;
+	const msOf = (layer) => {
+		const row = R.rows[i][layer], prev = R.rows[i - 1][layer];
+		if (!row || !prev || !(row.dur > 0)) return null;
+		const x = pair(R, i, layer, 0, frame);
+		if (!x || x.hand == null) return null;
+		return x.hand * row.dur;
+	};
+	const g = msOf('g'), b = msOf('b');
+	if (g == null || b == null) return false;
+	return g > frame && b > frame && Math.abs(g - b) <= frame;
+}
 // Every frame from the first change to the end, not only the frames that hold a change: the loop is never made anew,
 // never jumps at a hand-over, and (outside the frames after a long task) its place never moves more than one frame at
 // the faster pace (a retime that something else did at a moment no mark names shows here).
 export function everyFrame(R) {
-	const out = { worst: 0, where: null, restarts: [], known: [] }, frame = medianFrame(R.rows), mr = rates(R), spans = windowSpans(R, frame);
+	const out = { worst: 0, where: null, restarts: [], known: [], valueFails: 0 }, frame = medianFrame(R.rows), mr = rates(R), spans = windowSpans(R, frame);
 	out.spans = spans;
+	// The sampling window is from the first change on. A frame before that is the only one discarded.
+	// Inside the window a glyph-scale or backlight-opacity step past its bound is counted and fails the row
+	// (PM7PERF-STOPCHIP-FRAME-GUARD: that comparison used to be left out of `over`).
 	const first = Math.max(1, Math.min(...R.marks.map((m) => m.i).filter((i) => i > 0)));
 	for (const layer of ['g', 'b']) {
 		for (let i = first; i < R.rows.length; i++) {
 			const x = pair(R, i, layer, mr[layer], frame); if (!x) continue;
 			const t = Math.round(R.rows[i].w - R.rows[first].w);
 			if (x.restart) { out.restarts.push(`${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms`); continue; }
+			const valueOver = x.value != null && !(x.value <= x.valueBound) ? x.value / (x.valueBound > 0 ? x.valueBound : 1e-9) : 0;
+			if (valueOver > 1) out.valueFails++;
 			const wc = spanOf(spans, i);
-			if (wc && x.hand != null && x.hand > x.handBound) {
+			if (valueOver <= 1 && x.hand != null && x.hand > x.handBound && restyleFrame(R, i, frame, spans)) {
 				const ms = x.hand * R.rows[i][layer].dur;
-				if (ms <= wc.limitMs && ms <= R.rows[i].w - R.rows[i - 1].w + frame) { out.known.push(`${layer === 'g' ? 'glyph' : 'backlight'} ${Math.round(ms)} ms (${x.hand} of a loop) at +${Math.round(R.rows[i].w - R.rows[wc.from].w)} ms after the ${wc.what}`); continue; }
+				out.known.push(`${layer === 'g' ? 'glyph' : 'backlight'} ${Math.round(ms)} ms (${x.hand} of a loop) at +${Math.round(R.rows[i].w - R.rows[wc.from].w)} ms after the ${wc.what}, with the other loop`); continue;
 			}
-			const over = Math.max(x.hand != null ? x.hand / x.handBound : 0, x.place != null ? (x.place < x.floor ? 99 : Math.abs(x.place) / x.placeBound) : 0);
-			if (over > out.worst) { const a = R.rows[i - 1][layer], b = R.rows[i][layer]; out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: hand-over ${x.hand ?? '-'} (bound ${x.handBound ?? '-'}${x.gap != null ? `, of which ${x.lateAllow} for a late hand-over: ${x.gap} ms between samples` : ''}), main-thread place ${x.place ?? 'stale frame'} (bound ${x.placeBound ?? '-'}${x.holdMs != null ? `, of which ${x.holdMs} ms for a hold placed by the wall clock` : ''}), length ${a.dur} -> ${b.dur}, delay ${a.delay} -> ${b.delay}, start ${a.s == null ? '-' : Math.round(a.s)} -> ${b.s == null ? '-' : Math.round(b.s)}, ${a.state} -> ${b.state}, window ${R.rows[i - 1].win ? 'open' : 'closed'} -> ${R.rows[i].win ? 'open' : 'closed'}, ${Math.round(R.rows[i].w - R.rows[i - 1].w)} ms between samples, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
+			const over = Math.max(x.hand != null ? x.hand / x.handBound : 0, x.place != null ? (x.place < x.floor ? 99 : Math.abs(x.place) / x.placeBound) : 0, valueOver);
+			if (over > out.worst) { const a = R.rows[i - 1][layer], b = R.rows[i][layer]; out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: hand-over ${x.hand ?? '-'} (bound ${x.handBound ?? '-'}${x.gap != null ? `, of which ${x.lateAllow} for a late hand-over: ${x.gap} ms between samples` : ''}), main-thread place ${x.place ?? 'stale frame'} (bound ${x.placeBound ?? '-'}${x.holdMs != null ? `, of which ${x.holdMs} ms for a hold placed by the wall clock` : ''}), value ${x.value ?? '-'} (bound ${x.valueBound ?? '-'}), length ${a.dur} -> ${b.dur}, delay ${a.delay} -> ${b.delay}, start ${a.s == null ? '-' : Math.round(a.s)} -> ${b.s == null ? '-' : Math.round(b.s)}, ${a.state} -> ${b.state}, window ${R.rows[i - 1].win ? 'open' : 'closed'} -> ${R.rows[i].win ? 'open' : 'closed'}, ${Math.round(R.rows[i].w - R.rows[i - 1].w)} ms between samples, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
 		}
 	}
 	return out;
@@ -489,8 +510,7 @@ function judge(R, look) {
 			if (!x || x.restart) { row.restart = true; out.push(row); continue; }
 			Object.assign(row, x);
 			// the page-wide jump around the window's open and close (windowSpans): named, not failed, when the rest is fine
-			const wc = spanOf(spans, m.i);
-			if (!row.ok && wc && row.hand > row.handBound && row.hand * b.dur <= wc.limitMs && row.hand * b.dur <= r1.w - r0.w + frame && (row.place == null || (row.place >= row.floor && row.place <= row.placeBound && row.value <= row.valueBound))) { row.ok = true; row.known = true; }
+			if (!row.ok && row.hand > row.handBound && restyleFrame(R, m.i, frame, spans) && (row.place == null || (row.place >= row.floor && row.place <= row.placeBound && row.value <= row.valueBound))) { row.ok = true; row.known = true; }
 			out.push(row);
 		}
 	}
@@ -567,10 +587,10 @@ export default async function (t) {
 				bad.length ? bad.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}, value ${r.value ?? '-'}/${r.valueBound ?? '-'}`}`).join('; ') : `${rows.length} changes judged`);
 			const ev = everyFrame(R);
 			t.log(`${look}: every frame from the first change on: worst step ${(ev.worst * 100).toFixed(0)}% of its bound${ev.where ? ` (${ev.where})` : ''}; new loops: ${ev.restarts.join(', ') || 'none'}`);
-			for (const sp of ev.spans) t.log(`${look}: NOTE the onboarding window's ${sp.what}: the other held loops (${R.otherDesc}) jumped up to ${Math.round(sp.otherMs)} ms at +${sp.otherAt} ms after it (a page-wide jump, the window's: known, not judged); the chip's jumps within 3 s up to ${Math.round(sp.limitMs)} ms are named, not failed`);
+			for (const sp of ev.spans) t.log(`${look}: NOTE the onboarding window's ${sp.what}: the other held loops (${R.otherDesc}) jumped up to ${Math.round(sp.otherMs)} ms at +${sp.otherAt} ms after it (the restyle's own frame). A jump of both chip loops by that same amount in that frame is named, not failed; any other jump, including a later one of the backlight alone, fails`);
 			if (ev.spans.length) t.log(`${look}: NOTE the chip's jumps named as the window's: ${ev.known.join('; ') || 'none'}`);
-			await t.check(`${look}: in every frame from the first change on, the loop is never made anew and never jumps (hand-over and main-thread place)`, ev.restarts.length === 0 && ev.worst <= 1,
-				`${ev.restarts.length ? 'new loops ' + ev.restarts.join(', ') + '; ' : ''}worst ${(ev.worst * 100).toFixed(0)}%${ev.where ? ': ' + ev.where : ''}`);
+			await t.check(`${look}: in every frame from the first change on, the loop is never made anew and never jumps (hand-over, main-thread place, and glyph scale / backlight opacity)`, ev.restarts.length === 0 && ev.worst <= 1,
+				`${ev.restarts.length ? 'new loops ' + ev.restarts.join(', ') + '; ' : ''}${ev.valueFails ? ev.valueFails + ' in-window scale/opacity failure' + (ev.valueFails === 1 ? '' : 's') + '; ' : ''}worst ${(ev.worst * 100).toFixed(0)}%${ev.where ? ': ' + ev.where : ''}`);
 			const ph = inPhase(R), nier = look.startsWith('nier');
 			t.log(`${look}: one pulse: ${ph.n} frames with both loops, worst ${ph.worst.toFixed(5)} of a loop${ph.where ? ` (${ph.where})` : ''}`);
 			await t.check(`${look}: one pulse: in every frame the backlight is at the glyph's place in the loop (to 0.002 of a loop)${R.marks.some((m) => m.kind === 'window') ? ', through the onboarding window' : ''}${R.marks.some((m) => m.kind === 'theme') ? ', through a light/dark change' : ''}`,
@@ -609,7 +629,7 @@ export default async function (t) {
 				await t.check(`${look} light/dark: no change makes either loop jump or start anew (the light/dark change, the word and the quiet after it, the change back)`, tr.length > 0 && tb.length === 0,
 					tb.length ? tb.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}`}`).join('; ') : `${tr.length} changes judged`);
 				const te = everyFrame(T);
-				await t.check(`${look} light/dark: in every frame from the light/dark change on, neither loop is made anew or jumps`, te.restarts.length === 0 && te.worst <= 1, `${te.restarts.length ? 'new loops ' + te.restarts.join(', ') + '; ' : ''}worst ${(te.worst * 100).toFixed(0)}%${te.where ? ': ' + te.where : ''}`);
+				await t.check(`${look} light/dark: in every frame from the light/dark change on, neither loop is made anew or jumps (hand-over, place, and glyph scale / backlight opacity)`, te.restarts.length === 0 && te.worst <= 1, `${te.restarts.length ? 'new loops ' + te.restarts.join(', ') + '; ' : ''}${te.valueFails ? te.valueFails + ' in-window scale/opacity failure' + (te.valueFails === 1 ? '' : 's') + '; ' : ''}worst ${(te.worst * 100).toFixed(0)}%${te.where ? ': ' + te.where : ''}`);
 				const tp = inPhase(T);
 				t.log(`${look} light/dark: one pulse: ${tp.n} frames with both loops, worst ${tp.worst.toFixed(5)} of a loop${tp.where ? ` (${tp.where})` : ''}`);
 				await t.check(`${look} light/dark: one pulse: in every frame the backlight is at the glyph's place in the loop (to 0.002 of a loop), through the light/dark change and back`, tp.n > 60 && tp.worst <= 0.002, `${tp.n} frames, worst ${tp.worst.toFixed(4)} of a loop${tp.where ? ` (${tp.where})` : ''}`);
