@@ -211,7 +211,9 @@ def memo_class(base):
     """A subclass of the reference validator class whose descend / iter_errors / is_valid reuse exact results."""
     import pm_goal_oracle_common as common
     global MEMO_TYPES
+    import referencing.exceptions
     interner = Interner()
+    lookups = {}      # (registry id, base URI, dynamic scope id, ref) -> (registry, scope, Resolved): kept alive with the key
     valid = set()     # keys whose stream was fully drained with no error
     invalid = set()   # keys whose is_valid answered False (only is_valid reads it)
     keep = {}         # id(schema node) -> node, so a schema id is never reused while a key names it
@@ -288,6 +290,27 @@ def memo_class(base):
                 yield error
             if not failed and key is not None:
                 valid.add(key)
+
+        def _validate_reference(self, ref, instance):
+            """The reference keyword with the referencing lookup memoized: Resolver.lookup is a pure function of the
+            resolver's registry, base URI and dynamic scope and the ref (its registry crawl on a miss is what made a
+            51a5 validation cost 0.4 s); the resolved contents and resolver are reused, the descent is the reference's."""
+            resolver = self._resolver
+            if self._ref_resolver is not None:
+                return base._validate_reference(self, ref, instance)
+            key = (id(resolver._registry), resolver._base_uri, id(resolver._previous), ref)
+            hit = lookups.get(key)
+            if hit is None or hit[0] is not resolver._registry or hit[1] is not resolver._previous:
+                try:
+                    resolved = resolver.lookup(ref)
+                except referencing.exceptions.Unresolvable as err:
+                    raise jsonschema.exceptions._WrappedReferencingError(err)
+                lookups[key] = hit = (resolver._registry, resolver._previous, resolved)
+                STATS['lookup_miss'] += 1
+            else:
+                STATS['lookup_hit'] += 1
+            resolved = hit[2]
+            return self.descend(instance, resolved.contents, resolver=resolved.resolver)
 
         def is_valid(self, instance, _schema=None):
             top_level()
@@ -659,6 +682,15 @@ def install_fixes(cl):
                 return resolver.in_subresource(DRAFT202012.create_resource(node))
         return resolver
 
+    looked = {}
+
+    def lookup(resolver, ref):  # the same pure-function memo as the validator's (tool side: construction and proofs)
+        key = (id(resolver._registry), resolver._base_uri, id(resolver._previous), ref)
+        hit = looked.get(key)
+        if hit is None or hit[0] is not resolver._registry or hit[1] is not resolver._previous:
+            hit = looked[key] = (resolver._registry, resolver._previous, resolver.lookup(ref))
+        return hit[2]
+
     def deref(node, resolver, seen=None):
         seen = seen or set()
         resolver = own(node, resolver)
@@ -666,7 +698,7 @@ def install_fixes(cl):
             if node['$ref'] in seen:
                 break
             seen.add(node['$ref'])
-            resolved = resolver.lookup(node['$ref'])
+            resolved = lookup(resolver, node['$ref'])
             node, resolver = resolved.contents, own(resolved.contents, resolved.resolver)
         return node, resolver
     deref.go_original = original
