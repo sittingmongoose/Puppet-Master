@@ -9,6 +9,7 @@ import pm_dg6b_guard_suites as suites
 import pm_dg6b_c12_custody as custody
 import pm_dg6b_c12_schema as clauses
 import pm_dg6b_c12_datetime as timestamps
+import pm_dg6b_c12_receipts as receipts
 
 
 def main():
@@ -35,9 +36,13 @@ def main():
                'Plans/dg6b_event_contracts.schema.json', 'Plans/dg6b_event_contract_fixtures.json',
                'Plans/shared_integration_runtime.schema.json', 'Plans/event_record.schema.json',
                'Plans/event_record_index_checkpoint.schema.json']
+    sources = sorted(set(sources) | set(dg.custody_store.FROZEN_RESOURCES) |
+                     {str(p.relative_to(suites.ROOT)) for p in (suites.ROOT / 'scripts').glob('pm_dg6b*.py')} |
+                     {'scripts/pm-dg6b-c12.py', 'scripts/pm-dg6b-guard-tables.py'})
     result['source_hashes'] = {p: hashlib.sha256((suites.ROOT / p).read_bytes()).hexdigest() for p in sources}
     (args.out / 'coverage.json').write_text(json.dumps(result, indent=1, sort_keys=True) + '\n')
     (args.out / 'retained-observations.json').write_text(json.dumps(custody.OBSERVATIONS, indent=1) + '\n')
+    (args.out / 'receipt-observations.json').write_text(json.dumps(receipts.OBSERVATIONS, indent=1) + '\n')
     print(json.dumps(summary, sort_keys=True))
 
 

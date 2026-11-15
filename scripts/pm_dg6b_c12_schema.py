@@ -299,6 +299,15 @@ def boundaries(m, row, schema):
     yield Boundary('adapter_storage', 'scripts/pm-dg6b-event-contracts.py#adapter_schema(storage)',
                    m['adapter_schema']('storage'), history['storage_record'],
                    lambda v: m['history_contract'](name, replace(history, ('storage_record',), v), schema))
+    from referencing import Registry, Resource
+    import pm_dg6b_original_custody as store
+    from pm_dg6b_c12_receipts import receipt_read
+    receipt_schema = m['load_plan']('Plans/event_append_receipt_contracts.schema.json')
+    registry = Registry().with_resource(receipt_schema['$id'], Resource.from_contents(receipt_schema))
+    yield Boundary('receipt_schema', 'Plans/event_append_receipt_contracts.schema.json#/$defs/full_value_result',
+                   {'$ref': receipt_schema['$id'] + '#/$defs/full_value_result'},
+                   store.receipt_result(history['original']),
+                   lambda v: receipt_read(m, name, history, schema, v), registry)
 
 
 def run(m, row, schema):

@@ -41,6 +41,7 @@ TABLE_PHASES = (
     'json', 'references', 'preparation_a', 'preparation_b',
     'adapter_record', 'adapter_source', 'adapter_history', 'adapter_storage', 'adapter_resolved',
     'event_record', 'payload_schema', 'envelope_payload_schema', 'number_qualification', 'payload_types', 'source_scope',
+    'receipt_schema', 'receipt_numbers', 'receipt_join',
     'persona_scope_schema', 'checkpoint_schema', 'owner_io_request', 'owner_io_result', 'selected_result_schema',
     'resolution_schema', 'resolution_storage_schema', 'operation_schema', 'operation_logical_schema',
     'append_policy', 'retry', 'source_grants', 'frozen_source', 'auth_scope', 'partition', 'identity_event',
@@ -102,6 +103,12 @@ def require(phase, facts):
         RECORDER.append((CONTEXT, phase, copy.deepcopy(observed), refusal))
     if refusal is not None:
         raise TableRefusal(phase, *refusal)
+
+
+# Trusted composition, never a receipt/query parameter. Receipt predicates are
+# the same named Method B rows used by this checker and its guarded suites.
+custody_store.RECEIPT_REQUIRE = require
+custody_store.CHECKER_REFUSAL = TableRefusal
 
 
 def table_order_errors():
@@ -327,7 +334,8 @@ def resolve_schema_graph(schema):
     from referencing.jsonschema import DRAFT202012
     paths = ('Plans/shared_integration_runtime.schema.json',
              'Plans/shared_integration_runtime_expansion_contracts.schema.json',
-             'Plans/event_record.schema.json', 'Plans/event_record_index_checkpoint.schema.json')
+             'Plans/event_record.schema.json', 'Plans/event_record_index_checkpoint.schema.json',
+             'Plans/event_append_receipt_contracts.schema.json')
     documents = [schema] + [load_plan(path) for path in paths]
     resources = [(doc['$id'], Resource.from_contents(doc)) for doc in documents]
     resources.append(('https://puppetmaster.local/Plans/shared_integration_runtime.schema.json',
@@ -1251,6 +1259,15 @@ def check_append_contract(row, schema):
         else:
             expect_failure(call, code, name, label, row=target)
     complete['c12_custody_negatives'] = sum(target is not None for _, target, _, _ in retained)
+    from pm_dg6b_c12_receipts import family_cases as c12_receipt_cases
+    receipts = c12_receipt_cases(globals(), row, schema)
+    for label, target, code, call in receipts:
+        if target is None:
+            call()
+        else:
+            expect_failure(call, code, name, label, row=target)
+    complete['c12_receipt_negatives'] = sum(target is not None for _, target, _, _ in receipts)
+    complete['c12_receipt_positives'] = sum(target is None for _, target, _, _ in receipts)
     return {**complete, 'positive_envelopes': len(row['append_valid']), 'negative_envelopes': len(row['append_invalid']),
             'replay_only_refused': True, 'transport_boundary_bytes': [16383, 16384, 16385],
             'operation_cases': len(row['operation_cases']), 'history_cases': len(row['history_cases']),
