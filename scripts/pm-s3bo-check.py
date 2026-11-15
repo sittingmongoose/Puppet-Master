@@ -298,7 +298,12 @@ def _base_slots(control):
     """Common payload integer and envelope/receipt timestamp slots of a control."""
     value=control['value'];f=value['family']
     for path,_number,schema in w.integers(value['event']['payload'],w.schema_for(f)):
-        yield {'paths':[('event','payload')+path],'kind':'integer','row':'integer_domain','downstream':True,
+        paths=[('event','payload')+path]
+        if f=='seglog.event_appended' and path==('seq',):
+            # The common reference_seq join holds the original's sequence as an independent copy;
+            # both copies of this slot change together, as batteries() already does (C12-SS).
+            paths.append(('reference','seq'))
+        yield {'paths':paths,'kind':'integer','row':'integer_domain','downstream':True,
                'container_row':'payload_schema','bounds':{k:schema[k] for k in ('minimum','maximum') if k in schema}}
     for path,_text in w.timestamps(value['event']):
         storage=path in [('observed_at_utc',),('persisted_at_utc',)]
