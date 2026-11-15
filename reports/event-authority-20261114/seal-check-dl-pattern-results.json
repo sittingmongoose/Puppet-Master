@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.dl_pattern_checks.v1",
-  "validator_sha256": "308728929a863eae7c2b8dab0263130e4f7aa8a4ff292a369b29db6e40eb7616",
+  "validator_sha256": "b147459618e1c7f13ab1ba73ac03d270d40c8703690bd00239e3ac3d10ed3456",
   "checks": {
     "pattern_exhaustive_ascii_0_to_5_digits": {
       "pass": true,
@@ -226,7 +226,7 @@
     },
     "fifth_state_negative_answer_copy_missing": {
       "pass": true,
-      "value": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-scratch/ea-pnc-s1v/checks/s1v-checks-3yabu1tx/s1v-4rsozw8a/reports/event-authority-20261114/E9-1-answer.json'"
+      "value": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-scratch/ea-pnc-s1v/checks/s1v-checks-4ge7f4ib/s1v-3ejumsh_/reports/event-authority-20261114/E9-1-answer.json'"
     },
     "fifth_state_negative_fourth_relanded_without_fifth_prior_refresh": {
       "pass": true,
@@ -248,7 +248,7 @@
   "total": 54,
   "mutants": {
     "pattern_reverted_to_three_digits": {
-      "validator_sha256": "d1f5e2fe04824edfe15f18b9a37c4f4d0552d7da4ef46ec5e08eaf8ec3f645e7",
+      "validator_sha256": "48e0111d1fd60b583d1be1325d8b72a8b7830ac918331d2dc738a989705836c1",
       "killed": true,
       "killed_by": [
         "site_443_four_digit_ref_complete",
@@ -276,7 +276,7 @@
       }
     },
     "pattern_literal_three_or_four": {
-      "validator_sha256": "dac34475dfd741806ea77507201d8fedf5aa994f7e6b304207d62775813623c5",
+      "validator_sha256": "46c0d77de9a13f0d0fae6f6e89c814cbc3c342e587bd00a84ccccf0abba97f80",
       "killed": true,
       "killed_by": [
         "site_443_malformed_refs_fail_decision_ref_only",
@@ -304,7 +304,7 @@
       }
     },
     "pattern_three_to_five": {
-      "validator_sha256": "b912471c0717d20191097cf79262b18e421fdaf022428d2c611ce0707592201a",
+      "validator_sha256": "63a00dff86a405a7c712ebb949f70f9c982536947cf9b7b21f1f1b78ade54043",
       "killed": true,
       "killed_by": [
         "site_443_malformed_refs_fail_decision_ref_only",
@@ -329,7 +329,7 @@
       }
     },
     "pattern_unicode_four_digits": {
-      "validator_sha256": "07aec1b7380a4985821130bd4ffd5b954d3a16bf42341fa837ab80497d7c2fbe",
+      "validator_sha256": "98127476774b6a5390efb7555fd63e87c1f7d28a3db70964a391ba8bd09ec54b",
       "killed": true,
       "killed_by": [
         "site_443_malformed_refs_fail_decision_ref_only"
@@ -352,7 +352,7 @@
       }
     },
     "pattern_allows_empty_number": {
-      "validator_sha256": "0f5c47293e8680554e69c41a19cc04ca5896a115f825acc40564fd41c28ea31a",
+      "validator_sha256": "6ced01be499d6548dfe858f174d5a8cde00423d0cea8feeabf767eaa7f91ca60",
       "killed": true,
       "killed_by": [
         "site_443_malformed_refs_fail_decision_ref_only",
@@ -376,7 +376,7 @@
       }
     },
     "site_443_only_reverted": {
-      "validator_sha256": "dd15e723b4e791bf3ba9f55e36bd0f15c8bac5ff43b6f33493709a4fe03b381a",
+      "validator_sha256": "c0708f3e868b5e45fc0de766db860b3d8ccba6f1011b8a0ebf21f73fb6ab4b79",
       "killed": true,
       "killed_by": [
         "site_443_four_digit_ref_complete"
@@ -395,7 +395,7 @@
       }
     },
     "site_1016_only_reverted": {
-      "validator_sha256": "badbe53739ace95e7bb15114dff4afc5ba13ef122cad6d5f5dec223f2cb042f7",
+      "validator_sha256": "d69ac748d2df13d75dfe04ccfc7624f70f616de95d6b58036cbb72ac4eb18fe1",
       "killed": true,
       "killed_by": [
         "site_1016_four_digit_exclusion_complete"
@@ -412,7 +412,7 @@
       }
     },
     "fifth_link_without_anchor": {
-      "validator_sha256": "6080fd9059ee74f14f411597ad20daa120c14f65adf5528f4b575a8c86e6c8d0",
+      "validator_sha256": "05c4454aa0b98f7812d53f43d521d67f44898b8326add858d6f3ec42137edd8d",
       "killed": true,
       "killed_by": [
         "chain_negative_fifth_anchor_missing",
@@ -436,7 +436,7 @@
       }
     },
     "fifth_link_without_fourth_after": {
-      "validator_sha256": "c12408e7f4a234af10f5b94dc86919ace1bc12dfc36528488230b80094e7263f",
+      "validator_sha256": "3507cf0cd0033e4d227f051cae51d5ee42be8f296cbe433ef5bce7f71136b3c1",
       "killed": true,
       "killed_by": [
         "chain_negative_fourth_restamped_to_live"
@@ -452,7 +452,7 @@
       }
     },
     "fifth_link_without_live_after": {
-      "validator_sha256": "b74445003e587946958158133830605990b7045befabebccf12568f4219a2cbb",
+      "validator_sha256": "84386773ed7977b872fd527d94aec7c3fc2e8c8da44b84fca4ce03224068034c",
       "killed": true,
       "killed_by": [
         "chain_negative_fifth_after_is_fourth_after"
@@ -469,7 +469,7 @@
       }
     },
     "fifth_link_without_before": {
-      "validator_sha256": "e5d35a20bcfc6f677e9898bf2c31939508ad2e8276a3897bf005a23e1e2b4d78",
+      "validator_sha256": "bbd4252851852eedfe0c3d5a5690a87f791ec60043e7677c0c8bcc5651be0cf9",
       "killed": true,
       "killed_by": [
         "chain_negative_fifth_before_wrong"
@@ -485,7 +485,7 @@
       }
     },
     "fourth_link_reads_live_bytes": {
-      "validator_sha256": "4dfb2e231277a0de492626f19e14fae508dbb6e1ecb6127a9641e97aec9aab48",
+      "validator_sha256": "41f181047a84dbd740f101cda9fad9dac805bdae430bff5aaffc513d08b799ef",
       "killed": true,
       "killed_by": [
         "chain_positive_every_link_and_state"
@@ -498,11 +498,11 @@
         "wiring_recount_validation_reports_fifth_receipt"
       ],
       "killer_errors": {
-        "chain_positive_every_link_and_state": "positive refused: {\"fifth\": \"3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72\", \"fourth\": \"4dfb2e231277a0de492626f19e14fae508dbb6e1ecb6127a9641e97aec9aab48\", \"third\": \"4dfb2e231277a0de492626f19e14fae508dbb6e1ecb6127a9641e97aec9aab48\"}"
+        "chain_positive_every_link_and_state": "positive refused: {\"fifth\": \"3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72\", \"fourth\": \"41f181047a84dbd740f101cda9fad9dac805bdae430bff5aaffc513d08b799ef\", \"third\": \"41f181047a84dbd740f101cda9fad9dac805bdae430bff5aaffc513d08b799ef\"}"
       }
     },
     "fourth_link_fallback_is_observed_hash": {
-      "validator_sha256": "f75ee125a3b0f0132fcb222e9f4b0ed0b899494415efe1c1b97f787939b1a323",
+      "validator_sha256": "0a01c325f1dc97c5269dfc7062c07007a84ad6c9c8f9557c62a6f7f437b0727b",
       "killed": true,
       "killed_by": [
         "chain_negative_fourth_link_broken_under_intact_fifth_exposes_live"
@@ -518,7 +518,7 @@
       }
     },
     "fourth_state_reads_live_bytes": {
-      "validator_sha256": "35fc72c1e8bd8d1bd7ecc5b9fb68ed251da117a8ae814bd824fd63f379fef4bc",
+      "validator_sha256": "204da4b0fae3c880bcb81a0ccbe7bde84cc2de9f51a80b7dad3f43d66548f055",
       "killed": true,
       "killed_by": [
         "chain_positive_every_link_and_state"
@@ -535,7 +535,7 @@
       }
     },
     "fifth_state_without_lander_check": {
-      "validator_sha256": "25515384ea283c48b5fbb1f8fb42590ff968254ac4ebeab38d7d1ba4112425ea",
+      "validator_sha256": "719e4d83dc873cbe22470a925f2a9857ec977b6a7745df11134a1079a32b1404",
       "killed": true,
       "killed_by": [
         "fifth_state_negative_lander_empty",
@@ -555,28 +555,40 @@
         "fifth_state_negative_lander_blank": "negative accepted"
       }
     },
-    "fifth_state_without_copy_bytes": {
-      "validator_sha256": "f88cff6ca17e09abc25ba88ad60896f98634bf209a7f3d6cefa80031da435fb6",
+    "fifth_state_without_card_bytes": {
+      "validator_sha256": "8a4105442945d20e00d65934972f280b6643d0a851c303f8be42cc4628a59274",
       "killed": true,
       "killed_by": [
-        "fifth_state_negative_card_copy_bytes_edited",
-        "fifth_state_negative_answer_copy_missing"
+        "fifth_state_negative_card_copy_bytes_edited"
       ],
       "named_killers": [
-        "fifth_state_negative_card_copy_bytes_edited",
-        "fifth_state_negative_answer_copy_missing"
+        "fifth_state_negative_card_copy_bytes_edited"
       ],
       "failing_checks": [
-        "fifth_state_negative_answer_copy_missing",
         "fifth_state_negative_card_copy_bytes_edited"
       ],
       "killer_errors": {
-        "fifth_state_negative_card_copy_bytes_edited": "negative accepted",
+        "fifth_state_negative_card_copy_bytes_edited": "negative accepted"
+      }
+    },
+    "fifth_state_without_answer_bytes": {
+      "validator_sha256": "6df33869a3353578e2d13f642efa11eb38275f557e2053ae45c634476d4704c6",
+      "killed": true,
+      "killed_by": [
+        "fifth_state_negative_answer_copy_missing"
+      ],
+      "named_killers": [
+        "fifth_state_negative_answer_copy_missing"
+      ],
+      "failing_checks": [
+        "fifth_state_negative_answer_copy_missing"
+      ],
+      "killer_errors": {
         "fifth_state_negative_answer_copy_missing": "negative accepted"
       }
     },
     "fifth_state_without_flags": {
-      "validator_sha256": "fca302fa3677ee66ce2f31c126eec24ce9ed822769b40e9770f4667538d7d329",
+      "validator_sha256": "f531b1e6a39477017c38f5861d99048b7a4775394d0d06cef59eb7d9b2cacbfb",
       "killed": true,
       "killed_by": [
         "fifth_state_negative_seal_authorized_true",
@@ -599,7 +611,7 @@
       }
     },
     "fifth_state_without_prior": {
-      "validator_sha256": "a0a1622425eba55c3f0fc45c181cc246a58e8735560d3509e04946a809c14cf0",
+      "validator_sha256": "53c9b71010f702931b45ab33d31e4d273946cf74db4a4a55de4d5b3abbe99933",
       "killed": true,
       "killed_by": [
         "fifth_state_negative_prior_sha_stale",
@@ -620,7 +632,7 @@
       }
     },
     "fifth_state_without_pattern": {
-      "validator_sha256": "265e7cf8d8239a6ceef6ccb1f3501a155f8b883bd1cbc7fdb70cf98903edcbdd",
+      "validator_sha256": "aeb9e8f511cf05c5868b3558de817bb824a90800e3f88bff9645796eed668148",
       "killed": true,
       "killed_by": [
         "fifth_state_negative_pattern_literal_brief_form"
@@ -637,7 +649,7 @@
       }
     },
     "fifth_state_not_reported": {
-      "validator_sha256": "25113e268579f3ff62db6b4efc26f531a4115fcb33b9b267b3a6d94aa3bfde10",
+      "validator_sha256": "1c0d779ad6f2e7569da5e656ce2130bcdcfc02b18d2a7dcac45cb03ec779dea6",
       "killed": true,
       "killed_by": [
         "wiring_recount_validation_reports_fifth_receipt"
@@ -653,6 +665,6 @@
       }
     }
   },
-  "mutants_killed": 20,
-  "mutants_total": 20
+  "mutants_killed": 21,
+  "mutants_total": 21
 }
