@@ -16,7 +16,10 @@
 // scale and the backlight's opacity, as the page computes them; the films show the pixels). Changes: a word while
 // waiting, early in the loop and just before its end; 900 ms without a word while flowing, landing near a loop's end
 // and in its middle; Settings' Animation speed set to Fast mid-loop, then a word right after it and the quiet after
-// that, then Measured again; a word followed by a 200 ms long task before the next frame; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
+// that, then Measured again. Slow (Cinematic) is a Working run of its own: the demo's run ends about 33 s after it
+// starts, and on one run the chip was idle (data-ss idle, no loop) before the post-Slow .3-.4 window, which is ~3 s
+// later on a 5120 ms loop (Alexis probe, 2026-11-15, qw3 run-probe1). That run sets Fast, then Slow, then Measured,
+// and a finally sets Measured again if the leg stops short, so a later cell is not left at Cinematic. A word followed by a 200 ms long task before the next frame; the onboarding window opened mid-loop (it holds the app's animations; no words under it,
 // so the pace turns to waiting while held), closed, then a word. For each change:
 //   - at once: a word changes data-flow and the loop's length by the frame after it; the quiet one comes 900 ms after
 //     the last word (the module's timer on the word's age; up to --set late=<ms>, default 150, plus the main thread's long tasks after it fell due);
@@ -29,8 +32,8 @@
 // Every frame from the first change on is judged the same way, not only the frames that hold a change.
 // The onboarding window's open and close make every loop it holds jump by about the window's page-wide restyle (its
 // pause and resume are taken by a late frame's time): the lead's call A (2026-11-13), the window's, not the chip's.
-// The check samples another loop the window holds and, within 3 s of the open and of the close, names a jump of the
-// chip no larger (in time) than that loop's largest, instead of failing on it (windowSpans below).
+// The check samples another loop the window holds and names that restyle's frame. It waives a jump only when both of
+// the chip's loops jump by the same amount in that frame (windowSpans, restyleFrame). A later jump of one loop fails.
 // What it cannot see directly is the compositor; the hand-over above is computed from the timings the page reports.
 // The Node model (tests/stop-chip-beat-verify.mjs) and lane S's films (share 2026-11-13-pm7-stop-chip-pace) judge it
 // on a model of the compositor and on pixels.
@@ -62,7 +65,7 @@ import { traceWindow } from '../helpers/frame-trace.mjs';
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
 
 // One Working run, driven and sampled inside the page; returns every frame's sample, the marks and the flips.
-const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
+const PACE = async ({ speed, windowPart, themePart, themeOnly, speedOnly }) => {
 	const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 	const frame = () => new Promise((r) => requestAnimationFrame(r));
 	const SS = window.PM56_SENDSTOP, D = window.PM56_DEMO;
@@ -120,16 +123,36 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 		feedOn();
 	};
 	// stop the words so that the quiet change (900 ms later) lands near `target` of a loop at the flowing length
+	const snap = () => {
+		const r = last(), one = (x) => (x ? { dur: x.dur, place: x.place, state: x.state } : null);
+		let debug = null;
+		try { debug = SS.debug(); } catch (e) { debug = String(e); }
+		return JSON.stringify({ ss: r.ss, flow: r.flow, nier: r.nier, g: one(r.g), b: one(r.b), debug });
+	};
+	let quietWhy = '';
 	const quietAt = async (name, target) => {
 		await sleep(400);
 		const ahead = 901 / (last().g ? last().g.dur : 2200);
 		const stopAt = ((target - ahead) % 1 + 1) % 1;
-		if (!(await until(() => { const f = frac(); return f != null && Math.abs(f - stopAt) < 0.02; }))) return false;
+		if (!(await until(() => { const f = frac(); return f != null && Math.abs(f - stopAt) < 0.02; }))) { quietWhy = 'position ' + snap(); return false; }
 		feedOff(); word();                                            // the last word, now
 		marks.push({ name, i: -1, kind: 'quiet', wordAt: lastWord, aim: target });
-		return until(() => last().flow === 'waiting', 3000);
+		const ok = await until(() => last().flow === 'waiting', 3000);
+		if (!ok) quietWhy = 'flow ' + snap();
+		return ok;
 	};
 	const inLoop = (lo, hi) => until(() => { const f = frac(); return f != null && f >= lo && f <= hi && last().g.place >= 1; });
+	// After Settings applies a speed, wait until the loops show that factor. A fixed 150 ms still had
+	// no ss-breathe on the frame after the Slow word (glass-dark, the same run: flow "waiting", glyph
+	// undefined). NieR hides .ss-bl (send-stop.css) and the glow element lives inside it, so only the glyph is required there.
+	const expectDur = async (factor) => until(() => {
+		const r = last();
+		if (!r.g || !(r.g.dur > 0) || r.g.place == null) return false;
+		const base = r.flow === 'flowing' ? 2200 : 3200;
+		if (Math.abs(r.g.dur - base * factor) > 1) return false;
+		if (r.b && r.b.dur > 0) return Math.abs(r.b.dur - base * factor) <= 1;
+		return r.nier === 'on';
+	}, 8000);
 
 	try {
 		D.pauseWorking(); await sleep(300);
@@ -140,7 +163,7 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 		if (last().flow !== 'waiting') { await until(() => last().flow === 'waiting', 3000); }
 		// (a run of its own for the light/dark change: the demo's run ends about 33 s after it starts, before the first
 		// look's other parts are through)
-		if (!themeOnly) {
+		if (!themeOnly && !speedOnly) {
 		// a word while waiting, early in the loop; then quiet landing near the loop's end
 		if (!(await inLoop(0.2, 0.3))) throw new Error('early: the loop never reached .2-.3');
 		await wordAt('word while waiting, early in the loop');
@@ -154,18 +177,45 @@ const PACE = async ({ speed, windowPart, themePart, themeOnly }) => {
 		await wordThenTask('word while waiting, then a 200 ms long task', 200);
 		if (!(await quietAt('quiet after the long task', 0.6))) throw new Error('quiet after the long task: no change');
 		}
-		if (speed) {
-			if (!(await inLoop(0.3, 0.4))) throw new Error('speed: the loop never reached .3-.4');
-			await sleep(2); mark('Animation speed Fast, waiting, mid-loop', { kind: 'speed' });
-			const ok = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Fast');
-			if (!ok) throw new Error('Settings refused Fast');
-			await sleep(150);
-			await wordAt('word right after the speed change');
-			if (!(await quietAt('quiet after the speed change', 0.7))) throw new Error('quiet after speed: no change');
-			if (!(await inLoop(0.3, 0.4))) throw new Error('speed back: the loop never reached .3-.4');
-			await sleep(2); mark('Animation speed Measured, waiting, mid-loop', { kind: 'speed' });
-			window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured');
-			await sleep(300);
+		if (speed || speedOnly) {
+			// Measured is put back in a finally so a throw cannot leave Cinematic on for the next cell
+			// (the first failing run read 3520 and 5120 ms there, 2200 and 3200 times 1.6).
+			let speedBack = false;
+			const setMeasured = () => {
+				const okM = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Measured');
+				if (!okM) throw new Error('Settings refused Measured');
+				speedBack = true;
+			};
+			try {
+				if (!(await inLoop(0.3, 0.4))) throw new Error('speed: the loop never reached .3-.4 (' + snap() + ')');
+				await sleep(2); mark('Animation speed Fast, waiting, mid-loop', { kind: 'speed' });
+				const ok = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Fast');
+				if (!ok) throw new Error('Settings refused Fast');
+				// The run of its own waits until the loops show the new length. A fixed 150 ms, on the
+				// long run, still had no glyph on the frame after Slow (glass-dark, Alexis, 2026-11-15).
+				// The run main already had keeps that 150 ms, so it judges the same Fast hand-over.
+				if (speedOnly) { if (!(await expectDur(0.6))) throw new Error('Fast did not land (' + snap() + ')'); }
+				else await sleep(150);
+				await wordAt('word right after the speed change');
+				if (!(await quietAt('quiet after the speed change', 0.7))) throw new Error('quiet after speed: no change (' + quietWhy + ')');
+				if (speedOnly) {
+					// Both cadences are sampled before Measured, for judgeSpeed. This run is the only
+					// one that sets Slow: the demo's ~33 s run has ended by then on the long pace.
+					if (!(await inLoop(0.3, 0.4))) throw new Error('slow: the loop never reached .3-.4 (' + snap() + ')');
+					await sleep(2); mark('Animation speed Slow (Cinematic), waiting, mid-loop', { kind: 'speed' });
+					const okSlow = window.PM12_KIMI.setSettingFromHost('general.visual.animation-speed', 'Cinematic');
+					if (!okSlow) throw new Error('Settings refused Cinematic');
+					if (!(await expectDur(1.6))) throw new Error('Slow did not land (' + snap() + ')');
+					await wordAt('word right after Slow');
+					if (!(await quietAt('quiet after Slow', 0.7))) throw new Error('quiet after Slow: no change (' + quietWhy + ')');
+					if (!(await inLoop(0.3, 0.4))) throw new Error('speed back: the loop never reached .3-.4 (' + snap() + ')');
+				} else if (!(await inLoop(0.3, 0.4))) throw new Error('speed back: the loop never reached .3-.4');
+				await sleep(2); mark('Animation speed Measured, waiting, mid-loop', { kind: 'speed' });
+				setMeasured();
+				await sleep(300);
+			} finally {
+				if (!speedBack) { try { setMeasured(); } catch (e) { errors.push('speed not restored: ' + String(e && e.message || e)); } }
+			}
 		}
 		if (windowPart) {
 			await wordAt('word before the window');
@@ -373,11 +423,11 @@ function rates(R) {
 // restyle (~240 ms on the Windows PC) in the same task: the frame after it is late, and Chrome takes the pause's hold
 // (or the resume's start) by that frame's time, from before the restyle, so EVERY held loop jumps when that frame is
 // handed over (back at the open, forward at the close) by about the restyle's length. The lead's call A (2026-11-13):
-// the window's, not the chip's (main's page shows it for the chip and another held loop alike). So within 3 s of the
-// open and of the close a jump of the chip is named, not failed, when it is no larger (in time) than the largest jump of
-// other held loops sampled in the same run (up to 12, taken before the open; pairs in which a loop's own timing
-// changed are not counted) plus a frame; any
-// other jump of the chip fails.
+// the window's, not the chip's (main's page shows it for the chip and another held loop alike). The waiver is that
+// restyle's own frame only, and only when BOTH of the chip's loops jump by the same amount there (PM7PERF-STOPCHIP-K1-WAIVER:
+// a later jump of the backlight alone used to be named along with it). Any other jump of the chip fails.
+// The reference loops (up to 12, taken before the open; pairs in which a loop's own timing changed are not counted)
+// name which frame the restyle was.
 function windowSpans(R, frame) {
 	const out = [];
 	for (const name of ['onboarding window opens (holds the glyph), no more words', 'onboarding window closes']) {
@@ -385,7 +435,7 @@ function windowSpans(R, frame) {
 		if (!m || m.i <= 0) continue;
 		const from = m.i, until = R.rows.findIndex((r, i) => i > from && r.w - R.rows[from].w > 3000);
 		const to = until < 0 ? R.rows.length : until;
-		let other = 0, otherAt = null;
+		let other = 0, otherAt = null, otherI = null;
 		// a pause or resume taken by a late frame's time moves a loop by at most the time between the two samples around
 		// it: a reference step past that (its own timing changed: NieR restyles it) is not a measure of the window's jump
 		for (let i = from; i < to; i++) {
@@ -398,36 +448,112 @@ function windowSpans(R, frame) {
 				if (!(h0 >= 0 || h1 >= 0)) continue;
 				const ms = Math.abs(h1 - h0) * b.dur;
 				if (ms > r1.w - r0.w + frame) continue;
-				if (ms > other) { other = ms; otherAt = Math.round(r1.w - R.rows[from].w); }
+				if (ms > other) { other = ms; otherAt = Math.round(r1.w - R.rows[from].w); otherI = i; }
 			}
 		}
-		out.push({ what: /opens/.test(name) ? 'open' : 'close', from, to, otherMs: other, otherAt, limitMs: other + frame });
+		out.push({ what: /opens/.test(name) ? 'open' : 'close', from, to, otherMs: other, otherAt, otherI, limitMs: other + frame });
 	}
 	return out;
 }
 const spanOf = (spans, i) => spans.find((x) => i >= x.from && i < x.to) || null;
+// True only on the restyle's own frame. When both loops are drawn, both must jump by more than
+// one frame, by the same amount (within one frame of each other), on that frame exactly.
+// NieR draws no glow (send-stop.css: .ss-bl is display:none; one pulse reads 0 frames with both
+// loops). The glyph's jump is the window's. It is sometimes the next sample, not otherI:
+// run-s0-1 (Alexis, 2026-11-15) named nothing while the reference jumped 373 ms at +379 ms and
+// the glyph's hand-over was 0.16932 of the 2200 ms loop (372 ms). That neighbour is waived only
+// when its size is the reference's, within one frame. A later jump, or a different size, fails.
+function restyleFrame(R, i, frame, spans) {
+	const wc = spanOf(spans, i);
+	if (!wc || wc.otherI == null) return false;
+	const msOf = (layer) => {
+		const row = R.rows[i][layer], prev = R.rows[i - 1][layer];
+		if (!row || !prev || !(row.dur > 0)) return null;
+		const x = pair(R, i, layer, 0, frame);
+		if (!x || x.hand == null) return null;
+		return x.hand * row.dur;
+	};
+	const g = msOf('g'), b = msOf('b');
+	if (g == null || !(g > frame)) return false;
+	const glowRuns = (R.rows || []).some((r) => r && r.b && r.b.place != null && r.b.dur > 0);
+	const nierRun = (R.rows || []).some((r) => r && r.nier === 'on');
+	if (!glowRuns && nierRun && b == null) {
+		if (i === wc.otherI) return true;
+		return Math.abs(i - wc.otherI) === 1 && Math.abs(g - wc.otherMs) <= frame;
+	}
+	if (i !== wc.otherI || b == null) return false;
+	return b > frame && Math.abs(g - b) <= frame;
+}
 // Every frame from the first change to the end, not only the frames that hold a change: the loop is never made anew,
 // never jumps at a hand-over, and (outside the frames after a long task) its place never moves more than one frame at
 // the faster pace (a retime that something else did at a moment no mark names shows here).
-function everyFrame(R) {
-	const out = { worst: 0, where: null, restarts: [], known: [] }, frame = medianFrame(R.rows), mr = rates(R), spans = windowSpans(R, frame);
+export function everyFrame(R) {
+	const out = { worst: 0, where: null, restarts: [], known: [], valueFails: 0 }, frame = medianFrame(R.rows), mr = rates(R), spans = windowSpans(R, frame);
 	out.spans = spans;
+	// The sampling window is from the first change on. A frame before that is the only one discarded.
+	// Inside the window a glyph-scale or backlight-opacity step past its bound is counted and fails the row
+	// (PM7PERF-STOPCHIP-FRAME-GUARD: that comparison used to be left out of `over`).
 	const first = Math.max(1, Math.min(...R.marks.map((m) => m.i).filter((i) => i > 0)));
 	for (const layer of ['g', 'b']) {
 		for (let i = first; i < R.rows.length; i++) {
 			const x = pair(R, i, layer, mr[layer], frame); if (!x) continue;
 			const t = Math.round(R.rows[i].w - R.rows[first].w);
 			if (x.restart) { out.restarts.push(`${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms`); continue; }
+			const valueOver = x.value != null && !(x.value <= x.valueBound) ? x.value / (x.valueBound > 0 ? x.valueBound : 1e-9) : 0;
+			if (valueOver > 1) out.valueFails++;
 			const wc = spanOf(spans, i);
-			if (wc && x.hand != null && x.hand > x.handBound) {
+			if (valueOver <= 1 && x.hand != null && x.hand > x.handBound && restyleFrame(R, i, frame, spans)) {
 				const ms = x.hand * R.rows[i][layer].dur;
-				if (ms <= wc.limitMs && ms <= R.rows[i].w - R.rows[i - 1].w + frame) { out.known.push(`${layer === 'g' ? 'glyph' : 'backlight'} ${Math.round(ms)} ms (${x.hand} of a loop) at +${Math.round(R.rows[i].w - R.rows[wc.from].w)} ms after the ${wc.what}`); continue; }
+				out.known.push(`${layer === 'g' ? 'glyph' : 'backlight'} ${Math.round(ms)} ms (${x.hand} of a loop) at +${Math.round(R.rows[i].w - R.rows[wc.from].w)} ms after the ${wc.what}, with the other loop`); continue;
 			}
-			const over = Math.max(x.hand != null ? x.hand / x.handBound : 0, x.place != null ? (x.place < x.floor ? 99 : Math.abs(x.place) / x.placeBound) : 0);
-			if (over > out.worst) { const a = R.rows[i - 1][layer], b = R.rows[i][layer]; out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: hand-over ${x.hand ?? '-'} (bound ${x.handBound ?? '-'}${x.gap != null ? `, of which ${x.lateAllow} for a late hand-over: ${x.gap} ms between samples` : ''}), main-thread place ${x.place ?? 'stale frame'} (bound ${x.placeBound ?? '-'}${x.holdMs != null ? `, of which ${x.holdMs} ms for a hold placed by the wall clock` : ''}), length ${a.dur} -> ${b.dur}, delay ${a.delay} -> ${b.delay}, start ${a.s == null ? '-' : Math.round(a.s)} -> ${b.s == null ? '-' : Math.round(b.s)}, ${a.state} -> ${b.state}, window ${R.rows[i - 1].win ? 'open' : 'closed'} -> ${R.rows[i].win ? 'open' : 'closed'}, ${Math.round(R.rows[i].w - R.rows[i - 1].w)} ms between samples, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
+			const over = Math.max(x.hand != null ? x.hand / x.handBound : 0, x.place != null ? (x.place < x.floor ? 99 : Math.abs(x.place) / x.placeBound) : 0, valueOver);
+			if (over > out.worst) { const a = R.rows[i - 1][layer], b = R.rows[i][layer]; out.worst = over; out.where = `${layer === 'g' ? 'glyph' : 'backlight'} +${t} ms: hand-over ${x.hand ?? '-'} (bound ${x.handBound ?? '-'}${x.gap != null ? `, of which ${x.lateAllow} for a late hand-over: ${x.gap} ms between samples` : ''}), main-thread place ${x.place ?? 'stale frame'} (bound ${x.placeBound ?? '-'}${x.holdMs != null ? `, of which ${x.holdMs} ms for a hold placed by the wall clock` : ''}), value ${x.value ?? '-'} (bound ${x.valueBound ?? '-'}), length ${a.dur} -> ${b.dur}, delay ${a.delay} -> ${b.delay}, start ${a.s == null ? '-' : Math.round(a.s)} -> ${b.s == null ? '-' : Math.round(b.s)}, ${a.state} -> ${b.state}, window ${R.rows[i - 1].win ? 'open' : 'closed'} -> ${R.rows[i].win ? 'open' : 'closed'}, ${Math.round(R.rows[i].w - R.rows[i - 1].w)} ms between samples, theme ${R.rows[i - 1].th} -> ${R.rows[i].th}`; }
 		}
 	}
 	return out;
+}
+
+// Settings' Animation speed (17-look.js): Fast 0.6, Slow is Cinematic 1.6, Measured 1. The unscaled loops are
+// 2200 ms while words arrive and 3200 ms while the run waits. The last sample of each cadence between one speed
+// mark and the next is the one the speed has settled on (the mark is taken before Settings applies it).
+export const SPEED_FACTOR = { Fast: 0.6, Slow: 1.6, Cinematic: 1.6, Measured: 1 };
+export const LOOP_BASE = { flowing: 2200, waiting: 3200 };
+export function judgeSpeed(R) {
+	const marks = (R.marks || []).filter((m) => m.kind === 'speed' && m.i >= 0);
+	const bad = [];
+	const seen = [];
+	// NieR hides .ss-bl, and the glow loop lives inside it. A speed's own samples are what count:
+	// the Fast half of a NieR run can still catch a glow that a later restyle drops, and requiring
+	// that glow on Slow then reports the glyph as missing (Alexis, qw3 run-probe2). A window with
+	// no glow, on NieR, judges the glyph. A window that has a glow, and every other look, must
+	// produce both. A missing one fails the row.
+	for (let s = 0; s < marks.length; s++) {
+		const m = marks[s];
+		const speed = /Fast/.test(m.name) ? 'Fast' : /Slow|Cinematic/.test(m.name) ? 'Slow' : null;
+		if (!speed) continue;
+		const factor = SPEED_FACTOR[speed];
+		const end = s + 1 < marks.length ? marks[s + 1].i : R.rows.length;
+		const lastG = {}, lastB = {};
+		let nier = false, glow = false;
+		for (let i = m.i; i < end && i < R.rows.length; i++) {
+			const r = R.rows[i];
+			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing')) continue;
+			if (r.nier === 'on') nier = true;
+			if (r.g && r.g.dur > 0) lastG[r.flow] = r.g;
+			if (r.b && r.b.dur > 0) { lastB[r.flow] = r.b; glow = true; }
+		}
+		seen.push(speed);
+		for (const flow of ['waiting', 'flowing']) {
+			const glyph = lastG[flow], backlight = lastB[flow];
+			if (!glyph) { bad.push({ speed, flow, missing: true }); continue; }
+			const want = LOOP_BASE[flow] * factor;
+			if (Math.abs(glyph.dur - want) > 1) bad.push({ speed, flow, layer: 'glyph', dur: glyph.dur, want });
+			if (backlight) { if (Math.abs(backlight.dur - want) > 1) bad.push({ speed, flow, layer: 'backlight', dur: backlight.dur, want }); }
+			else if (!(nier && !glow)) bad.push({ speed, flow, layer: 'backlight', missing: true });
+		}
+	}
+	if (!seen.includes('Fast') || !seen.includes('Slow')) bad.push({ missing: ['Fast', 'Slow'].filter((x) => !seen.includes(x)) });
+	return { ok: bad.length === 0, bad };
 }
 
 // Judge one look's samples at its changes.
@@ -444,8 +570,7 @@ function judge(R, look) {
 			if (!x || x.restart) { row.restart = true; out.push(row); continue; }
 			Object.assign(row, x);
 			// the page-wide jump around the window's open and close (windowSpans): named, not failed, when the rest is fine
-			const wc = spanOf(spans, m.i);
-			if (!row.ok && wc && row.hand > row.handBound && row.hand * b.dur <= wc.limitMs && row.hand * b.dur <= r1.w - r0.w + frame && (row.place == null || (row.place >= row.floor && row.place <= row.placeBound && row.value <= row.valueBound))) { row.ok = true; row.known = true; }
+			if (!row.ok && row.hand > row.handBound && restyleFrame(R, m.i, frame, spans) && (row.place == null || (row.place >= row.floor && row.place <= row.placeBound && row.value <= row.valueBound))) { row.ok = true; row.known = true; }
 			out.push(row);
 		}
 	}
@@ -472,6 +597,18 @@ export default async function (t) {
 	await t.page.waitForTimeout(Number(t.args.settle ?? (alone ? 8000 : 30000)));
 	const sandbox = f !== t.page.mainFrame();
 	const home = () => (alone ? Promise.resolve() : f.evaluate(() => PM_PAGES.go('dashboard')));
+	// Measured is the default. A pace leg that already put it back does not write again (a second
+	// save rebuilds Settings). A leg that threw is put back here too, before the next look.
+	const restoreMeasured = async () => {
+		if (alone) return;
+		await f.evaluate(() => {
+			const K = window.PM12_KIMI;
+			if (!K || typeof K.getState !== 'function' || typeof K.setSettingFromHost !== 'function') return;
+			let cur = null;
+			try { cur = K.getState().settings['general.visual.animation-speed']; } catch (e) { return; }
+			if (cur && cur !== 'Measured') K.setSettingFromHost('general.visual.animation-speed', 'Measured');
+		}).catch(() => {});
+	};
 
 	if (parts.has('rest')) {
 		const cdp = await t.page.context().newCDPSession(t.page);
@@ -506,6 +643,7 @@ export default async function (t) {
 	};
 	if (parts.has('pace')) {
 		for (const [n, look] of looks.entries()) {
+			try {
 			await savedLook(look);
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await home();
@@ -522,10 +660,10 @@ export default async function (t) {
 				bad.length ? bad.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}, value ${r.value ?? '-'}/${r.valueBound ?? '-'}`}`).join('; ') : `${rows.length} changes judged`);
 			const ev = everyFrame(R);
 			t.log(`${look}: every frame from the first change on: worst step ${(ev.worst * 100).toFixed(0)}% of its bound${ev.where ? ` (${ev.where})` : ''}; new loops: ${ev.restarts.join(', ') || 'none'}`);
-			for (const sp of ev.spans) t.log(`${look}: NOTE the onboarding window's ${sp.what}: the other held loops (${R.otherDesc}) jumped up to ${Math.round(sp.otherMs)} ms at +${sp.otherAt} ms after it (a page-wide jump, the window's: known, not judged); the chip's jumps within 3 s up to ${Math.round(sp.limitMs)} ms are named, not failed`);
+			for (const sp of ev.spans) t.log(`${look}: NOTE the onboarding window's ${sp.what}: the other held loops (${R.otherDesc}) jumped up to ${Math.round(sp.otherMs)} ms at +${sp.otherAt} ms after it (the restyle's own frame). A jump of both chip loops by that same amount in that frame is named, not failed; any other jump, including a later one of the backlight alone, fails`);
 			if (ev.spans.length) t.log(`${look}: NOTE the chip's jumps named as the window's: ${ev.known.join('; ') || 'none'}`);
-			await t.check(`${look}: in every frame from the first change on, the loop is never made anew and never jumps (hand-over and main-thread place)`, ev.restarts.length === 0 && ev.worst <= 1,
-				`${ev.restarts.length ? 'new loops ' + ev.restarts.join(', ') + '; ' : ''}worst ${(ev.worst * 100).toFixed(0)}%${ev.where ? ': ' + ev.where : ''}`);
+			await t.check(`${look}: in every frame from the first change on, the loop is never made anew and never jumps (hand-over, main-thread place, and glyph scale / backlight opacity)`, ev.restarts.length === 0 && ev.worst <= 1,
+				`${ev.restarts.length ? 'new loops ' + ev.restarts.join(', ') + '; ' : ''}${ev.valueFails ? ev.valueFails + ' in-window scale/opacity failure' + (ev.valueFails === 1 ? '' : 's') + '; ' : ''}worst ${(ev.worst * 100).toFixed(0)}%${ev.where ? ': ' + ev.where : ''}`);
 			const ph = inPhase(R), nier = look.startsWith('nier');
 			t.log(`${look}: one pulse: ${ph.n} frames with both loops, worst ${ph.worst.toFixed(5)} of a loop${ph.where ? ` (${ph.where})` : ''}`);
 			await t.check(`${look}: one pulse: in every frame the backlight is at the glyph's place in the loop (to 0.002 of a loop)${R.marks.some((m) => m.kind === 'window') ? ', through the onboarding window' : ''}${R.marks.some((m) => m.kind === 'theme') ? ', through a light/dark change' : ''}`,
@@ -538,7 +676,7 @@ export default async function (t) {
 			// sample posted from frame N - 1 can run after frame N, which put the count one sample early; s-5, Basic Dark)
 			const by = (m) => R.rows.find((r, i) => i >= m.i && m.ft != null && r.t > m.ft) || R.rows[R.rows.length - 1];
 			const slow = words.filter((m) => { const p = R.rows[m.i - 1], r = by(m); if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
-			await t.check(`${look}: a word turns the pace to flowing by the next frame`, words.length >= (alone ? 2 : 3) && slow.length === 0, slow.length ? slow.map((m) => `${m.name}: the frame after ${JSON.stringify(by(m).flow)} ${by(m).g && by(m).g.dur}`).join('; ') : `${words.length} words`);
+			await t.check(`${look}: a word turns the pace to flowing by the next frame`, words.length >= (alone ? 2 : 3) && slow.length === 0, slow.length ? slow.map((m) => { const r = by(m); return `${m.name}: the frame after ${JSON.stringify(r.flow)} ${r.g ? r.g.dur : 'could not judge'}`; }).join('; ') : `${words.length} words`);
 			const quiet = R.marks.filter((m) => m.kind === 'quiet');
 			// allowed: `late` ms after 900, plus the time the main thread was held by long tasks after the timer fell due
 			// (R32 H3; the onboarding window's restyle made it 1093 ms in NieR and the check's own 200 ms task 1075 ms)
@@ -546,6 +684,35 @@ export default async function (t) {
 			await t.check(`${look}: 900 ms without a word turns it to waiting (within ${late} ms after, plus any long task after it fell due)`, quiet.length >= 2 && off.length === 0, quiet.map((m) => `${m.name}: ${m.flipMs == null ? 'no change' : m.flipMs + ' ms'}${m.blockedMs ? ` (${m.blockedMs} ms of long tasks after it fell due)` : ''}`).join('; '));
 			const d = R.after.debug || {};
 			await t.check(`${look}: once the run has ended nothing of the chip's is armed`, R.after.ss !== 'stop' && d.quiet === false && d.watching === false && d.pending !== true, JSON.stringify(R.after));
+			if (!alone) {
+				// Fast and Slow on a fresh Working run. The pace above is the one main already judged
+				// (Fast, then Measured). Slow does not fit in it: the demo ends about 33 s after
+				// startWorking, and the chip was idle before the post-Slow window (run-probe1).
+				await home();
+				await parkPointer(t.page, W, H);
+				await t.page.waitForTimeout(1500);
+				const S = await f.evaluate(PACE, { speedOnly: true });
+				for (const e of S.errors) t.log(`${look} speed: ${e}`);
+				await t.check(`${look}: the speed run went through Fast, Slow and back to Measured`, S.errors.length === 0 && S.rows.length > 60, S.errors.join('; ') || `${S.rows.length} frames sampled`);
+				const srows = judge(S, look);
+				const sbad = srows.filter((r) => r.restart || r.ok === false);
+				await t.check(`${look}: Fast, Slow and Measured do not make the loop jump`, srows.length > 0 && sbad.length === 0,
+					sbad.length ? sbad.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}, value ${r.value ?? '-'}/${r.valueBound ?? '-'}`}`).join('; ') : `${srows.length} changes judged`);
+				const sev = everyFrame(S);
+				await t.check(`${look}: in every frame of the speed run, the loop is never made anew and never jumps (hand-over, main-thread place, and glyph scale / backlight opacity)`, sev.restarts.length === 0 && sev.worst <= 1,
+					`${sev.restarts.length ? 'new loops ' + sev.restarts.join(', ') + '; ' : ''}${sev.valueFails ? sev.valueFails + ' in-window scale/opacity failure' + (sev.valueFails === 1 ? '' : 's') + '; ' : ''}worst ${(sev.worst * 100).toFixed(0)}%${sev.where ? ': ' + sev.where : ''}`);
+				const spj = judgeSpeed(S);
+				const missed = spj.bad.some((x) => x.missing);
+				await t.check(`${look}: Animation speed Fast and Slow scale both loops by that speed's factor`, spj.ok,
+					spj.ok ? 'Fast 0.6 and Slow (Cinematic) 1.6 against the unscaled 2200 ms flowing and 3200 ms waiting' : (missed ? 'could not judge: ' : '') + JSON.stringify(spj.bad.slice(0, 6)));
+				const sby = (m) => S.rows.find((r, i) => i >= m.i && m.ft != null && r.t > m.ft) || S.rows[S.rows.length - 1];
+				const swords = S.marks.filter((m) => m.kind === 'word' && m.i > 0 && m.i < S.rows.length);
+				const sslow = swords.filter((m) => { const p = S.rows[m.i - 1], r = sby(m); if (!p.g || !r.g) return true; const want = p.flow === 'waiting' ? p.g.dur * 2200 / 3200 : p.g.dur; return r.flow !== 'flowing' || Math.abs(r.g.dur - want) > 1; });
+				await t.check(`${look}: a word after Fast and after Slow turns the pace to flowing by the next frame`, swords.length >= 2 && sslow.length === 0, sslow.length ? sslow.map((m) => { const r = sby(m); return `${m.name}: the frame after ${JSON.stringify(r.flow)} ${r.g ? r.g.dur : 'could not judge'}`; }).join('; ') : `${swords.length} words`);
+				const squiet = S.marks.filter((m) => m.kind === 'quiet');
+				const soff = squiet.filter((m) => m.flipMs == null || m.flipMs < 880 || m.flipMs > 900 + late + (m.blockedMs || 0));
+				await t.check(`${look}: 900 ms without a word after Fast and after Slow turns it to waiting (within ${late} ms after, plus any long task after it fell due)`, squiet.length >= 2 && soff.length === 0, squiet.map((m) => `${m.name}: ${m.flipMs == null ? 'no change' : m.flipMs + ' ms'}${m.blockedMs ? ` (${m.blockedMs} ms of long tasks after it fell due)` : ''}`).join('; '));
+			}
 			if (!alone && n === 0 && !look.startsWith('nier')) {
 				// a light/dark change mid-run (K3), in a run of its own
 				await home(); await parkPointer(t.page, W, H); await t.page.waitForTimeout(3000);
@@ -559,11 +726,12 @@ export default async function (t) {
 				await t.check(`${look} light/dark: no change makes either loop jump or start anew (the light/dark change, the word and the quiet after it, the change back)`, tr.length > 0 && tb.length === 0,
 					tb.length ? tb.map((r) => `${r.layer} ${r.name}: ${r.restart ? 'a new loop' : `hand-over ${r.hand}/${r.handBound}, place ${r.place ?? 'stale'}/${r.placeBound ?? '-'}`}`).join('; ') : `${tr.length} changes judged`);
 				const te = everyFrame(T);
-				await t.check(`${look} light/dark: in every frame from the light/dark change on, neither loop is made anew or jumps`, te.restarts.length === 0 && te.worst <= 1, `${te.restarts.length ? 'new loops ' + te.restarts.join(', ') + '; ' : ''}worst ${(te.worst * 100).toFixed(0)}%${te.where ? ': ' + te.where : ''}`);
+				await t.check(`${look} light/dark: in every frame from the light/dark change on, neither loop is made anew or jumps (hand-over, place, and glyph scale / backlight opacity)`, te.restarts.length === 0 && te.worst <= 1, `${te.restarts.length ? 'new loops ' + te.restarts.join(', ') + '; ' : ''}${te.valueFails ? te.valueFails + ' in-window scale/opacity failure' + (te.valueFails === 1 ? '' : 's') + '; ' : ''}worst ${(te.worst * 100).toFixed(0)}%${te.where ? ': ' + te.where : ''}`);
 				const tp = inPhase(T);
 				t.log(`${look} light/dark: one pulse: ${tp.n} frames with both loops, worst ${tp.worst.toFixed(5)} of a loop${tp.where ? ` (${tp.where})` : ''}`);
 				await t.check(`${look} light/dark: one pulse: in every frame the backlight is at the glyph's place in the loop (to 0.002 of a loop), through the light/dark change and back`, tp.n > 60 && tp.worst <= 0.002, `${tp.n} frames, worst ${tp.worst.toFixed(4)} of a loop${tp.where ? ` (${tp.where})` : ''}`);
 			}
+			} finally { await restoreMeasured(); }
 		}
 	}
 
