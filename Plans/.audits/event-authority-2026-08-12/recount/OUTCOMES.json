@@ -74,6 +74,10 @@
   {
    "event_type": "discovery.selected",
    "outcome": "registered"
+  },
+  {
+   "event_type": "discovery.unsupported",
+   "outcome": "registered"
   }
  ]
 }
