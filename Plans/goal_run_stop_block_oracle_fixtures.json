@@ -1102,7 +1102,7 @@
           },
           "event_id": "goal_run.stopped.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
           "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
-          "valid": true
+          "valid": false
         },
         {
           "id": "canonical_revision_exponent",
@@ -1116,7 +1116,7 @@
           },
           "event_id": "goal_run.stopped.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
           "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
-          "valid": true
+          "valid": false
         }
       ],
       "source_status_cases": [
@@ -4747,7 +4747,7 @@
           },
           "event_id": "goal_run.blocked.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
           "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
-          "valid": true
+          "valid": false
         },
         {
           "id": "canonical_revision_exponent",
@@ -4761,7 +4761,7 @@
           },
           "event_id": "goal_run.blocked.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
           "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
-          "valid": true
+          "valid": false
         }
       ],
       "source_status_cases": [
