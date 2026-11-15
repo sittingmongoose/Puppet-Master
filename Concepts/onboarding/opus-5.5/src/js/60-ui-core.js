@@ -865,7 +865,10 @@
       prewarmed.add(id);
       const from = S.sess.screen;
       const host = document.createElement('div');
-      host.className = 'o55-prewarm'; host.setAttribute('aria-hidden', 'true'); host.setAttribute('inert', ''); host.setAttribute('data-screen', id);
+      /* (pmed-prepared: Liquid Glass's lens switcher leaves strips under it alone, as it does the editor's prepared sheet; the
+         copied Light / Dark control was adopted once the pre-draw showed it, and its lens drawn in the real window at full
+         strength, a chip at the top of Welcome's pane in Glass for the whole pre-draw, R49-2) */
+      host.className = 'o55-prewarm pmed-prepared'; host.setAttribute('aria-hidden', 'true'); host.setAttribute('inert', ''); host.setAttribute('data-screen', id);
       try { host.innerHTML = def.body(S); } catch (_) { return; }
       host.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
       pane.appendChild(host);
