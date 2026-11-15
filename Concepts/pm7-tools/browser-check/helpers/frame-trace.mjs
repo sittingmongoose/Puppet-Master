@@ -78,6 +78,11 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		if (e.ts < t0) t0 = e.ts;
 		const end = e.ts + (e.dur || 0); if (end > t1) t1 = end;
 	}
+	// The window starts when tracing did (TracingStartedInBrowser), not at the oldest timestamp in the trace: a renderer that
+	// draws rarely (T3's sandbox wrapper around the app's frame) reports a few async begins (PipelineReporter,
+	// BeginImplFrameToSendBeginMainFrame) seconds old, and a 3 s sandbox window read as 21.6 s, every rate about 7 times too
+	// low (lane V, 2026-11-15, Alexis; on the normal surface the two clocks agreed within 10 ms). Busy time is clipped there too.
+	if (started && started.ts > t0 && started.ts < t1) t0 = started.ts;
 	const secs = Math.max(0.001, (t1 - t0) / 1e6);
 	// time under each thread's outermost events: task events nest across categories, so summing them counts twice
 	const byThread = new Map();
@@ -91,7 +96,10 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		for (const [k, a] of per) {
 			a.sort((x, y) => x.ts - y.ts || y.dur - x.dur);
 			let end = -Infinity, sum = 0;
-			for (const e of a) { if (e.ts >= end) { sum += e.dur; end = e.ts + e.dur; } else if (e.ts + e.dur > end) { sum += e.ts + e.dur - end; end = e.ts + e.dur; } }
+			for (const e of a) {
+				const ts = Math.max(e.ts, t0), te = e.ts + e.dur; if (te <= ts) continue;
+				if (ts >= end) { sum += te - ts; end = te; } else if (te > end) { sum += te - end; end = te; }
+			}
 			byThread.set(k, sum);
 		}
 	}
@@ -178,12 +186,12 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	const draws = events.filter((e) => vizKeys.has(e.pid + ':' + e.tid) && e.name === 'Display::DrawAndSwap' && (e.ph === 'X' || e.ph === 'B')).map((e) => e.ts).sort((a, b) => a - b);
 	const gaps = draws.slice(1).map((x, i) => (x - draws[i]) / 1000).sort((a, b) => a - b);
 	const drawDur = events.filter((e) => vizKeys.has(e.pid + ':' + e.tid) && e.name === 'Display::DrawAndSwap' && e.ph === 'X').map((e) => e.dur / 1000).sort((a, b) => a - b);
-	let drawFrames = 0, droppedFrames = 0, beginFrames = 0, animStarted = 0;
+	let drawFrames = 0, droppedFrames = 0, partialFrames = 0, beginFrames = 0, animStarted = 0;
 	const failed = new Map(), animNode = new Map(), composited = new Set();
 	for (const e of events) {
 		if (e.pid === rpid) {
 			if (e.name === 'DrawFrame') drawFrames++;
-			else if (e.name === 'DroppedFrame') droppedFrames++;
+			else if (e.name === 'DroppedFrame') { droppedFrames++; if (e.args?.hasPartialUpdate) partialFrames++; }
 			else if (e.name === 'BeginFrame') beginFrames++;
 		}
 		if (e.name === 'Animation') {
@@ -200,7 +208,8 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	const states = {}; let smooth = 0, smoothDropped = 0;
 	for (const e of events) {
 		if (e.name !== 'PipelineReporter' || (e.ph !== 'b' && e.ph !== 'B')) continue;
-		const rep = e.args?.chrome_frame_reporter; if (!rep) continue;
+		// (Chrome 15x writes the reporter as frame_reporter; older builds as chrome_frame_reporter)
+		const rep = e.args?.frame_reporter || e.args?.chrome_frame_reporter; if (!rep) continue;
 		const s = String(rep.state || '').replace(/^STATE_/, '');
 		states[s] = (states[s] || 0) + 1;
 		if (rep.affects_smoothness) { smooth++; if (s === 'DROPPED') smoothDropped++; }
@@ -223,7 +232,11 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		// DOM events the page's listeners were called for, by type, in the window (Chrome dispatches one only where a listener hears it)
 		dispatched,
 		drawn: { perSec: r1(draws.length / secs), gapP50: r2(q(gaps, 0.5)), gapP95: r2(q(gaps, 0.95)), gapMax: r2(gaps[gaps.length - 1] || 0), drawP50: r2(q(drawDur, 0.5)), drawP95: r2(q(drawDur, 0.95)) },
-		frames: { beginPerSec: r1(beginFrames / secs), drawPerSec: r1(drawFrames / secs), droppedPerSec: r1(droppedFrames / secs) },
+		// droppedPerSec counts every DroppedFrame event, as every table has; of those, partialPerSec went out on time with a
+		// partial update (the compositor's part, a scroll say, was shown; some main-thread change missed the frame) and
+		// fullDroppedPerSec showed nothing new (lane V, 2026-11-15: a composited Usage scroll on Alexis, 238 Hz, 139 partial and
+		// 3 full a second against 59 and 8 for the same scroll on the main thread)
+		frames: { beginPerSec: r1(beginFrames / secs), drawPerSec: r1(drawFrames / secs), droppedPerSec: r1(droppedFrames / secs), partialPerSec: r1(partialFrames / secs), fullDroppedPerSec: r1((droppedFrames - partialFrames) / secs) },
 		notComposited: [...failed].sort((a, b) => b[1] - a[1]).slice(0, 12),
 		animations: { started: animStarted, composited: composited.size },
 		reporter: { states, smooth, smoothDropped },
@@ -288,13 +301,16 @@ export async function traceWindow(cdp, { ms = 3000, during, url, keep, allScript
 	}
 	const complete = new Promise((resolve) => cdp.once('Tracing.tracingComplete', resolve));
 	await cdp.send('Tracing.end');
-	const { stream } = await complete;
+	const done = await complete, { stream } = done;
 	const parts = [];
 	for (;;) { const r = await cdp.send('IO.read', { handle: stream, size: 1 << 22 }); parts.push(r.base64Encoded ? Buffer.from(r.data, 'base64').toString('utf8') : r.data); if (r.eof) break; }
 	await cdp.send('IO.close', { handle: stream });
 	const text = parts.join('');
 	if (keep) (await import('node:fs')).writeFileSync(keep, text);
-	return { at, ...summarise(JSON.parse(text), { url, allScripts }) };
+	// dataLoss: Chrome's own word that the trace buffer filled and events were dropped (lane V, 2026-11-15: two 3 s wheel
+	// windows on Alexis came back with main 6 and 94 ms/s while the board scrolled); a caller that judges a window can
+	// refuse or repeat one that lost data
+	return { at, dataLoss: !!done.dataLossOccurred, ...summarise(JSON.parse(text), { url, allScripts }) };
 }
 
 // The trace's events, parsed, for a caller that measures windows of its own (traceWindow summarises the whole trace).
