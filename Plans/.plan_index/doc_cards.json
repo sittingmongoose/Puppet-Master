@@ -1955,10 +1955,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 144,
+        "False": 145,
         "True": 47
       },
-      "heading_count": 278,
+      "heading_count": 279,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
@@ -2097,6 +2097,7 @@
         "scripts/pm-orchestrator-event-contracts.py",
         "scripts/pm-plans-verify.py",
         "scripts/pm-s3bo-check.py",
+        "scripts/pm-s3bo-sr-expiry-refreeze.py",
         "scripts/pm-s3bo-table-generate.py",
         "scripts/pm-server-command-gap-verify.py",
         "scripts/pm-shared-runtime-command-contracts.py",
@@ -2110,16 +2111,22 @@
         "scripts/pm_memory_archive_events.py",
         "scripts/pm_packet_audit_census.py",
         "scripts/pm_packet_audit_verdicts.py",
+        "scripts/pm_s3bo_ext_sr_applied.py",
+        "scripts/pm_s3bo_ext_sr_corrupt.py",
+        "scripts/pm_s3bo_ext_sr_created.py",
+        "scripts/pm_s3bo_ext_sr_expired.py",
+        "scripts/pm_s3bo_ext_sr_recovery.py",
         "scripts/pm_s3bo_oracles.py",
+        "scripts/pm_s3bo_sr_common.py",
         "tests/fixtures/pm7_shared",
         "tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json",
         "tests/fixtures/usage_gui",
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 14457,
+      "line_count": 14540,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 191,
+      "plan_unit_count": 192,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -2311,7 +2318,8 @@
         "ATS-2203",
         "ATS-2204",
         "ATS-2205",
-        "ATS-2206"
+        "ATS-2206",
+        "ATS-3880"
       ],
       "reasoning_tiers": [
         "high",
@@ -2410,10 +2418,10 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "951249a5c18103ffec316acb995c164c88ef033baf4a657386d8a69fd27a157e",
+      "sha256": "b140983e41f59bafc51aa27672d44777035b279666c99634c6392433287f5003",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 189,
+        "accepted": 190,
         "draft": 1,
         "superseded": 1
       },
@@ -2428,7 +2436,7 @@
         "interface_contract": 6,
         "owner_boundary": 4,
         "owner_contract": 1,
-        "requirement": 71,
+        "requirement": 72,
         "schema_contract": 3,
         "validation_contract": 3,
         "validation_criterion": 33,
@@ -2689,6 +2697,7 @@
         "reports/event-authority-20261105/W3B-oracle-plan.json",
         "reports/event-authority-20261105/W3H-oracle-plan.json",
         "reports/event-authority-20261105/W3I-oracle-plan.json",
+        "reports/event-authority-20261114/depth-c12-sr-families.json",
         "reports/event-authority-20261114/depth-s3b-registered-families.json",
         "reports/event-authority-20261114/depth-s3bo-registered-families.json",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
@@ -20695,7 +20704,7 @@
         "scripts/pm_event_numbers.py",
         "scripts/pm_home_layout_v2_slot_receipt.py"
       ],
-      "line_count": 66802,
+      "line_count": 66804,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 728,
       "plan_unit_ids": [
@@ -21601,7 +21610,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "a1e4528a71b4526ba7e1a9c90b70f3e9e88ff9f9e378db4656df5ec040fddb74",
+      "sha256": "1f938cea7b6add2997e3538afc0fc89e9aa954de41cee8eea0000a9ee38f4f85",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 707,
@@ -24203,7 +24212,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-14T21:22:19Z",
+  "generated_at_utc": "2026-11-15T00:26:28Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -24211,13 +24220,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 4880,
+      "False": 4881,
       "True": 3931
     },
-    "plan_unit_count": 8811,
+    "plan_unit_count": 8812,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 8531,
+      "accepted": 8532,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -24290,7 +24299,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6098,
+      "requirement": 6099,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

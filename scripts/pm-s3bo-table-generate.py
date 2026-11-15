@@ -23,8 +23,7 @@ EXPRESSIONS = {
 
 
 def code_for(row):
-    return {'replay_policy':'replay_only_not_appendable','dedupe_available':'dedupe_unavailable',
-            'request_digest':'idempotency_conflict'}.get(row,row+'_refused')
+    return w.code_for(row)
 
 
 def generate():

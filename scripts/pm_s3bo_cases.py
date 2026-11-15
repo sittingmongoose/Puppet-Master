@@ -9,8 +9,7 @@ import pm_s3bo_oracles as w
 
 
 def code(row):
-    return {'replay_policy':'replay_only_not_appendable','dedupe_available':'dedupe_unavailable',
-            'request_digest':'idempotency_conflict'}.get(row,row+'_refused')
+    return w.code_for(row)
 
 
 def set_path(value, path, replacement):
@@ -341,4 +340,23 @@ def cases():
                     d['resolution_transition']['to_state']=event['payload']['state']
                     negatives.append(dict(id=control['id']+'/'+row,family=value['family'],control=control['id'],target=row,
                                           code=code(row),defect={'source_field':field,'replacement':replacement,'copies':'rebound'},value=altered))
+    # Family-boundary extensions (pm_s3bo_oracles EXTENSION CONTRACT) append
+    # their own complete controls and single-defect negatives after the common
+    # catalogue, so the common witnesses and their guard selections are stable.
+    for ext in w.EXTENSIONS:
+        ext_controls,ext_negatives=ext.cases()
+        controls+=ext_controls;negatives+=ext_negatives
     return controls,negatives
+
+
+def negative(control,row,label,value,defect):
+    """An independently labelled single-source negative of a named control."""
+    return dict(id=control['id']+'/'+label,family=value['family'],control=control['id'],target=row,
+                code=code(row),defect=defect,value=value)
+
+
+def mutate(control,row,path,replacement,label=None):
+    """Copy the control and change exactly one path (extension helper)."""
+    value=copy.deepcopy(control['value'])
+    set_path(value,path,replacement)
+    return negative(control,row,label or row,value,{'path':list(path),'replacement':repr(replacement)[:160]})

@@ -3,8 +3,13 @@
 
 matrix: run every complete control/negative; mutation rows count a kill only
 when the intact checker returns exactly the named guard AND exact code.
-guards: run Method B in a fresh subprocess per <=8-row table, serially.
-run: matrix, boundary batteries, companion schemas and every guard proof.
+guards: run Method B in a fresh subprocess per <=8-row table, serially
+(--tables limits it to table-name prefixes, e.g. --tables sr_).
+batteries: the common boundary number/time batteries.
+corpus: the full shared number/date-time corpus through every family boundary
+owned by an extension (pm_s3bo_oracles EXTENSION CONTRACT).
+evidence: extension-owned extra evidence (for example a pinned package replay).
+run: matrix, batteries, corpus, evidence and the guard proof.
 Use long-job and the run's memory cap; do not run against a live app.
 """
 import argparse
@@ -101,8 +106,8 @@ def guard_table(name,out):
     return 0 if report['status']=='PASS' else 1
 
 
-def summarize(out,exit_code=0):
-    summaries=[json.loads((out/(name+'.summary.json')).read_text()) for name in w.table_names()]
+def summarize(out,exit_code=0,tables=None):
+    summaries=[json.loads((out/(name+'.summary.json')).read_text()) for name in chosen_tables(tables)]
     result={'status':'pass' if not exit_code else 'fail','tables':len(summaries),
             'rows':sum(x['rows'] for x in summaries),'proved':sum(x['proved'] for x in summaries),
             'unproved':[r for x in summaries for r in x['unproved']],
@@ -114,14 +119,26 @@ def summarize(out,exit_code=0):
     return result
 
 
-def guards(out):
+def chosen_tables(spec):
+    """All tables, or those whose name starts with one of the comma-separated prefixes."""
+    names=w.table_names()
+    if not spec:
+        return names
+    prefixes=tuple(x for x in spec.split(',') if x)
+    picked=[n for n in names if n.startswith(prefixes)]
+    if not picked:
+        raise SystemExit('no table matches '+spec)
+    return picked
+
+
+def guards(out,tables=None):
     exit_code=0
-    for name in w.table_names():
+    for name in chosen_tables(tables):
         g.MemoryGate(1800,12,12,30,2700).check()
         code=subprocess.call([sys.executable,'-B',__file__,'table','--name',name,'--out',str(out)])
         exit_code=max(exit_code,code)
         if code:return {'status':'fail','failed_table':name}
-    return summarize(out,exit_code)
+    return summarize(out,exit_code,tables)
 
 
 def batteries(out):
@@ -183,22 +200,200 @@ def batteries(out):
     return result
 
 
+CORPUS_PATH = 'Plans/event_number_recipe_corpus.json'
+U53 = (1<<53)-1
+
+
+def _typed(value):
+    """Decode the corpus's typed-value notation into the Python value it names."""
+    from decimal import Decimal
+    if isinstance(value,dict) and len(value)==1:
+        (tag,text),=value.items()
+        if tag=='@int':return int(text)
+        if tag=='@float':return float(text)
+        if tag=='@decimal':return Decimal(text)
+    return value
+
+
+def number_corpus():
+    """Every shared integer-slot corpus value with the corpus's own domain verdict.
+
+    'accepted' values carry their exact integer; the slot's OWNER bounds are
+    applied afterwards. A corpus refusal that is only a range refusal under the
+    corpus's own bounds is re-decided under the slot's bounds; a type/token
+    refusal refuses at every slot. Raw tokens that are not JSON values
+    (json_syntax) cannot occupy a slot and are listed as not applicable.
+    """
+    corpus=json.loads((w.ROOT/CORPUS_PATH).read_text());values=[];skipped=[]
+    for x in corpus['cases']:
+        op=x['op']
+        if op not in ('slot','integer','uint64','current_json_slot'):continue
+        if op in ('slot','current_json_slot'):
+            if x.get('error')=='json_syntax':
+                skipped.append({'id':x['id'],'reason':'not a JSON value; parser-level, never reaches a slot'});continue
+            try:parsed=w.loads_current_json(x['raw'])
+            except w.Refusal as exc:
+                skipped.append({'id':x['id'],'reason':'parser refusal '+exc.reason});continue
+            if op=='current_json_slot':
+                for key in x['path']:parsed=parsed[key]
+            value=parsed
+        else:
+            value=_typed(x['value'])
+        if 'returns' in x:
+            verdict=('integer',int(x['returns']['@int']))
+        elif x.get('error')=='integer_range':
+            verdict=('integer',value if isinstance(value,int) and not isinstance(value,bool) else int(value))
+        else:
+            verdict=('refused',x.get('error'))
+        values.append({'id':x['id'],'value':value,'verdict':verdict})
+    return values,skipped
+
+
+def datetime_corpus():
+    """Shared date-time corpus values per profile, with the corpus's own verdict."""
+    corpus=json.loads((w.ROOT/CORPUS_PATH).read_text());out={w.EVENT_RECORD:[],w.STORAGE_UTC_Z:[]}
+    for x in corpus['cases']:
+        if x['op']!='datetime':continue
+        profile=x.get('profile')
+        accepted='output' in x
+        if profile is None:
+            out[w.EVENT_RECORD].append({'id':x['id'],'value':x['value'],'accepted':accepted})
+            if not accepted:
+                # A refusal under the broad EventRecord grammar refuses under
+                # the narrower Storage UTC-Z profile too.
+                out[w.STORAGE_UTC_Z].append({'id':x['id'],'value':x['value'],'accepted':False})
+        elif profile==w.STORAGE_UTC_Z:
+            out[w.STORAGE_UTC_Z].append({'id':x['id'],'value':x['value'],'accepted':accepted})
+    return out
+
+
+def _isolated_downstream(value):
+    """Shared physical bytes and RFC 8785 JCS outcome of the one value, alone."""
+    from pm_event_numbers import qualified_jcs
+    if w.caught(w.storage_value_bytes,{'n':value},profile=w.EVENT_VALUE):
+        return ['physical_value']
+    if w.caught(qualified_jcs,{'n':value}):
+        return ['producer_jcs']
+    return []
+
+
+def _expected_number(entry,bounds,row,downstream,container_row=None):
+    kind,detail=entry['verdict'];expected=[]
+    if kind=='refused' and container_row and isinstance(entry['value'],(list,dict)):
+        # A container at an integer slot is refused by the complete owner
+        # schema's type keyword: the number projection enumerates integer leaves.
+        expected.append(container_row)
+    elif kind=='refused':
+        expected.append(row)
+    else:
+        lo,hi=bounds.get('minimum'),bounds.get('maximum')
+        if (lo is not None and detail<lo) or (hi is not None and detail>hi):
+            expected.append(row)
+    if downstream:
+        expected+=_isolated_downstream(entry['value'])
+    return sorted(set(expected))
+
+
+def _base_slots(control):
+    """Common payload integer and envelope/receipt timestamp slots of a control."""
+    value=control['value'];f=value['family']
+    for path,_number,schema in w.integers(value['event']['payload'],w.schema_for(f)):
+        yield {'paths':[('event','payload')+path],'kind':'integer','row':'integer_domain','downstream':True,
+               'container_row':'payload_schema','bounds':{k:schema[k] for k in ('minimum','maximum') if k in schema}}
+    for path,_text in w.timestamps(value['event']):
+        storage=path in [('observed_at_utc',),('persisted_at_utc',)]
+        # A non-string timestamp is refused by the complete schema's type
+        # keyword; the shared date_time call receives string slots only.
+        yield {'paths':[('event',)+path],'kind':'datetime','row':'storage_time' if storage else 'source_time',
+               'profile':w.STORAGE_UTC_Z if storage else w.EVENT_RECORD,
+               'type_rows':['payload_schema' if path[0]=='payload' else 'envelope_schema']}
+    yield {'paths':[('receipt','acknowledged_at_utc')],'kind':'datetime','row':'ack_time','profile':w.EVENT_RECORD,
+           'type_rows':['ack_time','receipt_schema']}
+
+
+def corpus(out):
+    """The full shared number and date-time corpus through every completed family boundary.
+
+    Runs on every control of a family owned by an extension, at the common
+    payload/envelope/receipt slots and at every boundary slot the extension
+    declares. A slot's copies are changed together so that only the slot's own
+    domain predicate (and the shared physical/JCS rule for payload values) can
+    refuse. Expectations come from the corpus verdicts and owner bounds, never
+    from the checker.
+    """
+    controls,_=c.cases();numbers,skipped=number_corpus();times=datetime_corpus()
+    owned={f for ext in w.EXTENSIONS for f in ext.FAMILIES}
+    results=[];inventory=[]
+    for control in controls:
+        base=control['value'];f=base['family']
+        if f not in owned:continue
+        slots=list(_base_slots(control))
+        for ext in w.EXTENSIONS:
+            if f in ext.FAMILIES and hasattr(ext,'corpus_slots'):
+                slots+=list(ext.corpus_slots(control))
+        for slot in slots:
+            inventory.append({'control':control['id'],'paths':[list(p) for p in slot['paths']],'kind':slot['kind'],
+                              'row':slot['row'],'bounds' if slot['kind']=='integer' else 'profile':
+                              slot.get('bounds') if slot['kind']=='integer' else slot['profile']})
+            entries=numbers if slot['kind']=='integer' else times[slot['profile']]
+            for entry in entries:
+                case=copy.deepcopy(base)
+                for path in slot['paths']:
+                    c.set_path(case,path,entry['value'])
+                if slot['kind']=='integer':
+                    expected=_expected_number(entry,slot.get('bounds',{}),slot['row'],slot.get('downstream',False),
+                                              slot.get('container_row'))
+                elif not isinstance(entry['value'],str):
+                    expected=sorted(slot.get('type_rows',[slot['row']]))
+                else:
+                    expected=[] if entry['accepted'] else [slot['row']]
+                errors,_=w.evaluate(case)
+                actual=sorted({row for row,_code in errors})
+                codes_ok=all(code==c.code(row) for row,code in errors)
+                results.append({'control':control['id'],'path':list(slot['paths'][0]),'corpus_id':entry['id'],
+                                'expected':expected,'actual':actual,'pass':actual==expected and codes_ok})
+    result={'status':'pass' if results and all(x['pass'] for x in results) else 'fail',
+            'corpus':CORPUS_PATH,'corpus_sha256':hashlib.sha256((w.ROOT/CORPUS_PATH).read_bytes()).hexdigest(),
+            'families':sorted(owned),'cases':len(results),'passed':sum(x['pass'] for x in results),
+            'number_values':len(numbers),'not_applicable_number_tokens':skipped,
+            'datetime_values':{k:len(v) for k,v in times.items()},
+            'failed':[x for x in results if not x['pass']][:200],'inventory':inventory,'results':results}
+    save(out/'corpus.json',result)
+    return result
+
+
+def extension_evidence(out):
+    results={}
+    for ext in w.EXTENSIONS:
+        if hasattr(ext,'evidence'):
+            results[ext.__name__]=ext.evidence(out)
+    status='pass' if all(r.get('status')=='pass' for r in results.values()) else 'fail'
+    result={'status':status,'extensions':results}
+    save(out/'extension-evidence.json',result)
+    return result
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command',choices=['matrix','guards','table','batteries','run','summarize'])
+    parser.add_argument('command',choices=['matrix','guards','table','batteries','corpus','evidence','run','summarize'])
     parser.add_argument('--out',type=Path,required=True);parser.add_argument('--name')
+    parser.add_argument('--tables',help='guards/summarize: comma-separated table-name prefixes (default: every table)')
     args=parser.parse_args();args.out.mkdir(parents=True,exist_ok=True)
     if args.command=='table':return guard_table(args.name,args.out)
     if args.command=='matrix':result=matrix(args.out)
-    elif args.command=='guards':result=guards(args.out)
+    elif args.command=='guards':result=guards(args.out,args.tables)
     elif args.command=='batteries':result=batteries(args.out)
-    elif args.command=='summarize':result=summarize(args.out)
+    elif args.command=='corpus':result=corpus(args.out)
+    elif args.command=='evidence':result=extension_evidence(args.out)
+    elif args.command=='summarize':result=summarize(args.out,0,args.tables)
     else:
-        m=matrix(args.out);b=batteries(args.out);g_=guards(args.out)
-        result={'status':'pass' if all(r['status']=='pass' for r in (m,b,g_)) else 'fail',
-                'matrix':{k:m[k] for k in ('status','controls','negatives')},
-                'batteries':{k:b[k] for k in ('status','cases','passed')},
-                'guards':{k:g_[k] for k in ('status','tables','rows','proved','unproved','flips','stays')}}
+        m=matrix(args.out);b=batteries(args.out);k=corpus(args.out);e=extension_evidence(args.out);g_=guards(args.out,args.tables)
+        result={'status':'pass' if all(r['status']=='pass' for r in (m,b,k,e,g_)) else 'fail',
+                'matrix':{k_:m[k_] for k_ in ('status','controls','negatives')},
+                'batteries':{k_:b[k_] for k_ in ('status','cases','passed')},
+                'corpus':{k_:k[k_] for k_ in ('status','cases','passed')},
+                'evidence':{'status':e['status']},
+                'guards':{k_:g_[k_] for k_ in ('status','tables','rows','proved','unproved','flips','stays')}}
         save(args.out/'summary.json',result)
     print(json.dumps({k:v for k,v in result.items() if k in ('status','controls','negatives','cases','passed','matrix','batteries','guards')}))
     return 0 if result['status']=='pass' else 1

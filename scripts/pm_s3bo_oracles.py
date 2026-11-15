@@ -204,6 +204,9 @@ def payload(family, project):
         result['user_disclosure_required'] = False
     if family == 'storage.integrity_detected':
         result.update(impact_precision='exact_byte_range', affected_byte_range=[0, 8])
+    for ext in EXTENSIONS:
+        if family in ext.FAMILIES and hasattr(ext,'payload'):
+            ext.payload(result, project)
     return result
 
 
@@ -340,6 +343,9 @@ def build(family, project=None):
         p['receipt_ref'] = 'event_append_receipt_custody.v1:' + STORE + ':' + sha(event['event_id'].encode())
     if family == 'seglog.event_appended':
         p.update(seq=17, type='source.event', event_ref='original-event', segment_ref='segment-A')
+    for ext in EXTENSIONS:
+        if family in ext.FAMILIES and hasattr(ext,'envelope'):
+            ext.envelope(event)
     selection_schema=read_json('Plans/event_record_index_checkpoint.schema.json')
     selection=sample(selection_schema['$defs']['source_selection'],selection_schema)
     token = dict(zip(TOKEN_FIELDS, (STORE, 'event_record_index_checkpoint.v1:' + STORE, 'checkpoint-A',
@@ -394,6 +400,11 @@ def build(family, project=None):
     result['persisted_read_outputs']={}
     result['prior_state']='initial'
     result['restore']['capability_digest']=source['command_digest']
+    # Family-boundary extensions attach their complete boundary record to the
+    # control of each family they own (EXTENSION CONTRACT, hook 'augment').
+    for ext in EXTENSIONS:
+        if family in ext.FAMILIES and hasattr(ext,'augment'):
+            ext.augment(result)
     return result
 
 
@@ -510,7 +521,10 @@ def quarantine_resolution_error(case):
 
 # Each row is ONE invariant. 'error' operands are the complete output of the
 # named shared/full-schema validator, not lane-authored acceptance flags.
-ROWS = [
+# BASE_ROWS is the s3bo common table. Family-boundary rows live in extension
+# modules (see EXTENSION CONTRACT at the end of this file) and are appended to
+# ROWS there, so lanes add disjoint predicates without editing this list.
+BASE_ROWS = [
  ('envelope_schema','schema','error','EventRecord validates under its complete owner schema.'),
  ('payload_schema','schema','error','Payload validates against this exact registered owner schema, all keywords intact.'),
  ('integer_domain','numbers','error','Every schema integer slot uses current_integer with its owner bounds.'),
@@ -610,8 +624,16 @@ ROWS = [
  ('resolution_effect_output','quarantine_delete','equal','The dependent-effect output hash matches the actual captured resolved value bytes.'),
  ('resolution_effect_time','quarantine_delete','error','The original resolution transition time uses the EventRecord date-time profile.'),
 ]
-ROW = {r[0]: r for r in ROWS}
-TABLES = tuple(dict.fromkeys(r[1] for r in ROWS))
+CODES = {'replay_policy':'replay_only_not_appendable','dedupe_available':'dedupe_unavailable',
+         'request_digest':'idempotency_conflict'}
+
+
+def code_for(row):
+    """The one refusal code of a row; shared by the cases and the table generator."""
+    for ext in EXTENSIONS:
+        if row in getattr(ext,'CODES',{}):
+            return ext.CODES[row]
+    return CODES.get(row,row+'_refused')
 
 
 def operands(case):
@@ -805,6 +827,19 @@ def operands(case):
         resolved=disposal['resolution_event'] is not None and error is None
         expected={} if resolved and not held else disposal['raw_before']
         put('quarantine_delete_image',disposal['raw_after'],expected)
+    # Extension operands: only rows the extension declares, only for its own
+    # families, never reading a table result. 'common' carries independently
+    # computed preconditions (never a row verdict).
+    common={'numeric_ok':not any(numeric) and v['storage_sequence']['left'] is None,
+            'physical_ok':physical_ok,'source_count_ready':source_count_ready}
+    for ext in EXTENSIONS:
+        if family in ext.FAMILIES:
+            owned=ext.ROW_NAMES
+            def ext_put(name,left,right=None,applies=True,_owned=owned,_ext=ext):
+                if name not in _owned:
+                    raise KeyError(_ext.__name__+' may not project row '+name)
+                put(name,left,right,applies)
+            ext.operands(case,ext_put,common)
     return v
 
 
@@ -836,3 +871,62 @@ def evaluate(case, cut=None):
             if code is not None:
                 errors.append((row[0],code))
     return errors, values
+
+
+# ---------------------------------------------------------------------------
+# EXTENSION CONTRACT (C12-SR, 2026-11-14). Family-boundary predicates for the
+# s3bo families are added as separate modules, never by editing BASE_ROWS,
+# operands() or pm_s3bo_cases.cases():
+#
+#   scripts/pm_s3bo_ext_<lane>_<topic>.py, discovered here in sorted order.
+#   LANE      'sr' | 'ss' | 'sl' (lane prefix; every row name and every table
+#             group must start with LANE + '_').
+#   FAMILIES  tuple of the event types whose boundary it owns; disjoint
+#             across extensions.
+#   ROWS      [(row, group, kind, invariant)], kinds as BASE_ROWS; tables
+#             are generated per group, eight rows per table.
+#   CODES     optional {row: refusal code}; default row + '_refused'.
+#   payload(payload, project)       optional; fixture values for the
+#             family's sampled payload before the EventRecord is built.
+#   envelope(event)                 optional; owner envelope joins (for
+#             example thread_id) before the stored copies are made.
+#   augment(control)                optional; attach the complete boundary
+#             record to w.build(family) for its FAMILIES.
+#   operands(case, put, common)     project raw operands for its own rows.
+#   cases()   -> (controls, negatives) built with pm_s3bo_cases helpers.
+#   corpus_slots(control)           optional; yields (path, 'integer',
+#             bounds) and (path, 'datetime', profile) for the shared corpus.
+#   evidence(out)                   optional; extra family evidence for the
+#             'run' command (for example a pinned external package replay).
+# The loader below refuses overlapping rows, groups or families.
+# ---------------------------------------------------------------------------
+
+
+def load_extensions():
+    loaded=[];rows=set(r[0] for r in BASE_ROWS);groups=set(r[1] for r in BASE_ROWS);families=set()
+    for path in sorted((ROOT/'scripts').glob('pm_s3bo_ext_*.py')):
+        ext=importlib.import_module(path.stem)
+        prefix=ext.LANE+'_'
+        names=[r[0] for r in ext.ROWS]
+        for row,group,_kind,_text in ext.ROWS:
+            if not row.startswith(prefix) or not group.startswith(prefix):
+                raise ValueError(path.name+': row/group outside lane prefix: '+row)
+            if row in rows:
+                raise ValueError(path.name+': duplicate row '+row)
+            rows.add(row)
+        own_groups={r[1] for r in ext.ROWS}
+        if own_groups & groups:
+            raise ValueError(path.name+': table group already owned: '+str(own_groups & groups))
+        groups |= own_groups
+        if set(ext.FAMILIES) & families:
+            raise ValueError(path.name+': family already owned: '+str(set(ext.FAMILIES) & families))
+        families |= set(ext.FAMILIES)
+        ext.ROW_NAMES=frozenset(names)
+        loaded.append(ext)
+    return tuple(loaded)
+
+
+EXTENSIONS = load_extensions()
+ROWS = BASE_ROWS + [row for ext in EXTENSIONS for row in ext.ROWS]
+ROW = {r[0]: r for r in ROWS}
+TABLES = tuple(dict.fromkeys(r[1] for r in ROWS))

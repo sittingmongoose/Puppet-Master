@@ -8042,6 +8042,7 @@
     "SP-1572",
     "SP-1573",
     "SP-1574",
+    "ATS-3880",
     "CV-520",
     "CV-521",
     "CV-522",
@@ -19491,6 +19492,51 @@
       "edge_type": "depends_on",
       "from": "ATS-380",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3880",
+      "to": "ATS-2202"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3880",
+      "to": "ATS-2203"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3880",
+      "to": "ATS-2204"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3880",
+      "to": "ATS-2206"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3880",
+      "to": "DL-076"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3880",
+      "to": "SP-2202"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3880",
+      "to": "SP-2203"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3880",
+      "to": "SP-2204"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-3880",
+      "to": "SP-275"
     },
     {
       "edge_type": "depends_on",
@@ -142813,7 +142859,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-14T21:22:19Z",
+  "generated_at_utc": "2026-11-15T00:26:28Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -159644,6 +159690,23 @@
       },
       "status": "accepted",
       "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_pnc019_c12_sr",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-3880",
+      "reasoning_tier": "high",
+      "risk_class": "false_event_oracle_closure",
+      "source_location": {
+        "heading": "ATS-3880 - Executable s3bo family boundaries for the restore-point and recovery-unavailable families (C12-SR)",
+        "heading_level": 2,
+        "heading_line": 14459,
+        "line": 14475,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "bitbucket_provider_identity",
@@ -265854,8 +265917,8 @@
       "source_location": {
         "heading": "SP-1130 - Goal update approval original custody",
         "heading_level": 3,
-        "heading_line": 46240,
-        "line": 46242,
+        "heading_line": 46242,
+        "line": 46244,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -265871,8 +265934,8 @@
       "source_location": {
         "heading": "SP-1131 - Goal cancellation unenrolled binding and old Stop migration",
         "heading_level": 3,
-        "heading_line": 46295,
-        "line": 46297,
+        "heading_line": 46297,
+        "line": 46299,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -265888,8 +265951,8 @@
       "source_location": {
         "heading": "SP-1132 - goal.updated original custody and oracle boundary adoption",
         "heading_level": 3,
-        "heading_line": 46358,
-        "line": 46360,
+        "heading_line": 46360,
+        "line": 46362,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -265905,8 +265968,8 @@
       "source_location": {
         "heading": "SP-1133 - goal.cancelled original custody and oracle boundary adoption",
         "heading_level": 3,
-        "heading_line": 46413,
-        "line": 46415,
+        "heading_line": 46415,
+        "line": 46417,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -265922,8 +265985,8 @@
       "source_location": {
         "heading": "SP-1134 - goal_run.started original custody and oracle boundary adoption",
         "heading_level": 3,
-        "heading_line": 46468,
-        "line": 46470,
+        "heading_line": 46470,
+        "line": 46472,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -265939,8 +266002,8 @@
       "source_location": {
         "heading": "SP-1135 - goal_run.cancelled original custody and oracle boundary adoption",
         "heading_level": 3,
-        "heading_line": 46528,
-        "line": 46530,
+        "heading_line": 46530,
+        "line": 46532,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -265956,8 +266019,8 @@
       "source_location": {
         "heading": "SP-1136 - goal_run.certified original custody and oracle boundary adoption",
         "heading_level": 3,
-        "heading_line": 46584,
-        "line": 46586,
+        "heading_line": 46586,
+        "line": 46588,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -265973,8 +266036,8 @@
       "source_location": {
         "heading": "SP-1138 - Explicitly selected GoalRun projection reference successors",
         "heading_level": 3,
-        "heading_line": 46640,
-        "line": 46642,
+        "heading_line": 46642,
+        "line": 46644,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -265990,8 +266053,8 @@
       "source_location": {
         "heading": "SP-1139 - Certified projection bounded reference physical edition",
         "heading_level": 3,
-        "heading_line": 46699,
-        "line": 46701,
+        "heading_line": 46701,
+        "line": 46703,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266126,8 +266189,8 @@
       "source_location": {
         "heading": "SP-1200 - forge.api.compatibility_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 46758,
-        "line": 46760,
+        "heading_line": 46760,
+        "line": 46762,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266143,8 +266206,8 @@
       "source_location": {
         "heading": "SP-1201 - forge.connection.capabilities_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 46950,
-        "line": 46952,
+        "heading_line": 46952,
+        "line": 46954,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266160,8 +266223,8 @@
       "source_location": {
         "heading": "SP-1202 - forge.connection.reauthorized prepared contract",
         "heading_level": 3,
-        "heading_line": 47143,
-        "line": 47145,
+        "heading_line": 47145,
+        "line": 47147,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266177,8 +266240,8 @@
       "source_location": {
         "heading": "SP-1203 - forge.connection.validated prepared contract",
         "heading_level": 3,
-        "heading_line": 47335,
-        "line": 47337,
+        "heading_line": 47337,
+        "line": 47339,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266194,8 +266257,8 @@
       "source_location": {
         "heading": "SP-1204 - forge.mirror.connected prepared contract",
         "heading_level": 3,
-        "heading_line": 47525,
-        "line": 47527,
+        "heading_line": 47527,
+        "line": 47529,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266211,8 +266274,8 @@
       "source_location": {
         "heading": "SP-1205 - forge.mirror.degraded prepared contract",
         "heading_level": 3,
-        "heading_line": 47715,
-        "line": 47717,
+        "heading_line": 47717,
+        "line": 47719,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266228,8 +266291,8 @@
       "source_location": {
         "heading": "SP-1206 - forge.mirror.detached prepared contract",
         "heading_level": 3,
-        "heading_line": 47905,
-        "line": 47907,
+        "heading_line": 47907,
+        "line": 47909,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266245,8 +266308,8 @@
       "source_location": {
         "heading": "SP-1207 - forge.mirror.status_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 48095,
-        "line": 48097,
+        "heading_line": 48097,
+        "line": 48099,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266262,8 +266325,8 @@
       "source_location": {
         "heading": "SP-1208 - forge.mirror.sync_completed prepared contract",
         "heading_level": 3,
-        "heading_line": 48286,
-        "line": 48288,
+        "heading_line": 48288,
+        "line": 48290,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266279,8 +266342,8 @@
       "source_location": {
         "heading": "SP-1209 - forge.mirror.sync_started prepared contract",
         "heading_level": 3,
-        "heading_line": 48477,
-        "line": 48479,
+        "heading_line": 48479,
+        "line": 48481,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266313,8 +266376,8 @@
       "source_location": {
         "heading": "SP-1210 - forge.pipeline.cancelled prepared contract",
         "heading_level": 3,
-        "heading_line": 48667,
-        "line": 48669,
+        "heading_line": 48669,
+        "line": 48671,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266330,8 +266393,8 @@
       "source_location": {
         "heading": "SP-1211 - forge.pipeline.completed prepared contract",
         "heading_level": 3,
-        "heading_line": 48857,
-        "line": 48859,
+        "heading_line": 48859,
+        "line": 48861,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266347,8 +266410,8 @@
       "source_location": {
         "heading": "SP-1212 - forge.pipeline.retried prepared contract",
         "heading_level": 3,
-        "heading_line": 49047,
-        "line": 49049,
+        "heading_line": 49049,
+        "line": 49051,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266364,8 +266427,8 @@
       "source_location": {
         "heading": "SP-1213 - forge.pipeline.started prepared contract",
         "heading_level": 3,
-        "heading_line": 49237,
-        "line": 49239,
+        "heading_line": 49239,
+        "line": 49241,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266381,8 +266444,8 @@
       "source_location": {
         "heading": "SP-1214 - forge.repository.authority_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 49427,
-        "line": 49429,
+        "heading_line": 49429,
+        "line": 49431,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266398,8 +266461,8 @@
       "source_location": {
         "heading": "SP-1215 - forge.repository.created prepared contract",
         "heading_level": 3,
-        "heading_line": 49619,
-        "line": 49621,
+        "heading_line": 49621,
+        "line": 49623,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266415,8 +266478,8 @@
       "source_location": {
         "heading": "SP-1216 - forge.repository.discovered prepared contract",
         "heading_level": 3,
-        "heading_line": 49809,
-        "line": 49811,
+        "heading_line": 49811,
+        "line": 49813,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266432,8 +266495,8 @@
       "source_location": {
         "heading": "SP-1217 - forge.repository.eligibility_changed prepared contract",
         "heading_level": 3,
-        "heading_line": 50000,
-        "line": 50002,
+        "heading_line": 50002,
+        "line": 50004,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266449,8 +266512,8 @@
       "source_location": {
         "heading": "SP-1218 - forge.review.approved prepared contract",
         "heading_level": 3,
-        "heading_line": 50194,
-        "line": 50196,
+        "heading_line": 50196,
+        "line": 50198,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266466,8 +266529,8 @@
       "source_location": {
         "heading": "SP-1219 - forge.review.changes_requested prepared contract",
         "heading_level": 3,
-        "heading_line": 50396,
-        "line": 50398,
+        "heading_line": 50398,
+        "line": 50400,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266500,8 +266563,8 @@
       "source_location": {
         "heading": "SP-1220 - forge.review.closed prepared contract",
         "heading_level": 3,
-        "heading_line": 50599,
-        "line": 50601,
+        "heading_line": 50601,
+        "line": 50603,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266517,8 +266580,8 @@
       "source_location": {
         "heading": "SP-1221 - forge.review.created prepared contract",
         "heading_level": 3,
-        "heading_line": 50789,
-        "line": 50791,
+        "heading_line": 50791,
+        "line": 50793,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266534,8 +266597,8 @@
       "source_location": {
         "heading": "SP-1222 - forge.review.marked_ready prepared contract",
         "heading_level": 3,
-        "heading_line": 50979,
-        "line": 50981,
+        "heading_line": 50981,
+        "line": 50983,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266551,8 +266614,8 @@
       "source_location": {
         "heading": "SP-1223 - forge.review.merged prepared contract",
         "heading_level": 3,
-        "heading_line": 51169,
-        "line": 51171,
+        "heading_line": 51171,
+        "line": 51173,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266568,8 +266631,8 @@
       "source_location": {
         "heading": "SP-1224 - forge.review.reopened prepared contract",
         "heading_level": 3,
-        "heading_line": 51359,
-        "line": 51361,
+        "heading_line": 51361,
+        "line": 51363,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266585,8 +266648,8 @@
       "source_location": {
         "heading": "SP-1225 - forge.review.thread.reopened prepared contract",
         "heading_level": 3,
-        "heading_line": 51549,
-        "line": 51551,
+        "heading_line": 51551,
+        "line": 51553,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266602,8 +266665,8 @@
       "source_location": {
         "heading": "SP-1226 - forge.review.thread.replied prepared contract",
         "heading_level": 3,
-        "heading_line": 51740,
-        "line": 51742,
+        "heading_line": 51742,
+        "line": 51744,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266619,8 +266682,8 @@
       "source_location": {
         "heading": "SP-1227 - forge.review.thread.resolved prepared contract",
         "heading_level": 3,
-        "heading_line": 51931,
-        "line": 51933,
+        "heading_line": 51933,
+        "line": 51935,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266636,8 +266699,8 @@
       "source_location": {
         "heading": "SP-1228 - forge.review.updated prepared contract",
         "heading_level": 3,
-        "heading_line": 52122,
-        "line": 52124,
+        "heading_line": 52124,
+        "line": 52126,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266653,8 +266716,8 @@
       "source_location": {
         "heading": "SP-1229 - forge.review.version_created prepared contract",
         "heading_level": 3,
-        "heading_line": 52312,
-        "line": 52314,
+        "heading_line": 52314,
+        "line": 52316,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266687,8 +266750,8 @@
       "source_location": {
         "heading": "SP-1230 - forge.webhook.delivery_failed prepared contract",
         "heading_level": 3,
-        "heading_line": 52503,
-        "line": 52505,
+        "heading_line": 52505,
+        "line": 52507,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266704,8 +266767,8 @@
       "source_location": {
         "heading": "SP-1231 - forge.webhook.delivery_recovered prepared contract",
         "heading_level": 3,
-        "heading_line": 52695,
-        "line": 52697,
+        "heading_line": 52697,
+        "line": 52699,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266721,8 +266784,8 @@
       "source_location": {
         "heading": "SP-1232 - forge.webhook.received prepared contract",
         "heading_level": 3,
-        "heading_line": 52888,
-        "line": 52890,
+        "heading_line": 52890,
+        "line": 52892,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266738,8 +266801,8 @@
       "source_location": {
         "heading": "SP-1233 - forge.webhook.redelivery_queued prepared contract",
         "heading_level": 3,
-        "heading_line": 53078,
-        "line": 53080,
+        "heading_line": 53080,
+        "line": 53082,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266755,8 +266818,8 @@
       "source_location": {
         "heading": "SP-1234 - forge.webhook.rejected prepared contract",
         "heading_level": 3,
-        "heading_line": 53270,
-        "line": 53272,
+        "heading_line": 53272,
+        "line": 53274,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266806,8 +266869,8 @@
       "source_location": {
         "heading": "SP-1250 — source_control.backend.detected source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 53464,
-        "line": 53466,
+        "heading_line": 53466,
+        "line": 53468,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266823,8 +266886,8 @@
       "source_location": {
         "heading": "SP-1251 — source_control.backend.selected source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 53578,
-        "line": 53580,
+        "heading_line": 53580,
+        "line": 53582,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266840,8 +266903,8 @@
       "source_location": {
         "heading": "SP-1252 — source_control.checkpoint.created source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 53691,
-        "line": 53693,
+        "heading_line": 53693,
+        "line": 53695,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266857,8 +266920,8 @@
       "source_location": {
         "heading": "SP-1253 — source_control.checkpoint.restored source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 53804,
-        "line": 53806,
+        "heading_line": 53806,
+        "line": 53808,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266874,8 +266937,8 @@
       "source_location": {
         "heading": "SP-1254 — source_control.remote.fetch_completed source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 53917,
-        "line": 53919,
+        "heading_line": 53919,
+        "line": 53921,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266891,8 +266954,8 @@
       "source_location": {
         "heading": "SP-1255 — source_control.remote.fetch_started source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 54032,
-        "line": 54034,
+        "heading_line": 54034,
+        "line": 54036,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266908,8 +266971,8 @@
       "source_location": {
         "heading": "SP-1256 — source_control.remote.publish_completed source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 54146,
-        "line": 54148,
+        "heading_line": 54148,
+        "line": 54150,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266925,8 +266988,8 @@
       "source_location": {
         "heading": "SP-1257 — source_control.remote.publish_started source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 54261,
-        "line": 54263,
+        "heading_line": 54263,
+        "line": 54265,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266942,8 +267005,8 @@
       "source_location": {
         "heading": "SP-1258 — source_control.remote.sync_completed source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 54376,
-        "line": 54378,
+        "heading_line": 54378,
+        "line": 54380,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266959,8 +267022,8 @@
       "source_location": {
         "heading": "SP-1259 — source_control.remote.sync_started source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 54490,
-        "line": 54492,
+        "heading_line": 54492,
+        "line": 54494,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -266993,8 +267056,8 @@
       "source_location": {
         "heading": "SP-1260 — source_control.repository.bound source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 54604,
-        "line": 54606,
+        "heading_line": 54606,
+        "line": 54608,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267010,8 +267073,8 @@
       "source_location": {
         "heading": "SP-1261 — source_control.repository.unbound source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 54717,
-        "line": 54719,
+        "heading_line": 54719,
+        "line": 54721,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267027,8 +267090,8 @@
       "source_location": {
         "heading": "SP-1262 — source_control.status.refreshed source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 54830,
-        "line": 54832,
+        "heading_line": 54832,
+        "line": 54834,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267044,8 +267107,8 @@
       "source_location": {
         "heading": "SP-1263 — source_control.workspace.created source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 54944,
-        "line": 54946,
+        "heading_line": 54946,
+        "line": 54948,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267061,8 +267124,8 @@
       "source_location": {
         "heading": "SP-1264 — source_control.workspace.opened source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 55057,
-        "line": 55059,
+        "heading_line": 55059,
+        "line": 55061,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267078,8 +267141,8 @@
       "source_location": {
         "heading": "SP-1265 — source_control.workspace.removed source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 55171,
-        "line": 55173,
+        "heading_line": 55173,
+        "line": 55175,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267095,8 +267158,8 @@
       "source_location": {
         "heading": "SP-1266 — source_control.workspace.switched source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 55284,
-        "line": 55286,
+        "heading_line": 55286,
+        "line": 55288,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267112,8 +267175,8 @@
       "source_location": {
         "heading": "SP-1267 — source_control.writer_lease.granted source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 55398,
-        "line": 55400,
+        "heading_line": 55400,
+        "line": 55402,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267129,8 +267192,8 @@
       "source_location": {
         "heading": "SP-1268 — source_control.writer_lease.lost source custody and filtered checkpoint",
         "heading_level": 3,
-        "heading_line": 55511,
-        "line": 55513,
+        "heading_line": 55513,
+        "line": 55515,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267214,8 +267277,8 @@
       "source_location": {
         "heading": "SP-1300 - artifacts.capture_provenance.inspected storage and reader binding",
         "heading_level": 3,
-        "heading_line": 55630,
-        "line": 55632,
+        "heading_line": 55632,
+        "line": 55634,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267231,8 +267294,8 @@
       "source_location": {
         "heading": "SP-1301 - artifacts.demonstration_video.created storage and reader binding",
         "heading_level": 3,
-        "heading_line": 55788,
-        "line": 55790,
+        "heading_line": 55790,
+        "line": 55792,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267248,8 +267311,8 @@
       "source_location": {
         "heading": "SP-1302 - artifacts.demonstration_video.failed storage and reader binding",
         "heading_level": 3,
-        "heading_line": 55943,
-        "line": 55945,
+        "heading_line": 55945,
+        "line": 55947,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267265,8 +267328,8 @@
       "source_location": {
         "heading": "SP-1303 - testing.capture.bookmarked storage and reader binding",
         "heading_level": 3,
-        "heading_line": 56101,
-        "line": 56103,
+        "heading_line": 56103,
+        "line": 56105,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267282,8 +267345,8 @@
       "source_location": {
         "heading": "SP-1304 - testing.capture.clip_saved storage and reader binding",
         "heading_level": 3,
-        "heading_line": 56258,
-        "line": 56260,
+        "heading_line": 56260,
+        "line": 56262,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267299,8 +267362,8 @@
       "source_location": {
         "heading": "SP-1305 - testing.capture.effective_quality_changed storage and reader binding",
         "heading_level": 3,
-        "heading_line": 56413,
-        "line": 56415,
+        "heading_line": 56415,
+        "line": 56417,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267316,8 +267379,8 @@
       "source_location": {
         "heading": "SP-1306 - testing.capture.health_degraded storage and reader binding",
         "heading_level": 3,
-        "heading_line": 56571,
-        "line": 56573,
+        "heading_line": 56573,
+        "line": 56575,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267333,8 +267396,8 @@
       "source_location": {
         "heading": "SP-1307 - testing.capture.health_recovered storage and reader binding",
         "heading_level": 3,
-        "heading_line": 56729,
-        "line": 56731,
+        "heading_line": 56731,
+        "line": 56733,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267350,8 +267413,8 @@
       "source_location": {
         "heading": "SP-1308 - testing.capture.interrupted storage and reader binding",
         "heading_level": 3,
-        "heading_line": 56887,
-        "line": 56889,
+        "heading_line": 56889,
+        "line": 56891,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267367,8 +267430,8 @@
       "source_location": {
         "heading": "SP-1309 - testing.capture.paused storage and reader binding",
         "heading_level": 3,
-        "heading_line": 57045,
-        "line": 57047,
+        "heading_line": 57047,
+        "line": 57049,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267401,8 +267464,8 @@
       "source_location": {
         "heading": "SP-1310 - testing.capture.provenance_rejected storage and reader binding",
         "heading_level": 3,
-        "heading_line": 57203,
-        "line": 57205,
+        "heading_line": 57205,
+        "line": 57207,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267418,8 +267481,8 @@
       "source_location": {
         "heading": "SP-1311 - testing.capture.provenance_verified storage and reader binding",
         "heading_level": 3,
-        "heading_line": 57358,
-        "line": 57360,
+        "heading_line": 57360,
+        "line": 57362,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267435,8 +267498,8 @@
       "source_location": {
         "heading": "SP-1312 - testing.capture.redaction_applied storage and reader binding",
         "heading_level": 3,
-        "heading_line": 57513,
-        "line": 57515,
+        "heading_line": 57515,
+        "line": 57517,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267452,8 +267515,8 @@
       "source_location": {
         "heading": "SP-1313 - testing.capture.resumed storage and reader binding",
         "heading_level": 3,
-        "heading_line": 57668,
-        "line": 57670,
+        "heading_line": 57670,
+        "line": 57672,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267469,8 +267532,8 @@
       "source_location": {
         "heading": "SP-1314 - testing.capture.segment_corrupt storage and reader binding",
         "heading_level": 3,
-        "heading_line": 57826,
-        "line": 57828,
+        "heading_line": 57828,
+        "line": 57830,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267486,8 +267549,8 @@
       "source_location": {
         "heading": "SP-1315 - testing.capture.segment_finalized storage and reader binding",
         "heading_level": 3,
-        "heading_line": 57984,
-        "line": 57986,
+        "heading_line": 57986,
+        "line": 57988,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267503,8 +267566,8 @@
       "source_location": {
         "heading": "SP-1316 - testing.capture.segment_recovered storage and reader binding",
         "heading_level": 3,
-        "heading_line": 58139,
-        "line": 58141,
+        "heading_line": 58141,
+        "line": 58143,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267520,8 +267583,8 @@
       "source_location": {
         "heading": "SP-1317 - testing.capture.started storage and reader binding",
         "heading_level": 3,
-        "heading_line": 58294,
-        "line": 58296,
+        "heading_line": 58296,
+        "line": 58298,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267537,8 +267600,8 @@
       "source_location": {
         "heading": "SP-1318 - testing.capture.stopped storage and reader binding",
         "heading_level": 3,
-        "heading_line": 58452,
-        "line": 58454,
+        "heading_line": 58454,
+        "line": 58456,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267554,8 +267617,8 @@
       "source_location": {
         "heading": "SP-1319 - testing.capture.target_changed storage and reader binding",
         "heading_level": 3,
-        "heading_line": 58610,
-        "line": 58612,
+        "heading_line": 58612,
+        "line": 58614,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267588,8 +267651,8 @@
       "source_location": {
         "heading": "SP-1320 - testing.runtime_enabled_for_adapter storage and reader binding",
         "heading_level": 3,
-        "heading_line": 58767,
-        "line": 58769,
+        "heading_line": 58769,
+        "line": 58771,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -267656,8 +267719,8 @@
       "source_location": {
         "heading": "SP-1350 - bsd.advice_emitted candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 65761,
-        "line": 65763,
+        "heading_line": 65763,
+        "line": 65765,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267673,8 +267736,8 @@
       "source_location": {
         "heading": "SP-1351 - bsd.assignment_paused candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 65823,
-        "line": 65825,
+        "heading_line": 65825,
+        "line": 65827,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267690,8 +267753,8 @@
       "source_location": {
         "heading": "SP-1352 - bsd.assignment_resumed candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 65885,
-        "line": 65887,
+        "heading_line": 65887,
+        "line": 65889,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267707,8 +267770,8 @@
       "source_location": {
         "heading": "SP-1353 - bsd.assignment_started candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 65947,
-        "line": 65949,
+        "heading_line": 65949,
+        "line": 65951,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267724,8 +267787,8 @@
       "source_location": {
         "heading": "SP-1354 - bsd.assignment_stopped candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66009,
-        "line": 66011,
+        "heading_line": 66011,
+        "line": 66013,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267741,8 +267804,8 @@
       "source_location": {
         "heading": "SP-1355 - bsd.finding_cleared candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66071,
-        "line": 66073,
+        "heading_line": 66073,
+        "line": 66075,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267758,8 +267821,8 @@
       "source_location": {
         "heading": "SP-1356 - bsd.finding_held candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66133,
-        "line": 66135,
+        "heading_line": 66135,
+        "line": 66137,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267775,8 +267838,8 @@
       "source_location": {
         "heading": "SP-1357 - bsd.finding_reconfirmed candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66195,
-        "line": 66197,
+        "heading_line": 66197,
+        "line": 66199,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267792,8 +267855,8 @@
       "source_location": {
         "heading": "SP-1358 - bsd.finding_suppressed candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66257,
-        "line": 66259,
+        "heading_line": 66259,
+        "line": 66261,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267809,8 +267872,8 @@
       "source_location": {
         "heading": "SP-1359 - bsd.output_quarantined candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66319,
-        "line": 66321,
+        "heading_line": 66321,
+        "line": 66323,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267843,8 +267906,8 @@
       "source_location": {
         "heading": "SP-1360 - bsd.policy_changed candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66381,
-        "line": 66383,
+        "heading_line": 66383,
+        "line": 66385,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267860,8 +267923,8 @@
       "source_location": {
         "heading": "SP-1361 - bsd.review_failed candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66443,
-        "line": 66445,
+        "heading_line": 66445,
+        "line": 66447,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267877,8 +267940,8 @@
       "source_location": {
         "heading": "SP-1362 - bsd.review_started candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66505,
-        "line": 66507,
+        "heading_line": 66507,
+        "line": 66509,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267894,8 +267957,8 @@
       "source_location": {
         "heading": "SP-1363 - bsd.review_timed_out candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66568,
-        "line": 66570,
+        "heading_line": 66570,
+        "line": 66572,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267911,8 +267974,8 @@
       "source_location": {
         "heading": "SP-1364 - bsd.workflow_binding_created candidate Storage custody",
         "heading_level": 3,
-        "heading_line": 66630,
-        "line": 66632,
+        "heading_line": 66632,
+        "line": 66634,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -267928,8 +267991,8 @@
       "source_location": {
         "heading": "SP-1365 - Pending BSD original lifecycle source graph",
         "heading_level": 3,
-        "heading_line": 66692,
-        "line": 66694,
+        "heading_line": 66694,
+        "line": 66696,
         "path": "Plans/storage-plan.md"
       },
       "status": "draft",
@@ -268013,8 +268076,8 @@
       "source_location": {
         "heading": "SP-1400 - backup.destination_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 58917,
-        "line": 58919,
+        "heading_line": 58919,
+        "line": 58921,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268030,8 +268093,8 @@
       "source_location": {
         "heading": "SP-1401 - backup.state_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59004,
-        "line": 59006,
+        "heading_line": 59006,
+        "line": 59008,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268047,8 +268110,8 @@
       "source_location": {
         "heading": "SP-1402 - remote_access.private_endpoint_state_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59093,
-        "line": 59095,
+        "heading_line": 59095,
+        "line": 59097,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268064,8 +268127,8 @@
       "source_location": {
         "heading": "SP-1403 - remote_access.proxy_state_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59182,
-        "line": 59184,
+        "heading_line": 59184,
+        "line": 59186,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268081,8 +268144,8 @@
       "source_location": {
         "heading": "SP-1404 - remote_access.public_security_violation_detected source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59270,
-        "line": 59272,
+        "heading_line": 59272,
+        "line": 59274,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268098,8 +268161,8 @@
       "source_location": {
         "heading": "SP-1405 - remote_access.remote_link_state_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59360,
-        "line": 59362,
+        "heading_line": 59362,
+        "line": 59364,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268115,8 +268178,8 @@
       "source_location": {
         "heading": "SP-1406 - remote_access.route_migration_state_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59449,
-        "line": 59451,
+        "heading_line": 59451,
+        "line": 59453,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268132,8 +268195,8 @@
       "source_location": {
         "heading": "SP-1407 - remote_access.route_preference_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59538,
-        "line": 59540,
+        "heading_line": 59540,
+        "line": 59542,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268149,8 +268212,8 @@
       "source_location": {
         "heading": "SP-1408 - remote_access.route_state_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59627,
-        "line": 59629,
+        "heading_line": 59629,
+        "line": 59631,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268166,8 +268229,8 @@
       "source_location": {
         "heading": "SP-1409 - remote_access.route_test_completed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59715,
-        "line": 59717,
+        "heading_line": 59717,
+        "line": 59719,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268200,8 +268263,8 @@
       "source_location": {
         "heading": "SP-1410 - restore.state_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59803,
-        "line": 59805,
+        "heading_line": 59805,
+        "line": 59807,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268217,8 +268280,8 @@
       "source_location": {
         "heading": "SP-1411 - server.catalog_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59892,
-        "line": 59894,
+        "heading_line": 59894,
+        "line": 59896,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268234,8 +268297,8 @@
       "source_location": {
         "heading": "SP-1412 - server.client_pairing_state_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 59979,
-        "line": 59981,
+        "heading_line": 59981,
+        "line": 59983,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268251,8 +268314,8 @@
       "source_location": {
         "heading": "SP-1413 - server.client_revoked source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 60067,
-        "line": 60069,
+        "heading_line": 60069,
+        "line": 60071,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268268,8 +268331,8 @@
       "source_location": {
         "heading": "SP-1414 - server.client_trust_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 60154,
-        "line": 60156,
+        "heading_line": 60156,
+        "line": 60158,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268285,8 +268348,8 @@
       "source_location": {
         "heading": "SP-1415 - server.connection_state_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 60241,
-        "line": 60243,
+        "heading_line": 60243,
+        "line": 60245,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268302,8 +268365,8 @@
       "source_location": {
         "heading": "SP-1416 - server.discovery_expired source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 60329,
-        "line": 60331,
+        "heading_line": 60331,
+        "line": 60333,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268319,8 +268382,8 @@
       "source_location": {
         "heading": "SP-1417 - server.discovery_observed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 60416,
-        "line": 60418,
+        "heading_line": 60418,
+        "line": 60420,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268336,8 +268399,8 @@
       "source_location": {
         "heading": "SP-1418 - server.endpoint_changed source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 60503,
-        "line": 60505,
+        "heading_line": 60505,
+        "line": 60507,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268353,8 +268416,8 @@
       "source_location": {
         "heading": "SP-1419 - server.identity_mismatch_detected source and filtered history custody",
         "heading_level": 3,
-        "heading_line": 60590,
-        "line": 60592,
+        "heading_line": 60592,
+        "line": 60594,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268438,8 +268501,8 @@
       "source_location": {
         "heading": "SP-1450 - autonomy.ceiling_checked Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 60683,
-        "line": 60685,
+        "heading_line": 60685,
+        "line": 60687,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268455,8 +268518,8 @@
       "source_location": {
         "heading": "SP-1451 - discovery.backpressure Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 60766,
-        "line": 60768,
+        "heading_line": 60768,
+        "line": 60770,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268472,8 +268535,8 @@
       "source_location": {
         "heading": "SP-1452 - discovery.candidates_returned Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 60829,
-        "line": 60831,
+        "heading_line": 60831,
+        "line": 60833,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268489,8 +268552,8 @@
       "source_location": {
         "heading": "SP-1453 - discovery.disabled Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 60892,
-        "line": 60894,
+        "heading_line": 60894,
+        "line": 60896,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268506,8 +268569,8 @@
       "source_location": {
         "heading": "SP-1454 - discovery.fallback Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 60955,
-        "line": 60957,
+        "heading_line": 60957,
+        "line": 60959,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268523,8 +268586,8 @@
       "source_location": {
         "heading": "SP-1455 - discovery.invoked Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 61018,
-        "line": 61020,
+        "heading_line": 61020,
+        "line": 61022,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268540,8 +268603,8 @@
       "source_location": {
         "heading": "SP-1456 - discovery.selected Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 61081,
-        "line": 61083,
+        "heading_line": 61083,
+        "line": 61085,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268557,8 +268620,8 @@
       "source_location": {
         "heading": "SP-1457 - discovery.unsupported Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 61144,
-        "line": 61146,
+        "heading_line": 61146,
+        "line": 61148,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268574,8 +268637,8 @@
       "source_location": {
         "heading": "SP-1458 - discovery.verified Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 61207,
-        "line": 61209,
+        "heading_line": 61209,
+        "line": 61211,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268591,8 +268654,8 @@
       "source_location": {
         "heading": "SP-1459 - planning.question_budget_exhausted Operating Reader And Storage Contract",
         "heading_level": 3,
-        "heading_line": 61586,
-        "line": 61588,
+        "heading_line": 61588,
+        "line": 61590,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268625,8 +268688,8 @@
       "source_location": {
         "heading": "SP-1460 - run.graph_canonical_locked Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 61270,
-        "line": 61272,
+        "heading_line": 61272,
+        "line": 61274,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268642,8 +268705,8 @@
       "source_location": {
         "heading": "SP-1461 - session_prompt.admitted Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 61333,
-        "line": 61335,
+        "heading_line": 61335,
+        "line": 61337,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268659,8 +268722,8 @@
       "source_location": {
         "heading": "SP-1462 - session_prompt.cancelled Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 61396,
-        "line": 61398,
+        "heading_line": 61398,
+        "line": 61400,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268676,8 +268739,8 @@
       "source_location": {
         "heading": "SP-1463 - session_prompt.expired Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 61459,
-        "line": 61461,
+        "heading_line": 61461,
+        "line": 61463,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268693,8 +268756,8 @@
       "source_location": {
         "heading": "SP-1464 - session_prompt.rejected Reader And Storage Adoption",
         "heading_level": 3,
-        "heading_line": 61522,
-        "line": 61524,
+        "heading_line": 61524,
+        "line": 61526,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268778,8 +268841,8 @@
       "source_location": {
         "heading": "SP-1500 - assistant_plan.build_started: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 61650,
-        "line": 61652,
+        "heading_line": 61652,
+        "line": 61654,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268795,8 +268858,8 @@
       "source_location": {
         "heading": "SP-1501 - assistant_plan.cancelled: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 61732,
-        "line": 61734,
+        "heading_line": 61734,
+        "line": 61736,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268812,8 +268875,8 @@
       "source_location": {
         "heading": "SP-1502 - assistant_plan.completed: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 61818,
-        "line": 61820,
+        "heading_line": 61820,
+        "line": 61822,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268829,8 +268892,8 @@
       "source_location": {
         "heading": "SP-1503 - assistant_plan.created: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 61900,
-        "line": 61902,
+        "heading_line": 61902,
+        "line": 61904,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268846,8 +268909,8 @@
       "source_location": {
         "heading": "SP-1504 - assistant_plan.exported: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 61985,
-        "line": 61987,
+        "heading_line": 61987,
+        "line": 61989,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268863,8 +268926,8 @@
       "source_location": {
         "heading": "SP-1505 - assistant_plan.version_created: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62068,
-        "line": 62070,
+        "heading_line": 62070,
+        "line": 62072,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268880,8 +268943,8 @@
       "source_location": {
         "heading": "SP-1506 - assistant_plan.wizard_handoff_created: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62153,
-        "line": 62155,
+        "heading_line": 62155,
+        "line": 62157,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268897,8 +268960,8 @@
       "source_location": {
         "heading": "SP-1507 - external_research.budget_denied: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62237,
-        "line": 62239,
+        "heading_line": 62239,
+        "line": 62241,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268914,8 +268977,8 @@
       "source_location": {
         "heading": "SP-1508 - external_research.finding_classified: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62321,
-        "line": 62323,
+        "heading_line": 62323,
+        "line": 62325,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268931,8 +268994,8 @@
       "source_location": {
         "heading": "SP-1509 - external_research.job_terminal: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62403,
-        "line": 62405,
+        "heading_line": 62405,
+        "line": 62407,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268965,8 +269028,8 @@
       "source_location": {
         "heading": "SP-1510 - external_research.packet_delivered: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62488,
-        "line": 62490,
+        "heading_line": 62490,
+        "line": 62492,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268982,8 +269045,8 @@
       "source_location": {
         "heading": "SP-1511 - external_research.topic_started: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62571,
-        "line": 62573,
+        "heading_line": 62573,
+        "line": 62575,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -268999,8 +269062,8 @@
       "source_location": {
         "heading": "SP-1512 - goal.paused: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62654,
-        "line": 62656,
+        "heading_line": 62656,
+        "line": 62658,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269016,8 +269079,8 @@
       "source_location": {
         "heading": "SP-1513 - goal.resumed: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62741,
-        "line": 62743,
+        "heading_line": 62743,
+        "line": 62745,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269033,8 +269096,8 @@
       "source_location": {
         "heading": "SP-1514 - notebook.checkpoint_committed: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62828,
-        "line": 62830,
+        "heading_line": 62830,
+        "line": 62832,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269050,8 +269113,8 @@
       "source_location": {
         "heading": "SP-1515 - notebook.checkpoint_failed: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62912,
-        "line": 62914,
+        "heading_line": 62914,
+        "line": 62916,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269067,8 +269130,8 @@
       "source_location": {
         "heading": "SP-1516 - notebook.entry_committed: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 62999,
-        "line": 63001,
+        "heading_line": 63001,
+        "line": 63003,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269084,8 +269147,8 @@
       "source_location": {
         "heading": "SP-1517 - notebook.entry_superseded: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 63082,
-        "line": 63084,
+        "heading_line": 63084,
+        "line": 63086,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269101,8 +269164,8 @@
       "source_location": {
         "heading": "SP-1518 - notebook.transition_state_changed: Storage adoption and value reuse",
         "heading_level": 3,
-        "heading_line": 63165,
-        "line": 63167,
+        "heading_line": 63167,
+        "line": 63169,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269186,8 +269249,8 @@
       "source_location": {
         "heading": "SP-1550 — `assistant_plan.schedule_invalidated` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63246,
-        "line": 63248,
+        "heading_line": 63248,
+        "line": 63250,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269203,8 +269266,8 @@
       "source_location": {
         "heading": "SP-1551 — `docker.compose.scenario.deleted` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63316,
-        "line": 63318,
+        "heading_line": 63318,
+        "line": 63320,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269220,8 +269283,8 @@
       "source_location": {
         "heading": "SP-1552 — `docker.compose.scenario.edited` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63386,
-        "line": 63388,
+        "heading_line": 63388,
+        "line": 63390,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269237,8 +269300,8 @@
       "source_location": {
         "heading": "SP-1553 — `docker.compose.scenario.run` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63456,
-        "line": 63458,
+        "heading_line": 63458,
+        "line": 63460,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269254,8 +269317,8 @@
       "source_location": {
         "heading": "SP-1554 — `docker.compose.scenario.saved` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63526,
-        "line": 63528,
+        "heading_line": 63528,
+        "line": 63530,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269271,8 +269334,8 @@
       "source_location": {
         "heading": "SP-1555 — `execution_window.created` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63596,
-        "line": 63598,
+        "heading_line": 63598,
+        "line": 63600,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269288,8 +269351,8 @@
       "source_location": {
         "heading": "SP-1556 — `execution_window.invalidated` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63666,
-        "line": 63668,
+        "heading_line": 63668,
+        "line": 63670,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269305,8 +269368,8 @@
       "source_location": {
         "heading": "SP-1557 — `execution_window.updated` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63736,
-        "line": 63738,
+        "heading_line": 63738,
+        "line": 63740,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269322,8 +269385,8 @@
       "source_location": {
         "heading": "SP-1558 — `goal.continuation_evaluated` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63806,
-        "line": 63808,
+        "heading_line": 63808,
+        "line": 63810,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269339,8 +269402,8 @@
       "source_location": {
         "heading": "SP-1559 — `named_plan.archived` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63876,
-        "line": 63878,
+        "heading_line": 63878,
+        "line": 63880,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269373,8 +269436,8 @@
       "source_location": {
         "heading": "SP-1560 — `named_plan.child_refs_changed` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 63946,
-        "line": 63948,
+        "heading_line": 63948,
+        "line": 63950,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269390,8 +269453,8 @@
       "source_location": {
         "heading": "SP-1561 — `named_plan.created` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64016,
-        "line": 64018,
+        "heading_line": 64018,
+        "line": 64020,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269407,8 +269470,8 @@
       "source_location": {
         "heading": "SP-1562 — `named_plan.priority_changed` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64086,
-        "line": 64088,
+        "heading_line": 64088,
+        "line": 64090,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269424,8 +269487,8 @@
       "source_location": {
         "heading": "SP-1563 — `named_plan.renamed` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64156,
-        "line": 64158,
+        "heading_line": 64158,
+        "line": 64160,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269441,8 +269504,8 @@
       "source_location": {
         "heading": "SP-1564 — `named_plan.restored` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64226,
-        "line": 64228,
+        "heading_line": 64228,
+        "line": 64230,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269458,8 +269521,8 @@
       "source_location": {
         "heading": "SP-1565 — `runtime.automation_pause_changed` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64296,
-        "line": 64298,
+        "heading_line": 64298,
+        "line": 64300,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269475,8 +269538,8 @@
       "source_location": {
         "heading": "SP-1566 — `runtime.quota_resume_attempted` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64366,
-        "line": 64368,
+        "heading_line": 64368,
+        "line": 64370,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269492,8 +269555,8 @@
       "source_location": {
         "heading": "SP-1567 — `runtime.quota_resume_consent_changed` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64436,
-        "line": 64438,
+        "heading_line": 64438,
+        "line": 64440,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269509,8 +269572,8 @@
       "source_location": {
         "heading": "SP-1568 — `runtime.quota_wait_started` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64506,
-        "line": 64508,
+        "heading_line": 64508,
+        "line": 64510,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269526,8 +269589,8 @@
       "source_location": {
         "heading": "SP-1569 — `scheduled_dispatch.cancelled` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64576,
-        "line": 64578,
+        "heading_line": 64578,
+        "line": 64580,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269560,8 +269623,8 @@
       "source_location": {
         "heading": "SP-1570 — `scheduled_dispatch.created` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64646,
-        "line": 64648,
+        "heading_line": 64648,
+        "line": 64650,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269577,8 +269640,8 @@
       "source_location": {
         "heading": "SP-1571 — `scheduled_dispatch.dispatched` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64716,
-        "line": 64718,
+        "heading_line": 64718,
+        "line": 64720,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269594,8 +269657,8 @@
       "source_location": {
         "heading": "SP-1572 — `scheduled_dispatch.failed` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64786,
-        "line": 64788,
+        "heading_line": 64788,
+        "line": 64790,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269611,8 +269674,8 @@
       "source_location": {
         "heading": "SP-1573 — `scheduled_dispatch.held` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64856,
-        "line": 64858,
+        "heading_line": 64858,
+        "line": 64860,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269628,8 +269691,8 @@
       "source_location": {
         "heading": "SP-1574 — `scheduled_dispatch.updated` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64926,
-        "line": 64928,
+        "heading_line": 64928,
+        "line": 64930,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269645,8 +269708,8 @@
       "source_location": {
         "heading": "SP-1575 — `todo.created` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 64996,
-        "line": 64998,
+        "heading_line": 64998,
+        "line": 65000,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269662,8 +269725,8 @@
       "source_location": {
         "heading": "SP-1576 — `todo.dependency_changed` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 65066,
-        "line": 65068,
+        "heading_line": 65068,
+        "line": 65070,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269679,8 +269742,8 @@
       "source_location": {
         "heading": "SP-1577 — `todo.removed_from_current_list` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 65136,
-        "line": 65138,
+        "heading_line": 65138,
+        "line": 65140,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269696,8 +269759,8 @@
       "source_location": {
         "heading": "SP-1578 — `todo.reordered` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 65206,
-        "line": 65208,
+        "heading_line": 65208,
+        "line": 65210,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269713,8 +269776,8 @@
       "source_location": {
         "heading": "SP-1579 — `todo.status_changed` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 65276,
-        "line": 65278,
+        "heading_line": 65278,
+        "line": 65280,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269747,8 +269810,8 @@
       "source_location": {
         "heading": "SP-1580 — `todo.updated` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 65346,
-        "line": 65348,
+        "heading_line": 65348,
+        "line": 65350,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269764,8 +269827,8 @@
       "source_location": {
         "heading": "SP-1581 — `todo.work_bound` publication, retention and reader (newly authored, no admission)",
         "heading_level": 2,
-        "heading_line": 65416,
-        "line": 65418,
+        "heading_line": 65418,
+        "line": 65420,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269815,8 +269878,8 @@
       "source_location": {
         "heading": "SP-1600 — `continuity.actor_identified` append, read, and custody",
         "heading_level": 3,
-        "heading_line": 65488,
-        "line": 65506,
+        "heading_line": 65490,
+        "line": 65508,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269832,8 +269895,8 @@
       "source_location": {
         "heading": "SP-1601 — `continuity.provenance_recorded` append, read, and custody",
         "heading_level": 3,
-        "heading_line": 65556,
-        "line": 65574,
+        "heading_line": 65558,
+        "line": 65576,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269849,8 +269912,8 @@
       "source_location": {
         "heading": "SP-1602 — `continuity.redaction_applied` append, read, and custody",
         "heading_level": 3,
-        "heading_line": 65624,
-        "line": 65642,
+        "heading_line": 65626,
+        "line": 65644,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -269866,8 +269929,8 @@
       "source_location": {
         "heading": "SP-1603 — `continuity.replay_checkpointed` append, read, and custody",
         "heading_level": 3,
-        "heading_line": 65692,
-        "line": 65710,
+        "heading_line": 65694,
+        "line": 65712,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -270937,8 +271000,8 @@
       "source_location": {
         "heading": "SP-2202 - restore_point.applied producer, identity, result custody, consumer and withdrawal",
         "heading_level": 3,
-        "heading_line": 23750,
-        "line": 23764,
+        "heading_line": 23752,
+        "line": 23766,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -270954,8 +271017,8 @@
       "source_location": {
         "heading": "SP-2203 - restore_point.corrupt producer, identity, transition order, custody, consumer and withdrawal",
         "heading_level": 3,
-        "heading_line": 23816,
-        "line": 23832,
+        "heading_line": 23818,
+        "line": 23834,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -270971,8 +271034,8 @@
       "source_location": {
         "heading": "SP-2204 - safe_point.recovery_unavailable producer, establishing receipt, identity, custody, consumer and withdrawal",
         "heading_level": 3,
-        "heading_line": 23885,
-        "line": 23903,
+        "heading_line": 23887,
+        "line": 23905,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -270988,8 +271051,8 @@
       "source_location": {
         "heading": "SP-2205 - storage.boot_recovery after a verified restore, and its event consumer",
         "heading_level": 3,
-        "heading_line": 24539,
-        "line": 24545,
+        "heading_line": 24541,
+        "line": 24547,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -271005,8 +271068,8 @@
       "source_location": {
         "heading": "SP-2206 - storage.compaction_lifecycle_changed event consumer",
         "heading_level": 3,
-        "heading_line": 24590,
-        "line": 24594,
+        "heading_line": 24592,
+        "line": 24596,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -271022,8 +271085,8 @@
       "source_location": {
         "heading": "SP-2207 - storage.recovery_applied aftermath consumer",
         "heading_level": 3,
-        "heading_line": 24634,
-        "line": 24638,
+        "heading_line": 24636,
+        "line": 24640,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -271039,8 +271102,8 @@
       "source_location": {
         "heading": "SP-2208 - storage.retention_hold_changed fresh admission after a verified restore",
         "heading_level": 3,
-        "heading_line": 24681,
-        "line": 24685,
+        "heading_line": 24683,
+        "line": 24687,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -271056,8 +271119,8 @@
       "source_location": {
         "heading": "SP-2209 - platform.capability_evaluated read output",
         "heading_level": 3,
-        "heading_line": 24726,
-        "line": 24730,
+        "heading_line": 24728,
+        "line": 24732,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -271090,8 +271153,8 @@
       "source_location": {
         "heading": "SP-2210 - seglog.event_appended semantic owner route and stored token",
         "heading_level": 3,
-        "heading_line": 24771,
-        "line": 24775,
+        "heading_line": 24773,
+        "line": 24777,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -271974,8 +272037,8 @@
       "source_location": {
         "heading": "SP-275 — Restore-point expiry custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 23501,
-        "line": 23503,
+        "heading_line": 23503,
+        "line": 23505,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272025,8 +272088,8 @@
       "source_location": {
         "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
         "heading_level": 3,
-        "heading_line": 24395,
-        "line": 24397,
+        "heading_line": 24397,
+        "line": 24399,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272093,8 +272156,8 @@
       "source_location": {
         "heading": "SP-285 — Restore-point admission and retained-read phases",
         "heading_level": 3,
-        "heading_line": 23653,
-        "line": 23655,
+        "heading_line": 23655,
+        "line": 23657,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272144,8 +272207,8 @@
       "source_location": {
         "heading": "SP-288 - Legal Hold Transition And Original SIR Custody",
         "heading_level": 3,
-        "heading_line": 24077,
-        "line": 24079,
+        "heading_line": 24079,
+        "line": 24081,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272161,8 +272224,8 @@
       "source_location": {
         "heading": "SP-289 - Original Standard Certification Custody",
         "heading_level": 3,
-        "heading_line": 24204,
-        "line": 24206,
+        "heading_line": 24206,
+        "line": 24208,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272178,8 +272241,8 @@
       "source_location": {
         "heading": "SP-290 - Platform Capability Decision Custody",
         "heading_level": 3,
-        "heading_line": 24880,
-        "line": 24882,
+        "heading_line": 24882,
+        "line": 24884,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272195,8 +272258,8 @@
       "source_location": {
         "heading": "SP-291 - Boot Recovery Aggregate and Original Producer Custody",
         "heading_level": 3,
-        "heading_line": 25017,
-        "line": 25019,
+        "heading_line": 25019,
+        "line": 25021,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272212,8 +272275,8 @@
       "source_location": {
         "heading": "SP-292 - Boot Earliest Receipt Continuity and Activation",
         "heading_level": 3,
-        "heading_line": 25118,
-        "line": 25120,
+        "heading_line": 25120,
+        "line": 25122,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272229,8 +272292,8 @@
       "source_location": {
         "heading": "SP-293 - Recovery Original Action Custody and Publication",
         "heading_level": 3,
-        "heading_line": 25214,
-        "line": 25216,
+        "heading_line": 25216,
+        "line": 25218,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272246,8 +272309,8 @@
       "source_location": {
         "heading": "SP-294 - Goal start original command custody and publication",
         "heading_level": 2,
-        "heading_line": 25289,
-        "line": 25291,
+        "heading_line": 25291,
+        "line": 25293,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272263,8 +272326,8 @@
       "source_location": {
         "heading": "SP-295 - Compaction Original Native Source Controls",
         "heading_level": 3,
-        "heading_line": 25452,
-        "line": 25454,
+        "heading_line": 25454,
+        "line": 25456,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272280,8 +272343,8 @@
       "source_location": {
         "heading": "SP-296 - Compaction Original Phase and Observation Custody",
         "heading_level": 3,
-        "heading_line": 25488,
-        "line": 25490,
+        "heading_line": 25490,
+        "line": 25492,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272297,8 +272360,8 @@
       "source_location": {
         "heading": "SP-297 - Compaction Original Settlement and Seven-Day Detail Retirement",
         "heading_level": 3,
-        "heading_line": 25524,
-        "line": 25526,
+        "heading_line": 25526,
+        "line": 25528,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272314,8 +272377,8 @@
       "source_location": {
         "heading": "SP-298 - Passive Goal Creation Read And Original Member Boundaries",
         "heading_level": 3,
-        "heading_line": 25619,
-        "line": 25621,
+        "heading_line": 25621,
+        "line": 25623,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272331,8 +272394,8 @@
       "source_location": {
         "heading": "SP-299 - Original Goal Update Physical And Transaction Custody",
         "heading_level": 3,
-        "heading_line": 25824,
-        "line": 25825,
+        "heading_line": 25826,
+        "line": 25827,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272348,8 +272411,8 @@
       "source_location": {
         "heading": "SP-300 - Exact historical goal.progressed source reader",
         "heading_level": 3,
-        "heading_line": 25965,
-        "line": 25967,
+        "heading_line": 25967,
+        "line": 25969,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272365,8 +272428,8 @@
       "source_location": {
         "heading": "SP-301 - Exact historical goal.replanned source reader",
         "heading_level": 3,
-        "heading_line": 26072,
-        "line": 26074,
+        "heading_line": 26074,
+        "line": 26076,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272382,8 +272445,8 @@
       "source_location": {
         "heading": "SP-302 - Exact historical goal.stopped source reader",
         "heading_level": 3,
-        "heading_line": 26179,
-        "line": 26181,
+        "heading_line": 26181,
+        "line": 26183,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272399,8 +272462,8 @@
       "source_location": {
         "heading": "SP-303 - Exact historical goal.verification_decided source reader",
         "heading_level": 3,
-        "heading_line": 26286,
-        "line": 26288,
+        "heading_line": 26288,
+        "line": 26290,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272416,8 +272479,8 @@
       "source_location": {
         "heading": "SP-304 - Original cancellation stages and custody",
         "heading_level": 3,
-        "heading_line": 26462,
-        "line": 26464,
+        "heading_line": 26464,
+        "line": 26466,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272433,8 +272496,8 @@
       "source_location": {
         "heading": "SP-305 - Execution binding custody and original append reservation",
         "heading_level": 3,
-        "heading_line": 26775,
-        "line": 26777,
+        "heading_line": 26777,
+        "line": 26779,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272450,8 +272513,8 @@
       "source_location": {
         "heading": "Exact physical codec and commitments",
         "heading_level": 4,
-        "heading_line": 26973,
-        "line": 27002,
+        "heading_line": 26975,
+        "line": 27004,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272467,8 +272530,8 @@
       "source_location": {
         "heading": "Original backup, restore and identity",
         "heading_level": 4,
-        "heading_line": 27103,
-        "line": 27115,
+        "heading_line": 27105,
+        "line": 27117,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272484,8 +272547,8 @@
       "source_location": {
         "heading": "Retention, original lifetime and restore",
         "heading_level": 4,
-        "heading_line": 27257,
-        "line": 27273,
+        "heading_line": 27259,
+        "line": 27275,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272501,8 +272564,8 @@
       "source_location": {
         "heading": "Event and native qualification boundary",
         "heading_level": 4,
-        "heading_line": 27422,
-        "line": 27428,
+        "heading_line": 27424,
+        "line": 27430,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272518,8 +272581,8 @@
       "source_location": {
         "heading": "Existing readiness validator representation gap",
         "heading_level": 4,
-        "heading_line": 27564,
-        "line": 27580,
+        "heading_line": 27566,
+        "line": 27582,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272535,8 +272598,8 @@
       "source_location": {
         "heading": "Exact physical and source registration",
         "heading_level": 4,
-        "heading_line": 27710,
-        "line": 27718,
+        "heading_line": 27712,
+        "line": 27720,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272552,8 +272615,8 @@
       "source_location": {
         "heading": "Exact delta registration and successor selection",
         "heading_level": 4,
-        "heading_line": 27942,
-        "line": 27954,
+        "heading_line": 27944,
+        "line": 27956,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272569,8 +272632,8 @@
       "source_location": {
         "heading": "Storage, retention and installation boundary",
         "heading_level": 5,
-        "heading_line": 28347,
-        "line": 28356,
+        "heading_line": 28349,
+        "line": 28358,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272586,8 +272649,8 @@
       "source_location": {
         "heading": "SP-314 — Original Standard authority families and fresh whole stored profiles (2026-09-20)",
         "heading_level": 2,
-        "heading_line": 28428,
-        "line": 28430,
+        "heading_line": 28430,
+        "line": 28432,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272603,8 +272666,8 @@
       "source_location": {
         "heading": "SP-315 — Certified producer current and retained source disclosure (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 28526,
-        "line": 28528,
+        "heading_line": 28528,
+        "line": 28530,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272620,8 +272683,8 @@
       "source_location": {
         "heading": "SP-316 — Seven compact authority families, eleven v7 profile-qualified wrapper routes and atomic native/Event release (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 28586,
-        "line": 28588,
+        "heading_line": 28588,
+        "line": 28590,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272637,8 +272700,8 @@
       "source_location": {
         "heading": "SP-317 — Two projection/checkpoint families and exact RP-PROJECTION-3GEN transaction/generation/cutover obligations (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 28662,
-        "line": 28664,
+        "heading_line": 28664,
+        "line": 28666,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272671,8 +272734,8 @@
       "source_location": {
         "heading": "SP-319 - Terminal workgroup moved compatibility and withdrawal",
         "heading_level": 3,
-        "heading_line": 28756,
-        "line": 28758,
+        "heading_line": 28758,
+        "line": 28760,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272688,8 +272751,8 @@
       "source_location": {
         "heading": "SP-320 - Coordination event persistence binding",
         "heading_level": 3,
-        "heading_line": 29390,
-        "line": 29392,
+        "heading_line": 29392,
+        "line": 29394,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272705,8 +272768,8 @@
       "source_location": {
         "heading": "SP-321 - Project Creation-Recovery Context Durable Custody",
         "heading_level": 3,
-        "heading_line": 29462,
-        "line": 29464,
+        "heading_line": 29464,
+        "line": 29466,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272722,8 +272785,8 @@
       "source_location": {
         "heading": "SP-322 - Durable application update successful-check basis",
         "heading_level": 3,
-        "heading_line": 29518,
-        "line": 29520,
+        "heading_line": 29520,
+        "line": 29522,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272739,8 +272802,8 @@
       "source_location": {
         "heading": "SP-323 - Project automation pause original custody",
         "heading_level": 3,
-        "heading_line": 29578,
-        "line": 29580,
+        "heading_line": 29580,
+        "line": 29582,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272756,8 +272819,8 @@
       "source_location": {
         "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
         "heading_level": 3,
-        "heading_line": 29669,
-        "line": 29671,
+        "heading_line": 29671,
+        "line": 29673,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272773,8 +272836,8 @@
       "source_location": {
         "heading": "SP-331 - Terminal Appearance Storage",
         "heading_level": 3,
-        "heading_line": 29834,
-        "line": 29836,
+        "heading_line": 29836,
+        "line": 29838,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272790,8 +272853,8 @@
       "source_location": {
         "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
         "heading_level": 3,
-        "heading_line": 29956,
-        "line": 29958,
+        "heading_line": 29958,
+        "line": 29960,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272807,8 +272870,8 @@
       "source_location": {
         "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
         "heading_level": 3,
-        "heading_line": 30055,
-        "line": 30057,
+        "heading_line": 30057,
+        "line": 30059,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272824,8 +272887,8 @@
       "source_location": {
         "heading": "SP-334 - Wonderer Record Boundary And Grill Me Slot Migration",
         "heading_level": 3,
-        "heading_line": 30115,
-        "line": 30117,
+        "heading_line": 30117,
+        "line": 30119,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272841,8 +272904,8 @@
       "source_location": {
         "heading": "SP-335 - Seglog Compression Profile And Seal-Time Repack",
         "heading_level": 3,
-        "heading_line": 30192,
-        "line": 30194,
+        "heading_line": 30194,
+        "line": 30196,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272858,8 +272921,8 @@
       "source_location": {
         "heading": "SP-336 - One Data Sync Per Commit Group, Full Flush For Barrier Events, Atomic Store Creation",
         "heading_level": 3,
-        "heading_line": 30256,
-        "line": 30258,
+        "heading_line": 30258,
+        "line": 30260,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272875,8 +272938,8 @@
       "source_location": {
         "heading": "SP-337 - Store-Once Payloads In Content-Addressed Packs",
         "heading_level": 3,
-        "heading_line": 30368,
-        "line": 30370,
+        "heading_line": 30370,
+        "line": 30372,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272892,8 +272955,8 @@
       "source_location": {
         "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
         "heading_level": 3,
-        "heading_line": 30428,
-        "line": 30430,
+        "heading_line": 30430,
+        "line": 30432,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272909,8 +272972,8 @@
       "source_location": {
         "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
         "heading_level": 3,
-        "heading_line": 30494,
-        "line": 30496,
+        "heading_line": 30496,
+        "line": 30498,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272926,8 +272989,8 @@
       "source_location": {
         "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
         "heading_level": 3,
-        "heading_line": 30568,
-        "line": 30570,
+        "heading_line": 30570,
+        "line": 30572,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272943,8 +273006,8 @@
       "source_location": {
         "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
         "heading_level": 3,
-        "heading_line": 30621,
-        "line": 30623,
+        "heading_line": 30623,
+        "line": 30625,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272960,8 +273023,8 @@
       "source_location": {
         "heading": "SP-342 - Storage Engine Requirements And The SQLite Ban",
         "heading_level": 3,
-        "heading_line": 30680,
-        "line": 30682,
+        "heading_line": 30682,
+        "line": 30684,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272977,8 +273040,8 @@
       "source_location": {
         "heading": "SP-343 - Lossless WebP Screenshots And Exact Evidence Media",
         "heading_level": 3,
-        "heading_line": 30748,
-        "line": 30750,
+        "heading_line": 30750,
+        "line": 30752,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -272994,8 +273057,8 @@
       "source_location": {
         "heading": "SP-344 - Storage Release Gates On Every OS",
         "heading_level": 3,
-        "heading_line": 30799,
-        "line": 30801,
+        "heading_line": 30801,
+        "line": 30803,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273011,8 +273074,8 @@
       "source_location": {
         "heading": "SP-345 - Data Placement Away From Desktop Indexers",
         "heading_level": 3,
-        "heading_line": 30853,
-        "line": 30855,
+        "heading_line": 30855,
+        "line": 30857,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273028,8 +273091,8 @@
       "source_location": {
         "heading": "SP-346 - Frame Compression Descriptor And The Sealed Segment Container",
         "heading_level": 3,
-        "heading_line": 30915,
-        "line": 30917,
+        "heading_line": 30917,
+        "line": 30919,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273045,8 +273108,8 @@
       "source_location": {
         "heading": "SP-347 - The Group Commit Control Frame",
         "heading_level": 3,
-        "heading_line": 30998,
-        "line": 31000,
+        "heading_line": 31000,
+        "line": 31002,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273062,8 +273125,8 @@
       "source_location": {
         "heading": "SP-348 - Sparse Settings Levels Writers History And Join Custody",
         "heading_level": 3,
-        "heading_line": 31074,
-        "line": 31076,
+        "heading_line": 31076,
+        "line": 31078,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273079,8 +273142,8 @@
       "source_location": {
         "heading": "SP-349 - App Chat Root Everyday Runtime Recovery And UI Custody",
         "heading_level": 3,
-        "heading_line": 31143,
-        "line": 31145,
+        "heading_line": 31145,
+        "line": 31147,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273096,8 +273159,8 @@
       "source_location": {
         "heading": "SP-350 - Conversion Cutover Sealed Source Undo And Payload Custody",
         "heading_level": 3,
-        "heading_line": 31273,
-        "line": 31275,
+        "heading_line": 31275,
+        "line": 31277,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273113,8 +273176,8 @@
       "source_location": {
         "heading": "SP-351 - Application Goal Crew Coordination Source And Backup Custody",
         "heading_level": 3,
-        "heading_line": 31343,
-        "line": 31345,
+        "heading_line": 31345,
+        "line": 31347,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273130,8 +273193,8 @@
       "source_location": {
         "heading": "SP-352 - Application Plan Schedule Cancel And Pause Physical Editions",
         "heading_level": 3,
-        "heading_line": 31472,
-        "line": 31474,
+        "heading_line": 31474,
+        "line": 31476,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273147,8 +273210,8 @@
       "source_location": {
         "heading": "SP-353 - Permission And Project Build Authority Durable Bindings",
         "heading_level": 3,
-        "heading_line": 31560,
-        "line": 31562,
+        "heading_line": 31562,
+        "line": 31564,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273164,8 +273227,8 @@
       "source_location": {
         "heading": "SP-400 - The v2 Home Layout Slot And Receipt Contract (Home4)",
         "heading_level": 3,
-        "heading_line": 43960,
-        "line": 43962,
+        "heading_line": 43962,
+        "line": 43964,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273181,8 +273244,8 @@
       "source_location": {
         "heading": "SP-420 - Historical Goal record original admission proof",
         "heading_level": 3,
-        "heading_line": 26393,
-        "line": 26395,
+        "heading_line": 26395,
+        "line": 26397,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273198,8 +273261,8 @@
       "source_location": {
         "heading": "SP-421 - Goal update event identity recipe",
         "heading_level": 3,
-        "heading_line": 25903,
-        "line": 25905,
+        "heading_line": 25905,
+        "line": 25907,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273215,8 +273278,8 @@
       "source_location": {
         "heading": "SP-422 - Goal cancellation event identity recipe",
         "heading_level": 3,
-        "heading_line": 26644,
-        "line": 26646,
+        "heading_line": 26646,
+        "line": 26648,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273232,8 +273295,8 @@
       "source_location": {
         "heading": "SP-423 - Goal cancellation writer cutoff and reader withdrawal",
         "heading_level": 3,
-        "heading_line": 26707,
-        "line": 26709,
+        "heading_line": 26709,
+        "line": 26711,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273249,8 +273312,8 @@
       "source_location": {
         "heading": "SP-424 - Workflow started-v3 writer cutoff and reader withdrawal",
         "heading_level": 3,
-        "heading_line": 27772,
-        "line": 27774,
+        "heading_line": 27774,
+        "line": 27776,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273266,8 +273329,8 @@
       "source_location": {
         "heading": "SP-425 - Workflow cancelled-v3 writer cutoff and reader withdrawal",
         "heading_level": 3,
-        "heading_line": 28012,
-        "line": 28014,
+        "heading_line": 28014,
+        "line": 28016,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273283,8 +273346,8 @@
       "source_location": {
         "heading": "SP-426 - Current goal_run.stopped persistence, identity and withdrawal",
         "heading_level": 3,
-        "heading_line": 28076,
-        "line": 28078,
+        "heading_line": 28078,
+        "line": 28080,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273300,8 +273363,8 @@
       "source_location": {
         "heading": "SP-427 - Current goal_run.blocked persistence, identity and withdrawal",
         "heading_level": 3,
-        "heading_line": 28141,
-        "line": 28143,
+        "heading_line": 28143,
+        "line": 28145,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273317,8 +273380,8 @@
       "source_location": {
         "heading": "SP-428 - Run-history projection delta for stopped and blocked rows",
         "heading_level": 3,
-        "heading_line": 28208,
-        "line": 28210,
+        "heading_line": 28210,
+        "line": 28212,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273334,8 +273397,8 @@
       "source_location": {
         "heading": "SP-429 - Project goal.blocked identity custody and observation",
         "heading_level": 3,
-        "heading_line": 45944,
-        "line": 45946,
+        "heading_line": 45946,
+        "line": 45948,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273351,8 +273414,8 @@
       "source_location": {
         "heading": "SP-430 - Project goal.completed identity custody and observation",
         "heading_level": 3,
-        "heading_line": 46001,
-        "line": 46003,
+        "heading_line": 46003,
+        "line": 46005,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273368,8 +273431,8 @@
       "source_location": {
         "heading": "SP-431 - Historical goal.evidence_captured reader custody",
         "heading_level": 3,
-        "heading_line": 46058,
-        "line": 46060,
+        "heading_line": 46060,
+        "line": 46062,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273385,8 +273448,8 @@
       "source_location": {
         "heading": "SP-432 - Historical goal.receipt_recorded reader custody",
         "heading_level": 3,
-        "heading_line": 46118,
-        "line": 46120,
+        "heading_line": 46120,
+        "line": 46122,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273402,8 +273465,8 @@
       "source_location": {
         "heading": "SP-433 - Historical goal.tool_check_recorded reader custody",
         "heading_level": 3,
-        "heading_line": 46178,
-        "line": 46180,
+        "heading_line": 46180,
+        "line": 46182,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273419,8 +273482,8 @@
       "source_location": {
         "heading": "SP-460 - Shared persistence mechanisms of the collaborative workflow families",
         "heading_level": 3,
-        "heading_line": 32338,
-        "line": 32411,
+        "heading_line": 32340,
+        "line": 32413,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273436,8 +273499,8 @@
       "source_location": {
         "heading": "SP-461 - Persistence of collaboration.created",
         "heading_level": 3,
-        "heading_line": 32508,
-        "line": 32526,
+        "heading_line": 32510,
+        "line": 32528,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273453,8 +273516,8 @@
       "source_location": {
         "heading": "SP-462 - Persistence of collaboration.started",
         "heading_level": 3,
-        "heading_line": 32598,
-        "line": 32616,
+        "heading_line": 32600,
+        "line": 32618,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273470,8 +273533,8 @@
       "source_location": {
         "heading": "SP-463 - Persistence of collaboration.paused",
         "heading_level": 3,
-        "heading_line": 32693,
-        "line": 32709,
+        "heading_line": 32695,
+        "line": 32711,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273487,8 +273550,8 @@
       "source_location": {
         "heading": "SP-464 - Persistence of collaboration.resumed",
         "heading_level": 3,
-        "heading_line": 32781,
-        "line": 32797,
+        "heading_line": 32783,
+        "line": 32799,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273504,8 +273567,8 @@
       "source_location": {
         "heading": "SP-465 - Persistence of collaboration.cancelled",
         "heading_level": 3,
-        "heading_line": 32869,
-        "line": 32885,
+        "heading_line": 32871,
+        "line": 32887,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273521,8 +273584,8 @@
       "source_location": {
         "heading": "SP-466 - Persistence of collaboration.completed",
         "heading_level": 3,
-        "heading_line": 32960,
-        "line": 32976,
+        "heading_line": 32962,
+        "line": 32978,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273538,8 +273601,8 @@
       "source_location": {
         "heading": "SP-467 - Persistence of collaboration.failed",
         "heading_level": 3,
-        "heading_line": 33059,
-        "line": 33075,
+        "heading_line": 33061,
+        "line": 33077,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273555,8 +273618,8 @@
       "source_location": {
         "heading": "SP-468 - Persistence of collaboration.participant_started",
         "heading_level": 3,
-        "heading_line": 33150,
-        "line": 33166,
+        "heading_line": 33152,
+        "line": 33168,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273572,8 +273635,8 @@
       "source_location": {
         "heading": "SP-469 - Persistence of collaboration.participant_completed",
         "heading_level": 3,
-        "heading_line": 33243,
-        "line": 33259,
+        "heading_line": 33245,
+        "line": 33261,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273589,8 +273652,8 @@
       "source_location": {
         "heading": "SP-470 - Persistence of collaboration.message_added",
         "heading_level": 3,
-        "heading_line": 33338,
-        "line": 33354,
+        "heading_line": 33340,
+        "line": 33356,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273606,8 +273669,8 @@
       "source_location": {
         "heading": "SP-471 - Persistence of collaboration.artifact_added",
         "heading_level": 3,
-        "heading_line": 33430,
-        "line": 33446,
+        "heading_line": 33432,
+        "line": 33448,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273623,8 +273686,8 @@
       "source_location": {
         "heading": "SP-472 - Persistence of collaboration.configuration_changed",
         "heading_level": 3,
-        "heading_line": 33516,
-        "line": 33534,
+        "heading_line": 33518,
+        "line": 33536,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273640,8 +273703,8 @@
       "source_location": {
         "heading": "SP-473 - Persistence of brainstorm.proposal_added",
         "heading_level": 3,
-        "heading_line": 33618,
-        "line": 33634,
+        "heading_line": 33620,
+        "line": 33636,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273657,8 +273720,8 @@
       "source_location": {
         "heading": "SP-474 - Persistence of brainstorm.vote_added",
         "heading_level": 3,
-        "heading_line": 33709,
-        "line": 33725,
+        "heading_line": 33711,
+        "line": 33727,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273674,8 +273737,8 @@
       "source_location": {
         "heading": "SP-475 - Persistence of brainstorm.plan_synthesized",
         "heading_level": 3,
-        "heading_line": 33802,
-        "line": 33818,
+        "heading_line": 33804,
+        "line": 33820,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273691,8 +273754,8 @@
       "source_location": {
         "heading": "SP-476 - Persistence of review.finding_added",
         "heading_level": 3,
-        "heading_line": 33889,
-        "line": 33905,
+        "heading_line": 33891,
+        "line": 33907,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273708,8 +273771,8 @@
       "source_location": {
         "heading": "SP-477 - Persistence of review.finding_dispositioned",
         "heading_level": 3,
-        "heading_line": 33981,
-        "line": 33997,
+        "heading_line": 33983,
+        "line": 33999,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273725,8 +273788,8 @@
       "source_location": {
         "heading": "SP-478 - Persistence of review.artifact_finalized",
         "heading_level": 3,
-        "heading_line": 34072,
-        "line": 34088,
+        "heading_line": 34074,
+        "line": 34090,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273742,8 +273805,8 @@
       "source_location": {
         "heading": "SP-500 — attempt.completed prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 38866,
-        "line": 38887,
+        "heading_line": 38868,
+        "line": 38889,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273759,8 +273822,8 @@
       "source_location": {
         "heading": "SP-501 — attempt.started prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 38926,
-        "line": 38947,
+        "heading_line": 38928,
+        "line": 38949,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273776,8 +273839,8 @@
       "source_location": {
         "heading": "SP-502 — node.blocked prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 38986,
-        "line": 39007,
+        "heading_line": 38988,
+        "line": 39009,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273793,8 +273856,8 @@
       "source_location": {
         "heading": "SP-503 — node.completed prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39046,
-        "line": 39067,
+        "heading_line": 39048,
+        "line": 39069,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273810,8 +273873,8 @@
       "source_location": {
         "heading": "SP-504 — node.started prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39106,
-        "line": 39127,
+        "heading_line": 39108,
+        "line": 39129,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273827,8 +273890,8 @@
       "source_location": {
         "heading": "SP-505 — node.unblocked prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39166,
-        "line": 39187,
+        "heading_line": 39168,
+        "line": 39189,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273844,8 +273907,8 @@
       "source_location": {
         "heading": "SP-506 — plan.decomposition_degraded prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39226,
-        "line": 39247,
+        "heading_line": 39228,
+        "line": 39249,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273861,8 +273924,8 @@
       "source_location": {
         "heading": "SP-507 — remediation.resolved prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39286,
-        "line": 39307,
+        "heading_line": 39288,
+        "line": 39309,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273878,8 +273941,8 @@
       "source_location": {
         "heading": "SP-508 — remediation.spawned prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39346,
-        "line": 39367,
+        "heading_line": 39348,
+        "line": 39369,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273895,8 +273958,8 @@
       "source_location": {
         "heading": "SP-509 — run.completed prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39406,
-        "line": 39427,
+        "heading_line": 39408,
+        "line": 39429,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273912,8 +273975,8 @@
       "source_location": {
         "heading": "SP-510 — run.graph_integrity_failed prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39466,
-        "line": 39487,
+        "heading_line": 39468,
+        "line": 39489,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273929,8 +273992,8 @@
       "source_location": {
         "heading": "SP-511 — run.node_backoff_expired prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39526,
-        "line": 39547,
+        "heading_line": 39528,
+        "line": 39549,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273946,8 +274009,8 @@
       "source_location": {
         "heading": "SP-512 — run.node_backoff_started prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39586,
-        "line": 39607,
+        "heading_line": 39588,
+        "line": 39609,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273963,8 +274026,8 @@
       "source_location": {
         "heading": "SP-513 — run.node_ready prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39646,
-        "line": 39667,
+        "heading_line": 39648,
+        "line": 39669,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273980,8 +274043,8 @@
       "source_location": {
         "heading": "SP-514 — run.node_retry_scheduled prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39706,
-        "line": 39727,
+        "heading_line": 39708,
+        "line": 39729,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -273997,8 +274060,8 @@
       "source_location": {
         "heading": "SP-515 — scheduler.pass prepared Event Authority contract",
         "heading_level": 2,
-        "heading_line": 39766,
-        "line": 39789,
+        "heading_line": 39768,
+        "line": 39791,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274014,8 +274077,8 @@
       "source_location": {
         "heading": "SP-520 — runtime_artifact.api_web_call",
         "heading_level": 3,
-        "heading_line": 44037,
-        "line": 44039,
+        "heading_line": 44039,
+        "line": 44041,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274031,8 +274094,8 @@
       "source_location": {
         "heading": "SP-521 — runtime_artifact.artifact_version",
         "heading_level": 3,
-        "heading_line": 44075,
-        "line": 44077,
+        "heading_line": 44077,
+        "line": 44079,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274048,8 +274111,8 @@
       "source_location": {
         "heading": "SP-522 — runtime_artifact.before_after_snapshot",
         "heading_level": 3,
-        "heading_line": 44113,
-        "line": 44115,
+        "heading_line": 44115,
+        "line": 44117,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274065,8 +274128,8 @@
       "source_location": {
         "heading": "SP-523 — runtime_artifact.browser_recording",
         "heading_level": 3,
-        "heading_line": 44151,
-        "line": 44153,
+        "heading_line": 44153,
+        "line": 44155,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274082,8 +274145,8 @@
       "source_location": {
         "heading": "SP-524 — runtime_artifact.code_diff",
         "heading_level": 3,
-        "heading_line": 44189,
-        "line": 44191,
+        "heading_line": 44191,
+        "line": 44193,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274099,8 +274162,8 @@
       "source_location": {
         "heading": "SP-525 — runtime_artifact.context_snapshot",
         "heading_level": 3,
-        "heading_line": 44227,
-        "line": 44229,
+        "heading_line": 44229,
+        "line": 44231,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274116,8 +274179,8 @@
       "source_location": {
         "heading": "SP-526 — runtime_artifact.cost_usage",
         "heading_level": 3,
-        "heading_line": 44265,
-        "line": 44267,
+        "heading_line": 44267,
+        "line": 44269,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274133,8 +274196,8 @@
       "source_location": {
         "heading": "SP-527 — runtime_artifact.document",
         "heading_level": 3,
-        "heading_line": 44303,
-        "line": 44305,
+        "heading_line": 44305,
+        "line": 44307,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274150,8 +274213,8 @@
       "source_location": {
         "heading": "SP-528 — runtime_artifact.evidence",
         "heading_level": 3,
-        "heading_line": 44341,
-        "line": 44343,
+        "heading_line": 44343,
+        "line": 44345,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274167,8 +274230,8 @@
       "source_location": {
         "heading": "SP-529 — runtime_artifact.failed_attempts",
         "heading_level": 3,
-        "heading_line": 44379,
-        "line": 44381,
+        "heading_line": 44381,
+        "line": 44383,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274184,8 +274247,8 @@
       "source_location": {
         "heading": "SP-530 — runtime_artifact.hitl_approval",
         "heading_level": 3,
-        "heading_line": 44417,
-        "line": 44419,
+        "heading_line": 44419,
+        "line": 44421,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274201,8 +274264,8 @@
       "source_location": {
         "heading": "SP-531 — runtime_artifact.implementation_plan",
         "heading_level": 3,
-        "heading_line": 44455,
-        "line": 44457,
+        "heading_line": 44457,
+        "line": 44459,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274218,8 +274281,8 @@
       "source_location": {
         "heading": "SP-532 — runtime_artifact.reasoning_summary",
         "heading_level": 3,
-        "heading_line": 44493,
-        "line": 44495,
+        "heading_line": 44495,
+        "line": 44497,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274235,8 +274298,8 @@
       "source_location": {
         "heading": "SP-533 — runtime_artifact.restore_point",
         "heading_level": 3,
-        "heading_line": 44531,
-        "line": 44533,
+        "heading_line": 44533,
+        "line": 44535,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274252,8 +274315,8 @@
       "source_location": {
         "heading": "SP-534 — runtime_artifact.screenshot",
         "heading_level": 3,
-        "heading_line": 44570,
-        "line": 44572,
+        "heading_line": 44572,
+        "line": 44574,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274269,8 +274332,8 @@
       "source_location": {
         "heading": "SP-535 — runtime_artifact.subagent_lineage",
         "heading_level": 3,
-        "heading_line": 44608,
-        "line": 44610,
+        "heading_line": 44610,
+        "line": 44612,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274286,8 +274349,8 @@
       "source_location": {
         "heading": "SP-536 — runtime_artifact.suggested_next_steps",
         "heading_level": 3,
-        "heading_line": 44646,
-        "line": 44648,
+        "heading_line": 44648,
+        "line": 44650,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274303,8 +274366,8 @@
       "source_location": {
         "heading": "SP-537 — runtime_artifact.tool_llm_trace",
         "heading_level": 3,
-        "heading_line": 44684,
-        "line": 44686,
+        "heading_line": 44686,
+        "line": 44688,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274320,8 +274383,8 @@
       "source_location": {
         "heading": "SP-538 — runtime_artifact.validation_test",
         "heading_level": 3,
-        "heading_line": 44722,
-        "line": 44724,
+        "heading_line": 44724,
+        "line": 44726,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274337,8 +274400,8 @@
       "source_location": {
         "heading": "SP-540 - coordination.agent_aborted Project contract refresh",
         "heading_level": 3,
-        "heading_line": 28944,
-        "line": 28964,
+        "heading_line": 28946,
+        "line": 28966,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274354,8 +274417,8 @@
       "source_location": {
         "heading": "SP-541 - coordination.agent_crashed Project contract refresh",
         "heading_level": 3,
-        "heading_line": 29016,
-        "line": 29038,
+        "heading_line": 29018,
+        "line": 29040,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274371,8 +274434,8 @@
       "source_location": {
         "heading": "SP-542 - coordination.agent_file_ownership_updated Project contract refresh",
         "heading_level": 3,
-        "heading_line": 29090,
-        "line": 29110,
+        "heading_line": 29092,
+        "line": 29112,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274388,8 +274451,8 @@
       "source_location": {
         "heading": "SP-543 - coordination.agent_operation_updated Project contract refresh",
         "heading_level": 3,
-        "heading_line": 29162,
-        "line": 29182,
+        "heading_line": 29164,
+        "line": 29184,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274405,8 +274468,8 @@
       "source_location": {
         "heading": "SP-544 - coordination.agent_status_updated Project contract refresh",
         "heading_level": 3,
-        "heading_line": 29234,
-        "line": 29254,
+        "heading_line": 29236,
+        "line": 29256,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274422,8 +274485,8 @@
       "source_location": {
         "heading": "SP-545 - coordination.agent_unregistered Project contract refresh",
         "heading_level": 3,
-        "heading_line": 29306,
-        "line": 29326,
+        "heading_line": 29308,
+        "line": 29328,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274439,8 +274502,8 @@
       "source_location": {
         "heading": "SP-550 - filesafe.command_denied persistence and read contract",
         "heading_level": 3,
-        "heading_line": 45318,
-        "line": 45320,
+        "heading_line": 45320,
+        "line": 45322,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274456,8 +274519,8 @@
       "source_location": {
         "heading": "SP-551 - filesafe.destructive_override_denied persistence and read contract",
         "heading_level": 3,
-        "heading_line": 45388,
-        "line": 45390,
+        "heading_line": 45390,
+        "line": 45392,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274473,8 +274536,8 @@
       "source_location": {
         "heading": "SP-552 - filesafe.destructive_override_granted persistence and read contract",
         "heading_level": 3,
-        "heading_line": 45458,
-        "line": 45460,
+        "heading_line": 45460,
+        "line": 45462,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274490,8 +274553,8 @@
       "source_location": {
         "heading": "SP-553 - filesafe.destructive_override_requested persistence and read contract",
         "heading_level": 3,
-        "heading_line": 45527,
-        "line": 45529,
+        "heading_line": 45529,
+        "line": 45531,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274507,8 +274570,8 @@
       "source_location": {
         "heading": "SP-554 - filesafe.guard_init_failed persistence and read contract",
         "heading_level": 3,
-        "heading_line": 45597,
-        "line": 45599,
+        "heading_line": 45599,
+        "line": 45601,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274524,8 +274587,8 @@
       "source_location": {
         "heading": "SP-555 - filesafe.path_denied persistence and read contract",
         "heading_level": 3,
-        "heading_line": 45667,
-        "line": 45669,
+        "heading_line": 45669,
+        "line": 45671,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274541,8 +274604,8 @@
       "source_location": {
         "heading": "SP-556 - filesafe.policy_degraded persistence and read contract",
         "heading_level": 3,
-        "heading_line": 45737,
-        "line": 45739,
+        "heading_line": 45739,
+        "line": 45741,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274558,8 +274621,8 @@
       "source_location": {
         "heading": "SP-557 - safe_point.created persistence and read contract",
         "heading_level": 3,
-        "heading_line": 45806,
-        "line": 45808,
+        "heading_line": 45808,
+        "line": 45810,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274575,8 +274638,8 @@
       "source_location": {
         "heading": "SP-558 - safe_point.restored persistence and read contract",
         "heading_level": 3,
-        "heading_line": 45876,
-        "line": 45878,
+        "heading_line": 45878,
+        "line": 45880,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274592,8 +274655,8 @@
       "source_location": {
         "heading": "SP-560 - FileManager prepared persistence routing",
         "heading_level": 3,
-        "heading_line": 43252,
-        "line": 43457,
+        "heading_line": 43254,
+        "line": 43459,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274626,8 +274689,8 @@
       "source_location": {
         "heading": "SP-575 - Bundle Revision Requested Custody And History",
         "heading_level": 3,
-        "heading_line": 44759,
-        "line": 44761,
+        "heading_line": 44761,
+        "line": 44763,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274643,8 +274706,8 @@
       "source_location": {
         "heading": "SP-576 - Bundle Revision Started Custody And History",
         "heading_level": 3,
-        "heading_line": 44858,
-        "line": 44860,
+        "heading_line": 44860,
+        "line": 44862,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274660,8 +274723,8 @@
       "source_location": {
         "heading": "SP-577 - Bundle Revision Completed Custody And History",
         "heading_level": 3,
-        "heading_line": 44956,
-        "line": 44958,
+        "heading_line": 44958,
+        "line": 44960,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274677,8 +274740,8 @@
       "source_location": {
         "heading": "SP-578 - Bundle Revision Interrupted Custody And History",
         "heading_level": 3,
-        "heading_line": 45055,
-        "line": 45057,
+        "heading_line": 45057,
+        "line": 45059,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274694,8 +274757,8 @@
       "source_location": {
         "heading": "SP-579 - Original Targeted Revision Source And Receipt Composition",
         "heading_level": 3,
-        "heading_line": 45155,
-        "line": 45157,
+        "heading_line": 45157,
+        "line": 45159,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274711,8 +274774,8 @@
       "source_location": {
         "heading": "SP-580 - approval.requested prepared event contract",
         "heading_level": 3,
-        "heading_line": 34168,
-        "line": 34170,
+        "heading_line": 34170,
+        "line": 34172,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274728,8 +274791,8 @@
       "source_location": {
         "heading": "SP-581 - approval.granted prepared event contract",
         "heading_level": 3,
-        "heading_line": 34208,
-        "line": 34210,
+        "heading_line": 34210,
+        "line": 34212,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274745,8 +274808,8 @@
       "source_location": {
         "heading": "SP-582 - approval.denied prepared event contract",
         "heading_level": 3,
-        "heading_line": 34248,
-        "line": 34250,
+        "heading_line": 34250,
+        "line": 34252,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274762,8 +274825,8 @@
       "source_location": {
         "heading": "SP-583 - approval.timeout prepared event contract",
         "heading_level": 3,
-        "heading_line": 34288,
-        "line": 34290,
+        "heading_line": 34290,
+        "line": 34292,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274779,8 +274842,8 @@
       "source_location": {
         "heading": "SP-584 - config.migrated prepared event contract",
         "heading_level": 3,
-        "heading_line": 34328,
-        "line": 34330,
+        "heading_line": 34330,
+        "line": 34332,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274796,8 +274859,8 @@
       "source_location": {
         "heading": "SP-585 - gate.evaluation_started prepared event contract",
         "heading_level": 3,
-        "heading_line": 34369,
-        "line": 34371,
+        "heading_line": 34371,
+        "line": 34373,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274813,8 +274876,8 @@
       "source_location": {
         "heading": "SP-586 - gate.failed prepared event contract",
         "heading_level": 3,
-        "heading_line": 34410,
-        "line": 34412,
+        "heading_line": 34412,
+        "line": 34414,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274830,8 +274893,8 @@
       "source_location": {
         "heading": "SP-587 - gate.passed prepared event contract",
         "heading_level": 3,
-        "heading_line": 34451,
-        "line": 34453,
+        "heading_line": 34453,
+        "line": 34455,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274847,8 +274910,8 @@
       "source_location": {
         "heading": "SP-588 - requirements.clarification_requested prepared event contract",
         "heading_level": 3,
-        "heading_line": 34492,
-        "line": 34494,
+        "heading_line": 34494,
+        "line": 34496,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274864,8 +274927,8 @@
       "source_location": {
         "heading": "SP-589 - run.background_enqueued prepared event contract",
         "heading_level": 3,
-        "heading_line": 34532,
-        "line": 34534,
+        "heading_line": 34534,
+        "line": 34536,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274881,8 +274944,8 @@
       "source_location": {
         "heading": "SP-590 - tool.denied prepared event contract",
         "heading_level": 3,
-        "heading_line": 34573,
-        "line": 34575,
+        "heading_line": 34575,
+        "line": 34577,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274898,8 +274961,8 @@
       "source_location": {
         "heading": "SP-591 - tool.execution_completed prepared event contract",
         "heading_level": 3,
-        "heading_line": 34615,
-        "line": 34617,
+        "heading_line": 34617,
+        "line": 34619,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274915,8 +274978,8 @@
       "source_location": {
         "heading": "SP-592 - tool.execution_started prepared event contract",
         "heading_level": 3,
-        "heading_line": 34656,
-        "line": 34658,
+        "heading_line": 34658,
+        "line": 34660,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274932,8 +274995,8 @@
       "source_location": {
         "heading": "SP-593 - tool.invoked prepared event contract",
         "heading_level": 3,
-        "heading_line": 34697,
-        "line": 34699,
+        "heading_line": 34699,
+        "line": 34701,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274949,8 +275012,8 @@
       "source_location": {
         "heading": "SP-594 - usage.event prepared event contract",
         "heading_level": 3,
-        "heading_line": 34739,
-        "line": 34741,
+        "heading_line": 34741,
+        "line": 34743,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274966,8 +275029,8 @@
       "source_location": {
         "heading": "SP-595 - worktree.created prepared event contract",
         "heading_level": 3,
-        "heading_line": 34781,
-        "line": 34783,
+        "heading_line": 34783,
+        "line": 34785,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -274983,8 +275046,8 @@
       "source_location": {
         "heading": "SP-596 - worktree.deleted prepared event contract",
         "heading_level": 3,
-        "heading_line": 34821,
-        "line": 34823,
+        "heading_line": 34823,
+        "line": 34825,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275000,8 +275063,8 @@
       "source_location": {
         "heading": "SP-600 - Event Authority format.applied persistence and passive reader",
         "heading_level": 3,
-        "heading_line": 43487,
-        "line": 43489,
+        "heading_line": 43489,
+        "line": 43491,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275017,8 +275080,8 @@
       "source_location": {
         "heading": "SP-601 - Event Authority lsp.server.lifecycle_changed persistence and passive reader",
         "heading_level": 3,
-        "heading_line": 43542,
-        "line": 43544,
+        "heading_line": 43544,
+        "line": 43546,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275034,8 +275097,8 @@
       "source_location": {
         "heading": "SP-602 - Event Authority model.catalog_refreshed persistence and passive reader",
         "heading_level": 3,
-        "heading_line": 43597,
-        "line": 43599,
+        "heading_line": 43599,
+        "line": 43601,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275051,8 +275114,8 @@
       "source_location": {
         "heading": "SP-603 - Event Authority subagent.context_rehydrated persistence and passive reader",
         "heading_level": 3,
-        "heading_line": 43652,
-        "line": 43654,
+        "heading_line": 43654,
+        "line": 43656,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275068,8 +275131,8 @@
       "source_location": {
         "heading": "SP-604 - Event Authority subagent.context_shrunk persistence and passive reader",
         "heading_level": 3,
-        "heading_line": 43707,
-        "line": 43709,
+        "heading_line": 43709,
+        "line": 43711,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275085,8 +275148,8 @@
       "source_location": {
         "heading": "SP-605 - Event Authority project.added persistence and passive reader",
         "heading_level": 3,
-        "heading_line": 43762,
-        "line": 43764,
+        "heading_line": 43764,
+        "line": 43766,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275102,8 +275165,8 @@
       "source_location": {
         "heading": "SP-606 - Event Authority project.created persistence and passive reader",
         "heading_level": 3,
-        "heading_line": 43817,
-        "line": 43819,
+        "heading_line": 43819,
+        "line": 43821,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275119,8 +275182,8 @@
       "source_location": {
         "heading": "SP-607 - Event Authority git.clone.completed persistence and passive reader",
         "heading_level": 3,
-        "heading_line": 43872,
-        "line": 43874,
+        "heading_line": 43874,
+        "line": 43876,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275136,8 +275199,8 @@
       "source_location": {
         "heading": "SP-610 — bundle.selection_forward_blocked",
         "heading_level": 3,
-        "heading_line": 34861,
-        "line": 34887,
+        "heading_line": 34863,
+        "line": 34889,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275153,8 +275216,8 @@
       "source_location": {
         "heading": "SP-611 — bundle.selection_sent_to_chat",
         "heading_level": 3,
-        "heading_line": 35085,
-        "line": 35111,
+        "heading_line": 35087,
+        "line": 35113,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275170,8 +275233,8 @@
       "source_location": {
         "heading": "SP-612 — chat.message",
         "heading_level": 3,
-        "heading_line": 35309,
-        "line": 35335,
+        "heading_line": 35311,
+        "line": 35337,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275187,8 +275250,8 @@
       "source_location": {
         "heading": "SP-613 — chat.thread_archived",
         "heading_level": 3,
-        "heading_line": 38458,
-        "line": 38484,
+        "heading_line": 38460,
+        "line": 38486,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275204,8 +275267,8 @@
       "source_location": {
         "heading": "SP-614 — chat.thread_created",
         "heading_level": 3,
-        "heading_line": 35537,
-        "line": 35563,
+        "heading_line": 35539,
+        "line": 35565,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275221,8 +275284,8 @@
       "source_location": {
         "heading": "SP-615 — chat.thread_deleted",
         "heading_level": 3,
-        "heading_line": 35761,
-        "line": 35787,
+        "heading_line": 35763,
+        "line": 35789,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275238,8 +275301,8 @@
       "source_location": {
         "heading": "SP-616 — chat.thread_worktree_bound",
         "heading_level": 3,
-        "heading_line": 35986,
-        "line": 36012,
+        "heading_line": 35988,
+        "line": 36014,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275255,8 +275318,8 @@
       "source_location": {
         "heading": "SP-617 — chat.thread_worktree_create_failed",
         "heading_level": 3,
-        "heading_line": 36210,
-        "line": 36236,
+        "heading_line": 36212,
+        "line": 36238,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275272,8 +275335,8 @@
       "source_location": {
         "heading": "SP-618 — chat.thread_worktree_merge_failed",
         "heading_level": 3,
-        "heading_line": 36434,
-        "line": 36460,
+        "heading_line": 36436,
+        "line": 36462,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275289,8 +275352,8 @@
       "source_location": {
         "heading": "SP-619 — chat.thread_worktree_merged",
         "heading_level": 3,
-        "heading_line": 36658,
-        "line": 36684,
+        "heading_line": 36660,
+        "line": 36686,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275306,8 +275369,8 @@
       "source_location": {
         "heading": "SP-620 — chat.thread_worktree_pr_created",
         "heading_level": 3,
-        "heading_line": 36882,
-        "line": 36908,
+        "heading_line": 36884,
+        "line": 36910,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275323,8 +275386,8 @@
       "source_location": {
         "heading": "SP-621 — chat.thread_worktree_pr_failed",
         "heading_level": 3,
-        "heading_line": 37106,
-        "line": 37132,
+        "heading_line": 37108,
+        "line": 37134,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275340,8 +275403,8 @@
       "source_location": {
         "heading": "SP-622 — chat.thread_worktree_pre_merge_test_failed",
         "heading_level": 3,
-        "heading_line": 37330,
-        "line": 37356,
+        "heading_line": 37332,
+        "line": 37358,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275357,8 +275420,8 @@
       "source_location": {
         "heading": "SP-623 — chat.thread_worktree_pre_merge_test_passed",
         "heading_level": 3,
-        "heading_line": 37555,
-        "line": 37581,
+        "heading_line": 37557,
+        "line": 37583,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275374,8 +275437,8 @@
       "source_location": {
         "heading": "SP-624 — chat.thread_worktree_pre_merge_test_started",
         "heading_level": 3,
-        "heading_line": 37780,
-        "line": 37808,
+        "heading_line": 37782,
+        "line": 37810,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275391,8 +275454,8 @@
       "source_location": {
         "heading": "SP-625 — chat.thread_worktree_renamed",
         "heading_level": 3,
-        "heading_line": 38010,
-        "line": 38036,
+        "heading_line": 38012,
+        "line": 38038,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275408,8 +275471,8 @@
       "source_location": {
         "heading": "SP-626 — chat.thread_worktree_unbound",
         "heading_level": 3,
-        "heading_line": 38234,
-        "line": 38260,
+        "heading_line": 38236,
+        "line": 38262,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275425,8 +275488,8 @@
       "source_location": {
         "heading": "SP-627 — Stop request and canonical assistant-turn result custody",
         "heading_level": 3,
-        "heading_line": 38684,
-        "line": 38694,
+        "heading_line": 38686,
+        "line": 38696,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275442,8 +275505,8 @@
       "source_location": {
         "heading": "SP-628 — DL-406/DL-427 conditional retirement of three chat_run names",
         "heading_level": 3,
-        "heading_line": 38796,
-        "line": 38802,
+        "heading_line": 38798,
+        "line": 38804,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275459,8 +275522,8 @@
       "source_location": {
         "heading": "SP-630 - memory.dedup_sweep.completed persistence and history",
         "heading_level": 3,
-        "heading_line": 39828,
-        "line": 39830,
+        "heading_line": 39830,
+        "line": 39832,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275476,8 +275539,8 @@
       "source_location": {
         "heading": "SP-631 - memory.dedup_sweep.started persistence and history",
         "heading_level": 3,
-        "heading_line": 39887,
-        "line": 39889,
+        "heading_line": 39889,
+        "line": 39891,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275493,8 +275556,8 @@
       "source_location": {
         "heading": "SP-632 - memory.index.lexical.rebuild.completed persistence and history",
         "heading_level": 3,
-        "heading_line": 39946,
-        "line": 39948,
+        "heading_line": 39948,
+        "line": 39950,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275510,8 +275573,8 @@
       "source_location": {
         "heading": "SP-633 - memory.index.lexical.rebuild.started persistence and history",
         "heading_level": 3,
-        "heading_line": 40011,
-        "line": 40013,
+        "heading_line": 40013,
+        "line": 40015,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275527,8 +275590,8 @@
       "source_location": {
         "heading": "SP-634 - memory.index.semantic.rebuild.completed persistence and history",
         "heading_level": 3,
-        "heading_line": 40076,
-        "line": 40078,
+        "heading_line": 40078,
+        "line": 40080,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275544,8 +275607,8 @@
       "source_location": {
         "heading": "SP-635 - memory.index.semantic.rebuild.started persistence and history",
         "heading_level": 3,
-        "heading_line": 40141,
-        "line": 40143,
+        "heading_line": 40143,
+        "line": 40145,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275561,8 +275624,8 @@
       "source_location": {
         "heading": "SP-636 - memory.verification_sweep.completed persistence and history",
         "heading_level": 3,
-        "heading_line": 40206,
-        "line": 40208,
+        "heading_line": 40208,
+        "line": 40210,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275578,8 +275641,8 @@
       "source_location": {
         "heading": "SP-637 - memory.verification_sweep.started persistence and history",
         "heading_level": 3,
-        "heading_line": 40263,
-        "line": 40265,
+        "heading_line": 40265,
+        "line": 40267,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275595,8 +275658,8 @@
       "source_location": {
         "heading": "SP-638 - memory.monthly_summary.completed Card 1b contract",
         "heading_level": 3,
-        "heading_line": 40320,
-        "line": 40322,
+        "heading_line": 40322,
+        "line": 40324,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275612,8 +275675,8 @@
       "source_location": {
         "heading": "SP-639 - memory.monthly_summary.started Card 1b contract",
         "heading_level": 3,
-        "heading_line": 40466,
-        "line": 40468,
+        "heading_line": 40468,
+        "line": 40470,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275629,8 +275692,8 @@
       "source_location": {
         "heading": "SP-640 — doctor.custom_headless.checked Storage adoption.",
         "heading_level": 3,
-        "heading_line": 40612,
-        "line": 40614,
+        "heading_line": 40614,
+        "line": 40616,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275646,8 +275709,8 @@
       "source_location": {
         "heading": "SP-642 — live.session.started Storage adoption.",
         "heading_level": 3,
-        "heading_line": 40701,
-        "line": 40703,
+        "heading_line": 40703,
+        "line": 40705,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275663,8 +275726,8 @@
       "source_location": {
         "heading": "SP-643 — live.step.updated Storage adoption.",
         "heading_level": 3,
-        "heading_line": 40742,
-        "line": 40744,
+        "heading_line": 40744,
+        "line": 40746,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275680,8 +275743,8 @@
       "source_location": {
         "heading": "SP-644 — live.artifact.created Storage adoption.",
         "heading_level": 3,
-        "heading_line": 40783,
-        "line": 40785,
+        "heading_line": 40785,
+        "line": 40787,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275697,8 +275760,8 @@
       "source_location": {
         "heading": "SP-645 — live.session.completed Storage adoption.",
         "heading_level": 3,
-        "heading_line": 40824,
-        "line": 40826,
+        "heading_line": 40826,
+        "line": 40828,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275714,8 +275777,8 @@
       "source_location": {
         "heading": "SP-646 — live.session.degraded Storage adoption.",
         "heading_level": 3,
-        "heading_line": 40865,
-        "line": 40867,
+        "heading_line": 40867,
+        "line": 40869,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275731,8 +275794,8 @@
       "source_location": {
         "heading": "SP-647 — browser.context_captured Storage binding",
         "heading_level": 3,
-        "heading_line": 40906,
-        "line": 40908,
+        "heading_line": 40908,
+        "line": 40910,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275748,8 +275811,8 @@
       "source_location": {
         "heading": "SP-648 — dev.session.started Storage binding",
         "heading_level": 3,
-        "heading_line": 40946,
-        "line": 40948,
+        "heading_line": 40948,
+        "line": 40950,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275765,8 +275828,8 @@
       "source_location": {
         "heading": "SP-649 — dev.session.stopping Storage binding",
         "heading_level": 3,
-        "heading_line": 40985,
-        "line": 40987,
+        "heading_line": 40987,
+        "line": 40989,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275782,8 +275845,8 @@
       "source_location": {
         "heading": "SP-650 — dev.session.stopped Storage binding",
         "heading_level": 3,
-        "heading_line": 41024,
-        "line": 41026,
+        "heading_line": 41026,
+        "line": 41028,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275799,8 +275862,8 @@
       "source_location": {
         "heading": "SP-651 — dev.session.restarting Storage binding",
         "heading_level": 3,
-        "heading_line": 41063,
-        "line": 41065,
+        "heading_line": 41065,
+        "line": 41067,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275816,8 +275879,8 @@
       "source_location": {
         "heading": "SP-652 — preview.session.started Storage binding",
         "heading_level": 3,
-        "heading_line": 41102,
-        "line": 41104,
+        "heading_line": 41104,
+        "line": 41106,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275833,8 +275896,8 @@
       "source_location": {
         "heading": "SP-653 — preview.session.refreshed Storage binding",
         "heading_level": 3,
-        "heading_line": 41141,
-        "line": 41143,
+        "heading_line": 41143,
+        "line": 41145,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275850,8 +275913,8 @@
       "source_location": {
         "heading": "SP-654 — preview.session.stopped Storage binding",
         "heading_level": 3,
-        "heading_line": 41180,
-        "line": 41182,
+        "heading_line": 41182,
+        "line": 41184,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275867,8 +275930,8 @@
       "source_location": {
         "heading": "SP-655 — Developer workflow and subordinate DAP value v2",
         "heading_level": 3,
-        "heading_line": 41219,
-        "line": 41221,
+        "heading_line": 41221,
+        "line": 41223,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275884,8 +275947,8 @@
       "source_location": {
         "heading": "SP-656 — Preview subject UI and runtime identity mapping",
         "heading_level": 3,
-        "heading_line": 41259,
-        "line": 41261,
+        "heading_line": 41261,
+        "line": 41263,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275901,8 +275964,8 @@
       "source_location": {
         "heading": "SP-657 — catalog.install.started Storage contract",
         "heading_level": 3,
-        "heading_line": 41299,
-        "line": 41301,
+        "heading_line": 41301,
+        "line": 41303,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275918,8 +275981,8 @@
       "source_location": {
         "heading": "SP-658 — catalog.install.completed Storage contract",
         "heading_level": 3,
-        "heading_line": 41348,
-        "line": 41350,
+        "heading_line": 41350,
+        "line": 41352,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275935,8 +275998,8 @@
       "source_location": {
         "heading": "SP-660 - alert.acknowledged original custody and history",
         "heading_level": 3,
-        "heading_line": 41396,
-        "line": 41398,
+        "heading_line": 41398,
+        "line": 41400,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275952,8 +276015,8 @@
       "source_location": {
         "heading": "SP-661 - alert.dismissed original custody and history",
         "heading_level": 3,
-        "heading_line": 41543,
-        "line": 41545,
+        "heading_line": 41545,
+        "line": 41547,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275969,8 +276032,8 @@
       "source_location": {
         "heading": "SP-662 - alert.rule_muted original custody and history",
         "heading_level": 3,
-        "heading_line": 41690,
-        "line": 41692,
+        "heading_line": 41692,
+        "line": 41694,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -275986,8 +276049,8 @@
       "source_location": {
         "heading": "SP-663 - alert.snoozed original custody and history",
         "heading_level": 3,
-        "heading_line": 41837,
-        "line": 41839,
+        "heading_line": 41839,
+        "line": 41841,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276003,8 +276066,8 @@
       "source_location": {
         "heading": "SP-664 - panel.redocked current chat-only audit and history",
         "heading_level": 3,
-        "heading_line": 41984,
-        "line": 41986,
+        "heading_line": 41986,
+        "line": 41988,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276020,8 +276083,8 @@
       "source_location": {
         "heading": "SP-665 - panel.undocked current chat-only audit and history",
         "heading_level": 3,
-        "heading_line": 42146,
-        "line": 42148,
+        "heading_line": 42148,
+        "line": 42150,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276037,8 +276100,8 @@
       "source_location": {
         "heading": "SP-666 - concern.created authorized original creation and History custody",
         "heading_level": 3,
-        "heading_line": 42308,
-        "line": 42310,
+        "heading_line": 42310,
+        "line": 42312,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276054,8 +276117,8 @@
       "source_location": {
         "heading": "SP-670 - DG6B GitHub auth individual persistence contracts",
         "heading_level": 3,
-        "heading_line": 31806,
-        "line": 31808,
+        "heading_line": 31808,
+        "line": 31810,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276071,8 +276134,8 @@
       "source_location": {
         "heading": "SP-671 - DG6B plugin individual persistence contracts",
         "heading_level": 3,
-        "heading_line": 31951,
-        "line": 31953,
+        "heading_line": 31953,
+        "line": 31955,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276088,8 +276151,8 @@
       "source_location": {
         "heading": "SP-672 - DG6B Persona individual persistence contracts",
         "heading_level": 3,
-        "heading_line": 32164,
-        "line": 32166,
+        "heading_line": 32166,
+        "line": 32168,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276105,8 +276168,8 @@
       "source_location": {
         "heading": "SP-720 — crew.board_message_posted canonical coordination member",
         "heading_level": 3,
-        "heading_line": 31631,
-        "line": 31649,
+        "heading_line": 31633,
+        "line": 31651,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276122,8 +276185,8 @@
       "source_location": {
         "heading": "SP-721 — crew.board_message_read canonical coordination member",
         "heading_level": 3,
-        "heading_line": 31676,
-        "line": 31694,
+        "heading_line": 31678,
+        "line": 31696,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276139,8 +276202,8 @@
       "source_location": {
         "heading": "SP-722 — crew.board_messages_archived canonical coordination member",
         "heading_level": 3,
-        "heading_line": 31721,
-        "line": 31739,
+        "heading_line": 31723,
+        "line": 31741,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276156,8 +276219,8 @@
       "source_location": {
         "heading": "SP-723 — Governed application board message V2 storage/source successor",
         "heading_level": 3,
-        "heading_line": 31766,
-        "line": 31778,
+        "heading_line": 31768,
+        "line": 31780,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276173,8 +276236,8 @@
       "source_location": {
         "heading": "SP-760 - browser.session.created storage and read custody",
         "heading_level": 3,
-        "heading_line": 42510,
-        "line": 42512,
+        "heading_line": 42512,
+        "line": 42514,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276190,8 +276253,8 @@
       "source_location": {
         "heading": "SP-761 - browser.session.state_changed storage and read custody",
         "heading_level": 3,
-        "heading_line": 42632,
-        "line": 42634,
+        "heading_line": 42634,
+        "line": 42636,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276207,8 +276270,8 @@
       "source_location": {
         "heading": "SP-762 - browser.session.closed storage and read custody",
         "heading_level": 3,
-        "heading_line": 42754,
-        "line": 42756,
+        "heading_line": 42756,
+        "line": 42758,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276224,8 +276287,8 @@
       "source_location": {
         "heading": "SP-763 - browser.session.promoted storage and read custody",
         "heading_level": 3,
-        "heading_line": 42876,
-        "line": 42878,
+        "heading_line": 42878,
+        "line": 42880,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276241,8 +276304,8 @@
       "source_location": {
         "heading": "SP-764 - browser.session.takeover_state_changed storage and read custody",
         "heading_level": 3,
-        "heading_line": 42998,
-        "line": 43000,
+        "heading_line": 43000,
+        "line": 43002,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -276258,8 +276321,8 @@
       "source_location": {
         "heading": "SP-765 - memory.gist_state_changed storage and read custody",
         "heading_level": 3,
-        "heading_line": 43121,
-        "line": 43123,
+        "heading_line": 43123,
+        "line": 43125,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -292609,10 +292672,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 23581,
+    "depends_on_edge_count": 23590,
     "downstream_blocked_node_count": 0,
-    "edge_count": 26799,
-    "node_count": 8811,
+    "edge_count": 26808,
+    "node_count": 8812,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3218,
     "unresolved_reference_count": 0
