@@ -1,0 +1,691 @@
+{
+ "goal.created/member/reply_schema": {
+  "cut_raises": null,
+  "families": [
+   "goal.created"
+  ],
+  "guard_site": null,
+  "kind": "duplicate_set",
+  "requires_kill_class": "DUPLICATE_SET_KILLED",
+  "statement": "SP-298 final disclosure boundary: the reply must be the owner's closed MemberSuccessV1 (value typed by member suffix). Every input reaching it with a bad value is first refused by the phase or value-present rows, so it is never the sole refusal; it is closed by the same declared duplicate sets, whose joint cut accepts while each site refuses alone.",
+  "witness": {
+   "input_sha256": "8a97c4f50f29ad04dba8d1bf1565dfd4f07abd052accdcef41e6d9a9f509224e",
+   "label": "goal.created/member/single-defect/row_missing",
+   "set": [
+    "goal.created/member/reply_schema",
+    "goal.created/member/row_present",
+    "goal.created/member/value_present"
+   ],
+   "site_cuts": {
+    "goal.created/member/reply_schema": [
+     "goal.created/member/reply_schema"
+    ],
+    "goal.created/member/row_present": [
+     "goal.created/member/row_present"
+    ],
+    "goal.created/member/value_present": [
+     "goal.created/member/value_present"
+    ]
+   }
+  }
+ },
+ "goal.created/member/value_present": {
+  "cut_raises": null,
+  "families": [
+   "goal.created"
+  ],
+  "guard_site": null,
+  "kind": "duplicate_set",
+  "requires_kill_class": "DUPLICATE_SET_KILLED",
+  "statement": "SP-298 member role: a null member value is refused as member_unavailable. It refuses only together with the earlier phase row (a no-effect or unknown row holds no creation receipt) or the row-presence row, so it is never the sole refusal and its gated table cannot be run; it is closed by the declared duplicate sets (phase, value_present, reply_schema) and (row_present, value_present, reply_schema), whose joint cut makes the complete resolver accept while each site still refuses alone.",
+  "witness": {
+   "input_sha256": "8a97c4f50f29ad04dba8d1bf1565dfd4f07abd052accdcef41e6d9a9f509224e",
+   "label": "goal.created/member/single-defect/row_missing",
+   "set": [
+    "goal.created/member/reply_schema",
+    "goal.created/member/row_present",
+    "goal.created/member/value_present"
+   ],
+   "site_cuts": {
+    "goal.created/member/reply_schema": [
+     "goal.created/member/reply_schema"
+    ],
+    "goal.created/member/row_present": [
+     "goal.created/member/row_present"
+    ],
+    "goal.created/member/value_present": [
+     "goal.created/member/value_present"
+    ]
+   }
+  }
+ },
+ "restore_point.deleted/original/actual generation dataset": {
+  "cut_raises": {
+   "detail": "object of type 'NoneType' has no len()",
+   "exception": "TypeError",
+   "frames": [
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/adoption_v4_check.py",
+     "line": 22,
+     "text": "generic_validate(v);expected=token(v);expect(t==expected,'exact current generation/anchor/frontier/source/redb snapshot token');expect(Draft202012Validator(contracts['$defs']['read_token'],format_checker=FormatChecker()).is_valid(t),'read t"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+     "line": 467,
+     "text": "result=__fn(*args,**kwargs)"
+    },
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py",
+     "line": 106,
+     "text": "rows=v['datasets'].get(g['index_dataset_name']);expect(rows is not None,'actual generation dataset');expect(len(rows)==front['index_row_count']==front['coverage']['retained_event_count'],'complete index cardinality');expect(rows_hash(rows)="
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted",
+   "run.started"
+  ],
+  "guard_site": [
+   [
+    "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py",
+    106
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (frozen-fixture/single-defect/235) the single-row cut makes the complete checker raise TypeError at /mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py:106 (`rows=v['datasets'].get(g['index_dataset_name']);expect(rows is not None,'actual generation dataset');expect(len(rows)==front['index_row_count']==front['coverage']['retained_event_count'],'complete index cardinality');expect(rows_hash(rows)=`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "53a9a17d1a56f71a0858f4124d52ee58b833886f973fa69c23e481ff298da3e4",
+   "label": "frozen-fixture/single-defect/235"
+  }
+ },
+ "restore_point.deleted/original/cleanup selects exact retired generation, never current": {
+  "cut_raises": {
+   "detail": "list index out of range",
+   "exception": "IndexError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_run_adoption_oracles.py",
+     "line": 184,
+     "text": "result=ns['run_retention_eligible'](value['root'],value['selection'])"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_run_adoption_oracles.py",
+     "line": 150,
+     "text": "result=__fn(*args,**kwargs)"
+    },
+    {
+     "file": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/adoption_v4_check.py",
+     "line": 123,
+     "text": "matches=[x for x in c['retired_generations'] if x['publication_id']==decision['selected_retired_publication_id']];expect(len(matches)==1,'cleanup selects exact retired generation, never current');x=matches[0]"
+    }
+   ]
+  },
+  "families": [
+   "run.started"
+  ],
+  "guard_site": [
+   [
+    "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/adoption_v4_check.py",
+    123
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (run.started/retention/single-defect/selected_generation) the single-row cut makes the complete checker raise IndexError at /home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/adoption_v4_check.py:123 (`matches=[x for x in c['retired_generations'] if x['publication_id']==decision['selected_retired_publication_id']];expect(len(matches)==1,'cleanup selects exact retired generation, never current');x=matches[0]`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "fbe8893652d800394fdf5f55ffcc3d540849c4c25d09c74b6965824b2c35ab72",
+   "label": "run.started/retention/single-defect/selected_generation"
+  }
+ },
+ "restore_point.deleted/original/committed marker": {
+  "cut_raises": {
+   "detail": "'NoneType' object is not subscriptable",
+   "exception": "TypeError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+     "line": 207,
+     "text": "try:fn(*value['args'],**value['kwargs'])"
+    },
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/created_domain_sp278.py",
+     "line": 55,
+     "text": "expect(rec['event_id'] == e['event_id'] and rec['sequence_id'] == e['sequence_id'] and (rec['manifest_generation'] == src['manifest_generation']) and (rec['durable_end_offset'] == src['durable_end_offset']), 'receipt join')"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted",
+   "run.started"
+  ],
+  "guard_site": [
+   [
+    "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/created_domain_sp278.py",
+    46
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (frozen-fixture/single-defect/303) the single-row cut makes the complete checker raise TypeError at /mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/created_domain_sp278.py:55 (`expect(rec['event_id'] == e['event_id'] and rec['sequence_id'] == e['sequence_id'] and (rec['manifest_generation'] == src['manifest_generation']) and (rec['durable_end_offset'] == src['durable_end_offset']), 'receipt join')`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "9fb83a99da4633a03664993400d28119afff23e75448d8bf1414310a4edf1b25",
+   "label": "frozen-fixture/single-defect/303"
+  }
+ },
+ "restore_point.deleted/original/exact canonical row set": {
+  "cut_raises": {
+   "detail": "'event_record_index.v2:project~cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521'",
+   "exception": "KeyError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+     "line": 207,
+     "text": "try:fn(*value['args'],**value['kwargs'])"
+    },
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py",
+     "line": 109,
+     "text": "actual=rows[ikey(f['event'])];expect(iv.is_valid(actual),'existing index row schema');expected=row_for(f,g)"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted",
+   "run.started"
+  ],
+  "guard_site": [
+   [
+    "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py",
+    106
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (frozen-fixture/single-defect/277) the single-row cut makes the complete checker raise KeyError at /mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py:109 (`actual=rows[ikey(f['event'])];expect(iv.is_valid(actual),'existing index row schema');expected=row_for(f,g)`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "9946981683eb2ac41caff2169acb7df70a02b62bc01adcd50220c7cb91b89da3",
+   "label": "frozen-fixture/single-defect/277"
+  }
+ },
+ "restore_point.deleted/original/result kind": {
+  "cut_raises": {
+   "detail": "'NoneType' object is not subscriptable",
+   "exception": "TypeError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+     "line": 207,
+     "text": "try:fn(*value['args'],**value['kwargs'])"
+    },
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/created_domain_sp278.py",
+     "line": 79,
+     "text": "expect(s['project_id'] == project and s['scope_partition'] == partition and (s['storage_instance_id'] == c['storage_instance_id']) and (s['restore_point_id'] == rp_id) and (s['record_ref'] == v['record_key']) and (s['original_record_hash'] "
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted",
+   "run.started"
+  ],
+  "guard_site": [
+   [
+    "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/created_domain_sp278.py",
+    74
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (go-duplicate/restore_point.deleted/frozen-fixture/single-defect/168) the single-row cut makes the complete checker raise TypeError at /mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/created_domain_sp278.py:79 (`expect(s['project_id'] == project and s['scope_partition'] == partition and (s['storage_instance_id'] == c['storage_instance_id']) and (s['restore_point_id'] == rp_id) and (s['record_ref'] == v['record_key']) and (s['original_record_hash'] `): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "fda5f56b9099ba5885d381b8e58f706931aa4e7d362386192ab554fcbb21b06f",
+   "label": "go-duplicate/restore_point.deleted/frozen-fixture/single-defect/168"
+  }
+ },
+ "restore_point.deleted/original/run retention selection schema": {
+  "cut_raises": {
+   "detail": "'NoneType' object is not subscriptable",
+   "exception": "TypeError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_run_adoption_oracles.py",
+     "line": 184,
+     "text": "result=ns['run_retention_eligible'](value['root'],value['selection'])"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_run_adoption_oracles.py",
+     "line": 150,
+     "text": "result=__fn(*args,**kwargs)"
+    },
+    {
+     "file": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/adoption_v4_check.py",
+     "line": 122,
+     "text": "key='run_started_index_checkpoint.v1:'+c['storage_instance_id']+':'+c['scope_partition'];expect(decision['storage_instance_id']==c['storage_instance_id'] and decision['checkpoint_key']==key and decision['checkpoint_sha256']==bdig(c),'run cl"
+    }
+   ]
+  },
+  "families": [
+   "run.started"
+  ],
+  "guard_site": [
+   [
+    "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/adoption_v4_check.py",
+    121
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (run.started/retention/single-defect/selection_schema) the single-row cut makes the complete checker raise TypeError at /home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/check-sources/adoption_v4_check.py:122 (`key='run_started_index_checkpoint.v1:'+c['storage_instance_id']+':'+c['scope_partition'];expect(decision['storage_instance_id']==c['storage_instance_id'] and decision['checkpoint_key']==key and decision['checkpoint_sha256']==bdig(c),'run cl`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "d1ee9e3d34b2bfe3f03aa8d4900237307dbde882a9bab3a867d1bbf04e505afc",
+   "label": "run.started/retention/single-defect/selection_schema"
+  }
+ },
+ "restore_point.deleted/original/schema/35d687558705f85873a00aad5c50cdae60352f0eeae7972474e5076b26759b96": {
+  "cut_raises": {
+   "detail": "",
+   "exception": "AssertionError",
+   "frames": [
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_fixture_hash_helpers.py",
+     "line": 24,
+     "text": "return hdr+b''.join(mp(k)+mp(x[k]) for k in sorted(x,key=lambda k:k.encode()))"
+    },
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_fixture_hash_helpers.py",
+     "line": 24,
+     "text": "return hdr+b''.join(mp(k)+mp(x[k]) for k in sorted(x,key=lambda k:k.encode()))"
+    },
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_fixture_hash_helpers.py",
+     "line": 9,
+     "text": "assert 0<=x<2**64"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted"
+  ],
+  "guard_site": [
+   [
+    "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+    97
+   ]
+  ],
+  "kind": "typed",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "With this row cut, the witness value (go-duplicate/restore_point.deleted/restore_point.deleted/retained/shared-uint64/uint64-overflow--1) reaches a shared codec or a harness postcondition that refuses it by raising AssertionError at /mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_fixture_hash_helpers.py:9 (`assert 0<=x<2**64`); the row is the owner refusal in front of that codec. No kill credit.",
+  "witness": {
+   "input_sha256": "704fe2cdafffa7fdac5d6efd594958b19cc9c131e19e8398c1a5fc777ecdbce7",
+   "label": "go-duplicate/restore_point.deleted/restore_point.deleted/retained/shared-uint64/uint64-overflow--1"
+  }
+ },
+ "restore_point.deleted/original/separate app-root deletion result survives retirement": {
+  "cut_raises": {
+   "detail": "'NoneType' object is not subscriptable",
+   "exception": "TypeError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+     "line": 207,
+     "text": "try:fn(*value['args'],**value['kwargs'])"
+    },
+    {
+     "file": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/validate_deleted_v3.py",
+     "line": 226,
+     "text": "receipt=b['result']['original_append_receipt'];expect(receipt['manifest_generation']==orig['source_selection']['manifest_generation'] and receipt['event_id']==orig['event_id'] and receipt['sequence_id']==term['original_sequence_id'] and rec"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted"
+  ],
+  "guard_site": [
+   [
+    "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/validate_deleted_v3.py",
+    225
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (frozen-fixture/single-defect/304) the single-row cut makes the complete checker raise TypeError at /home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/validate_deleted_v3.py:226 (`receipt=b['result']['original_append_receipt'];expect(receipt['manifest_generation']==orig['source_selection']['manifest_generation'] and receipt['event_id']==orig['event_id'] and receipt['sequence_id']==term['original_sequence_id'] and rec`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "f8366e8028ae4a2a7e643e7aef1142cff3a44f6c4e37f82fcf902611b133ecfb",
+   "label": "frozen-fixture/single-defect/304"
+  }
+ },
+ "restore_point.deleted/original/terminal original result only": {
+  "cut_raises": {
+   "detail": "'NoneType' object is not subscriptable",
+   "exception": "TypeError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+     "line": 207,
+     "text": "try:fn(*value['args'],**value['kwargs'])"
+    },
+    {
+     "file": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/validate_deleted_v3.py",
+     "line": 31,
+     "text": "c=row['original_dispatch_custody'];n=c['original_normalized_request'];o=c['original_command_outcome'];u=c['original_response'];z=row['result'];q=command_request_from_row(row)"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted"
+  ],
+  "guard_site": [
+   [
+    "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/validate_deleted_v3.py",
+    29
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (frozen-fixture/single-defect/256) the single-row cut makes the complete checker raise TypeError at /home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/validate_deleted_v3.py:31 (`c=row['original_dispatch_custody'];n=c['original_normalized_request'];o=c['original_command_outcome'];u=c['original_response'];z=row['result'];q=command_request_from_row(row)`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "ee413dbc7623838a278e0ab08223135ca9b6b9293400724328fc63af021f259e",
+   "label": "frozen-fixture/single-defect/256"
+  }
+ },
+ "restore_point.deleted/original/unique actual current generation": {
+  "cut_raises": {
+   "detail": "'eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385f1'",
+   "exception": "KeyError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+     "line": 207,
+     "text": "try:fn(*value['args'],**value['kwargs'])"
+    },
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py",
+     "line": 101,
+     "text": "g=ids[curr];src=v['current_source'];check_source(src);front=g['frontier'];anchor=g['anchor'];expect(front['source_selection']==src['source_selection'],'CURRENT/manifest current frontier');expect(front['coverage']==coverage(src),'complete ac"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted",
+   "run.started"
+  ],
+  "guard_site": [
+   [
+    "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py",
+    94
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (frozen-fixture/single-defect/125) the single-row cut makes the complete checker raise KeyError at /mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_checkpoint_check.py:101 (`g=ids[curr];src=v['current_source'];check_source(src);front=g['frontier'];anchor=g['anchor'];expect(front['source_selection']==src['source_selection'],'CURRENT/manifest current frontier');expect(front['coverage']==coverage(src),'complete ac`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "746a2ca4949e18f364d7d142657b6caac4ca3f618fabd3e9061a6acc28722697",
+   "label": "frozen-fixture/single-defect/125"
+  }
+ },
+ "restore_point.deleted/retained/SP274 admitted terminal project": {
+  "cut_raises": {
+   "detail": "'NoneType' object is not subscriptable",
+   "exception": "TypeError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+     "line": 207,
+     "text": "try:fn(*value['args'],**value['kwargs'])"
+    },
+    {
+     "file": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py",
+     "line": 74,
+     "text": "z=row['original_owner_result'];need(z['outcome']=='created' and z['restore_point_id']==r['restore_point_id'] and z['record_ref']==s['point']['key'] and z['record_sha256']==r['record_sha256'] and z['created_event_id']==event['event_id'],'ful"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted"
+  ],
+  "guard_site": [
+   [
+    "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py",
+    73
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (frozen-fixture/single-defect/57) the single-row cut makes the complete checker raise TypeError at /home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py:74 (`z=row['original_owner_result'];need(z['outcome']=='created' and z['restore_point_id']==r['restore_point_id'] and z['record_ref']==s['point']['key'] and z['record_sha256']==r['record_sha256'] and z['created_event_id']==event['event_id'],'ful`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "e865e6ebf7f2d62e756469384366e2cc466027d3eec356700baa11bb276171e6",
+   "label": "frozen-fixture/single-defect/57"
+  }
+ },
+ "restore_point.deleted/retained/actual retained original delete result": {
+  "cut_raises": {
+   "detail": "'NoneType' object is not subscriptable",
+   "exception": "TypeError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_retained_witnesses.py",
+     "line": 78,
+     "text": "try:fn(*value['args'])"
+    },
+    {
+     "file": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py",
+     "line": 124,
+     "text": "need(s['terminal_companion']['key']==d.operation_key(s['terminal_result']['value']),'deletion exact companion key')"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted"
+  ],
+  "guard_site": [
+   [
+    "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py",
+    123
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (restore_point.deleted/retained-phase/missing-terminal_result) the single-row cut makes the complete checker raise TypeError at /home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py:124 (`need(s['terminal_companion']['key']==d.operation_key(s['terminal_result']['value']),'deletion exact companion key')`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "87e4e9bb20c3bcfb388f11734d514aa5cb1139f2197fd54de3a66f0576fa64ce",
+   "label": "restore_point.deleted/retained-phase/missing-terminal_result"
+  }
+ },
+ "restore_point.deleted/retained/actual surviving created_event": {
+  "cut_raises": {
+   "detail": "'event_record_index.v2:project~cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07522'",
+   "exception": "KeyError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+     "line": 207,
+     "text": "try:fn(*value['args'],**value['kwargs'])"
+    },
+    {
+     "file": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py",
+     "line": 41,
+     "text": "need(s[name+'_index']==rows[d.ikey(event)],'actual complete selected '+name+' index')"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted"
+  ],
+  "guard_site": [
+   [
+    "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py",
+    40
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (frozen-fixture/single-defect/3) the single-row cut makes the complete checker raise KeyError at /home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py:41 (`need(s[name+'_index']==rows[d.ikey(event)],'actual complete selected '+name+' index')`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "34ec489dbcd1723da1f631c8823cd64b7aac76bbcab5973a50fa24ff879840da",
+   "label": "frozen-fixture/single-defect/3"
+  }
+ },
+ "restore_point.deleted/retained/actual surviving terminal_event": {
+  "cut_raises": {
+   "detail": "'event_record_index.v2:project~cHJvamVjdC1B:00000000000000000009:er_rpd_debe1ee5aea6267fc0c591f863cd9376a0bef3243d1931ac0710f654b02f8d61'",
+   "exception": "KeyError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_external_oracles.py",
+     "line": 207,
+     "text": "try:fn(*value['args'],**value['kwargs'])"
+    },
+    {
+     "file": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py",
+     "line": 41,
+     "text": "need(s[name+'_index']==rows[d.ikey(event)],'actual complete selected '+name+' index')"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted"
+  ],
+  "guard_site": [
+   [
+    "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py",
+    40
+   ]
+  ],
+  "kind": "presence",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "The checker statement after this guard indexes the member the row guards. On the run's exact witness (frozen-fixture/single-defect/5) the single-row cut makes the complete checker raise KeyError at /home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/retained_read.py:41 (`need(s[name+'_index']==rows[d.ikey(event)],'actual complete selected '+name+' index')`): with the row removed the input is not accepted but crashes the checker, so no single-row kill can exist; the row is the refusal standing in front of that dereference. No kill credit.",
+  "witness": {
+   "input_sha256": "28b9a4b1f71cd868c44ea5e797f56794e10d67ad8a078d7ec52ad8d8a4fec6e8",
+   "label": "frozen-fixture/single-defect/5"
+  }
+ },
+ "restore_point.deleted/retained/receipt-selected original uint64 physical profile": {
+  "cut_raises": {
+   "detail": "",
+   "exception": "AssertionError",
+   "frames": [
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_fixture_hash_helpers.py",
+     "line": 24,
+     "text": "return hdr+b''.join(mp(k)+mp(x[k]) for k in sorted(x,key=lambda k:k.encode()))"
+    },
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_fixture_hash_helpers.py",
+     "line": 24,
+     "text": "return hdr+b''.join(mp(k)+mp(x[k]) for k in sorted(x,key=lambda k:k.encode()))"
+    },
+    {
+     "file": "/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_fixture_hash_helpers.py",
+     "line": 9,
+     "text": "assert 0<=x<2**64"
+    }
+   ]
+  },
+  "families": [
+   "restore_point.deleted"
+  ],
+  "guard_site": [
+   [
+    "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_deleted_components.py",
+    50
+   ]
+  ],
+  "kind": "typed",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "With this row cut, the witness value (restore_point.deleted/retained/shared-uint64/uint64-overflow-18446744073709551616) reaches a shared codec or a harness postcondition that refuses it by raising AssertionError at /mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-restore-deleted-20260911/v3/check-sources/generic_fixture_hash_helpers.py:9 (`assert 0<=x<2**64`); the row is the owner refusal in front of that codec. No kill credit.",
+  "witness": {
+   "input_sha256": "12ebbb58d6c19ec76f18a1d99cc495da4219ceb064100ee8da7c6a981767329d",
+   "label": "restore_point.deleted/retained/shared-uint64/uint64-overflow-18446744073709551616"
+  }
+ },
+ "run.started/storage_sequence_uint64": {
+  "cut_raises": {
+   "detail": "Exceeds the limit (4300 digits) for integer string conversion; use sys.set_int_max_str_digits() to increase the limit",
+   "exception": "ValueError",
+   "frames": [
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_sweep.py",
+     "line": 82,
+     "text": "evaluate(copy.deepcopy(value))"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_run_started.py",
+     "line": 235,
+     "text": "return run_joins(bundle)"
+    },
+    {
+     "file": "/home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_run_started.py",
+     "line": 213,
+     "text": "g.require('run.started/index_key', lookup['index_key'] == f'event_record_index.v2:{part}:{ev[\"sequence_id\"]:020d}:{ev[\"event_id\"]}')"
+    }
+   ]
+  },
+  "families": [
+   "run.started"
+  ],
+  "guard_site": [
+   [
+    "scripts/pm_goal_go_run_started.py",
+    232
+   ]
+  ],
+  "kind": "typed",
+  "requires_kill_class": "CUT_EXCEPTION",
+  "statement": "With this row cut, the witness value (run.started/numbers/sequence_id/probe/4400_digits) reaches a shared codec or a harness postcondition that refuses it by raising ValueError at /home/sittingmongoose/pm-worktrees/pnc-c12-go/scripts/pm_goal_go_run_started.py:213 (`g.require('run.started/index_key', lookup['index_key'] == f'event_record_index.v2:{part}:{ev[\"sequence_id\"]:020d}:{ev[\"event_id\"]}')`); the row is the owner refusal in front of that codec. No kill credit.",
+  "witness": {
+   "input_sha256": "5d30d2a7c2ccf7ac5d62d8ffcc132f1e2328b4b22ac46445f7222f8a85040e38",
+   "label": "run.started/numbers/sequence_id/probe/4400_digits"
+  }
+ }
+}

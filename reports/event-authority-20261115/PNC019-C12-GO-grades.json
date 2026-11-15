@@ -1,0 +1,2036 @@
+{
+ "schema_id": "pm.pnc019.c12_go.depth_grades.v1",
+ "grade": "c12-go-regrade",
+ "assessed_tree": {
+  "commit": "5f1f1829f2",
+  "branch": "plans/ea-pnc-c12-go-20261114",
+  "note": "Three GO families; only criterion 12 re-graded."
+ },
+ "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+ "criteria": [
+  "membership_version",
+  "owner_doc",
+  "producer",
+  "closed_payload_schema",
+  "scope_identity",
+  "replay_idempotency",
+  "retention",
+  "redaction_custody",
+  "transitions",
+  "consumers_checkpoints",
+  "compatibility_withdrawal",
+  "positive_negative_oracles"
+ ],
+ "status_meaning": "PASS/PARTIAL/ABSENT/CONFLICT as in the rubric; a PASS grades owner text, never native or runtime proof. Native execution NOT_RUN for every family.",
+ "oracle_bar": "Criterion 12 PASS requires an executable checker whose guard rows are proved by the gated tool (scripts/pm_guard_isolation.py), using the shared number and date-time calls and retained reads from the sealed receipt (PNC019-RUN quality bar; same bar as lane s3b). Authored cases without that checker grade PARTIAL.",
+ "rows": [
+  {
+   "event_type": "goal.created",
+   "family_id": "event-family-goal-created",
+   "family_revision": "3.0.0",
+   "registry_pointer": "#/families/10",
+   "scope_policy": "application_or_project",
+   "group": "complete",
+   "disposition": "CURRENT_WRITER",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row event-family-goal-created at 3.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_created.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. No sibling or alias admission.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+       "unit": "root",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"$id\": \"pm.goal_runtime_event.goal_created.schema.v3\",",
+       "excerpt_sha256": "6a5b92713533c6433b1aa58d1ecbf8ffa02f8f7b94bd33ff05089b6a3c635bed",
+       "file_sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal V2 events",
+       "line_start": 272,
+       "line_end": 272,
+       "quote": "`goal.created` is admitted only through CV-341/SP-294",
+       "excerpt_sha256": "7da2dbd80d0a1653e3632e8f89f83d98c0cfb4a14f4e08a8ef313547fa4065c0",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal V2 events",
+       "line_start": 272,
+       "line_end": 272,
+       "quote": "no sibling registration grants emission",
+       "excerpt_sha256": "7da2dbd80d0a1653e3632e8f89f83d98c0cfb4a14f4e08a8ef313547fa4065c0",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "semantic_owner_doc resolves to the heading 'Original Goal creation command settlement' (GRS-066 prose) and payload_owner_doc to storage-plan 'Goal start original command custody and publication' (SP-294 prose); both govern active v3 creation.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/10",
+       "line_start": 703,
+       "line_end": 703,
+       "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#original-goal-creation-command-settlement\",",
+       "excerpt_sha256": "78d54f89b8fb0306c7c4b675052b525e29e3065a18dd13ab5192f1c5f65720a3",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/10",
+       "line_start": 704,
+       "line_end": 704,
+       "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#goal-start-original-command-custody-and-publication\",",
+       "excerpt_sha256": "357a88c5552d133c95488d2933bf5fcea53fb9aa55d63d342b3f1b75fdf0abe4",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Original Goal creation command settlement",
+       "line_start": 6509,
+       "line_end": 6509,
+       "quote": "## Original Goal creation command settlement",
+       "excerpt_sha256": "8324b24793af0274d46558b6debbcc5d7b8a57496c8c04e1f3b5cfcaa8622461",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Original Goal creation command settlement",
+       "line_start": 6519,
+       "line_end": 6519,
+       "quote": "The active `goal.created` v3 payload preserves content-free revision/currentness/body-receipt/source references",
+       "excerpt_sha256": "f497b266dc67d5c3d0acea47afa9176f5dde26d7f8d6430ba00aa5982696da89",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Sole existing cmd.chat.goal.start handler (CV-341) with the original Goal body issuer (SP-294) and SIR-048 source custody. Order is explicit: joined body transaction, shared event and first receipt, then immutable SIR/result settlement. SP-294 depends on SP-286 and takes append/full-value proof from original shared v2 first issuance.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "Goal start original command shapes (CV-341)",
+       "line_start": 27641,
+       "line_end": 27641,
+       "quote": "for the existing `cmd.chat.goal.start` command and its sole `handlers::goal_runtime::goal_start` handler",
+       "excerpt_sha256": "0f35e3db9e1e0f50c64fccd48b3523432f7d53acdb6583402153f04b39be2eef",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-066 section",
+       "line_start": 6513,
+       "line_end": 6513,
+       "quote": "The source/event/result chain is acyclic: original body transaction, original shared event/first receipt, then actual immutable SIR/result settlement.",
+       "excerpt_sha256": "f8403d917a7eff5bb353c2077d92c66200eb0619bbdac038733899d34346d50b",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24601,
+       "line_end": 24601,
+       "quote": "the original Goal body issuer joins the five existing SP-287 physical",
+       "excerpt_sha256": "46e44aa3a367c52a04391452dc42713915488c7572d507302290b63bf90ae71b",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24609,
+       "line_end": 24609,
+       "quote": "Original shared v2 group publication and first issuance then supply exact original append/full-value proof",
+       "excerpt_sha256": "9274990f0a6db46d43ed3e23e7c12aec4e740b5486e8f0cb11b207df9b82cbc3",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Active v3 root is closed (additionalProperties false) with twelve content-free fields, goal_revision and accepted_objective_revision const 1, and no retired structure. The whole v2 root survives only under legacy_v2_reader; D-R05 is declared retained-v2 interpretation only, which resolves the earlier retired-structure conflict.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+       "unit": "root",
+       "line_start": 7,
+       "line_end": 7,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+       "file_sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+       "unit": "root/properties/goal_revision",
+       "line_start": 39,
+       "line_end": 39,
+       "quote": "\"const\": 1",
+       "excerpt_sha256": "32312de91caeb1ff522a9c278dc7c98d9c0266af49d895ccba852d186573ee36",
+       "file_sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+       "unit": "root/$defs",
+       "line_start": 78,
+       "line_end": 78,
+       "quote": "\"legacy_v2_reader\": {",
+       "excerpt_sha256": "0fe31d2699d9128e0fcef300f866431f9183b1535f332aa6553391f41f72a633",
+       "file_sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-341 prose",
+       "line_start": 27645,
+       "line_end": 27645,
+       "quote": "The entire prior v2 root, including its own ID and all local definitions, remains under `#/$defs/legacy_v2_reader`",
+       "excerpt_sha256": "7d5977652190465f41280a4783cb2f2281785fff14d2e322ae10cd1fec21f939",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "application_or_project (Project edition project-scoped; app edition dormant) scope with project/thread identity pointers. SP-294 fixes D over storage instance, project, thread, command, command instance, operation and goal ids; event ID goal.created.v1:{D}, idempotency key goal.created.command.v1:{D}; run/node/attempt/account/parent/payload_ref null; occurred time is the joined body transaction time.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/10",
+       "line_start": 716,
+       "line_end": 716,
+       "quote": "\"/payload/project_id\"",
+       "excerpt_sha256": "b861f066719e794f56a69524d7b92dec3b4ab10ed1684a901d05e5fd0f46796a",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24607,
+       "line_end": 24607,
+       "quote": "Its event ID is `goal.created.v1:{D}` and event idempotency key is `goal.created.command.v1:{D}`.",
+       "excerpt_sha256": "a53ce7280f1a17ae139971b6c0b5937c7b6c759253c724dcc5baefcad2a72b5e",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24607,
+       "line_end": 24607,
+       "quote": "Run, node, attempt, requested/effective account, producer sequence, parent event and payload reference are explicitly null",
+       "excerpt_sha256": "a53ce7280f1a17ae139971b6c0b5937c7b6c759253c724dcc5baefcad2a72b5e",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24607,
+       "line_end": 24607,
+       "quote": "Occurred time is the exact original joined body transaction time",
+       "excerpt_sha256": "a53ce7280f1a17ae139971b6c0b5937c7b6c759253c724dcc5baefcad2a72b5e",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Deterministic key D with dedupe_by_idempotency_key; command-instance uniqueness binds source, operation and goal; later refusal keeps the accepted revision with no extra revision; immutable no-effect/unknown terminals cannot be retried into success; no rollback or replacement receipt; SP-286 returns the stored original receipt on lost delivery.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24607,
+       "line_end": 24607,
+       "quote": "`no_secrets` and `dedupe_by_idempotency_key` remain exact",
+       "excerpt_sha256": "a53ce7280f1a17ae139971b6c0b5937c7b6c759253c724dcc5baefcad2a72b5e",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24603,
+       "line_end": 24603,
+       "quote": "changing the generated Goal or operation cannot evade original command-instance uniqueness",
+       "excerpt_sha256": "621fd58f4b44001428b993e1156f44cd6779cbd2ad02758fd4f0f008eea6811c",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-066 section",
+       "line_start": 6517,
+       "line_end": 6517,
+       "quote": "An immutable original terminal no-effect or unknown result cannot be retried into a successful creation under its original command identity.",
+       "excerpt_sha256": "cf651a5599b359310eb297aa6e231e2846f728ffd8403d9c3165e38902802f8d",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24611,
+       "line_end": 24611,
+       "quote": "it cannot reconstruct Storage-owned values or mint a replacement receipt",
+       "excerpt_sha256": "1cc4f246695d527d3b669e71897ee8758bf9809ee9317b7a433c2de0d50da3a2",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registered RP-AUTHORITY-INDEFINITE@1.0.0; the SP-294 command row uses the same policy and SP-287 content families RP-GOAL-THREAD-LIFETIME under decided DL-047. The family owns no derived checkpoint or projection (GRS-064 creation mapping), so no further policy is needed.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/10",
+       "line_start": 737,
+       "line_end": 737,
+       "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\",",
+       "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24626,
+       "line_end": 24626,
+       "quote": "The command row alone uses existing `RP-AUTHORITY-INDEFINITE@1.0.0`",
+       "excerpt_sha256": "a3159ab4b90f36e6ab59ffcdd38dd5cde895751d54e80ca814751b57bc1ab0ae",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Five exact versioned physical values (SP-287)",
+       "line_start": 22820,
+       "line_end": 22820,
+       "quote": "`RP-GOAL-THREAD-LIFETIME@1.0.0`",
+       "excerpt_sha256": "bdea56d8d63f441c9364809ef7cec5328bc0b4114d0b22ffc0e1185b45a6eaf7",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Current creation consumers and canonical Goal state",
+       "line_start": 6285,
+       "line_end": 6285,
+       "quote": "Accordingly these particular view/inspection consumers have no family checkpoint or durable replay effect.",
+       "excerpt_sha256": "d0cf91fea2f7c7eeb2daf6e3d93ca0350cea2fd5ee53593a7e45bb33e3f07f23",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Registry rejects unhandled secrets; Goal V2 events forbid objective_text and secrets; SP-294 keeps no_secrets and a content-free non-rebuildable command row with mandatory coherent backup (same-owner capture/restore selectors); SP-287 hides deleted content immediately; SP-298 members check current audit authority at read. SP-294 leaves fresh-root product restore unavailable.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/10",
+       "line_start": 724,
+       "line_end": 724,
+       "quote": "\"mode\": \"reject_unhandled_secrets\",",
+       "excerpt_sha256": "91c21aae18a31744144bca6d3504227098463bc391436ab5b9042a5b03d04763",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Goal V2 events",
+       "line_start": 276,
+       "line_end": 276,
+       "quote": "no event may carry secrets, tokens, provider credentials, or raw file bodies",
+       "excerpt_sha256": "6d4dcd6c0274d52b826b20a32787972ca3153a27362773c7f96f094fb0dc166b",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24626,
+       "line_end": 24626,
+       "quote": "Complete coherent backup coverage is mandatory because this original authority is non-rebuildable; unproven or unresolved restore remains fenced.",
+       "excerpt_sha256": "a3159ab4b90f36e6ab59ffcdd38dd5cde895751d54e80ca814751b57bc1ab0ae",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24622,
+       "line_end": 24622,
+       "quote": "`storage.goal_start_command.backup_restore_same_owner.v1`",
+       "excerpt_sha256": "520860ec31cb2a37e2fc3ac74415183d39a8b3e3efa343ff4926b06bee4195a5",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current creation inserts body revision 1 with accepted revision/origin under absent-key CAS in the unchanged four-state lifecycle; D-R05's absent->created is retained-v2 only. Barriers: body commit, then event/first receipt, then SIR result; first continuation only after settled success, Stop wins; later refusal keeps the revision.",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "One shared native mutation owner (GRS-064)",
+       "line_start": 6229,
+       "line_end": 6229,
+       "quote": "It atomically inserts semantic body revision 1, accepted objective revision 1, actual origin revision 1, hidden control and original narrow body receipt with absent-key CAS.",
+       "excerpt_sha256": "3903202b3169360cb30a3158243ddab656422114db66045c32441095dcbf1d2a",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-066 section",
+       "line_start": 6515,
+       "line_end": 6515,
+       "quote": "Original first continuation is eligible only after that successful creation result has actually settled",
+       "excerpt_sha256": "821636eb1ea9fe229f9f6747dd24c8a8495a1e90e25375f6b5e269227344799b",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "GRS-066 section",
+       "line_start": 6515,
+       "line_end": 6515,
+       "quote": "Stop wins at the final original dispatch boundary.",
+       "excerpt_sha256": "821636eb1ea9fe229f9f6747dd24c8a8495a1e90e25375f6b5e269227344799b",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "EA-UND-0005-GOAL (D-R05)",
+       "line_start": 3894,
+       "line_end": 3894,
+       "quote": "Active-v3 creation follows CV-341/GRS-066 and original SP-294 custody, with the four-state GoalRecordV2 lifecycle unchanged",
+       "excerpt_sha256": "b0fc51e305783ef205d2c6dd7d05aca0d7167b44b9750c3959688906783594b3",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "GRS-064 maps Activity/body/history to reader.goal.body@1.0.0 and reader.goal.objective_history@1.0.0, with no event-derived projector or checkpoint. SP-298 storage.goal_created.current_read.v1@1.0.0 is a passive reader: checkpoint none_required by explicit owner assignment, SP-278 admission mandatory, ephemeral cursor (not persisted, so DL-076 is not engaged).",
+     "evidence": [
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Current creation consumers and canonical Goal state",
+       "line_start": 6279,
+       "line_end": 6279,
+       "quote": "GRS-064's `reader.goal.body@1.0.0` supplies current state/objective/currentness",
+       "excerpt_sha256": "0b4e1aaca019c318afe81c152774bb9b5a63aadd46c9fe51ece78827443b9365",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Goal_Runtime_System.md",
+       "unit": "Current creation consumers and canonical Goal state",
+       "line_start": 6285,
+       "line_end": 6285,
+       "quote": "This is an explicit owner mapping from GRS-064/SP-287/SP-294, not a family-wide inference from SP-298",
+       "excerpt_sha256": "d0cf91fea2f7c7eeb2daf6e3d93ca0350cea2fd5ee53593a7e45bb33e3f07f23",
+       "file_sha256": "0f9c175ec500e104f7b69131ee4acfd83f000701ac569cb2e218d1f99ef4340e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-298 section",
+       "line_start": 24906,
+       "line_end": 24906,
+       "quote": "Its exact selectors are `storage.goal_created.current_read.v1@1.0.0`",
+       "excerpt_sha256": "a413b0187a1fd1c187284ceb082b022d2ff6bd528abd1576eaea136745037872",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-298 section",
+       "line_start": 24908,
+       "line_end": 24908,
+       "quote": "The checkpoint disposition is `none_required` for this passive facet and whole original SP-278 admission remains mandatory.",
+       "excerpt_sha256": "23617c8d6680c7d48202124b0ea91f352a8ffd8deb90b5819c8e00a86fbe80f3",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Active v3 writer and whole-v2 retained decoder are separate installed roles (CV-341, SP-298 decoders). SP-294 withdrawal fences new mutation while keeping retained read/backup and original custody; read withdrawal refuses disclosure without deletion. SP-287 migration/withdrawal fences dependent use; SP-298 refuses changed sources or routes as stale_cursor.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-341 prose",
+       "line_start": 27645,
+       "line_end": 27645,
+       "quote": "An active-v3 writer and a whole-v2 retained decoder are separate installation roles.",
+       "excerpt_sha256": "7d5977652190465f41280a4783cb2f2281785fff14d2e322ae10cd1fec21f939",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-298 section",
+       "line_start": 24906,
+       "line_end": 24906,
+       "quote": "`storage.goal_created.decode_retained_v2.v1@1.0.0`",
+       "excerpt_sha256": "a413b0187a1fd1c187284ceb082b022d2ff6bd528abd1576eaea136745037872",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24624,
+       "line_end": 24624,
+       "quote": "Withdrawing a mutation role fences new mutation while preserving independently installed retained-read/backup authority and all original custody.",
+       "excerpt_sha256": "c48fa647cd65984069c92015f68c0eb7a3e980ba3723c16c6554ae8e2827abbf",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-294 section",
+       "line_start": 24624,
+       "line_end": 24624,
+       "quote": "Withdrawing read permission refuses disclosure without deleting the row.",
+       "excerpt_sha256": "c48fa647cd65984069c92015f68c0eb7a3e980ba3723c16c6554ae8e2827abbf",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_oracle_with_real_vector_phase_tables_complete_boundary_kill_ledger_and_schema_closure",
+     "finding": "138 checker and owner-schema rows evaluated by goal.created's complete calls: CLOSED 136 / CLOSED_BY_PROOF 2 (CLOSED = gated tool 004bdedd63 PASS on real observation vectors and a goal.created witness whose cut makes the complete checker accept and whose restoration repeats the refusal, or a declared duplicate set whose joint cut accepts with each site refusing alone; CLOSED_BY_PROOF = source-bound earlier-clause proof or a run-confirmed presence/typed justification). Schema clause closure roots 14, uncovered 0. Declared-target ledger (524 attempts, invalid ones listed apart), distinct-copy joins killed 58, shared number corpus 430/430 agree (0 crashes), sealed-receipt retained reads with store snapshots (11/11 unchanged). Global date-time inventory NOT_RUN (base predates S1 T198); native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GO-core.json",
+       "unit": "C12-GO core: family record",
+       "line_start": 113,
+       "line_end": 113,
+       "quote": "\"family\": \"goal.created\"",
+       "excerpt_sha256": "5ca79e531890ba72fdf06d2927f9ede2dfa2de1e5087debba7ed4fba4c2a0e57",
+       "file_sha256": "642dddb6d2e89abc1aefc8538d374f9a2e67928f301885362ed0fc8049b5caaa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GO-core.json",
+       "unit": "C12-GO core: family coverage matrix status",
+       "line_start": 114,
+       "line_end": 114,
+       "quote": "\"goal.created_matrix\": \"",
+       "excerpt_sha256": "0b02a8340fa5a1060fb57f741e2a98f23a6d39c5fa8a346894aae94e81bc6c64",
+       "file_sha256": "642dddb6d2e89abc1aefc8538d374f9a2e67928f301885362ed0fc8049b5caaa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GO-core.json",
+       "unit": "C12-GO core: schema clause closure (lane GC standard)",
+       "line_start": 118,
+       "line_end": 118,
+       "quote": "\"goal.created_schema_closure\": \"",
+       "excerpt_sha256": "f10cee035cda182ee8291483526f1fad034a711aaadacd28efb93b09ea91a596",
+       "file_sha256": "642dddb6d2e89abc1aefc8538d374f9a2e67928f301885362ed0fc8049b5caaa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "GH1 kill rule: cut accepts and restoration repeats the refusal",
+       "line_start": 360,
+       "line_end": 360,
+       "quote": "record['kill'] = 'KILLED'",
+       "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_go_sweep.py",
+       "unit": "GO phase-table manifest (gated tool on real vectors)",
+       "line_start": 37,
+       "line_end": 37,
+       "quote": "MANIFEST = ROOT / 'scripts/pm_goal_go_rows.json'",
+       "excerpt_sha256": "b60cb4c3dab8f0c00b636241b95fd43f269eb096afd164f83d5831e767340a3e",
+       "file_sha256": "a0b0327b8f13aec2b53bf662c7cae6aa3754880e55fd3064ba585c47ae483f5b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_go_created.py",
+       "unit": "CV-341/SP-294 D identity join",
+       "line_start": 204,
+       "line_end": 204,
+       "quote": "g.require('goal.created/identity/event_id', p['event_id'] == E)",
+       "excerpt_sha256": "38fc2e68c664f9739a7e18360fc95cf7c36cac6301edd82263e0f5b9611dd842",
+       "file_sha256": "cfed90bb4c52e47bb412e7a2d8ed5c28fac5b32a2b40025bec23a1847bcd803e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_go_created.py",
+       "unit": "SP-298 stale_cursor rows",
+       "line_start": 598,
+       "line_end": 598,
+       "quote": "g.require('goal.created/reader/cursor/stale/' + fact, all(bound[x] == current[x] for x in fields))",
+       "excerpt_sha256": "8bd539622dde194acabf0cb075afa065a65d3713a1fcf50cf297300e7486a923",
+       "file_sha256": "cfed90bb4c52e47bb412e7a2d8ed5c28fac5b32a2b40025bec23a1847bcd803e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_go_created.py",
+       "unit": "SP-298 installed role (supplied support map: unsupported)",
+       "line_start": 550,
+       "line_end": 550,
+       "quote": "g.require('goal.created/reader/install/role_current_page'",
+       "excerpt_sha256": "0bfede9bcac97fab3f5cd414e1cceb7288c10faba3f525c68b9f35c9f904ff53",
+       "file_sha256": "cfed90bb4c52e47bb412e7a2d8ed5c28fac5b32a2b40025bec23a1847bcd803e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261115/PNC019-S3AO-grades-core.json",
+      "status": "PASS (does not stand: reviews/PNC019-s3ao-c12-conformance/REVIEW.md G1-G3, G5, G6)"
+     },
+     "change": "regraded",
+     "change_reason": "C12-GO closes the s3ao conformance gaps for this family on GH1's machinery."
+    }
+   },
+   "remaining_gaps": [],
+   "notes": [
+    "Criterion 12 re-graded by C12-GO (lane 18) at 5f1f1829f2; other cells carried unchanged from s3ao; native NOT_RUN."
+   ],
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P"
+  },
+  {
+   "event_type": "restore_point.deleted",
+   "family_id": "event-family-restore-point-deleted",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/25",
+   "scope_policy": "project_only",
+   "group": "complete",
+   "disposition": "CURRENT_WRITER",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row #/families/25 registers event-family-restore-point-deleted@2.0.0, project_only, with an inline closed eight-field payload whose $id equals payload_schema_id (restore_point_deleted/1.0.0); no aliases or extensions. SP-268 restates the exact family and payload with no aliases/extensions.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/25",
+       "line_start": 1687,
+       "line_end": 1687,
+       "quote": "\"family_id\": \"event-family-restore-point-deleted\"",
+       "excerpt_sha256": "4c28a8b81655ca79615d9824c9eb3c80dbda0c3c9c7bffb94ddd953302da7861",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/25",
+       "line_start": 1696,
+       "line_end": 1696,
+       "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/restore_point_deleted/1.0.0\"",
+       "excerpt_sha256": "6d69721d03ac80a6372820330013aa0f0c15594ab047eee58305a81da156f20f",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/25",
+       "line_start": 1255,
+       "line_end": 1255,
+       "quote": "\"aliases\": []",
+       "excerpt_sha256": "3a770c67768bb8b1e0618ff18be0bc587ec5a6c80de3cd1818e91c448580f76d",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22960,
+       "line_end": 22960,
+       "quote": "project-only EventRecord2 with its exact eight-field payload and no aliases/extensions",
+       "excerpt_sha256": "a1eb9df3f62503b6e20fd73022e3a30a59efd8092e23035eb052f19acdae7e18",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The whole-document semantic anchor holds Chat lifecycle text (restore section, ACD-464); the Case L-5 payload route is acceptable (clarification 1). Storage SP-268/SP-272 own custody and checkpoint, and RAP-058/SIR-045 own the artifact reader and outcome custody.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/25",
+       "line_start": 1413,
+       "line_end": 1413,
+       "quote": "\"semantic_owner_doc\": \"Plans/assistant-chat-design.md\"",
+       "excerpt_sha256": "0260855fda8b48d830e24d2ee5332d233c1faee6fbdeaadc4eea9326b9b0d3f4",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22960,
+       "line_end": 22960,
+       "quote": "Chat immutable restore-point lifecycle and UCC Case L own cmd.chat.delete_restore_point",
+       "excerpt_sha256": "a1eb9df3f62503b6e20fd73022e3a30a59efd8092e23035eb052f19acdae7e18",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/assistant-chat-design.md",
+       "unit": "ACD-464",
+       "line_start": 26625,
+       "line_end": 26625,
+       "quote": "plan_unit_id: ACD-464",
+       "excerpt_sha256": "2949f65b1a22362c25b9d0078a7d7a2e879e297e87686f98ee2fb8af45f307d7",
+       "file_sha256": "d6a0adb2d473eee030abd7e011b477a4066eeb8754c44d9f942999781fcdb608",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Case L-5",
+       "line_start": 17919,
+       "line_end": 17919,
+       "quote": "### Case L-5. EventRecord persistence, legacy normalization, and dedupe",
+       "excerpt_sha256": "9ee76de1c36cdeca7642b5a3c7708c1e930ed76a670d813c322adf7c50a537da",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The command, sole handler and ordering are exact. B1 status-only CAS plus the pending companion and pending result in one redb transaction; B2 synced append of frozen input; B3 committed companion plus terminal result, with success only after B3. Recovery adopts SP-286 and the SP-285 full-value resolver. The first-writer frame bytes are now defined by SP-026/SP-236.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22972,
+       "line_end": 22972,
+       "quote": "B1 is one redb transaction: CAS available with exact expected immutable hash, change only mutable status to deleted",
+       "excerpt_sha256": "4516524a90619a6c07e7ecb97fe016b4af8d286eb90c7870252fd8b6378cc3ab",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22974,
+       "line_end": 22974,
+       "quote": "reuses the genuine exact first eleven-field receipt through the explicitly adopted SP-286 append-owner protocol",
+       "excerpt_sha256": "707862ac02aa9c17f7a9d813f26af46f358ca21be24429d02e9989a45075f6d6",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22974,
+       "line_end": 22974,
+       "quote": "Only after B3 may the dispatcher project success.",
+       "excerpt_sha256": "707862ac02aa9c17f7a9d813f26af46f358ca21be24429d02e9989a45075f6d6",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-268",
+       "line_start": 23049,
+       "line_end": 23049,
+       "quote": "SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication",
+       "excerpt_sha256": "130d37628728e6c8c8931b28b3117286ee035c38491789c271649848bb3352c7",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "1.2 EventRecord",
+       "line_start": 1027,
+       "line_end": 1027,
+       "quote": "The first native seglog writer encodes the complete EventRecord using Storage Case L-2 / SP-026 / SP-236",
+       "excerpt_sha256": "7812c9e1856580e2e7a461d2d01f3c863f98cdaebb0d7bc4def64f0bd5e21afb",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The inline payload 1.0.0 is closed with eight required fields and status const deleted. The owner fixes producer values for it (reason constant explicit_user_delete, actor/project equality), and the new physical values have closed schemas in restore_point_deleted_contracts.schema.json.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/25",
+       "line_start": 1420,
+       "line_end": 1420,
+       "quote": "\"additionalProperties\": false",
+       "excerpt_sha256": "1be4b6c3f19530f8ac3978ba46d81790dbfc498fb7af9f83cf88c18415edbc60",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/25",
+       "line_start": 1728,
+       "line_end": 1728,
+       "quote": "\"const\": \"deleted\"",
+       "excerpt_sha256": "328989717948b8bb4a886f8e1b0731aed473bcaf992b300e21e12649738ecd25",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22972,
+       "line_end": 22972,
+       "quote": "The native owner reason explicit_user_delete is a technical producer constant, not an added UI argument or global reason enum.",
+       "excerpt_sha256": "4516524a90619a6c07e7ecb97fe016b4af8d286eb90c7870252fd8b6378cc3ab",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "deletion_id is rpd_ over the length-prefixed (restore_point.deleted/delete/v1, project_id, idempotency_key) tuple, and event_id is er_rpd_ over the same digest. Envelope project equals payload project, actor equals the authenticated actor, and thread/run/node/attempt/account refs are null. Physical keys use the project partition.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22968,
+       "line_end": 22968,
+       "quote": "The deletion ID is rpd_ plus lowercase SHA256 of the concatenation of each UTF-8 value preceded by its unsigned 64-bit big-endian byte length",
+       "excerpt_sha256": "a6c2e1000d241e7c59694e4a6115df0e31bda70d7dc99cbd242acc472ebad0ce",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22968,
+       "line_end": 22968,
+       "quote": "Event ID is er_rpd_ plus the same digest.",
+       "excerpt_sha256": "a6c2e1000d241e7c59694e4a6115df0e31bda70d7dc99cbd242acc472ebad0ce",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22972,
+       "line_end": 22972,
+       "quote": "Native envelope project equals payload project; actor matches authenticated command actor",
+       "excerpt_sha256": "4516524a90619a6c07e7ecb97fe016b4af8d286eb90c7870252fd8b6378cc3ab",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The replay policy is dedupe_by_idempotency_key, and the same key with a different request digest fails closed. After B1 a failure or timeout is pending reconciliation, never rollback, and retries keep IDs, payload, correlation and time. SP-272 returns the exact original result after source retirement without re-running deletion.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22972,
+       "line_end": 22972,
+       "quote": "Payload is inline and no_secrets; replay policy is dedupe_by_idempotency_key.",
+       "excerpt_sha256": "4516524a90619a6c07e7ecb97fe016b4af8d286eb90c7870252fd8b6378cc3ab",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22974,
+       "line_end": 22974,
+       "quote": "After B1, failure/timeout is pending reconciliation, never refused/failed or rollback to available.",
+       "excerpt_sha256": "707862ac02aa9c17f7a9d813f26af46f358ca21be24429d02e9989a45075f6d6",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point delete original-result custody",
+       "line_start": 23108,
+       "line_end": 23108,
+       "quote": "After source retirement it still returns exact original result for matching request; it never reconstructs point bytes or performs deletion again.",
+       "excerpt_sha256": "f389b6e54a0bf078a7dbacaf4c7c3e89dd5acd553221d1fb14a079ba861ac553",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The point, event and deletion companion keep RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0, and deletion time is not release. The result is RP-AUTHORITY-INDEFINITE@1.0.0 and the checkpoint RP-PROJECTION-3GEN@1.0.0 with persisted retirement anchors; the SP-269 summary is the residue. No borrowed TTL and no open choice.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/25",
+       "line_start": 1511,
+       "line_end": 1511,
+       "quote": "\"policy_id\": \"RP-RESTOREPOINT-90D-AFTER-RELEASE\"",
+       "excerpt_sha256": "3146cd0b2f8163116739034d1d5ecd63971b50d0a54aa3087c814899d1d98db4",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point delete original-result custody",
+       "line_start": 23106,
+       "line_end": 23106,
+       "quote": "Deletion timestamp is not release. Pending custody never retires.",
+       "excerpt_sha256": "b785cdb677d3bb3589a2a696d32763cae8456c1790bfc1dd390a8110c26ef0ab",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point delete original-result custody",
+       "line_start": 23108,
+       "line_end": 23108,
+       "quote": "mapped to existing RP-AUTHORITY-INDEFINITE@1.0.0",
+       "excerpt_sha256": "f389b6e54a0bf078a7dbacaf4c7c3e89dd5acd553221d1fb14a079ba861ac553",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Deleted checkpoint generation history",
+       "line_start": 22994,
+       "line_end": 22994,
+       "quote": "The exact existing registry policy is `RP-PROJECTION-3GEN@1.0.0`",
+       "excerpt_sha256": "cd87682cfade567141e9b80ec81baf2a2b785d19b3d9ff5899a95b319c40286d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-272 holds the original typed result, the SIR-045 delegated original outcome/response and the original receipt. It is canonical non-rebuildable, preserved by coherent backup/restore, and replayed only under current disclosure permissions. The payload is no_secrets, and the result stores no transcript or source capture.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point delete original-result custody",
+       "line_start": 23108,
+       "line_end": 23108,
+       "quote": "Store only original request/idempotency digest, compact identity/custody references and closed original typed result, never transcript/source capture.",
+       "excerpt_sha256": "f389b6e54a0bf078a7dbacaf4c7c3e89dd5acd553221d1fb14a079ba861ac553",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point delete original-result custody",
+       "line_start": 23108,
+       "line_end": 23108,
+       "quote": "It is canonical nonrebuildable; coherent backup/restore must preserve it.",
+       "excerpt_sha256": "f389b6e54a0bf078a7dbacaf4c7c3e89dd5acd553221d1fb14a079ba861ac553",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Original request/outcome/result joins and safe logical references",
+       "line_start": 23130,
+       "line_end": 23130,
+       "quote": "Original-result replay requires current authenticated row resolution and applicable disclosure permissions",
+       "excerpt_sha256": "21eb661853e24bf2a65dc088b320f60199023a5a6c7959aa4ad0d25d92bf7668",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The only edge is exact-hash available->deleted, and B1 changes only status. Protecting-ref, permission and confirmation gates run in the serialized admission domain; refusal preserves the point and holds. A hold after B1 protects retirement but cannot undo deletion. B3 writes only companion/result, and a second transition is impossible.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22970,
+       "line_end": 22970,
+       "quote": "Refusal preserves available point and all refs. No hold is cleared.",
+       "excerpt_sha256": "5d4ee6cc5d5456f936e0c274b15d98e46e145d7699fb1461a43a814080d0e029",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22974,
+       "line_end": 22974,
+       "quote": "Hold admission before B1 blocks; a later hold protects retirement and does not undo an already authorized deletion.",
+       "excerpt_sha256": "707862ac02aa9c17f7a9d813f26af46f358ca21be24429d02e9989a45075f6d6",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22968,
+       "line_end": 22968,
+       "quote": "a deleted point cannot undergo a second available-to-deleted transition",
+       "excerpt_sha256": "a6c2e1000d241e7c59694e4a6115df0e31bda70d7dc99cbd242acc472ebad0ce",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact passive consumers: consumer/projector.chat.restore_point_deleted@1.0.0, the History@2.0.0 deleted route and reader.runtime_artifacts.restore_point_deleted@1.0.0. Key and closed checkpoint schema are exact, with CAS traversal and generation history. SP-278 is adopted by name. The persisted index_selection_sha256 covers the nine durable fields and the snapshot ID is checked live, so DL-076 holds.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Restore-point deletion custody and checkpoint",
+       "line_start": 22962,
+       "line_end": 22962,
+       "quote": "consumer.chat.restore_point_deleted@1.0.0 (Chat ACD-464), projector.chat.restore_point_deleted@1.0.0 (Storage SP-268) and reader.runtime_artifacts.restore_point_deleted@1.0.0 (RAP-058) are passive.",
+       "excerpt_sha256": "44c071265fdae5a762ee089ad69237447737ded623c302af793f2d4a6802fff0",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Explicit deletion SP-278, SP-281 and SP-274 adoption",
+       "line_start": 23000,
+       "line_end": 23000,
+       "quote": "selecting SP-278 at initial admission",
+       "excerpt_sha256": "a2287b72acfcdc71e11ee0813859187255b1df7102611eddfd0b7609aac3cbf0",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Explicit deletion SP-278, SP-281 and SP-274 adoption",
+       "line_start": 23002,
+       "line_end": 23002,
+       "quote": "The exact current read token additionally binds the same-redb snapshot ID, separately checked before commit/disclosure.",
+       "excerpt_sha256": "b91c80fef1881196c5f8bd605c1ec62f79620482121a3e716ec4a87d1e3dd1dc",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "restore_point_deleted_checkpoint",
+       "line_start": 67720,
+       "line_end": 67720,
+       "quote": "\"value_schema_ref\": \"Plans/restore_point_deleted_contracts.schema.json#/$defs/checkpoint\"",
+       "excerpt_sha256": "80584c5c403fee4cf404ba771f49da1e29f5fc5c159dab32f735e8c3b75d487c",
+       "file_sha256": "68271aa87c1ec0e19fe4701795564ed9bc776b963a4a554b24f724e672c4a8ed",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Compatibility: owner-proven historical events only, the SP-269 v1/v2 dispatcher with compatibility fences, and no authority for old null-custody or restored pending rows. Withdrawal: new generations need a verified rebuild or reviewed successor, stale state keeps the prior checkpoint, and SP-285 rechecks registration/installed bindings at B1. Registration or reader-installation changes invalidate read leases.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Explicit deletion SP-278, SP-281 and SP-274 adoption",
+       "line_start": 23000,
+       "line_end": 23000,
+       "quote": "If an actual prior writer exists, the coordinator must resolve an explicit supported successor before use.",
+       "excerpt_sha256": "a2287b72acfcdc71e11ee0813859187255b1df7102611eddfd0b7609aac3cbf0",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Deleted checkpoint generation history",
+       "line_start": 22990,
+       "line_end": 22990,
+       "quote": "Only first initialization, an explicit verified projection rebuild, or an owner-reviewed supported schema/binding successor establishes a new projection generation.",
+       "excerpt_sha256": "58042e8d16671f85d9235b93fb7bd66818543a44ead681304ac3d5c494446a06",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Deletion consumer truth and checkpoint",
+       "line_start": 22982,
+       "line_end": 22982,
+       "quote": "Gaps, stale indexes, missing frame durability or stale generation preserve prior checkpoint and disclose unavailable currentness.",
+       "excerpt_sha256": "f835275ea227624b6c6b8b20e3e7c607a5e2262eefd7a26b843a929657342392",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-285 Original admission, new lifecycle admission and pending recovery",
+       "line_start": 23432,
+       "line_end": 23432,
+       "quote": "Older pending rows lacking this custody remain recovery-required; migration cannot manufacture it.",
+       "excerpt_sha256": "ec3b08ad2aeb6f48805344818a1f100e3165e330d156ebdf66192734dc8cf0de",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-285 Actual current-store authority and final disclosure fence",
+       "line_start": 23458,
+       "line_end": 23458,
+       "quote": "Every change to current family registration, reader installation, supported migration, verified backup/store origin, permissions, quarantine",
+       "excerpt_sha256": "7a5d3ecdf0bde56fb1b0b2e22546b606768db30be83d66d6103d47c5fd1e38c8",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-285 Original admission, new lifecycle admission and pending recovery",
+       "line_start": 23428,
+       "line_end": 23428,
+       "quote": "Recheck current registration, installed bindings, origin/backup/migration/access/quarantine, exact rows and complete source frontier through mutation.",
+       "excerpt_sha256": "a796bc0522c52cb4a59c26c8bde90b4e5a53bd3fad5dbfff4e5d8e37fe39c741",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "positive_negative_oracles": {
+     "status": "PARTIAL",
+     "representation": "executable_oracle_with_real_vector_phase_tables_complete_boundary_kill_ledger_and_schema_closure",
+     "finding": "437 checker and owner-schema rows evaluated by restore_point.deleted's complete calls: CLOSED 414 / CLOSED_BY_PROOF 23 (CLOSED = gated tool 004bdedd63 PASS on real observation vectors and a restore_point.deleted witness whose cut makes the complete checker accept and whose restoration repeats the refusal, or a declared duplicate set whose joint cut accepts with each site refusing alone; CLOSED_BY_PROOF = source-bound earlier-clause proof or a run-confirmed presence/typed justification). Schema clause closure roots 31, uncovered 12601. Declared-target ledger (4378 attempts, invalid ones listed apart), distinct-copy joins killed 20, shared number corpus 86/86 agree (0 crashes), sealed-receipt retained reads with store snapshots (50/63 unchanged). Global date-time inventory NOT_RUN (base predates S1 T198); native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GO-core.json",
+       "unit": "C12-GO core: family record",
+       "line_start": 233,
+       "line_end": 233,
+       "quote": "\"family\": \"restore_point.deleted\"",
+       "excerpt_sha256": "02dab9fde7dfe7e8d486eb7ea183bb3062739c396f2819340b626a98787cc3e2",
+       "file_sha256": "642dddb6d2e89abc1aefc8538d374f9a2e67928f301885362ed0fc8049b5caaa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GO-core.json",
+       "unit": "C12-GO core: family coverage matrix status",
+       "line_start": 234,
+       "line_end": 234,
+       "quote": "\"restore_point.deleted_matrix\": \"",
+       "excerpt_sha256": "a5808663987b7252cc5693ef56b4f79d820568a28c979da673d343dbf9534782",
+       "file_sha256": "642dddb6d2e89abc1aefc8538d374f9a2e67928f301885362ed0fc8049b5caaa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GO-core.json",
+       "unit": "C12-GO core: schema clause closure (lane GC standard)",
+       "line_start": 238,
+       "line_end": 238,
+       "quote": "\"restore_point.deleted_schema_closure\": \"",
+       "excerpt_sha256": "1cffd3c66186ca9ce70bb33429f7ef81badc5b57c7c8f9ce804123ede5ab422d",
+       "file_sha256": "642dddb6d2e89abc1aefc8538d374f9a2e67928f301885362ed0fc8049b5caaa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "GH1 kill rule: cut accepts and restoration repeats the refusal",
+       "line_start": 360,
+       "line_end": 360,
+       "quote": "record['kill'] = 'KILLED'",
+       "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_go_sweep.py",
+       "unit": "GO phase-table manifest (gated tool on real vectors)",
+       "line_start": 37,
+       "line_end": 37,
+       "quote": "MANIFEST = ROOT / 'scripts/pm_goal_go_rows.json'",
+       "excerpt_sha256": "b60cb4c3dab8f0c00b636241b95fd43f269eb096afd164f83d5831e767340a3e",
+       "file_sha256": "a0b0327b8f13aec2b53bf662c7cae6aa3754880e55fd3064ba585c47ae483f5b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_go_deleted.py",
+       "unit": "pinned frozen suite with declared bank targets",
+       "line_start": 140,
+       "line_end": 140,
+       "quote": "frozen.replay_witnesses = replay",
+       "excerpt_sha256": "ac234d1c7715cccbec05e7c5064e5386276b4b50923c932200ae51b79d222ae2",
+       "file_sha256": "2aec6126a2f7a22e4f042682ca9e115a198c6cabc08bec09521ac3beeaa28038",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_go_search.py",
+       "unit": "declared-target witness search",
+       "line_start": 197,
+       "line_end": 197,
+       "quote": "collector.invoke(source, evaluate, value, False, target=row, family=family, generated=True)",
+       "excerpt_sha256": "aca96e45a88836a570778fcb82fc512c9f91f45a3f3bccedddbfda86968773a8",
+       "file_sha256": "0ee5a0c18418a4e7a5818ab5bff62a959465fbe795b5bd1c97f0bc718d981feb",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261115/PNC019-S3AO-grades-core.json",
+      "status": "PASS (does not stand: reviews/PNC019-s3ao-c12-conformance/REVIEW.md G1-G3, G5, G6)"
+     },
+     "change": "regraded",
+     "change_reason": "C12-GO closes the s3ao conformance gaps for this family on GH1's machinery."
+    }
+   },
+   "remaining_gaps": [
+    {
+     "cell": "positive_negative_oracles",
+     "open_rows": [],
+     "closure": "roots 31, uncovered 12601"
+    }
+   ],
+   "notes": [
+    "Criterion 12 re-graded by C12-GO (lane 18) at 5f1f1829f2; other cells carried unchanged from s3ao; native NOT_RUN."
+   ],
+   "pass_count": 11,
+   "vector": "P P P P P P P P P P P p"
+  },
+  {
+   "event_type": "run.started",
+   "family_id": "event-family-run-started",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/27",
+   "scope_policy": "project_only",
+   "group": "complete",
+   "disposition": "CURRENT_WRITER",
+   "native_execution": "NOT_RUN",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row #/families/27 registers event-family-run-started@2.0.0, project_only, with payload_schema_ref to event_payload_run_started.schema.json#. The file's root $id is run_started/2.0.0 with schema_version const 2.0.0, and v1 is only a $defs compatibility reader. No aliases or extensions.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/27",
+       "line_start": 1862,
+       "line_end": 1862,
+       "quote": "\"family_id\": \"event-family-run-started\"",
+       "excerpt_sha256": "9268cc2c06bf392b98e75ca3d3091998ff46beedd23c0266ebb6803899b12bf1",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/27",
+       "line_start": 1903,
+       "line_end": 1903,
+       "quote": "\"schema_id\": \"https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0\"",
+       "excerpt_sha256": "1d44d95348e4a1c77f94c8fc9b098e7f0ac684b9dc36f7c299a017f656938634",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payload_run_started.schema.json",
+       "unit": "#",
+       "line_start": 36,
+       "line_end": 36,
+       "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0\"",
+       "excerpt_sha256": "314b92676df59cbd30233dfb26ef5c6d899e97b90bfc586a46e859c5dc5b9e79",
+       "file_sha256": "9dc2e503137f773dba45e3753ac5af9a507bcb7fcb61bd9cadcfd59a48cea560",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payload_run_started.schema.json",
+       "unit": "#/properties/schema_version",
+       "line_start": 581,
+       "line_end": 581,
+       "quote": "\"const\": \"2.0.0\"",
+       "excerpt_sha256": "f206a78b368b345c07bb0096277e6754e4c89c3f0d5dc5e3dfb56ee190b33edf",
+       "file_sha256": "9dc2e503137f773dba45e3753ac5af9a507bcb7fcb61bd9cadcfd59a48cea560",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/27",
+       "line_start": 1379,
+       "line_end": 1379,
+       "quote": "\"aliases\": []",
+       "excerpt_sha256": "3a770c67768bb8b1e0618ff18be0bc587ec5a6c80de3cd1818e91c448580f76d",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The whole-document semantic anchor Executor_Protocol.md holds the governing run-start barrier and EP-116. The Case L-5 payload route is acceptable (clarification 1), and SP-265 owns the index/checkpoint. The Contracts runtime catalog row in source_refs still shows requested_effective_snapshot_ref as optional (a stale minimum; Contracts l.324 and v2 require it). Not an anchor defect.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/27",
+       "line_start": 1866,
+       "line_end": 1866,
+       "quote": "\"semantic_owner_doc\": \"Plans/Executor_Protocol.md\"",
+       "excerpt_sha256": "fc71b1d167db90c8f192b52ca929a65ec4dcc1bafcde4c7a429e0805d9762f17",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "EP-116",
+       "line_start": 7380,
+       "line_end": 7380,
+       "quote": "plan_unit_id: EP-116",
+       "excerpt_sha256": "a16681882befa40444d717d038b23f8d91f9c6fb0ae1f87eab0c2e1a773b40c5",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Case L-5",
+       "line_start": 17919,
+       "line_end": 17919,
+       "quote": "### Case L-5. EventRecord persistence, legacy normalization, and dedupe",
+       "excerpt_sha256": "9ee76de1c36cdeca7642b5a3c7708c1e930ed76a670d813c322adf7c50a537da",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "Runtime event catalog carry-through",
+       "line_start": 937,
+       "line_end": 937,
+       "quote": "`requested_effective_snapshot_ref?`",
+       "excerpt_sha256": "f72dbe128877cab3c6ede5f465428adb7c75f9e64b6ba1575aeb2ccf330156c4",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Executor's start barrier is exact. It persists the immutable requested_effective_runtime snapshot and six owner joins, runs candidate->admission_validated->runtime_identity_resolved->activated->start_recorded, and gets the synced barrier AppendReceipt before attributable work. Recovery explicitly adopts SP-286/CV-339 resolve.v2 and, for full-value claims, resolve_full_value.v1. Uncertain appends are resolved before dispatch.",
+     "evidence": [
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Run-start consumer binding and recovery read boundary - 2026-09-11",
+       "line_start": 7353,
+       "line_end": 7353,
+       "quote": "obtains the synced barrier AppendReceipt before attributable provider/tool work",
+       "excerpt_sha256": "132d1634a5556b0b46db0b881277b8b3dc4b35ce869155d5c879bc1613e988e4",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Original run-start first-receipt recovery adoption",
+       "line_start": 7367,
+       "line_end": 7367,
+       "quote": "Executor explicitly adopts SP-286/CV-339's `storage.first_append_receipt.resolve.v2`",
+       "excerpt_sha256": "8f3d610d5e118ce10f7daa871ea1e5449b367a36d6c691e8bb3e93ca530e5fd8",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Original run-start first-receipt recovery adoption",
+       "line_start": 7369,
+       "line_end": 7369,
+       "quote": "this owner explicitly adopts `storage.first_append_receipt.resolve_full_value.v1`",
+       "excerpt_sha256": "d4e360d1b5244d667e6cfbd901985b566bdff5428666397ed8135a105d9af930",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Original run-start first-receipt recovery adoption",
+       "line_start": 7371,
+       "line_end": 7371,
+       "quote": "Uncertain append is resolved by the actual Storage owner before any dependent start acknowledgement or attributable dispatch.",
+       "excerpt_sha256": "61a2d445a49a09388bcc29af432f2bfc12512cb3ad72a8d393bcc8ff0e4637e7",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The v2 root is closed (additionalProperties false), consistent with DL-034 DP-K37-06 (hybrid snapshot ref plus minimum inline joins) and Executor's 'current closed run-start v2 root'. v1 is reader-only.",
+     "evidence": [
+      {
+       "path": "Plans/event_payload_run_started.schema.json",
+       "unit": "#",
+       "line_start": 38,
+       "line_end": 38,
+       "quote": "\"additionalProperties\": false",
+       "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+       "file_sha256": "9dc2e503137f773dba45e3753ac5af9a507bcb7fcb61bd9cadcfd59a48cea560",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Run-start consumer binding and recovery read boundary - 2026-09-11",
+       "line_start": 7353,
+       "line_end": 7353,
+       "quote": "payload remains the current closed run-start v2 root",
+       "excerpt_sha256": "132d1634a5556b0b46db0b881277b8b3dc4b35ce869155d5c879bc1613e988e4",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "requested_effective_runtime",
+       "line_start": 326,
+       "line_end": 326,
+       "quote": "`run.started` then carries the required `requested_effective_snapshot_ref` plus the immutable minimum inline joins.",
+       "excerpt_sha256": "8189ff0c61abef337d6fd10216b805fed57743d5e0f888b686a5435066ed1116",
+       "file_sha256": "2a5fb28e7f28b6d2b7504f93198a720c35b468f3f0d103ea248e8edb3d4d1a8f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The replay policy is dedupe_by_idempotency_key. The idempotency_key is run-start: plus SHA-256 of RFC8785([project_id, run_id]), and event_id is evt_run_start_ plus SHA-256 of RFC8785([storage_instance_id, project_id, run_id]). Historical identities take precedence. The scope is the reversible project partition, and envelope, payload and snapshot equality are required.",
+     "evidence": [
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Run-start consumer binding and recovery read boundary - 2026-09-11",
+       "line_start": 7355,
+       "line_end": 7355,
+       "quote": "`idempotency_key = \"run-start:\" + lowerhex(SHA256(RFC8785([project_id, run_id])))`",
+       "excerpt_sha256": "b96de341ec4add8e70fd6dace991f43a3d62cb730c831d22c8a8513d8a2f0ddf",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Run-start consumer binding and recovery read boundary - 2026-09-11",
+       "line_start": 7357,
+       "line_end": 7357,
+       "quote": "If it does, preserve and replay that original event ID/key; never mint the new-formula identity for the same existing run.",
+       "excerpt_sha256": "fe8a1844460d43dee87e24996ec84137bf58bbf86a1fa958c7487ebd3fefa19d",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Known-37 run-start and recovery-unavailable admission",
+       "line_start": 7303,
+       "line_end": 7303,
+       "quote": "requires envelope/payload/snapshot equality",
+       "excerpt_sha256": "3579fb2435f89d240a79dcf6dd6ba6e236f66816a86233078f281ee3d29aefd0",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The same semantic start returns the original durable result and preserves authored bytes. A different snapshot or intent is idempotency_conflict; uncertain truth is dedupe_unavailable and blocks dispatch. A missing acknowledgement never re-appends. An intact issued receipt replays unchanged after lost delivery. Checkpoint resume is inclusive and never repeats effects.",
+     "evidence": [
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Run-start consumer binding and recovery read boundary - 2026-09-11",
+       "line_start": 7357,
+       "line_end": 7357,
+       "quote": "Absence of a UI row or missing caller acknowledgement is never permission to append or execute again.",
+       "excerpt_sha256": "fe8a1844460d43dee87e24996ec84137bf58bbf86a1fa958c7487ebd3fefa19d",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Original run-start first-receipt recovery adoption",
+       "line_start": 7369,
+       "line_end": 7369,
+       "quote": "An intact already-issued receipt replays unchanged after lost delivery or interrupted dependent acknowledgement.",
+       "excerpt_sha256": "d4e360d1b5244d667e6cfbd901985b566bdff5428666397ed8135a105d9af930",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Run-start index consumers and checkpoint - 2026-09-11",
+       "line_start": 20176,
+       "line_end": 20176,
+       "quote": "The run-start binding never creates a replacement event or a second dispatch to repair a missing acknowledgement.",
+       "excerpt_sha256": "e10b780603459eb30d288775c50e9e89d8a54c6ad14ec2cb87ac94b2289af0d6",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The source event keeps RP-RUNTIME-365D@1.0.0 (run-completion anchor, per-run/project caps, latest-25 preservation), and index rows keep RP-EVENT-INDEX-SOURCE. The checkpoint is RP-PROJECTION-3GEN with a concrete same-key history and a first-withdrawal anchor. The requested_effective_runtime snapshot is retained at least as long as referencing events. No new policy.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/27",
+       "line_start": 1897,
+       "line_end": 1897,
+       "quote": "\"policy_id\": \"RP-RUNTIME-365D\"",
+       "excerpt_sha256": "ff4d0a8da38a8f3056162d8a1f66e9cc6a187fe4827aa9f5f6c952963259f7b3",
+       "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Run-start index consumers and checkpoint - 2026-09-11",
+       "line_start": 20180,
+       "line_end": 20180,
+       "quote": "The source event remains under **`RP-RUNTIME-365D@1.0.0`**",
+       "excerpt_sha256": "eef534a190e8f62fbce6c6518a81da2dc1a7a87e1667a2679e01f1dbe87b4642",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Run-start index consumers and checkpoint - 2026-09-11",
+       "line_start": 20180,
+       "line_end": 20180,
+       "quote": "The new disposable checkpoint is explicitly assigned existing **`RP-PROJECTION-3GEN@1.0.0`**",
+       "excerpt_sha256": "eef534a190e8f62fbce6c6518a81da2dc1a7a87e1667a2679e01f1dbe87b4642",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Requested/effective runtime custody",
+       "line_start": 18512,
+       "line_end": 18512,
+       "quote": "It is retained at least as long as every referencing EventRecord/hold.",
+       "excerpt_sha256": "4aa307e79259d3b0e276d240cc32aef039e7c8e2c2d3196d8cbccab883de3210",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "There are no-secret and access checks before exposure, and checkpoints hold only IDs, hashes and non-secret refs. Deletion tombstones are evaluated at read/publication and after restore. The runtime snapshot is canonical_non_rebuildable with mandatory backup and a mutation fence, and missing canonical records are never rebuilt from the checkpoint or event.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Run-start index consumers and checkpoint - 2026-09-11",
+       "line_start": 20184,
+       "line_end": 20184,
+       "quote": "Checkpoint values contain only IDs, hashes, cursors and non-secret Storage refs",
+       "excerpt_sha256": "e934e009c0b31f28b1ba671f9e163c292e2c1c6dffaae56f3b45c1898e52bb2d",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Run-start index consumers and checkpoint - 2026-09-11",
+       "line_start": 20186,
+       "line_end": 20186,
+       "quote": "Deletion is evaluated from actual owner tombstones at read/publication time and after restore, not from an old checkpoint.",
+       "excerpt_sha256": "416d2357f9ab7d1f65027a3dd8d225009ee82b46a2cfd03d09b07637843e56ec",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Requested/effective runtime custody",
+       "line_start": 18512,
+       "line_end": 18512,
+       "quote": "This family is `canonical_non_rebuildable`, requires mandatory backup, restore from backup, user disclosure on loss, and a mutation fence while unresolved.",
+       "excerpt_sha256": "4aa307e79259d3b0e276d240cc32aef039e7c8e2c2d3196d8cbccab883de3210",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The start sequence candidate->...->start_recorded is explicit, with the barrier before attributable work. The two ordered, non-circular barriers (generic index publication, then filtered checkpoint) are explicit, as is the checkpoint's terminal current|degraded->withdrawn. A late start fact cannot revive a terminal run.",
+     "evidence": [
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Known-37 run-start and recovery-unavailable admission",
+       "line_start": 7303,
+       "line_end": 7303,
+       "quote": "The sequence is `candidate -> admission_validated -> runtime_identity_resolved -> activated -> start_recorded`",
+       "excerpt_sha256": "3579fb2435f89d240a79dcf6dd6ba6e236f66816a86233078f281ee3d29aefd0",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Run-start index consumers and checkpoint - 2026-09-11",
+       "line_start": 20165,
+       "line_end": 20165,
+       "quote": "The two ordered barriers are explicit and are not circular:",
+       "excerpt_sha256": "9fae29b4429d7b9130a5a0280ac94ca1961d16f82f7ec5e1a9ac66e0de4e7307",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Run-start index consumers and checkpoint - 2026-09-11",
+       "line_start": 20182,
+       "line_end": 20182,
+       "quote": "For this new checkpoint, the exact terminal transition is `current|degraded -> withdrawn`.",
+       "excerpt_sha256": "72e95e4b6729198fcf5fbe12771ea115a8fa1d266229c9fd1d60f790d35eea6b",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Run-start index consumers and checkpoint - 2026-09-11",
+       "line_start": 20176,
+       "line_end": 20176,
+       "quote": "A late start fact cannot turn a terminal, stopped, superseded or historical run into a current running run.",
+       "excerpt_sha256": "e10b780603459eb30d288775c50e9e89d8a54c6ad14ec2cb87ac94b2289af0d6",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The v2 projector storage.run_started_index.v2@2.0.0 serves four named v2 readers. Key and v2 value schema are exact, with CAS, rebuild and withdrawal rules. SP-278 is adopted by name. The persisted current_selection_sha256 hashes exactly the nine durable token fields, and the redb snapshot ID is pinned live and not persisted, which is consistent with DL-076.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Exact successor registration and routing",
+       "line_start": 21688,
+       "line_end": 21688,
+       "quote": "Its current value is newly versioned `pm.storage_value.run_started_index_checkpoint.v2@2.0.0`",
+       "excerpt_sha256": "0ab28290d623d452b9c95e0de9d8eaef1a493273a3aa41aace69c232f8b9b238",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Exact successor registration and routing",
+       "line_start": 21688,
+       "line_end": 21688,
+       "quote": "Its four current reader successors are `run_graph.run_start_context.v2@2.0.0`",
+       "excerpt_sha256": "0ab28290d623d452b9c95e0de9d8eaef1a493273a3aa41aace69c232f8b9b238",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Exact current selection and cursor joins",
+       "line_start": 21722,
+       "line_end": 21722,
+       "quote": "The redb read-snapshot ID is separately pinned and revalidated before commit/disclosure; it is not persisted in this digest.",
+       "excerpt_sha256": "3ee997d6fc53ec1d79341d06b354b448cd34a1ab7e0075acafa229a75834506c",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Run-start consumer binding and recovery read boundary - 2026-09-11",
+       "line_start": 7349,
+       "line_end": 7349,
+       "quote": "the current reader is `executor.run_start_recovery_evidence.v2@2.0.0` through `storage.run_started_index.v2@2.0.0` and the SP-265/SP-278 successor contract",
+       "excerpt_sha256": "bac70392f6300efd4a25865d61bca5a2d503e24acf192a198dbeba612c1c8735",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Compatibility: the exact v1 reader pointer and MIG-RUN-STARTED-PAYLOAD-001@1.0.0 with no rewrite/append, and v1 checkpoint and readers compatibility-only. Withdrawal order is explicit: writer withdrawal stops new start writes at Executor admission, consumer-only withdrawal fences dependent readers, and successors come only via StorageMigrationCoordinator rebuild with verification.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Run-start index consumers and checkpoint - 2026-09-11",
+       "line_start": 20188,
+       "line_end": 20188,
+       "quote": "Compatibility remains exact: `run.started` v1 reads only through `Plans/event_payload_run_started.schema.json#/$defs/run_started_1_0_0_compatibility_reader`",
+       "excerpt_sha256": "2fad5eacf0ac8979cd49ea83f074a262c9b2bbd1cb67b3271a374887424002ec",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Run-start index consumers and checkpoint - 2026-09-11",
+       "line_start": 20190,
+       "line_end": 20190,
+       "quote": "Withdrawal order is: if the event writer is withdrawn, stop new writes at the existing Executor run-start admission boundary",
+       "excerpt_sha256": "0b0ee8727edc3be951f563da9c341dfe177f19638ec2254c46003383157c3909",
+       "file_sha256": "f409b296ccc7d885802eaad31a73b6fdcf4d15a4191ceec0e5bb1958f8342423",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Executor_Protocol.md",
+       "unit": "Run-start consumer binding and recovery read boundary - 2026-09-11",
+       "line_start": 7361,
+       "line_end": 7361,
+       "quote": "Withdrawal of the run-start writer itself stops new activation/start writes until the explicit compatible successor is adopted",
+       "excerpt_sha256": "6f7f22cea6047d00aee250885b705cbafd5661d1b65d7880114996ea1d945902",
+       "file_sha256": "426ea0ce180a1efa1c43471a84043ae2ca517c2416f859f9784e6c0af17dc8fe",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "s3a before grade at 3c33510c57 (reports/event-authority-20261114/PNC019-S3A-grades-before.json)",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Re-read at the lane head; every cited quote re-found; no change in substance since the before grade."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_oracle_with_real_vector_phase_tables_complete_boundary_kill_ledger_and_schema_closure",
+     "finding": "278 checker and owner-schema rows evaluated by run.started's complete calls: CLOSED 265 / CLOSED_BY_PROOF 13 (CLOSED = gated tool 004bdedd63 PASS on real observation vectors and a run.started witness whose cut makes the complete checker accept and whose restoration repeats the refusal, or a declared duplicate set whose joint cut accepts with each site refusing alone; CLOSED_BY_PROOF = source-bound earlier-clause proof or a run-confirmed presence/typed justification). Schema clause closure roots 16, uncovered 0. Declared-target ledger (3269 attempts, invalid ones listed apart), distinct-copy joins killed 61, shared number corpus 173/173 agree (0 crashes), sealed-receipt retained reads with store snapshots (11/11 unchanged). Global date-time inventory NOT_RUN (base predates S1 T198); native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GO-core.json",
+       "unit": "C12-GO core: family record",
+       "line_start": 340,
+       "line_end": 340,
+       "quote": "\"family\": \"run.started\"",
+       "excerpt_sha256": "15f3378313897df2c08e59bb7212708c788ed6765613eb975ea711121a83c24b",
+       "file_sha256": "642dddb6d2e89abc1aefc8538d374f9a2e67928f301885362ed0fc8049b5caaa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GO-core.json",
+       "unit": "C12-GO core: family coverage matrix status",
+       "line_start": 341,
+       "line_end": 341,
+       "quote": "\"run.started_matrix\": \"",
+       "excerpt_sha256": "c7e37540d58ccac2336b714377732021f56ab0090849c95152ad970add504371",
+       "file_sha256": "642dddb6d2e89abc1aefc8538d374f9a2e67928f301885362ed0fc8049b5caaa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GO-core.json",
+       "unit": "C12-GO core: schema clause closure (lane GC standard)",
+       "line_start": 345,
+       "line_end": 345,
+       "quote": "\"run.started_schema_closure\": \"",
+       "excerpt_sha256": "e1b9979d50ea8316f3eba746154c40e860d7b6c57561e61703a90b1ad59df977",
+       "file_sha256": "642dddb6d2e89abc1aefc8538d374f9a2e67928f301885362ed0fc8049b5caaa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_guard_sweep.py",
+       "unit": "GH1 kill rule: cut accepts and restoration repeats the refusal",
+       "line_start": 360,
+       "line_end": 360,
+       "quote": "record['kill'] = 'KILLED'",
+       "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+       "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_go_sweep.py",
+       "unit": "GO phase-table manifest (gated tool on real vectors)",
+       "line_start": 37,
+       "line_end": 37,
+       "quote": "MANIFEST = ROOT / 'scripts/pm_goal_go_rows.json'",
+       "excerpt_sha256": "b60cb4c3dab8f0c00b636241b95fd43f269eb096afd164f83d5831e767340a3e",
+       "file_sha256": "a0b0327b8f13aec2b53bf662c7cae6aa3754880e55fd3064ba585c47ae483f5b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_go_run_started.py",
+       "unit": "complete consumer boundary: Storage uint64 sequence before joins",
+       "line_start": 232,
+       "line_end": 232,
+       "quote": "gate.require('run.started/storage_sequence_uint64', storage_u64(bundle['event']['sequence_id']))",
+       "excerpt_sha256": "138a37c6ddf03d112209b5fa3f3fc1695bec6b4b816a352a489cd275e81fd0e7",
+       "file_sha256": "f5fe21147752c6ba2341d7c955eeaa096f3e6f51b4d6d2d76ce7c6122a0576f1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "scripts/pm_goal_go_run_started.py",
+       "unit": "snapshot/payload distinct-copy runtime joins",
+       "line_start": 189,
+       "line_end": 189,
+       "quote": "g.require('run.started/runtime/' + key, snapshot[key] == payload[key])",
+       "excerpt_sha256": "a841189db3c5eb09d2b5798910d3e7b549e8c2ef1b9e05c5020c86721b01178e",
+       "file_sha256": "f5fe21147752c6ba2341d7c955eeaa096f3e6f51b4d6d2d76ce7c6122a0576f1",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261115/PNC019-S3AO-grades-core.json",
+      "status": "PASS (does not stand: reviews/PNC019-s3ao-c12-conformance/REVIEW.md G1-G3, G5, G6)"
+     },
+     "change": "regraded",
+     "change_reason": "C12-GO closes the s3ao conformance gaps for this family on GH1's machinery."
+    }
+   },
+   "remaining_gaps": [],
+   "notes": [
+    "Criterion 12 re-graded by C12-GO (lane 18) at 5f1f1829f2; other cells carried unchanged from s3ao; native NOT_RUN."
+   ],
+   "pass_count": 12,
+   "vector": "P P P P P P P P P P P P"
+  }
+ ]
+}
