@@ -7,7 +7,9 @@
 // and Reduced Motion), Settings' Animation speed multiplies every length and delay (#o55-look-scale, FO-153), a style
 // change of the same name keeps the Animation and its start time (as Chrome does), a change of name starts a new one,
 // and the onboarding window holds the glyph's loop (its rule matches elements, not the backlight's ::before). Frames run
-// at 120 Hz; timers fire at their due time between frames.
+// at 120 Hz; timers fire at their due time between frames. Each case runs twice: once on the plain timers
+// (PM56_CLOCK.scale === 1, so the module reads performance.now) and once on the film clock (scale !== 1, so it
+// reads the document timeline). The hand-over records of both loops are judged in every case.
 //
 // "Keeps its place": across every frame, the loop's position (loops run plus the way through this one, in time) moves
 // by no more than one frame's step at the faster pace. A loop that restarts (a new Animation) is reported on its own.
@@ -108,6 +110,9 @@ const BL_FOLLOWS_MARK = RULES.some((r) => /paused/.test(r.decl['animation-play-s
 
 /* ---------------------------------------------------------------- the browser */
 const FRAME = 1000 / 120;
+// plain: scale 1, clockNow uses performance.now. film: scale is not 1, clockNow uses the document timeline.
+let filmClock = false;
+const clocksSeen = new Set();
 function world({ clockApi = true } = {}) {
 	// clock: the wall clock (performance.now, timers, the compositor); ft: the last frame's time, which the document
 	// timeline and every Animation's current time read during a task (Chrome's frame clock)
@@ -193,11 +198,15 @@ function world({ clockApi = true } = {}) {
 		removeEventListener: (type, fn) => { const i = handlers.findIndex((h) => h.type === type && h.fn === fn); if (i >= 0) handlers.splice(i, 1); },
 		PM56_STREAM: { active: () => W.streams || [] }
 	};
-	if (clockApi) window.PM56_CLOCK = {
-		now: () => W.clock, ms: (x) => x,
-		after(t, fn) { const h = { done: false, t: 0 }; h.t = setTimeout(() => { if (!h.done) { h.done = true; fn(); } }, t); return h; },
-		cancel(h) { if (h) { h.done = true; clearTimeout(h.t); } }
-	};
+	if (clockApi) {
+		clocksSeen.add(filmClock ? 'film' : 'plain');
+		window.PM56_CLOCK = {
+			scale: filmClock ? 0 : 1,
+			now: () => W.clock, ms: (x) => x,
+			after(t, fn) { const h = { done: false, t: 0 }; h.t = setTimeout(() => { if (!h.done) { h.done = true; fn(); } }, t); return h; },
+			cancel(h) { if (h) { h.done = true; clearTimeout(h.t); } }
+		};
+	} else clocksSeen.add('plain');
 	vm.runInNewContext(SRC, { window, document, performance: { now: () => W.clock }, setTimeout, clearTimeout, requestAnimationFrame, cancelAnimationFrame, MutationObserver });
 	const api = window.PM56_SENDSTOP;
 	assert.ok(api && typeof api.html === 'function', 'the module defines PM56_SENDSTOP');
@@ -290,7 +299,7 @@ function world({ clockApi = true } = {}) {
 /* ---------------------------------------------------------------- the checks */
 // No frame moves the loop further than one frame at the faster pace (both loops), from frame index i0 on. A frame in
 // which a loop was made anew is not counted here (restarts are asserted by the case).
-function smooth(W, i0 = 0, what = 'g') {
+function smooth(W, i0 = 0, what = 'g', allow = []) {
 	const fast = Math.min(...[2200, 3200].map((d) => d * W.k));
 	let worst = 0, where = null;
 	for (let i = Math.max(1, i0); i < W.frames.length; i++) {
@@ -301,11 +310,23 @@ function smooth(W, i0 = 0, what = 'g') {
 		if (over > worst) { worst = over; where = { i, t: Math.round(W.frames[i].t), step: +step.toFixed(5), bound: +bound.toFixed(5), from: p.dur, to: c.dur }; }
 	}
 	assert.ok(worst <= 1, `${what === 'g' ? 'the glyph' : 'the backlight'}'s loop moved more than one frame at the faster pace in one frame: ${JSON.stringify(where)}`);
-	// what a person sees: at every hand-over the square shown just after is where it was shown just before
-	const hand = W.jumps.filter((j) => j.i >= i0 && j.layer === what).map((j) => ({ ...j, over: Math.abs(j.after - j.before) / (FRAME / Math.min(fast, j.d) + 1e-9) }));
-	const bad = hand.sort((x, y) => y.over - x.over)[0];
-	assert.ok(!bad || bad.over <= 1, `${what === 'g' ? 'the glyph' : 'the backlight'} jumped when a frame handed it to the compositor: ${bad && JSON.stringify({ t: Math.round(bad.t), before: +bad.before.toFixed(4), after: +bad.after.toFixed(4) })}`);
+	// Frames call the backlight `b`; its hand-over records say `bl`. Every record of both loops is judged,
+	// whichever loop the frame step named. `allow` is a record a case has already checked on its own
+	// (a catch-up the case puts in by hand, or NieR Mode coming back).
+	const skip = new Set(allow);
+	for (const layer of ['g', 'bl']) {
+		const hand = W.jumps.filter((j) => j.i >= i0 && j.layer === layer && !skip.has(j.i)).map((j) => ({ ...j, over: Math.abs(j.after - j.before) / (FRAME / Math.min(fast, j.d) + 1e-9) }));
+		const bad = hand.sort((x, y) => y.over - x.over)[0];
+		assert.ok(!bad || bad.over <= 1, `${layer === 'g' ? 'the glyph' : 'the backlight'} jumped when a frame handed it to the compositor: ${bad && JSON.stringify({ t: Math.round(bad.t), before: +bad.before.toFixed(4), after: +bad.after.toFixed(4) })}`);
+	}
 	return worst;
+}
+// The one backlight hand-over past a frame from i0 on. The case checks that record; smooth then checks every other.
+function catchUp(W, i0) {
+	const fast = Math.min(2200, 3200) * W.k;
+	const big = W.jumps.filter((j) => j.i >= i0 && j.layer === 'bl').map((j) => ({ ...j, over: Math.abs(j.after - j.before) / (FRAME / Math.min(fast, j.d) + 1e-9) })).filter((j) => j.over > 1);
+	assert.equal(big.length, 1, `the backlight's catch-up is one hand-over record, saw ${big.length}`);
+	return big[0];
 }
 const feed = (W, msLong, every = 100) => { const end = W.clock + msLong; let next = W.clock; while (W.clock < end) { if (W.clock >= next) { W.api.token('one'); next += every; } W.frame(); } };
 // enter Stop: flowing (a word just arrived) or waiting (none)
@@ -486,7 +507,10 @@ const CASES = {
 		assert.ok(apart(W) < 1e-6, `NieR Mode off, then the flowing change: the backlight is ${apart(W).toFixed(4)} of a loop from the glyph`);
 		// the step a person sees, in a loop (opacity follows the place in the loop, not the count of loops run)
 		const step = Math.max(0, ...W.jumps.filter((j) => j.i >= i1 && j.layer === 'bl').map((j) => { const x = (((j.after - j.before) % 1) + 1) % 1; return Math.min(x, 1 - x); }));
-		smooth(W, i1);
+		const caught = catchUp(W, i1);
+		const circ = (((caught.after - caught.before) % 1) + 1) % 1;
+		assert.ok(Math.abs(Math.min(circ, 1 - circ) - step) < 1e-9, `the backlight record's step is not the measured ${step}`);
+		smooth(W, i1, 'g', [caught.i]);
 		out.push(`NieR Mode off: a new backlight loop ${back.toFixed(4)} of a loop from the glyph; the next change put it with the glyph, a step of ${step.toFixed(4)} of a loop`);
 		// NieR Mode off and a change while the new backlight still waits out its delay (at rest, its loop's first
 		// frame): it is not moved into the loop; it starts with the glyph's next loop, and stays with it
@@ -668,7 +692,8 @@ const CASES = {
 			if (flowing) W.until(() => W.attrs.get('data-flow') === 'waiting', 3000); else W.api.token('one');
 			W.run(300);
 			assert.ok(apart(W) < 1e-6, `${flowing ? 'the waiting' : 'the flowing'} change left them ${apart(W).toFixed(4)} of a loop apart`);
-			smooth(W, i0);
+			const caught = catchUp(W, i0);
+			smooth(W, i0, 'g', [caught.i]);
 			out.push(`${ms} ms apart (${was.toFixed(4)} of a loop): ${apart(W).toFixed(6)} after the ${flowing ? 'waiting' : 'flowing'} change`);
 		}
 		return out.join('; ');
@@ -781,14 +806,18 @@ const CASES = {
 };
 
 let failed = 0;
-const clocksSeen = new Set();
 console.log(`send-stop pace model: ${ref ? `files at ${ref}` : 'this tree'}; --ss-ld ${LD} ms`);
-for (const [name, fn] of Object.entries(CASES)) {
-	try { console.log(`PASS ${name}: ${fn()}`); } catch (e) { failed++; console.log(`FAIL ${name}: ${e.message.split("\n")[0]}`); if (process.env.TRACE) console.log(e.stack); }
+for (const film of [false, true]) {
+	filmClock = film;
+	const tag = film ? 'film' : 'plain';
+	for (const [name, fn] of Object.entries(CASES)) {
+		try { console.log(`PASS ${tag} ${name}: ${fn()}`); } catch (e) { failed++; console.log(`FAIL ${tag} ${name}: ${e.message.split("\n")[0]}`); if (process.env.TRACE) console.log(e.stack); }
+	}
 }
 if (!clocksSeen.has('plain') || !clocksSeen.has('film')) {
 	failed++;
-	console.log(`FAIL both clocks: cases ran on ${[...clocksSeen].join(' and ') || 'one clock (the stub has no scale, so clockNow takes the film clock)'}`);
+	console.log(`FAIL both clocks: cases ran on ${[...clocksSeen].join(' and ') || 'neither'}`);
 }
-console.log(failed ? `${failed} of ${Object.keys(CASES).length} failed` : `all ${Object.keys(CASES).length} passed`);
+const runs = Object.keys(CASES).length * 2;
+console.log(failed ? `${failed} failed` : `all ${runs} passed`);
 process.exit(failed ? 1 : 0);
