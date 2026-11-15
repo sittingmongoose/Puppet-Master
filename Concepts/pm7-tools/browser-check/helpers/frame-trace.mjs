@@ -79,11 +79,6 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		const end = e.ts + (e.dur || 0); if (end > t1) t1 = end;
 	}
 	const secs = Math.max(0.001, (t1 - t0) / 1e6);
-	// the renderer that holds the page: named by the trace's frame list, else the busiest renderer main thread
-	let rpid = null;
-	const frames = started?.args?.data?.frames || [];
-	const want = url ? frames.find((f) => f.url && f.url.split('?')[0] === url.split('?')[0] && !f.parent) || frames.find((f) => f.url && f.url.split('?')[0] === url.split('?')[0]) : null;
-	if (want) rpid = want.processId;
 	// time under each thread's outermost events: task events nest across categories, so summing them counts twice
 	const byThread = new Map();
 	{
@@ -99,6 +94,21 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 			for (const e of a) { if (e.ts >= end) { sum += e.dur; end = e.ts + e.dur; } else if (e.ts + e.dur > end) { sum += e.ts + e.dur - end; end = e.ts + e.dur; } }
 			byThread.set(k, sum);
 		}
+	}
+	// the renderer that holds the page: named by the trace's frame list, else the busiest renderer main thread. The
+	// frame whose URL is exactly the page's (a load's cache-buster makes it unique) wins; else, among frames at the same
+	// address, the one whose renderer's main thread did the most (PM7PERF-FRAMETRACE-STALE-TOP: after a normal ->
+	// sandbox navigation in one browser the list still held the old top frame at that address, and preferring a top frame
+	// by address alone read its idle renderer: 0 main frames, where the live child frame had 289)
+	let rpid = null;
+	const frames = started?.args?.data?.frames || [];
+	if (url) {
+		const path = (u) => String(u).split(/[?#]/)[0];
+		const mainBusy = (p) => { let v = 0; for (const [k, us] of byThread) if (Number(k.split(':')[0]) === p && threads.get(k) === 'CrRendererMain') v = Math.max(v, us); return v; };
+		const exact = frames.filter((f) => f.url === url);
+		const same = exact.length ? exact : frames.filter((f) => f.url && path(f.url) === path(url));
+		const want = same.slice().sort((a, b) => mainBusy(b.processId) - mainBusy(a.processId) || (a.parent ? 1 : 0) - (b.parent ? 1 : 0))[0];
+		if (want) rpid = want.processId;
 	}
 	if (rpid == null) {
 		let best = 0;

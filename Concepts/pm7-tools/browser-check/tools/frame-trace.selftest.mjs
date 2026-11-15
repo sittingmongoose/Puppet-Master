@@ -1,5 +1,7 @@
 // helpers/frame-trace.mjs on constructed traces (microseconds). node tools/frame-trace.selftest.mjs [frame-trace.mjs]
 // (1) PM7PERF-STILL-FRAMES-STARTS: main frame STARTS, those abandoned with nothing to update, and the rendered rest;
+// (2) PM7PERF-FRAMETRACE-STALE-TOP: after a navigation in one browser the frame list can still hold an old frame at the
+//     page's address; the live frame (exact URL, the renderer that did the work) is the one summarised;
 // (3) frameStarts names what asked for each start.
 import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
@@ -10,6 +12,7 @@ const ft = await import(given ? pathToFileURL(resolve(given)).href : '../helpers
 const meta = (pid, tid, name) => ({ ph: 'M', name: 'thread_name', pid, tid, args: { name } });
 const page = 'http://h/p.html?cb=2&o55=off';
 const frames = [
+	{ frame: 'OLD', url: 'http://h/p.html?cb=1&o55=off', processId: 10 },   // the earlier normal page's top frame, stale
 	{ frame: 'TOP', url: 'http://h/sandbox-wrapper.html', processId: 30 },
 	{ frame: 'APP', url: page, processId: 20, parent: 'TOP' }
 ];
@@ -32,7 +35,7 @@ ev.push({ name: 'Idle', ph: 'X', ts: 2000000, dur: 1000, pid: 20, tid: 2 });
 
 const s = ft.summarise(ev, { url: page });
 if (given) console.log(`given helper: mainFrames ${JSON.stringify(s.mainFrames)}`);
-assert.equal(s.mainFrames.perSec, 10, '(1) the app frame\'s renderer: 20 starts in 2 s');
+assert.equal(s.mainFrames.perSec, 10, '(2) the live app frame\'s renderer is summarised, not the stale top frame at the same address (20 starts in 2 s)');
 assert.equal(s.mainFrames.noUpdatePerSec, 7, '(1) 14 starts abandoned with nothing to update');
 assert.equal(s.mainFrames.renderedPerSec, 3, '(1) rendered = starts less the NoUpdates aborts (a deferred one counts as rendered)');
 assert.equal(s.mainFrames.commitsPerSec, 2.5, '(1) the commit events themselves');
@@ -43,10 +46,14 @@ assert.deepEqual(s.renderer, { pid: 20, tid: 2 });
 const noOuts = ft.summarise(ev.filter((e) => !String(e.name).startsWith('EarlyOut_')), { url: page });
 assert.equal(noOuts.mainFrames.renderedPerSec, 10);
 
+// (2) without the exact URL the address alone picks the frame whose renderer did the work
+const byPath = ft.summarise(ev, { url: 'http://h/p.html?cb=9' });
+assert.equal(byPath.mainFrames.perSec, 10, 'by address: the busy renderer, not the stale idle one');
+
 // (3) what asked for each start
 const by = ft.frameStarts(ev, s.renderer);
 const timer = by.find(([what]) => what === 'timer checkShown@321576:22');
 assert.ok(timer && timer[1] === 1 && timer[2] === 1, `a timer's function named for the start it asked for: ${JSON.stringify(by)}`);
 assert.equal(by.reduce((a, r) => a + r[1], 0), 20, 'every start is counted once');
 assert.equal(by.reduce((a, r) => a + r[3], 0), 6, 'rendered per row adds up (5 commits + 1 deferred)');
-console.log('PASS frame starts, NoUpdates aborts and rendered frames counted per renderer; frameStarts names the asking task');
+console.log('PASS frame starts, NoUpdates aborts and rendered frames counted per renderer; the live frame wins over a stale record at the same address; frameStarts names the asking task');
