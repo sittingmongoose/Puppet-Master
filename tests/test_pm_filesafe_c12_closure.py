@@ -11,6 +11,44 @@ import pm_filesafe_c12_closure as X
 
 
 class ClosureEvidenceTests(unittest.TestCase):
+    def test_null_post_manifest_witness_is_exact_and_restores_the_schema(self):
+        path = Path(__file__).resolve().parents[1] / 'scripts/pm-filesafe-c12-covering.py'
+        spec = importlib.util.spec_from_file_location('df_c12_null_test', path)
+        covering = importlib.util.module_from_spec(spec); spec.loader.exec_module(covering)
+        graph, documents, registry = X.SG.context('safe_point.restored')
+        schema_path = 'Plans/filesafe_event_sources/safe_point_restored.schema.json'
+        local = documents[schema_path]
+        node = local['$defs']['application_records']['properties']['post_restore_manifest']['anyOf'][1]
+        root = graph['application_body_roots']['post_restore_manifest']
+        item = dict(phase='app_body_schema', keyword='type', schema=schema_path,
+                    pointer=root[1:] + '/anyOf/1', route='/$ref:' + local['$id'] + root + '/anyOf/1',
+                    node_sha256=X.digest(node))
+        before = X.digest(local)
+        witness = covering.post_manifest_null_witness(local, registry, graph, item)
+        self.assertEqual(witness['actual'], ['application_body_schema'])
+        self.assertTrue(witness['clause_cut_accepts'] and witness['row_cut_accepts'] and witness['restored_exact_refusal'])
+        self.assertEqual(X.digest(local), before)
+        item['phase'] = 'mat_schema'
+        self.assertIsNone(covering.post_manifest_null_witness(local, registry, graph, item))
+
+    def test_scope_covering_refuses_extra_condition_and_wrong_selector(self):
+        path = Path(__file__).resolve().parents[1] / 'scripts/pm-filesafe-c12-covering.py'
+        spec = importlib.util.spec_from_file_location('df_c12_covering_test', path)
+        covering = importlib.util.module_from_spec(spec); spec.loader.exec_module(covering)
+        documents = X.SG.context('safe_point.created')[1]
+        local = documents['Plans/filesafe_event_sources/safe_point_created.schema.json']
+        shared = documents['Plans/shared_integration_runtime.schema.json']
+        item = dict(schema='Plans/shared_integration_runtime.schema.json',
+                    pointer='/$defs/WorkflowScopeV2/allOf/0/else',
+                    route=local['$id'] + '#/$defs/application_request/properties/scope/allOf/0/$ref:scope')
+        self.assertEqual(covering.application_else_implication(local, shared, item), 'application_request')
+        changed = copy.deepcopy(shared)
+        changed['$defs']['WorkflowScopeV2']['allOf'][0]['if']['required'] = ['other_field']
+        self.assertIsNone(covering.application_else_implication(local, changed, item))
+        changed = copy.deepcopy(local)
+        changed['$defs']['application_request']['properties']['scope']['allOf'][1]['properties']['scope_kind']['const'] = 'project'
+        self.assertIsNone(covering.application_else_implication(changed, shared, item))
+
     def test_restore_branch_controls_preserve_the_complete_declared_schema(self):
         row = next(r for r in X.A.load('Plans/filesafe_event_authority_fixtures.json')['families']
                    if r['event_type'] == 'safe_point.restored')
