@@ -44,10 +44,14 @@ import do_checkpoint_coverage_7  # noqa: E402
 import do_checkpoint_coverage_8  # noqa: E402
 import do_checkpoint_coverage_9  # noqa: E402
 import do_checkpoint_coverage_10  # noqa: E402
-
 import do_append_number_1  # noqa: E402
 import do_append_references_1  # noqa: E402
 import do_append_shape_1  # noqa: E402
+import do_append_join_1  # noqa: E402
+import do_append_join_2  # noqa: E402
+import do_append_join_3  # noqa: E402
+import do_append_join_4  # noqa: E402
+import do_append_join_5  # noqa: E402
 import do_append_phase_context_1  # noqa: E402
 import do_append_predicate_1  # noqa: E402
 import do_append_retry_source_1  # noqa: E402
@@ -77,6 +81,8 @@ import do_history_disclosure_1  # noqa: E402
 import do_retry_number_1  # noqa: E402
 import do_retry_shape_1  # noqa: E402
 import do_retry_replay_1  # noqa: E402
+import do_retry_identity_1  # noqa: E402
+import do_retry_identity_2  # noqa: E402
 import do_retry_semantics_1  # noqa: E402
 import do_board_number_1  # noqa: E402
 import do_board_join_1  # noqa: E402
@@ -110,37 +116,43 @@ import do_project_input_value_2  # noqa: E402
 import do_board_project_source_1  # noqa: E402
 import do_board_project_source_2  # noqa: E402
 import do_board_project_source_3  # noqa: E402
-import do_board_posted_1  # noqa: E402
-import do_board_posted_2  # noqa: E402
-import do_board_posted_3  # noqa: E402
-import do_append_join_1  # noqa: E402
-import do_append_join_2  # noqa: E402
-import do_append_join_3  # noqa: E402
-import do_append_join_4  # noqa: E402
-import do_append_join_5  # noqa: E402
-import do_retry_identity_1  # noqa: E402
-import do_retry_identity_2  # noqa: E402
 import do_board_application_shape_1  # noqa: E402
 import do_board_application_shape_2  # noqa: E402
 import do_board_application_shape_3  # noqa: E402
 import do_board_application_source_1  # noqa: E402
-import do_board_application_source_2  # noqa: E402
-import do_board_application_source_3  # noqa: E402
-import do_board_application_source_4  # noqa: E402
-import do_board_application_source_5  # noqa: E402
+import do_c12_source_scope_application_scope_identity  # noqa: E402
+import do_c12_source_scope_outer_project_mismatch  # noqa: E402
+import do_c12_source_scope_project_partition_mismatch  # noqa: E402
+import do_c12_source_scope_server_scope_mismatch  # noqa: E402
+import do_c12_source_scope_application_outer_project  # noqa: E402
+import do_c12_source_scope_application_thread_mismatch  # noqa: E402
+import do_c12_source_scope_wrapper_record_scope_mismatch  # noqa: E402
+import do_c12_source_scope_wrapper_record_server_id_mismatch  # noqa: E402
+import do_c12_source_scope_wrapper_record_storage_instance_id_mismatch  # noqa: E402
+import do_c12_wrapper_scope_application_scope_identity  # noqa: E402
+import do_c12_wrapper_scope_outer_project_mismatch  # noqa: E402
+import do_c12_wrapper_scope_project_partition_mismatch  # noqa: E402
+import do_c12_wrapper_scope_server_scope_mismatch  # noqa: E402
+import do_c12_wrapper_scope_application_outer_project  # noqa: E402
+import do_c12_wrapper_scope_application_thread_mismatch  # noqa: E402
+import do_c12_wrapper_scope_wrapper_record_server_id_mismatch  # noqa: E402
+import do_c12_wrapper_scope_wrapper_record_storage_instance_id_mismatch  # noqa: E402
 import do_board_application_source_6  # noqa: E402
 import do_board_application_source_7  # noqa: E402
 import do_board_application_source_8  # noqa: E402
 import do_board_application_source_9  # noqa: E402
 import do_board_application_source_10  # noqa: E402
-import do_board_application_source_11  # noqa: E402
+import do_c12_wrapper_scope_join  # noqa: E402
 import do_board_application_source_12  # noqa: E402
 import do_board_application_source_13  # noqa: E402
 import do_board_application_source_14  # noqa: E402
 import do_board_application_source_15  # noqa: E402
 import do_board_application_source_16  # noqa: E402
+import do_board_posted_1  # noqa: E402
+import do_board_posted_2  # noqa: E402
+import do_board_posted_3  # noqa: E402
 
-# Suites, in table order: (stage table, suite name, module).
+# Suites retain the original production order. C12 unproved rows are singleton tables.
 SUITES = (
     ('RECIPE_ROWS', 'recipe_1', do_recipe_1),
     ('CHECKPOINT_SCHEMA_ROWS', 'checkpoint_schema_1', do_checkpoint_schema_1),
@@ -171,8 +183,8 @@ SUITES = (
     ('APPEND_SHAPE_ROWS', 'append_shape_1', do_append_shape_1),
     ('APPEND_JOIN_ROWS', 'append_join_1', do_append_join_1),
     ('APPEND_JOIN_ROWS', 'append_join_2', do_append_join_2),
-    ('APPEND_JOIN_ROWS', 'append_join_3', do_append_join_3),
     ('APPEND_JOIN_ROWS', 'append_join_4', do_append_join_4),
+    ('APPEND_JOIN_ROWS', 'append_join_3', do_append_join_3),
     ('APPEND_JOIN_ROWS', 'append_join_5', do_append_join_5),
     ('APPEND_PHASE_CONTEXT_ROWS', 'append_phase_context_1', do_append_phase_context_1),
     ('APPEND_PREDICATE_ROWS', 'append_predicate_1', do_append_predicate_1),
@@ -203,8 +215,8 @@ SUITES = (
     ('RETRY_NUMBER_ROWS', 'retry_number_1', do_retry_number_1),
     ('RETRY_SHAPE_ROWS', 'retry_shape_1', do_retry_shape_1),
     ('RETRY_REPLAY_ROWS', 'retry_replay_1', do_retry_replay_1),
-    ('RETRY_IDENTITY_ROWS', 'retry_identity_1', do_retry_identity_1),
     ('RETRY_IDENTITY_ROWS', 'retry_identity_2', do_retry_identity_2),
+    ('RETRY_IDENTITY_ROWS', 'retry_identity_1', do_retry_identity_1),
     ('RETRY_SEMANTIC_ROWS', 'retry_semantics_1', do_retry_semantics_1),
     ('BOARD_NUMBER_ROWS', 'board_number_1', do_board_number_1),
     ('BOARD_JOIN_ROWS', 'board_join_1', do_board_join_1),
@@ -242,16 +254,29 @@ SUITES = (
     ('BOARD_APPLICATION_SHAPE_ROWS', 'board_application_shape_2', do_board_application_shape_2),
     ('BOARD_APPLICATION_SHAPE_ROWS', 'board_application_shape_3', do_board_application_shape_3),
     ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_1', do_board_application_source_1),
-    ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_2', do_board_application_source_2),
-    ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_3', do_board_application_source_3),
-    ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_4', do_board_application_source_4),
-    ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_5', do_board_application_source_5),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_source_scope_application_scope_identity', do_c12_source_scope_application_scope_identity),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_source_scope_outer_project_mismatch', do_c12_source_scope_outer_project_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_source_scope_project_partition_mismatch', do_c12_source_scope_project_partition_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_source_scope_server_scope_mismatch', do_c12_source_scope_server_scope_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_source_scope_application_outer_project', do_c12_source_scope_application_outer_project),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_source_scope_application_thread_mismatch', do_c12_source_scope_application_thread_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_source_scope_wrapper_record_scope_mismatch', do_c12_source_scope_wrapper_record_scope_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_source_scope_wrapper_record_server_id_mismatch', do_c12_source_scope_wrapper_record_server_id_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_source_scope_wrapper_record_storage_instance_id_mismatch', do_c12_source_scope_wrapper_record_storage_instance_id_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_wrapper_scope_application_scope_identity', do_c12_wrapper_scope_application_scope_identity),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_wrapper_scope_outer_project_mismatch', do_c12_wrapper_scope_outer_project_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_wrapper_scope_project_partition_mismatch', do_c12_wrapper_scope_project_partition_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_wrapper_scope_server_scope_mismatch', do_c12_wrapper_scope_server_scope_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_wrapper_scope_application_outer_project', do_c12_wrapper_scope_application_outer_project),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_wrapper_scope_application_thread_mismatch', do_c12_wrapper_scope_application_thread_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_wrapper_scope_wrapper_record_server_id_mismatch', do_c12_wrapper_scope_wrapper_record_server_id_mismatch),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_wrapper_scope_wrapper_record_storage_instance_id_mismatch', do_c12_wrapper_scope_wrapper_record_storage_instance_id_mismatch),
     ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_6', do_board_application_source_6),
     ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_7', do_board_application_source_7),
     ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_8', do_board_application_source_8),
     ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_9', do_board_application_source_9),
     ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_10', do_board_application_source_10),
-    ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_11', do_board_application_source_11),
+    ('BOARD_APPLICATION_SOURCE_ROWS', 'c12_wrapper_scope_join', do_c12_wrapper_scope_join),
     ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_12', do_board_application_source_12),
     ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_13', do_board_application_source_13),
     ('BOARD_APPLICATION_SOURCE_ROWS', 'board_application_source_14', do_board_application_source_14),
@@ -272,7 +297,7 @@ CHECKPOINT_COVERAGE_ROWS = do_checkpoint_coverage_1.ROWS + do_checkpoint_coverag
 APPEND_NUMBER_ROWS = do_append_number_1.ROWS
 APPEND_REFERENCE_ROWS = do_append_references_1.ROWS
 APPEND_SHAPE_ROWS = do_append_shape_1.ROWS
-APPEND_JOIN_ROWS = do_append_join_1.ROWS + do_append_join_2.ROWS + do_append_join_3.ROWS + do_append_join_4.ROWS + do_append_join_5.ROWS
+APPEND_JOIN_ROWS = do_append_join_1.ROWS + do_append_join_2.ROWS + do_append_join_4.ROWS + do_append_join_3.ROWS + do_append_join_5.ROWS
 APPEND_PHASE_CONTEXT_ROWS = do_append_phase_context_1.ROWS
 APPEND_PREDICATE_ROWS = do_append_predicate_1.ROWS
 APPEND_RETRY_SOURCE_ROWS = do_append_retry_source_1.ROWS
@@ -296,7 +321,7 @@ HISTORICAL_DISCLOSURE_ROWS = do_history_disclosure_1.ROWS
 RETRY_NUMBER_ROWS = do_retry_number_1.ROWS
 RETRY_SHAPE_ROWS = do_retry_shape_1.ROWS
 RETRY_REPLAY_ROWS = do_retry_replay_1.ROWS
-RETRY_IDENTITY_ROWS = do_retry_identity_1.ROWS + do_retry_identity_2.ROWS
+RETRY_IDENTITY_ROWS = do_retry_identity_2.ROWS + do_retry_identity_1.ROWS
 RETRY_SEMANTIC_ROWS = do_retry_semantics_1.ROWS
 BOARD_NUMBER_ROWS = do_board_number_1.ROWS
 BOARD_JOIN_ROWS = do_board_join_1.ROWS + do_board_join_2.ROWS + do_board_join_3.ROWS + do_board_join_4.ROWS + do_board_join_5.ROWS
@@ -312,5 +337,8 @@ PROJECT_INPUT_TYPE_ROWS = do_project_input_type_1.ROWS + do_project_input_type_2
 PROJECT_INPUT_VALUE_ROWS = do_project_input_value_1.ROWS + do_project_input_value_2.ROWS
 BOARD_PROJECT_SOURCE_ROWS = do_board_project_source_1.ROWS + do_board_project_source_2.ROWS + do_board_project_source_3.ROWS
 BOARD_APPLICATION_SHAPE_ROWS = do_board_application_shape_1.ROWS + do_board_application_shape_2.ROWS + do_board_application_shape_3.ROWS
-BOARD_APPLICATION_SOURCE_ROWS = do_board_application_source_1.ROWS + do_board_application_source_2.ROWS + do_board_application_source_3.ROWS + do_board_application_source_4.ROWS + do_board_application_source_5.ROWS + do_board_application_source_6.ROWS + do_board_application_source_7.ROWS + do_board_application_source_8.ROWS + do_board_application_source_9.ROWS + do_board_application_source_10.ROWS + do_board_application_source_11.ROWS + do_board_application_source_12.ROWS + do_board_application_source_13.ROWS + do_board_application_source_14.ROWS + do_board_application_source_15.ROWS + do_board_application_source_16.ROWS
+BOARD_APPLICATION_SOURCE_ROWS = do_board_application_source_1.ROWS + do_c12_source_scope_application_scope_identity.ROWS + do_c12_source_scope_outer_project_mismatch.ROWS + do_c12_source_scope_project_partition_mismatch.ROWS + do_c12_source_scope_server_scope_mismatch.ROWS + do_c12_source_scope_application_outer_project.ROWS + do_c12_source_scope_application_thread_mismatch.ROWS + do_c12_source_scope_wrapper_record_scope_mismatch.ROWS + do_c12_source_scope_wrapper_record_server_id_mismatch.ROWS + do_c12_source_scope_wrapper_record_storage_instance_id_mismatch.ROWS + do_c12_wrapper_scope_application_scope_identity.ROWS + do_c12_wrapper_scope_outer_project_mismatch.ROWS + do_c12_wrapper_scope_project_partition_mismatch.ROWS + do_c12_wrapper_scope_server_scope_mismatch.ROWS + do_c12_wrapper_scope_application_outer_project.ROWS + do_c12_wrapper_scope_application_thread_mismatch.ROWS + do_c12_wrapper_scope_wrapper_record_server_id_mismatch.ROWS + do_c12_wrapper_scope_wrapper_record_storage_instance_id_mismatch.ROWS + do_board_application_source_6.ROWS + do_board_application_source_7.ROWS + do_board_application_source_8.ROWS + do_board_application_source_9.ROWS + do_board_application_source_10.ROWS + do_c12_wrapper_scope_join.ROWS + do_board_application_source_12.ROWS + do_board_application_source_13.ROWS + do_board_application_source_14.ROWS + do_board_application_source_15.ROWS + do_board_application_source_16.ROWS
 BOARD_POSTED_ROWS = do_board_posted_1.ROWS + do_board_posted_2.ROWS + do_board_posted_3.ROWS
+
+# Two redundant cycle edges are represented by the independent copy tree.
+# See pm_orchestrator_c12_cases.py and C12-DO copy-tree proof.
