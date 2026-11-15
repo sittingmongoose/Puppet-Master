@@ -42,6 +42,10 @@
   {
    "event_type": "assistant_plan.version_created",
    "outcome": "registered"
+  },
+  {
+   "event_type": "assistant_plan.wizard_handoff_created",
+   "outcome": "registered"
   }
  ]
 }
