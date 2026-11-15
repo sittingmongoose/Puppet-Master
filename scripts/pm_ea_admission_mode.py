@@ -31,9 +31,10 @@ Admitted means all of these, checked in this order; the first that fails is the 
     one-family step, row hash, and the pinned 12/12 depth assessment with Plans evidence)
  7. ``registry_before`` is this registry's own history at the pinned revision            registry_before_mismatch
  8. ``registry_after`` is too, with this family's pinned row as its last row             registry_after_mismatch
-    Both are first rebuilt from the live registry: its first N rows at the pinned revision, rendered as the
-    registry is written, must hash to the pinned SHA-256. When that differs (an earlier row was revised after
-    the admission), the exact blob is looked up in the checkout's own git history instead, read-only: it must
+    Both are first rebuilt from the registry: its first N rows at the pinned revision, rendered as the registry is
+    written, must hash to the pinned SHA-256 (the registry document judged, or this tree's own registry file when a
+    caller judges a synthetic document). When that differs (an earlier row was revised after the admission), the
+    exact blob is looked up in the checkout's own git history instead, read-only: it must
     have the pinned revision and family count, the before blob must be the after blob less its last row, and
     the last row must be this family's pinned row.
  9. the decision entry the record pins names the row hash and both registry pins         decision_entry_does_not_pin_admission
@@ -179,16 +180,33 @@ def _pins_match(side: dict, doc) -> bool:
 def registry_history_problem(record: dict, registry: dict, index: int, root: Path) -> tuple[str, dict] | None:
     """Steps 7 and 8: (code, detail) when the record's registry pins are not this registry's own history.
 
-    First the live-registry rebuild; when it cannot prove both pins (or the row is not at the pinned position), the
-    checkout's git history, when there is one. Each route judges the before pin first, then the after pin.
+    First the rebuild, from the registry being judged and then from this tree's own registry file; when neither
+    proves both pins (or the row is not at the pinned position in either), the checkout's git history, when there is
+    one. Each route judges the before pin first, then the after pin; the rebuild route reports the first witness
+    whose row sits at the pinned position.
     """
     before, after = record["registry_before"], record["registry_after"]
+    # Rebuild witnesses: the registry being judged, then (when a caller judges another registry document, as the
+    # lanes' synthetic witnesses do) this tree's own registry file, with the family's row at its own position.
+    witnesses = [(registry, index)]
+    try:
+        own = load_registry(root)
+    except (OSError, ValueError):
+        own = None
+    if isinstance(own, dict) and own != registry and isinstance(own.get("families"), list):
+        own_index = [i for i, f in enumerate(own["families"])
+                     if isinstance(f, dict) and f.get("event_type") == record.get("event_type")]
+        if len(own_index) == 1:
+            witnesses.append((own, own_index[0]))
     rebuilt_before = rebuilt_after = None
-    if index == after["family_count"] - 1 and after["family_count"] <= len(registry["families"]):
-        rebuilt_before = hashlib.sha256(_prefix(registry, before["revision"], before["family_count"])).hexdigest()
-        rebuilt_after = hashlib.sha256(_prefix(registry, after["revision"], after["family_count"])).hexdigest()
-        if rebuilt_before == before["sha256"] and rebuilt_after == after["sha256"]:
-            return None
+    for doc, at in witnesses:
+        if at == after["family_count"] - 1 and after["family_count"] <= len(doc["families"]):
+            this_before = hashlib.sha256(_prefix(doc, before["revision"], before["family_count"])).hexdigest()
+            this_after = hashlib.sha256(_prefix(doc, after["revision"], after["family_count"])).hexdigest()
+            if this_before == before["sha256"] and this_after == after["sha256"]:
+                return None
+            if rebuilt_before is None:
+                rebuilt_before, rebuilt_after = this_before, this_after
     history = _git_history(root)
     if history is None:
         detail = {"route": "rebuild", "row_index": index, "rebuilt_before_sha256": rebuilt_before,

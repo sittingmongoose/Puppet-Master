@@ -143,7 +143,8 @@ def _counts_shifted(record):
     record["registry_after"]["family_count"] += 1
 
 
-# (name, defect, family, prepared_row change or None, expected mode, expected code)
+# (name, defect, family, call (None, prepared_row 'same'/'differs', registry 'synthetic'/'synthetic_changed'),
+#  expected mode, expected code)
 SCENARIOS = [
     ("admitted_control", None, ADMITTED, None, "admitted", None),
     ("prepared_control", None, PREPARED, None, "prepared", None),
@@ -185,6 +186,12 @@ SCENARIOS = [
      None, "refused", "admission_landing_record_missing"),
     ("landing_record_not_naming_family", _landing_not_naming, ADMITTED, None, "refused", "admission_landing_record_missing"),
     ("record_without_registration", _unregister, ADMITTED, None, "refused", "admission_record_without_registration"),
+    # A lane witness judging a synthetic registry document (the family's row moved, other families removed): the
+    # tree's own registry file still proves the record's pins without git; a wrong pin is still refused.
+    ("synthetic_registry_control", None, ADMITTED, "synthetic", "admitted", None),
+    ("synthetic_registry_record_after_revision", _record_edit(lambda r: r["registry_after"].__setitem__("revision", "2026-11-15.999")),
+     ADMITTED, "synthetic", "refused", "registry_after_mismatch"),
+    ("synthetic_registry_row_differs", None, ADMITTED, "synthetic_changed", "refused", "registry_row_differs_from_pinned_row"),
 ]
 
 
@@ -208,13 +215,19 @@ def run_scenarios(module, repo: Path = REPO, names=None) -> list[dict]:
             if defect is not None:
                 defect(root)
             module.reset_caches()
-            row = None
-            if prepared is not None:
+            row = registry = None
+            if prepared in ("same", "differs"):
                 row = copy.deepcopy(_row(root, family))
                 if prepared == "differs":
                     row["source_refs"] = list(row.get("source_refs", [])) + ["Plans/Decision_Log.md#DL-077"]
+            elif prepared in ("synthetic", "synthetic_changed"):
+                registry = _read(root, REGISTRY)
+                moved = copy.deepcopy(_row(root, family))
+                if prepared == "synthetic_changed":
+                    moved["family_revision"] += "-changed"
+                registry["families"] = [f for f in registry["families"][:40]] + [moved]
             try:
-                got = module.verdict(family, root=root, prepared_row=row)
+                got = module.verdict(family, root=root, prepared_row=row, registry=registry)
                 observed = {"mode": got.get("mode"), "code": got.get("code")}
                 error = None
             except Exception as exc:  # reported, never a kill
