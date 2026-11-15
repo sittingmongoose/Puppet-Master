@@ -286,7 +286,7 @@
 
   /* ---------- one ability --------------------------------------------------------------------------------------- */
   const orow = ({ label, help, control, home, wide }) => `<div class="setting-row o55-row o55-scoped${wide ? ' is-wide' : ''}"${home ? ` data-setting-id="${a(home)}"` : ''}><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${control}</div><span></span></div>`;
-  const valueWith = (text, btn) => `<span class="pm51-row-value">${h(text)}</span>${btn ? PM51.btn(Object.assign({ small: true }, btn)) : ''}`;
+  const valueWith = (text, btn) => PM51.valueWith(text, btn);
   function ownRow(r, key) {
     const def = OWN[key]; const o = r.output || {}; const v = o[key];
     const opts = (def.by ? def.by[r.id] : def.options) || [];
@@ -313,7 +313,7 @@
     });
     const backup = orow({ label: 'If that fails, use', help: fallbackText(r), home: r.id === 'image-understanding' ? S.visionBackup : null, control: PM51.btn({ label: 'Edit', icon: 'edit', small: true, action: 'pm51-media-fallbacks', data }) });
     const check = orow({ label: 'Last check', help: off ? 'Turn the ability on to check it.' : 'One small request through the main service.', control: valueWith(lastCheck(r), { label: 'Check', icon: 'test', action: 'pm51-media-check', data, disabled: off || unset(r), reason: off ? 'Turn the ability on first.' : 'Choose a service first.' }) });
-    const saveRow = SUBFOLDER[r.id] ? orow({ label: 'Saves to', help: keepText(), home: S.folder, control: `<span class="pm51-row-value o55-media-path">${h(saveText(r))}</span>${PM51.btn({ label: 'Change', icon: 'folder', small: true, action: 'pm51-media-saveto', data })}` }) : '';
+    const saveRow = SUBFOLDER[r.id] ? orow({ label: 'Saves to', help: keepText(), home: S.folder, control: PM51.valueWith(saveText(r), { label: 'Change', icon: 'folder', action: 'pm51-media-saveto', data }, 'o55-media-path') }) : '';
     const defaults = (DEFAULTS[r.id] || []).length ? PM51.bound.rows(DEFAULTS[r.id]) : '';
     const own = (OWN_KEYS[r.id] || []).filter(k => (r.output || {})[k] != null).map(k => ownRow(r, k));
     if (r.id === 'artifact-output') own.unshift(fileTypesRow(r));
