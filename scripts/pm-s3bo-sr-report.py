@@ -126,10 +126,62 @@ def invalid_mutations(controls):
     return out
 
 
+def assemble(bundle, guard_dirs):
+    """Merge parallel guard runs into the bundle and verify each proof against this tree.
+
+    A table proof is reused only when every control and negative it consumed
+    has the same tool digest as the table input recomputed now, the table
+    module and the gated tool are byte-identical, and the report is PASS.
+    """
+    import hashlib
+    import importlib.util
+    import shutil
+    import pm_guard_isolation as g
+    spec = importlib.util.spec_from_file_location('s3bo_check', str(w.ROOT / 'scripts/pm-s3bo-check.py'))
+    check = importlib.util.module_from_spec(spec); spec.loader.exec_module(check)
+    tool = hashlib.sha256((w.ROOT / 'scripts/pm_guard_isolation.py').read_bytes()).hexdigest()
+    verified = []
+    for name in w.table_names():
+        source = next((d for d in guard_dirs if (d / (name + '.summary.json')).exists()), None)
+        if source is None:
+            raise SystemExit('no guard report for ' + name)
+        for suffix in ('.summary.json', '.json.gz'):
+            shutil.copyfile(source / (name + suffix), bundle / (name + suffix))
+        report = json.load(gzip.open(bundle / (name + '.json.gz'), 'rt'))
+        cs, ns = check.selected(name)
+        now = sorted((x.id, g.digest(x.value)) for x in cs + ns)
+        then = sorted((x['id'], x['sha256']) for x in report['controls'] + report['negatives'])
+        module = 'scripts/pm_s3bo_table_' + name + '.py'
+        files = {f['path']: f.get('sha256') for f in report['static'].get('files', [])}
+        module_ok = files.get(module) in (None, hashlib.sha256((w.ROOT / module).read_bytes()).hexdigest())
+        ok = now == then and report['tool_sha256'] == tool and report['status'] == 'PASS' and module_ok
+        verified.append({'table': name, 'inputs_match': now == then, 'tool_match': report['tool_sha256'] == tool,
+                         'module_match': module_ok, 'status': report['status'], 'reused': ok})
+        if not ok:
+            raise SystemExit('guard proof cannot be reused for ' + name + ': ' + json.dumps(verified[-1]))
+    guards = check.summarize(bundle, 0)
+    guards['reuse_verification'] = verified
+    (bundle / 'guards.json').write_text(json.dumps(guards, indent=1, sort_keys=True) + '\n')
+    parts = {k: json.loads((bundle / f).read_text()) for k, f in
+             (('matrix', 'matrix.json'), ('batteries', 'batteries.json'), ('corpus', 'corpus.json'), ('evidence', 'extension-evidence.json'))}
+    summary = {'status': 'pass' if all(v['status'] == 'pass' for v in parts.values()) and guards['status'] == 'pass' else 'fail',
+               'matrix': {k: parts['matrix'][k] for k in ('status', 'controls', 'negatives')},
+               'batteries': {k: parts['batteries'][k] for k in ('status', 'cases', 'passed')},
+               'corpus': {k: parts['corpus'][k] for k in ('status', 'cases', 'passed')},
+               'evidence': {'status': parts['evidence']['status']},
+               'guards': {k: guards[k] for k in ('status', 'tables', 'rows', 'proved', 'unproved', 'flips', 'stays', 'max_rows')}}
+    (bundle / 'summary.json').write_text(json.dumps(summary, indent=1, sort_keys=True) + '\n')
+    return summary
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--bundle', type=Path, required=True)
+    parser.add_argument('--guard-dirs', type=Path, nargs='*', default=[],
+                        help='merge and verify parallel guard runs into the bundle first')
     args = parser.parse_args()
+    if args.guard_dirs:
+        print(json.dumps(assemble(args.bundle, args.guard_dirs)))
     matrix = json.loads((args.bundle / 'matrix.json').read_text())
     controls, negatives = c.cases()
     sr_rows = [r for r in w.ROWS if r[0].startswith('sr_')]
