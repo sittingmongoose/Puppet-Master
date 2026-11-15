@@ -114,6 +114,12 @@ MULTI_FAMILY_REQUIRED = (
 )
 STEP_FIELD = "registry_step_event_types"
 
+# E9-1 (Jared, 2026-11-14, card E9-1 option A): the fifth receipted change. A
+# decision reference may also carry a four-digit number, DL-1000 to DL-9999.
+# The three-digit branch is the old pattern unchanged; zero-padded four-digit
+# forms (DL-0077) stay refused, so they cannot alias an excluded entry.
+DL_REF = r"DL-(?:\d{3}|[1-9][0-9]{3})"
+
 
 def holding_authority_bytes(path: Path) -> bytes:
     """Pin only the canonical DL-039 body, not unrelated Decision Log edits."""
@@ -440,7 +446,7 @@ def admission_record_problems(record, family) -> list:
         problems.append("implementation_receipt_sha256")
     if record.get("family_id") != family.get("family_id"):
         problems.append("family_id")
-    match = re.fullmatch(r"Plans/Decision_Log\.md#(DL-\d{3})", str(record.get("decision_ref", "")))
+    match = re.fullmatch(r"Plans/Decision_Log\.md#(" + DL_REF + ")", str(record.get("decision_ref", "")))
     if not match:
         problems.append("decision_ref")
     else:
@@ -809,6 +815,18 @@ RECOUNT_AUTHOR = "codex:CA-SEAL2-20261105"
 RECOUNT_BEFORE_SHA = "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91"
 RECOUNT_OUTCOMES = HOME / "recount" / "OUTCOMES.json"
 VALIDATOR_RELATIVE = "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py"
+# E9-1 adds only DL_REF and this anchored fifth link to the receipt chain.
+DL_PATTERN_CHANGE = "reports/event-authority-20261114/seal-check-dl-pattern-receipt.json"
+DL_PATTERN_AUTHOR = "claude-opus-5.5:ea-pnc-s1v-20261114"
+DL_PATTERN_BEFORE_SHA = "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72"
+DL_PATTERN_AUTHORITY = {
+    "card_label": "E9-1",
+    "selected_option": "A",
+    "card": {"path": "reports/event-authority-20261114/E9-1-card.json",
+             "sha256": "b4809cf1361cd13a4adcb09b7ffabce4ad0b56d91d8bcb9c46655daa264cefa6"},
+    "answer": {"path": "reports/event-authority-20261114/E9-1-answer.json",
+               "sha256": "64e0bb3966b9b4efe353cfc4070922e2a68ca839312a0e2a088258ee0431246f"},
+}
 
 
 def recount_json(raw, expected_type):
@@ -853,14 +871,31 @@ def recount_anchor(path):
             and entries[0]["sha256"] == sha256_file(REPO / path))
 
 
+def fourth_change_validator_pin():
+    """Only the anchored fifth byte link may expose the fourth frozen hash."""
+    live = sha256_file(Path(__file__))
+    try:
+        receipt = recount_object(REPO / DL_PATTERN_CHANGE)
+        fourth = recount_object(REPO / RECOUNT_CHANGE)
+        if (recount_anchor(DL_PATTERN_CHANGE)
+                and receipt.get("validator_after_sha256") == live
+                and receipt.get("validator_before_sha256") == DL_PATTERN_BEFORE_SHA
+                and fourth.get("validator_after_sha256") == DL_PATTERN_BEFORE_SHA):
+            return DL_PATTERN_BEFORE_SHA
+    except (OSError, ValueError, TypeError, KeyError, UnicodeError):
+        pass
+    return live
+
+
 def third_change_validator_pin():
     """Only the anchored fourth byte link may expose the third frozen hash."""
     live = sha256_file(Path(__file__))
+    presented = fourth_change_validator_pin()
     try:
         receipt = recount_object(REPO / RECOUNT_CHANGE)
         third = recount_object(REPO / MULTI_FAMILY_RECEIPT)
         if (recount_anchor(RECOUNT_CHANGE)
-                and receipt.get("validator_after_sha256") == live
+                and receipt.get("validator_after_sha256") == presented
                 and receipt.get("validator_before_sha256") == RECOUNT_BEFORE_SHA
                 and third.get("validator_after_sha256") == RECOUNT_BEFORE_SHA):
             return RECOUNT_BEFORE_SHA
@@ -884,7 +919,7 @@ def recount_change_state():
         "validator_path": VALIDATOR_RELATIVE,
         "validator_id": "pm.plans.audits.event_authority.independent_validator",
         "validator_before_sha256": RECOUNT_BEFORE_SHA,
-        "validator_after_sha256": sha256_file(Path(__file__)),
+        "validator_after_sha256": fourth_change_validator_pin(),
         "prior_receipt": {"path": MULTI_FAMILY_RECEIPT, "sha256": sha256_file(REPO / MULTI_FAMILY_RECEIPT)},
         "recount_receipt": {"path": RECOUNT_RECEIPT, "sha256": RECOUNT_RECEIPT_SHA},
         "recount_list": {"path": RECOUNT_LIST, "sha256": RECOUNT_LIST_SHA},
@@ -900,6 +935,35 @@ def recount_change_state():
             or not recount_anchor(RECOUNT_CHANGE)
             or third_change_validator_pin() != RECOUNT_BEFORE_SHA):
         raise ValueError("fourth amendment identity, authority, byte link or anchor mismatch")
+    return receipt, sha256_file(path)
+
+
+def dl_pattern_change_state():
+    """E9-1's receipt pins the signed card and answer, the fourth receipt and this file's bytes."""
+    path = REPO / DL_PATTERN_CHANGE
+    receipt = recount_object(path)
+    lander = receipt.get("lander_task")
+    expected = {
+        "schema_id": "pm.assurance.event_authority.dl_pattern_change.v1",
+        "authority": DL_PATTERN_AUTHORITY,
+        "validator_path": VALIDATOR_RELATIVE,
+        "validator_id": "pm.plans.audits.event_authority.independent_validator",
+        "validator_before_sha256": DL_PATTERN_BEFORE_SHA,
+        "validator_after_sha256": sha256_file(Path(__file__)),
+        "prior_receipt": {"path": RECOUNT_CHANGE, "sha256": sha256_file(REPO / RECOUNT_CHANGE)},
+        "decision_ref_pattern": DL_REF,
+        "author_task": DL_PATTERN_AUTHOR,
+    }
+    if (any(type(receipt.get(k)) is not type(v) or receipt.get(k) != v for k, v in expected.items())
+            or any(sha256_file(REPO / DL_PATTERN_AUTHORITY[k]["path"]) != DL_PATTERN_AUTHORITY[k]["sha256"]
+                   for k in ("card", "answer"))
+            or type(lander) is not str or not lander.strip()
+            or receipt.get("seal_applier_forbidden_tasks") != sorted({DL_PATTERN_AUTHOR, lander})
+            or any(receipt.get(k) is not False for k in (
+                "seal_authorized", "admission_authorized", "contract_depth_complete"))
+            or not recount_anchor(DL_PATTERN_CHANGE)
+            or fourth_change_validator_pin() != DL_PATTERN_BEFORE_SHA):
+        raise ValueError("fifth amendment identity, authority, byte link or anchor mismatch")
     return receipt, sha256_file(path)
 
 
@@ -1013,7 +1077,7 @@ def recount_outcomes(names, admitted):
                     or type(row.get("rationale")) is not str or not row["rationale"].strip()):
                 raise ValueError("incomplete or contradictory recount exclusion: " + name)
             ref = row.get("decision_ref")
-            if type(ref) is not str or not re.fullmatch(r"Plans/Decision_Log\.md#DL-\d{3}", ref):
+            if type(ref) is not str or not re.fullmatch(r"Plans/Decision_Log\.md#" + DL_REF, ref):
                 raise ValueError("recount exclusion decision missing: " + name)
             section = decision_section_bytes(ROOT / "Decision_Log.md", ref.split("#")[1])
             if (hashlib.sha256(section).hexdigest() != row.get("decision_section_sha256")
@@ -1065,6 +1129,10 @@ def recount_validation(admitted):
         _, state["change_receipt_sha256"] = recount_change_state()
     except (OSError, ValueError, TypeError, KeyError, UnicodeError) as exc:
         issues.append({"error": "recount_change_receipt_invalid", "detail": str(exc)})
+    try:
+        _, state["dl_pattern_change_receipt_sha256"] = dl_pattern_change_state()
+    except (OSError, ValueError, TypeError, KeyError, UnicodeError) as exc:
+        issues.append({"error": "dl_pattern_change_receipt_invalid", "detail": str(exc)})
     try:
         names, custody = recount_frozen_inputs()
         state["custody"] = custody

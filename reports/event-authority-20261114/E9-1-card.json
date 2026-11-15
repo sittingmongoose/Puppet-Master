@@ -1,0 +1,91 @@
+{
+  "schema": "agent-reports/card@1",
+  "kind": "question",
+  "label": "E9-1",
+  "project": "puppet-master",
+  "stream": "E",
+  "askedBy": "pm-ea-lead",
+  "replyTo": {
+    "pmMail": "pm-ea-lead",
+    "t3Thread": null
+  },
+  "state": "open",
+  "multiple": false,
+  "urgency": "today",
+  "batch": "E-questions-9",
+  "replies": [],
+  "exception": null,
+  "title": "Let the final event check accept four-digit decision numbers?",
+  "now": "Every history type we add needs its own entry in the decision log, and about 510 are coming (from your EA-P1 to EA-P3 answers). The frozen final check that proves the event list is complete only accepts three-digit decision numbers (up to DL-999), and only 489 of those are left, shared with every other stream. The first 173 additions fit; the rest do not. Changing that frozen check needs your yes (your 'no other edits' rule, DL-039).",
+  "options": [
+    {
+      "key": "A",
+      "label": "Allow four-digit numbers (DL-1000 and up)",
+      "gets": "All additions fit. A small change to the check's number pattern, written by a separate agent, reviewed blind and pinned by the reseal, like the earlier approved check changes.",
+      "costs": "About half a day of agent work, bundled with the next check landing.",
+      "media": []
+    },
+    {
+      "key": "B",
+      "label": "Keep three digits; let one decision entry cover several types",
+      "gets": "No change to the frozen check.",
+      "costs": "Bends your rule of one decision entry per type (DL-400); each entry would list many types.",
+      "media": []
+    },
+    {
+      "key": "C",
+      "label": "Keep three digits and stop at what fits",
+      "gets": "No change.",
+      "costs": "About 20 types can't be added, so the final plan check can't pass.",
+      "media": []
+    }
+  ],
+  "recommendation": {
+    "key": "A",
+    "why": "It is a one-line pattern change that keeps your one-entry-per-type rule intact.",
+    "confidence": "high",
+    "flip": "If you want the frozen check never touched again"
+  },
+  "neededBy": {
+    "at": null,
+    "ifNoAnswer": "The first 173 additions go ahead on three-digit numbers; the rest wait."
+  },
+  "reversible": {
+    "yes": true,
+    "how": "The pattern change can be reverted before any four-digit entry lands"
+  },
+  "evidence": [
+    {
+      "label": "s5w's finding",
+      "path": "pm-mail 1114191950-b716; scripts/pm_event_authority_independent_validator.py:443 and :1016"
+    }
+  ],
+  "sections": [
+    {
+      "type": "facts",
+      "title": "Technical detail for agents",
+      "fold": true,
+      "rows": [
+        {
+          "label": "Regex",
+          "value": "re.fullmatch(r'Plans/Decision_Log\\.md#(DL-\\d{3})') at :443 (admission records) and :1016 (recount exclusions)"
+        },
+        {
+          "label": "Count",
+          "value": "173 merge 1 + ~300 merge 2 + 5 DG switches + up to 32 S3 revisions ~ 509; 3-digit space DL-511..999 = 489"
+        },
+        {
+          "label": "Change",
+          "value": "DL-\\d{3,4}, as a receipted change (separate author, blind review, P Spec Lock anchor), bundled with S1"
+        }
+      ]
+    }
+  ],
+  "blocks": "Admission merge 2 (PNC-019)",
+  "id": "vm.pm-ea-lead--E9-1",
+  "writer": "vm.pm-ea-lead",
+  "seq": 1794501339848,
+  "writtenAt": "2026-11-14T20:33:21Z",
+  "nowAsOf": "2026-11-14T20:33:21Z",
+  "askedAt": "2026-11-14T20:33:21Z"
+}
