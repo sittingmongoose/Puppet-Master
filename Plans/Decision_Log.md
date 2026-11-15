@@ -40238,7 +40238,6 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
-
 ### DL-693 - A Restore Point Records Everything Up To Its Message, Sorted By Kind (E10-1)
 
 ```yaml
