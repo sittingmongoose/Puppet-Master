@@ -33946,3 +33946,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-550: Event Authority registers subagent.context_rehydrated (admission merge 1)
+
+```yaml
+plan_unit_id: DL-550
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `subagent.context_rehydrated` as family `event-family-subagent-context-rehydrated` revision 1.0.0 in admission merge 1 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the families ready then are admitted in a first merge. `subagent.context_rehydrated` is one of the rows DL-039 confirmed as persisted but unregistered and kept quarantined until its contract was complete; DL-414 requires every such row to reach its one outcome, and DL-039 authorized registering these rows family by family. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `subagent.context_rehydrated`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-15.30 (76 families, SHA-256 c82f0d724591aef661c1d7e24f3b4e0eb54e5bf55dc5aaa740dff4a9636a3e2a) to 2026-11-15.31 (77 families, SHA-256 0428e5d4d0ffdd3d697562725b7a4cbf08d019b15b4351dbf8d08b1f1f50b375). The appended row, canonical SHA-256 cbaee2ec6c25d44f23e6e62587f58371c21a15824d1e10d8535bca5f43fb9f58, has scope policy application_or_project, payload `pm.event_payload.subagent_context_rehydrated.v1` at Plans/event_payloads/subagent_context_rehydrated.schema.json#, semantic owner Plans/Prompt_Pipeline.md#PP-151, payload owner Plans/Contracts_V0.md#CV-623 and retention RP-RUNTIME-365D@1.0.0. Its payload versions are application `pm.event_payload.subagent_context_rehydrated.v1` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption); project `pm.event_payload.subagent_context_rehydrated.v1` (RP-RUNTIME-365D@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-15.31 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 77 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261114/admission-merge-1/depth/subagent.context_rehydrated.json (SHA-256 ca65b5ffbd9db0cded9b5899b99b7ad4a8eff30160779f5bd2c07381eedc2d72) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261104/DM-self-grade.json (SHA-256 db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/subagent.context_rehydrated.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `subagent.context_rehydrated`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for subagent.context_rehydrated, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/subagent.context_rehydrated.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-15.31 and 77 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_1
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "Plans/Decision_Log.md#DL-039 (confirmed_persisted_unregistered row, registered family by family)"
+- "reports/event-authority-20261104/DM-self-grade.json; SHA-256 db1afde1d26205e9ccbb8361b0d631615653f23f4fabae9748d08607a66f9312"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/INT2/admission-readiness-final.json; SHA-256 58566991d8f8a012b87e49afb36f0578576ed24f73122362d84ff365901507be"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["subagent.context_rehydrated", "event-family-subagent-context-rehydrated", "2026-11-15.31", "0428e5d4d0ffdd3d697562725b7a4cbf08d019b15b4351dbf8d08b1f1f50b375", "cbaee2ec6c25d44f23e6e62587f58371c21a15824d1e10d8535bca5f43fb9f58", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
