@@ -299,8 +299,8 @@ body[data-theme] { --tx-gutter: 24px; }
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
 }
-.working-head:has(.work-demo-drawer) > div:not(.working-controls) { overflow: visible; }
-.working-head:has(.work-demo-drawer) strong { flex: 0 0 auto; min-width: min-content; }
+.working-head:has(.work-demo-drawer) > .working-status-copy { overflow: visible; }
+.working-head:has(.work-demo-drawer) .working-status-label { flex: 0 0 auto; min-width: min-content; }
 .working-head:has(.work-demo-drawer) .sub { min-width: min-content; }
 .working-head:has(.work-demo-drawer) .orbit-caption { flex: 1 1 0; opacity: .25; }
 .working-head:has(.work-demo-drawer) > .spacer { display: none; }
